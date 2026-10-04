@@ -1,0 +1,150 @@
+{
+  "role": "local-candidate-not-installed-or-QA",
+  "recipe": "horse-front-native-eye-elliptical-K6-55percent-v2",
+  "selected": "0.55",
+  "changed_frames": 5,
+  "unchanged_frames": 39,
+  "changed_x2_pixels": 66,
+  "patches": [
+    {
+      "resref": "AHRSG1",
+      "frame_index": 0,
+      "source_core": [
+        [
+          8,
+          25
+        ],
+        [
+          9,
+          25
+        ],
+        [
+          9,
+          26
+        ]
+      ],
+      "changed_x2_pixels": 14
+    },
+    {
+      "resref": "AHRSG1",
+      "frame_index": 1,
+      "source_core": [
+        [
+          9,
+          25
+        ],
+        [
+          8,
+          26
+        ],
+        [
+          9,
+          26
+        ]
+      ],
+      "changed_x2_pixels": 14
+    },
+    {
+      "resref": "AHRSG1",
+      "frame_index": 2,
+      "source_core": [
+        [
+          9,
+          26
+        ],
+        [
+          9,
+          27
+        ]
+      ],
+      "changed_x2_pixels": 12
+    },
+    {
+      "resref": "AHRSG1",
+      "frame_index": 3,
+      "source_core": [
+        [
+          8,
+          25
+        ],
+        [
+          9,
+          25
+        ],
+        [
+          9,
+          26
+        ]
+      ],
+      "changed_x2_pixels": 14
+    },
+    {
+      "resref": "AHRSG1",
+      "frame_index": 4,
+      "source_core": [
+        [
+          9,
+          25
+        ],
+        [
+          9,
+          26
+        ]
+      ],
+      "changed_x2_pixels": 12
+    }
+  ],
+  "retained_previous_profile_eye_frames": 10,
+  "no_new_neural_inference": true,
+  "pack": {
+    "schema": "bg2-q3m-family-witness-pack-v1",
+    "scale": 2,
+    "registry_version": 7,
+    "catalog_version": 2,
+    "animation_count": 1,
+    "resources": 2,
+    "frames": 44,
+    "index_bytes": 1031820,
+    "registry_bytes": 496410,
+    "catalog_sha256": "07077a1e508027a349e2717020cdded83939b054861f429582d93e9b966cdf8a",
+    "oracle_sha256": "2f47fa5b36ea39fdc61ddbb3255bc99ef6b5418a43c23eb82c5b889ddbab346b",
+    "oracle_palette_stage": "post-CVidCell-transparent-entry-clear",
+    "logical_resource_bindings": 2,
+    "shared_resource_bindings": 0,
+    "leaves": [
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "DB52BF22A4781A0372E4E078D5480E87BD66E87C39E5A9AD22CF3D2E21AA23F5",
+        "crc32": 394144607,
+        "resource_count": 1,
+        "frame_count": 22,
+        "index_bytes": 524572,
+        "registry_bytes": 258894,
+        "class_profile_id": 8,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "5EC41CA22F52240D439D5A7EB6C7A7A7912CB1115AAB92CD14FD5A75FC69E0E0",
+        "crc32": 1846627139,
+        "resource_count": 1,
+        "frame_count": 22,
+        "index_bytes": 507248,
+        "registry_bytes": 237516,
+        "class_profile_id": 8,
+        "decode_rule_id": 3
+      }
+    ],
+    "ingame_validated": false
+  },
+  "pack_directory": "sprite/.work/q3m-horse-eye-directions-20261004-v2/candidate",
+  "SDF": false,
+  "ingame_QA": false,
+  "installed": false
+}

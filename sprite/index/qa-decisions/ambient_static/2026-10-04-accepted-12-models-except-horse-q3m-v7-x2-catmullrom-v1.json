@@ -1,0 +1,315 @@
+{
+  "schema": "bg2-upscale-native-sprite-family-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-10-04T11:08:21.359607+00:00",
+  "scope": {
+    "kind": "installed-native-family-subset",
+    "engine_family": "ambient_static",
+    "animation_ids": [
+      "0xB000",
+      "0xB200",
+      "0xB210",
+      "0xB300",
+      "0xB310",
+      "0xB400",
+      "0xB410",
+      "0xB500",
+      "0xB510",
+      "0xB600",
+      "0xB610",
+      "0xB700"
+    ],
+    "excluded_animation_ids": [
+      "0xB100"
+    ],
+    "variant_id": "q3m-v7-k6-four-partners-eight-levels-x2-catmullrom-no-SDF",
+    "scale": 2,
+    "resources": 24,
+    "frames": 1100
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "user_statement": "le cheval n'a pas d'oeil une fois upscalé. un moyen de corriger ça?\ntout les autres sprites sont validés.",
+    "individual_scenario_details": "not specified by user"
+  },
+  "runtime_contract": {
+    "runtime": {
+      "path": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/runtime.json",
+      "sha256": "1e752368a91798abc17b07f62e4e1f82ed56cff801fea78489c359ca61745b7e",
+      "bytes": 3137
+    },
+    "dll": {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/build-q3m-sdf-stable-20261004-v1/Release/InfinityEngine-Enhancer.dll",
+      "sha256": "0bdaf3b6c6dbc35634c20681a68bb06e113604810eee99a85e0948607619e4d5",
+      "bytes": 2114048
+    },
+    "ini_sha256": "68b322543c53bd59621577cb98ec814b2e33123084adea90d6abe00d219c2ad4",
+    "catalogue_sha256": "e68a207b56696626de7981812421195319e02311deafba544f0ab34f30928460",
+    "owner": 13,
+    "world_filter": "CatmullRom",
+    "SDF": false,
+    "native_geometry": true
+  },
+  "provenance": {
+    "selected_generation": {
+      "path": "docs/measurements/q3m-ambient-static-full-x2-20261004-v1/current-generation.json",
+      "sha256": "2b25958874156757efef98713c96c6facd034abbf2cfb3d829fbffdfbcc0fb48",
+      "bytes": 1535
+    },
+    "production": {
+      "path": "docs/measurements/q3m-ambient-static-full-x2-20261004-v1/production.json",
+      "sha256": "d9248642cd8788ec623d7fe48b9e578f65c96b7ccbd38b479b0d2b7f4d379d54",
+      "bytes": 21612
+    },
+    "installation_snapshot": {
+      "path": "docs/measurements/q3m-ambient-static-full-x2-20261004-v1/installation-verification.json",
+      "sha256": "01639a2625dc242e5857b0a3d6a455c9f70fd041d21ab20b0b07e9d5ac3472f3",
+      "bytes": 3546
+    }
+  },
+  "resources": [
+    {
+      "index": 4592,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-46E72975D7D72C16667010420DC567A428597F2ECB0D9E410A0DEEEAC790FD97.registry",
+      "sha256": "46E72975D7D72C16667010420DC567A428597F2ECB0D9E410A0DEEEAC790FD97",
+      "crc32": 240338468,
+      "resource_count": 1,
+      "frame_count": 22,
+      "index_bytes": 295056,
+      "registry_bytes": 172646
+    },
+    {
+      "index": 4593,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-0EE38777D9B5F9364D79589B46C4F11E6FD6DCCF2CADC0545F5D0372F45C7226.registry",
+      "sha256": "0EE38777D9B5F9364D79589B46C4F11E6FD6DCCF2CADC0545F5D0372F45C7226",
+      "crc32": 1236969160,
+      "resource_count": 1,
+      "frame_count": 22,
+      "index_bytes": 301564,
+      "registry_bytes": 165615
+    },
+    {
+      "index": 4596,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-65ED798BAE0A582D1759141BB8953E91AE0C06E017359B5FCB28FC0A9813D716.registry",
+      "sha256": "65ED798BAE0A582D1759141BB8953E91AE0C06E017359B5FCB28FC0A9813D716",
+      "crc32": 714606228,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 370900,
+      "registry_bytes": 225259
+    },
+    {
+      "index": 4597,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-DF3D8BF1A04605341811BC85519C57261188D7D34C607E0F4BE17C0EE0031D5D.registry",
+      "sha256": "DF3D8BF1A04605341811BC85519C57261188D7D34C607E0F4BE17C0EE0031D5D",
+      "crc32": 2045877306,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 372792,
+      "registry_bytes": 224928
+    },
+    {
+      "index": 4598,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-B61F5347FC3036C426C7BA83BAD8704EC719B1BFEF7095FE4287D8F02EB96A7A.registry",
+      "sha256": "B61F5347FC3036C426C7BA83BAD8704EC719B1BFEF7095FE4287D8F02EB96A7A",
+      "crc32": 3443198475,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 360556,
+      "registry_bytes": 247069
+    },
+    {
+      "index": 4599,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-0EB7242D301BC9BCA7E64DFCE4057F032E8ED05F1E72F6BFA5C282404A7EE6BF.registry",
+      "sha256": "0EB7242D301BC9BCA7E64DFCE4057F032E8ED05F1E72F6BFA5C282404A7EE6BF",
+      "crc32": 4092921085,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 334796,
+      "registry_bytes": 239207
+    },
+    {
+      "index": 4600,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-7441E36F9FD9FE1CD29480B960C9D8037C37934604AB45E9F5FD620CB2EC74CD.registry",
+      "sha256": "7441E36F9FD9FE1CD29480B960C9D8037C37934604AB45E9F5FD620CB2EC74CD",
+      "crc32": 4062740036,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 213504,
+      "registry_bytes": 172917
+    },
+    {
+      "index": 4601,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-A82BEA7E6263CE79B7D81B2EE4A00A0E2368CB90372A64BBA2757A70F5848ED8.registry",
+      "sha256": "A82BEA7E6263CE79B7D81B2EE4A00A0E2368CB90372A64BBA2757A70F5848ED8",
+      "crc32": 2758363361,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 209164,
+      "registry_bytes": 172180
+    },
+    {
+      "index": 4602,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-7E40E0470851ABD19E60C6D78F61CE38EE81DE9102BCAFE697E6A1CF4DEE43B0.registry",
+      "sha256": "7E40E0470851ABD19E60C6D78F61CE38EE81DE9102BCAFE697E6A1CF4DEE43B0",
+      "crc32": 1857624189,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 190376,
+      "registry_bytes": 166981
+    },
+    {
+      "index": 4603,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-477AF568D6DCE9BB7D842126AF761AEA65C99ABF0E5F7FDC37A05D68A1BC000D.registry",
+      "sha256": "477AF568D6DCE9BB7D842126AF761AEA65C99ABF0E5F7FDC37A05D68A1BC000D",
+      "crc32": 2515773780,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 182828,
+      "registry_bytes": 164060
+    },
+    {
+      "index": 4604,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-26DA2E925456A7EA70BCEC2CD0F6222025A7CC814CCB28983B2C770B7054C747.registry",
+      "sha256": "26DA2E925456A7EA70BCEC2CD0F6222025A7CC814CCB28983B2C770B7054C747",
+      "crc32": 1699225686,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 436296,
+      "registry_bytes": 303128
+    },
+    {
+      "index": 4605,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-A28C072D48DCBEAD51462AC926385F34C51E6B088CA6BDF3AC24B48A88AEB223.registry",
+      "sha256": "A28C072D48DCBEAD51462AC926385F34C51E6B088CA6BDF3AC24B48A88AEB223",
+      "crc32": 3862341937,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 420124,
+      "registry_bytes": 304088
+    },
+    {
+      "index": 4606,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-29C95765BA68E246793A7D82650D98DBF8E04C296D838CCCCFB0EBADA64DABEB.registry",
+      "sha256": "29C95765BA68E246793A7D82650D98DBF8E04C296D838CCCCFB0EBADA64DABEB",
+      "crc32": 1094396127,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 461968,
+      "registry_bytes": 323138
+    },
+    {
+      "index": 4607,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-9952C31818BD4685CE88793D205F372650DAFABCA029BF07C9605696BCCD6725.registry",
+      "sha256": "9952C31818BD4685CE88793D205F372650DAFABCA029BF07C9605696BCCD6725",
+      "crc32": 968154401,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 451768,
+      "registry_bytes": 325280
+    },
+    {
+      "index": 4608,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-EA39CC41BBA47F6AA1C03253EEA239DF9CBD10E3BDB1AB9930EB54C63C053553.registry",
+      "sha256": "EA39CC41BBA47F6AA1C03253EEA239DF9CBD10E3BDB1AB9930EB54C63C053553",
+      "crc32": 552328771,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 378020,
+      "registry_bytes": 243954
+    },
+    {
+      "index": 4609,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-ED7179CE238014A8A2E5B1E02002811A51322C9A44471D1C2C8310FA7562FCE1.registry",
+      "sha256": "ED7179CE238014A8A2E5B1E02002811A51322C9A44471D1C2C8310FA7562FCE1",
+      "crc32": 3722439821,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 354136,
+      "registry_bytes": 238820
+    },
+    {
+      "index": 4610,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-78F3314EB629906887CE04BB8606FFF99FF9B38584ED3D52318EB330E545DBBD.registry",
+      "sha256": "78F3314EB629906887CE04BB8606FFF99FF9B38584ED3D52318EB330E545DBBD",
+      "crc32": 3244035835,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 324500,
+      "registry_bytes": 223771
+    },
+    {
+      "index": 4611,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-67D7773115885D513A6D4CAD9C92DA0908E855B759EB814C40FF84765C9818F8.registry",
+      "sha256": "67D7773115885D513A6D4CAD9C92DA0908E855B759EB814C40FF84765C9818F8",
+      "crc32": 917980157,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 316312,
+      "registry_bytes": 219386
+    },
+    {
+      "index": 4612,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-0FDE009747B560AE0ACFC1B19F108621451B59955CC37DE97AD662545E031C51.registry",
+      "sha256": "0FDE009747B560AE0ACFC1B19F108621451B59955CC37DE97AD662545E031C51",
+      "crc32": 3039461365,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 416540,
+      "registry_bytes": 250421
+    },
+    {
+      "index": 4613,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-B5EE0372B04D10CB85FC4E4B408154C8D1027BC182F4AC64BACDB45896A5D5FB.registry",
+      "sha256": "B5EE0372B04D10CB85FC4E4B408154C8D1027BC182F4AC64BACDB45896A5D5FB",
+      "crc32": 1904708337,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 392484,
+      "registry_bytes": 246382
+    },
+    {
+      "index": 4614,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-1A4A8B5D1750DFF7C0259702F1062668D03EE36B2551B8AA24385A7D9B5FB283.registry",
+      "sha256": "1A4A8B5D1750DFF7C0259702F1062668D03EE36B2551B8AA24385A7D9B5FB283",
+      "crc32": 3035246904,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 420748,
+      "registry_bytes": 266252
+    },
+    {
+      "index": 4615,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-3DF05EBD39EDB82558E012D0406BF313CA69851D38350A3D00BCFDB574E29E20.registry",
+      "sha256": "3DF05EBD39EDB82558E012D0406BF313CA69851D38350A3D00BCFDB574E29E20",
+      "crc32": 1735896262,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 401136,
+      "registry_bytes": 263337
+    },
+    {
+      "index": 4616,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-3B61FC4D7FA9DF8289F7B14245F601AD4BBD2C0F044691B84AC7B9C3C36424DA.registry",
+      "sha256": "3B61FC4D7FA9DF8289F7B14245F601AD4BBD2C0F044691B84AC7B9C3C36424DA",
+      "crc32": 4020932196,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 367420,
+      "registry_bytes": 226120
+    },
+    {
+      "index": 4617,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-E46F2ACFE9196B89DAA1E55BA0ABE18DD27006EFB5CBCA932976D5E0239EB91D.registry",
+      "sha256": "E46F2ACFE9196B89DAA1E55BA0ABE18DD27006EFB5CBCA932976D5E0239EB91D",
+      "crc32": 1120338855,
+      "resource_count": 1,
+      "frame_count": 48,
+      "index_bytes": 368056,
+      "registry_bytes": 224500
+    }
+  ],
+  "release": false
+}

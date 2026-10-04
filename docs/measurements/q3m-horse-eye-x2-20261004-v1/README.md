@@ -1,0 +1,13 @@
+# Cheval : œil natif protégé — Q3m V7 x2 — 2026-10-04
+
+- Retour utilisateur : cheval sans œil après upscale ; tous les 12 autres modèles ambient_static validés. QA immuable hors cheval : `sprite/index/qa-decisions/ambient_static/2026-10-04-accepted-12-models-except-horse-q3m-v7-x2-catmullrom-v1.json` ; 12 IDs/24 BAM/1 100 frames. Famille entière non validée.
+- Cause observée : détail natif sombre de quelques pixels atténué dans la reconstruction Q3m/ReboutCX ; `heads-before.png`, `eye-indices.png`, `comparison.png`. Le constat ne localise pas séparément la perte entre cible neurale et quantification.
+- Correction locale `correct.py` : B100 owner13, AHRSG1/AHRSG1E ; ancrages natifs vérifiés par valeur d'indice, frames11..15 dans chaque BAM. 12 pixels natifs → 48 pixels x2 I natif exact/F0 ; deps recalculées ; guide inchangé, pixels hors masque I/F identiques. Dix frames modifiées/34 inchangées ; aucune retouche des vues masquées/dos.
+- Contrat : V7 profile8/rule3, palette native live, K6/quatre partenaires/huit niveaux hors yeux ; mêmes centres/cycles/source SHA. Aucun SDF/alpha8/contour ; CatmullRom global conservé. Zéro nouvelle inférence/encodage Q3m ; 44 fichiers du cache partagé authentifiés inchangés ; dérivés dans `sprite/.work/q3m-horse-eye-x2-20261004-v1/encoded`.
+- Source/génération parent ambient_static conservée : `../q3m-ambient-static-full-x2-20261004-v1/`. Nouveau pack local `sprite/.work/q3m-horse-eye-x2-20261004-v1/{isolated,combined}` ; aucun ancien asset réécrit.
+- Native isolé + combiné : deux ressources/44 frames/878 slots, K6 ×trois formats, 18 572 760 pixels comparés par passage. `native-isolated.log`, `native-combined.log`, `verification.json`.
+- Catalogue : deux composants/feuilles remplacés aux mêmes indices ; 104 IDs/50 299 routes identiques, 4 616 autres feuilles/composants identiques. 24 feuilles ambient_static acceptées préservées. `catalog-proof.json`.
+- Installation : deux nouvelles feuilles + catalogue ; backup `work/before/CreatureSprites-XN.catalog`, reçu `ingame-installation/active-test.json`, `installation-verification.json`. 149 fichiers préservés SHA ; aucune DLL/shader/INI/CRE modifiée.
+- Test ingame : `C:CreateCreature("HORSE")` ; examiner les deux vues de profil à plusieurs zooms. QA du cheval corrigé en attente utilisateur ; aucun transfert de QA depuis l'ancien résultat.
+- Restore, jeu/InfinityLoader fermés : `& ./docs/measurements/q3m-horse-eye-x2-20261004-v1/restore.ps1` ; authentifie catalogue courant/parent/fichiers acquis avant retour au cheval précédent ; feuilles non référencées conservées.
+- Release/payload/staging/content/TP2/archives inchangés.

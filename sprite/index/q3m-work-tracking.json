@@ -42,7 +42,7 @@
     "integration_reference": "docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json",
     "candidate_reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json",
     "installed_candidate_reference": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/installation-verification.json",
-    "latest_installation_verification_reference": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/installation-verification.json"
+    "latest_installation_verification_reference": "docs/measurements/q3m-horse-eye-ingame-x2-20261004-v1/installation-verification.json"
   },
   "method": {
     "current": "Q3m-K6-four-partners-eight-levels",
@@ -67,7 +67,7 @@
       "four-partners-eight-levels",
       "sixteen-levels"
     ],
-    "state": "Q3m-x2-flying-accepted-Ankheg-V9-SDF-stable-accepted-Ogre-installed-Large16-V7-no-SDF-accepted-other-families-pilot",
+    "state": "Q3m-x2-flying-accepted-Ankheg-V9-SDF-stable-accepted-Ogre-installed-Large16-V7-no-SDF-accepted-Ambient_static-V7-no-SDF-horse-eye-v3-accepted-other-families-pilot",
     "format_compatibility": "V7 reader implemented; V6 unchanged",
     "next_recipe_selection": "selected-for-pilot; sixteen-levels remains diagnostic",
     "selected": "four-partners-eight-levels",
@@ -82,11 +82,11 @@
     "with_bam_without_q3m_reference": 254,
     "counting_rule": "IDs count consumers; BAMs/frames shared; family counts not summed as physical work",
     "current_recipe_witness_ids": 15,
-    "current_recipe_complete_animation_ids": 10,
-    "current_recipe_ingame_accepted_families": 3,
-    "current_recipe_complete_families": 4,
-    "current_recipe_installed_animation_ids": 10,
-    "current_recipe_ingame_accepted_animation_ids": 9,
+    "current_recipe_complete_animation_ids": 23,
+    "current_recipe_ingame_accepted_families": 4,
+    "current_recipe_complete_families": 5,
+    "current_recipe_installed_animation_ids": 23,
+    "current_recipe_ingame_accepted_animation_ids": 22,
     "ingame_acceptance_counting_rule": "unique families/IDs across accepted full productions and current contour trials; QA belongs to exact variant/runtime"
   },
   "families": [
@@ -802,7 +802,110 @@
         "unique_encoded_work": 44,
         "state": "host-verified-ingame-pending",
         "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
-      }
+      },
+      "current_full_production": {
+        "family": "ambient_static",
+        "reference": "docs/measurements/q3m-ambient-static-full-x2-20261004-v1/current-generation.json",
+        "selection": "docs/measurements/q3m-ambient-static-full-x2-20261004-v1/selection.json",
+        "animation_ids": [
+          "0xB000",
+          "0xB100",
+          "0xB200",
+          "0xB210",
+          "0xB300",
+          "0xB310",
+          "0xB400",
+          "0xB410",
+          "0xB500",
+          "0xB510",
+          "0xB600",
+          "0xB610",
+          "0xB700"
+        ],
+        "physical_frames": 1144,
+        "unique_source_work": 1064,
+        "unique_encoded_work": 1064,
+        "encoded_cache_hits": 44,
+        "new_encoded_work": 1020,
+        "new_neural_targets": 6120,
+        "resume_cache_hits": 1064,
+        "installation_reference": "docs/measurements/q3m-ambient-static-full-x2-20261004-v1/ingame-installation/active-test.json",
+        "installation_snapshot": "docs/measurements/q3m-ambient-static-full-x2-20261004-v1/installation-verification.json",
+        "state": "family-complete-installed-with-horse-eye-v3-ingame-accepted",
+        "qa_ingame": true,
+        "release": false,
+        "SDF": false,
+        "visual_QA": {
+          "state": "accepted-full-with-horse-eye-v3-replacement",
+          "animation_ids": [
+            "0xB000",
+            "0xB100",
+            "0xB200",
+            "0xB210",
+            "0xB300",
+            "0xB310",
+            "0xB400",
+            "0xB410",
+            "0xB500",
+            "0xB510",
+            "0xB600",
+            "0xB610",
+            "0xB700"
+          ],
+          "resources": 26,
+          "frames": 1144,
+          "qa_reference": "sprite/index/qa-decisions/ambient_static/2026-10-04-accepted-full-ambient-static-horse-eye-v3-q3m-v7-x2-catmullrom-v1.json",
+          "catalogue_sha256": "211edfd214af0eefee3be1f8a4f62cb04b9a98406eedf3dbd8c50b8e6cfd2c55"
+        },
+        "qa_reference": "sprite/index/qa-decisions/ambient_static/2026-10-04-accepted-full-ambient-static-horse-eye-v3-q3m-v7-x2-catmullrom-v1.json",
+        "acceptance_requires_current_resource_replacements": true
+      },
+      "current_visual_QA": {
+        "state": "accepted-full-with-horse-eye-v3-replacement",
+        "animation_ids": [
+          "0xB000",
+          "0xB100",
+          "0xB200",
+          "0xB210",
+          "0xB300",
+          "0xB310",
+          "0xB400",
+          "0xB410",
+          "0xB500",
+          "0xB510",
+          "0xB600",
+          "0xB610",
+          "0xB700"
+        ],
+        "resources": 26,
+        "frames": 1144,
+        "qa_reference": "sprite/index/qa-decisions/ambient_static/2026-10-04-accepted-full-ambient-static-horse-eye-v3-q3m-v7-x2-catmullrom-v1.json",
+        "catalogue_sha256": "211edfd214af0eefee3be1f8a4f62cb04b9a98406eedf3dbd8c50b8e6cfd2c55"
+      },
+      "current_resource_replacements": [
+        {
+          "family": "ambient_static",
+          "animation_ids": [
+            "0xB100"
+          ],
+          "reference": "docs/measurements/q3m-horse-eye-ingame-x2-20261004-v1/current-generation.json",
+          "installation_snapshot": "docs/measurements/q3m-horse-eye-ingame-x2-20261004-v1/installation-verification.json",
+          "state": "horse-front-eye-v3-installed-ingame-accepted",
+          "resources": 2,
+          "frames": 44,
+          "changed_frames": 5,
+          "changed_x2_pixels": 134,
+          "new_inference": 0,
+          "SDF": false,
+          "qa_ingame": true,
+          "release": false,
+          "new_leaves": 1,
+          "retained_previous_profile_eye_frames": 10,
+          "previous_reference": "docs/measurements/q3m-horse-eye-x2-20261004-v1/current-generation.json",
+          "analysis_reference": "docs/measurements/q3m-horse-eye-directions-20261004-v3/analysis.json",
+          "qa_reference": "sprite/index/qa-decisions/ambient_static/2026-10-04-accepted-full-ambient-static-horse-eye-v3-q3m-v7-x2-catmullrom-v1.json"
+        }
+      ]
     },
     {
       "engine_section": "town_static",
@@ -1166,6 +1269,87 @@
       "qa_ingame": true,
       "release": false,
       "qa_reference": "sprite/index/qa-decisions/monster_large16/2026-10-04-accepted-full-available-large16-q3m-v7-x2-catmullrom-v1.json"
+    },
+    {
+      "family": "ambient_static",
+      "reference": "docs/measurements/q3m-ambient-static-full-x2-20261004-v1/current-generation.json",
+      "selection": "docs/measurements/q3m-ambient-static-full-x2-20261004-v1/selection.json",
+      "animation_ids": [
+        "0xB000",
+        "0xB100",
+        "0xB200",
+        "0xB210",
+        "0xB300",
+        "0xB310",
+        "0xB400",
+        "0xB410",
+        "0xB500",
+        "0xB510",
+        "0xB600",
+        "0xB610",
+        "0xB700"
+      ],
+      "physical_frames": 1144,
+      "unique_source_work": 1064,
+      "unique_encoded_work": 1064,
+      "encoded_cache_hits": 44,
+      "new_encoded_work": 1020,
+      "new_neural_targets": 6120,
+      "resume_cache_hits": 1064,
+      "installation_reference": "docs/measurements/q3m-ambient-static-full-x2-20261004-v1/ingame-installation/active-test.json",
+      "installation_snapshot": "docs/measurements/q3m-ambient-static-full-x2-20261004-v1/installation-verification.json",
+      "state": "family-complete-installed-with-horse-eye-v3-ingame-accepted",
+      "qa_ingame": true,
+      "release": false,
+      "SDF": false,
+      "visual_QA": {
+        "state": "accepted-full-with-horse-eye-v3-replacement",
+        "animation_ids": [
+          "0xB000",
+          "0xB100",
+          "0xB200",
+          "0xB210",
+          "0xB300",
+          "0xB310",
+          "0xB400",
+          "0xB410",
+          "0xB500",
+          "0xB510",
+          "0xB600",
+          "0xB610",
+          "0xB700"
+        ],
+        "resources": 26,
+        "frames": 1144,
+        "qa_reference": "sprite/index/qa-decisions/ambient_static/2026-10-04-accepted-full-ambient-static-horse-eye-v3-q3m-v7-x2-catmullrom-v1.json",
+        "catalogue_sha256": "211edfd214af0eefee3be1f8a4f62cb04b9a98406eedf3dbd8c50b8e6cfd2c55"
+      },
+      "current_resource_replacements": [
+        {
+          "family": "ambient_static",
+          "animation_ids": [
+            "0xB100"
+          ],
+          "reference": "docs/measurements/q3m-horse-eye-ingame-x2-20261004-v1/current-generation.json",
+          "installation_snapshot": "docs/measurements/q3m-horse-eye-ingame-x2-20261004-v1/installation-verification.json",
+          "state": "horse-front-eye-v3-installed-ingame-accepted",
+          "resources": 2,
+          "frames": 44,
+          "changed_frames": 5,
+          "changed_x2_pixels": 134,
+          "new_inference": 0,
+          "SDF": false,
+          "qa_ingame": true,
+          "release": false,
+          "new_leaves": 1,
+          "retained_previous_profile_eye_frames": 10,
+          "previous_reference": "docs/measurements/q3m-horse-eye-x2-20261004-v1/current-generation.json",
+          "analysis_reference": "docs/measurements/q3m-horse-eye-directions-20261004-v3/analysis.json",
+          "qa_reference": "sprite/index/qa-decisions/ambient_static/2026-10-04-accepted-full-ambient-static-horse-eye-v3-q3m-v7-x2-catmullrom-v1.json"
+        }
+      ],
+      "qa_reference": "sprite/index/qa-decisions/ambient_static/2026-10-04-accepted-full-ambient-static-horse-eye-v3-q3m-v7-x2-catmullrom-v1.json",
+      "acceptance_requires_current_resource_replacements": true
     }
   ],
   "current_contour_trials": [

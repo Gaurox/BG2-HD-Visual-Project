@@ -1,0 +1,686 @@
+{
+  "plan": {
+    "schema": "bg2-q3m-family-witness-work-plan-v1",
+    "selection_sha256": "bdb8e81489d12f3f9e1e56d3cff5d8b7bead5bfb77dc6382a0a70c10a326a88a",
+    "families": 1,
+    "resources": 26,
+    "physical_frames": 1144,
+    "unique_source_work": 1064,
+    "unique_encoded_work": 1064,
+    "native_oracle": "pinned CVidPalette type0 Realize; K6 byte comparison; type1 acquired Character K6",
+    "witnesses": [
+      {
+        "family": "ambient_static",
+        "animation_id": "0xB000",
+        "name": "COW",
+        "owner": 13,
+        "native_kind": 0,
+        "refs": [
+          "ACOWG1",
+          "ACOWG1E"
+        ],
+        "physical_frames": 44,
+        "source_work": 44,
+        "encoded_work": 44
+      },
+      {
+        "family": "ambient_static",
+        "animation_id": "0xB100",
+        "name": "HORSE",
+        "owner": 13,
+        "native_kind": 0,
+        "refs": [
+          "AHRSG1",
+          "AHRSG1E"
+        ],
+        "physical_frames": 44,
+        "source_work": 44,
+        "encoded_work": 44
+      },
+      {
+        "family": "ambient_static",
+        "animation_id": "0xB200",
+        "name": "STATIC_BEGGAR_MAN",
+        "owner": 13,
+        "native_kind": 1,
+        "refs": [
+          "NBEGLG1",
+          "NBEGLG1E"
+        ],
+        "physical_frames": 96,
+        "source_work": 96,
+        "encoded_work": 96
+      },
+      {
+        "family": "ambient_static",
+        "animation_id": "0xB210",
+        "name": "STATIC_HARLOT_WOMAN",
+        "owner": 13,
+        "native_kind": 1,
+        "refs": [
+          "NPROLG1",
+          "NPROLG1E"
+        ],
+        "physical_frames": 96,
+        "source_work": 96,
+        "encoded_work": 96
+      },
+      {
+        "family": "ambient_static",
+        "animation_id": "0xB300",
+        "name": "STATIC_BOY",
+        "owner": 13,
+        "native_kind": 1,
+        "refs": [
+          "NBOYLG1",
+          "NBOYLG1E"
+        ],
+        "physical_frames": 96,
+        "source_work": 96,
+        "encoded_work": 96
+      },
+      {
+        "family": "ambient_static",
+        "animation_id": "0xB310",
+        "name": "STATIC_GIRL",
+        "owner": 13,
+        "native_kind": 1,
+        "refs": [
+          "NGRLLG1",
+          "NGRLLG1E"
+        ],
+        "physical_frames": 96,
+        "source_work": 96,
+        "encoded_work": 96
+      },
+      {
+        "family": "ambient_static",
+        "animation_id": "0xB400",
+        "name": "STATIC_FAT_MAN",
+        "owner": 13,
+        "native_kind": 1,
+        "refs": [
+          "NFAMLG1",
+          "NFAMLG1E"
+        ],
+        "physical_frames": 96,
+        "source_work": 96,
+        "encoded_work": 96
+      },
+      {
+        "family": "ambient_static",
+        "animation_id": "0xB410",
+        "name": "STATIC_FAT_WOMAN",
+        "owner": 13,
+        "native_kind": 1,
+        "refs": [
+          "NFAWLG1",
+          "NFAWLG1E"
+        ],
+        "physical_frames": 96,
+        "source_work": 96,
+        "encoded_work": 96
+      },
+      {
+        "family": "ambient_static",
+        "animation_id": "0xB500",
+        "name": "STATIC_PEASANT_MAN",
+        "owner": 13,
+        "native_kind": 1,
+        "refs": [
+          "NSIMLG1",
+          "NSIMLG1E"
+        ],
+        "physical_frames": 96,
+        "source_work": 96,
+        "encoded_work": 96
+      },
+      {
+        "family": "ambient_static",
+        "animation_id": "0xB510",
+        "name": "STATIC_PEASANT_WOMAN",
+        "owner": 13,
+        "native_kind": 1,
+        "refs": [
+          "NSIWLG1",
+          "NSIWLG1E"
+        ],
+        "physical_frames": 96,
+        "source_work": 96,
+        "encoded_work": 96
+      },
+      {
+        "family": "ambient_static",
+        "animation_id": "0xB600",
+        "name": "STATIC_NOBLE_MAN",
+        "owner": 13,
+        "native_kind": 1,
+        "refs": [
+          "NNOMLG1",
+          "NNOMLG1E"
+        ],
+        "physical_frames": 96,
+        "source_work": 96,
+        "encoded_work": 96
+      },
+      {
+        "family": "ambient_static",
+        "animation_id": "0xB610",
+        "name": "STATIC_NOBLE_WOMAN",
+        "owner": 13,
+        "native_kind": 1,
+        "refs": [
+          "NNOWLG1",
+          "NNOWLG1E"
+        ],
+        "physical_frames": 96,
+        "source_work": 96,
+        "encoded_work": 96
+      },
+      {
+        "family": "ambient_static",
+        "animation_id": "0xB700",
+        "name": "STATIC_SLAVE",
+        "owner": 13,
+        "native_kind": 1,
+        "refs": [
+          "NSLVLG1",
+          "NSLVLG1E"
+        ],
+        "physical_frames": 96,
+        "source_work": 96,
+        "encoded_work": 96
+      }
+    ],
+    "source_plans": {
+      "character": {
+        "schema": "bg2-playable-palette-work-plan-pointer-v1",
+        "role": "source-work-plan-not-production-or-QA",
+        "path": "docs/measurements/playable-palettized-frame-dedup-20261001-v1/processing-plan.sqlite",
+        "bytes": 576868352,
+        "sha256": "06b32c785aa4b946a3836275925fea587322b57485163b76bbb79104bd313e25",
+        "summary": {
+          "absent_families": 246,
+          "available_families": 4896,
+          "canonical_bytes": 407156955,
+          "cross_model_additional_model_work_avoided": 6618307,
+          "cross_model_additional_q32_pixels_avoided": 20365903872,
+          "cycle_slots": 3599209,
+          "cycles": 168192,
+          "distinct_bam_frames": 1564054,
+          "distinct_bam_model_frames": 894348,
+          "distinct_bam_model_q32_pixels": 2309177344,
+          "distinct_bam_native_pixels": 1268986342,
+          "families": 5142,
+          "input_reuses_byte_compared": 1000566,
+          "logical_frame_work_avoided": 13113072,
+          "logical_frames": 13677041,
+          "logical_model_frames": 11448124,
+          "logical_model_q32_pixels": 31296118784,
+          "logical_model_q32_pixels_avoided": 29640327168,
+          "logical_model_work_avoided": 10884327,
+          "logical_native_pixels": 17717563045,
+          "model_local_unique_model_q32_pixels": 22021695488,
+          "model_local_unique_model_work_items": 7182104,
+          "model_local_unique_work_items": 7187637,
+          "models": 78,
+          "original_rle_tail_overflow_frames": 70,
+          "resources": 4510,
+          "shared_between_models_model_work_items": 558741,
+          "shared_between_models_source_occurrences": 1558519,
+          "shared_between_models_work_items": 558913,
+          "six_palette_targets_naive": 68688744,
+          "six_palette_targets_unique_indexed_input": 3379914,
+          "six_palette_targets_unique_work": 3382782,
+          "source_bytes": 189397325,
+          "source_frames_avoided_after_bam_sharing": 1000085,
+          "source_model_frames_avoided_after_bam_sharing": 330551,
+          "strict_full_palette_work_items": 566136,
+          "unique_indexed_inputs": 563488,
+          "unique_model_native_pixels": 960065986,
+          "unique_model_q32_pixels": 1655791616,
+          "unique_model_work_items": 563797,
+          "unique_neural_inputs": 563319,
+          "unique_neural_native_pixels": 959768171,
+          "unique_neural_q32_pixels": 1655021568,
+          "unique_work_items": 563969,
+          "unique_work_native_pixels": 961019931,
+          "unprocessable_work_items": 0,
+          "unreferenced_source_frames": 25466,
+          "unused_native_palette_additional_work_avoided": 2167,
+          "within_model_model_work_avoided": 4266020,
+          "work_items_with_different_centres": 2325,
+          "work_reuses_byte_compared": 1000085
+        },
+        "analysis": "docs/measurements/playable-palettized-frame-dedup-20261001-v1",
+        "consumer": "pipeline/scripts/palette_playable.py",
+        "trusted_seed_runs": [
+          {
+            "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v3-full-6110",
+            "sha256": {
+              "recipe.json": "6283faeca68477b0d5f8fa04ea662b54cce4d670de2075540b12494c4a0b980c",
+              "coverage.json": "5f446635b0d70f24162c8f72789559b76b2ed6c589cfcc8e227f0ac63d9dce8b",
+              "verification.json": "874df5b09a8243ab3b7c448e973a96815955ab73ef192d5af05cf5222cde9ad6"
+            }
+          },
+          {
+            "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v5-full-x4-6110",
+            "sha256": {
+              "recipe.json": "0fd3b5af8bda26df2b6cd4ad486224761a21c08705f9406d524b11752ae3f030",
+              "coverage.json": "467207c3afed063e845b07ee610d9c4ba6989624e7380b5efd3ffd1e3253b86b",
+              "verification.json": "0cb2522cc85034ee8075b2fc0bcea3bcbe277483d2349be593b5584ceed45fd8"
+            }
+          }
+        ]
+      },
+      "other": {
+        "schema": "bg2-all-creature-source-dedup-v1",
+        "role": "source-plan-not-production-or-QA",
+        "path": "docs/measurements/all-creature-source-dedup-20261003-v1/processing-plan.sqlite",
+        "bytes": 541003776,
+        "sha256": "65bc442f3884badbb21dce39b5e471984b5380ae7b07f403008731e2e9247ad0",
+        "summary": "docs/measurements/all-creature-source-dedup-20261003-v1/summary.json",
+        "character_descriptor": "sprite/index/palette-work-plan.json",
+        "monster_descriptor": "docs/measurements/q3m-monster-work-plan-x2-20261003-v1/plan.json",
+        "consumer": "analyze_sprite_frame_dedup.py plan; encoded work requires the demonstrated per-profile plan and shared cache"
+      }
+    },
+    "complete_family": "ambient_static"
+  },
+  "stats": {
+    "encoded_cache_hits": 44,
+    "new_guides": 1020,
+    "new_neural_targets": 6120,
+    "new_encoded_work": 1020
+  },
+  "resume": {
+    "encoded_cache_hits": 1064
+  },
+  "resume_torch_import_blocked": true,
+  "acquired_encoded_sha256_unchanged": 44,
+  "encoder_namespace": "0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449",
+  "pack": {
+    "schema": "bg2-q3m-family-witness-pack-v1",
+    "scale": 2,
+    "registry_version": 7,
+    "catalog_version": 2,
+    "animation_count": 13,
+    "resources": 26,
+    "frames": 1144,
+    "index_bytes": 9372864,
+    "registry_bytes": 6105826,
+    "catalog_sha256": "1bec1f9aed5a155d570acc6b446a8d70d44d37927475dcca45a2d76480528528",
+    "oracle_sha256": "a57f51162a5880b967d1199a1e68dcfba96c5d94c75e09a37d4d9e7ef6bc19bb",
+    "oracle_palette_stage": "post-CVidCell-transparent-entry-clear",
+    "logical_resource_bindings": 26,
+    "shared_resource_bindings": 0,
+    "leaves": [
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "46E72975D7D72C16667010420DC567A428597F2ECB0D9E410A0DEEEAC790FD97",
+        "crc32": 240338468,
+        "resource_count": 1,
+        "frame_count": 22,
+        "index_bytes": 295056,
+        "registry_bytes": 172646,
+        "class_profile_id": 8,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "0EE38777D9B5F9364D79589B46C4F11E6FD6DCCF2CADC0545F5D0372F45C7226",
+        "crc32": 1236969160,
+        "resource_count": 1,
+        "frame_count": 22,
+        "index_bytes": 301564,
+        "registry_bytes": 165615,
+        "class_profile_id": 8,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "C892C96D2A8C4AC6DAB4D8B10F90850436F92CF718BC35F78EB833FC6A9242B8",
+        "crc32": 3685195177,
+        "resource_count": 1,
+        "frame_count": 22,
+        "index_bytes": 524572,
+        "registry_bytes": 258868,
+        "class_profile_id": 8,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "9EA5A3C2A7D275B5CC68944336E5DEF1E6A9660FAA9EDB7E3AD933C075286062",
+        "crc32": 1394844778,
+        "resource_count": 1,
+        "frame_count": 22,
+        "index_bytes": 507248,
+        "registry_bytes": 237519,
+        "class_profile_id": 8,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "65ED798BAE0A582D1759141BB8953E91AE0C06E017359B5FCB28FC0A9813D716",
+        "crc32": 714606228,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 370900,
+        "registry_bytes": 225259,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "DF3D8BF1A04605341811BC85519C57261188D7D34C607E0F4BE17C0EE0031D5D",
+        "crc32": 2045877306,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 372792,
+        "registry_bytes": 224928,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "B61F5347FC3036C426C7BA83BAD8704EC719B1BFEF7095FE4287D8F02EB96A7A",
+        "crc32": 3443198475,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 360556,
+        "registry_bytes": 247069,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "0EB7242D301BC9BCA7E64DFCE4057F032E8ED05F1E72F6BFA5C282404A7EE6BF",
+        "crc32": 4092921085,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 334796,
+        "registry_bytes": 239207,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "7441E36F9FD9FE1CD29480B960C9D8037C37934604AB45E9F5FD620CB2EC74CD",
+        "crc32": 4062740036,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 213504,
+        "registry_bytes": 172917,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "A82BEA7E6263CE79B7D81B2EE4A00A0E2368CB90372A64BBA2757A70F5848ED8",
+        "crc32": 2758363361,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 209164,
+        "registry_bytes": 172180,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "7E40E0470851ABD19E60C6D78F61CE38EE81DE9102BCAFE697E6A1CF4DEE43B0",
+        "crc32": 1857624189,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 190376,
+        "registry_bytes": 166981,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "477AF568D6DCE9BB7D842126AF761AEA65C99ABF0E5F7FDC37A05D68A1BC000D",
+        "crc32": 2515773780,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 182828,
+        "registry_bytes": 164060,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "26DA2E925456A7EA70BCEC2CD0F6222025A7CC814CCB28983B2C770B7054C747",
+        "crc32": 1699225686,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 436296,
+        "registry_bytes": 303128,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "A28C072D48DCBEAD51462AC926385F34C51E6B088CA6BDF3AC24B48A88AEB223",
+        "crc32": 3862341937,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 420124,
+        "registry_bytes": 304088,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "29C95765BA68E246793A7D82650D98DBF8E04C296D838CCCCFB0EBADA64DABEB",
+        "crc32": 1094396127,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 461968,
+        "registry_bytes": 323138,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "9952C31818BD4685CE88793D205F372650DAFABCA029BF07C9605696BCCD6725",
+        "crc32": 968154401,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 451768,
+        "registry_bytes": 325280,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "EA39CC41BBA47F6AA1C03253EEA239DF9CBD10E3BDB1AB9930EB54C63C053553",
+        "crc32": 552328771,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 378020,
+        "registry_bytes": 243954,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "ED7179CE238014A8A2E5B1E02002811A51322C9A44471D1C2C8310FA7562FCE1",
+        "crc32": 3722439821,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 354136,
+        "registry_bytes": 238820,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "78F3314EB629906887CE04BB8606FFF99FF9B38584ED3D52318EB330E545DBBD",
+        "crc32": 3244035835,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 324500,
+        "registry_bytes": 223771,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "67D7773115885D513A6D4CAD9C92DA0908E855B759EB814C40FF84765C9818F8",
+        "crc32": 917980157,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 316312,
+        "registry_bytes": 219386,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "0FDE009747B560AE0ACFC1B19F108621451B59955CC37DE97AD662545E031C51",
+        "crc32": 3039461365,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 416540,
+        "registry_bytes": 250421,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "B5EE0372B04D10CB85FC4E4B408154C8D1027BC182F4AC64BACDB45896A5D5FB",
+        "crc32": 1904708337,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 392484,
+        "registry_bytes": 246382,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "1A4A8B5D1750DFF7C0259702F1062668D03EE36B2551B8AA24385A7D9B5FB283",
+        "crc32": 3035246904,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 420748,
+        "registry_bytes": 266252,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "3DF05EBD39EDB82558E012D0406BF313CA69851D38350A3D00BCFDB574E29E20",
+        "crc32": 1735896262,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 401136,
+        "registry_bytes": 263337,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "3B61FC4D7FA9DF8289F7B14245F601AD4BBD2C0F044691B84AC7B9C3C36424DA",
+        "crc32": 4020932196,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 367420,
+        "registry_bytes": 226120,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "E46F2ACFE9196B89DAA1E55BA0ABE18DD27006EFB5CBCA932976D5E0239EB91D",
+        "crc32": 1120338855,
+        "resource_count": 1,
+        "frame_count": 48,
+        "index_bytes": 368056,
+        "registry_bytes": 224500,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      }
+    ],
+    "ingame_validated": false
+  },
+  "pack_directory": "sprite/.work/q3m-ambient-static-full-x2-20261004-v1/isolated"
+}
