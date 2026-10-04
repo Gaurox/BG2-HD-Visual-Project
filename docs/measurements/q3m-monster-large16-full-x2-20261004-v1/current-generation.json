@@ -1,0 +1,46 @@
+{
+  "schema": "bg2-Large16-Q3m-V7-current-v1",
+  "role": "production-not-QA-installation-or-release",
+  "family": "monster_large16",
+  "animation_ids": [
+    "0xA000",
+    "0xA100",
+    "0xA200"
+  ],
+  "source_absent_animation_ids": [
+    "0xA201",
+    "0xA202"
+  ],
+  "resources": 20,
+  "frames": 1692,
+  "original_resources": 13,
+  "original_frames": 1114,
+  "scale": 2,
+  "colour": "K6-four-partners-eight-levels",
+  "registry_version": 7,
+  "SDF": false,
+  "generation_dir": "sprite/.work/q3m-monster-large16-full-x2-20261004-v1/combined",
+  "catalog": {
+    "path": "sprite/.work/q3m-monster-large16-full-x2-20261004-v1/combined/iee-assets/creature-sprites/CreatureSprites-XN.catalog",
+    "sha256": "6fbb2f02237ee80032d02c50b5a6de04ee13b750eb8a410da86520c91bf44c80",
+    "bytes": 2033716
+  },
+  "production": {
+    "path": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/production.json",
+    "sha256": "2ac5ecd8855879fff5c48b5701b305d841475edd5cb5199306d22c8e16eba286",
+    "bytes": 17240
+  },
+  "runtime": {
+    "path": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/runtime.json",
+    "sha256": "1e752368a91798abc17b07f62e4e1f82ed56cff801fea78489c359ca61745b7e",
+    "bytes": 3137
+  },
+  "dll": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/build-q3m-sdf-stable-20261004-v1/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "0bdaf3b6c6dbc35634c20681a68bb06e113604810eee99a85e0948607619e4d5",
+    "bytes": 2114048
+  },
+  "state": "produced-host-verified-ready-to-install",
+  "ingame_QA": false,
+  "release": false
+}

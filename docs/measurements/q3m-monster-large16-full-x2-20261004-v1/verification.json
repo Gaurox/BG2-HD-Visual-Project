@@ -1,0 +1,107 @@
+{
+  "schema": "bg2-Large16-local-verification-v1",
+  "passed": true,
+  "host_tests": 10,
+  "native_isolated": {
+    "resources": 20,
+    "frames": 1692,
+    "native_cycle_slots": 7441,
+    "decoded_pixels": 791699328,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "native_combined": {
+    "resources": 20,
+    "frames": 1692,
+    "native_cycle_slots": 7441,
+    "decoded_pixels": 791699328,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "white_palette_resource": "MWYV_WS",
+  "white_source_palette_verified_leaves": 7,
+  "ordinary_source_palette_verified_leaves": 13,
+  "registry_version": 7,
+  "SDF": false,
+  "source_absent_ids": [
+    "0xA201",
+    "0xA202"
+  ],
+  "duplicate_work_rule": "unique compatible colour/source keys; exact acquired hits unchanged; no Torch on resume",
+  "unique_original_BAM_source_work": 1053,
+  "unique_colour_source_work": 1567,
+  "unique_encoded_work": 1570,
+  "runtime": {
+    "path": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/runtime.json",
+    "sha256": "1e752368a91798abc17b07f62e4e1f82ed56cff801fea78489c359ca61745b7e",
+    "bytes": 3137
+  },
+  "dll": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/build-q3m-sdf-stable-20261004-v1/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "0bdaf3b6c6dbc35634c20681a68bb06e113604810eee99a85e0948607619e4d5",
+    "bytes": 2114048
+  },
+  "production": {
+    "path": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/production.json",
+    "sha256": "2ac5ecd8855879fff5c48b5701b305d841475edd5cb5199306d22c8e16eba286",
+    "bytes": 17240
+  },
+  "catalog_proof": {
+    "path": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/catalog-proof.json",
+    "sha256": "a42587f35f87c823404e24b1d2ec90a636251558962375e7eecfec1aa785dac2",
+    "bytes": 808
+  },
+  "native_scope": {
+    "path": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/native-scope.json",
+    "sha256": "f27d30ac5421ae911089493e6e05aaae7f4ec98b6f66bf184d7e2afdaf5fadac",
+    "bytes": 1196
+  },
+  "logs": [
+    {
+      "path": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/host-tests.log",
+      "sha256": "ce6edbfc67e107b95f34d1d265453582cb307a2cc948364c244a8a08445c8778",
+      "bytes": 1618
+    },
+    {
+      "path": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/native-isolated.log",
+      "sha256": "037c7624ce0a7e93a5b9f3eef135e390409552b5dd571fc41c808f6093db62ed",
+      "bytes": 3612
+    },
+    {
+      "path": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/native-combined.log",
+      "sha256": "5bf374a95da07dc32d6f45be601389944118072a22a074763d8bc0e3d3c7240f",
+      "bytes": 3677
+    }
+  ],
+  "producer_sources": [
+    {
+      "path": "pipeline/scripts/q3m_family_witnesses.py",
+      "sha256": "b6e0666910df0983cc3899d4fc2572351cb6dccbf923d2c5e89ccbed6c918df9",
+      "bytes": 28214
+    },
+    {
+      "path": "pipeline/scripts/palette_q3m_partners.py",
+      "sha256": "0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449",
+      "bytes": 6554
+    },
+    {
+      "path": "pipeline/scripts/palette_partner_registry.py",
+      "sha256": "ad609acd3104c32c9cf19fb5e83f1e790f4ae933f818e9a7bf9672d478d7efe2",
+      "bytes": 11082
+    }
+  ],
+  "fixture": {
+    "path": "sprite/.work/q3m-monster-large16-full-x2-20261004-v1/QMWYVW01.cre",
+    "target": "override/QMWYVW01.cre",
+    "sha256": "fb313f466ef054ac57e99645dd1b7319fa25fdc64ceba2f5fe776398384ced5f",
+    "bytes": 1136,
+    "parent_target_existed": false,
+    "derived_from": "WYVBAB01",
+    "source_sha256": "1c47dd913e4ba12c444a4256b6288576cdd270010cf09a44f4c5593abc2507b8",
+    "only_change": "CRE V1.0 animation uint16 at 0x28: A000 -> A200"
+  },
+  "ingame_QA": false,
+  "release": false
+}

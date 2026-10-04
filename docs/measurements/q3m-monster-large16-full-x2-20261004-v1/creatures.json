@@ -1,0 +1,136 @@
+{
+  "schema": "bg2-Large16-live-CRE-v1",
+  "stock_cre_scanned": 4735,
+  "override_cre_scanned": 4,
+  "precedence": "override first; KEY/BIF otherwise",
+  "stock_or_override_consumers": [
+    {
+      "resref": "AMWYVERN",
+      "animation_id": "0xA000",
+      "body_resref": "MWYV",
+      "source": "stock:data/Creature.bif",
+      "sha256": "2cd593714f28883fae8abdd1b5d25e05f93b5b8f88dd2760f57af365e062a51c",
+      "clua": "C:CreateCreature(\"AMWYVERN\")"
+    },
+    {
+      "resref": "CARCRA01",
+      "animation_id": "0xA100",
+      "body_resref": "MCAR",
+      "source": "stock:data/Creature.bif",
+      "sha256": "6ee29ca14a875e523344441e53aede5b0f79b47f32dbdb3d4a2747cceecfaae1",
+      "clua": "C:CreateCreature(\"CARCRA01\")"
+    },
+    {
+      "resref": "CARRIO",
+      "animation_id": "0xA100",
+      "body_resref": "MCAR",
+      "source": "stock:data/Creature.bif",
+      "sha256": "82d6d698b9d83a9d3fc916ac6ba8971a1a45bb70792b240be1be9e65b0891dc1",
+      "clua": "C:CreateCreature(\"CARRIO\")"
+    },
+    {
+      "resref": "CARRIOSU",
+      "animation_id": "0xA100",
+      "body_resref": "MCAR",
+      "source": "stock:data/Creature.bif",
+      "sha256": "96fbe4c402c3e8eb10d56647e1bba7e5cb14a64fc914a3e2035b0904d6e66d69",
+      "clua": "C:CreateCreature(\"CARRIOSU\")"
+    },
+    {
+      "resref": "NWYVBAB",
+      "animation_id": "0xA000",
+      "body_resref": "MWYV",
+      "source": "stock:data/Creature.bif",
+      "sha256": "755f2f5422c74b9be5ee9efb54e12392c1d8e7259509ef301cbbdda4ad9f8db9",
+      "clua": "C:CreateCreature(\"NWYVBAB\")"
+    },
+    {
+      "resref": "OHBMENA6",
+      "animation_id": "0xA100",
+      "body_resref": "MCAR",
+      "source": "stock:data/BlackPits.bif",
+      "sha256": "35d18c758c7412046a9fc2453a6644e04550c0f27c02e1a356e94f19c61ba1ca",
+      "clua": "C:CreateCreature(\"OHBMENA6\")"
+    },
+    {
+      "resref": "PALKNI05",
+      "animation_id": "0xA000",
+      "body_resref": "MWYV",
+      "source": "stock:data/Creature.bif",
+      "sha256": "020b0549ee36651c52ee6183066e02d86f5a79d1f1ff36f8febcd4f5aef37252",
+      "clua": "C:CreateCreature(\"PALKNI05\")"
+    },
+    {
+      "resref": "PLYWYVRN",
+      "animation_id": "0xA000",
+      "body_resref": "MWYV",
+      "source": "stock:data/Creature.bif",
+      "sha256": "cdc6cc49cdea0b88357ecd81016fabdcdac02b39dc7093977881e96bf1824b76",
+      "clua": "C:CreateCreature(\"PLYWYVRN\")"
+    },
+    {
+      "resref": "POLYCARR",
+      "animation_id": "0xA100",
+      "body_resref": "MCAR",
+      "source": "stock:data/Creature.bif",
+      "sha256": "738d34bb8bf35a837bee083e63f32775925f66e3dc4cab0815f7cec743d91ff8",
+      "clua": "C:CreateCreature(\"POLYCARR\")"
+    },
+    {
+      "resref": "SEWCC",
+      "animation_id": "0xA100",
+      "body_resref": "MCAR",
+      "source": "stock:data/Creature.bif",
+      "sha256": "7310a07c872568118d9f82f8ae9df642b70cd01b9a369a6147b82a79ddcd4571",
+      "clua": "C:CreateCreature(\"SEWCC\")"
+    },
+    {
+      "resref": "WYVBAB01",
+      "animation_id": "0xA000",
+      "body_resref": "MWYV",
+      "source": "stock:data/Creature.bif",
+      "sha256": "1c47dd913e4ba12c444a4256b6288576cdd270010cf09a44f4c5593abc2507b8",
+      "clua": "C:CreateCreature(\"WYVBAB01\")"
+    }
+  ],
+  "stock_or_override_consumer_count": 11,
+  "representatives": [
+    {
+      "resref": "WYVBAB01",
+      "animation_id": "0xA000",
+      "body_resref": "MWYV",
+      "source": "stock:data/Creature.bif",
+      "sha256": "1c47dd913e4ba12c444a4256b6288576cdd270010cf09a44f4c5593abc2507b8",
+      "clua": "C:CreateCreature(\"WYVBAB01\")"
+    },
+    {
+      "resref": "CARCRA01",
+      "animation_id": "0xA100",
+      "body_resref": "MCAR",
+      "source": "stock:data/Creature.bif",
+      "sha256": "6ee29ca14a875e523344441e53aede5b0f79b47f32dbdb3d4a2747cceecfaae1",
+      "clua": "C:CreateCreature(\"CARCRA01\")"
+    },
+    {
+      "resref": "QMWYVW01",
+      "animation_id": "0xA200",
+      "body_resref": "MWYV",
+      "source": "generated-test-fixture",
+      "sha256": "fb313f466ef054ac57e99645dd1b7319fa25fdc64ceba2f5fe776398384ced5f",
+      "clua": "C:CreateCreature(\"QMWYVW01\")"
+    }
+  ],
+  "fixture": {
+    "path": "sprite/.work/q3m-monster-large16-full-x2-20261004-v1/QMWYVW01.cre",
+    "target": "override/QMWYVW01.cre",
+    "sha256": "fb313f466ef054ac57e99645dd1b7319fa25fdc64ceba2f5fe776398384ced5f",
+    "bytes": 1136,
+    "parent_target_existed": false,
+    "derived_from": "WYVBAB01",
+    "source_sha256": "1c47dd913e4ba12c444a4256b6288576cdd270010cf09a44f4c5593abc2507b8",
+    "only_change": "CRE V1.0 animation uint16 at 0x28: A000 -> A200"
+  },
+  "distinct_original_sprite_models": 2,
+  "available_animation_ids": 3,
+  "ingame_spawn_verified": false
+}

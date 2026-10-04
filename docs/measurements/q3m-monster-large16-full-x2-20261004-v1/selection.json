@@ -1,0 +1,94 @@
+{
+  "schema": "bg2-q3m-family-witness-selection-v1",
+  "scale": 2,
+  "colour": "four partners; eight blend levels; K6; V7; no SDF",
+  "scope": "complete native Large16 world calls: 3 IDs / 12 original BAMs / native white replacement palette; WYV inventory auxiliary produced without UI claim; shared Quadrant chunks excluded",
+  "source_absent_animation_ids": [
+    "0xA201",
+    "0xA202"
+  ],
+  "witnesses": [
+    {
+      "family": "monster_large16",
+      "animation_id": "0xA000",
+      "name": "Wyverne",
+      "owner": 11,
+      "native_kind": 0,
+      "refs": [
+        "MWYVG1",
+        "MWYVG1E",
+        "MWYVG2",
+        "MWYVG2E",
+        "MWYVG3",
+        "MWYVG3E",
+        "MWYVINV"
+      ],
+      "excluded_non_native_refs": [
+        "MWYVG11",
+        "MWYVG12",
+        "MWYVG13",
+        "MWYVG14",
+        "MWYVG21",
+        "MWYVG22",
+        "MWYVG23",
+        "MWYVG24",
+        "MWYVG31",
+        "MWYVG32",
+        "MWYVG33",
+        "MWYVG34"
+      ]
+    },
+    {
+      "family": "monster_large16",
+      "animation_id": "0xA100",
+      "name": "Charognard rampant",
+      "owner": 11,
+      "native_kind": 0,
+      "refs": [
+        "MCARG1",
+        "MCARG1E",
+        "MCARG2",
+        "MCARG2E",
+        "MCARG3",
+        "MCARG3E"
+      ],
+      "excluded_non_native_refs": []
+    },
+    {
+      "family": "monster_large16",
+      "animation_id": "0xA200",
+      "name": "Wyverne blanche",
+      "owner": 11,
+      "native_kind": 0,
+      "refs": [
+        "MWYVG1",
+        "MWYVG1E",
+        "MWYVG2",
+        "MWYVG2E",
+        "MWYVG3",
+        "MWYVG3E",
+        "MWYVINV"
+      ],
+      "palette_override": {
+        "resref": "MWYV_WS",
+        "sha256": "e02a556f839d015bdea4a4a1f886f97e5d25d92c276965e3e6a0370829609a48",
+        "source": "stock:data/Patch2.bif",
+        "type": "BMP-P8-native-new_palette"
+      },
+      "excluded_non_native_refs": [
+        "MWYVG11",
+        "MWYVG12",
+        "MWYVG13",
+        "MWYVG14",
+        "MWYVG21",
+        "MWYVG22",
+        "MWYVG23",
+        "MWYVG24",
+        "MWYVG31",
+        "MWYVG32",
+        "MWYVG33",
+        "MWYVG34"
+      ]
+    }
+  ]
+}

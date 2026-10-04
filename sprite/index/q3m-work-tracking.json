@@ -41,8 +41,8 @@
     "does_not_measure": "asset-coverage-or-QA",
     "integration_reference": "docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json",
     "candidate_reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json",
-    "installed_candidate_reference": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/installation-verification.json",
-    "latest_installation_verification_reference": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/restoration-verification.json"
+    "installed_candidate_reference": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/installation-verification.json",
+    "latest_installation_verification_reference": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/installation-verification.json"
   },
   "method": {
     "current": "Q3m-K6-four-partners-eight-levels",
@@ -67,7 +67,7 @@
       "four-partners-eight-levels",
       "sixteen-levels"
     ],
-    "state": "Q3m-x2-flying-accepted-Ankheg-V9-SDF-stable-accepted-Ogre-installed-other-families-pilot",
+    "state": "Q3m-x2-flying-accepted-Ankheg-V9-SDF-stable-accepted-Ogre-installed-Large16-V7-no-SDF-accepted-other-families-pilot",
     "format_compatibility": "V7 reader implemented; V6 unchanged",
     "next_recipe_selection": "selected-for-pilot; sixteen-levels remains diagnostic",
     "selected": "four-partners-eight-levels",
@@ -82,11 +82,11 @@
     "with_bam_without_q3m_reference": 254,
     "counting_rule": "IDs count consumers; BAMs/frames shared; family counts not summed as physical work",
     "current_recipe_witness_ids": 15,
-    "current_recipe_complete_animation_ids": 7,
-    "current_recipe_ingame_accepted_families": 2,
-    "current_recipe_complete_families": 3,
-    "current_recipe_installed_animation_ids": 7,
-    "current_recipe_ingame_accepted_animation_ids": 6,
+    "current_recipe_complete_animation_ids": 10,
+    "current_recipe_ingame_accepted_families": 3,
+    "current_recipe_complete_families": 4,
+    "current_recipe_installed_animation_ids": 10,
+    "current_recipe_ingame_accepted_animation_ids": 9,
     "ingame_acceptance_counting_rule": "unique families/IDs across accepted full productions and current contour trials; QA belongs to exact variant/runtime"
   },
   "families": [
@@ -646,7 +646,8 @@
         "unique_model_candidate_work": 2287,
         "source_work_shared_with_character": 0,
         "descriptor": "sprite/index/q3m-source-work-plan.json",
-        "remaining_gpu_work": null
+        "remaining_gpu_work": 0,
+        "remaining_gpu_work_scope": "current available native Large16 selection; shared Quadrant prefix assets excluded"
       },
       "current_colour_witness": {
         "animation_id": "0xA100",
@@ -659,8 +660,82 @@
         "physical_frames": 176,
         "unique_source_work": 176,
         "unique_encoded_work": 176,
-        "state": "host-verified-ingame-pending",
-        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
+        "state": "ingame-accepted-via-complete-available-family",
+        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json",
+        "qa_reference": "sprite/index/qa-decisions/monster_large16/2026-10-04-accepted-full-available-large16-q3m-v7-x2-catmullrom-v1.json"
+      },
+      "current_full_production": {
+        "reference": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/current-generation.json",
+        "selection": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/selection.json",
+        "animation_ids": [
+          "0xA000",
+          "0xA100",
+          "0xA200"
+        ],
+        "source_absent_animation_ids": [
+          "0xA201",
+          "0xA202"
+        ],
+        "native_kind": 0,
+        "owner": 11,
+        "bams": [
+          "MCARG1",
+          "MCARG1E",
+          "MCARG2",
+          "MCARG2E",
+          "MCARG3",
+          "MCARG3E",
+          "MWYVG1",
+          "MWYVG1E",
+          "MWYVG2",
+          "MWYVG2E",
+          "MWYVG3",
+          "MWYVG3E",
+          "MWYVINV"
+        ],
+        "original_world_bams": 12,
+        "auxiliary_inventory_bams": 1,
+        "original_BAM_frames": 1114,
+        "resources": 20,
+        "physical_frames": 1692,
+        "logical_frame_occurrences": 1692,
+        "unique_original_BAM_source_work": 1053,
+        "unique_source_work": 1567,
+        "unique_encoded_work": 1570,
+        "encoded_cache_hits": 176,
+        "new_encoded_work": 1388,
+        "special_work_without_GPU": 6,
+        "new_neural_targets": 8328,
+        "resume_cache_hits": 1570,
+        "native_replacement_palettes": {
+          "0xA200": "MWYV_WS"
+        },
+        "excluded_shared_Quadrant_BAMs": [
+          "MWYVG11",
+          "MWYVG12",
+          "MWYVG13",
+          "MWYVG14",
+          "MWYVG21",
+          "MWYVG22",
+          "MWYVG23",
+          "MWYVG24",
+          "MWYVG31",
+          "MWYVG32",
+          "MWYVG33",
+          "MWYVG34"
+        ],
+        "native_scope_reference": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/native-scope.json",
+        "scope": "complete available native Large16 world; all six banks/directions; INV auxiliary without UI claim; two declared source-absent IDs excluded",
+        "registry_version": 7,
+        "scale": 2,
+        "SDF": false,
+        "world_filter": "CatmullRom",
+        "installation_reference": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/ingame-installation/active-test.json",
+        "installation_snapshot": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/installation-verification.json",
+        "state": "family-complete-available-produced-installed-ingame-accepted",
+        "qa_ingame": true,
+        "release": false,
+        "qa_reference": "sprite/index/qa-decisions/monster_large16/2026-10-04-accepted-full-available-large16-q3m-v7-x2-catmullrom-v1.json"
       }
     },
     {
@@ -1017,6 +1092,80 @@
       "state": "family-complete-produced-installed-ingame-QA-pending",
       "qa_ingame": false,
       "release": false
+    },
+    {
+      "family": "monster_large16",
+      "reference": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/current-generation.json",
+      "selection": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/selection.json",
+      "animation_ids": [
+        "0xA000",
+        "0xA100",
+        "0xA200"
+      ],
+      "source_absent_animation_ids": [
+        "0xA201",
+        "0xA202"
+      ],
+      "native_kind": 0,
+      "owner": 11,
+      "bams": [
+        "MCARG1",
+        "MCARG1E",
+        "MCARG2",
+        "MCARG2E",
+        "MCARG3",
+        "MCARG3E",
+        "MWYVG1",
+        "MWYVG1E",
+        "MWYVG2",
+        "MWYVG2E",
+        "MWYVG3",
+        "MWYVG3E",
+        "MWYVINV"
+      ],
+      "original_world_bams": 12,
+      "auxiliary_inventory_bams": 1,
+      "original_BAM_frames": 1114,
+      "resources": 20,
+      "physical_frames": 1692,
+      "logical_frame_occurrences": 1692,
+      "unique_original_BAM_source_work": 1053,
+      "unique_source_work": 1567,
+      "unique_encoded_work": 1570,
+      "encoded_cache_hits": 176,
+      "new_encoded_work": 1388,
+      "special_work_without_GPU": 6,
+      "new_neural_targets": 8328,
+      "resume_cache_hits": 1570,
+      "native_replacement_palettes": {
+        "0xA200": "MWYV_WS"
+      },
+      "excluded_shared_Quadrant_BAMs": [
+        "MWYVG11",
+        "MWYVG12",
+        "MWYVG13",
+        "MWYVG14",
+        "MWYVG21",
+        "MWYVG22",
+        "MWYVG23",
+        "MWYVG24",
+        "MWYVG31",
+        "MWYVG32",
+        "MWYVG33",
+        "MWYVG34"
+      ],
+      "native_scope_reference": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/native-scope.json",
+      "scope": "complete available native Large16 world; all six banks/directions; INV auxiliary without UI claim; two declared source-absent IDs excluded",
+      "registry_version": 7,
+      "scale": 2,
+      "SDF": false,
+      "world_filter": "CatmullRom",
+      "installation_reference": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/ingame-installation/active-test.json",
+      "installation_snapshot": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/installation-verification.json",
+      "state": "family-complete-available-produced-installed-ingame-accepted",
+      "qa_ingame": true,
+      "release": false,
+      "qa_reference": "sprite/index/qa-decisions/monster_large16/2026-10-04-accepted-full-available-large16-q3m-v7-x2-catmullrom-v1.json"
     }
   ],
   "current_contour_trials": [

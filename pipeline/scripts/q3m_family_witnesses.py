@@ -61,16 +61,36 @@ def validate_selection(selection, complete_family=None):
         inventory = {r['animation_id']:r for r in csv.DictReader(stream)}
     if complete_family:
         expected = {aid for aid,row in inventory.items() if row['engine_section'] == complete_family}
-        require({w['animation_id'] for w in witnesses} == expected, 'complete family animation coverage differs')
         with (ROOT/'sprite/index/q3m-work-items.csv').open(encoding='utf-8-sig',newline='') as stream:
             source_items = {r['animation_id']:r for r in csv.DictReader(stream)}
+        absent = {aid for aid in expected if not source_items[aid]['bam_resrefs']}
+        require(set(selection.get('source_absent_animation_ids',[])) == absent,
+                'source-absent animation declarations differ')
+        require({w['animation_id'] for w in witnesses} == expected - absent,
+                'complete available family animation coverage differs')
         for witness in witnesses:
             refs = source_items[witness['animation_id']]['bam_resrefs'].split(';')
+            if complete_family == 'monster_large16':
+                # Native constructor 0x310551 binds G1/G2/G3 and G1E/G2E/G3E.
+                # Prefix discovery also returns the separate Quadrant chunks.
+                prefix = inventory[witness['animation_id']]['resref']
+                useful = {prefix + suffix for suffix in ('G1','G1E','G2','G2E','G3','G3E','INV')}
+                require(set(witness.get('excluded_non_native_refs',[])) == set(refs) - useful,
+                        'Large16 excluded shared quadrant resources differ')
+                refs = [ref for ref in refs if ref in useful]
+                require({prefix + suffix for suffix in ('G1','G1E','G2','G2E','G3','G3E')} <= set(refs),
+                        'Large16 native world actions incomplete')
             require(refs != [''] and len(witness['refs']) == len(set(refs)) and set(witness['refs']) == set(refs), 'complete family BAM coverage differs')
     for witness in witnesses:
         native = inventory[witness['animation_id']]
         require(native['engine_section'] == witness['family'] and KNOWN[witness['family']][0] == witness['owner'], 'witness owner/family differs from source')
         require(native['false_color'] == '' or int(native['false_color']) == witness['native_kind'], 'witness palette kind differs from INI')
+        replacement = json.loads(native['ini_sections_json']).get('general',{}).get('new_palette')
+        override = witness.get('palette_override')
+        if complete_family or override:
+            require((not replacement and not override) or
+                    (override and witness['native_kind'] == 0 and override['resref'] == replacement),
+                    'native replacement palette must be explicitly represented')
         if witness['family'] == 'multi_new':
             # Stock dragon resrefs: prefix + bank + PART(1..9) + chunk + direction.
             # Nine direction suffixes of part 1 are not a nine-part native draw.
@@ -80,6 +100,18 @@ def validate_selection(selection, complete_family=None):
                 require(len(group) == 9 and len(set(group)) == 9 and all(len(ref) == 8 for ref in group), 'dragon needs nine distinct parts')
                 require({ref[5] for ref in group} == set('123456789') and len({ref[:5]+ref[6:] for ref in group}) == 1, 'dragon part/bank/chunk/direction group differs')
     return witnesses
+
+
+def bmp_palette(raw):
+    """Native new_palette resources: complete 256-entry BI_RGB/P8 DIB table."""
+    require(len(raw) >= 1078 and raw[:2] == b'BM', 'truncated replacement palette BMP')
+    size,width,height,planes,bits,compression,_,_,_,colours,_ = struct.unpack_from('<IiiHHIIiiII',raw,14)
+    require(size == 40 and width > 0 and height != 0 and planes == 1 and bits == 8 and
+            compression == 0 and colours in (0,256) and struct.unpack_from('<I',raw,10)[0] >= 1078,
+            'replacement palette BMP contract differs')
+    p = np.frombuffer(raw[54:1078],np.uint8).reshape(256,4).copy()
+    require(np.isin(p[:,3],(0,255)).all(), 'replacement palette alpha differs')
+    return p
 
 
 def source_plan(selection_path=SELECTION, complete_family=None):
@@ -98,11 +130,25 @@ def source_plan(selection_path=SELECTION, complete_family=None):
     exe = (get_path('bg2ee_game_root',required=True)/'BaldurReal.exe').read_bytes()
     oracle = oracle_module['NativeFixed'](exe)
     profiles, works, resources, source_keys = {}, {}, [], set()
+    original_source_keys, replacement_palettes = set(), {}
     for witness in selection['witnesses']:
         char = witness['family'] == 'character'; db = databases['character' if char else 'other']
+        override = witness.get('palette_override')
+        if override and override['resref'] not in replacement_palettes:
+            from run_creature_sprite_x2 import KeyIndex
+            game = get_path('bg2ee_game_root',required=True)
+            live = game/'override'/(override['resref']+'.bmp')
+            if live.exists(): raw = live.read_bytes()
+            else:
+                index = KeyIndex(game); entry = index.resource_map(1).get(override['resref'])
+                require(entry is not None, 'replacement palette BMP absent')
+                raw,_ = index.resolve(entry)
+            require(hashlib.sha256(raw).hexdigest() == override['sha256'], 'replacement palette identity changed')
+            replacement_palettes[override['resref']] = bmp_palette(raw)
         for ref in witness['refs']:
             resource = db.execute('SELECT * FROM resources WHERE resref=?',(ref,)).fetchone(); require(resource is not None, 'missing source '+ref)
-            rid = resource['resource_id']; p = np.frombuffer(resource['palette_bgra'],np.uint8).reshape(256,4)
+            rid = resource['resource_id']; original_palette = np.frombuffer(resource['palette_bgra'],np.uint8).reshape(256,4)
+            p = replacement_palettes[override['resref']] if override else original_palette
             if char:
                 membership = db.execute('SELECT 1 FROM model_resources JOIN models USING(model_id) WHERE resource_id=? AND animation_id=?',(rid,witness['animation_id'])).fetchone()
             else: membership = db.execute('SELECT 1 FROM animation_resources WHERE resource_id=? AND animation_id=?',(rid,witness['animation_id'])).fetchone()
@@ -115,6 +161,10 @@ def source_plan(selection_path=SELECTION, complete_family=None):
                     for _,flags,tint in oracle_module['FITS']:
                         actual = oracle.realize(p,flags,tint)
                         expected = oracle_module['expected_palette'](p,flags,tint)
+                        # The pinned native branch also tints entry1. Earlier
+                        # witnesses used black shadows, hiding that distinction.
+                        if flags & 0x20000:
+                            expected[1,:3] = (p[1,[2,1,0]].astype(np.uint16) * tint) >> 8
                         require(np.array_equal(actual,expected), 'native fixed palette oracle differs')
                         fits_list.append(actual[:,:3])
                     fits = np.stack(fits_list)
@@ -128,9 +178,11 @@ def source_plan(selection_path=SELECTION, complete_family=None):
                 rgb = p[:,[2,1,0]].copy(); rgba = np.dstack((rgb[indices],np.where(indices == 0,0,255).astype(np.uint8))).tobytes()
                 frame = SourceFrame(ref,row['frame_index'],w,h,row['center_x'],row['center_y'],0,indices,rgb,rgba)
                 input_key, source_key, _, _, _ = identities(indices,rgb,0)
+                original_key = identities(indices,original_palette[:,[2,1,0]],0)[1] if override else source_key
                 expected_key = row['work_key'] if char else bytes.fromhex(row['source_work_key'])
                 if isinstance(expected_key,str): expected_key = bytes.fromhex(expected_key)
-                require(source_key == expected_key, f'source work identity differs {ref}/{row["frame_index"]}: {source_key.hex()} vs {expected_key.hex()}')
+                require(original_key == expected_key, f'source work identity differs {ref}/{row["frame_index"]}: {original_key.hex()} vs {expected_key.hex()}')
+                original_source_keys.add(original_key.hex())
                 source_keys.add(source_key.hex())
                 encoded_key = hashlib.sha256(bytes.fromhex(profile.identity)+source_key).hexdigest()
                 if encoded_key in works:
@@ -149,6 +201,11 @@ def source_plan(selection_path=SELECTION, complete_family=None):
                                     source_work=len({works[k]['source_key'] for k in keys}),encoded_work=len(keys)))
     summary = dict(schema='bg2-q3m-family-witness-work-plan-v1',selection_sha256=file_sha(selection_path),families=len({w['family'] for w in witnesses}),resources=len(resources),physical_frames=sum(len(r['frames']) for r in resources),unique_source_work=len(source_keys),unique_encoded_work=len(works),native_oracle='pinned CVidPalette type0 Realize; K6 byte comparison; type1 acquired Character K6',witnesses=witness_summary,source_plans=pointers)
     if complete_family: summary['complete_family'] = complete_family
+    if replacement_palettes:
+        summary['unique_original_BAM_source_work'] = len(original_source_keys)
+        summary['replacement_palettes'] = sorted(replacement_palettes)
+    if selection.get('source_absent_animation_ids'):
+        summary['source_absent_animation_ids'] = selection['source_absent_animation_ids']
     return resources,works,summary
 
 

@@ -90,3 +90,10 @@ $env:PYTHONPATH=(Resolve-Path sprite/.work/q3m-runtime-tools-20261003-v1).Path
 
 Build DLL local : VS2019, CMake `IEE_BUILD_WINDOWS_DLL=ON`, C++20 ; `BUILD_TESTING=ON` pour les tests.
 Installation : fermer jeu/InfinityLoader avant remplacement ; ce pilote n'écrit aucun fichier installé/release.
+
+## Large16 : scope et palettes fixes — 2026-10-04
+
+- Cas `../docs/measurements/q3m-monster-large16-full-x2-20261004-v1/README.md` : native owner11, cellules G1/G2/G3 + E ; préfixe MWYV inclut aussi douze BAM Quadrant inutilisés par Large16. Une famille disponible complète peut déclarer ses IDs sans source, exactement selon l'inventaire ; ne pas produire des quadrants/frames 0×0 hors appels natifs pour satisfaire un compteur de préfixe.
+- `general.new_palette` remplace réellement la palette BAM fixe : A200 utilise BMP-P8 `MWYV_WS` (SHA dans sélection), avant guides/cibles/fitting/clés/source-palette guard. Couleurs natives distinctes = contrats distincts ; RGB/indices identiques compatibles restent dédupliqués. `q3m_family_witnesses.py` exige cet override explicite pour une famille complète ; pilote historique partiel préservé.
+- NativeFixed index1 peut avoir RGB non noir ; tint natif aussi appliqué à son RGB sous flag 0x20000. Ajustement de l'attente scalaire locale, comparaison Unicorn épinglée sur les 256 entrées K6 ; producteurs/preuves historiques non réécrits. V7 ordinary conserve cette ombre native.
+- Vérifié : dix tests hôte, sondes native isolée/combinée 20 ressources/1 692 frames × six palettes × trois formats, reprise 1 570 hits sans Torch. Aucun SDF nouveau ni moteur recompilé.

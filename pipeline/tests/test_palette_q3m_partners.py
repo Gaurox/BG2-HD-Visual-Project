@@ -80,6 +80,29 @@ class PartnersTests(unittest.TestCase):
         selection['witnesses'][0]['refs'].pop()
         with self.assertRaises(ValueError):validate_selection(selection,'monster_large')
 
+    def test_complete_available_family_requires_exact_absent_declarations(self):
+        import copy,json
+        from q3m_family_witnesses import ROOT,validate_selection
+        selection=json.loads((ROOT/'docs/measurements/q3m-monster-large16-full-x2-20261004-v1/selection.json').read_text(encoding='utf-8'))
+        self.assertEqual(len(validate_selection(selection,'monster_large16')),3)
+        for change in ('undeclared-absent','omit-available','declare-available-absent'):
+            candidate=copy.deepcopy(selection)
+            if change=='undeclared-absent':candidate.pop('source_absent_animation_ids')
+            elif change=='omit-available':candidate['witnesses'].pop(0)
+            else:candidate['source_absent_animation_ids'].append('0xA100')
+            with self.assertRaises(ValueError):validate_selection(candidate,'monster_large16')
+
+    def test_native_replacement_palette_cannot_silently_use_base_colours(self):
+        import copy,json
+        from q3m_family_witnesses import ROOT,validate_selection
+        selection=json.loads((ROOT/'docs/measurements/q3m-monster-large16-full-x2-20261004-v1/selection.json').read_text(encoding='utf-8'))
+        for incorrect in (None,'MWYV_WH'):
+            candidate=copy.deepcopy(selection)
+            white=next(w for w in candidate['witnesses'] if w['animation_id']=='0xA200')
+            if incorrect is None:white.pop('palette_override')
+            else:white['palette_override']['resref']=incorrect
+            with self.assertRaises(ValueError):validate_selection(candidate,'monster_large16')
+
     def test_registry_roundtrip_and_malformed_data(self):
         profile = self.profile(); g = np.array([[0,1],[3,4]],np.uint8); code = np.array([[0,0],[9,31]],np.uint8)
         resource = dict(resref='TEST',source_sha256='00'*32,cycles=[[0,0,65535]],frames=[dict(geometry=(1,1,-3,5,0),representatives=np.full(256,65535,np.uint16),guide=g,I=g,F=code,dep=profile.dependencies(g,code))])

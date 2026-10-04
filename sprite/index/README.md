@@ -159,3 +159,11 @@ $m.stock_cre_usage | Select-Object cre_resource_count, animation_id_count, `
   runtime_supported_blocked_animation_id_count, runtime_unsupported_animation_id_count, `
   runtime_unsupported_nonzero_animation_id_count
 ```
+
+## Large16 Q3m x2 sans SDF — 2026-10-04
+
+- `q3m-work-tracking.json`, `../SUIVI_Q3M.md` : quatrième famille disponible complète installée, dix IDs complets ; QA acquises toujours deux familles/six IDs.
+- `../../docs/measurements/q3m-monster-large16-full-x2-20261004-v1/README.md` : trois IDs, deux modèles/trois palettes, scope natif 12 BAM monde + INV auxiliaire ; vingt feuilles / 1 692 frames. Les 25 BAM de l'inventaire par préfixe restent une donnée source, douze quadrants hors appels Large16. A201/A202 explicitement sans source.
+- Production/installation prouvées séparément ; QA ingame en attente ; Character SDF en stock, Ankheg stable conservé.
+
+- 2026-10-04 : **V7 sans SDF validé ingame**, utilisateur « c'est propre ! » ; QA immuable `sprite/index/qa-decisions/monster_large16/2026-10-04-accepted-full-available-large16-q3m-v7-x2-catmullrom-v1.json`. Trois familles/neuf IDs acceptés. Les mentions en attente ci-dessus décrivent la remise initiale ; futur SDF = autre variante, QA distincte.
