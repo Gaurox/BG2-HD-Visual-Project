@@ -1,0 +1,171 @@
+{
+  "schema": "bg2-upscale-native-sprite-family-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-10-05T19:39:18.759461+00:00",
+  "scope": {
+    "kind": "installed-native-family-complete",
+    "engine_family": "multi_new",
+    "animation_ids": [
+      "0x1200",
+      "0x1201",
+      "0x1202",
+      "0x1203",
+      "0x1204",
+      "0x1205",
+      "0x1206",
+      "0x1207",
+      "0x1208",
+      "0x1300"
+    ],
+    "models": 4,
+    "colour_variants": 10,
+    "resources": 5155,
+    "resource_bindings": 5155,
+    "unique_native_BAM": 1753,
+    "frames": 519867,
+    "original_native_frames": 191817,
+    "scale": 2,
+    "SDF": false,
+    "source_absent": []
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "user_statement": "ok tout le lot est validé. committe et met a jour le suivi.\nreste seulement a vérifier la 40ene de créature de la famille précédente. je le fais apres ton committe",
+    "individual_scenario_details": "not specified by user"
+  },
+  "runtime_contract": {
+    "runtime": {
+      "path": "docs/measurements/q3m-multi-new-frame-stability-20261005-v2/runtime.json",
+      "sha256": "d87a02651c8ba2d331cef039bae21a3838786159bf02aa50ba7b316f48299756",
+      "bytes": 2422
+    },
+    "dll": {
+      "path": "sprite/.work/q3m-multi-new-frame-stability-20261005-v2/runtime-build/Release/InfinityEngine-Enhancer.dll",
+      "sha256": "cf9fade9b8a620abdf2c052c1a4da989c5958cbca1715da984f5691f1bf15e89",
+      "bytes": 2118656
+    },
+    "catalogue_sha256": "cb14e24171eb8567bdb0beaafe2463a4222cf00c2559925ee2a335235cb03411",
+    "owner": 5,
+    "native_render_owners": [
+      "MonsterMulti",
+      "MultiNew"
+    ],
+    "native_palette_kinds": [
+      0
+    ],
+    "registry_version": 7,
+    "world_filter": "CatmullRom",
+    "colour": "K6-four-partners-eight-levels/native bank palettes/rule3",
+    "SDF": false,
+    "native_geometry": true,
+    "current_group_metadata_wait": true,
+    "native_loop_and_clamp": true,
+    "installed_runtime_files": [
+      {
+        "relative_path": "InfinityEngine-Enhancer.dll",
+        "sha256": "cf9fade9b8a620abdf2c052c1a4da989c5958cbca1715da984f5691f1bf15e89"
+      },
+      {
+        "relative_path": "InfinityEngine-Enhancer.ini",
+        "sha256": "68b322543c53bd59621577cb98ec814b2e33123084adea90d6abe00d219c2ad4"
+      },
+      {
+        "relative_path": "override/fpDraw.glsl",
+        "sha256": "c6f1f23d99d16bfd34fc3eac1577f24c096c4c00f0427cea69e8bde779311827"
+      },
+      {
+        "relative_path": "override/fpSprite.glsl",
+        "sha256": "065e28c595af84a7addcbd97793bc8eedcb5052bb26bab1d92710cb0e2fd0816"
+      },
+      {
+        "relative_path": "override/fpSELECT.glsl",
+        "sha256": "e4e70c98de1e6826c47f934ac3e600af06f105f69cc80f84e2289d28e5952815"
+      }
+    ]
+  },
+  "asset_scope": {
+    "inventory": {
+      "path": "docs/measurements/q3m-multi-new-accepted-x2-20261005-v1/asset-scope.csv",
+      "sha256": "228ac49eb00f4068bc9dd03001c1c4ad6bffd2645b1cebd5dd499c3ec02a7d20",
+      "bytes": 1069381
+    },
+    "ordering": "animation_id,resref ascending; UTF-8 CSV LF, header included in SHA256",
+    "physical_leaf_count": 5155,
+    "binding_count": 5155,
+    "catalogue": {
+      "path": "sprite/.work/q3m-multi-new-full-x2-20261005-v1/combined/iee-assets/creature-sprites/CreatureSprites-XN.catalog",
+      "sha256": "cb14e24171eb8567bdb0beaafe2463a4222cf00c2559925ee2a335235cb03411",
+      "bytes": 3375392
+    },
+    "physical_hash_verification": {
+      "path": "docs/measurements/q3m-multi-new-frame-stability-20261005-v2/verification.json",
+      "sha256": "e23ef0a08757d55da7ff3a6d9657c82721c451054856142482d6c7d601d92347",
+      "bytes": 1092
+    }
+  },
+  "provenance": {
+    "generation": {
+      "path": "docs/measurements/q3m-multi-new-frame-stability-20261005-v2/current-generation.json",
+      "sha256": "ff45c4d3897ab321fec5e90bfc2dc417c6c1894d7d30257db3868859e101c443",
+      "bytes": 2225
+    },
+    "production": {
+      "path": "docs/measurements/q3m-multi-new-full-x2-20261005-v1/production.json",
+      "sha256": "1036b311b13ce91420007855fd273c54d7af23e280c60a9682378314bea5a70c",
+      "bytes": 2461147
+    },
+    "runtime": {
+      "path": "docs/measurements/q3m-multi-new-frame-stability-20261005-v2/runtime.json",
+      "sha256": "d87a02651c8ba2d331cef039bae21a3838786159bf02aa50ba7b316f48299756",
+      "bytes": 2422
+    },
+    "installation_snapshot": {
+      "path": "docs/measurements/q3m-multi-new-frame-stability-20261005-v2/installation-verification.json",
+      "sha256": "7c21b2c14f4dcbf8928214dfd67132c3223e1d5c5fef35eed1d22221244a17be",
+      "bytes": 1611
+    },
+    "installation_receipt": {
+      "path": "docs/measurements/q3m-multi-new-frame-stability-20261005-v2/ingame-installation/active-test.json",
+      "sha256": "3aec8a43945268c0aa29dec6d2c2d6139f5bed57354569becc8c223d3de66bed",
+      "bytes": 1848
+    },
+    "original_asset_installation_receipt": {
+      "path": "docs/measurements/q3m-multi-new-full-x2-20261005-v1/ingame-installation/active-test.json",
+      "sha256": "703225120745a99a350ed00ae06ce5e6c6ce65f8ecb60f6a2798acd351ac8070",
+      "bytes": 2809709
+    },
+    "verification": {
+      "path": "docs/measurements/q3m-multi-new-frame-stability-20261005-v2/verification.json",
+      "sha256": "e23ef0a08757d55da7ff3a6d9657c82721c451054856142482d6c7d601d92347",
+      "bytes": 1092
+    },
+    "original_verification": {
+      "path": "docs/measurements/q3m-multi-new-full-x2-20261005-v1/verification.json",
+      "sha256": "a1a01f390861abf5fdcf5a40128ff49472d737500495aa7d25cf79a6dfc0e0b3",
+      "bytes": 1561
+    },
+    "fixtures": {
+      "path": "docs/measurements/q3m-multi-new-full-x2-20261005-v1/creatures.json",
+      "sha256": "ed7532da1ceb16ea61332467b7e4cffdebddbaf9eeac36c8bceec77a8ff94667",
+      "bytes": 6335
+    }
+  },
+  "contextual_seams": {
+    "contexts": 5411,
+    "referenced_native_frames": 519867,
+    "unreferenced_native_frames": 0,
+    "context_cache_hits": 1823,
+    "new_neural_targets": 21348,
+    "changed_encoded_pixels": 49157454,
+    "changed_outside_band": 0,
+    "band_native_pixels": 4,
+    "scale": 2,
+    "SDF": false,
+    "context_encode_workers": 8,
+    "cuda_trim_exact_output_checks": 6,
+    "recipe_key": "4a36d4bb2eb6a8ed1a3cfc5bca98bf7e6c2ee5aa135c48fba081faebb9ff33e2"
+  },
+  "release": false
+}
