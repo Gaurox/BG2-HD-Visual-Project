@@ -48,7 +48,7 @@
     "current": "Q3m-K6-four-partners-eight-levels",
     "colour_contract": "V7 profiles 8/9 rule 3; I + packed B/F + exact dependencies; live native palettes; four same-class partners; eight levels",
     "world_scale": 2,
-    "world_filter": "CatmullRom",
+    "world_filter": "Nearest",
     "historical_final_rasters_excluded": [
       "xBR",
       "ReboutCX-first-generation"
@@ -59,7 +59,8 @@
       "ReboutCX-float32-targets"
     ],
     "initial_world_filter": "Box",
-    "world_filter_reference": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/restoration-verification.json"
+    "world_filter_reference": "docs/measurements/sprite-display-nearest-20261005-v1/decision.json",
+    "display_preference_state": "user-selected-Nearest; historical CatmullRom QA retained; no new display QA claimed"
   },
   "colour_variants": {
     "reference": "docs/measurements/q3m4partners-colour-comparison-x4-20261003-v1/README.md",
