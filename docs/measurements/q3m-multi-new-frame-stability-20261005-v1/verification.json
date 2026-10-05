@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "scope": "MultiNew owner5 current-group metadata readiness",
+  "scale": 2,
+  "assets_unchanged": true,
+  "baseline": {
+    "mode": "baseline-nonblocking",
+    "groups": 20,
+    "resources": 170,
+    "cold_native_fallback_groups": 20,
+    "warm_misses": 0,
+    "guard_failures": 0,
+    "max_group_ms": 145.708
+  },
+  "fixed": {
+    "mode": "fixed-owner5-wait",
+    "groups": 580,
+    "resources": 5155,
+    "cold_native_fallback_groups": 0,
+    "warm_misses": 0,
+    "guard_failures": 0,
+    "max_group_ms": 303.203
+  },
+  "native_general_tests_passed": true,
+  "ingame_QA": false,
+  "release": false
+}

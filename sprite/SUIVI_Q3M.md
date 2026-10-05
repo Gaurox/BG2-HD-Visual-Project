@@ -268,3 +268,8 @@ Flying : alias intérieur `BIRD_IN` = même ressource ; listes `CLUA-generiques.
 - 17 103 sources originales -> 42 772 travaux compatibles, 30 palettes BMP natives par banque ; 5 411 assemblages contextuels, zéro changement hors bande. Q3m V7 K6 x2 amélioré/CatmullRom sans SDF.
 - DLL/INI/shaders acquis inchangés ; 10 CRE tests QMUL neutres. Douze familles/136 IDs installés ; neuf familles/79 IDs acceptés inchangés. **Monster_old et MultiNew : QA en attente** ; aucune release déduite.
 - [Run et CLUA](../docs/measurements/q3m-multi-new-full-x2-20261005-v1/README.md).
+
+## MultiNew : chargement stabilisé — 2026-10-05
+
+- [Correctif runtime installé](../docs/measurements/q3m-multi-new-frame-stability-20261005-v1/README.md) : métadonnées du groupe courant 4/9 parties prêtes avant le rendu HD ; fini le repli vanilla dû au chargement asynchrone. Repli natif conservé pour les ressources réellement invalides.
+- Régression : ancien mode 20/20 groupes en repli temporaire ; corrigé 0/580 groupes, 5 155 ressources. DLL seule remplacée ; assets/palettes Q3m K6 x2 sans SDF inchangés. QA ingame toujours en attente ; compteurs et décisions acquis inchangés.

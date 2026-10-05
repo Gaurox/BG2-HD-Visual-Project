@@ -1,0 +1,11 @@
+# MultiNew — stabilité du chargement Q3m x2
+
+- Périmètre : owner 5, `0x1200..0x1208`, `0x1300`. Pixels/palettes/Q3m V7 K6 x2 sans SDF acquis inchangés.
+- Symptôme : session `InfinityEngine-Enhancer.log` 2026-10-05 20:20–20:22 ; métadonnées en chargement => préflight incomplet => rendu intégral vanilla, puis HD. Nouvelle action/direction => récidive. Ancien préchargement MDR1 limité à un composant : zéro shard sur le catalogue actuel.
+- Correction : précharger les 4/9 ressources du groupe courant ; `WaitForMultiNewMetadata` attend chaque métadonnée V2 authentifiée via le worker existant, mutex libéré. Délai maximal 5 s par ressource, timeout/quarantaine acquis ; payloads/caches restent paresseux et bornés. Une ressource invalide conserve le repli natif intégral. Aucun chargement global au démarrage.
+- DLL dérivée de la source exacte du runtime installé MonsterQuadrant ; delta de trois fichiers seulement. Source canonique conserve séparément les évolutions V10 préexistantes. Historique parent immuable.
+- Régression native : `verify.py`, 580 groupes / 5 155 ressources, chargement à froid + accès chaud + payload courant ; séquences/actions/directions présentes dans chaque BAM. Slots invalides/absents refusés ; mode d'attente sans effet sur owner 9. Les contrôles de tous les pixels/cycles restent ceux de la production parent.
+- Reproduction de l'ancien mode : 20 groupes, 20 retours natifs temporaires. Résultat corrigé et temps observés : `verification.json` ; ces temps mesurent un probe CPU, pas une session ingame.
+- Installation : uniquement `InfinityEngine-Enhancer.dll` ; catalogue/INI/shaders/exécutable vérifiés inchangés. Autorités : `current-generation.json`, `runtime.json`, `installation-verification.json`, reçu local `ingame-installation/active-test.json` ; les assets/CRE héritent du reçu parent.
+- Commandes : Python chaiNNer `build.py`, `verify.py`, `prepare.py` ; PowerShell `install.ps1` ; Python `finish.py`. Restauration DLL parent : `restore.ps1`, puis `finish.py`. Jeu/InfinityLoader fermés avant remplacement ; sauvegarde hors git `work/before`.
+- QA ingame en attente ; aucune validation/release déduite. Essais existants : [CLUA](../q3m-multi-new-full-x2-20261005-v1/CLUA.txt), notamment `QMUL1207`, `QMUL1300`. Refaire apparition puis déplacements/attaques/orientations.

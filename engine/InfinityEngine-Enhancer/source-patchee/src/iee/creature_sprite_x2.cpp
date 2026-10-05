@@ -4495,7 +4495,10 @@ bool resolve_frame(std::uint16_t animationId,
           ((mode == FrameResolveMode::WaitForCharacterMetadata &&
             animation->owner == kCatalogCharacterOwner) ||
            (mode == FrameResolveMode::WaitForAnkhegMetadata &&
-            animationId == 0x3000u && animation->owner == kCatalogAnkhegOwner));
+            animationId == 0x3000u && animation->owner == kCatalogAnkhegOwner) ||
+           (mode == FrameResolveMode::WaitForMultiNewMetadata &&
+            is_multi_new_animation(animationId) &&
+            animation->owner == kCatalogMultiNewOwner));
       if (!catalog_resident_resource_locked(
               animationId, resref, catalogShardIndex, resourceOrdinal,
               resourceIndex)) {

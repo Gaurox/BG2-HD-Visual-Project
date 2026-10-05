@@ -957,7 +957,10 @@ bool read_registered_creature_cell(std::uint16_t animationId, void* cell,
               ? creature_sprite_x2::FrameResolveMode::WaitForCharacterMetadata
               : (animationId == 0x3000u
                   ? creature_sprite_x2::FrameResolveMode::WaitForAnkhegMetadata
-                  : creature_sprite_x2::FrameResolveMode::NonBlocking))) {
+                  : ((animationId >= 0x1200u && animationId <= 0x1208u) ||
+                     animationId == 0x1300u)
+                      ? creature_sprite_x2::FrameResolveMode::WaitForMultiNewMetadata
+                      : creature_sprite_x2::FrameResolveMode::NonBlocking))) {
     if (g_ctx->cfg.enableCreatureSpritePaletteTrace && animationId == 0x6110) {
       thread_local std::set<std::array<char, 8>> unresolved;
       if (unresolved.size() < 64 && unresolved.insert(resref).second) {
@@ -1075,6 +1078,23 @@ bool read_multipart_creature_sprite_scope(void* animation,
 
   std::array<ResolvedCreatureSpriteFrame, kMaximumCreatureSpriteLayers> resolved{};
   const auto cellsBase = reinterpret_cast<std::uintptr_t>(cells);
+  if ((animationId >= 0x1200u && animationId <= 0x1208u) || animationId == 0x1300u) {
+    // Queue the current 4/9-cell group together. Resolve below waits for each
+    // authenticated resource instead of exposing a transient all-native draw.
+    // Frame payloads remain lazy; invalid resources still fail closed.
+    for (std::size_t index = 0; index < expectedCount; ++index) {
+      if (index > (std::numeric_limits<std::uintptr_t>::max)() / runtime.vidCellStride)
+        return false;
+      const auto offset = index * runtime.vidCellStride;
+      if (cellsBase > (std::numeric_limits<std::uintptr_t>::max)() - offset ||
+          cellsBase + offset > (std::numeric_limits<std::uintptr_t>::max)() - runtime.vidCellResref)
+        return false;
+      std::array<char, 8> ref{};
+      if (!core::safe_read(reinterpret_cast<const void*>(cellsBase + offset + runtime.vidCellResref), ref))
+        return false;
+      if (!creature_sprite_x2::contains_resource(animationId, ref)) return false;
+    }
+  }
   for (std::size_t index = 0; index < expectedCount; ++index) {
     if (index > (std::numeric_limits<std::uintptr_t>::max)() /
                     runtime.vidCellStride) {

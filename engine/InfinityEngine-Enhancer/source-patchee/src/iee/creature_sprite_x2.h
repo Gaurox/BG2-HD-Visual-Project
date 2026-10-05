@@ -262,6 +262,8 @@ enum class FrameResolveMode : std::uint8_t {
   WaitForCharacterMetadata,
   // Authenticated owner-9 Ankheg resources must be ready on their first draw.
   WaitForAnkhegMetadata,
+  // Owner-5 dragons/Demogorgon: cold action/direction changes stay HD.
+  WaitForMultiNewMetadata,
 };
 bool resolve_frame(std::uint16_t animationId, const std::array<char, 8>& resref,
                    int sequence, int currentFrame, FrameHandle& out,

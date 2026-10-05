@@ -1,0 +1,64 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-delta-v1",
+  "runtime_id": "q3m-multi-new-frame-stability-20261005-v1",
+  "inherited_runtime": {
+    "path": "docs/measurements/q3m-monster-quadrant-full-x2-20261004-v1/runtime.json",
+    "sha256": "d9beabb1c51964f258b258a8924c87b2a8ed4ab494d5c1ecb256643ce04ff51a",
+    "bytes": 2327
+  },
+  "dll": {
+    "path": "sprite/.work/q3m-multi-new-frame-stability-20261005-v1/runtime-build/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "418b2c3ed1fcccaacc2ee7e1111e1725abcbc2c15eff88e91c32620e58e49b72",
+    "bytes": 2117632
+  },
+  "runtime_patch": {
+    "path": "docs/measurements/q3m-multi-new-frame-stability-20261005-v1/runtime-delta.patch",
+    "sha256": "07a135b3abf3ec021660584bc16af542c62ecec66073e9e25b17e5685fd7fa66",
+    "bytes": 3591
+  },
+  "source_provenance": [
+    {
+      "path": "sprite/.work/q3m-multi-new-frame-stability-20261005-v1/runtime-src/src/iee/creature_sprite_x2.cpp",
+      "sha256": "267338bdf3ad3eea1982c365e03fa126df9c6c696be0f4c1b911ed444a7e49d3",
+      "bytes": 230534
+    },
+    {
+      "path": "sprite/.work/q3m-multi-new-frame-stability-20261005-v1/runtime-src/src/iee/creature_sprite_x2.h",
+      "sha256": "e322dad493cec6a6696b9c6da3d4c9e14197d98c64d3b6a0bd75eac26d531ba8",
+      "bytes": 17261
+    },
+    {
+      "path": "sprite/.work/q3m-multi-new-frame-stability-20261005-v1/runtime-src/src/iee/hooks.cpp",
+      "sha256": "800a2568706975491e65cf9c5921312bc640d4d9776a8c5c3dcd37682e39bd60",
+      "bytes": 287057
+    }
+  ],
+  "capability_delta": {
+    "owner": 5,
+    "animation_ids": [
+      "0x1200",
+      "0x1201",
+      "0x1202",
+      "0x1203",
+      "0x1204",
+      "0x1205",
+      "0x1206",
+      "0x1207",
+      "0x1208",
+      "0x1300"
+    ],
+    "exact_current_group_prefetch": true,
+    "authenticated_V2_resource_metadata_wait": true,
+    "load_timeout_seconds": 5,
+    "frame_payloads_lazy": true,
+    "native_fail_closed_retained": true,
+    "unchanged_non_owner5_lookup_modes": true
+  },
+  "verification": {
+    "path": "docs/measurements/q3m-multi-new-frame-stability-20261005-v1/verification.json",
+    "sha256": "0d55df38e8627b5c6cd5de48b17fa5226cf7c5354f50d21b1193da0ce5e71551",
+    "bytes": 624
+  },
+  "ingame_QA": false,
+  "release": false
+}
