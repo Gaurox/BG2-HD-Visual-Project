@@ -1,0 +1,43 @@
+diff --git a/engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp b/engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp
+index 36bf7532..8b22b803 100644
+--- a/engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp
++++ b/engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp
+@@ -4483,7 +4483,10 @@ bool resolve_frame(std::uint16_t animationId,
+           ((mode == FrameResolveMode::WaitForCharacterMetadata &&
+             animation->owner == kCatalogCharacterOwner) ||
+            (mode == FrameResolveMode::WaitForAnkhegMetadata &&
+-            animationId == 0x3000u && animation->owner == kCatalogAnkhegOwner));
++            animationId == 0x3000u && animation->owner == kCatalogAnkhegOwner) ||
++           (mode == FrameResolveMode::WaitForLarge16Metadata &&
++            (animationId == 0xA000u || animationId == 0xA100u || animationId == 0xA200u) &&
++            animation->owner == 11u));
+       if (!catalog_resident_resource_locked(
+               animationId, resref, catalogShardIndex, resourceOrdinal,
+               resourceIndex)) {
+diff --git a/engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.h b/engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.h
+index 236be453..402d7333 100644
+--- a/engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.h
++++ b/engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.h
+@@ -262,6 +262,7 @@ enum class FrameResolveMode : std::uint8_t {
+   WaitForCharacterMetadata,
+   // Authenticated owner-9 Ankheg resources must be ready on their first draw.
+   WaitForAnkhegMetadata,
++  WaitForLarge16Metadata,
+ };
+ bool resolve_frame(std::uint16_t animationId, const std::array<char, 8>& resref,
+                    int sequence, int currentFrame, FrameHandle& out,
+diff --git a/engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp b/engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp
+index a323a292..19767f82 100644
+--- a/engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp
++++ b/engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp
+@@ -957,7 +957,9 @@ bool read_registered_creature_cell(std::uint16_t animationId, void* cell,
+               ? creature_sprite_x2::FrameResolveMode::WaitForCharacterMetadata
+               : (animationId == 0x3000u
+                   ? creature_sprite_x2::FrameResolveMode::WaitForAnkhegMetadata
+-                  : creature_sprite_x2::FrameResolveMode::NonBlocking))) {
++                  : ((animationId == 0xA000u || animationId == 0xA100u || animationId == 0xA200u)
++                      ? creature_sprite_x2::FrameResolveMode::WaitForLarge16Metadata
++                      : creature_sprite_x2::FrameResolveMode::NonBlocking)))) {
+     if (g_ctx->cfg.enableCreatureSpritePaletteTrace && animationId == 0x6110) {
+       thread_local std::set<std::array<char, 8>> unresolved;
+       if (unresolved.size() < 64 && unresolved.insert(resref).second) {

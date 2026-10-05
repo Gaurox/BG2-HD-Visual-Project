@@ -124,7 +124,7 @@
 *.sfk
 *.lnk
 
-# Quadrant contextual production: temporary composites/backups/native build outputs
-/docs/measurements/q3m-monster-quadrant-*/work/
-/docs/measurements/q3m-monster-quadrant-*/*.exe
-/docs/measurements/q3m-monster-quadrant-*/*.obj
+# Q3m measurements: local work copies/backups and compiled probes; keep evidence tracked.
+/docs/measurements/q3m-*/work/
+/docs/measurements/q3m-*/*.exe
+/docs/measurements/q3m-*/*.obj

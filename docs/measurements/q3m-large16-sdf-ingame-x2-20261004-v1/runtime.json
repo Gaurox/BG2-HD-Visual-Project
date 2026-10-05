@@ -1,0 +1,80 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-delta-v1",
+  "runtime_id": "iee-q3m-v9-Large16-sdf-x2-20261004-v1",
+  "inherited_runtime": {
+    "path": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/runtime.json",
+    "sha256": "1e752368a91798abc17b07f62e4e1f82ed56cff801fea78489c359ca61745b7e",
+    "bytes": 3137
+  },
+  "dll": {
+    "path": "sprite/.work/q3m-large16-sdf-ingame-x2-20261004-v1/runtime-build/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "7dc7394c7c0cea13f06412e2a437ec89f27b6137ccc5495c2079c8ac10bc3508",
+    "bytes": 2114048
+  },
+  "shaders": [
+    {
+      "path": "sprite/.work/q3m-large16-sdf-ingame-x2-20261004-v1/runtime-shaders/fpDraw.glsl",
+      "target": "override/fpDraw.glsl",
+      "sha256": "c6f1f23d99d16bfd34fc3eac1577f24c096c4c00f0427cea69e8bde779311827",
+      "bytes": 21082,
+      "baseline_sha256": "D2C73E866BCCB0E8E3F5ADF60D116A7270A84A364D3E7774FBD5F0E207CB2FE1"
+    },
+    {
+      "path": "sprite/.work/q3m-large16-sdf-ingame-x2-20261004-v1/runtime-shaders/fpSprite.glsl",
+      "target": "override/fpSprite.glsl",
+      "sha256": "065e28c595af84a7addcbd97793bc8eedcb5052bb26bab1d92710cb0e2fd0816",
+      "bytes": 22085,
+      "baseline_sha256": "7CCD93AF45F34461F1D2157FBAF95199D8EECB954323DD45736DB638CF808E32"
+    },
+    {
+      "path": "sprite/.work/q3m-large16-sdf-ingame-x2-20261004-v1/runtime-shaders/fpSELECT.glsl",
+      "target": "override/fpSELECT.glsl",
+      "sha256": "e4e70c98de1e6826c47f934ac3e600af06f105f69cc80f84e2289d28e5952815",
+      "bytes": 22346,
+      "baseline_sha256": "A177BDF726FF855AE4C54D8D609BCE3F1163FFC4B68C2B7F6851BB7C35CCA391"
+    }
+  ],
+  "capability_delta": {
+    "Large16_cold_resolution": {
+      "catalog_versions": [
+        2
+      ],
+      "owner": 11,
+      "animation_ids": [
+        "0xA000",
+        "0xA100",
+        "0xA200"
+      ],
+      "mode": "WaitForLarge16Metadata",
+      "maximum_wait_ms": 5000,
+      "payloads": "lazy",
+      "timeout_policy": "quarantine-and-native-fallback",
+      "other_families": "unchanged"
+    }
+  },
+  "verification": {
+    "path": "docs/measurements/q3m-large16-sdf-ingame-x2-20261004-v1/verification.json",
+    "sha256": "dea44891926312ab6b6965c347872b3c6634b9e43ea9a3733b358c9326e99109",
+    "bytes": 2417
+  },
+  "source_provenance": [
+    {
+      "path": "sprite/.work/q3m-large16-sdf-ingame-x2-20261004-v1/runtime-src/src/iee/creature_sprite_x2.h",
+      "sha256": "b97226f6d9ec85bf1137d7f5e32fe044fd983672ebbf4d753ecdfe89c48a2b40",
+      "bytes": 17379
+    },
+    {
+      "path": "sprite/.work/q3m-large16-sdf-ingame-x2-20261004-v1/runtime-src/src/iee/creature_sprite_x2.cpp",
+      "sha256": "fb3552ddc5af0bdb07e6a98d47f007cfd039345c45f34d490187880dc7b4229b",
+      "bytes": 234325
+    },
+    {
+      "path": "sprite/.work/q3m-large16-sdf-ingame-x2-20261004-v1/runtime-src/src/iee/hooks.cpp",
+      "sha256": "e0c76bf4a4befeb921f2d45ae58f3558450b4bb3805473e407896ac7ff4e1db8",
+      "bytes": 291548
+    }
+  ],
+  "Character_V10_not_in_build": true,
+  "ingame_QA": false,
+  "release": false
+}

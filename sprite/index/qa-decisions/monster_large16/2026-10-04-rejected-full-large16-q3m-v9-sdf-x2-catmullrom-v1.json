@@ -1,0 +1,82 @@
+{
+  "schema": "bg2-upscale-native-sprite-family-qa-decision-v1",
+  "status": "rejected",
+  "qa_state": "failed",
+  "recorded_at_utc": "2026-10-04T10:42:12.244117+00:00",
+  "scope": {
+    "kind": "installed-complete-available-native-family-contour-trial",
+    "engine_family": "monster_large16",
+    "animation_ids": [
+      "0xA000",
+      "0xA100",
+      "0xA200"
+    ],
+    "variant_id": "q3m-v9-sdf-x2-catmullrom",
+    "scale": 2,
+    "resources": 18,
+    "frames": 1688
+  },
+  "visual_qa": {
+    "result": "fail",
+    "authority": "user",
+    "user_statement": "retire SDF c'est vraiment pas acceptable, ca fait beaucoup trop lisse. valide la famille sans SDF",
+    "defect": "contour excessively smooth; unacceptable visual result"
+  },
+  "runtime_contract": {
+    "runtime": {
+      "path": "docs/measurements/q3m-large16-sdf-ingame-x2-20261004-v1/runtime.json",
+      "sha256": "4f2e084169d057e1ec6d708be6d8e6706d76d14c208a6899b241fea1c900e8cf",
+      "bytes": 3049
+    },
+    "dll": {
+      "path": "sprite/.work/q3m-large16-sdf-ingame-x2-20261004-v1/runtime-build/Release/InfinityEngine-Enhancer.dll",
+      "sha256": "7dc7394c7c0cea13f06412e2a437ec89f27b6137ccc5495c2079c8ac10bc3508",
+      "bytes": 2114048
+    },
+    "catalogue_sha256": "e23ccdc6e482e51c54a5552e02f7c91a8185bbc1134eadbd6999c80abb522a43",
+    "world_filter": "CatmullRom",
+    "owner": 11,
+    "colour_profile_id": 8,
+    "decode_rule_id": 3,
+    "SDF": true
+  },
+  "provenance": {
+    "selected_generation": {
+      "path": "docs/measurements/q3m-large16-sdf-ingame-x2-20261004-v1/current-generation.json",
+      "sha256": "bbc9b9342c9cda38e938014940a4d6706d72ccd16f2db202d0f31c70e6d81b7a",
+      "bytes": 1676
+    },
+    "production": {
+      "path": "docs/measurements/q3m-large16-sdf-ingame-x2-20261004-v1/production.json",
+      "sha256": "feae280c8fee6c890dfadc1fb64255986cf0815d7cc52c2f507440ff116e7d95",
+      "bytes": 1108695
+    },
+    "installation_snapshot": {
+      "path": "docs/measurements/q3m-large16-sdf-ingame-x2-20261004-v1/installation-verification.json",
+      "sha256": "215d6f1647348caaf78e2a459e88cefbb72d3bb28add1140a36b57ff9ca0adf8",
+      "bytes": 1395
+    },
+    "restoration": {
+      "path": "docs/measurements/q3m-large16-sdf-ingame-x2-20261004-v1/restoration-verification.json",
+      "sha256": "df36cd312e5659834a5f3ae29a0323e5712945c84e9a2ef8856585205b86fceb",
+      "bytes": 6836
+    }
+  },
+  "final_selection": {
+    "variant": "Q3m-V7-x2-without-SDF",
+    "status": "accepted",
+    "authority": "user",
+    "accepted_QA": {
+      "path": "sprite/index/qa-decisions/monster_large16/2026-10-04-accepted-full-available-large16-q3m-v7-x2-catmullrom-v1.json",
+      "sha256": "23fda1b4532b65702acf6862e99f609c146937b26c49e0931adbde04f36c3c7c",
+      "bytes": 11594
+    },
+    "generation": {
+      "path": "docs/measurements/q3m-monster-large16-full-x2-20261004-v1/current-generation.json",
+      "sha256": "d54b8d3e9e05df0337d0a0aa7b735d50d9ea432ac7d83c4b009ba37c8c727677",
+      "bytes": 1568
+    },
+    "installation_state": "restored-byte-identical"
+  },
+  "release_state": "not-promoted"
+}
