@@ -951,6 +951,16 @@ bool read_registered_creature_cell(std::uint16_t animationId, void* cell,
     }
     return false;
   }
+  auto playback = creature_sprite_x2::FramePlaybackMode::Strict;
+  if ((animationId >= 0x1200u && animationId <= 0x1208u) || animationId == 0x1300u) {
+    // Same CVidCell playback field used by the native item-icon bridge.
+    const auto playbackOffset = g_ctx->manifest->itemIcons.vidCellPlaybackMode;
+    std::int32_t nativeMode = 0;
+    if (!playbackOffset || !core::safe_read(
+        reinterpret_cast<const void*>(cellBase + playbackOffset), nativeMode)) return false;
+    playback = nativeMode != 0 ? creature_sprite_x2::FramePlaybackMode::Loop
+                               : creature_sprite_x2::FramePlaybackMode::Clamp;
+  }
   if (!creature_sprite_x2::resolve_frame(animationId, resref, currentSequence,
           currentFrame, resolved.handle,
           waitForCharacterMetadata
@@ -960,7 +970,7 @@ bool read_registered_creature_cell(std::uint16_t animationId, void* cell,
                   : ((animationId >= 0x1200u && animationId <= 0x1208u) ||
                      animationId == 0x1300u)
                       ? creature_sprite_x2::FrameResolveMode::WaitForMultiNewMetadata
-                      : creature_sprite_x2::FrameResolveMode::NonBlocking))) {
+                      : creature_sprite_x2::FrameResolveMode::NonBlocking), playback)) {
     if (g_ctx->cfg.enableCreatureSpritePaletteTrace && animationId == 0x6110) {
       thread_local std::set<std::array<char, 8>> unresolved;
       if (unresolved.size() < 64 && unresolved.insert(resref).second) {

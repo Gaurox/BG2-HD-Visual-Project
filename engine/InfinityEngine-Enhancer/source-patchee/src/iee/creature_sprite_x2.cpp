@@ -4474,9 +4474,13 @@ bool capture_palette_snapshot(const std::uint32_t* realizedOutput, const EngineT
 bool resolve_frame(std::uint16_t animationId,
                    const std::array<char, 8>& resref, int sequence,
                    int currentFrame, FrameHandle& out,
-                   FrameResolveMode mode) noexcept {
+                   FrameResolveMode mode, FramePlaybackMode playback) noexcept {
   out = {};
-  if (!g_ready.load(std::memory_order_acquire) || sequence < 0 || currentFrame < 0) return false;
+  const bool nativePlayback = mode == FrameResolveMode::WaitForMultiNewMetadata &&
+      is_multi_new_animation(animationId) &&
+      (playback == FramePlaybackMode::Clamp || playback == FramePlaybackMode::Loop);
+  if (!g_ready.load(std::memory_order_acquire) ||
+      (!nativePlayback && (sequence < 0 || currentFrame < 0))) return false;
   try {
     std::unique_lock lock(g_mutex);
     if (!g_ready.load(std::memory_order_acquire) ||
@@ -4544,11 +4548,23 @@ bool resolve_frame(std::uint16_t animationId,
       resourceIndex = *mapped;
     }
     auto& resource = g_resources[resourceIndex];
-    if (static_cast<std::size_t>(sequence) >= resource.cycles.size()) {
-      return false;
+    if (sequence < 0 || static_cast<std::size_t>(sequence) >= resource.cycles.size()) {
+      if (!nativePlayback || resource.cycles.empty()) return false;
+      sequence = 0;
     }
     const auto& cycle = resource.cycles[static_cast<std::size_t>(sequence)];
-    if (static_cast<std::size_t>(currentFrame) >= cycle.size()) return false;
+    if (cycle.empty()) return false;
+    if (nativePlayback) {
+      // CVidCell::GetCurrentFrameSize (BG2EE 2.7.3, RVA 0x4117F8..0x41185F):
+      // mode!=0 wraps signed slots; mode==0 clamps to first/last frame.
+      // Do not change native cell state or normalize other sprite families.
+      const int count = static_cast<int>(cycle.size());
+      if (currentFrame >= count)
+        currentFrame = playback == FramePlaybackMode::Loop ? currentFrame % count : count - 1;
+      if (currentFrame < 0)
+        currentFrame = playback == FramePlaybackMode::Loop
+            ? ((currentFrame % count) + count) % count : 0;
+    } else if (static_cast<std::size_t>(currentFrame) >= cycle.size()) return false;
     const FrameHandle resolved{
         .resourceIndex = resourceIndex,
         .frameIndex = cycle[static_cast<std::size_t>(currentFrame)],

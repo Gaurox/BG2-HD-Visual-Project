@@ -273,3 +273,8 @@ Flying : alias intérieur `BIRD_IN` = même ressource ; listes `CLUA-generiques.
 
 - [Correctif runtime installé](../docs/measurements/q3m-multi-new-frame-stability-20261005-v1/README.md) : métadonnées du groupe courant 4/9 parties prêtes avant le rendu HD ; fini le repli vanilla dû au chargement asynchrone. Repli natif conservé pour les ressources réellement invalides.
 - Régression : ancien mode 20/20 groupes en repli temporaire ; corrigé 0/580 groupes, 5 155 ressources. DLL seule remplacée ; assets/palettes Q3m K6 x2 sans SDF inchangés. QA ingame toujours en attente ; compteurs et décisions acquis inchangés.
+
+## MultiNew : transitions de fin de cycle corrigées — 2026-10-05
+
+- [Runtime v2 installé](../docs/measurements/q3m-multi-new-frame-stability-20261005-v2/README.md) : v1 conservée pour le chargement ; normalisation native des slots selon le mode CVidCell (boucle/arrêt), uniquement owner 5. Corrige les dix replis de fin de cycle de la session 20:59–21:01, dont `1207 slot8/8` et Démogorgon `slot18/18`.
+- 231 cas vérifiés contre les instructions du jeu ; 160 524 cycles/5 155 ressources, 2 910 052 contrôles HD/natif, zéro frame incorrecte/manquante. DLL seule remplacée ; mêmes palettes/sprites Q3m K6 x2 sans SDF ; QA ingame toujours en attente, compteurs et décisions acquis inchangés.

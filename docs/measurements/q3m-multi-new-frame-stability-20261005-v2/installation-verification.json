@@ -1,0 +1,45 @@
+{
+  "status": "installed-pending-ingame-qa",
+  "dll_sha256": "cf9fade9b8a620abdf2c052c1a4da989c5958cbca1715da984f5691f1bf15e89",
+  "catalog_sha256": "cb14e24171eb8567bdb0beaafe2463a4222cf00c2559925ee2a335235cb03411",
+  "scale": 2,
+  "assets_unchanged": true,
+  "only_replaced": "InfinityEngine-Enhancer.dll",
+  "preserved_files_verified": 6,
+  "native_regression": {
+    "passed": true,
+    "scale": 2,
+    "assets_unchanged": true,
+    "native_x64_oracle": {
+      "passed": true,
+      "native_instruction_cases": 231,
+      "exe_sha256": "b51093a49140b2b8a7c046b4652bb8e535be24ebbc12b1d735e0b94217a14d57",
+      "native_rva_start": "0x4117F8",
+      "native_rva_end": "0x411863",
+      "playback_field": "CVidCell+0x11C",
+      "no_game_launched": true
+    },
+    "playback": {
+      "passed": true,
+      "resources": 5155,
+      "cycles": 160524,
+      "empty_cycles": 0,
+      "native_playback_checks": 2910052,
+      "strict_out_of_range_rejected": 321048,
+      "invalid_lookup_checks": 0,
+      "missing_or_wrong_frames": 0
+    },
+    "observed_regressions_verified": 10,
+    "input_oracle": {
+      "path": "sprite/.work/q3m-multi-new-frame-stability-20261005-v2/native-playback.oracle",
+      "sha256": "de0d2c7d7e9a1813fdbb18dc8bf90fa857aa9aa0bbcc86c7b35780aa450f2645",
+      "bytes": 7311428
+    },
+    "inherited_cold_load_verification": "docs/measurements/q3m-multi-new-frame-stability-20261005-v1/verification.json",
+    "native_general_tests_passed": true,
+    "ingame_QA": false,
+    "release": false
+  },
+  "ingame_QA": false,
+  "release": false
+}

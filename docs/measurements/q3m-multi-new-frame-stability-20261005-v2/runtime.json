@@ -1,0 +1,66 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-delta-v1",
+  "runtime_id": "q3m-multi-new-frame-stability-20261005-v2",
+  "inherited_runtime": {
+    "path": "docs/measurements/q3m-multi-new-frame-stability-20261005-v1/runtime.json",
+    "sha256": "0f403974918270d0920fdaeb05dc63eca60f2dd3bc1918cb6cbbe15d5bfe6d07",
+    "bytes": 2252
+  },
+  "dll": {
+    "path": "sprite/.work/q3m-multi-new-frame-stability-20261005-v2/runtime-build/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "cf9fade9b8a620abdf2c052c1a4da989c5958cbca1715da984f5691f1bf15e89",
+    "bytes": 2118656
+  },
+  "runtime_patch": {
+    "path": "docs/measurements/q3m-multi-new-frame-stability-20261005-v2/runtime-delta.patch",
+    "sha256": "2b8666130b62e45d4435b3f2893ccb8b28080c75f2159990c8fe512467e64991",
+    "bytes": 3263
+  },
+  "source_provenance": [
+    {
+      "path": "sprite/.work/q3m-multi-new-frame-stability-20261005-v2/runtime-src/src/iee/creature_sprite_x2.cpp",
+      "sha256": "18940b50f1494104a8fffe7bf4f5f9a42216aa2c5d9c1de0c4280922141bb3a5",
+      "bytes": 231517
+    },
+    {
+      "path": "sprite/.work/q3m-multi-new-frame-stability-20261005-v2/runtime-src/src/iee/creature_sprite_x2.h",
+      "sha256": "f2461d13a39c55dc5e3cc90b6f38c8d5a2d2c43b28e5a4774684f2090ea069c9",
+      "bytes": 17474
+    },
+    {
+      "path": "sprite/.work/q3m-multi-new-frame-stability-20261005-v2/runtime-src/src/iee/hooks.cpp",
+      "sha256": "a51b6f4fda40c8653a78b09597282686ad166786fa93645cb5b02d70d77dd532",
+      "bytes": 287702
+    }
+  ],
+  "capability_delta": {
+    "owner": 5,
+    "animation_ids": [
+      "0x1200",
+      "0x1201",
+      "0x1202",
+      "0x1203",
+      "0x1204",
+      "0x1205",
+      "0x1206",
+      "0x1207",
+      "0x1208",
+      "0x1300"
+    ],
+    "native_playback_offset": "0x11C",
+    "native_loop_or_clamp": true,
+    "signed_negative_slots_normalized": true,
+    "native_out_of_range_sequence_falls_back_to_zero": true,
+    "opt_in_only": "WaitForMultiNewMetadata + FramePlaybackMode::{Clamp,Loop}",
+    "other_owners_and_default_strict_lookup_unchanged": true,
+    "inherited_current_group_metadata_wait": true,
+    "invalid_resource_fail_closed": true
+  },
+  "verification": {
+    "path": "docs/measurements/q3m-multi-new-frame-stability-20261005-v2/verification.json",
+    "sha256": "e23ef0a08757d55da7ff3a6d9657c82721c451054856142482d6c7d601d92347",
+    "bytes": 1092
+  },
+  "ingame_QA": false,
+  "release": false
+}

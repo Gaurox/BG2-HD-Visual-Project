@@ -1,0 +1,57 @@
+--- v1/src/iee/creature_sprite_x2.h
++++ v2/src/iee/creature_sprite_x2.h
+@@ -267,0 +268,2 @@
++// Native CVidCell playback is opt-in and restricted to owner-5 IDs.
++enum class FramePlaybackMode : std::uint8_t { Strict, Clamp, Loop };
+@@ -270 +272,2 @@
+-                   FrameResolveMode mode = FrameResolveMode::NonBlocking) noexcept;
++                   FrameResolveMode mode = FrameResolveMode::NonBlocking,
++                   FramePlaybackMode playback = FramePlaybackMode::Strict) noexcept;
+--- v1/src/iee/creature_sprite_x2.cpp
++++ v2/src/iee/creature_sprite_x2.cpp
+@@ -4463 +4463 @@
+-                   FrameResolveMode mode) noexcept {
++                   FrameResolveMode mode, FramePlaybackMode playback) noexcept {
+@@ -4465 +4465,5 @@
+-  if (!g_ready.load(std::memory_order_acquire) || sequence < 0 || currentFrame < 0) return false;
++  const bool nativePlayback = mode == FrameResolveMode::WaitForMultiNewMetadata &&
++      is_multi_new_animation(animationId) &&
++      (playback == FramePlaybackMode::Clamp || playback == FramePlaybackMode::Loop);
++  if (!g_ready.load(std::memory_order_acquire) ||
++      (!nativePlayback && (sequence < 0 || currentFrame < 0))) return false;
+@@ -4533,2 +4537,3 @@
+-    if (static_cast<std::size_t>(sequence) >= resource.cycles.size()) {
+-      return false;
++    if (sequence < 0 || static_cast<std::size_t>(sequence) >= resource.cycles.size()) {
++      if (!nativePlayback || resource.cycles.empty()) return false;
++      sequence = 0;
+@@ -4537 +4542,12 @@
+-    if (static_cast<std::size_t>(currentFrame) >= cycle.size()) return false;
++    if (cycle.empty()) return false;
++    if (nativePlayback) {
++      // CVidCell::GetCurrentFrameSize (BG2EE 2.7.3, RVA 0x4117F8..0x41185F):
++      // mode!=0 wraps signed slots; mode==0 clamps to first/last frame.
++      // Do not change native cell state or normalize other sprite families.
++      const int count = static_cast<int>(cycle.size());
++      if (currentFrame >= count)
++        currentFrame = playback == FramePlaybackMode::Loop ? currentFrame % count : count - 1;
++      if (currentFrame < 0)
++        currentFrame = playback == FramePlaybackMode::Loop
++            ? ((currentFrame % count) + count) % count : 0;
++    } else if (static_cast<std::size_t>(currentFrame) >= cycle.size()) return false;
+--- v1/src/iee/hooks.cpp
++++ v2/src/iee/hooks.cpp
+@@ -953,0 +954,10 @@
++  auto playback = creature_sprite_x2::FramePlaybackMode::Strict;
++  if ((animationId >= 0x1200u && animationId <= 0x1208u) || animationId == 0x1300u) {
++    // Same CVidCell playback field used by the native item-icon bridge.
++    const auto playbackOffset = g_ctx->manifest->itemIcons.vidCellPlaybackMode;
++    std::int32_t nativeMode = 0;
++    if (!playbackOffset || !core::safe_read(
++        reinterpret_cast<const void*>(cellBase + playbackOffset), nativeMode)) return false;
++    playback = nativeMode != 0 ? creature_sprite_x2::FramePlaybackMode::Loop
++                               : creature_sprite_x2::FramePlaybackMode::Clamp;
++  }
+@@ -963 +973 @@
+-                      : creature_sprite_x2::FrameResolveMode::NonBlocking))) {
++                      : creature_sprite_x2::FrameResolveMode::NonBlocking), playback)) {

@@ -96,6 +96,14 @@ $env:PYTHONPATH = Join-Path (Get-Location) 'sprite/.work/q3m-runtime-tools-20261
   Vérification hors jeu : décodages natifs des cellules, centres/cycles, puis assemblage ordonné4/9 ;
   DLL/INI/shaders acquis conservés. Ne jamais déduire QA ingame de ce contrôle.
 
+## Chargement et transitions natives (owner 5)
+
+Chargement/rendu owner 5 : [runtime MultiNew v2](../docs/measurements/q3m-multi-new-frame-stability-20261005-v2/README.md).
+Métadonnées du groupe courant prêtes avant le dessin HD ; slots de fin de cycle normalisés selon
+`CVidCell+0x11C` (boucle modulo signé / arrêt première-dernière frame), comme vanilla. Tester les
+transitions `slot==cycleLength` et négatives, pas seulement les slots valides/chargements à froid.
+Correction strictement `0x1200..0x1208,0x1300` ; autres familles gardent leurs contrats acquis.
+
 ## Encodage palette accéléré, option mesurée
 
 - `Q3M_PALETTE_ENCODER=gpu-grouped-guarded-v1` : `scripts/q3m_guarded_gpu_encode.py` ;
