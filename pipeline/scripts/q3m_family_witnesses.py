@@ -115,18 +115,37 @@ def validate_selection(selection, complete_family=None):
         require(native['false_color'] == '' or int(native['false_color']) == witness['native_kind'], 'witness palette kind differs from INI')
         replacement = json.loads(native['ini_sections_json']).get('general',{}).get('new_palette')
         override = witness.get('palette_override')
-        if complete_family or override:
+        bank_overrides = witness.get('palette_overrides_by_bank')
+        if bank_overrides:
+            require(witness['family'] == 'multi_new' and witness['native_kind'] == 0 and
+                    replacement and not override and set(bank_overrides) == set('12345') and
+                    all(value['resref'] == replacement + bank and len(value['sha256']) == 64
+                        for bank,value in bank_overrides.items()),
+                    'native MonsterMulti bank replacement palettes differ')
+        elif complete_family or override:
             require((not replacement and not override) or
                     (override and witness['native_kind'] == 0 and override['resref'] == replacement),
                     'native replacement palette must be explicitly represented')
         if witness['family'] == 'multi_new':
-            # Stock dragon resrefs: prefix + bank + PART(1..9) + chunk + direction.
-            # Nine direction suffixes of part 1 are not a nine-part native draw.
+            # MonsterMulti dragons: prefix + bank + part + chunk + direction.
+            # MultiNew Demogorgon: prefix + G + bank + part + optional chunk.
             groups = witness.get('multipart_groups',[])
             require(groups and set(witness['refs']) == {ref for group in groups for ref in group}, 'missing multipart groups')
+            parts = 9 if 0x1200 <= int(witness['animation_id'],16) <= 0x1208 else 4
+            require(witness.get('native_parts',parts) == parts, 'native multipart count differs')
+            require(sum(map(len,groups)) == len(witness['refs']), 'duplicate multipart group binding')
             for group in groups:
-                require(len(group) == 9 and len(set(group)) == 9 and all(len(ref) == 8 for ref in group), 'dragon needs nine distinct parts')
-                require({ref[5] for ref in group} == set('123456789') and len({ref[:5]+ref[6:] for ref in group}) == 1, 'dragon part/bank/chunk/direction group differs')
+                require(len(group) == parts and len(set(group)) == parts, 'native draw needs distinct parts')
+                if parts == 9:
+                    require(all(len(ref) == 8 and ref[4] in '12345' for ref in group) and
+                            {ref[5] for ref in group} == set('123456789') and
+                            len({ref[:5]+ref[6:] for ref in group}) == 1,
+                            'dragon part/bank/chunk/direction group differs')
+                else:
+                    require(all(len(ref) in (7,8) and ref[4] == 'G' and ref[5] in '12' for ref in group) and
+                            {ref[6] for ref in group} == set('1234') and
+                            len({ref[:6]+ref[7:] for ref in group}) == 1,
+                            'Demogorgon part/bank/chunk group differs')
     return witnesses
 
 
@@ -161,8 +180,10 @@ def source_plan(selection_path=SELECTION, complete_family=None):
     original_source_keys, replacement_palettes = set(), {}
     for witness in selection['witnesses']:
         char = witness['family'] == 'character'; db = databases['character' if char else 'other']
-        override = witness.get('palette_override')
-        if override and override['resref'] not in replacement_palettes:
+        overrides = ([witness['palette_override']] if witness.get('palette_override') else
+                     list(witness.get('palette_overrides_by_bank',{}).values()))
+        for override in overrides:
+            if override['resref'] in replacement_palettes: continue
             from run_creature_sprite_x2 import KeyIndex
             game = get_path('bg2ee_game_root',required=True)
             live = game/'override'/(override['resref']+'.bmp')
@@ -174,6 +195,7 @@ def source_plan(selection_path=SELECTION, complete_family=None):
             require(hashlib.sha256(raw).hexdigest() == override['sha256'], 'replacement palette identity changed')
             replacement_palettes[override['resref']] = bmp_palette(raw)
         for ref in witness['refs']:
+            override = witness.get('palette_override') or witness.get('palette_overrides_by_bank',{}).get(ref[4])
             resource = db.execute('SELECT * FROM resources WHERE resref=?',(ref,)).fetchone(); require(resource is not None, 'missing source '+ref)
             rid = resource['resource_id']; original_palette = np.frombuffer(resource['palette_bgra'],np.uint8).reshape(256,4)
             p = replacement_palettes[override['resref']] if override else original_palette
@@ -240,6 +262,35 @@ def source_plan(selection_path=SELECTION, complete_family=None):
     return resources,works,summary
 
 
+def guide_batch(args):
+    """Independent exact guides; workers never write shared cache paths."""
+    batch_keys,frames,scalepix = args
+    outputs = run_xbr(frames,scalepix,'node',direct_upscale_contract(2))
+    return [(key,map_output(frame,output[2],xbr_provenance_indices(frame,2))[0].reshape(
+                 frame.height*2,frame.width*2))
+            for key,frame,output in zip(batch_keys,frames,outputs,strict=True)]
+
+
+def target_file(args):
+    """CPU reduction/compression only; unchanged fixed-N GPU output."""
+    from chainner_ext import resize, ResizeFilter
+    path,frame,crop = args
+    target = np.ascontiguousarray(np.clip(resize(crop,(frame.width*2,frame.height*2),
+                                  ResizeFilter.Box,False),0,1),dtype=np.float32)
+    save(path,target=target)
+
+
+def encode_work(work):
+    """Encode one missing key; optional guarded GPU ranking, acquired hits untouched."""
+    targets = []
+    for path in work['targets']:
+        with np.load(path,allow_pickle=False) as data: target = data['target'].copy()
+        require(target.dtype == np.float32 and target.shape == (*work['guide'].shape,3),'target cache differs'); targets.append(target)
+    from q3m_guarded_gpu_encode import encode
+    arrays = encode(work['profile'],work['guide'],np.stack(targets)); save(work['encoded_path'],**arrays)
+    return 1
+
+
 def produce(resources, works, root):
     from reboutcx_multipal import inference_context
     backend_path = root/'backend.json'
@@ -275,15 +326,22 @@ def produce(resources, works, root):
             guide = guide_dir/(work['source_key']+'.npz'); work['guide_path'] = guide
             if not guide.exists(): missing_guides.setdefault(work['source_key'],work['frame'])
     keys = list(missing_guides)
-    for start in range(0,len(keys),64):
-        batch_keys = keys[start:start+64]; frames = [missing_guides[k] for k in batch_keys]
-        # xBR is only a semantic index guide; it is never a final sprite treatment.
-        outputs = run_xbr(frames,scalepix,'node',direct_upscale_contract(2))
-        for key,frame,output in zip(batch_keys,frames,outputs,strict=True):
-            indices,_ = map_output(frame,output[2],xbr_provenance_indices(frame,2))
-            save(guide_dir/(key+'.npz'),guide=indices.reshape(frame.height*2,frame.width*2)); stats['new_guides'] += 1
-        print(json.dumps(dict(stage='guides',done=min(start+64,len(keys)),total=len(keys))),flush=True)
-    requests, pending = {}, []
+    guide_workers = int(os.environ.get('Q3M_GUIDE_WORKERS','1'))
+    require(1 <= guide_workers <= 16,'guide worker limit')
+    batches = [(keys[start:start+64],[missing_guides[k] for k in keys[start:start+64]],scalepix)
+               for start in range(0,len(keys),64)]
+    def publish(results):
+        for result in results:
+            for key,indices in result:
+                save(guide_dir/(key+'.npz'),guide=indices); stats['new_guides'] += 1
+            print(json.dumps(dict(stage='guides',done=stats['new_guides'],total=len(keys))),flush=True)
+    if guide_workers == 1 or not batches:
+        publish(map(guide_batch,batches))
+    else:
+        from concurrent.futures import ProcessPoolExecutor
+        with ProcessPoolExecutor(max_workers=guide_workers) as pool:
+            publish(pool.map(guide_batch,batches))
+    requests, pending, unique_target_hits = {}, [], set()
     for key,work in works.items():
         if work['encoded_path'].exists(): continue
         with np.load(work['guide_path'],allow_pickle=False) as data: guide = data['guide'].copy()
@@ -300,7 +358,10 @@ def produce(resources, works, root):
             if not path.exists():
                 old = requests.setdefault(target_key,(path,frame,palette))
                 require(np.array_equal(old[1].indices,frame.indices) and np.array_equal(old[2][used],palette[used]),'neural input hash collision')
-            else: stats['target_cache_hits'] += 1
+            else:
+                stats['target_cache_hits'] += 1
+                unique_target_hits.add(target_key)
+    if unique_target_hits: stats['unique_target_cache_hits'] = len(unique_target_hits)
     if requests:
         # No Torch/processor/model construction occurs on an all-hit resume.
         import torch
@@ -313,28 +374,34 @@ def produce(resources, works, root):
         for request in requests.values():
             frame = request[1]; canvas = (((frame.height+31)//32)*32,((frame.width+31)//32)*32)
             groups[canvas].append(request)
+        from concurrent.futures import ThreadPoolExecutor
+        io_workers = int(os.environ.get('Q3M_TARGET_IO_WORKERS','1'))
+        require(1 <= io_workers <= 16,'target IO worker limit')
+        trim_cuda = os.environ.get('Q3M_TRIM_CUDA_CACHE','0') == '1'
         done = 0
-        for canvas,group in sorted(groups.items()):
-            for start in range(0,len(group),86):
-                batch = group[start:start+86]; images = [prepare_inference_rgb(frame,palette) for _,frame,palette in batch]
-                require(all(image is not None for image in images),'transparent model work')
-                crops,_ = infer_float_crops(descriptor,images,canvas=canvas,fp16=True)
-                for (path,frame,_),crop in zip(batch,crops,strict=True):
-                    target = np.ascontiguousarray(np.clip(resize(crop,(frame.width*2,frame.height*2),ResizeFilter.Box,False),0,1),dtype=np.float32)
-                    save(path,target=target)
-                done += len(batch); stats['new_neural_targets'] += len(batch)
-                print(json.dumps(dict(stage='neural-targets',done=done,total=len(requests))),flush=True)
+        with ThreadPoolExecutor(max_workers=io_workers) as io:
+            for canvas,group in sorted(groups.items()):
+                for start in range(0,len(group),86):
+                    batch = group[start:start+86]; images = [prepare_inference_rgb(frame,palette) for _,frame,palette in batch]
+                    require(all(image is not None for image in images),'transparent model work')
+                    crops,_ = infer_float_crops(descriptor,images,canvas=canvas,fp16=True)
+                    if trim_cuda and not done:
+                        torch.cuda.empty_cache()
+                        repeat,_ = infer_float_crops(descriptor,images,canvas=canvas,fp16=True)
+                        require(all(np.array_equal(a,b) for a,b in zip(crops,repeat,strict=True)),
+                                'CUDA cache trim changed neural output')
+                        stats['cuda_trim_exact_output_checks'] = len(batch)
+                        del repeat
+                    if trim_cuda: torch.cuda.empty_cache()
+                    list(io.map(target_file,[(path,frame,crop) for (path,frame,_),crop in zip(batch,crops,strict=True)]))
+                    done += len(batch); stats['new_neural_targets'] += len(batch)
+                    print(json.dumps(dict(stage='neural-targets',done=done,total=len(requests))),flush=True)
         del descriptor
     from concurrent.futures import ThreadPoolExecutor
-    def encode(work):
-        targets = []
-        for path in work['targets']:
-            with np.load(path,allow_pickle=False) as data: target = data['target'].copy()
-            require(target.dtype == np.float32 and target.shape == (*work['guide'].shape,3),'target cache differs'); targets.append(target)
-        arrays = work['profile'].encode(work['guide'],np.stack(targets)); save(work['encoded_path'],**arrays)
-        return 1
-    with ThreadPoolExecutor(max_workers=2) as pool:
-        for done,_ in enumerate(pool.map(encode,pending),1):
+    encode_workers = int(os.environ.get('Q3M_ENCODE_WORKERS','2'))
+    require(1 <= encode_workers <= 16,'encode worker count outside 1..16')
+    with ThreadPoolExecutor(max_workers=encode_workers) as pool:
+        for done,_ in enumerate(pool.map(encode_work,pending),1):
             stats['new_encoded_work'] += 1
             if done % 32 == 0 or done == len(pending): print(json.dumps(dict(stage='encoding',done=done,total=len(pending))),flush=True)
     return dict(stats),directory

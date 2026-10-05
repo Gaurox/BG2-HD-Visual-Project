@@ -90,6 +90,39 @@ def strength(a, geometry):
     return np.clip((4-distance)/3, 0, 1)
 
 
+def repair_part(args):
+    """Independent native cell, exact feather/codec; writes its own context key."""
+    from palette_work_plan import file_sha
+    from q3m_family_witnesses import save, validate_encoded
+    item, context = args
+    part, r, row, old, weight, roi = item
+    targets, left, top, recipe_key, ck, work, works, old_targets = context
+    node = dict(parent_key=row['key'], encoded_key=row['key'], changed_pixels=0)
+    if roi.any():
+        a = row['geometry']; x, y = -a[2]-left, -a[3]-top
+        crop = targets[:, y*2:y*2+a[1]*2, x*2:x*2+a[0]*2][:, roi, :]
+        blend = (old_targets(works[row['key']], roi)*(1-weight[roi][None, :, None])+
+            crop*weight[roi][None, :, None]).astype(np.float32)
+        from q3m_guarded_gpu_encode import encode
+        encoded = encode(r['profile'],old['guide'][roi][None, :], blend[:, None, :, :])
+        result = {k: v.copy() for k, v in old.items()}
+        result['I'][roi], result['F'][roi] = encoded['I'][0], encoded['F'][0]
+        result['dep'] = r['profile'].dependencies(result['I'], result['F'])
+        validate_encoded(r['profile'], result['I'], result['F'], result['guide'], result['dep'])
+        assert np.array_equal(result['I'][~roi], old['I'][~roi])
+        assert np.array_equal(result['F'][~roi], old['F'][~roi])
+        node['changed_pixels'] = int(((result['I'] != old['I']) | (result['F'] != old['F'])).sum())
+        if node['changed_pixels']:
+            key = digest([recipe_key, ck, part, row['key']]); dest = work/'encoded'/(key+'.npz')
+            if dest.exists():
+                with np.load(dest, allow_pickle=False) as z:
+                    assert all(np.array_equal(z[k], v) for k, v in result.items())
+            else:
+                save(dest, **result)
+            node.update(encoded_key=key, encoded_sha256=file_sha(dest))
+    return node
+
+
 def apply_context(resources, works, selection_path, cache, mode='run'):
     """plan=CPU, run=resume/infer missing contexts, bind=read sealed checkpoints.
 
@@ -116,6 +149,10 @@ def apply_context(resources, works, selection_path, cache, mode='run'):
         selection_sha256=file_sha(selection_path), producer_sha256=file_sha(Path(__file__)),
         backend=backend, encoder_sha256=encoder, band_native_pixels=4,
         scale=2, neural_batch=6, fp16=True, reduce='Box x4 to x2', SDF=False)
+    accelerated_mode = os.environ.get('Q3M_PALETTE_ENCODER', 'cpu')
+    if accelerated_mode != 'cpu':
+        recipe['palette_acceleration'] = dict(mode=accelerated_mode,
+            sha256=file_sha(Path(__file__).with_name('q3m_guarded_gpu_encode.py')))
     recipe_key = digest(recipe)
     work = cache/'multipart-seams'/recipe_key
     if mode == 'run':
@@ -141,6 +178,11 @@ def apply_context(resources, works, selection_path, cache, mode='run'):
                 targets.append(z['target'][roi].copy())
         return np.stack(targets)
 
+    encode_workers = int(os.environ.get('Q3M_CONTEXT_ENCODE_WORKERS','1'))
+    if not 1 <= encode_workers <= 16:
+        raise ValueError('Context encode worker count outside 1..16')
+    trim_cuda = os.environ.get('Q3M_TRIM_CUDA_CACHE','0') == '1'
+    report['context_encode_workers'] = encode_workers
     model, records = None, {}
     for done, (ck, context) in enumerate(sorted(contexts.items()), 1):
         checkpoint = work/'contexts'/(ck+'.json')
@@ -167,6 +209,7 @@ def apply_context(resources, works, selection_path, cache, mode='run'):
                 weight = strength(row['geometry'], context['geometry'])
                 roi = (weight > 0) & (r['profile'].classes[old['guide']] >= (3 if r['profile'].kind == 0 else 4))
                 prepared.append((r, row, old, weight, roi))
+            targets, left, top = None, 0, 0
             if any(roi.any() for _, _, _, _, roi in prepared):
                 from scipy.ndimage import distance_transform_edt
                 from reboutcx_batch_p10 import pack_normalized
@@ -203,36 +246,29 @@ def apply_context(resources, works, selection_path, cache, mode='run'):
                 if tuple(prediction.shape) != (6, 3, canvas[0]*4, canvas[1]*4):
                     raise ValueError('Contextual model output differs')
                 output = prediction.float().clamp(0, 1).cpu().numpy()
+                if trim_cuda and not report['new_neural_targets']:
+                    del prediction
+                    torch.cuda.empty_cache()
+                    with torch.inference_mode():
+                        prediction = model(tensor)
+                    if not np.array_equal(output, prediction.float().clamp(0, 1).cpu().numpy()):
+                        raise ValueError('CUDA cache trim changed contextual neural output')
+                    report['cuda_trim_exact_output_checks'] = 6
                 targets = np.stack([np.ascontiguousarray(np.clip(resize(
                     o[:, :H*4, :W*4].transpose(1, 2, 0), (W*2, H*2), ResizeFilter.Box, False),
                     0, 1), dtype=np.float32) for o in output])
                 del tensor, prediction, output
+                if trim_cuda:
+                    torch.cuda.empty_cache()
                 report['new_neural_targets'] += 6
-            nodes = []
-            for part, (r, row, old, weight, roi) in enumerate(prepared):
-                node = dict(parent_key=row['key'], encoded_key=row['key'], changed_pixels=0)
-                if roi.any():
-                    a = row['geometry']; x, y = -a[2]-left, -a[3]-top
-                    crop = targets[:, y*2:y*2+a[1]*2, x*2:x*2+a[0]*2][:, roi, :]
-                    blend = (old_targets(works[row['key']], roi)*(1-weight[roi][None, :, None])+
-                        crop*weight[roi][None, :, None]).astype(np.float32)
-                    encoded = r['profile'].encode(old['guide'][roi][None, :], blend[:, None, :, :])
-                    result = {k: v.copy() for k, v in old.items()}
-                    result['I'][roi], result['F'][roi] = encoded['I'][0], encoded['F'][0]
-                    result['dep'] = r['profile'].dependencies(result['I'], result['F'])
-                    validate_encoded(r['profile'], result['I'], result['F'], result['guide'], result['dep'])
-                    assert np.array_equal(result['I'][~roi], old['I'][~roi])
-                    assert np.array_equal(result['F'][~roi], old['F'][~roi])
-                    node['changed_pixels'] = int(((result['I'] != old['I']) | (result['F'] != old['F'])).sum())
-                    if node['changed_pixels']:
-                        key = digest([recipe_key, ck, part, row['key']]); dest = work/'encoded'/(key+'.npz')
-                        if dest.exists():
-                            with np.load(dest, allow_pickle=False) as z:
-                                assert all(np.array_equal(z[k], v) for k, v in result.items())
-                        else:
-                            save(dest, **result)
-                        node.update(encoded_key=key, encoded_sha256=file_sha(dest))
-                nodes.append(node)
+            shared = (targets, left, top, recipe_key, ck, work, works, old_targets)
+            jobs = [((part, *item), shared) for part, item in enumerate(prepared)]
+            if encode_workers == 1:
+                nodes = list(map(repair_part,jobs))
+            else:
+                from concurrent.futures import ThreadPoolExecutor
+                with ThreadPoolExecutor(max_workers=encode_workers) as pool:
+                    nodes = list(pool.map(repair_part,jobs))
             record = dict(recipe_key=recipe_key, nodes=nodes, changed_outside_band=0)
             write_json(checkpoint, record)
         records[ck] = record

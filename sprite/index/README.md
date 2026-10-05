@@ -200,3 +200,5 @@ $m.stock_cre_usage | Select-Object cre_resource_count, animation_id_count, `
 - Gros sprites divisés spatialement : [pipeline contextuel systématique](../../pipeline/SPRITES_Q3M_MULTIPART.md), intégré au producteur `q3m_family_witnesses.py` (plan/run/pack).
 
 - Monster_old **complet disponible installé, QA en attente** : [run](../../docs/measurements/q3m-monster-old-full-x2-20261004-v1/README.md), [46 CLUA neutres](../../docs/measurements/q3m-monster-old-full-x2-20261004-v1/CLUA.txt). 18 modèles/46 palettes natives,79 BAM/217 feuilles/17 752 frames physiques (218 liaisons/17 754 frames liées) Q3m V7 K6 x2 amélioré sans SDF ;huit IDs7D01–7D08 absents. Onze familles/126 IDs installés ;neuf familles/79 IDs acceptés conservés.
+
+- MultiNew complet installé, QA en attente : [run](../../docs/measurements/q3m-multi-new-full-x2-20261005-v1/README.md), [10 CLUA](../../docs/measurements/q3m-multi-new-full-x2-20261005-v1/CLUA.txt). Quatre modèles/10 IDs, 30 palettes par banque, contextes natifs quatre/neuf parties ; douze familles/136 IDs installés, neuf familles/79 IDs acceptés conservés.

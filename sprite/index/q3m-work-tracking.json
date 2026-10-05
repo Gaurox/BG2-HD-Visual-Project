@@ -41,8 +41,8 @@
     "does_not_measure": "asset-coverage-or-QA",
     "integration_reference": "docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json",
     "candidate_reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json",
-    "installed_candidate_reference": "docs/measurements/q3m-monster-old-full-x2-20261004-v1/current-generation.json",
-    "latest_installation_verification_reference": "docs/measurements/q3m-monster-old-full-x2-20261004-v1/installation-verification.json"
+    "installed_candidate_reference": "docs/measurements/q3m-multi-new-full-x2-20261005-v1/current-generation.json",
+    "latest_installation_verification_reference": "docs/measurements/q3m-multi-new-full-x2-20261005-v1/installation-verification.json"
   },
   "method": {
     "current": "Q3m-K6-four-partners-eight-levels",
@@ -67,7 +67,7 @@
       "four-partners-eight-levels",
       "sixteen-levels"
     ],
-    "state": "Q3m-x2-flying-accepted-Ankheg-V9-SDF-stable-accepted-Ogre-installed-Large16-V7-no-SDF-accepted-Ambient_static-V7-no-SDF-horse-eye-v3-accepted-Town_static-V7-no-SDF-accepted-Ambient-V7-no-SDF-accepted-Character_old-V7-V9-guards-SDF-accepted-other-families-pilot-Monster_layered-V7-no-SDF-accepted-Monster_quadrant-contextual-V7-no-SDF-accepted-Monster_old-V7-no-SDF-installed-ingame-pending",
+    "state": "Q3m-x2-flying-accepted-Ankheg-V9-SDF-stable-accepted-Ogre-installed-Large16-V7-no-SDF-accepted-Ambient_static-V7-no-SDF-horse-eye-v3-accepted-Town_static-V7-no-SDF-accepted-Ambient-V7-no-SDF-accepted-Character_old-V7-V9-guards-SDF-accepted-other-families-pilot-Monster_layered-V7-no-SDF-accepted-Monster_quadrant-contextual-V7-no-SDF-accepted-Monster_old-V7-no-SDF-installed-ingame-pending-MultiNew-V7-contextual-no-SDF-installed-ingame-pending",
     "format_compatibility": "V7 reader implemented; V6 unchanged",
     "next_recipe_selection": "selected-for-pilot; sixteen-levels remains diagnostic",
     "selected": "four-partners-eight-levels",
@@ -82,10 +82,10 @@
     "with_bam_without_q3m_reference": 254,
     "counting_rule": "IDs count consumers; BAMs/frames shared; family counts not summed as physical work",
     "current_recipe_witness_ids": 15,
-    "current_recipe_complete_animation_ids": 126,
+    "current_recipe_complete_animation_ids": 136,
     "current_recipe_ingame_accepted_families": 9,
-    "current_recipe_complete_families": 11,
-    "current_recipe_installed_animation_ids": 126,
+    "current_recipe_complete_families": 12,
+    "current_recipe_installed_animation_ids": 136,
     "current_recipe_ingame_accepted_animation_ids": 79,
     "ingame_acceptance_counting_rule": "unique families/IDs across accepted full productions and current contour trials; QA belongs to exact variant/runtime"
   },
@@ -758,7 +758,7 @@
         "unique_model_candidate_work": 16773,
         "source_work_shared_with_character": 1,
         "descriptor": "sprite/index/q3m-source-work-plan.json",
-        "remaining_gpu_work": null
+        "remaining_gpu_work": 0
       },
       "current_colour_witness": {
         "animation_id": "0x1201",
@@ -778,8 +778,107 @@
         "physical_frames": 972,
         "unique_source_work": 109,
         "unique_encoded_work": 109,
-        "state": "host-verified-ingame-pending",
-        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
+        "state": "installed-via-complete-native-palette-family-ingame-pending",
+        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json",
+        "installation_reference": "docs/measurements/q3m-multi-new-full-x2-20261005-v1/installation-verification.json"
+      },
+      "current_full_production": {
+        "reference": "docs/measurements/q3m-multi-new-full-x2-20261005-v1/current-generation.json",
+        "selection": "docs/measurements/q3m-multi-new-full-x2-20261005-v1/selection.json",
+        "animation_ids": [
+          "0x1200",
+          "0x1201",
+          "0x1202",
+          "0x1203",
+          "0x1204",
+          "0x1205",
+          "0x1206",
+          "0x1207",
+          "0x1208",
+          "0x1300"
+        ],
+        "source_absent_animation_ids": [],
+        "models": 4,
+        "colour_variants": 10,
+        "physical_resources": 5155,
+        "physical_frames": 519867,
+        "logical_resource_bindings": 5155,
+        "bound_frames": 519867,
+        "unique_native_BAM": 1753,
+        "original_native_frames": 191817,
+        "unique_original_source_work": 17103,
+        "unique_source_work": 41149,
+        "unique_encoded_work": 42772,
+        "stats": {
+          "encoded_cache_hits": 42772
+        },
+        "multipart_context": {
+          "contexts": 5411,
+          "referenced_native_frames": 519867,
+          "unreferenced_native_frames": 0,
+          "context_cache_hits": 1823,
+          "new_neural_targets": 21348,
+          "changed_encoded_pixels": 49157454,
+          "changed_outside_band": 0,
+          "band_native_pixels": 4,
+          "scale": 2,
+          "SDF": false,
+          "context_encode_workers": 8,
+          "cuda_trim_exact_output_checks": 6,
+          "recipe_key": "4a36d4bb2eb6a8ed1a3cfc5bca98bf7e6c2ee5aa135c48fba081faebb9ff33e2"
+        },
+        "resume_cache_hits": 42772,
+        "runtime_reference": "docs/measurements/q3m-monster-quadrant-full-x2-20261004-v1/runtime.json",
+        "installation_reference": "docs/measurements/q3m-multi-new-full-x2-20261005-v1/ingame-installation/active-test.json",
+        "installation_snapshot": "docs/measurements/q3m-multi-new-full-x2-20261005-v1/installation-verification.json",
+        "state": "family-complete-produced-installed-ingame-QA-pending",
+        "registry_version": 7,
+        "SDF": false,
+        "qa_ingame": false,
+        "release": false,
+        "cumulative_stats": {
+          "new_neural_targets": 239956,
+          "initial_acquired_encoded_cache_hits": 205,
+          "retained_special_encoded_work": 2241,
+          "retained_body_encoded_work": 40326,
+          "completed_new_guides": 40943
+        },
+        "encode_workers": 16,
+        "palette_acceleration": {
+          "mode": "gpu-grouped-guarded-v1",
+          "sha256": "48238d6fc24957d3cc2cec003d44ecc551999b847eabd40d053c8cc6449e604a",
+          "stats": {
+            "pixels": 63021543,
+            "ambiguous_pixels": 185,
+            "cpu_blocks": 185,
+            "total_blocks": 259553,
+            "collapsed_candidates": 130447
+          },
+          "benchmark": "acceleration-benchmark.json",
+          "validation": "acceleration-validation.json"
+        }
+      },
+      "state": "family-complete-produced-installed-ingame-QA-pending",
+      "current_installation": {
+        "state": "installed-ingame-pending",
+        "reference": "docs/measurements/q3m-multi-new-full-x2-20261005-v1/installation-verification.json",
+        "receipt": "docs/measurements/q3m-multi-new-full-x2-20261005-v1/ingame-installation/active-test.json",
+        "catalogue_sha256": "cb14e24171eb8567bdb0beaafe2463a4222cf00c2559925ee2a335235cb03411",
+        "dll_sha256": "06b7b1f646f4f62bb6c93c55aa1f76ed9193d23850f19abb8cd3b35e773b4d32",
+        "animation_ids": [
+          "0x1200",
+          "0x1201",
+          "0x1202",
+          "0x1203",
+          "0x1204",
+          "0x1205",
+          "0x1206",
+          "0x1207",
+          "0x1208",
+          "0x1300"
+        ],
+        "SDF": false,
+        "qa_ingame": false
       }
     },
     {
@@ -2720,6 +2819,83 @@
       "SDF": false,
       "qa_ingame": false,
       "release": false
+    },
+    {
+      "family": "multi_new",
+      "reference": "docs/measurements/q3m-multi-new-full-x2-20261005-v1/current-generation.json",
+      "selection": "docs/measurements/q3m-multi-new-full-x2-20261005-v1/selection.json",
+      "animation_ids": [
+        "0x1200",
+        "0x1201",
+        "0x1202",
+        "0x1203",
+        "0x1204",
+        "0x1205",
+        "0x1206",
+        "0x1207",
+        "0x1208",
+        "0x1300"
+      ],
+      "source_absent_animation_ids": [],
+      "models": 4,
+      "colour_variants": 10,
+      "physical_resources": 5155,
+      "physical_frames": 519867,
+      "logical_resource_bindings": 5155,
+      "bound_frames": 519867,
+      "unique_native_BAM": 1753,
+      "original_native_frames": 191817,
+      "unique_original_source_work": 17103,
+      "unique_source_work": 41149,
+      "unique_encoded_work": 42772,
+      "stats": {
+        "encoded_cache_hits": 42772
+      },
+      "multipart_context": {
+        "contexts": 5411,
+        "referenced_native_frames": 519867,
+        "unreferenced_native_frames": 0,
+        "context_cache_hits": 1823,
+        "new_neural_targets": 21348,
+        "changed_encoded_pixels": 49157454,
+        "changed_outside_band": 0,
+        "band_native_pixels": 4,
+        "scale": 2,
+        "SDF": false,
+        "context_encode_workers": 8,
+        "cuda_trim_exact_output_checks": 6,
+        "recipe_key": "4a36d4bb2eb6a8ed1a3cfc5bca98bf7e6c2ee5aa135c48fba081faebb9ff33e2"
+      },
+      "resume_cache_hits": 42772,
+      "runtime_reference": "docs/measurements/q3m-monster-quadrant-full-x2-20261004-v1/runtime.json",
+      "installation_reference": "docs/measurements/q3m-multi-new-full-x2-20261005-v1/ingame-installation/active-test.json",
+      "installation_snapshot": "docs/measurements/q3m-multi-new-full-x2-20261005-v1/installation-verification.json",
+      "state": "family-complete-produced-installed-ingame-QA-pending",
+      "registry_version": 7,
+      "SDF": false,
+      "qa_ingame": false,
+      "release": false,
+      "cumulative_stats": {
+        "new_neural_targets": 239956,
+        "initial_acquired_encoded_cache_hits": 205,
+        "retained_special_encoded_work": 2241,
+        "retained_body_encoded_work": 40326,
+        "completed_new_guides": 40943
+      },
+      "encode_workers": 16,
+      "palette_acceleration": {
+        "mode": "gpu-grouped-guarded-v1",
+        "sha256": "48238d6fc24957d3cc2cec003d44ecc551999b847eabd40d053c8cc6449e604a",
+        "stats": {
+          "pixels": 63021543,
+          "ambiguous_pixels": 185,
+          "cpu_blocks": 185,
+          "total_blocks": 259553,
+          "collapsed_candidates": 130447
+        },
+        "benchmark": "acceleration-benchmark.json",
+        "validation": "acceleration-validation.json"
+      }
     }
   ],
   "current_contour_trials": [

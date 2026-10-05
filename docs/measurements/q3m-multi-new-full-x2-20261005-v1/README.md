@@ -1,0 +1,14 @@
+# MultiNew complet — Q3m amélioré x2 installé
+
+- 10 IDs/4 modèles : MDR1 rouge/vert/aqua/bleu/brun/multicolore/violet ; MDR2 noir, MDR3 argent, MDEM Démogorgon. 1 753 BAM/191 817 frames natives ; 5155 feuilles/519867 frames physiques, 5 155 liaisons/519 867 frames liées.
+- 17 103 sources originales -> 42 772 travaux compatibles, 30 palettes BMP natives par banque ; 5 411 assemblages contextuels, zéro changement hors bande. Q3m V7 K6 x2 amélioré/CatmullRom sans SDF.
+- DLL/INI/shaders acquis inchangés ; 10 CRE tests QMUL neutres. Douze familles/136 IDs installés ; neuf familles/79 IDs acceptés inchangés. **Monster_old et MultiNew : QA en attente** ; aucune release déduite.
+- Décodeur natif K6×3formats : 519 867 frames/cycles liés ; assemblage ordonné des cellules natives quatre/neuf parties : 42156 cas. Contrat palettes/géométrie/indices spéciaux/représentants vérifié.
+- Vérification cache-only : 42 772 encodages de base et 5 411 checkpoints relus sans import Torch ; aucune inférence durant ces contrôles. Production reprise : 1 823 contextes acquis conservés, 3 588 terminés, 21 348 nouvelles cibles contextuelles. Statistiques exactes `production.json`, recettes/contextes `multipart_context`.
+- Anciennes 207 animations/7 102 composants/55 733 routes et 2853 fichiers acquis préservés. Catalogue actif : `catalog-proof.json`. Aucun BAM/INI/BMP natif remplacé.
+- Autorités : `current-generation.json`, `production.json`, `verification.json`, `runtime-route.json`, `installation-verification.json`, `installed-native-verification.json`, reçu local `ingame-installation/active-test.json`.
+- Essais : `CLUA.txt`/`creatures.json`, dix créatures neutres sans scripts/effets/équipement. Trois comparatifs `comparison*.png`, assemblages complets natif x2/Q3m. Aucun test ingame réalisé par l'agent.
+- Restauration : `restore.ps1`, jeu et InfinityLoader fermés ; parent catalogue conservé hors git `work/before`. Caches/assets locaux sous `sprite/.work/q3m-multi-new-full-x2-20261005-v1` ; sources et manifests de production versionnés, payload/release inchangés.
+- Calculs GPU de base cumulés : 239956 cibles uniques ; les reprises CPU n'en génèrent aucune. Encodage : 16 threads/BLAS1 ; mesure synthétique `encode-scheduling.json`, SHA serial/parallèle identiques.
+- Accélération palette : `gpu-grouped-guarded-v1`, source/compteurs `production.json`, mesures réelles `acceleration-benchmark.json`, comparaison CPU acquise et ROIs `acceleration-validation.json`. Les encodages CPU acquis sont conservés octet pour octet ; les ambiguïtés GPU sont recalculées par blocs CPU originaux.
+- Complément visuel : `preview-visible.py`/`comparison-visible*.png`, trois planches de poses natives visibles (seuil 512 pixels corps). Planches initiales conservées ; les poses vides le sont déjà dans la source. Inspection hors jeu effectuée ; QA ingame toujours en attente.

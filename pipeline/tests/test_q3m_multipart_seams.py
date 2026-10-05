@@ -84,4 +84,42 @@ class ContextualSeamsTests(unittest.TestCase):
                 seams.apply_context(parts,works,p,cache,'bind')
         self.assertNotIn('torch',sys.modules)
 
+    def test_nine_parts_parallel_match_serial_and_preserve_outside_band(self):
+        from concurrent.futures import ThreadPoolExecutor
+        from palette_q3m_partners import Profile
+        from palette_work_plan import file_sha
+        rng=np.random.default_rng(31)
+        fitting=rng.integers(0,256,(6,256,3),dtype=np.uint8)
+        source=np.column_stack((fitting[0,:,::-1],np.zeros(256,np.uint8)))
+        geometries=[(12,12,-x*12,-y*12,0) for y in range(3) for x in range(3)]
+        target=rng.random((6,72,72,3),dtype=np.float32);templates=[];works={}
+        for n,a in enumerate(geometries):
+            guide=rng.integers(0,256,(24,24),dtype=np.uint8);guide[0,:3]=[0,1,2]
+            profile=Profile(0,source,fitting);fraction=np.zeros_like(guide)
+            old=dict(guide=guide,I=guide.copy(),F=fraction,dep=profile.dependencies(guide,fraction))
+            weight=seams.strength(a,geometries);roi=(weight>0)&(profile.classes[guide]>=3)
+            row=dict(key=f'part{n}',geometry=a)
+            templates.append((n,row,old,weight,roi))
+            works[row['key']]=dict(targets=rng.random((6,24,24,3),dtype=np.float32))
+        def original_targets(item,roi):return item['targets'][:,roi,:]
+        with tempfile.TemporaryDirectory() as temporary:
+            results=[]
+            for workers in (1,8):
+                work=Path(temporary)/str(workers);profile=Profile(0,source,fitting)
+                shared=(target,0,0,'recipe','context',work,works,original_targets)
+                jobs=[((n,dict(profile=profile),row,old,weight,roi),shared)
+                      for n,row,old,weight,roi in templates]
+                with ThreadPoolExecutor(max_workers=workers) as pool:
+                    nodes=list(pool.map(seams.repair_part,jobs))
+                results.append(nodes)
+                for node,(_,row,old,_,roi) in zip(nodes,templates):
+                    self.assertGreater(node['changed_pixels'],0)
+                    path=work/'encoded'/(node['encoded_key']+'.npz')
+                    self.assertEqual(file_sha(path),node['encoded_sha256'])
+                    with np.load(path) as data:
+                        self.assertTrue(np.array_equal(data['guide'],old['guide']))
+                        for plane in ('I','F'):
+                            self.assertTrue(np.array_equal(data[plane][~roi],old[plane][~roi]))
+            self.assertEqual(results[0],results[1])
+
 if __name__=='__main__':unittest.main()

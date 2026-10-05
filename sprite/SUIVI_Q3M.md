@@ -33,7 +33,7 @@
 | `monster_old` | 46/54 | — | **Famille disponible complète installée, QA en attente**, Q3m V7 K6 x2 amélioré sans SDF ;18 modèles/46 variantes natives,79 BAM/217 feuilles/17 752 frames physiques (218 liaisons/17 754 frames liées). Huit IDs sans source. |
 | `monster_icewind` | 44/132 | — | Séquences de style IWD ; contrat palette propre à l'animation. Orcs, gobelins, ettins, liches. |
 | `monster_quadrant` | 7/9 | — | **Famille disponible complète Q3m V7 x2 contextuel palette améliorée sans SDF installée et validée ingame** ; deux modèles/sept palettes, 36 BAM natifs/132 feuilles/12 928 frames ; quadrants vides préservés, MWDR1101/1105 sans source. |
-| `multi_new` | 10/10 | — | Grands composites, quadrants et BAM divisés selon l'INI ; dragons, Démogorgon. |
+| `multi_new` | 10/10 | — | **Complète installée, QA en attente** : neuf dragons (trois modèles, sept palettes MDR1) et Démogorgon ; Q3m K6 x2 amélioré, raccords contextuels quatre/neuf parties, sans SDF. |
 | `monster_layered` | 7/7 | — | **Famille complète Q3m V7 x2 palette améliorée sans SDF installée et validée ingame** ; 65 BAM utiles/6 422 frames, sept modèles, corps/armes, deux chemins natifs. MSIRG2BE orphelin exclu. |
 | `monster_ankheg` | 1/1 | — | Ankheg ; **famille complète V9 SDF x2 + attente HD installée et validée**, 12 BAM / 516 frames ; couleurs V7, corps/terre et enfouissement/émergence. |
 | `monster_large` | 1/1 | — | Ogre ; **famille complète V7 x2 installée**, 7 BAM / 434 frames ; QA ingame en attente. |
@@ -47,7 +47,7 @@
 
 - `index/q3m-work-tracking.json` : décisions de méthode, estimation moteur, familles et références ; **plan**, aucune autorité supplémentaire sur les états métier.
 - `index/q3m-work-items.csv` : 465 IDs, dont 335 avec BAM et 130 sans BAM. Une ligne par animation ; composants/équipement reliés par `family_ids`. `q3m-reference-available` / `to-produce-or-extend-profile` / `source-absent` = état de queue, pas validation.
-- Historique V6 : 81 IDs avec référence Q3m ; 254 IDs avec BAM sans référence V6 inscrite. Nouvelle recette : **15 IDs témoins partiels, 126 IDs /11 familles disponibles complètes installées ; 79 IDs /9 familles validées (`flying`, `monster_ankheg` V9 stable, `monster_large16` V7 sans SDF, `ambient_static` V7 sans SDF +cheval œil v3, `town_static` V7 sans SDF, `ambient` V7 sans SDF, `character_old` V7/V9 SDF gardes seulement, `monster_layered` V7 sans SDF, `monster_quadrant` V7 contextuel sans SDF)** ; colonnes `q3m_v7_witness_*`, `q3m_v7_full_production_reference`, `q3m_v7_installation_reference` du CSV. QA propre à chaque variante/runtime. Ogre reste QA en attente ; V10 Character en stock exclu de l'installation et des validations. Pas de taux global à partir des frames/BAM partagés.
+- Historique V6 : 81 IDs avec référence Q3m ; 254 IDs avec BAM sans référence V6 inscrite. Nouvelle recette : **15 IDs témoins partiels, 136 IDs /12 familles disponibles complètes installées ; 79 IDs /9 familles validées (`flying`, `monster_ankheg` V9 stable, `monster_large16` V7 sans SDF, `ambient_static` V7 sans SDF +cheval œil v3, `town_static` V7 sans SDF, `ambient` V7 sans SDF, `character_old` V7/V9 SDF gardes seulement, `monster_layered` V7 sans SDF, `monster_quadrant` V7 contextuel sans SDF)** ; colonnes `q3m_v7_witness_*`, `q3m_v7_full_production_reference`, `q3m_v7_installation_reference` du CSV. QA propre à chaque variante/runtime. Ogre reste QA en attente ; V10 Character en stock exclu de l'installation et des validations. Pas de taux global à partir des frames/BAM partagés.
 - Character : `../docs/measurements/playable-q3m-x2-ingame-20261002-v1/current-generation.json` ; 78 IDs / 4 510 BAM.
 - Monster `0x7F02`, `0x7F07`, `0x7F30` : `../docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json` ; delta 39 BAM / 20 925 frames, catalogue mixte prêt à installer selon son pointeur. Cela ne prouve pas l'installation actuelle.
 - QA = `index/qa-decisions/` ; installation = reçu actif du run concerné ; release = candidats puis `content.json`. Références indépendantes, aucun état réconcilié dans cette queue.
@@ -261,3 +261,10 @@ Flying : alias intérieur `BIRD_IN` = même ressource ; listes `CLUA-generiques.
 - 46 IDs/18 modèles,79 BAM natifs/6 917 frames originales ;217 feuilles/17 752 frames physiques (218 liaisons/17 754 frames liées) Q3m V7 K6 x2 palette améliorée sans SDF. 16 785 encodages uniques ;100644 cibles neuves, aucune répétition physique retraitée. Trente palettes BMP natives authentifiées, sept INV auxiliaires conservés.
 - Huit IDs7D01–7D08 sans BAM exclus. DLL/INI/shaders/acquis conservés ;46 CRE tests QOLD neutres sans scripts/effets/équipement. [Run/CLUA](../docs/measurements/q3m-monster-old-full-x2-20261004-v1/README.md).
 - Onze familles/126 IDs installés ;neuf familles/79 IDs acceptés inchangés. **QA ingame en attente**, aucune release/validation déduite.
+
+## MultiNew : complet installé — 2026-10-05
+
+- 10 IDs/4 modèles : MDR1 rouge/vert/aqua/bleu/brun/multicolore/violet ; MDR2 noir, MDR3 argent, MDEM Démogorgon. 1 753 BAM/191 817 frames natives ; 5155 feuilles/519867 frames physiques, 5 155 liaisons/519 867 frames liées.
+- 17 103 sources originales -> 42 772 travaux compatibles, 30 palettes BMP natives par banque ; 5 411 assemblages contextuels, zéro changement hors bande. Q3m V7 K6 x2 amélioré/CatmullRom sans SDF.
+- DLL/INI/shaders acquis inchangés ; 10 CRE tests QMUL neutres. Douze familles/136 IDs installés ; neuf familles/79 IDs acceptés inchangés. **Monster_old et MultiNew : QA en attente** ; aucune release déduite.
+- [Run et CLUA](../docs/measurements/q3m-multi-new-full-x2-20261005-v1/README.md).
