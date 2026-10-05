@@ -1,0 +1,151 @@
+{
+  "schema": "bg2-upscale-native-sprite-family-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-10-05T20:07:56.169935+00:00",
+  "scope": {
+    "kind": "installed-native-family-complete-world",
+    "engine_family": "monster_large",
+    "animation_ids": [
+      "0x9000"
+    ],
+    "models": 1,
+    "creature_consumers": 22,
+    "resources": 7,
+    "resource_bindings": 7,
+    "frames": 434,
+    "scale": 2,
+    "SDF": false,
+    "source_absent": [],
+    "inventory_resource": "MOGRINV produced; dedicated UI QA not claimed"
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "user_statement": "l'ogre est validé? il est indiqué toujours en attente de QA ! je veux toute la famille validée QA si c'est pas déja le cas",
+    "individual_scenario_details": "not specified by user",
+    "individual_creature_spawn_tests": "not claimed; 22 consumers share one accepted avatar",
+    "accepted_as_installed": true
+  },
+  "runtime_contract": {
+    "runtime": {
+      "path": "docs/measurements/q3m-multi-new-frame-stability-20261005-v2/runtime.json",
+      "sha256": "d87a02651c8ba2d331cef039bae21a3838786159bf02aa50ba7b316f48299756",
+      "bytes": 2422,
+      "serialization": "Git HEAD blob; working copy equivalent modulo CRLF"
+    },
+    "dll": {
+      "path": "sprite/.work/q3m-multi-new-frame-stability-20261005-v2/runtime-build/Release/InfinityEngine-Enhancer.dll",
+      "sha256": "cf9fade9b8a620abdf2c052c1a4da989c5958cbca1715da984f5691f1bf15e89",
+      "bytes": 2118656
+    },
+    "catalogue_sha256": "cb14e24171eb8567bdb0beaafe2463a4222cf00c2559925ee2a335235cb03411",
+    "owner": 10,
+    "native_render_owners": [
+      "MonsterLarge"
+    ],
+    "native_palette_kinds": [
+      1
+    ],
+    "registry_version": 7,
+    "world_filter": "CatmullRom",
+    "colour": "K6-four-partners-eight-levels/rule3",
+    "SDF": false,
+    "native_geometry": true,
+    "installed_runtime_files": [
+      {
+        "relative_path": "InfinityEngine-Enhancer.dll",
+        "sha256": "cf9fade9b8a620abdf2c052c1a4da989c5958cbca1715da984f5691f1bf15e89"
+      },
+      {
+        "relative_path": "InfinityEngine-Enhancer.ini",
+        "sha256": "68b322543c53bd59621577cb98ec814b2e33123084adea90d6abe00d219c2ad4"
+      },
+      {
+        "relative_path": "override/fpDraw.glsl",
+        "sha256": "c6f1f23d99d16bfd34fc3eac1577f24c096c4c00f0427cea69e8bde779311827"
+      },
+      {
+        "relative_path": "override/fpSprite.glsl",
+        "sha256": "065e28c595af84a7addcbd97793bc8eedcb5052bb26bab1d92710cb0e2fd0816"
+      },
+      {
+        "relative_path": "override/fpSELECT.glsl",
+        "sha256": "e4e70c98de1e6826c47f934ac3e600af06f105f69cc80f84e2289d28e5952815"
+      }
+    ]
+  },
+  "asset_scope": {
+    "inventory": {
+      "path": "docs/measurements/q3m-monster-large-accepted-x2-20261005-v1/asset-scope.csv",
+      "sha256": "7c3a11acc5e29031b072373f7ed0b7338af30e69cd837120eddabcfb616902ce",
+      "bytes": 1504
+    },
+    "ordering": "animation_id,resref ascending; UTF-8 CSV LF, header included in SHA256",
+    "physical_leaf_count": 7,
+    "binding_count": 7,
+    "catalogue": {
+      "path": "sprite/.work/q3m-multi-new-full-x2-20261005-v1/combined/iee-assets/creature-sprites/CreatureSprites-XN.catalog",
+      "sha256": "cb14e24171eb8567bdb0beaafe2463a4222cf00c2559925ee2a335235cb03411",
+      "bytes": 3375392
+    },
+    "physical_leaf_hashes_verified": 7,
+    "selected_routes_unchanged": true
+  },
+  "provenance": {
+    "generation": {
+      "path": "docs/measurements/q3m-monster-large-full-x2-20261003-v1/current-generation.json",
+      "sha256": "ad80aa0ab6604350ea927d0e243ab0bb16a03d599b22a485a5d3918638fdec08",
+      "bytes": 1379,
+      "serialization": "Git HEAD blob; working copy equivalent modulo CRLF"
+    },
+    "production": {
+      "path": "docs/measurements/q3m-monster-large-full-x2-20261003-v1/production.json",
+      "sha256": "34e25aa6a09107c2faffdc1f4a49ce9141325442009da7cc95de692fe82d2bd2",
+      "bytes": 9635,
+      "serialization": "Git HEAD blob; working copy equivalent modulo CRLF"
+    },
+    "original_runtime": {
+      "path": "pipeline/runtime/manifests/iee-sprite-q3m-v7-x2-all-families-20261003-v1.json",
+      "sha256": "141af2b91d6e55b6a6c1146503ce5a3f7b22c08104f7e616222291ac4c41526c",
+      "bytes": 48296,
+      "serialization": "Git HEAD blob; working copy equivalent modulo CRLF"
+    },
+    "current_runtime_generation": {
+      "path": "docs/measurements/q3m-multi-new-frame-stability-20261005-v2/current-generation.json",
+      "sha256": "ff45c4d3897ab321fec5e90bfc2dc417c6c1894d7d30257db3868859e101c443",
+      "bytes": 2225,
+      "serialization": "Git HEAD blob; working copy equivalent modulo CRLF"
+    },
+    "current_runtime_installation_snapshot": {
+      "path": "docs/measurements/q3m-multi-new-frame-stability-20261005-v2/installation-verification.json",
+      "sha256": "2546fa5c81e62ca8634e1489ee0f9ea5d4b70c3430cd3080fe326491ebc8ebea",
+      "bytes": 1567,
+      "serialization": "Git HEAD blob; working copy equivalent modulo CRLF"
+    },
+    "original_asset_installation_snapshot": {
+      "path": "docs/measurements/q3m-monster-large-full-x2-20261003-v1/installation-verification.json",
+      "sha256": "45234704f611d46a197db99b063c7572e71ade1abdbfd4f0d407e3fc582ca223",
+      "bytes": 1537,
+      "serialization": "Git HEAD blob; working copy equivalent modulo CRLF"
+    },
+    "original_asset_installation_receipt": {
+      "path": "docs/measurements/q3m-monster-large-full-x2-20261003-v1/ingame-installation/active-test.json",
+      "sha256": "6d418b7d96eda819a7eaaa28b7b4828b8c00ce6015cd0eb805e5014402402295",
+      "bytes": 4552
+    },
+    "host_tests": {
+      "path": "docs/measurements/q3m-monster-large-full-x2-20261003-v1/host-tests.json",
+      "sha256": "b5fee880ed10f7ebaea263560b8e5b74e392b36f21041fe17059ba71e6990a13",
+      "bytes": 450,
+      "serialization": "Git HEAD blob; working copy equivalent modulo CRLF"
+    },
+    "creatures": {
+      "path": "docs/measurements/q3m-monster-large-full-x2-20261003-v1/creatures.json",
+      "sha256": "28be0f65386296532ac7468dc1c108b7219e5e5c8d1b9b0000fa513fa9be1556",
+      "bytes": 8850,
+      "serialization": "Git HEAD blob; working copy equivalent modulo CRLF"
+    }
+  },
+  "release": false
+}
