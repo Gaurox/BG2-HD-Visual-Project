@@ -1,0 +1,214 @@
+{
+  "schema": "bg2-upscale-native-sprite-family-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-10-05T19:59:00.329922+00:00",
+  "scope": {
+    "kind": "installed-native-family-complete-available",
+    "engine_family": "monster_old",
+    "animation_ids": [
+      "0x7000",
+      "0x7001",
+      "0x7100",
+      "0x7101",
+      "0x7200",
+      "0x7201",
+      "0x7202",
+      "0x7203",
+      "0x7400",
+      "0x7401",
+      "0x7402",
+      "0x7500",
+      "0x7501",
+      "0x7600",
+      "0x7601",
+      "0x7602",
+      "0x7603",
+      "0x7604",
+      "0x7700",
+      "0x7701",
+      "0x7702",
+      "0x7800",
+      "0x7801",
+      "0x7802",
+      "0x7900",
+      "0x7901",
+      "0x7902",
+      "0x7903",
+      "0x7904",
+      "0x7A00",
+      "0x7A01",
+      "0x7A02",
+      "0x7A03",
+      "0x7A04",
+      "0x7B00",
+      "0x7B01",
+      "0x7B02",
+      "0x7B03",
+      "0x7B04",
+      "0x7B05",
+      "0x7B06",
+      "0x7C00",
+      "0x7C01",
+      "0x7D00",
+      "0x7E00",
+      "0x7E01"
+    ],
+    "models": 18,
+    "colour_variants": 46,
+    "resources": 217,
+    "resource_bindings": 218,
+    "unique_native_BAM": 79,
+    "frames": 17752,
+    "bound_frames": 17754,
+    "original_native_frames": 6917,
+    "scale": 2,
+    "SDF": false,
+    "source_absent": [
+      "0x7D01",
+      "0x7D02",
+      "0x7D03",
+      "0x7D04",
+      "0x7D05",
+      "0x7D06",
+      "0x7D07",
+      "0x7D08"
+    ]
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "user_statement": "ok je valide les 2.\ntu peux valider tout ce pack de monstres.\nmet a jour le suivi et committe",
+    "individual_scenario_details": "not specified by user",
+    "explicitly_confirmed": [
+      "QOLD7001",
+      "QOLD7B06"
+    ],
+    "accepted_as_installed": true,
+    "analysis": {
+      "path": "docs/measurements/q3m-monster-old-7001-7b06-analysis-20261005-v1/analysis.json",
+      "sha256": "89c00ffb74d345df5917386785a9d9c56f429a6cc8ae1392a69c81fc6e1a3af2",
+      "bytes": 7733
+    },
+    "analysis_notes": {
+      "path": "docs/measurements/q3m-monster-old-7001-7b06-analysis-20261005-v1/README.md",
+      "sha256": "3639d9c32e659ac6de5ce9b7bd387bca3049c88bd7876bee5e919b5a849464ce",
+      "bytes": 4384
+    },
+    "proposed_ogrillon_and_wolf_retouches_applied": false
+  },
+  "runtime_contract": {
+    "runtime": {
+      "path": "docs/measurements/q3m-multi-new-frame-stability-20261005-v2/runtime.json",
+      "sha256": "d87a02651c8ba2d331cef039bae21a3838786159bf02aa50ba7b316f48299756",
+      "bytes": 2422
+    },
+    "dll": {
+      "path": "sprite/.work/q3m-multi-new-frame-stability-20261005-v2/runtime-build/Release/InfinityEngine-Enhancer.dll",
+      "sha256": "cf9fade9b8a620abdf2c052c1a4da989c5958cbca1715da984f5691f1bf15e89",
+      "bytes": 2118656
+    },
+    "catalogue_sha256": "cb14e24171eb8567bdb0beaafe2463a4222cf00c2559925ee2a335235cb03411",
+    "owner": 7,
+    "native_render_owners": [
+      "MonsterOld"
+    ],
+    "native_palette_kinds": [
+      0,
+      1
+    ],
+    "registry_version": 7,
+    "world_filter": "CatmullRom",
+    "colour": "K6-four-partners-eight-levels/native replacement palettes/rule3",
+    "SDF": false,
+    "native_geometry": true,
+    "installed_runtime_files": [
+      {
+        "relative_path": "InfinityEngine-Enhancer.dll",
+        "sha256": "cf9fade9b8a620abdf2c052c1a4da989c5958cbca1715da984f5691f1bf15e89"
+      },
+      {
+        "relative_path": "InfinityEngine-Enhancer.ini",
+        "sha256": "68b322543c53bd59621577cb98ec814b2e33123084adea90d6abe00d219c2ad4"
+      },
+      {
+        "relative_path": "override/fpDraw.glsl",
+        "sha256": "c6f1f23d99d16bfd34fc3eac1577f24c096c4c00f0427cea69e8bde779311827"
+      },
+      {
+        "relative_path": "override/fpSprite.glsl",
+        "sha256": "065e28c595af84a7addcbd97793bc8eedcb5052bb26bab1d92710cb0e2fd0816"
+      },
+      {
+        "relative_path": "override/fpSELECT.glsl",
+        "sha256": "e4e70c98de1e6826c47f934ac3e600af06f105f69cc80f84e2289d28e5952815"
+      }
+    ]
+  },
+  "asset_scope": {
+    "inventory": {
+      "path": "docs/measurements/q3m-monster-old-accepted-x2-20261005-v1/asset-scope.csv",
+      "sha256": "51c5813075e9d99f242398c6aa7954e5f0fda8c292cd1127bb93ceeca32ecd10",
+      "bytes": 44961
+    },
+    "ordering": "animation_id,resref ascending; UTF-8 CSV LF, header included in SHA256",
+    "physical_leaf_count": 217,
+    "binding_count": 218,
+    "catalogue": {
+      "path": "sprite/.work/q3m-multi-new-full-x2-20261005-v1/combined/iee-assets/creature-sprites/CreatureSprites-XN.catalog",
+      "sha256": "cb14e24171eb8567bdb0beaafe2463a4222cf00c2559925ee2a335235cb03411",
+      "bytes": 3375392
+    },
+    "physical_leaf_hashes_verified": 217,
+    "selected_routes_unchanged": true
+  },
+  "provenance": {
+    "generation": {
+      "path": "docs/measurements/q3m-monster-old-full-x2-20261004-v1/current-generation.json",
+      "sha256": "4276403fbff5c00f061f7fa98b6e39eb144a90036d6da01e59d80dd023e2039c",
+      "bytes": 2581
+    },
+    "production": {
+      "path": "docs/measurements/q3m-monster-old-full-x2-20261004-v1/production.json",
+      "sha256": "8dd69bdda09f5a25d5fb2170d47b38d378309bbe4a89de54c4fb56cf768a5336",
+      "bytes": 121799
+    },
+    "original_runtime": {
+      "path": "docs/measurements/q3m-monster-quadrant-full-x2-20261004-v1/runtime.json",
+      "sha256": "d9beabb1c51964f258b258a8924c87b2a8ed4ab494d5c1ecb256643ce04ff51a",
+      "bytes": 2327
+    },
+    "current_runtime_generation": {
+      "path": "docs/measurements/q3m-multi-new-frame-stability-20261005-v2/current-generation.json",
+      "sha256": "ff45c4d3897ab321fec5e90bfc2dc417c6c1894d7d30257db3868859e101c443",
+      "bytes": 2225
+    },
+    "current_runtime_installation_snapshot": {
+      "path": "docs/measurements/q3m-multi-new-frame-stability-20261005-v2/installation-verification.json",
+      "sha256": "2546fa5c81e62ca8634e1489ee0f9ea5d4b70c3430cd3080fe326491ebc8ebea",
+      "bytes": 1567,
+      "serialization": "Git HEAD blob; working copy equivalent modulo CRLF"
+    },
+    "original_asset_installation_snapshot": {
+      "path": "docs/measurements/q3m-monster-old-full-x2-20261004-v1/installation-verification.json",
+      "sha256": "4825edb75bf5ecf70b3d7464a0b462c8f0edcf8592ec2ccc12df8820bbe8351f",
+      "bytes": 1368
+    },
+    "original_asset_installation_receipt": {
+      "path": "docs/measurements/q3m-monster-old-full-x2-20261004-v1/ingame-installation/active-test.json",
+      "sha256": "8c2112bede4dea632abb45f3960d50a389f65380d45ee73e4b7c448c99c9e907",
+      "bytes": 743451
+    },
+    "verification": {
+      "path": "docs/measurements/q3m-monster-old-full-x2-20261004-v1/verification.json",
+      "sha256": "d833dc0ccc30eeb1ae9280d576a27984c7e777f54dc8749aeb73c3447a60fe07",
+      "bytes": 894
+    },
+    "fixtures": {
+      "path": "docs/measurements/q3m-monster-old-full-x2-20261004-v1/creatures.json",
+      "sha256": "73802293898c1f9a347597d5b72367891d5bf64713377e24200495f970a35b93",
+      "bytes": 28848
+    }
+  },
+  "release": false
+}
