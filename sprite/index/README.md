@@ -198,3 +198,5 @@ $m.stock_cre_usage | Select-Object cre_resource_count, animation_id_count, `
 
 - Monster_quadrant complet **validé ingame**, deux modèles/sept palettes, 132 feuilles/12 928 frames Q3m V7 x2 contextuel amélioré/CatmullRom sans SDF : [QA/décision](../../docs/measurements/q3m-monster-quadrant-accepted-x2-20261004-v1/README.md). Dix familles/80 IDs installés ; neuf familles/79 IDs acceptés.
 - Gros sprites divisés spatialement : [pipeline contextuel systématique](../../pipeline/SPRITES_Q3M_MULTIPART.md), intégré au producteur `q3m_family_witnesses.py` (plan/run/pack).
+
+- Monster_old **complet disponible installé, QA en attente** : [run](../../docs/measurements/q3m-monster-old-full-x2-20261004-v1/README.md), [46 CLUA neutres](../../docs/measurements/q3m-monster-old-full-x2-20261004-v1/CLUA.txt). 18 modèles/46 palettes natives,79 BAM/217 feuilles/17 752 frames physiques (218 liaisons/17 754 frames liées) Q3m V7 K6 x2 amélioré sans SDF ;huit IDs7D01–7D08 absents. Onze familles/126 IDs installés ;neuf familles/79 IDs acceptés conservés.

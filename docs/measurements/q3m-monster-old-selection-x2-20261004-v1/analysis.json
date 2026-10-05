@@ -1,0 +1,1259 @@
+{
+  "role": "proposal-not-production-QA-installation-release",
+  "family": "monster_old",
+  "scale": 2,
+  "SDF": false,
+  "models": 18,
+  "available_animation_ids": 46,
+  "defined_animation_ids": 54,
+  "source_absent": [
+    {
+      "animation_id": "0x7D01",
+      "name": "SLAVE_FIGHTER",
+      "resref": "NSLF"
+    },
+    {
+      "animation_id": "0x7D02",
+      "name": "CHICKEN_BROWN",
+      "resref": "ACHB"
+    },
+    {
+      "animation_id": "0x7D03",
+      "name": "CHICKEN_WHITE",
+      "resref": "ACHW"
+    },
+    {
+      "animation_id": "0x7D04",
+      "name": "HARLOT_FIGHTER",
+      "resref": "NPRF"
+    },
+    {
+      "animation_id": "0x7D05",
+      "name": "NOBLEMAN_FIGHTER",
+      "resref": "NNMF"
+    },
+    {
+      "animation_id": "0x7D06",
+      "name": "NOBLEWOMAN_FIGHTER",
+      "resref": "NNWF"
+    },
+    {
+      "animation_id": "0x7D07",
+      "name": "PEASANT_MAN_FIGHTER",
+      "resref": "NSMF"
+    },
+    {
+      "animation_id": "0x7D08",
+      "name": "PEASANT_WOMAN_FIGHTER",
+      "resref": "NSWF"
+    }
+  ],
+  "native_BAM": 79,
+  "native_physical_frames": 6917,
+  "base_unique_source_work": 6701,
+  "base_repetitions": 216,
+  "palette_bound_resources": 218,
+  "palette_bound_frames": 17754,
+  "unique_source_work": 16785,
+  "unique_encoded_work": 16785,
+  "compatible_encoded_cache_hits": 0,
+  "new_encoded_work": 16785,
+  "special_work_without_inference": 0,
+  "unique_neural_requests": 100644,
+  "existing_target_cache_hits": 0,
+  "new_neural_targets": 100644,
+  "models_and_variants": [
+    {
+      "model": "MOGH",
+      "refs": [
+        "MOGHG1",
+        "MOGHG1E",
+        "MOGHG2",
+        "MOGHG2E"
+      ],
+      "frames": 304,
+      "variants": [
+        {
+          "animation_id": "0x7000",
+          "name": "HALF_OGRE",
+          "palette": "native BAM",
+          "native_kind": 1,
+          "unique_encoded_work": 304,
+          "cache_hits": 0
+        }
+      ]
+    },
+    {
+      "model": "MOGN",
+      "refs": [
+        "MOGNG1",
+        "MOGNG1E",
+        "MOGNG2",
+        "MOGNG2E"
+      ],
+      "frames": 384,
+      "variants": [
+        {
+          "animation_id": "0x7001",
+          "name": "OGRILLON",
+          "palette": "native BAM",
+          "native_kind": 1,
+          "unique_encoded_work": 384,
+          "cache_hits": 0
+        }
+      ]
+    },
+    {
+      "model": "MBAS",
+      "refs": [
+        "MBASG1",
+        "MBASG1E",
+        "MBASG2",
+        "MBASG2E"
+      ],
+      "frames": 360,
+      "variants": [
+        {
+          "animation_id": "0x7100",
+          "name": "BASILISK",
+          "palette": "native BAM",
+          "native_kind": 0,
+          "unique_encoded_work": 360,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7101",
+          "name": "BASILISK_GREATER",
+          "palette": "MBAS_GR",
+          "native_kind": 0,
+          "unique_encoded_work": 360,
+          "cache_hits": 0
+        }
+      ]
+    },
+    {
+      "model": "MBER",
+      "refs": [
+        "MBER0INV",
+        "MBER1INV",
+        "MBERG1",
+        "MBERG1E",
+        "MBERG2",
+        "MBERG2E"
+      ],
+      "frames": 404,
+      "variants": [
+        {
+          "animation_id": "0x7200",
+          "name": "BEAR_BLACK",
+          "palette": "MBER_BL",
+          "native_kind": 0,
+          "unique_encoded_work": 402,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7201",
+          "name": "BEAR_BROWN",
+          "palette": "native BAM",
+          "native_kind": 0,
+          "unique_encoded_work": 404,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7202",
+          "name": "BEAR_CAVE",
+          "palette": "MBER_CA",
+          "native_kind": 0,
+          "unique_encoded_work": 402,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7203",
+          "name": "BEAR_POLAR",
+          "palette": "MBER_PO",
+          "native_kind": 0,
+          "unique_encoded_work": 402,
+          "cache_hits": 0
+        }
+      ]
+    },
+    {
+      "model": "MDOG",
+      "refs": [
+        "MDOGG1",
+        "MDOGG1E",
+        "MDOGG2",
+        "MDOGG2E"
+      ],
+      "frames": 272,
+      "variants": [
+        {
+          "animation_id": "0x7400",
+          "name": "DOG_WILD",
+          "palette": "MDOG_WI",
+          "native_kind": 0,
+          "unique_encoded_work": 272,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7401",
+          "name": "DOG_WAR",
+          "palette": "MDOG_WA",
+          "native_kind": 0,
+          "unique_encoded_work": 272,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7402",
+          "name": "DOG_MOON",
+          "palette": "MDOG_MO",
+          "native_kind": 0,
+          "unique_encoded_work": 272,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7603",
+          "name": "DOG_GRAY",
+          "palette": "MDOG_GR",
+          "native_kind": 0,
+          "unique_encoded_work": 272,
+          "cache_hits": 0
+        }
+      ]
+    },
+    {
+      "model": "MDOP",
+      "refs": [
+        "MDOPG1",
+        "MDOPG1E",
+        "MDOPG2",
+        "MDOPG2E"
+      ],
+      "frames": 352,
+      "variants": [
+        {
+          "animation_id": "0x7500",
+          "name": "DOPPLEGANGER",
+          "palette": "native BAM",
+          "native_kind": 0,
+          "unique_encoded_work": 352,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7501",
+          "name": "DOPPLEGANGER_GREATER",
+          "palette": "MDOP_GR",
+          "native_kind": 0,
+          "unique_encoded_work": 352,
+          "cache_hits": 0
+        }
+      ]
+    },
+    {
+      "model": "METT",
+      "refs": [
+        "METTG1",
+        "METTG1E",
+        "METTG2",
+        "METTG2E"
+      ],
+      "frames": 376,
+      "variants": [
+        {
+          "animation_id": "0x7600",
+          "name": "ETTERCAP",
+          "palette": "native BAM",
+          "native_kind": 0,
+          "unique_encoded_work": 376,
+          "cache_hits": 0
+        }
+      ]
+    },
+    {
+      "model": "MGHL",
+      "refs": [
+        "MGHLG1",
+        "MGHLG1E",
+        "MGHLG2",
+        "MGHLG2E"
+      ],
+      "frames": 352,
+      "variants": [
+        {
+          "animation_id": "0x7601",
+          "name": "MAUREZHI",
+          "palette": "MGHL_MA",
+          "native_kind": 0,
+          "unique_encoded_work": 352,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7700",
+          "name": "GHOUL",
+          "palette": "native BAM",
+          "native_kind": 0,
+          "unique_encoded_work": 352,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7701",
+          "name": "REVENANT",
+          "palette": "MGHL_RE",
+          "native_kind": 0,
+          "unique_encoded_work": 352,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7702",
+          "name": "GHAST",
+          "palette": "MGHL_GA",
+          "native_kind": 0,
+          "unique_encoded_work": 352,
+          "cache_hits": 0
+        }
+      ]
+    },
+    {
+      "model": "MSPI",
+      "refs": [
+        "MSPI3INV",
+        "MSPIG1",
+        "MSPIG1E",
+        "MSPIG2",
+        "MSPIG2E"
+      ],
+      "frames": 402,
+      "variants": [
+        {
+          "animation_id": "0x7602",
+          "name": "MYRLOCHAR",
+          "palette": "MSPI_MY",
+          "native_kind": 0,
+          "unique_encoded_work": 402,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7604",
+          "name": "SPIDER_WATER",
+          "palette": "MSPI_WA",
+          "native_kind": 0,
+          "unique_encoded_work": 402,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7A00",
+          "name": "SPIDER_GIANT",
+          "palette": "MSPI_GI",
+          "native_kind": 0,
+          "unique_encoded_work": 402,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7A01",
+          "name": "SPIDER_HUGE",
+          "palette": "MSPI_HU",
+          "native_kind": 0,
+          "unique_encoded_work": 402,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7A02",
+          "name": "SPIDER_PHASE",
+          "palette": "MSPI_PH",
+          "native_kind": 0,
+          "unique_encoded_work": 402,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7A03",
+          "name": "SPIDER_SWORD",
+          "palette": "MSPI_SW",
+          "native_kind": 0,
+          "unique_encoded_work": 402,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7A04",
+          "name": "SPIDER_WRAITH",
+          "palette": "MSPI_WR",
+          "native_kind": 0,
+          "unique_encoded_work": 402,
+          "cache_hits": 0
+        }
+      ]
+    },
+    {
+      "model": "MGIB",
+      "refs": [
+        "MGIBG1",
+        "MGIBG1E",
+        "MGIBG2",
+        "MGIBG2E"
+      ],
+      "frames": 304,
+      "variants": [
+        {
+          "animation_id": "0x7800",
+          "name": "GIBBERLING",
+          "palette": "native BAM",
+          "native_kind": 0,
+          "unique_encoded_work": 304,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7801",
+          "name": "GIBBERLING_BROOD",
+          "palette": "MGIB_BR",
+          "native_kind": 0,
+          "unique_encoded_work": 304,
+          "cache_hits": 0
+        }
+      ]
+    },
+    {
+      "model": "MSLI",
+      "refs": [
+        "MSLI2INV",
+        "MSLIG1",
+        "MSLIG1E",
+        "MSLIG2",
+        "MSLIG2E"
+      ],
+      "frames": 481,
+      "variants": [
+        {
+          "animation_id": "0x7802",
+          "name": "BLACK_PUDDING",
+          "palette": "MSLI_BL",
+          "native_kind": 0,
+          "unique_encoded_work": 394,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7900",
+          "name": "SLIME_GREEN",
+          "palette": "MSLI_GR",
+          "native_kind": 0,
+          "unique_encoded_work": 394,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7901",
+          "name": "SLIME_OLIVE",
+          "palette": "MSLI_OL",
+          "native_kind": 0,
+          "unique_encoded_work": 394,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7902",
+          "name": "SLIME_MUSTARD",
+          "palette": "MSLI_MU",
+          "native_kind": 0,
+          "unique_encoded_work": 394,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7903",
+          "name": "SLIME_OCHRE",
+          "palette": "MSLI_OC",
+          "native_kind": 0,
+          "unique_encoded_work": 394,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7904",
+          "name": "GRAY_OOZE",
+          "palette": "native BAM",
+          "native_kind": 0,
+          "unique_encoded_work": 394,
+          "cache_hits": 0
+        }
+      ]
+    },
+    {
+      "model": "MWLF",
+      "refs": [
+        "MWLF0INV",
+        "MWLF3INV",
+        "MWLFG1",
+        "MWLFG1E",
+        "MWLFG2",
+        "MWLFG2E"
+      ],
+      "frames": 384,
+      "variants": [
+        {
+          "animation_id": "0x7B00",
+          "name": "WOLF",
+          "palette": "native BAM",
+          "native_kind": 0,
+          "unique_encoded_work": 322,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7B01",
+          "name": "WOLF_WORG",
+          "palette": "MWLF_WO",
+          "native_kind": 0,
+          "unique_encoded_work": 322,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7B02",
+          "name": "WOLF_DIRE",
+          "palette": "MWLF_DI",
+          "native_kind": 0,
+          "unique_encoded_work": 322,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7B03",
+          "name": "WOLF_WINTER",
+          "palette": "MWLF_WI",
+          "native_kind": 0,
+          "unique_encoded_work": 322,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7B04",
+          "name": "WOLF_VAMPIRIC",
+          "palette": "MWLF_VA",
+          "native_kind": 0,
+          "unique_encoded_work": 322,
+          "cache_hits": 0
+        },
+        {
+          "animation_id": "0x7B05",
+          "name": "WOLF_DREAD",
+          "palette": "MWLF_DR",
+          "native_kind": 0,
+          "unique_encoded_work": 322,
+          "cache_hits": 0
+        }
+      ]
+    },
+    {
+      "model": "MWLS",
+      "refs": [
+        "MWLSG1",
+        "MWLSG1E",
+        "MWLSG2",
+        "MWLSG2E"
+      ],
+      "frames": 380,
+      "variants": [
+        {
+          "animation_id": "0x7B06",
+          "name": "WOLF_SHADOW",
+          "palette": "native BAM",
+          "native_kind": 0,
+          "unique_encoded_work": 320,
+          "cache_hits": 0
+        }
+      ]
+    },
+    {
+      "model": "MXVT",
+      "refs": [
+        "MXVTG1",
+        "MXVTG1E",
+        "MXVTG2",
+        "MXVTG2E"
+      ],
+      "frames": 288,
+      "variants": [
+        {
+          "animation_id": "0x7C00",
+          "name": "KOBOLD_XVART",
+          "palette": "native BAM",
+          "native_kind": 1,
+          "unique_encoded_work": 288,
+          "cache_hits": 0
+        }
+      ]
+    },
+    {
+      "model": "MTAS",
+      "refs": [
+        "MTASG1",
+        "MTASG1E",
+        "MTASG2",
+        "MTASG2E"
+      ],
+      "frames": 320,
+      "variants": [
+        {
+          "animation_id": "0x7C01",
+          "name": "KOBOLD_TASLOI",
+          "palette": "native BAM",
+          "native_kind": 0,
+          "unique_encoded_work": 320,
+          "cache_hits": 0
+        }
+      ]
+    },
+    {
+      "model": "MZOM",
+      "refs": [
+        "MZOMG1",
+        "MZOMG1E",
+        "MZOMG2",
+        "MZOMG2E"
+      ],
+      "frames": 560,
+      "variants": [
+        {
+          "animation_id": "0x7D00",
+          "name": "ZOMBIE",
+          "palette": "native BAM",
+          "native_kind": 1,
+          "unique_encoded_work": 560,
+          "cache_hits": 0
+        }
+      ]
+    },
+    {
+      "model": "MWER",
+      "refs": [
+        "MWERG1",
+        "MWERG1E",
+        "MWERG2",
+        "MWERG2E"
+      ],
+      "frames": 496,
+      "variants": [
+        {
+          "animation_id": "0x7E00",
+          "name": "WEREWOLF",
+          "palette": "native BAM",
+          "native_kind": 0,
+          "unique_encoded_work": 489,
+          "cache_hits": 0
+        }
+      ]
+    },
+    {
+      "model": "MGWE",
+      "refs": [
+        "MGWEG1",
+        "MGWEG1E",
+        "MGWEG2",
+        "MGWEG2E",
+        "MGWEINV"
+      ],
+      "frames": 498,
+      "variants": [
+        {
+          "animation_id": "0x7E01",
+          "name": "WEREWOLF_GREATER",
+          "palette": "native BAM",
+          "native_kind": 0,
+          "unique_encoded_work": 498,
+          "cache_hits": 0
+        }
+      ]
+    }
+  ],
+  "native_replacement_palettes": [
+    {
+      "animation_id": "0x7101",
+      "resref": "MBAS_GR",
+      "sha256": "32735d77d8688d5078364850fc5b9fc25364a23faee8d7e1b24195428e73e922",
+      "source": "data/ee.bif"
+    },
+    {
+      "animation_id": "0x7200",
+      "resref": "MBER_BL",
+      "sha256": "6dd37c5713222d5e1f7f9a7e703e4e239a12e52039d5953ec5919d5521d89c10",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7202",
+      "resref": "MBER_CA",
+      "sha256": "31149dda8552580436eb6508eae414b43a732c42b52409071eddfa9c107e74ed",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7203",
+      "resref": "MBER_PO",
+      "sha256": "bc8cd31f63edfadfd490e49250c27c5fea267a2a1a2f7c5f8a6abbf040efce38",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7400",
+      "resref": "MDOG_WI",
+      "sha256": "e28ffb7444b8ef75b0bea55103069d74610efe741c7429faf023650888053077",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7401",
+      "resref": "MDOG_WA",
+      "sha256": "03bde7adf7d4f021e77e64a47f41e43eaa33af14d1b7ed2f2d705751b0824227",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7402",
+      "resref": "MDOG_MO",
+      "sha256": "3ca65971366747538a9a59d9fab63e8ab3d15254e907674e385e0daadcc66503",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7501",
+      "resref": "MDOP_GR",
+      "sha256": "b2183c3644cc1bff30c55ba707426205b0e2097d674294cc89d8bfed71ec7826",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7601",
+      "resref": "MGHL_MA",
+      "sha256": "21bd7404e7f43297632649c08861defeca6e7337f20ebaa8b7554a3bae94ae6d",
+      "source": "data/Patch2.bif"
+    },
+    {
+      "animation_id": "0x7602",
+      "resref": "MSPI_MY",
+      "sha256": "5dedaaf3296f1e9ccb6f3f4b4cd22b4ba11a7cf9ed8fbf678cb256aeb7754a41",
+      "source": "data/Patch2.bif"
+    },
+    {
+      "animation_id": "0x7603",
+      "resref": "MDOG_GR",
+      "sha256": "9f7da8f55ac3c6812705105515c3e1a8222ed70007bf2f8ac1fd1ef96125e293",
+      "source": "data/Patch2.bif"
+    },
+    {
+      "animation_id": "0x7604",
+      "resref": "MSPI_WA",
+      "sha256": "71952f9767440d48da2a3aff32b917b6788d65cb62e766744d92c971e5a2192f",
+      "source": "data/Patch2.bif"
+    },
+    {
+      "animation_id": "0x7701",
+      "resref": "MGHL_RE",
+      "sha256": "c95722adfa20771257b3911e4ae4868635f30d43808a887d7fb94b406bf53159",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7702",
+      "resref": "MGHL_GA",
+      "sha256": "b5da926a2e3ab9ef7fd7fc3f53e297ec8ecfd94cdd0bb3f4c7961b7ff43d95d0",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7801",
+      "resref": "MGIB_BR",
+      "sha256": "24d7f969d29ce044fa903db0792a87f8b7c54da65751622dd0b24d2c4dbd19f5",
+      "source": "data/Patch2.bif"
+    },
+    {
+      "animation_id": "0x7802",
+      "resref": "MSLI_BL",
+      "sha256": "b5703020bd6e8b56fc5c05649fd2f7b7edf5412752b1a0dcbe79ec0a954a7f5a",
+      "source": "data/Patch2.bif"
+    },
+    {
+      "animation_id": "0x7900",
+      "resref": "MSLI_GR",
+      "sha256": "6481b101f1c9bb69415daa121230dfa8b801bdba49dcd2c4b9072353a90368d8",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7901",
+      "resref": "MSLI_OL",
+      "sha256": "f0c81c38198522b14426b4336547a0422de6c5fa25fa18f5b6ccd207634b18d2",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7902",
+      "resref": "MSLI_MU",
+      "sha256": "7c4ed046662fc5d6e12815039042814b4b7ae1f7df6e9250dbeb4cda2e8209d9",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7903",
+      "resref": "MSLI_OC",
+      "sha256": "96f9c6b9dafd0d307f02eb26aadfe9977a7de253c3a0a335a6e77be747cf5361",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7A00",
+      "resref": "MSPI_GI",
+      "sha256": "91a74cc64f21f2f0109ab95d8ccb84ad7b6cd2910353c473aae2e51ac91cf401",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7A01",
+      "resref": "MSPI_HU",
+      "sha256": "8fe30a9d573c6d2f01c6c8a3efe8363c72c7201379063c8bc942e6b2073d0a18",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7A02",
+      "resref": "MSPI_PH",
+      "sha256": "0c679227b139f8fd9883b7901bd65298f4aa80ba5488f1dbdbc647670f96282b",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7A03",
+      "resref": "MSPI_SW",
+      "sha256": "18c503da7e396c6324d22b6c3bd15c11c6e5cc611c07340e5067414368bf0cbe",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7A04",
+      "resref": "MSPI_WR",
+      "sha256": "351dff5987580840c221a7744d1b455fa0a8cac0a5fed820629f948f9d7ddbb5",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7B01",
+      "resref": "MWLF_WO",
+      "sha256": "7b7f149e96c56dba3d64c362e70a9dbc0cc8690a68f4126a660f3035a2bbff96",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7B02",
+      "resref": "MWLF_DI",
+      "sha256": "ef97deafbbb891892f567b1fd1ed155be7d1d1a472e267fe589847e9d3611350",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7B03",
+      "resref": "MWLF_WI",
+      "sha256": "82a58a9bef876624c9887666545008a241710f8b0a712c8d0ce473fe54031a8a",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7B04",
+      "resref": "MWLF_VA",
+      "sha256": "233db704b7ae90d5a94ccc1ca296860f22be74cf18b0a7ae32e0fe6cb62b8ea4",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "animation_id": "0x7B05",
+      "resref": "MWLF_DR",
+      "sha256": "d19f06a9ddf137f6b02b1c0e2fb844061efd943b4a55b4bdf26e4b9c9a32b10f",
+      "source": "data/CREAnim1.bif"
+    }
+  ],
+  "whole_BAM_duplicates": [
+    {
+      "resrefs": [
+        "MWLF0INV",
+        "MWLF3INV"
+      ],
+      "count": 2
+    }
+  ],
+  "source_resources_verified": [
+    {
+      "resref": "MBASG1",
+      "canonical_sha256": "407a4e523334364543df50bc91d83ad0226e673f2f2af69d694dbceb707ed6f5",
+      "source": "data/ee.bif"
+    },
+    {
+      "resref": "MBASG1E",
+      "canonical_sha256": "21a400f20e58514a1d6e8aad638f58b9c13886858b40541727853a97a64c9494",
+      "source": "data/ee.bif"
+    },
+    {
+      "resref": "MBASG2",
+      "canonical_sha256": "47f78ccaee6ff46571fce5bc18b8aa9bdac7bc9e42324e6bf9dc7d8eb7a36743",
+      "source": "data/ee.bif"
+    },
+    {
+      "resref": "MBASG2E",
+      "canonical_sha256": "9063b0aa92dc1748f41ade0b63852dcdfbe8b9e679b6c1b07bea77836d4622e3",
+      "source": "data/ee.bif"
+    },
+    {
+      "resref": "MBER0INV",
+      "canonical_sha256": "8c087f3c42c823601cc7a0a2c952be63c2e7d7d6dec60219ec2e318a7f2ad1b2",
+      "source": "data/GUIBam.bif"
+    },
+    {
+      "resref": "MBER1INV",
+      "canonical_sha256": "6bbbc1ecce24eff51dba9dd6c771e08f55fefca5ee7d39e392e6b18ccb93e32e",
+      "source": "data/GUIBam.bif"
+    },
+    {
+      "resref": "MBERG1",
+      "canonical_sha256": "6ab8607730ae13ce39ac5df4139b2982dedd7fb1467996a7c1bd5cc54e8d8522",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MBERG1E",
+      "canonical_sha256": "5cd4a706eb236a55eb2d3419b6806e0eddbc6334f6dc473138bc77ed8ba07876",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MBERG2",
+      "canonical_sha256": "2774e10bd3e66021c482bf181a879b007a719cb7789056c0ff30702caa57b709",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MBERG2E",
+      "canonical_sha256": "78921bc052f6e4301ac16f5ab799f81a7545acdfbc7ac71ad1b2de6d5d334445",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MDOGG1",
+      "canonical_sha256": "ff27da3b3daa259c9e584047ae86ca26b970e1bc61f1f93bf5dbe377aa9687b1",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MDOGG1E",
+      "canonical_sha256": "f7c000cd3ca7fca8f045220e52e627151d3e27028c6f198d52821e0df498de8b",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MDOGG2",
+      "canonical_sha256": "7cbbbbf37ed171e64946afb18bd89502e89f88a1b8472e9491ff2fd20b518ad5",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MDOGG2E",
+      "canonical_sha256": "6d2c2e5596e2c56ab1f8cdd3306eac05777d49b3b8a11e2bc06bcbded98dd675",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MDOPG1",
+      "canonical_sha256": "be648e7206d98857dede60c2c7a6b3b8221d6e1e95839916cdad7c13d88372ba",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MDOPG1E",
+      "canonical_sha256": "ba90168f64229fe91c9b4632c7355b02047b9f3de62c196d9d66af5d4b28dcb2",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MDOPG2",
+      "canonical_sha256": "5aada7e4cb437d91978a322bedfef9b8da8d34e1cf6b0007649407ef159efb30",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MDOPG2E",
+      "canonical_sha256": "e96d2510269b9605c6cd918af085bdb77a37ac99e13425d164c45719fbc3bc31",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "METTG1",
+      "canonical_sha256": "b2d651cc026d5d1e53460325df1764a2ddc545f38cdb63f5dd1418888e0dfe70",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "METTG1E",
+      "canonical_sha256": "be167e85ad35c2034ea2cf8796e7d472cdf925c590fdaea1fc37d638448101ee",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "METTG2",
+      "canonical_sha256": "c224bf722303bc407bf4b3f2f8c256a4f8ba0e350896a5eeba415d84e89eed4c",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "METTG2E",
+      "canonical_sha256": "24178de7da62a75f1b82a15fb5e9282c1234575c4f77fbe2d865ade11456d55b",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MGHLG1",
+      "canonical_sha256": "21b903f184bc2ea637044594ecefba4417f2f472b564e8444c882992a9ee0926",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MGHLG1E",
+      "canonical_sha256": "eca20e8203db703d98591234694b6d3c9a1253d42426ca39ee817c5ea5334db4",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MGHLG2",
+      "canonical_sha256": "25cff5fcdfd1019dc13ecd7c2ae916edc3b24330b5f492186ace5325316b2097",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MGHLG2E",
+      "canonical_sha256": "9854e66f89ee1f9952276ae91a8d90f01f1a404360d19593ecb198fe8da2321f",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MGIBG1",
+      "canonical_sha256": "2062ca8d5a3640d86352e9fff5b2564f8f04b07bc2c15b5e7724ea3965b1c156",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MGIBG1E",
+      "canonical_sha256": "2b6e670c333b8cc3d6d1c7b02b5b650c1ba3cdf50ac3464f2ee391eb076f2713",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MGIBG2",
+      "canonical_sha256": "abf2a9a6dbf27357040dce03a89529ab673bd348f5c7db0fa2825edcdd8726d6",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MGIBG2E",
+      "canonical_sha256": "7876241ed283e54982cb2e710158a9f9e4e1fc2bec3345789428cf519cddafcd",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MGWEG1",
+      "canonical_sha256": "e329caa4fbac38df86b831f6bbe94aa749fa367b9b0f37189edda0ea2e843289",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MGWEG1E",
+      "canonical_sha256": "3a4b8a318d5ddcd76dcba37fdebdc175b6dcb795ecc6322afafef88ee7001cc3",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MGWEG2",
+      "canonical_sha256": "7bd94e5673f46df02e7ff721f65aa4c2b508978e8a50ec7af0b04a25a6f0798e",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MGWEG2E",
+      "canonical_sha256": "bf060adf5de3f8119cddcd3835685c1927a6138eb038ae0b11058fc4891b14ed",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MGWEINV",
+      "canonical_sha256": "9753b18345be88686d5ef63cc261f940d6576101cc02a4ac1466f015c1e99de3",
+      "source": "data/PaperDol.bif"
+    },
+    {
+      "resref": "MOGHG1",
+      "canonical_sha256": "90a979028731effddb522d7927dd5542ad53d773e726691e0f3bf01bc54fdf04",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MOGHG1E",
+      "canonical_sha256": "513a1cf924491db138cdb72efc4a38f64f6b3de6cb03be8193ac4db123cad4be",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MOGHG2",
+      "canonical_sha256": "61d50f5689f101b6ad871f0dbe5a5e277d2c11e8acf37ccc8ef8efec3493d6a4",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MOGHG2E",
+      "canonical_sha256": "d6c22b653c42785022ea277ea974a8fa3332fbb0ac8e359c18254dda4c8e00a4",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MOGNG1",
+      "canonical_sha256": "22fc6f567195d3e68b6cb9c6378d5d959223c72eb39fdf96eb4d042eef659882",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MOGNG1E",
+      "canonical_sha256": "a851d52afd39d5d9d8ac3c00b8198253bfd7bce4de474645b1ad1aafc578ea04",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MOGNG2",
+      "canonical_sha256": "39d1f16b28fdb52eef5e60ea77155cf6c075c5e9984e623bf19efa23b8a1ca21",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MOGNG2E",
+      "canonical_sha256": "49eae34424fde79501eb8fddb637e4ff4f6224a66cdbef1301eb8ab54d9e04ed",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MSLI2INV",
+      "canonical_sha256": "d496517a46a7e80edd8c21565ef7fd6055cdaca9a00feacb1e013c7869fb2dbf",
+      "source": "data/PaperDol.bif"
+    },
+    {
+      "resref": "MSLIG1",
+      "canonical_sha256": "ab1b717bd650b235abf325caa77fa15ce835dd09632aec6b5e851948ba703a60",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MSLIG1E",
+      "canonical_sha256": "4bd4c5a4715d2dfbfdf901276503f280df9affdeb86252dbf85175e87e9042e4",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MSLIG2",
+      "canonical_sha256": "4119ed7c7213be13e69c9932938e11d6fd918ac72ce16fbf4c54629c9894fa71",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MSLIG2E",
+      "canonical_sha256": "cfba7c8907210e7580584dac4e564ab0a1b132e8fd725f88ea71dae0ea1d0d67",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MSPI3INV",
+      "canonical_sha256": "45d3bf42e0a021cb9a6d989eda0755a14171c559d9a51113b1418d456ee73ef9",
+      "source": "data/PaperDol.bif"
+    },
+    {
+      "resref": "MSPIG1",
+      "canonical_sha256": "3faf471e6e198d42a7d1bcbbb09e39ffda301a9fb9baaff40ccf9d3de8dd1096",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MSPIG1E",
+      "canonical_sha256": "586004e8f226062710b19455b905a35c1064dfeb04d5c6660cf24c3ee44c857a",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MSPIG2",
+      "canonical_sha256": "96a2f90680562dda043b91c94d39602193a368eeae5c6933db9a1ff551065cb5",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MSPIG2E",
+      "canonical_sha256": "06c20e9e0410ade8cb31644b6390e07dd7953c585b836021678e581484b81a26",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MTASG1",
+      "canonical_sha256": "69b8b7136c975a462df9e63623a98f0c3ff82aab70ee80d738a4004764ebe271",
+      "source": "data/ee.bif"
+    },
+    {
+      "resref": "MTASG1E",
+      "canonical_sha256": "8aafc770d20364af58913800c4d226855db65a3043f17e413f7374a4075eb243",
+      "source": "data/ee.bif"
+    },
+    {
+      "resref": "MTASG2",
+      "canonical_sha256": "41a799a43b1e1e39227409407e1c08b7209497a4772d11dfe00119761915329a",
+      "source": "data/ee.bif"
+    },
+    {
+      "resref": "MTASG2E",
+      "canonical_sha256": "0ba9405c48d0e6c8f7250759d63802136ffde5205c3262d4c584820c53ab2145",
+      "source": "data/ee.bif"
+    },
+    {
+      "resref": "MWERG1",
+      "canonical_sha256": "e53059372d2eafbaeef7c3295920b53a2910dd84e8e5cfa2cb8712f90ae5d7d4",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MWERG1E",
+      "canonical_sha256": "66b3778eedb14792e607e986a0314c4a1e87db2bbaeccb70283eb273dbd67341",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MWERG2",
+      "canonical_sha256": "d6bd595bf6b2e12f119c6f0d4d5fff0b7938d56eeb864e6905ae947e7764be72",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MWERG2E",
+      "canonical_sha256": "d4b43b27fd5fa03be012bf7542b9ea254bc8a45e46704bc26874b7f694a9ac6c",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MWLF0INV",
+      "canonical_sha256": "94fc31f3edac15cb1d287f23758935963604a91e788bd319b7a3401ebddeac82",
+      "source": "data/GUIBam.bif"
+    },
+    {
+      "resref": "MWLF3INV",
+      "canonical_sha256": "94fc31f3edac15cb1d287f23758935963604a91e788bd319b7a3401ebddeac82",
+      "source": "data/Patch2.bif"
+    },
+    {
+      "resref": "MWLFG1",
+      "canonical_sha256": "a0cf6969da90e474d21200ee359726efbaed6811e1309111d88a288f5ae38160",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MWLFG1E",
+      "canonical_sha256": "5e385b20a3151767fba78fe4f759a5095e7f35cdded5f5db7454b0abfe4182bb",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MWLFG2",
+      "canonical_sha256": "6743b8896adb248437f7f9073791c260d8d529416314abe44108110a3a995cfa",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MWLFG2E",
+      "canonical_sha256": "6d37893125e0590544fd931d9b54041842b31ed23c6f18d212290eb315d93f5a",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MWLSG1",
+      "canonical_sha256": "fd2aeabb80ce8321621b18d441192f7c411044e2ff14ff18fe8a728590b41a02",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MWLSG1E",
+      "canonical_sha256": "5c0845ef75f783455abd8ad6791c3750878a6ede8190751d9a3af924191bd579",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MWLSG2",
+      "canonical_sha256": "6ce3b156c872ed616c13ee44460545cd7a16aac60b775f59902cbbecce1d6648",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MWLSG2E",
+      "canonical_sha256": "4be763da3e520e815303e234a5b68341b58d6c12b65c98940bc5694445ea3844",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MXVTG1",
+      "canonical_sha256": "00a92e59eae00501175e854f65cbf89a973398caa1bb9b90ed1a1085d3ef06df",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MXVTG1E",
+      "canonical_sha256": "568bc2991b64dbe02715a5ad4d77e4a5be07b48efd3bcf0e95cf6b602cbbb3da",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MXVTG2",
+      "canonical_sha256": "95cd548bf66a60e7668bfc55f48a7fbc823c430eb090f944460f4cd99014203e",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MXVTG2E",
+      "canonical_sha256": "07da94fd0de3b9ab85cc5207f5873bb557e66ec43312ab7a4201b4732d220c59",
+      "source": "data/CREAnim1.bif"
+    },
+    {
+      "resref": "MZOMG1",
+      "canonical_sha256": "4a1118e2eefb35271be0995fce0e328cc8e542711391960063fdae9320f57e8e",
+      "source": "data/CREAnim.bif"
+    },
+    {
+      "resref": "MZOMG1E",
+      "canonical_sha256": "6e342cee4a3a19221c4f66206375c64e48ec4fd4b91b5558228c9fbb9175d11d",
+      "source": "data/CREAnim.bif"
+    },
+    {
+      "resref": "MZOMG2",
+      "canonical_sha256": "952bd5b7b28848be3dcd85f8749abf13ffaa17c8a477b79675bc0719473b1b1d",
+      "source": "data/CREAnim.bif"
+    },
+    {
+      "resref": "MZOMG2E",
+      "canonical_sha256": "07c9b835233d914357b66194cc362e15cc1716485eb10a3feb242e601053f126",
+      "source": "data/CREAnim.bif"
+    }
+  ],
+  "cache_hit_files": [],
+  "auxiliary_INV_refs": [
+    "MBER0INV",
+    "MBER1INV",
+    "MGWEINV",
+    "MSLI2INV",
+    "MSPI3INV",
+    "MWLF0INV",
+    "MWLF3INV"
+  ],
+  "production_started": false,
+  "installed": false,
+  "release": false
+}
