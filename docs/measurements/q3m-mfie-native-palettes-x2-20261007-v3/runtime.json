@@ -1,0 +1,44 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-delta-v1",
+  "runtime_id": "q3m-mfie-native-palettes-x2-20261007-v3",
+  "inherited_runtime": {
+    "path": "docs/measurements/q3m-mfie-palette-stability-x2-20261007-v2/runtime.json",
+    "sha256": "0a4669c59bb93c4c97b2721c1ab8d437dfe7af817c2dcd00b2da560c8e987688",
+    "bytes": 1994
+  },
+  "inherited_dll": {
+    "path": "sprite/.work/q3m-mfie-palette-stability-x2-20261007-v2/runtime-build/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "f8bf6e0c83937042eaec557e5309cb875100859a6d9896fd645730ec2b6f6496",
+    "bytes": 2122240
+  },
+  "dll": {
+    "path": "sprite/.work/q3m-mfie-native-palettes-x2-20261007-v3/runtime-build/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "c8690b4edd978d28eafabd1e6aafbd2533820c0bfbc0ea88192ea161850e5697",
+    "bytes": 2122240
+  },
+  "runtime_patch": {
+    "path": "docs/measurements/q3m-mfie-native-palettes-x2-20261007-v3/runtime-delta.patch",
+    "sha256": "f8b3a3caaf9dec4de9dcb02b7d4c56f1dfd83a023aea4975265613910a8fd79b"
+  },
+  "source_provenance": [
+    {
+      "path": "sprite/.work/q3m-mfie-native-palettes-x2-20261007-v3/runtime-src/src/iee/creature_sprite_x2.cpp",
+      "sha256": "6e115b6caff340ad460e23e94ef9fe51944c8a945cd79f749468372e87633dde"
+    },
+    {
+      "path": "sprite/.work/q3m-mfie-native-palettes-x2-20261007-v3/runtime-src/src/iee/hooks.cpp",
+      "sha256": "902f085fae9018955d5105006540b8d4ee179d42f43d2c33230d43555a207291"
+    }
+  ],
+  "capability_delta": {
+    "animation_id": "0x7314",
+    "palette": "G1 palette1 MFIEG31/253, G2 palette2 MFIEG3B/252; exact declared prefix, optional 256 advertised; unused zero padding guarded by frame dependencies",
+    "diagnostic": "MFIE_PALETTE: kind/count/source colors/accepted/globalOutput, at most eight unique palettes",
+    "actual_live_palette_G1_observed_exact": true,
+    "other_animation_contracts_unchanged": true
+  },
+  "native_general_tests_passed": true,
+  "installation": false,
+  "ingame_QA": false,
+  "release": false
+}

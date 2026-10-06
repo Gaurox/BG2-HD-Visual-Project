@@ -1,0 +1,23 @@
+{
+  "session_evidence": {
+    "path": "docs/measurements/q3m-mfie-palette-stability-x2-20261007-v2/session-evidence.txt",
+    "sha256": "519980c07d342dde73cb706e4d31404d30da001f7ef10a4d631aaa03380aea69",
+    "bytes": 2911
+  },
+  "installed_generation": {
+    "path": "docs/measurements/q3m-monster-stability-x2-20261007-v1/current-generation.json",
+    "sha256": "372388be69ff32bc312af383259c3cd55d7a092c0bf1b65350bad1de5f18fc8f",
+    "bytes": 3408
+  },
+  "confirmed": "7314 metadata ready; Monster Render reached; target Realize=1, captured=0; no MFIE composition",
+  "three_retests_user_accepted": [
+    "0x7F0B",
+    "0x7F2C",
+    "0x7F36"
+  ],
+  "source_palette_entries": 252,
+  "unresolved_live_detail": "v1 log lacks native kind/count/colors; exact palette refusal not known",
+  "tested_guard_gap": "v1 rejects 256-entry CVidPalette if unused final four entries differ from zero profile padding",
+  "candidate": "7314 only: compare exact252 prefix if advertised252or256 and frame dependencies exclude all tail indices; bounded trace",
+  "release": false
+}

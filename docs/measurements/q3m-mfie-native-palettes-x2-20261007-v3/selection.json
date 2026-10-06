@@ -1,0 +1,69 @@
+{
+  "schema": "bg2-q3m-family-witness-selection-v1",
+  "scale": 2,
+  "colour": "K6-four-partners-eight-levels",
+  "scope": "single-ID native palette bank correction; not complete-family production",
+  "source_absent_animation_ids": [
+    "0x7F2B",
+    "0x7F33",
+    "0x7F34",
+    "0x7F44",
+    "0x7F47",
+    "0x7F48",
+    "0x7F49",
+    "0x7F4A",
+    "0x7F4B",
+    "0x7F4C",
+    "0x7F4D",
+    "0x7F4E",
+    "0x7F4F",
+    "0x7F56",
+    "0x7F57",
+    "0x7F58",
+    "0x7F59",
+    "0x7F5A",
+    "0x7F5B",
+    "0x7F5C",
+    "0x7F5D",
+    "0x7F5E",
+    "0x7F5F",
+    "0x7F61",
+    "0x7F62"
+  ],
+  "witnesses": [
+    {
+      "family": "monster",
+      "animation_id": "0x7314",
+      "name": "BURNING_MAN",
+      "owner": 3,
+      "native_kind": 0,
+      "refs": [
+        "MFIEG1",
+        "MFIEG11",
+        "MFIEG12",
+        "MFIEG13",
+        "MFIEG14",
+        "MFIEG15",
+        "MFIEG2",
+        "MFIEG21",
+        "MFIEG22",
+        "MFIEG23",
+        "MFIEG24",
+        "MFIEG25",
+        "MFIEG26",
+        "MFIEINV"
+      ],
+      "palette_override_scope": "world",
+      "palette_overrides_by_bank": {
+        "1": {
+          "resref": "MFIEG31",
+          "sha256": "3ddb3eef07a8c58d5cfba719e95a3087351c752a947ef8d8c0d6d22af66e2636"
+        },
+        "2": {
+          "resref": "MFIEG3B",
+          "sha256": "1badebfedb3b2295f849ad1a026654f3c67e671bb8a6259d598fb3916d0770f7"
+        }
+      }
+    }
+  ]
+}

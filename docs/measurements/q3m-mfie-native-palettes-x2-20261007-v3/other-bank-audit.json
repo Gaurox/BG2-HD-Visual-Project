@@ -1,0 +1,126 @@
+{
+  "scope": "read-only additional bank audit",
+  "items": [
+    {
+      "animation_id": "0x7312",
+      "native_palettes": [
+        {
+          "resref": "MFIEG1B",
+          "entries": 256,
+          "sha256": "faebfb17a6db42c460a7ed45271d783f698c5e6d715605f27ca9497e90cfb8ca",
+          "source_BIF": "data/25Deflt.bif"
+        },
+        {
+          "resref": "MFIEG2B",
+          "entries": 256,
+          "sha256": "5b2bcbd2379e51679ffeda1bcd76b90e2276d0cb332c0e80910c74abaa3ee54d",
+          "source_BIF": "data/25Deflt.bif"
+        }
+      ],
+      "G1_G2_RGB_differences": 236,
+      "G2_bindings": [
+        {
+          "resref": "MFIEG2",
+          "source_matches_G1": true,
+          "source_RGB_mismatches_against_native_G2": 236
+        },
+        {
+          "resref": "MFIEG21",
+          "source_matches_G1": true,
+          "source_RGB_mismatches_against_native_G2": 236
+        },
+        {
+          "resref": "MFIEG22",
+          "source_matches_G1": true,
+          "source_RGB_mismatches_against_native_G2": 236
+        },
+        {
+          "resref": "MFIEG23",
+          "source_matches_G1": true,
+          "source_RGB_mismatches_against_native_G2": 236
+        },
+        {
+          "resref": "MFIEG24",
+          "source_matches_G1": true,
+          "source_RGB_mismatches_against_native_G2": 236
+        },
+        {
+          "resref": "MFIEG25",
+          "source_matches_G1": true,
+          "source_RGB_mismatches_against_native_G2": 236
+        },
+        {
+          "resref": "MFIEG26",
+          "source_matches_G1": true,
+          "source_RGB_mismatches_against_native_G2": 236
+        }
+      ],
+      "observation": "static source/native bank discrepancy; live G2 capture not observed",
+      "ingame_failure_confirmed": false,
+      "historical_user_QA_preserved": true,
+      "assets_modified": false
+    },
+    {
+      "animation_id": "0x7313",
+      "native_palettes": [
+        {
+          "resref": "MFISG1B",
+          "entries": 256,
+          "sha256": "3b5a529acd029acaa494daebe6b43ba424f516f09d8d963c5a9f4ef319bbc488",
+          "source_BIF": "data/Patch2.bif"
+        },
+        {
+          "resref": "MFISG2B",
+          "entries": 256,
+          "sha256": "e8c5b0b9f104a4e1ff30756d2dd1bf4b3c79138cd7233818d5a14f174fff667c",
+          "source_BIF": "data/Patch2.bif"
+        }
+      ],
+      "G1_G2_RGB_differences": 253,
+      "G2_bindings": [
+        {
+          "resref": "MFISG2",
+          "source_matches_G1": true,
+          "source_RGB_mismatches_against_native_G2": 253
+        },
+        {
+          "resref": "MFISG21",
+          "source_matches_G1": true,
+          "source_RGB_mismatches_against_native_G2": 253
+        },
+        {
+          "resref": "MFISG22",
+          "source_matches_G1": true,
+          "source_RGB_mismatches_against_native_G2": 253
+        },
+        {
+          "resref": "MFISG23",
+          "source_matches_G1": true,
+          "source_RGB_mismatches_against_native_G2": 253
+        },
+        {
+          "resref": "MFISG24",
+          "source_matches_G1": true,
+          "source_RGB_mismatches_against_native_G2": 253
+        },
+        {
+          "resref": "MFISG25",
+          "source_matches_G1": true,
+          "source_RGB_mismatches_against_native_G2": 253
+        },
+        {
+          "resref": "MFISG26",
+          "source_matches_G1": true,
+          "source_RGB_mismatches_against_native_G2": 253
+        }
+      ],
+      "observation": "static source/native bank discrepancy; live G2 capture not observed",
+      "ingame_failure_confirmed": false,
+      "historical_user_QA_preserved": true,
+      "assets_modified": false
+    }
+  ],
+  "other_IDs_modified": false,
+  "QA_decisions_modified": false,
+  "follow_up": "Observe G2 attacks for QMON7312/QMON7313 separately; no inferred ingame failure or automatic family regeneration."
+}

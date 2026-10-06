@@ -1,0 +1,34 @@
+--- v1/creature_sprite_x2.cpp
++++ v2/creature_sprite_x2.cpp
+@@ -4724,18 +4724,23 @@
+     const auto& frame = resource->frames[handle.frameIndex];
+     if (frame.partnerProfile) {
+       if (kind != frame.partnerProfile->nativeKind) return false;
+-      // A CVidCell may advertise 256 entries for a 252-entry replacement BMP.
+-      // Ignore its four undefined tail slots only when this frame cannot use
+-      // them, either as base indices or as blend partners.
+-      const bool shortBurningMan = handle.animationId == 0x7314u && kind == 0 &&
+-          (entryCount == 252 || entryCount == 256) &&
+-          (frame.dependencies.back() & 0xF0u) == 0 &&
+-          std::all_of(frame.partnerProfile->sourcePalette.begin() + 252,
++      // Monster SetSequence selects palette1 for G1, palette2 for G2.
++      // MFIE's native palettes have respectively 253 and 252 entries.
++      const bool burningBody = handle.animationId == 0x7314u && kind == 0 &&
++          resource->resref[0] == 'M' && resource->resref[1] == 'F' &&
++          resource->resref[2] == 'I' && resource->resref[3] == 'E' && resource->resref[4] == 'G' &&
++          (resource->resref[5] == '1' || resource->resref[5] == '2');
++      const auto nativeEntries = resource->resref[5] == '1' ? 253u : 252u;
++      const auto tailMask = static_cast<std::uint8_t>(0xFFu << (nativeEntries - 248u));
++      const bool shortBurningMan = burningBody &&
++          (entryCount == nativeEntries || entryCount == 256) &&
++          (frame.dependencies.back() & tailMask) == 0 &&
++          std::all_of(frame.partnerProfile->sourcePalette.begin() + nativeEntries,
+                       frame.partnerProfile->sourcePalette.end(),
+                       [](std::uint32_t color) { return color == 0; });
+       if (entryCount != 256 && !shortBurningMan) return false;
+       if (kind == 1) return true;
+-      const auto checkedEntries = shortBurningMan ? 252u : entryCount;
++      const auto checkedEntries = shortBurningMan ? nativeEntries : entryCount;
+       for (std::size_t i = 0; i < checkedEntries; ++i) {
+         const auto alpha = colors[i] >> 24;
+         if ((colors[i] & 0xffffffu) != (frame.partnerProfile->sourcePalette[i] & 0xffffffu) ||

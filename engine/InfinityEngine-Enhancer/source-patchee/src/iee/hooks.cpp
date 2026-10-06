@@ -953,7 +953,8 @@ bool read_registered_creature_cell(std::uint16_t animationId, void* cell,
   }
   auto playback = creature_sprite_x2::FramePlaybackMode::Strict;
   const bool icewind = (animationId & 0xF000u) == 0xE000u;
-  if (icewind || (animationId >= 0x1200u && animationId <= 0x1208u) || animationId == 0x1300u) {
+  const bool monster = std::string_view{ownerLabel} == "CGameAnimationTypeMonster";
+  if (monster || icewind || (animationId >= 0x1200u && animationId <= 0x1208u) || animationId == 0x1300u) {
     // Icewind native sizing (RVA 0x3175B0) calls GetCurrentFrameSize for
     // both body (+0xCD8) and equipped weapon (+0x2F10). Same playback field.
     const auto playbackOffset = g_ctx->manifest->itemIcons.vidCellPlaybackMode;
@@ -973,7 +974,8 @@ bool read_registered_creature_cell(std::uint16_t animationId, void* cell,
                      animationId == 0x1300u)
                       ? creature_sprite_x2::FrameResolveMode::WaitForMultiNewMetadata
                       : (icewind ? creature_sprite_x2::FrameResolveMode::WaitForIcewindMetadata
-                                 : creature_sprite_x2::FrameResolveMode::NonBlocking)), playback)) {
+                                 : (monster ? creature_sprite_x2::FrameResolveMode::WaitForMonsterMetadata
+                                            : creature_sprite_x2::FrameResolveMode::NonBlocking))), playback)) {
     if (g_ctx->cfg.enableCreatureSpritePaletteTrace && animationId == 0x6110) {
       thread_local std::set<std::array<char, 8>> unresolved;
       if (unresolved.size() < 64 && unresolved.insert(resref).second) {
@@ -3336,10 +3338,42 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
       if (ownerCandidate && creature_sprite_x2::frame_requires_fixed_monster_palette(scope->layers[ownerLayer].frame)) {
         game::CVidPalette native{};
         std::array<std::uint32_t, 256> sourceColors{};
-        ownerCandidate = core::safe_read(paletteThis, native) && native.m_nEntries == 256 &&
-                         core::safe_read(native.m_pPalette, sourceColors) &&
-                         creature_sprite_x2::frame_accepts_fixed_monster_palette(
-                             scope->layers[ownerLayer].frame, paletteKind, sourceColors);
+        const bool nativeRead = core::safe_read(paletteThis, native);
+        ownerCandidate = nativeRead && native.m_nEntries > 0 &&
+                         native.m_nEntries <= 256 && core::is_readable(
+                             native.m_pPalette, static_cast<std::size_t>(native.m_nEntries) * sizeof(std::uint32_t));
+        if (ownerCandidate) {
+          std::memcpy(sourceColors.data(), native.m_pPalette,
+                      static_cast<std::size_t>(native.m_nEntries) * sizeof(std::uint32_t));
+          ownerCandidate = creature_sprite_x2::frame_accepts_fixed_monster_palette(
+              scope->layers[ownerLayer].frame, paletteKind, sourceColors,
+              static_cast<std::uint32_t>(native.m_nEntries));
+        }
+      }
+      if (scope->animationId == 0x7314u) {
+          game::CVidPalette native{};
+          std::array<std::uint32_t, 256> sourceColors{};
+          const bool nativeRead = core::safe_read(paletteThis, native);
+          const bool sourceRead = nativeRead && native.m_nEntries > 0 && native.m_nEntries <= 256 &&
+              core::is_readable(native.m_pPalette, static_cast<std::size_t>(native.m_nEntries) * sizeof(std::uint32_t));
+          if (sourceRead) std::memcpy(sourceColors.data(), native.m_pPalette,
+              static_cast<std::size_t>(native.m_nEntries) * sizeof(std::uint32_t));
+          // Bounded palette-only diagnostics for the remaining Burning Man QA.
+          const auto crc = static_cast<std::uint32_t>(crc32(0,
+              reinterpret_cast<const Bytef*>(sourceColors.data()), sizeof(sourceColors)));
+          thread_local std::set<std::array<std::uint64_t, 3>> seen;
+          const std::array<std::uint64_t, 3> key{crc,
+              static_cast<std::uint32_t>(native.m_nEntries),
+              paletteKind | (static_cast<std::uint64_t>(ownerCandidate) << 32)};
+          if (seen.size() < 8 && seen.insert(key).second) {
+            std::ostringstream colors;
+            colors << std::hex << std::setfill('0');
+            if (sourceRead) for (const auto color : sourceColors) colors << std::setw(8) << color;
+            LOG_INFO("MFIE_PALETTE animation=0x7314 nativeRead={} sourceRead={} kind={} entries={} "
+                     "accepted={} crc32={:08X} globalOutput={} flags={:X} colors={}",
+                nativeRead, sourceRead, paletteKind, native.m_nEntries, ownerCandidate, crc,
+                realizedOutput == g_creatureSpriteTextureApi.realizedPalette, flags, colors.str());
+          }
       }
       if (!ownerCandidate && scope->layeredComposition) {
         scope->compositionIncomplete = true;

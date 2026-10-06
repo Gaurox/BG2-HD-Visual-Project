@@ -1,0 +1,415 @@
+{
+  "audit_completed": true,
+  "installed_generation": {
+    "schema": "bg2-monster-native-MFIE-palette-successor-v3",
+    "role": "installation-candidate-not-QA-or-release",
+    "family": "monster",
+    "animation_ids": [
+      "0x7300",
+      "0x7301",
+      "0x7302",
+      "0x7310",
+      "0x7311",
+      "0x7312",
+      "0x7313",
+      "0x7314",
+      "0x7320",
+      "0x7321",
+      "0x7703",
+      "0x7F00",
+      "0x7F01",
+      "0x7F02",
+      "0x7F03",
+      "0x7F04",
+      "0x7F05",
+      "0x7F06",
+      "0x7F07",
+      "0x7F08",
+      "0x7F09",
+      "0x7F0A",
+      "0x7F0B",
+      "0x7F0C",
+      "0x7F0D",
+      "0x7F0E",
+      "0x7F0F",
+      "0x7F10",
+      "0x7F11",
+      "0x7F12",
+      "0x7F13",
+      "0x7F14",
+      "0x7F15",
+      "0x7F16",
+      "0x7F17",
+      "0x7F18",
+      "0x7F19",
+      "0x7F20",
+      "0x7F21",
+      "0x7F22",
+      "0x7F23",
+      "0x7F24",
+      "0x7F27",
+      "0x7F28",
+      "0x7F29",
+      "0x7F2A",
+      "0x7F2C",
+      "0x7F2D",
+      "0x7F2E",
+      "0x7F2F",
+      "0x7F30",
+      "0x7F31",
+      "0x7F32",
+      "0x7F35",
+      "0x7F36",
+      "0x7F37",
+      "0x7F38",
+      "0x7F39",
+      "0x7F3A",
+      "0x7F3B",
+      "0x7F3C",
+      "0x7F3D",
+      "0x7F3E",
+      "0x7F3F",
+      "0x7F40",
+      "0x7F41",
+      "0x7F42",
+      "0x7F43",
+      "0x7F45",
+      "0x7F46",
+      "0x7F50",
+      "0x7F51",
+      "0x7F52",
+      "0x7F53",
+      "0x7F54",
+      "0x7F55",
+      "0x7F60"
+    ],
+    "models": 62,
+    "resources": 1037,
+    "frames": 496816,
+    "logical_resource_bindings": 1040,
+    "bound_frames": 496822,
+    "scale": 2,
+    "SDF": false,
+    "colour": "K6-four-partners-eight-levels",
+    "generation_dir": "sprite/.work/q3m-mfie-native-palettes-x2-20261007-v3/combined",
+    "catalog": {
+      "path": "sprite/.work/q3m-mfie-native-palettes-x2-20261007-v3/combined/iee-assets/creature-sprites/CreatureSprites-XN.catalog",
+      "sha256": "d013ac44d8925cbaa972f15697e1e6b49d4230e1f09747bb11779a63c56f2ff6",
+      "bytes": 3719092
+    },
+    "production_generation": {
+      "path": "docs/measurements/q3m-monster-full-x2-20261006-v2/current-generation.json",
+      "sha256": "b97ee96d30d225c9bb08be3e68163930d7bf58da744393c37073e56f1a844604",
+      "bytes": 2579
+    },
+    "production_verification": {
+      "path": "docs/measurements/q3m-monster-full-x2-20261006-v2/verification.json",
+      "sha256": "5d5c49c905270a4a521bce55ca2cf6c20e3ce4a0973f4b8510b60766de938921",
+      "bytes": 19212
+    },
+    "runtime": {
+      "path": "docs/measurements/q3m-mfie-native-palettes-x2-20261007-v3/runtime.json",
+      "sha256": "c0b61c777fefea7399d6aa295202ef70d98c0e8733a3b0fb1ac64ed1bd1a0e10",
+      "bytes": 2000
+    },
+    "dll": {
+      "path": "sprite/.work/q3m-mfie-native-palettes-x2-20261007-v3/runtime-build/Release/InfinityEngine-Enhancer.dll",
+      "sha256": "c8690b4edd978d28eafabd1e6aafbd2533820c0bfbc0ea88192ea161850e5697",
+      "bytes": 2122240
+    },
+    "runtime_changed": true,
+    "ingame_QA": false,
+    "release": false,
+    "parent_generation": {
+      "path": "docs/measurements/q3m-mfie-palette-stability-x2-20261007-v2/current-generation.json",
+      "sha256": "326c69cb13273e596bf707062c05d3454fc12819f821e20bc0b2d93a74b7ba68",
+      "bytes": 3985
+    },
+    "partial_visual_QA": {
+      "decisions": [
+        {
+          "path": "sprite/index/qa-decisions/monsters/2026-10-07-accepted-partial-monster-73-q3m-v7-x2-nearest-v1.json",
+          "sha256": "ff0a5ca33947837fc3cda14b3824f39846aae49fefadc85a79d768fce5e7fe90",
+          "bytes": 5325
+        },
+        {
+          "path": "sprite/index/qa-decisions/monsters/2026-10-07-accepted-three-monster-stability-retests-q3m-v7-x2-nearest-v2.json",
+          "sha256": "deff35d23cda5561e6a46765fce9eb2f19ec6e29e2840e6b88232efc7e3137a8",
+          "bytes": 3052
+        }
+      ]
+    },
+    "short_palette_dependency_proof": {
+      "path": "docs/measurements/q3m-monster-stability-x2-20261007-v1/short-palette-dependencies.json",
+      "sha256": "6150fd664d66be9561d982fecd409fe2f313db0392668e6c85fec4b8f8e91378",
+      "bytes": 199
+    },
+    "correction_animation_ids": [
+      "0x7314"
+    ],
+    "correction_production": {
+      "path": "docs/measurements/q3m-mfie-native-palettes-x2-20261007-v3/production.json",
+      "sha256": "1f94032f560c91edff7a80e0069cbcd3945078c94625673ab6f5b29b86c3afb2",
+      "bytes": 13889
+    },
+    "correction_selection": {
+      "path": "docs/measurements/q3m-mfie-native-palettes-x2-20261007-v3/selection.json",
+      "sha256": "5eb6c3491cd12a07d325a38e40d39b3cd392a2300ae764e58695956ab2296b89",
+      "bytes": 1414
+    },
+    "native_palette_analysis": {
+      "path": "docs/measurements/q3m-mfie-native-palettes-x2-20261007-v3/analysis.json",
+      "sha256": "7bc1a86b4cb6468d9f3545176bca1d7d1654efa4a6a8cd88b7f0b8851e3dfe8f",
+      "bytes": 5336
+    }
+  },
+  "session_begin": "[2026-10-07 01:27:46.784]",
+  "log_sha256": "d9a61ec6e250fc3ca71560553e719d0fe90eb776489ea4b8957d824d3b7a171b",
+  "MFIE_live_native_palette_accepted": true,
+  "MFIE_live_HD_composition_observed": true,
+  "live_observed_follow_up_IDs": [],
+  "native_bank_guard": {
+    "audit_completed": true,
+    "resources": 27,
+    "frames": 11774,
+    "cycles": 1531,
+    "playback_checks": 33682,
+    "native_playback_passed": true,
+    "G1_frames": 6480,
+    "G1_native_palette_accepted": 6480,
+    "G2_frames": 5292,
+    "G2_native_palette_accepted": 0,
+    "G2_wrong_G1_palette_accepted": 5292,
+    "G2_defect_confirmed": true
+  },
+  "resources": [
+    {
+      "animation_id": "0x7312",
+      "resref": "MFIEG1",
+      "frames": 540,
+      "installed_leaf_sha256": "A34C5E0F4EE1AF9A968D26AE7849649EC7DABA62058227EF582FDC4780AB7E10",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": true
+    },
+    {
+      "animation_id": "0x7312",
+      "resref": "MFIEG11",
+      "frames": 540,
+      "installed_leaf_sha256": "E4837D9235DA6ACE08C7458E21CD063977EFA2657EB0EB29E6B061DFDD780FB9",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": true
+    },
+    {
+      "animation_id": "0x7312",
+      "resref": "MFIEG12",
+      "frames": 540,
+      "installed_leaf_sha256": "2627787AF948160680DFA7397EB331747EE8A4FBDF28FC6152107F3B8FB52674",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": true
+    },
+    {
+      "animation_id": "0x7312",
+      "resref": "MFIEG13",
+      "frames": 540,
+      "installed_leaf_sha256": "58C33BCF46D2FFF7F03C947F7F54151782E6B711D30C12D7265869CE19B90716",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": true
+    },
+    {
+      "animation_id": "0x7312",
+      "resref": "MFIEG14",
+      "frames": 540,
+      "installed_leaf_sha256": "DD445DB22AF4B940C131B0846552100DC65B9F47CF58AE00895A6FB0612F740A",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": true
+    },
+    {
+      "animation_id": "0x7312",
+      "resref": "MFIEG15",
+      "frames": 540,
+      "installed_leaf_sha256": "45E9FBFF37D3D75D0BDBB3B9A53B76F0202E71F6F0133F33040A8DBBA255542D",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": true
+    },
+    {
+      "animation_id": "0x7312",
+      "resref": "MFIEG2",
+      "frames": 378,
+      "installed_leaf_sha256": "789372F6758871693C4C0B303C580DE8F8D70B5C775913B186605A66B0976DC1",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": false
+    },
+    {
+      "animation_id": "0x7312",
+      "resref": "MFIEG21",
+      "frames": 378,
+      "installed_leaf_sha256": "017FFE6D7F2AE6AB1F46CCB38D47C241C0AD16DE4AE1609C5B36F40E46254C73",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": false
+    },
+    {
+      "animation_id": "0x7312",
+      "resref": "MFIEG22",
+      "frames": 378,
+      "installed_leaf_sha256": "3F83A7F50BB015DE4D85B51A3C9DF66D26C8035DC90662ED8C01818624365563",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": false
+    },
+    {
+      "animation_id": "0x7312",
+      "resref": "MFIEG23",
+      "frames": 378,
+      "installed_leaf_sha256": "51D8596F08BDEFBAAD8A8B7890F1955765283CE4BDE2000C0C4AAB959207E103",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": false
+    },
+    {
+      "animation_id": "0x7312",
+      "resref": "MFIEG24",
+      "frames": 378,
+      "installed_leaf_sha256": "182B522E588A778DE211EE08AEE8CE5B8A43FD9B7F1E2A087A5A11FA75F1D91B",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": false
+    },
+    {
+      "animation_id": "0x7312",
+      "resref": "MFIEG25",
+      "frames": 378,
+      "installed_leaf_sha256": "12B75FD8D7495E177E5A8128F94628EC6492753D9CD114EA0398071D987EEFDB",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": false
+    },
+    {
+      "animation_id": "0x7312",
+      "resref": "MFIEG26",
+      "frames": 378,
+      "installed_leaf_sha256": "89222CB3DB24734FC8D2B90D6EDE0EE4098E1DD506E0DBB89EA2521C667DCF89",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": false
+    },
+    {
+      "animation_id": "0x7312",
+      "resref": "MFIEINV",
+      "frames": 2,
+      "installed_leaf_sha256": "5FB5C86DAF69B070440D70CDC86312CA1F516F37DE007A2BF9E8125A57863BAD",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": true
+    },
+    {
+      "animation_id": "0x7313",
+      "resref": "MFISG1",
+      "frames": 540,
+      "installed_leaf_sha256": "A815DE7FB28E674DC2A085BED5F1F05271000BFC015066C2CD487F0ED7169C3E",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": true
+    },
+    {
+      "animation_id": "0x7313",
+      "resref": "MFISG11",
+      "frames": 540,
+      "installed_leaf_sha256": "3054B9F9331B84EE5749D149D57677BA1EEC980F0B51E926412D488CCBBD4503",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": true
+    },
+    {
+      "animation_id": "0x7313",
+      "resref": "MFISG12",
+      "frames": 540,
+      "installed_leaf_sha256": "F89798761CEA667CB83555F4C929F84FFF1665166557F7600A9C9A6A75912E67",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": true
+    },
+    {
+      "animation_id": "0x7313",
+      "resref": "MFISG13",
+      "frames": 540,
+      "installed_leaf_sha256": "9BE92B34ACE775EAB6589BEB8863A4B830230C64E53BB1A212455F5B40EDD83F",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": true
+    },
+    {
+      "animation_id": "0x7313",
+      "resref": "MFISG14",
+      "frames": 540,
+      "installed_leaf_sha256": "1D74B7846A5D145C9EA334DB8D83F9BC9E24E905C289A7EF04BE48E730D5CC05",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": true
+    },
+    {
+      "animation_id": "0x7313",
+      "resref": "MFISG15",
+      "frames": 540,
+      "installed_leaf_sha256": "A65552CE5FD04B0A57BD86CC036225B21A02F0147FD02CCAAB79C9D3BA450DC2",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": true
+    },
+    {
+      "animation_id": "0x7313",
+      "resref": "MFISG2",
+      "frames": 378,
+      "installed_leaf_sha256": "EE530246E441561235248D87CFC594B5EBD269508856AD367E037869E86C4328",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": false
+    },
+    {
+      "animation_id": "0x7313",
+      "resref": "MFISG21",
+      "frames": 378,
+      "installed_leaf_sha256": "52D72F8A46FED753C27C8AFA098856447FA538E4F1D9CBEFE3EB01D51743E243",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": false
+    },
+    {
+      "animation_id": "0x7313",
+      "resref": "MFISG22",
+      "frames": 378,
+      "installed_leaf_sha256": "84CC7D9708A1733F8CCC2EC63CF033F79FD670FCAAC858B5B82EC6764A465AAE",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": false
+    },
+    {
+      "animation_id": "0x7313",
+      "resref": "MFISG23",
+      "frames": 378,
+      "installed_leaf_sha256": "2D1DB2ACE2EBE5997A226CCEA766DCB2721055CE1316283D1744FF4458786B66",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": false
+    },
+    {
+      "animation_id": "0x7313",
+      "resref": "MFISG24",
+      "frames": 378,
+      "installed_leaf_sha256": "25E30E492DFE090D75CCB2333DF0F0A398DC1E4F4E2A37D6AA811D55A0287725",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": false
+    },
+    {
+      "animation_id": "0x7313",
+      "resref": "MFISG25",
+      "frames": 378,
+      "installed_leaf_sha256": "F0F43E070DF1B7B070801013C705EB912554F8899B9988766211E5CD4B1A7220",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": false
+    },
+    {
+      "animation_id": "0x7313",
+      "resref": "MFISG26",
+      "frames": 378,
+      "installed_leaf_sha256": "B68583900E4AA32BEDB310FF5CC793BD6D23F80F3FDF3B0326EA2C8FDCAF7DBA",
+      "cycles_exact_native_BAM": true,
+      "installed_source_palette_matches_native_bank": false
+    }
+  ],
+  "affected_animation_ids": [
+    "0x7312",
+    "0x7313"
+  ],
+  "defect": "G2 fixed-palette guard rejects actual native palette2 for every frame; installed profile incorrectly uses palette1",
+  "native_G1_G2_selection_reference": "docs/measurements/q3m-mfie-native-palettes-x2-20261007-v3/native-bank-selection.txt",
+  "wrong_G2_bindings": 14,
+  "prepared_correction_reference": "docs/measurements/q3m-monster-final-checks-x2-20261007-v1/correction-plan.json",
+  "GPU_inference_started": false,
+  "game_files_changed": false,
+  "ingame_follow_up_failure_observed": false,
+  "release": false
+}

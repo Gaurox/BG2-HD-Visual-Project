@@ -1,0 +1,44 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-delta-v1",
+  "runtime_id": "q3m-mfie-palette-stability-x2-20261007-v2",
+  "inherited_runtime": {
+    "path": "docs/measurements/q3m-monster-stability-x2-20261007-v1/runtime.json",
+    "sha256": "b087c7ff6af8d07459967c7afdbe3244b288e17aa33606f977c749cf45fdba64",
+    "bytes": 2078
+  },
+  "inherited_dll": {
+    "path": "sprite/.work/q3m-monster-stability-x2-20261007-v1/runtime-build/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "a9eeccad278dd5502d119ad1951a09dbf220cf65aac92877d6530eab3ba16b99",
+    "bytes": 2119168
+  },
+  "dll": {
+    "path": "sprite/.work/q3m-mfie-palette-stability-x2-20261007-v2/runtime-build/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "f8bf6e0c83937042eaec557e5309cb875100859a6d9896fd645730ec2b6f6496",
+    "bytes": 2122240
+  },
+  "runtime_patch": {
+    "path": "docs/measurements/q3m-mfie-palette-stability-x2-20261007-v2/runtime-delta.patch",
+    "sha256": "6093609333a5d8dcef91991aa07220e224f290123895534690b60589eafd9f85"
+  },
+  "source_provenance": [
+    {
+      "path": "sprite/.work/q3m-mfie-palette-stability-x2-20261007-v2/runtime-src/src/iee/creature_sprite_x2.cpp",
+      "sha256": "66a76fa5dc2e67ea1da8d55af26a60007c117b30d53a50486b60d9ad83c26662"
+    },
+    {
+      "path": "sprite/.work/q3m-mfie-palette-stability-x2-20261007-v2/runtime-src/src/iee/hooks.cpp",
+      "sha256": "902f085fae9018955d5105006540b8d4ee179d42f43d2c33230d43555a207291"
+    }
+  ],
+  "capability_delta": {
+    "animation_id": "0x7314",
+    "palette": "252 exact RGB prefix with 252 or 256 advertised entries; ignore tail only if profile zero and frame base/partner dependencies exclude 252..255",
+    "diagnostic": "MFIE_PALETTE: kind/count/source colors/accepted/globalOutput, at most eight unique palettes",
+    "actual_live_palette_not_yet_observed": true,
+    "other_animation_contracts_unchanged": true
+  },
+  "native_general_tests_passed": true,
+  "installation": false,
+  "ingame_QA": false,
+  "release": false
+}

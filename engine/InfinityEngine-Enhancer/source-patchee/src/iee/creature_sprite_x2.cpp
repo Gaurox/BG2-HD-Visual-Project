@@ -4478,7 +4478,8 @@ bool resolve_frame(std::uint16_t animationId,
   out = {};
   const bool nativePlayback =
       ((mode == FrameResolveMode::WaitForMultiNewMetadata && is_multi_new_animation(animationId)) ||
-       (mode == FrameResolveMode::WaitForIcewindMetadata && (animationId & 0xF000u) == 0xE000u)) &&
+       (mode == FrameResolveMode::WaitForIcewindMetadata && (animationId & 0xF000u) == 0xE000u) ||
+       (mode == FrameResolveMode::WaitForMonsterMetadata && (animationId & 0xF000u) == 0x7000u)) &&
       (playback == FramePlaybackMode::Clamp || playback == FramePlaybackMode::Loop);
   if (!g_ready.load(std::memory_order_acquire) ||
       (!nativePlayback && (sequence < 0 || currentFrame < 0))) return false;
@@ -4495,6 +4496,8 @@ bool resolve_frame(std::uint16_t animationId,
     if (g_catalog.active) {
       const auto* animation = find_catalog_animation_locked(animationId);
       if (!animation) return false;
+      if (mode == FrameResolveMode::WaitForMonsterMetadata &&
+          animation->owner != kCatalogMonsterOwner) return false;
       const bool waitForMetadata =
           g_catalog.version == kRegistryCatalogDirectoryVersion &&
           ((mode == FrameResolveMode::WaitForCharacterMetadata &&
@@ -4506,7 +4509,9 @@ bool resolve_frame(std::uint16_t animationId,
             animation->owner == kCatalogMultiNewOwner) ||
            (mode == FrameResolveMode::WaitForIcewindMetadata &&
             (animationId & 0xF000u) == 0xE000u &&
-            animation->owner == kCatalogMonsterIcewindOwner));
+            animation->owner == kCatalogMonsterIcewindOwner) ||
+           (mode == FrameResolveMode::WaitForMonsterMetadata &&
+            animation->owner == kCatalogMonsterOwner));
       if (!catalog_resident_resource_locked(
               animationId, resref, catalogShardIndex, resourceOrdinal,
               resourceIndex)) {
@@ -4709,7 +4714,8 @@ bool frame_requires_fixed_monster_palette(FrameHandle handle) noexcept {
 }
 
 bool frame_accepts_fixed_monster_palette(FrameHandle handle, std::uint16_t kind,
-                                        const std::array<std::uint32_t, 256>& colors) noexcept {
+                                        const std::array<std::uint32_t, 256>& colors,
+                                        std::uint32_t entryCount) noexcept {
   try {
     std::lock_guard lock(g_mutex);
     if (!g_ready.load(std::memory_order_acquire)) return false;
@@ -4718,15 +4724,31 @@ bool frame_accepts_fixed_monster_palette(FrameHandle handle, std::uint16_t kind,
     const auto& frame = resource->frames[handle.frameIndex];
     if (frame.partnerProfile) {
       if (kind != frame.partnerProfile->nativeKind) return false;
+      // Monster SetSequence selects palette1 for G1, palette2 for G2.
+      // MFIE's native palettes have respectively 253 and 252 entries.
+      const bool burningBody = handle.animationId == 0x7314u && kind == 0 &&
+          resource->resref[0] == 'M' && resource->resref[1] == 'F' &&
+          resource->resref[2] == 'I' && resource->resref[3] == 'E' && resource->resref[4] == 'G' &&
+          (resource->resref[5] == '1' || resource->resref[5] == '2');
+      const auto nativeEntries = resource->resref[5] == '1' ? 253u : 252u;
+      const auto tailMask = static_cast<std::uint8_t>(0xFFu << (nativeEntries - 248u));
+      const bool shortBurningMan = burningBody &&
+          (entryCount == nativeEntries || entryCount == 256) &&
+          (frame.dependencies.back() & tailMask) == 0 &&
+          std::all_of(frame.partnerProfile->sourcePalette.begin() + nativeEntries,
+                      frame.partnerProfile->sourcePalette.end(),
+                      [](std::uint32_t color) { return color == 0; });
+      if (entryCount != 256 && !shortBurningMan) return false;
       if (kind == 1) return true;
-      for (std::size_t i = 0; i < colors.size(); ++i) {
+      const auto checkedEntries = shortBurningMan ? nativeEntries : entryCount;
+      for (std::size_t i = 0; i < checkedEntries; ++i) {
         const auto alpha = colors[i] >> 24;
         if ((colors[i] & 0xffffffu) != (frame.partnerProfile->sourcePalette[i] & 0xffffffu) ||
             (alpha != 0 && alpha != 255)) return false;
       }
       return true;
     }
-    return frame.fractional && core::palette_fraction::monster_profile(frame.fractionProfile, frame.fractionRule) &&
+    return entryCount == 256 && frame.fractional && core::palette_fraction::monster_profile(frame.fractionProfile, frame.fractionRule) &&
            core::palette_fraction::monster_source_palette(frame.fractionProfile, kind, colors);
   } catch (...) { return false; }
 }

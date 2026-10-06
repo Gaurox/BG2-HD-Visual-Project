@@ -1,0 +1,102 @@
+{
+  "schema": "bg2-q3m-family-witness-selection-v1",
+  "scale": 2,
+  "colour": "K6-four-partners-eight-levels",
+  "scope": "prepared native bank correction for two IDs only; no inference/installation",
+  "source_absent_animation_ids": [
+    "0x7F2B",
+    "0x7F33",
+    "0x7F34",
+    "0x7F44",
+    "0x7F47",
+    "0x7F48",
+    "0x7F49",
+    "0x7F4A",
+    "0x7F4B",
+    "0x7F4C",
+    "0x7F4D",
+    "0x7F4E",
+    "0x7F4F",
+    "0x7F56",
+    "0x7F57",
+    "0x7F58",
+    "0x7F59",
+    "0x7F5A",
+    "0x7F5B",
+    "0x7F5C",
+    "0x7F5D",
+    "0x7F5E",
+    "0x7F5F",
+    "0x7F61",
+    "0x7F62"
+  ],
+  "witnesses": [
+    {
+      "family": "monster",
+      "animation_id": "0x7312",
+      "name": "ELEMENTAL_FIRE_PURPLE",
+      "owner": 3,
+      "native_kind": 0,
+      "refs": [
+        "MFIEG1",
+        "MFIEG11",
+        "MFIEG12",
+        "MFIEG13",
+        "MFIEG14",
+        "MFIEG15",
+        "MFIEG2",
+        "MFIEG21",
+        "MFIEG22",
+        "MFIEG23",
+        "MFIEG24",
+        "MFIEG25",
+        "MFIEG26",
+        "MFIEINV"
+      ],
+      "palette_override_scope": "world",
+      "palette_overrides_by_bank": {
+        "1": {
+          "resref": "MFIEG1B",
+          "sha256": "faebfb17a6db42c460a7ed45271d783f698c5e6d715605f27ca9497e90cfb8ca"
+        },
+        "2": {
+          "resref": "MFIEG2B",
+          "sha256": "5b2bcbd2379e51679ffeda1bcd76b90e2276d0cb332c0e80910c74abaa3ee54d"
+        }
+      }
+    },
+    {
+      "family": "monster",
+      "animation_id": "0x7313",
+      "name": "ELEMENTAL_FIRE_SMALL_PURPLE",
+      "owner": 3,
+      "native_kind": 0,
+      "refs": [
+        "MFISG1",
+        "MFISG11",
+        "MFISG12",
+        "MFISG13",
+        "MFISG14",
+        "MFISG15",
+        "MFISG2",
+        "MFISG21",
+        "MFISG22",
+        "MFISG23",
+        "MFISG24",
+        "MFISG25",
+        "MFISG26"
+      ],
+      "palette_override_scope": "world",
+      "palette_overrides_by_bank": {
+        "1": {
+          "resref": "MFISG1B",
+          "sha256": "3b5a529acd029acaa494daebe6b43ba424f516f09d8d963c5a9f4ef319bbc488"
+        },
+        "2": {
+          "resref": "MFISG2B",
+          "sha256": "e8c5b0b9f104a4e1ff30756d2dd1bf4b3c79138cd7233818d5a14f174fff667c"
+        }
+      }
+    }
+  ]
+}

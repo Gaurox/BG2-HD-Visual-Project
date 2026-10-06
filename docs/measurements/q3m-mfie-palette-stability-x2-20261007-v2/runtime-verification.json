@@ -1,0 +1,76 @@
+{
+  "passed": true,
+  "native_x64_oracle": {
+    "passed": true,
+    "native_instruction_cases": 231,
+    "exe_sha256": "b51093a49140b2b8a7c046b4652bb8e535be24ebbc12b1d735e0b94217a14d57",
+    "native_rva_start": "0x4117F8",
+    "native_rva_end": "0x411863",
+    "playback_field": "CVidCell+0x11C",
+    "no_game_launched": true
+  },
+  "monster": {
+    "passed": true,
+    "resources": 1040,
+    "cycles": 56383,
+    "empty_cycles": 212,
+    "native_playback_checks": 1240346,
+    "strict_out_of_range_rejected": 112342,
+    "invalid_lookup_checks": 504,
+    "baseline_nonblocking_cold_misses": 1037,
+    "short_palette_acceptance_checks": 765,
+    "palette_guard_checks": 62291,
+    "missing_or_wrong_frames": 0
+  },
+  "icewind_regression": {
+    "passed": true,
+    "resources": 1140,
+    "cycles": 7401,
+    "empty_cycles": 2715,
+    "native_playback_checks": 94338,
+    "strict_out_of_range_rejected": 9372,
+    "invalid_lookup_checks": 7602,
+    "missing_or_wrong_frames": 0
+  },
+  "native_pixel_samples": [
+    {
+      "resources": 32,
+      "frames": 16802,
+      "native_cycle_slots": 19956,
+      "decoded_pixels": 1689777072,
+      "palette_encodings": 3,
+      "K": 6,
+      "passed": true
+    },
+    {
+      "resources": 32,
+      "frames": 16681,
+      "native_cycle_slots": 33069,
+      "decoded_pixels": 2288386512,
+      "palette_encodings": 3,
+      "K": 6,
+      "passed": true
+    },
+    {
+      "resources": 15,
+      "frames": 6875,
+      "native_cycle_slots": 8144,
+      "decoded_pixels": 1501698888,
+      "palette_encodings": 3,
+      "K": 6,
+      "passed": true
+    }
+  ],
+  "sampled_ids": 77,
+  "sampled_resources": 79,
+  "sampled_frames": 40358,
+  "K": 6,
+  "palette_encodings": 3,
+  "unchanged_parent_source_files": 251,
+  "catalog_sha256": "86e6b4d5ab614fb9e8698337dc7850635a1818fbb3874f258b0ef58b2534c928",
+  "dll_sha256": "f8bf6e0c83937042eaec557e5309cb875100859a6d9896fd645730ec2b6f6496",
+  "native_general_tests_passed": true,
+  "installation": false,
+  "ingame_QA": false,
+  "release": false
+}

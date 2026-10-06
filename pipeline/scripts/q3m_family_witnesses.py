@@ -82,7 +82,7 @@ def exclusive(root):
     finally: lock.seek(0); msvcrt.locking(lock.fileno(),msvcrt.LK_UNLCK,1); lock.close()
 
 
-def validate_selection(selection, complete_family=None):
+def validate_selection(selection, complete_family=None, *, animation_ids=None):
     from analyze_native_sprite_families import KNOWN
     witnesses = selection['witnesses']
     if complete_family is None:
@@ -106,7 +106,12 @@ def validate_selection(selection, complete_family=None):
                                  source_items[aid]['bam_resrefs'].split(';'))}
             require(set(selection.get('native_source_absent_animation_ids', [])) == native_absent,
                     'Icewind native-source-absent declarations differ')
-        require({w['animation_id'] for w in witnesses} == expected - absent - native_absent,
+        selected = expected - absent - native_absent
+        if animation_ids is not None:
+            require(bool(animation_ids) and set(animation_ids) <= selected,
+                    'partial animation scope outside available family')
+            selected = set(animation_ids)
+        require({w['animation_id'] for w in witnesses} == selected,
                 'complete available family animation coverage differs')
         for witness in witnesses:
             refs = source_items[witness['animation_id']]['bam_resrefs'].split(';')
@@ -152,11 +157,15 @@ def validate_selection(selection, complete_family=None):
         override = witness.get('palette_override')
         bank_overrides = witness.get('palette_overrides_by_bank')
         if bank_overrides:
-            require(witness['family'] == 'multi_new' and witness['native_kind'] == 0 and
-                    replacement and not override and set(bank_overrides) == set('12345') and
-                    all(value['resref'] == replacement + bank and len(value['sha256']) == 64
-                        for bank,value in bank_overrides.items()),
-                    'native MonsterMulti bank replacement palettes differ')
+            monster_palettes = json.loads(native['ini_sections_json']).get('monster', {})
+            monster_banks = witness['family'] == 'monster' and set(bank_overrides) == set('12') and all(
+                value['resref'] == monster_palettes.get('palette' + bank) and len(value['sha256']) == 64
+                for bank, value in bank_overrides.items())
+            multi_banks = witness['family'] == 'multi_new' and set(bank_overrides) == set('12345') and all(
+                value['resref'] == replacement + bank and len(value['sha256']) == 64
+                for bank, value in bank_overrides.items()) if replacement else False
+            require(witness['native_kind'] == 0 and not override and (multi_banks or monster_banks),
+                    'native bank replacement palettes differ')
         elif complete_family or override:
             require((not replacement and not override) or
                     (override and witness['native_kind'] == 0 and override['resref'] == replacement),
@@ -206,10 +215,10 @@ def bmp_palette(raw, tail_palette=None):
     return p
 
 
-def source_plan(selection_path=SELECTION, complete_family=None):
+def source_plan(selection_path=SELECTION, complete_family=None, *, animation_ids=None):
     selection_path = Path(selection_path)
     selection = json.loads(selection_path.read_text(encoding='utf-8'))
-    witnesses = validate_selection(selection,complete_family)
+    witnesses = validate_selection(selection,complete_family,animation_ids=animation_ids)
     pointers = {name:json.loads((ROOT/path).read_text()) for name,path in (
         ('character','sprite/index/palette-work-plan.json'),('other','sprite/index/q3m-source-work-plan.json'))}
     databases = {}
@@ -240,7 +249,8 @@ def source_plan(selection_path=SELECTION, complete_family=None):
             require(hashlib.sha256(raw).hexdigest() == override['sha256'], 'replacement palette identity changed')
             replacement_palettes[override['resref']] = raw
         for ref in witness['refs']:
-            override = witness.get('palette_override') or witness.get('palette_overrides_by_bank',{}).get(ref[4])
+            bank = ref[5] if witness['family'] == 'monster' and not ref.endswith('INV') else ref[4]
+            override = witness.get('palette_override') or witness.get('palette_overrides_by_bank',{}).get(bank)
             if witness.get('palette_override_scope') == 'world' and ref.endswith('INV'):
                 override = None
             resource = db.execute('SELECT * FROM resources WHERE resref=?',(ref,)).fetchone(); require(resource is not None, 'missing source '+ref)

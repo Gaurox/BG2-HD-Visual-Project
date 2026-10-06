@@ -1,0 +1,87 @@
+{
+  "schema": "bg2-upscale-native-sprite-family-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_on": "2026-10-07",
+  "recorded_at_utc": "2026-10-06T23:32:18.353702+00:00",
+  "timezone": "Europe/Paris",
+  "scope": {
+    "kind": "installed-native-family-final-ID-retest",
+    "engine_family": "monster",
+    "animation_ids": [
+      "0x7314"
+    ],
+    "models": 1,
+    "colour_variants": 1,
+    "resources": 14,
+    "resource_bindings": 14,
+    "frames": 5888,
+    "scale": 2,
+    "SDF": false
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "user_statement": "validé. fais les dernières vérif dont tu parles",
+    "context": "MFIE retest after native G1 MFIEG31/253 and G2 MFIEG3B/252 correction v3",
+    "accepted_as_installed": true,
+    "detailed_actions_tested": "not specified by user; native cycle/palette checks recorded independently"
+  },
+  "runtime_contract": {
+    "runtime": {
+      "path": "docs/measurements/q3m-mfie-native-palettes-x2-20261007-v3/runtime.json",
+      "sha256": "c0b61c777fefea7399d6aa295202ef70d98c0e8733a3b0fb1ac64ed1bd1a0e10",
+      "bytes": 2000
+    },
+    "dll": {
+      "path": "sprite/.work/q3m-mfie-native-palettes-x2-20261007-v3/runtime-build/Release/InfinityEngine-Enhancer.dll",
+      "sha256": "c8690b4edd978d28eafabd1e6aafbd2533820c0bfbc0ea88192ea161850e5697",
+      "bytes": 2122240
+    },
+    "catalogue_sha256": "d013ac44d8925cbaa972f15697e1e6b49d4230e1f09747bb11779a63c56f2ff6",
+    "owner": 3,
+    "world_filter": "Nearest",
+    "colour": "Q3m K6 four partners/eight levels x2",
+    "SDF": false,
+    "metadata_wait": true,
+    "native_loop_clamp": true
+  },
+  "asset_scope": {
+    "inventory": {
+      "path": "docs/measurements/q3m-monster-final-checks-x2-20261007-v1/MFIE-accepted-assets.csv",
+      "sha256": "3bba7528199267a56caba8cf63401c4a2ea9e4b299e9343defa09434f1b9c333",
+      "bytes": 2959
+    },
+    "physical_leaf_count": 14,
+    "binding_count": 14,
+    "physical_leaf_hashes_verified": 14
+  },
+  "provenance": {
+    "installed_generation": {
+      "path": "docs/measurements/q3m-mfie-native-palettes-x2-20261007-v3/current-generation.json",
+      "sha256": "effa4584bb3928d566b91888086645b3e3aa11e3f889f0e69ec10e7ea0b4de6e",
+      "bytes": 4479
+    },
+    "installed_verification": {
+      "path": "docs/measurements/q3m-mfie-native-palettes-x2-20261007-v3/installed-verification.json",
+      "sha256": "80ebc09e9767799c617a3914bf96f76ce3801aa052a6472b7ed2905d9158a8c4",
+      "bytes": 717
+    },
+    "native_verification": {
+      "path": "docs/measurements/q3m-mfie-native-palettes-x2-20261007-v3/verification.json",
+      "sha256": "56bfd9fc78058d9f8abf8d9ee32a2aded3fb882df0cdd1defe09c77ba51a6d2a",
+      "bytes": 1712
+    },
+    "session_evidence": {
+      "path": "docs/measurements/q3m-monster-final-checks-x2-20261007-v1/session-evidence.txt",
+      "sha256": "972b8ec4f4b0bb03d0b50ecfb7e9bf0f26e84b48c8a95fa7ea22a075d131b4bd",
+      "bytes": 19143
+    },
+    "native_checks": {
+      "path": "docs/measurements/q3m-monster-final-checks-x2-20261007-v1/checks.json",
+      "sha256": "d38b014e92496f1d9587db15b2ef16c07e9bbfdf19027c8a458a1e617dc5a20d",
+      "bytes": 13954
+    }
+  },
+  "release": false
+}

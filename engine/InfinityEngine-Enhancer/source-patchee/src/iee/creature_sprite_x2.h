@@ -265,8 +265,10 @@ enum class FrameResolveMode : std::uint8_t {
   // Owner-5 dragons/Demogorgon: cold action/direction changes stay HD.
   WaitForMultiNewMetadata,
   WaitForIcewindMetadata,
+  // Owner-3 generic Monster: action changes resolve their exact HD metadata.
+  WaitForMonsterMetadata,
 };
-// Native CVidCell playback is opt-in for MultiNew (owner5) and Icewind (owner2).
+// Native CVidCell playback is opt-in for MultiNew, Icewind and generic Monster.
 enum class FramePlaybackMode : std::uint8_t { Strict, Clamp, Loop };
 bool resolve_frame(std::uint16_t animationId, const std::array<char, 8>& resref,
                    int sequence, int currentFrame, FrameHandle& out,
@@ -302,7 +304,8 @@ bool reconstruct_composite_sdf_pixels(const CompositeLayer* layers, std::size_t 
 [[nodiscard]] bool frame_uses_q3m_profile(FrameHandle handle) noexcept;
 [[nodiscard]] bool frame_requires_fixed_monster_palette(FrameHandle handle) noexcept;
 bool frame_accepts_fixed_monster_palette(FrameHandle handle, std::uint16_t kind,
-                                        const std::array<std::uint32_t, 256>& colors) noexcept;
+                                        const std::array<std::uint32_t, 256>& colors,
+                                        std::uint32_t entryCount = 256) noexcept;
 bool reconstruct_composite_pixels(const CompositeLayer* layers, std::size_t layerCount,
                                   std::vector<std::uint32_t>& pixels,
                                   CompositeBounds& bounds) noexcept;

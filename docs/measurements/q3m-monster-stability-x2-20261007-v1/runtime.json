@@ -1,0 +1,47 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-delta-v1",
+  "runtime_id": "q3m-monster-stability-x2-20261007-v1",
+  "inherited_runtime": {
+    "path": "docs/measurements/q3m-icewind-full-x2-20261006-v1/runtime.json",
+    "sha256": "bbc6365d8ed7e60549aa60689c704d2eae508cda819a53cd7d6b265da9b5a024"
+  },
+  "inherited_dll": {
+    "path": "sprite/.work/q3m-icewind-full-x2-20261006-v1/runtime-build/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "21a6f2e4203e36c1b6c09ba54e2650cc5f4b5b1e01f55a27eefa67b04ea4b0e3",
+    "bytes": 2118144
+  },
+  "dll": {
+    "path": "sprite/.work/q3m-monster-stability-x2-20261007-v1/runtime-build/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "a9eeccad278dd5502d119ad1951a09dbf220cf65aac92877d6530eab3ba16b99",
+    "bytes": 2119168
+  },
+  "runtime_patch": {
+    "path": "docs/measurements/q3m-monster-stability-x2-20261007-v1/runtime-delta.patch",
+    "sha256": "a6136072f4a86633c7cfc214be1743337e1ee89c34550ae4a9ed9bf6ae679069"
+  },
+  "source_provenance": [
+    {
+      "path": "sprite/.work/q3m-monster-stability-x2-20261007-v1/runtime-src/src/iee/creature_sprite_x2.h",
+      "sha256": "cc2e831baa930c06209115079a48ae8b4abca4d133b1bd09b3f8ec56d733e4ac"
+    },
+    {
+      "path": "sprite/.work/q3m-monster-stability-x2-20261007-v1/runtime-src/src/iee/creature_sprite_x2.cpp",
+      "sha256": "10fd8971438ac48e893ca7af3354393f2fe449eb7968a80aa8643ce2936dc0d7"
+    },
+    {
+      "path": "sprite/.work/q3m-monster-stability-x2-20261007-v1/runtime-src/src/iee/hooks.cpp",
+      "sha256": "39cb57fdf22d7aa20732913a2f5ceda701dd076644ac3b698319d27016c3ebc0"
+    }
+  ],
+  "capability_delta": {
+    "owner": 3,
+    "metadata_wait": "exact shard metadata; existing five-second deadline",
+    "native_playback": "CVidCell+0x11C native signed Loop/Clamp, invalid sequence->zero",
+    "short_palette": "7314 only; type0/252 entries; exact source prefix, zero profile tail; read declared bytes only",
+    "other_owners_unchanged": true
+  },
+  "native_general_tests_passed": true,
+  "installation": false,
+  "ingame_QA": false,
+  "release": false
+}

@@ -1,0 +1,86 @@
+{
+  "schema": "bg2-upscale-native-sprite-family-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_on": "2026-10-07",
+  "recorded_at_utc": "2026-10-06T23:07:02.645047+00:00",
+  "timezone": "Europe/Paris",
+  "scope": {
+    "kind": "installed-native-family-partial-retest",
+    "engine_family": "monster",
+    "animation_ids": [
+      "0x7F0B",
+      "0x7F2C",
+      "0x7F36"
+    ],
+    "models": 3,
+    "colour_variants": 3,
+    "excluded_animation_ids": [
+      "0x7314"
+    ],
+    "scale": 2,
+    "SDF": false,
+    "resources": 39,
+    "resource_bindings": 39
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "user_statement": "ok pour les 3 derniers. le premier est toujours vanilla. tu peux voir les logs",
+    "context": "7F0B MGCL /7F2C NSOL /7F36 NSHD retested with Monster stability v1",
+    "accepted_as_installed": true,
+    "full_lot_explicitly_confirmed": false
+  },
+  "runtime_contract": {
+    "runtime": {
+      "path": "docs/measurements/q3m-monster-stability-x2-20261007-v1/runtime.json",
+      "sha256": "b087c7ff6af8d07459967c7afdbe3244b288e17aa33606f977c749cf45fdba64",
+      "bytes": 2078
+    },
+    "dll": {
+      "path": "sprite/.work/q3m-monster-stability-x2-20261007-v1/runtime-build/Release/InfinityEngine-Enhancer.dll",
+      "sha256": "a9eeccad278dd5502d119ad1951a09dbf220cf65aac92877d6530eab3ba16b99",
+      "bytes": 2119168
+    },
+    "catalogue_sha256": "86e6b4d5ab614fb9e8698337dc7850635a1818fbb3874f258b0ef58b2534c928",
+    "owner": 3,
+    "world_filter": "Nearest",
+    "colour": "Q3m K6 four partners/eight levels x2",
+    "metadata_wait": true,
+    "native_loop_clamp": true,
+    "SDF": false
+  },
+  "asset_scope": {
+    "inventory": {
+      "path": "docs/measurements/q3m-mfie-palette-stability-x2-20261007-v2/accepted-asset-scope.csv",
+      "sha256": "3d7c152c27fb5ce59945bafdfe1a7190f5d9fd87b8f327d8412570dc2460d04c",
+      "bytes": 8132
+    },
+    "physical_leaf_count": 39,
+    "binding_count": 39,
+    "catalogue": {
+      "path": "sprite/.work/q3m-monster-ingame-x2-20261007-v1/combined/iee-assets/creature-sprites/CreatureSprites-XN.catalog",
+      "sha256": "86e6b4d5ab614fb9e8698337dc7850635a1818fbb3874f258b0ef58b2534c928",
+      "bytes": 3719092
+    },
+    "physical_leaf_hashes_verified": 39
+  },
+  "provenance": {
+    "installed_generation": {
+      "path": "docs/measurements/q3m-monster-stability-x2-20261007-v1/current-generation.json",
+      "sha256": "372388be69ff32bc312af383259c3cd55d7a092c0bf1b65350bad1de5f18fc8f",
+      "bytes": 3408
+    },
+    "installed_verification": {
+      "path": "docs/measurements/q3m-monster-stability-x2-20261007-v1/installed-verification.json",
+      "sha256": "d866bbbb4b4450e09eb0426979d2d7480a632f40b7f64efb10e34c0a5d61b62c",
+      "bytes": 527
+    },
+    "session_evidence": {
+      "path": "docs/measurements/q3m-mfie-palette-stability-x2-20261007-v2/session-evidence.txt",
+      "sha256": "519980c07d342dde73cb706e4d31404d30da001f7ef10a4d631aaa03380aea69",
+      "bytes": 2911
+    }
+  },
+  "release": false
+}
