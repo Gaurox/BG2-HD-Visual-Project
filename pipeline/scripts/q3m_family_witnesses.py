@@ -42,6 +42,14 @@ def validate_encoded(profile, i, code, guide=None, dep=None):
             'native empty quadrant planes')
 
 
+def native_representatives(indices):
+    values, offsets = np.unique(indices, return_index=True)
+    require(np.all(offsets < 0xffff), 'native representatives exceed u16; refusing truncation')
+    reps = np.full(256, 0xffff, np.uint16)
+    reps[values] = offsets
+    return reps
+
+
 def save(path, **arrays):
     path.parent.mkdir(parents=True, exist_ok=True); temporary = path.with_suffix('.part')
     with temporary.open('wb') as stream: np.savez_compressed(stream, **arrays)
@@ -149,14 +157,24 @@ def validate_selection(selection, complete_family=None):
     return witnesses
 
 
-def bmp_palette(raw):
-    """Native new_palette resources: complete 256-entry BI_RGB/P8 DIB table."""
-    require(len(raw) >= 1078 and raw[:2] == b'BM', 'truncated replacement palette BMP')
+def bmp_palette(raw, tail_palette=None):
+    """BI_RGB/P8 table; short native tables retain the source's unused tail."""
+    require(len(raw) >= 54 and raw[:2] == b'BM', 'truncated replacement palette BMP')
     size,width,height,planes,bits,compression,_,_,_,colours,_ = struct.unpack_from('<IiiHHIIiiII',raw,14)
     require(size == 40 and width > 0 and height != 0 and planes == 1 and bits == 8 and
-            compression == 0 and colours in (0,256) and struct.unpack_from('<I',raw,10)[0] >= 1078,
+            compression == 0 and 0 <= colours <= 256,
             'replacement palette BMP contract differs')
-    p = np.frombuffer(raw[54:1078],np.uint8).reshape(256,4).copy()
+    count = colours or 256
+    offset = struct.unpack_from('<I',raw,10)[0]
+    require(54 + count*4 <= offset <= len(raw), 'truncated replacement palette table')
+    if count == 256:
+        p = np.empty((256,4),np.uint8)
+    else:
+        require(tail_palette is not None, 'short replacement palette requires native tail')
+        p = np.asarray(tail_palette).copy()
+        require(p.dtype == np.uint8 and p.shape == (256,4) and not np.any(p[count:]),
+                'short replacement palette has nonzero unresolved native tail')
+    p[:count] = np.frombuffer(raw[54:54+count*4],np.uint8).reshape(count,4)
     require(np.isin(p[:,3],(0,255)).all(), 'replacement palette alpha differs')
     return p
 
@@ -193,12 +211,14 @@ def source_plan(selection_path=SELECTION, complete_family=None):
                 require(entry is not None, 'replacement palette BMP absent')
                 raw,_ = index.resolve(entry)
             require(hashlib.sha256(raw).hexdigest() == override['sha256'], 'replacement palette identity changed')
-            replacement_palettes[override['resref']] = bmp_palette(raw)
+            replacement_palettes[override['resref']] = raw
         for ref in witness['refs']:
             override = witness.get('palette_override') or witness.get('palette_overrides_by_bank',{}).get(ref[4])
+            if witness.get('palette_override_scope') == 'world' and ref.endswith('INV'):
+                override = None
             resource = db.execute('SELECT * FROM resources WHERE resref=?',(ref,)).fetchone(); require(resource is not None, 'missing source '+ref)
             rid = resource['resource_id']; original_palette = np.frombuffer(resource['palette_bgra'],np.uint8).reshape(256,4)
-            p = replacement_palettes[override['resref']] if override else original_palette
+            p = bmp_palette(replacement_palettes[override['resref']],original_palette) if override else original_palette
             if char:
                 membership = db.execute('SELECT 1 FROM model_resources JOIN models USING(model_id) WHERE resource_id=? AND animation_id=?',(rid,witness['animation_id'])).fetchone()
             else: membership = db.execute('SELECT 1 FROM animation_resources WHERE resource_id=? AND animation_id=?',(rid,witness['animation_id'])).fetchone()
@@ -226,7 +246,9 @@ def source_plan(selection_path=SELECTION, complete_family=None):
                 w,h = row['width'],row['height']
                 empty = (complete_family == 'monster_quadrant' and (w,h) == (0,0) and
                          ref in ('MWYVG22','MWYVG23','MWYVG24','MTANG21E'))
-                require((0 < w*h < 65535 or empty) and row['transparent_index'] == 0, 'source geometry contract')
+                from run_creature_sprite_x2 import MAX_LAZY_FRAME_INDEX_BYTES
+                require(((0 < w <= 65535 and 0 < h <= 65535 and w*h*8 <= MAX_LAZY_FRAME_INDEX_BYTES) or empty)
+                        and row['transparent_index'] == 0, 'source geometry contract')
                 indices = np.frombuffer(zlib.decompress(row['indices_zlib']),np.uint8).reshape(h,w).copy()
                 rgb = p[:,[2,1,0]].copy(); rgba = np.dstack((rgb[indices],np.where(indices == 0,0,255).astype(np.uint8))).tobytes()
                 frame = SourceFrame(ref,row['frame_index'],w,h,row['center_x'],row['center_y'],0,indices,rgb,rgba)
@@ -246,6 +268,10 @@ def source_plan(selection_path=SELECTION, complete_family=None):
             cycles = [list(struct.unpack(f"<{c['slot_count']}H",c['frame_indices_le_u16'])) for c in db.execute('SELECT * FROM cycles WHERE resource_id=? ORDER BY cycle_index',(rid,))]
             require(len(frames) == resource['frame_count'] and len(cycles) == resource['cycle_count'], 'native coverage incomplete')
             resources.append(dict(witness=witness,resref=ref,source_sha256=resource['canonical_sha256'],frames=frames,cycles=cycles,profile=profile))
+        if os.environ.get('Q3M_PLAN_PROGRESS') == '1':
+            print(json.dumps(dict(stage='source-plan', animation_id=witness['animation_id'],
+                                  done=selection['witnesses'].index(witness)+1,total=len(witnesses),
+                                  resource_bindings=len(resources),unique_encoded_work=len(works))),flush=True)
     for db in databases.values(): db.close()
     witness_summary = []
     for witness in witnesses:
@@ -266,9 +292,16 @@ def guide_batch(args):
     """Independent exact guides; workers never write shared cache paths."""
     batch_keys,frames,scalepix = args
     outputs = run_xbr(frames,scalepix,'node',direct_upscale_contract(2))
-    return [(key,map_output(frame,output[2],xbr_provenance_indices(frame,2))[0].reshape(
-                 frame.height*2,frame.width*2))
-            for key,frame,output in zip(batch_keys,frames,outputs,strict=True)]
+    results = []
+    for key,frame,output in zip(batch_keys,frames,outputs,strict=True):
+        used = np.unique(frame.indices)
+        colours = np.column_stack((frame.palette[used],np.where(used == frame.transparent,0,255)))
+        # Injective RGBA uniquely identifies every selected source index.
+        # Only duplicate RGBA needs the slower independent provenance oracle.
+        provenance = xbr_provenance_indices(frame,2) if len(np.unique(colours,axis=0)) != len(used) else None
+        guide = map_output(frame,output[2],provenance)[0].reshape(frame.height*2,frame.width*2)
+        results.append((key,guide))
+    return results
 
 
 def target_file(args):
@@ -409,8 +442,18 @@ def produce(resources, works, root):
 
 def pack(resources,works,output):
     from run_creature_sprite_x2 import catalog_shard_filename,catalog_shard_entry_bytes,catalog_component_digest,catalog_directory_digest
+    from functools import lru_cache
     require(not output.exists(),'fresh immutable pack destination required'); output.mkdir(parents=True)
     infos,components,directory,animations,shared = [],[],[],{},{}
+    pixel_hashes, representatives = {}, {}
+    @lru_cache(maxsize=2048)
+    def encoded_arrays(key):
+        with np.load(works[key]['encoded_path'],allow_pickle=False) as data:
+            return {name:data[name].copy() for name in data.files}
+    def progress():
+        if os.environ.get('Q3M_PACK_PROGRESS') == '1':
+            print(json.dumps(dict(stage='packing',done=len(directory),total=len(resources),
+                                  physical_leaves=len(infos),unique_pixel_oracles=len(pixel_hashes))),flush=True)
     oracle = bytearray(struct.pack('<8sI',b'IEEQP7\0\0',len(resources)))
     for resource in resources:
         material = dict(resref=resource['resref'],source_sha256=resource['source_sha256'],frames=[],cycles=resource['cycles'])
@@ -423,6 +466,7 @@ def pack(resources,works,output):
             ordinal,body = shared[identity]; oracle.extend(body)
             animations.setdefault(aid,dict(owner=witness['owner'],components=[]))['components'].append(ordinal)
             directory.append((aid,resource['resref'],ordinal,ordinal,0))
+            progress()
             continue
         ordinal = len(infos); body = bytearray()
         palettes = []
@@ -437,15 +481,19 @@ def pack(resources,works,output):
         body.extend(profile.metadata())
         for cycle in resource['cycles']: body.extend(struct.pack('<I',len(cycle))+struct.pack(f'<{len(cycle)}I',*cycle))
         for row in resource['frames']:
-            work = works[row['key']]
-            with np.load(work['encoded_path'],allow_pickle=False) as data: arrays = {name:data[name].copy() for name in data.files}
+            key = row['key']; work = works[key]; arrays = encoded_arrays(key)
+            require('profile' not in work or work['profile'].identity == profile.identity,'pack profile/key identity differs')
             validate_encoded(profile,arrays['I'],arrays['F'],arrays['guide'],arrays['dep'])
-            reps = np.full(256,0xffff,np.uint16); values,offsets = np.unique(work['frame'].indices,return_index=True); reps[values] = offsets
+            if key not in representatives: representatives[key] = native_representatives(work['frame'].indices)
+            reps = representatives[key]
             material['frames'].append(dict(geometry=row['geometry'],representatives=reps,**arrays))
             w,h,cx,cy,_ = row['geometry']; body.extend(struct.pack('<IIii',w,h,cx,cy))
-            for palette in palettes:
-                pixels = profile.decode(arrays['I'],arrays['F'],palette).tobytes() if w*h else b''
-                body.extend(hashlib.sha256(pixels).digest())
+            require((w,h)==(work['frame'].width,work['frame'].height),'pack pixel-key geometry differs')
+            hash_key = (key,profile.identity)
+            if hash_key not in pixel_hashes:
+                pixel_hashes[hash_key] = b''.join(hashlib.sha256(profile.decode(arrays['I'],arrays['F'],palette).tobytes()
+                                           if w*h else b'').digest() for palette in palettes)
+            body.extend(pixel_hashes[hash_key])
         shared[identity] = ordinal,bytes(body); oracle.extend(body)
         leaf = output/(resource['resref']+'.registry'); info = write_leaf(leaf,[material],profile)
         sealed = output/catalog_shard_filename(info['sha256']); leaf.replace(sealed); infos.append(info)
@@ -453,9 +501,11 @@ def pack(resources,works,output):
         components.append(dict(index=ordinal,digest=digest,shard_start=ordinal,shard_count=1,resource_count=1,frame_count=info['frame_count'],index_bytes=info['index_bytes'],registry_bytes=info['registry_bytes']))
         animations.setdefault(aid,dict(owner=witness['owner'],components=[]))['components'].append(ordinal)
         directory.append((aid,resource['resref'],ordinal,ordinal,0))
+        progress()
     memberships, animation_raw = [],bytearray()
     for aid,animation in sorted(animations.items()):
-        start = len(memberships); memberships.extend(animation['components']); animation_raw.extend(struct.pack('<4I',aid,animation['owner'],start,len(animation['components'])))
+        indices = sorted(set(animation['components']))
+        start = len(memberships); memberships.extend(indices); animation_raw.extend(struct.pack('<4I',aid,animation['owner'],start,len(indices)))
     directory_raw = b''.join(struct.pack('<I8sIII',a,r.encode().ljust(8,b'\0'),c,s,o) for a,r,c,s,o in sorted(directory))
     totals = [sum(i[n] for i in infos) for n in ('resource_count','frame_count','index_bytes','registry_bytes')]
     raw = bytearray(struct.pack('<8s6I4Q',b'IEECSNC\0',2,2,len(animations),len(components),len(memberships),len(infos),*totals))
@@ -466,6 +516,7 @@ def pack(resources,works,output):
     for info in infos: raw.extend(catalog_shard_entry_bytes(info,output))
     raw.extend(directory_raw); (output/'CreatureSprites-XN.catalog').write_bytes(raw); (output/'witnesses.oracle').write_bytes(oracle)
     report = dict(schema='bg2-q3m-family-witness-pack-v1',scale=2,registry_version=7,catalog_version=2,animation_count=len(animations),resources=totals[0],frames=totals[1],index_bytes=totals[2],registry_bytes=totals[3],catalog_sha256=hashlib.sha256(raw).hexdigest(),oracle_sha256=hashlib.sha256(oracle).hexdigest(),oracle_palette_stage='post-CVidCell-transparent-entry-clear',logical_resource_bindings=len(resources),shared_resource_bindings=len(resources)-len(infos),leaves=infos,ingame_validated=False)
+    report['unique_pixel_oracles'] = len(pixel_hashes)
     write_json(output/'pack.json',report); return report
 
 

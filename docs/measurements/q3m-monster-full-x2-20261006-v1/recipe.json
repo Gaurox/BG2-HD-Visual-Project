@@ -1,0 +1,36 @@
+{
+  "method": "Q3m-K6-four-partners-eight-levels",
+  "scale": 2,
+  "SDF": false,
+  "sources": [
+    {
+      "path": "pipeline/scripts/q3m_family_witnesses.py",
+      "sha256": "d727b5b457733f09973d8467fb9ddb45980d94beb8bd17b4a6d17ffd0dfe7a2b",
+      "bytes": 36668,
+      "snapshot": "sprite/.work/q3m-monster-full-x2-20261006-v1/provenance/d727b5b457733f09973d8467fb9ddb45980d94beb8bd17b4a6d17ffd0dfe7a2b/q3m_family_witnesses.py"
+    },
+    {
+      "path": "pipeline/scripts/palette_q3m_partners.py",
+      "sha256": "0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449",
+      "bytes": 6554,
+      "snapshot": "sprite/.work/q3m-monster-full-x2-20261006-v1/provenance/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/palette_q3m_partners.py"
+    },
+    {
+      "path": "pipeline/scripts/palette_partner_registry.py",
+      "sha256": "d39e483f5bf98f9dc8a314aa4c6a8c9fd675a4e1aeca8400af6ea2fc82cd59c4",
+      "bytes": 11830,
+      "snapshot": "sprite/.work/q3m-monster-full-x2-20261006-v1/provenance/d39e483f5bf98f9dc8a314aa4c6a8c9fd675a4e1aeca8400af6ea2fc82cd59c4/palette_partner_registry.py"
+    },
+    {
+      "path": "pipeline/scripts/q3m_guarded_gpu_encode.py",
+      "sha256": "48238d6fc24957d3cc2cec003d44ecc551999b847eabd40d053c8cc6449e604a",
+      "bytes": 4392,
+      "snapshot": "sprite/.work/q3m-monster-full-x2-20261006-v1/provenance/48238d6fc24957d3cc2cec003d44ecc551999b847eabd40d053c8cc6449e604a/q3m_guarded_gpu_encode.py"
+    }
+  ],
+  "source_scope": "source-scope.json",
+  "selection_sha256": "ac44b663e2757d80ccb7042027c3e70523a2ceb27837215ee166d22f7833b01d",
+  "short_palette": "MFIEG3B: 252 native entries; zero native source tail retained; no bitmap pixel bytes interpreted as colours",
+  "large_frame": "native dimensions preserved; u16 first representatives checked before conversion",
+  "acceleration": "gpu-grouped-guarded-v1"
+}

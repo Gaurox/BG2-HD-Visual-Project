@@ -1,0 +1,22 @@
+{
+  "method": "Q3m-K6-four-partners-eight-levels",
+  "scale": 2,
+  "SDF": false,
+  "encoding_recipe": {
+    "path": "docs/measurements/q3m-monster-full-x2-20261006-v1/recipe.json",
+    "sha256": "f294956135a138d2b64a9ac565ca5940463fb4299422f838483b68445a04e240"
+  },
+  "pack_recipe": {
+    "path": "docs/measurements/q3m-monster-full-x2-20261006-v1/recipe-packing-v2.json",
+    "sha256": "460c67fbca0dfff7a34df5b9f7ee087cd5ba7e85f38a73ca77fc32a469b325da"
+  },
+  "catalog_kernel": {
+    "path": "pipeline/scripts/q3m_family_witnesses.py",
+    "sha256": "1716620d8e5ff9587a5b40d55089d1159677e031e247759643b2519924eef4cb"
+  },
+  "canonicalizer": {
+    "path": "docs/measurements/q3m-monster-full-x2-20261006-v1/canonicalize.py",
+    "sha256": "90dad18be21e371d6401441b5d64d50f438ecd606093b8ab9f1f881f8f41542c"
+  },
+  "change": "strict ascending unique component memberships; all leaf/oracle bytes retained"
+}

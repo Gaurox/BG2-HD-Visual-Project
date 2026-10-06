@@ -1,4 +1,4 @@
-# Suivi sprites Q3m — 2026-10-05
+# Suivi sprites Q3m — 2026-10-06
 
 ## Portée / méthode
 
@@ -29,7 +29,7 @@
 |---|---:|---:|---|
 | `character` | 78/78 | 78 | Corps/armures + armes/casques/boucliers ; palettes par couche. Variantes LOW `5000` et standard `6000`. Jouables, compagnons, PNJ partageant ces avatars. |
 | `character_old` | 7/8 | 7 | **Famille disponible complète validée**, Q3m x2 palette améliorée/CatmullRom ; cinq IDs V7 sans SDF +gardes6405/6406 V9 SDF. 1 066 BAM natifs/2 018 feuilles variantes installées ; corps des gardes natifs transparents, XHFF6621 absent. |
-| `monster` | 77/102 | 3 | Monstres BG2, BAM éventuellement divisés ; palette fixe/false-color à résoudre par ID. Spectateurs, Bodhi, golems, trolls. |
+| `monster` | 77/102 | 3 | **Production disponible complète Q3m V7 x2 améliorée sans SDF, vérifiée sur hôte** : 62 modèles/77 variantes, 850 BAM natifs/409 599 frames ; 102 953 encodages uniques. Installation et QA ingame en attente. 25 IDs sans source exclus. |
 | `monster_old` | 46/54 | — | **Famille disponible complète installée et validée ingame**, Q3m V7 K6 x2 amélioré sans SDF ;18 modèles/46 variantes natives,79 BAM/217 feuilles/17 752 frames physiques (218 liaisons/17 754 frames liées). Ogrillon et loup d'ombre acceptés tels qu'installés ; huit IDs sans source. |
 | `monster_icewind` | 44/132 | — | Séquences de style IWD ; contrat palette propre à l'animation. Orcs, gobelins, ettins, liches. |
 | `monster_quadrant` | 7/9 | — | **Famille disponible complète Q3m V7 x2 contextuel palette améliorée sans SDF installée et validée ingame** ; deux modèles/sept palettes, 36 BAM natifs/132 feuilles/12 928 frames ; quadrants vides préservés, MWDR1101/1105 sans source. |
@@ -44,6 +44,8 @@
 | `flying` | 5/5 | — | Aigle, mouette, vautour, petit oiseau ; **famille complète V7 x2 installée et validée**, 4 BAM / 243 frames ; intérieur/extérieur partagent une ressource. |
 
 ## Queue / références
+
+- Production améliorée complète : **213 IDs /13 familles disponibles** ; Monster ajoute 77 IDs/62 modèles, pack autonome vérifié, non installé. **Installation/QA : 136 IDs /12 familles**, acquis conservés. [Monster](../docs/measurements/q3m-monster-full-x2-20261006-v2/README.md) ; `docs/measurements/q3m-monster-full-x2-20261006-v2/current-generation.json`.
 
 - `index/q3m-work-tracking.json` : décisions de méthode, estimation moteur, familles et références ; **plan**, aucune autorité supplémentaire sur les états métier.
 - `index/q3m-work-items.csv` : 465 IDs, dont 335 avec BAM et 130 sans BAM. Une ligne par animation ; composants/équipement reliés par `family_ids`. `q3m-reference-available` / `to-produce-or-extend-profile` / `source-absent` = état de queue, pas validation.
