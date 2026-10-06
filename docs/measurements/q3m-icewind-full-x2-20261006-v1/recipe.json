@@ -1,0 +1,37 @@
+{
+  "method": "Q3m-K6-four-partners-eight-levels",
+  "scale": 2,
+  "registry_version": 7,
+  "SDF": false,
+  "sources": [
+    {
+      "path": "pipeline/scripts/q3m_family_witnesses.py",
+      "sha256": "2abcc0044134776e4dcfdcf6b45612742cc1ab930f050711024e6eec115719c6",
+      "snapshot": "sprite/.work/q3m-icewind-full-x2-20261006-v1/provenance/2abcc0044134776e4dcfdcf6b45612742cc1ab930f050711024e6eec115719c6/q3m_family_witnesses.py"
+    },
+    {
+      "path": "pipeline/scripts/palette_q3m_partners.py",
+      "sha256": "0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449",
+      "snapshot": "sprite/.work/q3m-icewind-full-x2-20261006-v1/provenance/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/palette_q3m_partners.py"
+    },
+    {
+      "path": "pipeline/scripts/palette_partner_registry.py",
+      "sha256": "d39e483f5bf98f9dc8a314aa4c6a8c9fd675a4e1aeca8400af6ea2fc82cd59c4",
+      "snapshot": "sprite/.work/q3m-icewind-full-x2-20261006-v1/provenance/d39e483f5bf98f9dc8a314aa4c6a8c9fd675a4e1aeca8400af6ea2fc82cd59c4/palette_partner_registry.py"
+    },
+    {
+      "path": "pipeline/scripts/q3m_guarded_gpu_encode.py",
+      "sha256": "48238d6fc24957d3cc2cec003d44ecc551999b847eabd40d053c8cc6449e604a",
+      "snapshot": "sprite/.work/q3m-icewind-full-x2-20261006-v1/provenance/48238d6fc24957d3cc2cec003d44ecc551999b847eabd40d053c8cc6449e604a/q3m_guarded_gpu_encode.py"
+    }
+  ],
+  "selection_sha256": "45e735f95b9e12ffee6c62683a8b7ef97b72a530c50b8fb1cab27baa74313ac8",
+  "native_naming": "body constructor 0x30EA60; weapons 0x3253E0; eastern attack3 body uses A2E",
+  "palette_overrides": [
+    "MBOA_BR",
+    "METN_GH",
+    "MTRO_DK"
+  ],
+  "spatial_contexts": 0,
+  "acceleration": "gpu-grouped-guarded-v1"
+}

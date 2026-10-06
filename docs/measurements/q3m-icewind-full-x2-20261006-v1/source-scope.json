@@ -1,0 +1,50 @@
+{
+  "native_ids": 40,
+  "models": 36,
+  "native_BAM": 1051,
+  "native_frames": 71072,
+  "bindings": 1140,
+  "bound_frames": 76955,
+  "canonical_current_game_sources_verified": 1051,
+  "source_set_sha256": "4cac7b4814fff26819accc5754583e9b017e76ccdb4bebcc3671e299551ca975",
+  "source_plans": {
+    "schema": "bg2-all-creature-source-dedup-v1",
+    "role": "source-plan-not-production-or-QA",
+    "path": "docs/measurements/all-creature-source-dedup-20261003-v1/processing-plan.sqlite",
+    "bytes": 541003776,
+    "sha256": "65bc442f3884badbb21dce39b5e471984b5380ae7b07f403008731e2e9247ad0",
+    "summary": "docs/measurements/all-creature-source-dedup-20261003-v1/summary.json",
+    "character_descriptor": "sprite/index/palette-work-plan.json",
+    "monster_descriptor": "docs/measurements/q3m-monster-work-plan-x2-20261003-v1/plan.json",
+    "consumer": "analyze_sprite_frame_dedup.py plan; encoded work requires the demonstrated per-profile plan and shared cache"
+  },
+  "raw_absent_ids": 88,
+  "native_absent_ids": [
+    "0xE060",
+    "0xE0D0",
+    "0xE261",
+    "0xE262"
+  ],
+  "excluded_non_native_BAM": 122,
+  "native_body_constructor": "0x30EA60",
+  "native_equipment": "0x3253E0",
+  "native_size_body_weapon": "0x3175B0 -> CVidCell::GetCurrentFrameSize 0x411780; +0xCD8/+0x2F10",
+  "spatial_groups": 0,
+  "equipment_BAM": 268,
+  "equipment_frames": 19808,
+  "original_source_work": 67143,
+  "palette_extra_work": 3728,
+  "total_encoded_work": 70871,
+  "acquired_encoded": 2632,
+  "max_native_representative": 39946,
+  "max_frame": {
+    "resref": "MCORSP",
+    "index": 136,
+    "width": 264,
+    "height": 183
+  },
+  "native_exe_sha256": "b51093a49140b2b8a7c046b4652bb8e535be24ebbc12b1d735e0b94217a14d57",
+  "installation": false,
+  "ingame_QA": false,
+  "release": false
+}

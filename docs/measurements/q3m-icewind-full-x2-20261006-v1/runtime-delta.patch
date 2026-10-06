@@ -1,0 +1,65 @@
+--- installed/src/iee/creature_sprite_x2.cpp
++++ icewind/src/iee/creature_sprite_x2.cpp
+@@ -4462,8 +4462,9 @@
+                    int currentFrame, FrameHandle& out,
+                    FrameResolveMode mode, FramePlaybackMode playback) noexcept {
+   out = {};
+-  const bool nativePlayback = mode == FrameResolveMode::WaitForMultiNewMetadata &&
+-      is_multi_new_animation(animationId) &&
++  const bool nativePlayback =
++      ((mode == FrameResolveMode::WaitForMultiNewMetadata && is_multi_new_animation(animationId)) ||
++       (mode == FrameResolveMode::WaitForIcewindMetadata && (animationId & 0xF000u) == 0xE000u)) &&
+       (playback == FramePlaybackMode::Clamp || playback == FramePlaybackMode::Loop);
+   if (!g_ready.load(std::memory_order_acquire) ||
+       (!nativePlayback && (sequence < 0 || currentFrame < 0))) return false;
+@@ -4488,7 +4489,10 @@
+             animationId == 0x3000u && animation->owner == kCatalogAnkhegOwner) ||
+            (mode == FrameResolveMode::WaitForMultiNewMetadata &&
+             is_multi_new_animation(animationId) &&
+-            animation->owner == kCatalogMultiNewOwner));
++            animation->owner == kCatalogMultiNewOwner) ||
++           (mode == FrameResolveMode::WaitForIcewindMetadata &&
++            (animationId & 0xF000u) == 0xE000u &&
++            animation->owner == kCatalogMonsterIcewindOwner));
+       if (!catalog_resident_resource_locked(
+               animationId, resref, catalogShardIndex, resourceOrdinal,
+               resourceIndex)) {
+--- installed/src/iee/creature_sprite_x2.h
++++ icewind/src/iee/creature_sprite_x2.h
+@@ -264,8 +264,9 @@
+   WaitForAnkhegMetadata,
+   // Owner-5 dragons/Demogorgon: cold action/direction changes stay HD.
+   WaitForMultiNewMetadata,
+-};
+-// Native CVidCell playback is opt-in and restricted to owner-5 IDs.
++  WaitForIcewindMetadata,
++};
++// Native CVidCell playback is opt-in for MultiNew (owner5) and Icewind (owner2).
+ enum class FramePlaybackMode : std::uint8_t { Strict, Clamp, Loop };
+ bool resolve_frame(std::uint16_t animationId, const std::array<char, 8>& resref,
+                    int sequence, int currentFrame, FrameHandle& out,
+--- installed/src/iee/hooks.cpp
++++ icewind/src/iee/hooks.cpp
+@@ -952,8 +952,10 @@
+     return false;
+   }
+   auto playback = creature_sprite_x2::FramePlaybackMode::Strict;
+-  if ((animationId >= 0x1200u && animationId <= 0x1208u) || animationId == 0x1300u) {
+-    // Same CVidCell playback field used by the native item-icon bridge.
++  const bool icewind = (animationId & 0xF000u) == 0xE000u;
++  if (icewind || (animationId >= 0x1200u && animationId <= 0x1208u) || animationId == 0x1300u) {
++    // Icewind native sizing (RVA 0x3175B0) calls GetCurrentFrameSize for
++    // both body (+0xCD8) and equipped weapon (+0x2F10). Same playback field.
+     const auto playbackOffset = g_ctx->manifest->itemIcons.vidCellPlaybackMode;
+     std::int32_t nativeMode = 0;
+     if (!playbackOffset || !core::safe_read(
+@@ -970,7 +972,8 @@
+                   : ((animationId >= 0x1200u && animationId <= 0x1208u) ||
+                      animationId == 0x1300u)
+                       ? creature_sprite_x2::FrameResolveMode::WaitForMultiNewMetadata
+-                      : creature_sprite_x2::FrameResolveMode::NonBlocking), playback)) {
++                      : (icewind ? creature_sprite_x2::FrameResolveMode::WaitForIcewindMetadata
++                                 : creature_sprite_x2::FrameResolveMode::NonBlocking)), playback)) {
+     if (g_ctx->cfg.enableCreatureSpritePaletteTrace && animationId == 0x6110) {
+       thread_local std::set<std::array<char, 8>> unresolved;
+       if (unresolved.size() < 64 && unresolved.insert(resref).second) {

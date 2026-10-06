@@ -1,4 +1,4 @@
-# Suivi sprites Q3m — 2026-10-06
+# Suivi sprites Q3m — 2026-10-07
 
 ## Portée / méthode
 
@@ -27,11 +27,11 @@
 
 | Profil | Stock | Q3m connu | Intégration / exemples |
 |---|---:|---:|---|
-| `character` | 78/78 | 78 | Corps/armures + armes/casques/boucliers ; palettes par couche. Variantes LOW `5000` et standard `6000`. Jouables, compagnons, PNJ partageant ces avatars. |
+| `character` | 78/78 | 78 | **Famille complète V6 K6 x2 sans SDF installée et validée ingame, conservée par choix utilisateur** ; un partenaire/huit niveaux, filtre Nearest. Corps/armures/armes/casques/boucliers ; migration V7 non demandée. |
 | `character_old` | 7/8 | 7 | **Famille disponible complète validée**, Q3m x2 palette améliorée/CatmullRom ; cinq IDs V7 sans SDF +gardes6405/6406 V9 SDF. 1 066 BAM natifs/2 018 feuilles variantes installées ; corps des gardes natifs transparents, XHFF6621 absent. |
 | `monster` | 77/102 | 3 | **Production disponible complète Q3m V7 x2 améliorée sans SDF, vérifiée sur hôte** : 62 modèles/77 variantes, 850 BAM natifs/409 599 frames ; 102 953 encodages uniques. Installation et QA ingame en attente. 25 IDs sans source exclus. |
 | `monster_old` | 46/54 | — | **Famille disponible complète installée et validée ingame**, Q3m V7 K6 x2 amélioré sans SDF ;18 modèles/46 variantes natives,79 BAM/217 feuilles/17 752 frames physiques (218 liaisons/17 754 frames liées). Ogrillon et loup d'ombre acceptés tels qu'installés ; huit IDs sans source. |
-| `monster_icewind` | 44/132 | — | Séquences de style IWD ; contrat palette propre à l'animation. Orcs, gobelins, ettins, liches. |
+| `monster_icewind` | 40/132 natifs ; 44 avec préfixe | — | **Famille native disponible complète V7 x2 améliorée sans SDF installée et validée ingame** : 36 modèles/40 IDs, 1 051 BAM/71 072 frames natives, 1 115 feuilles/75 176 frames physiques. DLL owner2 chargement/cycles ; 40 CRE QICE neutres. 88 absents +4 IDs au layout Monster exclus. |
 | `monster_quadrant` | 7/9 | — | **Famille disponible complète Q3m V7 x2 contextuel palette améliorée sans SDF installée et validée ingame** ; deux modèles/sept palettes, 36 BAM natifs/132 feuilles/12 928 frames ; quadrants vides préservés, MWDR1101/1105 sans source. |
 | `multi_new` | 10/10 | — | **Complète installée et validée ingame** : neuf dragons (trois modèles, sept palettes MDR1) et Démogorgon ; Q3m K6 x2 amélioré, raccords contextuels quatre/neuf parties, sans SDF ; runtime v2 chargements et fins de cycles natifs. |
 | `monster_layered` | 7/7 | — | **Famille complète Q3m V7 x2 palette améliorée sans SDF installée et validée ingame** ; 65 BAM utiles/6 422 frames, sept modèles, corps/armes, deux chemins natifs. MSIRG2BE orphelin exclu. |
@@ -45,11 +45,14 @@
 
 ## Queue / références
 
-- Production améliorée complète : **213 IDs /13 familles disponibles** ; Monster ajoute 77 IDs/62 modèles, pack autonome vérifié, non installé. **Installation/QA : 136 IDs /12 familles**, acquis conservés. [Monster](../docs/measurements/q3m-monster-full-x2-20261006-v2/README.md) ; `docs/measurements/q3m-monster-full-x2-20261006-v2/current-generation.json`.
+- Icewind : **40 IDs/36 modèles produits, installés et validés ingame**, 2 632 encodages acquis conservés, 64 511 guides historiques importés ; nouveaux calculs limités aux clés manquantes. [Production](../docs/measurements/q3m-icewind-full-x2-20261006-v1/README.md), [QA](../docs/measurements/q3m-icewind-accepted-x2-20261007-v1/README.md). Total amélioré **253 IDs/14 familles**, recettes retenues Character V6 inclus **331 IDs/15 familles**.
+
+- Production améliorée complète : **253 IDs /14 familles disponibles** ; Monster 77 IDs/62 modèles et Icewind 40 IDs/36 modèles, packs autonomes vérifiés ; Icewind installé et accepté, Monster non installé. **Installation et QA : 176 IDs/13 familles**, acquis conservés. [Monster](../docs/measurements/q3m-monster-full-x2-20261006-v2/README.md) ; [Icewind](../docs/measurements/q3m-icewind-accepted-x2-20261007-v1/README.md).
+- Character : **78 IDs V6 complets installés/acceptés le 2026-10-06**, exception explicite à la recette améliorée. Total des recettes retenues : **331 IDs/15 familles produites**, **254 IDs/14 familles installés et acceptés** ; Monster reste production seule. **Aucun lot natif disponible complet restant à produire.** Icewind : 36 modèles/40 IDs ; 88 absents et quatre IDs sans layout Icewind exclus. [Décision Character V6](../docs/measurements/q3m-character-v6-accepted-x2-20261006-v1/README.md).
 
 - `index/q3m-work-tracking.json` : décisions de méthode, estimation moteur, familles et références ; **plan**, aucune autorité supplémentaire sur les états métier.
 - `index/q3m-work-items.csv` : 465 IDs, dont 335 avec BAM et 130 sans BAM. Une ligne par animation ; composants/équipement reliés par `family_ids`. `q3m-reference-available` / `to-produce-or-extend-profile` / `source-absent` = état de queue, pas validation.
-- Historique V6 : 81 IDs avec référence Q3m ; 254 IDs avec BAM sans référence V6 inscrite. Nouvelle recette : **15 IDs témoins partiels, 136 IDs /12 familles disponibles complètes installées, toutes validées QA (`monster_large` Ogre V7 sans SDF, `flying`, `monster_ankheg` V9 stable, `monster_large16` V7 sans SDF, `ambient_static` V7 sans SDF +cheval œil v3, `town_static` V7 sans SDF, `ambient` V7 sans SDF, `character_old` V7/V9 SDF gardes seulement, `monster_layered` V7 sans SDF, `monster_quadrant` V7 contextuel sans SDF, `multi_new` V7 contextuel/runtime natif v2 sans SDF, `monster_old` V7 sans SDF)** ; colonnes `q3m_v7_witness_*`, `q3m_v7_full_production_reference`, `q3m_v7_installation_reference` du CSV. QA propre à chaque variante/runtime. V10 Character en stock exclu de l'installation et des validations. Pas de taux global à partir des frames/BAM partagés.
+- Historique V6 : 81 IDs avec référence Q3m ; 254 IDs avec BAM sans référence V6 inscrite. État historique 2026-10-05, avant Character/Icewind : **15 IDs témoins partiels, 136 IDs /12 familles disponibles complètes installées, toutes validées QA (`monster_large` Ogre V7 sans SDF, `flying`, `monster_ankheg` V9 stable, `monster_large16` V7 sans SDF, `ambient_static` V7 sans SDF +cheval œil v3, `town_static` V7 sans SDF, `ambient` V7 sans SDF, `character_old` V7/V9 SDF gardes seulement, `monster_layered` V7 sans SDF, `monster_quadrant` V7 contextuel sans SDF, `multi_new` V7 contextuel/runtime natif v2 sans SDF, `monster_old` V7 sans SDF)** ; colonnes `q3m_v7_witness_*`, `q3m_v7_full_production_reference`, `q3m_v7_installation_reference` du CSV. QA propre à chaque variante/runtime. V10 Character en stock exclu de l'installation et des validations. Pas de taux global à partir des frames/BAM partagés.
 - Character : `../docs/measurements/playable-q3m-x2-ingame-20261002-v1/current-generation.json` ; 78 IDs / 4 510 BAM.
 - Monster `0x7F02`, `0x7F07`, `0x7F30` : `../docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json` ; delta 39 BAM / 20 925 frames, catalogue mixte prêt à installer selon son pointeur. Cela ne prouve pas l'installation actuelle.
 - QA = `index/qa-decisions/` ; installation = reçu actif du run concerné ; release = candidats puis `content.json`. Références indépendantes, aucun état réconcilié dans cette queue.
@@ -297,3 +300,15 @@ Flying : alias intérieur `BIRD_IN` = même ressource ; listes `CLUA-generiques.
 
 - Validation explicite utilisateur : `monster_large` complet, ID9000/un modèle/22 CRE, sept feuilles/434 frames Q3m V7 K6 x2 amélioré/CatmullRom sans SDF. [QA et portée exacte](../docs/measurements/q3m-monster-large-accepted-x2-20261005-v1/README.md) ; décision immuable `index/qa-decisions/monster_large/2026-10-05-accepted-full-ogre-q3m-v7-x2-catmullrom-v1.json`.
 - Sept feuilles et 22 CRE vérifiés, routes acquises conservées, runtime installé exact lié à la QA. **12 familles/136 IDs installés = 12 familles/136 IDs validés QA**. Aucune production/installation/release modifiée ; mentions datées « Ogre QA en attente » ci-dessus = historique avant cette décision.
+
+## Icewind installé — 2026-10-07
+
+- 40 IDs/36 modèles ; Q3m V7 K6/quatre partenaires/huit niveaux/x2 sans SDF, filtre Nearest conservé. Catalogue combiné 257 IDs/13 372 feuilles/2 318 470 frames ; 217 IDs/60 888 routes parents préservés.
+- [Installation/CLUA](../docs/measurements/q3m-icewind-ingame-x2-20261006-v1/README.md), reçu `docs/measurements/q3m-icewind-ingame-x2-20261006-v1/ingame-installation/active-test.json`. 40 CRE QICE neutres, dont trois palettes alternatives et alias E020. DLL candidate owner2 installée ; INI/shaders/exécutable natif inchangés. Sauvegarde/restauration disponibles.
+- À l'installation, avant validation : 176 IDs/13 familles améliorées installés ; avec Character V6 acquis : 254 IDs/14 familles. QA alors 136 IDs/12 familles (+Character : 214/13), Icewind en attente ; état historique conservé dans le reçu.
+
+## Icewind : validation QA de toute la famille — 2026-10-07
+
+- Validation explicite utilisateur : « tous les mobs sont vérifiés ingame et validés » ; **36 modèles/40 IDs**, alias E020 et trois palettes alternatives inclus. Q3m V7 K6/quatre partenaires/huit niveaux/x2/Nearest sans SDF.
+- [QA et portée exacte](../docs/measurements/q3m-icewind-accepted-x2-20261007-v1/README.md), décision immuable `index/qa-decisions/monster-icewind/2026-10-07-accepted-full-native-icewind-q3m-v7-x2-nearest-v1.json`. 1 115 feuilles/75 176 frames physiques, 1 140 liaisons/76 955 occurrences ; SHA feuilles/40 CRE/cinq fichiers runtime vérifiés, catalogue `e6b367b0…`, DLL `21a6f2e4…`.
+- **13 familles améliorées/176 IDs installés et acceptés ; Character V6 inclus : 14 familles/254 IDs.** Monster complet reste produit mais non installé, QA en attente. Preuves de production/installation antérieures conservées ; aucune release.

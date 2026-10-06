@@ -28,6 +28,21 @@ from workspace_paths import get_path
 SELECTION = ROOT/'sprite/index/q3m-family-witnesses.json'
 
 
+def icewind_native_refs(prefix, refs):
+    """Pinned Icewind constructor/EquipWeapon bindings; overlays are not tiles.
+
+    RVA 0x30EA60 binds A2E to both eastern attack-2/attack-3 body cells.
+    RVA 0x3253E0 uses weapon[0], including A3E, but no DE/TW weapon cell.
+    """
+    body = ('A1','A2','A3','A4','GU','SL','DE','GH','SD','SC','SP','CA','TW','WK')
+    weapons = ('A1','A2','A3','A4','GU','SL','GH','SD','SC','SP','CA','WK')
+    body = set(body) | {s+'E' for s in body if s != 'A3'}
+    weapons = set(weapons) | {s+'E' for s in weapons}
+    return [ref for ref in refs if ref.startswith(prefix) and
+            (ref[len(prefix):] in body or
+             (len(ref) > len(prefix) and ref[len(prefix)+1:] in weapons))]
+
+
 def require(ok, message):
     if not ok: raise ValueError(message)
 
@@ -84,10 +99,22 @@ def validate_selection(selection, complete_family=None):
         absent = {aid for aid in expected if not source_items[aid]['bam_resrefs']}
         require(set(selection.get('source_absent_animation_ids',[])) == absent,
                 'source-absent animation declarations differ')
-        require({w['animation_id'] for w in witnesses} == expected - absent,
+        native_absent = set()
+        if complete_family == 'monster_icewind':
+            native_absent = {aid for aid in expected - absent
+                             if not icewind_native_refs(inventory[aid]['resref'],
+                                 source_items[aid]['bam_resrefs'].split(';'))}
+            require(set(selection.get('native_source_absent_animation_ids', [])) == native_absent,
+                    'Icewind native-source-absent declarations differ')
+        require({w['animation_id'] for w in witnesses} == expected - absent - native_absent,
                 'complete available family animation coverage differs')
         for witness in witnesses:
             refs = source_items[witness['animation_id']]['bam_resrefs'].split(';')
+            if complete_family == 'monster_icewind':
+                useful = icewind_native_refs(inventory[witness['animation_id']]['resref'], refs)
+                require(set(witness.get('excluded_non_native_refs', [])) == set(refs) - set(useful),
+                        'Icewind excluded native resource bindings differ')
+                refs = useful
             if complete_family == 'monster_large16':
                 # Native constructor 0x310551 binds G1/G2/G3 and G1E/G2E/G3E.
                 # Prefix discovery also returns the separate Quadrant chunks.
@@ -285,6 +312,8 @@ def source_plan(selection_path=SELECTION, complete_family=None):
         summary['replacement_palettes'] = sorted(replacement_palettes)
     if selection.get('source_absent_animation_ids'):
         summary['source_absent_animation_ids'] = selection['source_absent_animation_ids']
+    if selection.get('native_source_absent_animation_ids'):
+        summary['native_source_absent_animation_ids'] = selection['native_source_absent_animation_ids']
     return resources,works,summary
 
 

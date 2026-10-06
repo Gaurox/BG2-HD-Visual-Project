@@ -1,0 +1,17 @@
+# Icewind — Q3m V7 x2 complet
+
+- Autorisation : utilisateur 2026-10-06 ; GPU disponible. Production autonome +DLL candidate ; installation/QA/release séparées.
+- Autorité finale : `current-generation.json` ; avant sa vérification finale, aucun acquis QA nouveau.
+- Sélection : `selection.json`, constructeur `0x30EA60`, EquipWeapon `0x3253E0`, moteur BG2EE SHA `b51093a49140b2b8a7c046b4652bb8e535be24ebbc12b1d735e0b94217a14d57`.
+- 36 modèles/40 IDs ; 1 051 BAM/71 072 frames natives ; 1 140 bindings/76 955 occurrences ; 1 115 feuilles/75 176 frames physiques après palettes.
+- 88 IDs sans BAM ; `E060/E0D0/E261/E262` sans layout natif Icewind ; inventaire source brut conservé. QA historique `sprite/index/qa-decisions/monster-icewind/2026-09-13-accepted-monster-icewind-batch-x2-nearest-v1.json` confirme ces quatre exclusions.
+- Corps : suffixes actions/directions ; attaque3 est native sur `A3`, orientale utilise `A2E` (quirk constructeur). Équipements : 268 BAM/19 808 frames, cinq modèles ; calques superposés, aucune tuile spatiale/contextuelle.
+- Palettes explicites : `MBOA_BR` E27F, `MTRO_DK` E28A, `METN_GH` E292. Profil fixe natif0 ; K6/four-partners/eight-levels, V7 profil8/règle3 ; x2/no-SDF/Nearest.
+- Dédup : 67 143 travaux source originaux ; palettes alternatives +3 728 ; 70 871 clés encodées. Cache acquis 2 632 =Monster MMIN/MTRO 2 624 +témoin MWWE8 ; octets acquis conservés. Guides historiques V3 monolithes/sets : 64 511 importables +2 632 existants identiques ; xBR nouveau seulement palettes alternatives.
+- Backend partagé : `sprite/.work/q3m-family-witnesses-x2-20261003-v1`, ReboutCX FP16/fixed86/q32, x4 float32 → BOX x2 float32 ; cible par contenu/K6/backend, encodage par source/profil ; GPU guarded FP64 avec résolution CPU des quasi-égalités. 409 344 cibles initialement manquantes ; 15 travaux spéciaux sans inférence.
+- DLL : successeur isolé du snapshot installé MultiNew v2 (`cf9fade9...`), sans embarquer le delta Character V10 canonique ; owner2 attente métadonnées corps/arme et loop/clamp natif `CVidCell+0x11C` ; autres familles/default strict conservés. Delta intégré séparément aux sources canoniques sans retirer leurs changements hors lot.
+- Commandes : Python `config://chainner_python`, `PYTHONPATH=pipeline/scripts;sprite/.work/q3m-runtime-tools-20261003-v1` ; `produce.py`, `build_runtime.py`, `verify.py`, `verify_runtime.py`, `preview.py`, `finalize.py`.
+- Accélération : `Q3M_GUIDE_WORKERS=8`, `Q3M_TARGET_IO_WORKERS=8`, `Q3M_ENCODE_WORKERS=16`, `Q3M_TRIM_CUDA_CACHE=1`, `Q3M_PALETTE_ENCODER=gpu-grouped-guarded-v1` ; provenance figée dans `.work/q3m-icewind-full-x2-20261006-v1/provenance`.
+- Contrôles : 21 tests ciblés (`targeted-tests.log`), geometry/cycles/profils/représentants/cache, reprise all-hit sans Torch, décodeur natif K6×trois formats, oracle x64/playback froid corps+armes ; preuves finales `verification.json`, `runtime-verification.json`.
+- Résultat : production +DLL candidate terminées ; contrôles `verification.json` et `runtime-verification.json` acquis. 76 955 occurrences/1 140 bindings vérifiés ; 94 338 cas playback natif, zéro frame manquante/incorrecte ; reprise 70 871 hits sans Torch. Installation/QA/release en attente.
+- Prévisualisations courantes : `previews-v2/comparison-*.png`, sélection `previews-v2/previews.json` (corps natifs uniquement). `comparison-*.png`/`previews.json` initiaux conservés : cinq variantes choisissaient un équipement isolé. Aucun asset recalculé, aucune validation ingame déduite.

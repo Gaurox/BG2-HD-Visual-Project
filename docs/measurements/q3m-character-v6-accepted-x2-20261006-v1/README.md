@@ -1,0 +1,9 @@
+# Character V6 — famille complète acceptée
+
+- Autorité : utilisateur, 2026-10-06, « OK on valide char v6. Les gains v7 sont presque invisibles. » Retour précédent : personnages jugés OK ingame ; détails de scénarios individuels non précisés.
+- QA immuable : `sprite/index/qa-decisions/character/2026-10-06-accepted-full-character-q3m-v6-x2-nearest-v1.json` ; 78 IDs, corps/armures/équipements monde, 4 510 BAM/1 564 054 frames natives ; paperdolls/UI séparés.
+- Contrat retenu : V6/profile1/rule1, K6, un partenaire de même rampe/huit niveaux, x2 Nearest, sans SDF ; aucune migration globale V7 demandée. [Comparaison](../q3m-character-frame-v6-v7-x2-20261006-v1/comparison-v6-v7-nearest-x6.png).
+- Production : `docs/measurements/playable-q3m-x2-ingame-20261002-v1/current-generation.json`, catalogue `c26c03df…61dd`. Catalogue installé au moment de la décision : `cb14e241…411` ; 50 190 liaisons Character/4 510 identités de feuilles égales au pack V6 complet. Filtre Nearest lu dans l'INI ; contrôle ciblé des routes, aucune nouvelle vérification exhaustive des payloads.
+- Suivi : 78 lignes Character marquées recette retenue complète/acceptée ; colonnes V7 complet/installé restent vides, témoins V7 et stock V10 SDF conservés. Compteurs recette améliorée inchangés : 213 IDs/13 familles produits, 136 IDs/12 familles installés/acceptés. Avec exception V6 : 291 IDs/14 familles produits, 214 IDs/13 familles installés/acceptés.
+- Reste en production : `monster_icewind`, **40 modèles de base/44 IDs disponibles**, 88 IDs sans source exclus. Aliases natifs : METN E010/E292 ; MTAN E020/E090 ; MTRO E0B0/E28A ; MBOA E265/E27F. 1 173 BAM distincts dans l'index ; aucun traitement Icewind lancé.
+- `accept.py` : enregistrement QA +suivi ; aucun changement installé/release, aucune réécriture de génération ou QA historique. Exécution avec Python `config://chainner_python`, `PYTHONPATH=pipeline/scripts;sprite/.work/q3m-runtime-tools-20261003-v1`.

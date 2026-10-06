@@ -4476,8 +4476,9 @@ bool resolve_frame(std::uint16_t animationId,
                    int currentFrame, FrameHandle& out,
                    FrameResolveMode mode, FramePlaybackMode playback) noexcept {
   out = {};
-  const bool nativePlayback = mode == FrameResolveMode::WaitForMultiNewMetadata &&
-      is_multi_new_animation(animationId) &&
+  const bool nativePlayback =
+      ((mode == FrameResolveMode::WaitForMultiNewMetadata && is_multi_new_animation(animationId)) ||
+       (mode == FrameResolveMode::WaitForIcewindMetadata && (animationId & 0xF000u) == 0xE000u)) &&
       (playback == FramePlaybackMode::Clamp || playback == FramePlaybackMode::Loop);
   if (!g_ready.load(std::memory_order_acquire) ||
       (!nativePlayback && (sequence < 0 || currentFrame < 0))) return false;
@@ -4502,7 +4503,10 @@ bool resolve_frame(std::uint16_t animationId,
             animationId == 0x3000u && animation->owner == kCatalogAnkhegOwner) ||
            (mode == FrameResolveMode::WaitForMultiNewMetadata &&
             is_multi_new_animation(animationId) &&
-            animation->owner == kCatalogMultiNewOwner));
+            animation->owner == kCatalogMultiNewOwner) ||
+           (mode == FrameResolveMode::WaitForIcewindMetadata &&
+            (animationId & 0xF000u) == 0xE000u &&
+            animation->owner == kCatalogMonsterIcewindOwner));
       if (!catalog_resident_resource_locked(
               animationId, resref, catalogShardIndex, resourceOrdinal,
               resourceIndex)) {

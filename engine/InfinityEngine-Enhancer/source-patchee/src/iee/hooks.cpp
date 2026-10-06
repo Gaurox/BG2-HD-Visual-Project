@@ -952,8 +952,10 @@ bool read_registered_creature_cell(std::uint16_t animationId, void* cell,
     return false;
   }
   auto playback = creature_sprite_x2::FramePlaybackMode::Strict;
-  if ((animationId >= 0x1200u && animationId <= 0x1208u) || animationId == 0x1300u) {
-    // Same CVidCell playback field used by the native item-icon bridge.
+  const bool icewind = (animationId & 0xF000u) == 0xE000u;
+  if (icewind || (animationId >= 0x1200u && animationId <= 0x1208u) || animationId == 0x1300u) {
+    // Icewind native sizing (RVA 0x3175B0) calls GetCurrentFrameSize for
+    // both body (+0xCD8) and equipped weapon (+0x2F10). Same playback field.
     const auto playbackOffset = g_ctx->manifest->itemIcons.vidCellPlaybackMode;
     std::int32_t nativeMode = 0;
     if (!playbackOffset || !core::safe_read(
@@ -970,7 +972,8 @@ bool read_registered_creature_cell(std::uint16_t animationId, void* cell,
                   : ((animationId >= 0x1200u && animationId <= 0x1208u) ||
                      animationId == 0x1300u)
                       ? creature_sprite_x2::FrameResolveMode::WaitForMultiNewMetadata
-                      : creature_sprite_x2::FrameResolveMode::NonBlocking), playback)) {
+                      : (icewind ? creature_sprite_x2::FrameResolveMode::WaitForIcewindMetadata
+                                 : creature_sprite_x2::FrameResolveMode::NonBlocking)), playback)) {
     if (g_ctx->cfg.enableCreatureSpritePaletteTrace && animationId == 0x6110) {
       thread_local std::set<std::array<char, 8>> unresolved;
       if (unresolved.size() < 64 && unresolved.insert(resref).second) {

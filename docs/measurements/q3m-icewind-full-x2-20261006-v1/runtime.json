@@ -1,0 +1,49 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-delta-v1",
+  "runtime_id": "q3m-icewind-full-x2-20261006-v1",
+  "inherited_runtime": {
+    "path": "docs/measurements/q3m-multi-new-frame-stability-20261005-v2/runtime.json",
+    "sha256": "d87a02651c8ba2d331cef039bae21a3838786159bf02aa50ba7b316f48299756",
+    "bytes": 2422
+  },
+  "inherited_dll": {
+    "path": "sprite/.work/q3m-multi-new-frame-stability-20261005-v2/runtime-build/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "cf9fade9b8a620abdf2c052c1a4da989c5958cbca1715da984f5691f1bf15e89",
+    "bytes": 2118656
+  },
+  "dll": {
+    "path": "sprite/.work/q3m-icewind-full-x2-20261006-v1/runtime-build/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "21a6f2e4203e36c1b6c09ba54e2650cc5f4b5b1e01f55a27eefa67b04ea4b0e3",
+    "bytes": 2118144
+  },
+  "runtime_patch": {
+    "path": "docs/measurements/q3m-icewind-full-x2-20261006-v1/runtime-delta.patch",
+    "sha256": "f295094fadd752e998dc169e262fbc7938fe54c9900a95d4f7b19f3fa3a92d15"
+  },
+  "source_provenance": [
+    {
+      "path": "sprite/.work/q3m-icewind-full-x2-20261006-v1/runtime-src/src/iee/creature_sprite_x2.h",
+      "sha256": "96b7ea17f5caa7cad62167ed3947bc1fa1199919d02c3aa10e797f000acc87d0"
+    },
+    {
+      "path": "sprite/.work/q3m-icewind-full-x2-20261006-v1/runtime-src/src/iee/creature_sprite_x2.cpp",
+      "sha256": "4585d488b54d45b3c3a7972cfd31061efd90eb1d2bd6fbe6bf8ce2aaa574edf5"
+    },
+    {
+      "path": "sprite/.work/q3m-icewind-full-x2-20261006-v1/runtime-src/src/iee/hooks.cpp",
+      "sha256": "87b128b8ab5eb247e5f471ad61c053b521dafe857c423822e4c85ac67fe17a21"
+    }
+  ],
+  "capability_delta": {
+    "owner": 2,
+    "metadata_wait": "body and weapon; directory V2; five-second existing deadline",
+    "native_playback": "CVidCell+0x11C; signed loop/clamp; invalid sequence -> zero",
+    "opt_in_only": "WaitForIcewindMetadata; owner2 catalog entries; E000 family",
+    "composite": "complete native layer order/palettes/translucency retained",
+    "other_owners_unchanged": true
+  },
+  "native_general_tests_passed": true,
+  "installation": false,
+  "ingame_QA": false,
+  "release": false
+}

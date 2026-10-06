@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "native_x64_oracle": {
+    "passed": true,
+    "native_instruction_cases": 231,
+    "exe_sha256": "b51093a49140b2b8a7c046b4652bb8e535be24ebbc12b1d735e0b94217a14d57",
+    "native_rva_start": "0x4117F8",
+    "native_rva_end": "0x411863",
+    "playback_field": "CVidCell+0x11C",
+    "no_game_launched": true
+  },
+  "playback": {
+    "passed": true,
+    "resources": 1140,
+    "cycles": 7401,
+    "empty_cycles": 2715,
+    "native_playback_checks": 94338,
+    "strict_out_of_range_rejected": 9372,
+    "invalid_lookup_checks": 7602,
+    "missing_or_wrong_frames": 0
+  },
+  "native_general_tests_passed": true,
+  "cold_body_and_equipment_metadata_wait": true,
+  "strict_and_other_owner_guards_preserved": true,
+  "oracle": {
+    "path": "sprite/.work/q3m-icewind-full-x2-20261006-v1/native-playback.oracle",
+    "sha256": "fd3816f87086a057e45fafaacdbf04d89b663c19fa7bf9c00cfc50e6f87dcdb9"
+  },
+  "installation": false,
+  "ingame_QA": false,
+  "release": false
+}

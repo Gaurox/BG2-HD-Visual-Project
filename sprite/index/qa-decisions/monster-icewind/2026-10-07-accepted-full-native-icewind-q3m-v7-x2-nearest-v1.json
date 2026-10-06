@@ -1,0 +1,279 @@
+{
+  "schema": "bg2-upscale-native-sprite-family-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-10-06T22:11:05.995030+00:00",
+  "recorded_on": "2026-10-07",
+  "timezone": "Europe/Paris",
+  "scope": {
+    "kind": "installed-native-family-complete-available",
+    "engine_family": "monster_icewind",
+    "animation_ids": [
+      "0xE010",
+      "0xE020",
+      "0xE050",
+      "0xE070",
+      "0xE080",
+      "0xE090",
+      "0xE0B0",
+      "0xE0E0",
+      "0xE0F0",
+      "0xE0F1",
+      "0xE0F2",
+      "0xE265",
+      "0xE27F",
+      "0xE28A",
+      "0xE292",
+      "0xE400",
+      "0xE410",
+      "0xE420",
+      "0xE430",
+      "0xE500",
+      "0xE600",
+      "0xE610",
+      "0xE700",
+      "0xE710",
+      "0xE720",
+      "0xE800",
+      "0xE810",
+      "0xE820",
+      "0xE830",
+      "0xE840",
+      "0xE900",
+      "0xE910",
+      "0xEA00",
+      "0xEB00",
+      "0xEB10",
+      "0xEB20",
+      "0xED00",
+      "0xED10",
+      "0xED20",
+      "0xEF10"
+    ],
+    "models": 36,
+    "colour_variants": 40,
+    "resources": 1115,
+    "resource_bindings": 1140,
+    "unique_native_BAM": 1051,
+    "frames": 75176,
+    "bound_frames": 76955,
+    "original_native_frames": 71072,
+    "scale": 2,
+    "SDF": false,
+    "source_absent": [
+      "0xE000",
+      "0xE040",
+      "0xE0A0",
+      "0xE0C0",
+      "0xE200",
+      "0xE210",
+      "0xE220",
+      "0xE230",
+      "0xE240",
+      "0xE241",
+      "0xE242",
+      "0xE243",
+      "0xE244",
+      "0xE245",
+      "0xE246",
+      "0xE247",
+      "0xE248",
+      "0xE249",
+      "0xE24A",
+      "0xE24B",
+      "0xE24C",
+      "0xE24D",
+      "0xE24E",
+      "0xE24F",
+      "0xE250",
+      "0xE251",
+      "0xE252",
+      "0xE253",
+      "0xE254",
+      "0xE255",
+      "0xE259",
+      "0xE25A",
+      "0xE25B",
+      "0xE25C",
+      "0xE25D",
+      "0xE25E",
+      "0xE25F",
+      "0xE260",
+      "0xE263",
+      "0xE264",
+      "0xE266",
+      "0xE267",
+      "0xE26A",
+      "0xE26B",
+      "0xE26D",
+      "0xE26E",
+      "0xE26F",
+      "0xE270",
+      "0xE271",
+      "0xE272",
+      "0xE273",
+      "0xE274",
+      "0xE276",
+      "0xE279",
+      "0xE27D",
+      "0xE27E",
+      "0xE280",
+      "0xE281",
+      "0xE282",
+      "0xE283",
+      "0xE288",
+      "0xE289",
+      "0xE28B",
+      "0xE28C",
+      "0xE28D",
+      "0xE28E",
+      "0xE28F",
+      "0xE290",
+      "0xE291",
+      "0xE293",
+      "0xE294",
+      "0xE300",
+      "0xE310",
+      "0xE320",
+      "0xE440",
+      "0xE441",
+      "0xE442",
+      "0xE443",
+      "0xE444",
+      "0xE510",
+      "0xE520",
+      "0xEA10",
+      "0xEA20",
+      "0xEC00",
+      "0xEC10",
+      "0xEC20",
+      "0xEE00",
+      "0xEE10"
+    ],
+    "native_source_absent": [
+      "0xE060",
+      "0xE0D0",
+      "0xE261",
+      "0xE262"
+    ]
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "user_statement": "bien, tous les mobs sont vérifiés ingame et validés. valide le lot, mets a jour le suivi et committe",
+    "individual_scenario_details": "not specified by user",
+    "accepted_as_installed": true,
+    "full_lot_explicitly_confirmed": true
+  },
+  "runtime_contract": {
+    "runtime": {
+      "path": "docs/measurements/q3m-icewind-full-x2-20261006-v1/runtime.json",
+      "sha256": "bbc6365d8ed7e60549aa60689c704d2eae508cda819a53cd7d6b265da9b5a024"
+    },
+    "dll": {
+      "path": "sprite/.work/q3m-icewind-full-x2-20261006-v1/runtime-build/Release/InfinityEngine-Enhancer.dll",
+      "sha256": "21a6f2e4203e36c1b6c09ba54e2650cc5f4b5b1e01f55a27eefa67b04ea4b0e3",
+      "bytes": 2118144
+    },
+    "catalogue_sha256": "e6b367b070c39e4f9c1272221c0a0292b017fe4ccf45e1b1bb47596e834a47b3",
+    "owner": 2,
+    "native_render_owners": [
+      "MonsterIcewind"
+    ],
+    "native_palette_kinds": [
+      0
+    ],
+    "registry_version": 7,
+    "world_filter": "Nearest",
+    "colour": "K6-four-partners-eight-levels/native fixed and alternate palettes/rule3",
+    "SDF": false,
+    "native_geometry": true,
+    "body_and_weapon_metadata_wait": true,
+    "native_loop_and_clamp": true,
+    "installed_runtime_files": [
+      {
+        "relative_path": "InfinityEngine-Enhancer.dll",
+        "sha256": "21a6f2e4203e36c1b6c09ba54e2650cc5f4b5b1e01f55a27eefa67b04ea4b0e3"
+      },
+      {
+        "relative_path": "InfinityEngine-Enhancer.ini",
+        "sha256": "5859f49562e89f71cc1a9b9ddbac4f77b9b5ab95e5983d88e51c09e480042aba"
+      },
+      {
+        "relative_path": "override/fpDraw.glsl",
+        "sha256": "c6f1f23d99d16bfd34fc3eac1577f24c096c4c00f0427cea69e8bde779311827"
+      },
+      {
+        "relative_path": "override/fpSprite.glsl",
+        "sha256": "065e28c595af84a7addcbd97793bc8eedcb5052bb26bab1d92710cb0e2fd0816"
+      },
+      {
+        "relative_path": "override/fpSELECT.glsl",
+        "sha256": "e4e70c98de1e6826c47f934ac3e600af06f105f69cc80f84e2289d28e5952815"
+      }
+    ]
+  },
+  "asset_scope": {
+    "inventory": {
+      "path": "docs/measurements/q3m-icewind-accepted-x2-20261007-v1/asset-scope.csv",
+      "sha256": "b4582efa61110eaf3d8432d4f811379b0438d8f36c5f95ab43ad32f7f2dee345",
+      "bytes": 234680
+    },
+    "ordering": "animation_id,resref ascending; UTF-8 CSV LF, header included in SHA256",
+    "physical_leaf_count": 1115,
+    "binding_count": 1140,
+    "catalogue": {
+      "path": "sprite/.work/q3m-icewind-ingame-x2-20261006-v1/combined/iee-assets/creature-sprites/CreatureSprites-XN.catalog",
+      "sha256": "e6b367b070c39e4f9c1272221c0a0292b017fe4ccf45e1b1bb47596e834a47b3",
+      "bytes": 3559592
+    },
+    "physical_leaf_hashes_verified": 1115,
+    "selected_routes_unchanged": true
+  },
+  "provenance": {
+    "generation": {
+      "path": "docs/measurements/q3m-icewind-full-x2-20261006-v1/current-generation.json",
+      "sha256": "921d89e951af5bcabe30c16bfb60952e0725f5ae58302445df0db3e515dd366f",
+      "bytes": 3879
+    },
+    "production": {
+      "path": "docs/measurements/q3m-icewind-full-x2-20261006-v1/production.json",
+      "sha256": "8378c36fb2381cedd710b3d729136caba999fbb1401181f0d5919af414cef8d3"
+    },
+    "recipe": {
+      "path": "docs/measurements/q3m-icewind-full-x2-20261006-v1/recipe.json",
+      "sha256": "f048bd66e425e42c62792f9c2b7fbbf719d5b03a629d3f1e1c0cdd5369388880"
+    },
+    "installed_generation": {
+      "path": "docs/measurements/q3m-icewind-ingame-x2-20261006-v1/current-generation.json",
+      "sha256": "99282993d13423755bd4b9e85f1b9634023a7e810fd8467f1a1ad36c67ef9f0a",
+      "bytes": 2319
+    },
+    "installation_snapshot": {
+      "path": "docs/measurements/q3m-icewind-ingame-x2-20261006-v1/installation-verification.json",
+      "sha256": "79e894c2ce70b1bb2d2a17e7e1d45565e5c20cc13fe6af04eca2acb236d972ad",
+      "bytes": 1146
+    },
+    "installation_receipt": {
+      "path": "docs/measurements/q3m-icewind-ingame-x2-20261006-v1/ingame-installation/active-test.json",
+      "sha256": "38d84da123f8bc3a8488d9a9a80ad053111b4e2ca692262a759855a500e66fd7",
+      "bytes": 759391
+    },
+    "verification": {
+      "path": "docs/measurements/q3m-icewind-ingame-x2-20261006-v1/verification.json",
+      "sha256": "b22258a3982cd312b1c520167da8a93df4a6e3894ac59671a52a6abcc484ba9e",
+      "bytes": 22396
+    },
+    "installed_native_verification": {
+      "path": "docs/measurements/q3m-icewind-ingame-x2-20261006-v1/installed-native-verification.json",
+      "sha256": "b05347a3282b77d27e7f977994c1a99334925381a6fa34016a7f2b6989f4dc61",
+      "bytes": 21884
+    },
+    "fixtures": {
+      "path": "docs/measurements/q3m-icewind-ingame-x2-20261006-v1/creatures.json",
+      "sha256": "bf570da83a9e987d6f8d7a4db5318549abb35914602b1ecfee06a1a36decfa09",
+      "bytes": 23890
+    }
+  },
+  "release": false
+}

@@ -264,8 +264,9 @@ enum class FrameResolveMode : std::uint8_t {
   WaitForAnkhegMetadata,
   // Owner-5 dragons/Demogorgon: cold action/direction changes stay HD.
   WaitForMultiNewMetadata,
+  WaitForIcewindMetadata,
 };
-// Native CVidCell playback is opt-in and restricted to owner-5 IDs.
+// Native CVidCell playback is opt-in for MultiNew (owner5) and Icewind (owner2).
 enum class FramePlaybackMode : std::uint8_t { Strict, Clamp, Loop };
 bool resolve_frame(std::uint16_t animationId, const std::array<char, 8>& resref,
                    int sequence, int currentFrame, FrameHandle& out,
