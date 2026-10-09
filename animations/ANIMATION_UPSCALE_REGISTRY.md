@@ -22,6 +22,10 @@ les zones qui utilisent cet élément et `occurrences` en donne le nombre total.
 Ne passer à `écarté` qu'après une décision explicite. Une hypothèse telle que
 « probablement à désactiver » reste `à-arbitrer`.
 
+`non-traité` décrit l'absence d'enregistrement, sans garantir qu'aucun ancien traitement n'a
+existé. Pour qualifier un lot d'inédit, recouper les sélections, le catalogue, les manifestes
+historiques et les signalements utilisateur ; noter toute divergence sans déduire une QA.
+
 ## Mise à jour
 
 Après une régénération de `ressources.csv` ou `occurrences.csv` :
