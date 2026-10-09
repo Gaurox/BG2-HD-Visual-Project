@@ -4298,8 +4298,16 @@
    }
   },
   "AR5500": {
-   "recorded_utc": "2026-09-18T23:17:30.548689+00:00",
+   "recorded_utc": "2026-10-09T20:16:59.194747+00:00",
    "resources": {
+    "AM5500A": {
+     "sig": "8d8bd22c78d1",
+     "frames": 32
+    },
+    "AM5500D": {
+     "sig": "e62d583a4df2",
+     "frames": 20
+    },
     "BUTRFLY": {
      "sig": "f8cb283031ba",
      "frames": 36
@@ -4318,12 +4326,16 @@
     }
    },
    "fingerprint": {
-    "files": 454,
-    "bytes": 56698068,
-    "max_mtime_ns": 1789773449053773800
+    "files": 506,
+    "bytes": 76808236,
+    "max_mtime_ns": 1791577017329932300
    },
    "build": {
-    "leaf": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR5500"
+    "merged_from": [
+     "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR5500",
+     "animations/packs-par-zone/am5500a-spline-fit1-feather4-oval20x6-rgbgaussian1-20261009-v1/AR5500::AM5500A",
+     "animations/packs-par-zone/am5500d-reboutcx-apo8-aura24-sparkguard1-20261009-v1/AR5500::AM5500D"
+    ]
    }
   },
   "AR5502": {
@@ -5044,5 +5056,5 @@
    }
   }
  },
- "updated_utc": "2026-10-09T19:52:10.375570+00:00"
+ "updated_utc": "2026-10-09T20:16:59.199970+00:00"
 }

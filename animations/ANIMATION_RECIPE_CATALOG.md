@@ -57,3 +57,15 @@ Base `umar-foyer-seedvr-apo8` : SeedVR2 7B INT8/LAB x4 → Apollo-8 TimedTimelin
 
 - Coupe interne crénelée inchangée après spline : recaler la capture sur le WED ; la spline du contour extérieur ne corrige pas une limite du pont natif x1.
 - Une variante liée bypass le pont natif : ne pas cuire aveuglément tous les covers en nearest x1. Un meuble déjà peint dans l'animation (WED17 / AM1101A) doit garder son rendu, sinon une nouvelle frontière crénelée apparaît.
+
+## Amkethran AR5500 — validés ingame au premier essai, 2026-10-09
+
+Pack QA installé : `animations/packs-par-zone/ar5500-fumee-brasero-complete-20261009-v1/AR5500` ; reçu `backups/animations/area-tests/AR5500-20261009T201652920932Z-46d75921/install-backup.json`. BUTRFLY/DSTDVL1A/B/C conservés exacts ; aucune intégration release.
+
+| Asset / modèle | Recette exacte | Autorité |
+|---|---|---|
+| AM5500A / `FUMEE-SEEDVR-SPLINE4-EDGEFADE` | SeedVR2 7B INT8/LAB x4 → Apollo-8 15→30, RGB transparent nearest-opaque-dilate → spline Fit1 multi-contours feather4 → Oval20/6 → RGB Gaussian σ1 sans padding. RGB prémultiplié ; géométrie native par frame. 2 cycles indépendants : 8 poses → 16 phases chacun, 0,533333 s ; AR5500 utilise le cycle0, 7 occurrences. | [Sélection](index/selections/AM5500A.json) |
+| AM5500D / `BRASERO-REBOUTCX-APO8-AURA-SPARKGUARD1` | ReboutCX x4 → Apollo-8 15→30, 10 poses → 20 phases, 0,666667 s → corps Aura24/5/0,9/14 ; composantes détachées ≤128 pixels x4 (connectivité4) : Aura1/1/0,9/1 ; fusion max RGB prémultiplié/alpha, une seule prémultiplication. Dimensions/centres natifs ; occurrence1297,2386, aucun cover WED vanilla intersectant. | [Sélection](index/selections/AM5500D.json) |
+
+- Variante brasero : les rayons uniformes16/24/28 préservent le cœur p95 mais effacent les petites composantes. Séparer leur fondu du corps ; ne pas réduire tout le brasero au rayon1. Sur AM5500D final : 110 petites composantes, pic moyen conservé92,6 %, minimum58,7 % ; cœur inchangé au balayage spatial.
+- Recette reproductible exacte (copie SHA-identique du script de production) : [`pipeline/recipes/ar5500-fumee-brasero-20261009-v1/build_brasero_guard.py`](../pipeline/recipes/ar5500-fumee-brasero-20261009-v1/build_brasero_guard.py). Paramètres liés à cet asset ; recalculer taille et conservation lumineuse pour une autre source.

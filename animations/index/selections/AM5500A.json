@@ -1,0 +1,70 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM5500A",
+  "correction_id": "spline-fit1-feather4-oval20x6-rgbgaussian1",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM5500A/runs/am5500a-spline-fit1-feather4-oval20x6-20261009-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "DA40EC4CA9BE286A92DBF9EDA4F58E6D1A7198851852D022326D258FC4E0598C",
+        "path": "animations/ressources/AM5500A/runs/am5500a-spline-fit1-feather4-oval20x6-20261009-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM5500A/runs/am5500a-spline-fit1-feather4-oval20x6-rgbgaussian1-20261009-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "784DA81D719240DC39D9D789C87466EBD2C6870836C86395E5A33F3F7B42D745",
+        "path": "animations/ressources/AM5500A/runs/am5500a-spline-fit1-feather4-oval20x6-rgbgaussian1-20261009-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/AM5500A/runs/am5500a-spline-fit1-feather4-oval20x6-rgbgaussian1-20261009-v1/manifest.json",
+        "manifest_sha256": "DC103921DD7F932DC89DE7F8390AE26245A3911EFB7E6BD7891BBFF29EC35583",
+        "path": "animations/ressources/AM5500A/runs/am5500a-spline-fit1-feather4-oval20x6-rgbgaussian1-20261009-v1",
+        "schema": "bg2-upscale-animation-visual-treatment-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-09",
+    "path": "animations/index/qa-decisions/AM5500A/2026-10-09-accepted-am5500a-fumee-spline-oval-gaussian1-v1.json",
+    "sha256": "9FD8DCB4952E03C79A6ABBBEFF9045A8BE3F15ECFC239F3D6392A6D6AE6DACA2",
+    "status": "accepted"
+  },
+  "recipe_id": "fumee-seedvr-spline4-edgefade",
+  "resref": "AM5500A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM5500A/runs/am5500a-fumee-selection-accepted-20261009/manifest.json",
+    "manifest_sha256": "2EA975BC77F2F363A814E7039559E99E977D2C288787045F2AC43F90FEA0236F",
+    "path": "animations/ressources/AM5500A/runs/am5500a-fumee-selection-accepted-20261009",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR5500",
+        "manifest_path": "animations/packs-par-zone/ar5500-fumee-brasero-complete-20261009-v1/AR5500/manifest.json",
+        "manifest_sha256": "7292F65E645E9A82D9B6CB9557DAD9CF097CCADE3F0FF066E56A91DDF8E8F0EC",
+        "path": "animations/packs-par-zone/ar5500-fumee-brasero-complete-20261009-v1/AR5500",
+        "registry_sha256": "87E71D509E9FF8F7B4F6C0798EBDC90BC765FAE541F264F2C26799D055DA1233",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar5500-fumee-brasero-complete-20261009-v1/manifest.json",
+    "manifest_sha256": "BA2C0DA260901F78D3E08B1E79B0364CF65D1B8AAA6CA62CB2C071F483B6AC25",
+    "path": "animations/packs-par-zone/ar5500-fumee-brasero-complete-20261009-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR5500"
+  ],
+  "updated_at_utc": "2026-10-09T20:25:14Z"
+}

@@ -1,0 +1,83 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM5500D",
+  "correction_id": "aura24-sparkguard1",
+  "decision": "Validation ingame utilisateur des deux assets AR5500 : valides first try.",
+  "decision_date": "2026-10-09",
+  "decision_id": "2026-10-09-accepted-am5500d-brasero-aura24-sparkguard1-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM5500D/runs/am5500d-brasero-sparkguard-selection-accepted-20261009/manifest.json",
+    "manifest_sha256": "1B23C28A16E9FD424DDC72C1C3B4588E5B02C98237DA3D6F068DC28A44D3981F",
+    "path": "animations/ressources/AM5500D/runs/am5500d-brasero-sparkguard-selection-accepted-20261009",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/am5500d-reboutcx-apo8-aura24-sparkguard1-20261009-v1/AR5500/manifest.json",
+        "manifest_sha256": "364938488CD588F228264632F79F7B35EF958926B39C9A17EADBAAC2243048DC",
+        "path": "animations/packs-par-zone/am5500d-reboutcx-apo8-aura24-sparkguard1-20261009-v1/AR5500",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM5500D/runs/am5500d-reboutcx-apo8-x4-30fps-20261009-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "C40D66185A60618EC31605A9FDAA900430E3813A5362958DFB3511333F953C08",
+        "path": "animations/ressources/AM5500D/runs/am5500d-reboutcx-apo8-x4-30fps-20261009-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM5500D/runs/am5500d-reboutcx-x4-20261009-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "DBC993978FEBC544AE9C9997C1C85F80CC4AD171710DDFF4E8907DCCDD11AE91",
+        "path": "animations/ressources/AM5500D/runs/am5500d-reboutcx-x4-20261009-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/AM5500D/runs/am5500d-reboutcx-apo8-x4-30fps-20261009-v1/manifest.json",
+        "manifest_sha256": "6F79544102F1F9701B985632DD5EE7186C725D5BE3D277EF45040167595142F9",
+        "path": "animations/ressources/AM5500D/runs/am5500d-reboutcx-apo8-x4-30fps-20261009-v1",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM5500D/runs/am5500d-reboutcx-x4-20261009-v1/manifest.json",
+        "manifest_sha256": "2DED736E08C78621E57B79CCC5BAA9B884488B410A8003DAD789CD62F90C0CBB",
+        "path": "animations/ressources/AM5500D/runs/am5500d-reboutcx-x4-20261009-v1",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "brasero-reboutcx-apo8-aura-sparkguard1",
+  "recorded_at_utc": "2026-10-09T20:25:16Z",
+  "resref": "AM5500D",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR5500",
+        "manifest_path": "animations/packs-par-zone/ar5500-fumee-brasero-complete-20261009-v1/AR5500/manifest.json",
+        "manifest_sha256": "7292F65E645E9A82D9B6CB9557DAD9CF097CCADE3F0FF066E56A91DDF8E8F0EC",
+        "path": "animations/packs-par-zone/ar5500-fumee-brasero-complete-20261009-v1/AR5500",
+        "registry_sha256": "87E71D509E9FF8F7B4F6C0798EBDC90BC765FAE541F264F2C26799D055DA1233",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar5500-fumee-brasero-complete-20261009-v1/manifest.json",
+    "manifest_sha256": "BA2C0DA260901F78D3E08B1E79B0364CF65D1B8AAA6CA62CB2C071F483B6AC25",
+    "path": "animations/packs-par-zone/ar5500-fumee-brasero-complete-20261009-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR5500"
+  ]
+}
