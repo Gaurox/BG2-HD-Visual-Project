@@ -1,0 +1,91 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM6005A",
+  "correction_id": "spline-fit1-feather8-preserve-rgb",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM6005A/runs/am6005a-reboutcx-apo8-spline-fit1-feather8-20261009-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "52CCC02D4F5082942C38E45B72A1012623C98E418966E859603D69D680831667",
+        "path": "animations/ressources/AM6005A/runs/am6005a-reboutcx-apo8-spline-fit1-feather8-20261009-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM6005A/runs/am6005a-reboutcx-apo8-x4-30fps-20261009-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "53AB6179D45A54D2A93442D2DC76F68AA7D6784A0985BB77F9CB7D3AC82D9E60",
+        "path": "animations/ressources/AM6005A/runs/am6005a-reboutcx-apo8-x4-30fps-20261009-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM6005A/runs/am6005a-reboutcx-x4-20261009-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "071597A4B8A4D77B43600CE03AACA90783A21B6C27AF825710693A346A09C84D",
+        "path": "animations/ressources/AM6005A/runs/am6005a-reboutcx-x4-20261009-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/AM6005A/runs/am6005a-reboutcx-apo8-spline-fit1-feather8-20261009-v1/manifest.json",
+        "manifest_sha256": "370F7A0F8B8623EDA0D2C07F629D88491EDAC0E707E444327450EF9A95420682",
+        "path": "animations/ressources/AM6005A/runs/am6005a-reboutcx-apo8-spline-fit1-feather8-20261009-v1",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM6005A/runs/am6005a-reboutcx-apo8-x4-30fps-20261009-v1/manifest.json",
+        "manifest_sha256": "A96F9CCE18DDC67CC37BB8B9631BE9292BFC18F6807CA87D27FAA26C5AED351D",
+        "path": "animations/ressources/AM6005A/runs/am6005a-reboutcx-apo8-x4-30fps-20261009-v1",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM6005A/runs/am6005a-reboutcx-x4-20261009-v1/manifest.json",
+        "manifest_sha256": "4DCBE154D231C88D511C56DC25DE5A6C8400F6C17C1F6DC156D4A1A27E5BDDBC",
+        "path": "animations/ressources/AM6005A/runs/am6005a-reboutcx-x4-20261009-v1",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-09",
+    "path": "animations/index/qa-decisions/AM6005A/2026-10-09-accepted-am6005a-effetvert-spline-feather8-v1.json",
+    "sha256": "98AF6DCECE78EA1DA0BFBB374B871E8F9AED46DF02E25D63A29AC54A1E06BB8A",
+    "status": "accepted"
+  },
+  "recipe_id": "disque-ferme-reboutcx-spline8",
+  "resref": "AM6005A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM6005A/runs/am6005a-effetvert-selection-accepted-20261009/manifest.json",
+    "manifest_sha256": "A8AF7D489F560C7882CC6156F58C018EA94FBBF374D95AA2A0F27FA30D9DC19E",
+    "path": "animations/ressources/AM6005A/runs/am6005a-effetvert-selection-accepted-20261009",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR6005",
+        "manifest_path": "animations/packs-par-zone/ar6001-ar6005-fumee-effetvert-complete-20261009-v1/AR6005/manifest.json",
+        "manifest_sha256": "27385E7466207B1950DA201E297F8EEB46E41C53BDAEB966BDD7D76529690C62",
+        "path": "animations/packs-par-zone/ar6001-ar6005-fumee-effetvert-complete-20261009-v1/AR6005",
+        "registry_sha256": "E25F49D5CD45563D602EB17E8211D310EB33CB15C4FC2E21855485D5AFB322AE",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar6001-ar6005-fumee-effetvert-complete-20261009-v1/manifest.json",
+    "manifest_sha256": "590281791E4B9F0BC5867E8CD4718560E3B9EE12942CD5095EB1F6C4A2280BBD",
+    "path": "animations/packs-par-zone/ar6001-ar6005-fumee-effetvert-complete-20261009-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR6005"
+  ],
+  "updated_at_utc": "2026-10-09T21:23:02Z"
+}
