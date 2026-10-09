@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM1104B",
+  "correction_id": "wed21-fade24-left-inset8-feather4",
+  "decision": "Validation ingame explicite utilisateur des trois assets : AM1104B AR1104, SeedVR LAB7B x4, Apollo-8 30fps, InnerFade8, WED21 fondu24 lié à372,246 et bord gauche retrait8/raccord4.",
+  "decision_date": "2026-10-09",
+  "decision_id": "2026-10-09-accepted-am1104b-wed21-fade24-left-inset8-v4",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM1104B/runs/am1104b-wed21-fade24-left-inset8-selection-accepted-20261009/manifest.json",
+    "manifest_sha256": "75334E820D174BF3781C3028362C10952FFFD606C4BBC8F43F9CAEAB8905443A",
+    "path": "animations/ressources/AM1104B/runs/am1104b-wed21-fade24-left-inset8-selection-accepted-20261009",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/umar-foyers-local-cuts-complete-20261009-v3/ar1104-merge/AR1104/manifest.json",
+        "manifest_sha256": "28DA801EA022845285409DA5A501B39003E1B1AD9AFF11639BCFDF6D3910B5E1",
+        "path": "animations/packs-par-zone/umar-foyers-local-cuts-complete-20261009-v3/ar1104-merge/AR1104",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/AM1104B/runs/am1104b-left-inset8-feather4-30fps-20261009-v4/visual-treatment/manifest.json",
+        "manifest_sha256": "E564C28339DAA8A8316FFC205328B57D13FF5ADC2C82122FC687ADA6D50AF78E",
+        "path": "animations/ressources/AM1104B/runs/am1104b-left-inset8-feather4-30fps-20261009-v4/visual-treatment",
+        "schema": "bg2-upscale-animation-visual-treatment-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "umar-foyer-seedvr-apo8",
+  "recorded_at_utc": "2026-10-09T19:55:40Z",
+  "resref": "AM1104B",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR1104",
+        "manifest_path": "animations/packs-par-zone/am1104b-left-inset8-feather4-complete-20261009-v4/AR1104/manifest.json",
+        "manifest_sha256": "17559987615C5B1D3E5E9C805818FB4F4C535DF9C31963EAB9D834A89714B4E3",
+        "path": "animations/packs-par-zone/am1104b-left-inset8-feather4-complete-20261009-v4/AR1104",
+        "registry_sha256": "7016E4DA854B9F900E5F726ED30D90A086D55482AF847E49BF6309C824EB1491",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am1104b-left-inset8-feather4-complete-20261009-v4/manifest.json",
+    "manifest_sha256": "DB00CD34E20A2FF82E27020E026727F2E36E9B4215049D08E7EB306A41FA076B",
+    "path": "animations/packs-par-zone/am1104b-left-inset8-feather4-complete-20261009-v4",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR1104"
+  ]
+}

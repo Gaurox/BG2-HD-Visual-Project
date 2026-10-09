@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM1101A",
+  "correction_id": "wed15-aa4-bench17-restored",
+  "decision": "Validation ingame explicite utilisateur : ok l'asset est validé. AM1101A AR1101 v5, coupe de hotte corrigée et banc original restauré.",
+  "decision_date": "2026-10-09",
+  "decision_id": "2026-10-09-accepted-am1101a-wed15-aa-bench-restored-v5",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM1101A/runs/am1101a-wed15-bench-restored-selection-accepted-20261009/manifest.json",
+    "manifest_sha256": "9AA716EB6270CB9DAF713EA84B3249585EEFB993C3B2D79FA0C4984DDC8E12E2",
+    "path": "animations/ressources/AM1101A/runs/am1101a-wed15-bench-restored-selection-accepted-20261009",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM1101A/runs/am1101a-spline-fit1-feather8-30fps-20261009-v2/03_runtime_pack/manifest.json",
+        "manifest_sha256": "FD907AFEA90440827BAAC0FFB3EEB5875C9444859C3C4122E73EA7E0665FD7B4",
+        "path": "animations/ressources/AM1101A/runs/am1101a-spline-fit1-feather8-30fps-20261009-v2/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/AM1101A/runs/am1101a-wed15-aa-bench-restored-30fps-20261009-v5/visual-treatment/manifest.json",
+        "manifest_sha256": "AE80D78BB613808FE659BFC97377FD6684C74EA262877C7B4D7853095F69FB13",
+        "path": "animations/ressources/AM1101A/runs/am1101a-wed15-aa-bench-restored-30fps-20261009-v5/visual-treatment",
+        "schema": "bg2-upscale-animation-visual-treatment-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "umar-foyer-seedvr-apo8",
+  "recorded_at_utc": "2026-10-09T19:48:33Z",
+  "resref": "AM1101A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR1101",
+        "manifest_path": "animations/packs-par-zone/am1101a-wed15-aa-bench-restored-bound-20261009-v5/AR1101/manifest.json",
+        "manifest_sha256": "AD277C9407A229AED3685F0CBE093672EADC1B103E9B7F8481CE0DFF902845A6",
+        "path": "animations/packs-par-zone/am1101a-wed15-aa-bench-restored-bound-20261009-v5/AR1101",
+        "registry_sha256": "50D7BC31AE060C862F947B4E6B557C69A97B736A67424C2157476993A4A474FC",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am1101a-wed15-aa-bench-restored-bound-20261009-v5/manifest.json",
+    "manifest_sha256": "FBCB8C401A61F28B08B2A3D61FD25EB6627F70509E635F5A271B7362DF955B5E",
+    "path": "animations/packs-par-zone/am1101a-wed15-aa-bench-restored-bound-20261009-v5",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR1101"
+  ]
+}

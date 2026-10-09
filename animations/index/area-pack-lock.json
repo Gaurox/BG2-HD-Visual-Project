@@ -2323,9 +2323,32 @@
     "leaf": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR1100"
    }
   },
-  "AR1103": {
-   "recorded_utc": "2026-09-18T23:35:36.149282+00:00",
+  "AR1101": {
+   "recorded_utc": "2026-10-09T19:39:33.008860+00:00",
    "resources": {
+    "AM1101A": {
+     "sig": "987d104eb9cc",
+     "frames": 18
+    }
+   },
+   "fingerprint": {
+    "files": 19,
+    "bytes": 48937296,
+    "max_mtime_ns": 1791574772819239800
+   },
+   "build": {
+    "merged_from": [
+     "animations/packs-par-zone/am1101a-wed15-aa-bench-restored-split-20261009-v5/AR1101::AM1101A::571,379"
+    ]
+   }
+  },
+  "AR1103": {
+   "recorded_utc": "2026-10-09T19:21:46.264235+00:00",
+   "resources": {
+    "AM1104A": {
+     "sig": "df7e5e8dea21",
+     "frames": 18
+    },
     "FIRE_4": {
      "sig": "414b3adf5fa8",
      "frames": 14
@@ -2336,20 +2359,25 @@
     }
    },
    "fingerprint": {
-    "files": 42,
-    "bytes": 564788,
-    "max_mtime_ns": 1789774536037105700
+    "files": 60,
+    "bytes": 4885100,
+    "max_mtime_ns": 1791573706048923100
    },
    "build": {
     "merged_from": [
-     "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1103",
-     "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1103"
+     "animations/packs-par-zone/umar-foyers-innerfade8-complete-20261009-v1/ar1103-merge/AR1103::FIRE_4",
+     "animations/packs-par-zone/umar-foyers-innerfade8-complete-20261009-v1/ar1103-merge/AR1103::FLAME2S",
+     "animations/packs-par-zone/umar-foyers-local-cuts-split-20261009-v3/AR1103::AM1104A"
     ]
    }
   },
   "AR1104": {
-   "recorded_utc": "2026-09-18T23:35:37.855369+00:00",
+   "recorded_utc": "2026-10-09T19:52:10.371079+00:00",
    "resources": {
+    "AM1104B": {
+     "sig": "1423b5f76ac8",
+     "frames": 18
+    },
     "FIRE_4": {
      "sig": "414b3adf5fa8",
      "frames": 14
@@ -2360,14 +2388,15 @@
     }
    },
    "fingerprint": {
-    "files": 42,
-    "bytes": 564788,
-    "max_mtime_ns": 1789774537742893000
+    "files": 60,
+    "bytes": 11837420,
+    "max_mtime_ns": 1791575530160363500
    },
    "build": {
     "merged_from": [
-     "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1104",
-     "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1104"
+     "animations/packs-par-zone/umar-foyers-local-cuts-complete-20261009-v3/ar1104-merge/AR1104::FIRE_4",
+     "animations/packs-par-zone/umar-foyers-local-cuts-complete-20261009-v3/ar1104-merge/AR1104::FLAME2S",
+     "animations/ressources/AM1104B/runs/am1104b-left-inset8-feather4-30fps-20261009-v4/visual-treatment/03_runtime_pack::AM1104B"
     ]
    }
   },
@@ -5015,5 +5044,5 @@
    }
   }
  },
- "updated_utc": "2026-09-22T22:25:50.475497+00:00"
+ "updated_utc": "2026-10-09T19:52:10.375570+00:00"
 }

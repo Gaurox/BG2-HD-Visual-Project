@@ -44,3 +44,16 @@ Une ressemblance de couleur seule ne suffit pas.
 - `AMWRPGT1` : variante candidate `Safe Boundary 8/6 + Gaussian 3`; non validée. Le défaut cyan connu vient du PVRZ BC1, pas de l'asset.
 
 Sources de décision : `index/animation_upscale_registry.csv`, `index/animation_alpha_corrections.csv`, `index/qa-decisions/`.
+
+## Foyers Umar — validés ingame le 2026-10-09
+
+Base `umar-foyer-seedvr-apo8` : SeedVR2 7B INT8/LAB x4 → Apollo-8 TimedTimeline 15→30, 18 phases / 0,6 s ; RGB droit, dimensions/centres natifs conservés. FIRE_4/FLAME2S préexistantes conservées dans les packs complets.
+
+| Asset / zone | Correctif final | Autorité courante |
+|---|---|---|
+| AM1101A / AR1101 | Spline Fit1 feather8 ; WED15 hotte : distance analytique x4 + raccord4 ; lié à571,379 ; WED17 retiré, banc déjà peint dans l'asset restauré exact. | [Sélection](index/selections/AM1101A.json) |
+| AM1104A / AR1103 | InnerFade8, bords canvas ouverts ; fondu local24 sur les deux limites sous hotte, colonnesx4 0..218 ; pas de WED intersectant. | [Sélection](index/selections/AM1104A.json) |
+| AM1104B / AR1104 | InnerFade8 ; WED21 pilier : fondu24 côté visible, lié à372,246 ; bord gauche : retrait8/raccord4 x4. | [Sélection](index/selections/AM1104B.json) |
+
+- Coupe interne crénelée inchangée après spline : recaler la capture sur le WED ; la spline du contour extérieur ne corrige pas une limite du pont natif x1.
+- Une variante liée bypass le pont natif : ne pas cuire aveuglément tous les covers en nearest x1. Un meuble déjà peint dans l'animation (WED17 / AM1101A) doit garder son rendu, sinon une nouvelle frontière crénelée apparaît.

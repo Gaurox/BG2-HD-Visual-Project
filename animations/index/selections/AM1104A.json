@@ -1,0 +1,63 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM1104A",
+  "correction_id": "innerfade8-local-top24",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/umar-foyers-seedvr7b-apo8-x4-30fps-innerfade8-20261009-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "FD9D69F2F38FE8458724BCD7D3C8DD275FA78A083248623A85944F12FD80AEB9",
+        "path": "animations/batches/umar-foyers-seedvr7b-apo8-x4-30fps-innerfade8-20261009-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/umar-foyers-local-cuts-20261009-v3/visual-treatment/manifest.json",
+        "manifest_sha256": "9BADE25A6093DD61AE7C88E06EAD3221510BD8F83A44C4D85630C64AF6F1769B",
+        "path": "animations/batches/umar-foyers-local-cuts-20261009-v3/visual-treatment",
+        "schema": "bg2-upscale-animation-visual-treatment-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-09",
+    "path": "animations/index/qa-decisions/AM1104A/2026-10-09-accepted-am1104a-innerfade8-local-top24-v3.json",
+    "sha256": "27C6D4DD0B5105EAFE5344E9B94A45CDC24E4B32E7C916089A4D8D30C0F6851F",
+    "status": "accepted"
+  },
+  "recipe_id": "umar-foyer-seedvr-apo8",
+  "resref": "AM1104A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM1104A/runs/am1104a-innerfade8-local-top24-selection-accepted-20261009/manifest.json",
+    "manifest_sha256": "E359B52909AA5FF44CCEB46987599799D9A646240981E35D49DBED8678E57441",
+    "path": "animations/ressources/AM1104A/runs/am1104a-innerfade8-local-top24-selection-accepted-20261009",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR1103",
+        "manifest_path": "animations/packs-par-zone/umar-foyers-local-cuts-complete-20261009-v3/ar1103-merge/AR1103/manifest.json",
+        "manifest_sha256": "9D1B3819FBFE7B9027EBD4FD3D72B41C76EF2EFBE19DBDACEC8F4A90345F8E3C",
+        "path": "animations/packs-par-zone/umar-foyers-local-cuts-complete-20261009-v3/ar1103-merge/AR1103",
+        "registry_sha256": "84ED91FEBE9E36FA58D7460ADAEA062EA38BD9694D9A683F0A5D733CB259A35F",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/umar-foyers-local-cuts-complete-20261009-v3/ar1103-merge/manifest.json",
+    "manifest_sha256": "03BF5E3B191579CC6ADA8B77488C4429428B4AEF86BBBA550657C48DD7DF6313",
+    "path": "animations/packs-par-zone/umar-foyers-local-cuts-complete-20261009-v3/ar1103-merge",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR1103"
+  ],
+  "updated_at_utc": "2026-10-09T19:55:39Z"
+}
