@@ -1,0 +1,97 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:OHHNECR",
+  "correction_id": "innerfeather16-premultiply",
+  "decision": "Validation ingame explicite utilisateur du lot AMOH7300/OHHNECR dans OH7300 : valide.",
+  "decision_date": "2026-10-10",
+  "decision_id": "2026-10-10-accepted-ohhnecr-pieges-reboutcx-apo8-inner16-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/OHHNECR/runs/ohhnecr-pieges-selection-accepted-20261010/manifest.json",
+    "manifest_sha256": "B0425BD4E1361FF492352AFCB94FDEC461BD347B4AC6C2E6B63AC72E4C1B207D",
+    "path": "animations/ressources/OHHNECR/runs/ohhnecr-pieges-selection-accepted-20261010",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-20261010-v1/manifest.json",
+        "manifest_sha256": "D8E88F9CD515B28C95ADAF7797411384DB5B9302716BDA28EF5AB687AB7EA164",
+        "path": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-20261010-v1",
+        "schema": "bg2-upscale-area-animation-pack-index-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/manifest.json",
+        "manifest_sha256": "9556C6FD78C13CE41AB7C369778BCF4E041395317ABA239668456DD15A372A7D",
+        "path": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/OHHNECR/runs/ohhnecr-reboutcx-apo8-x4-30fps-20261010-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "7B8D1897EF135F475D908651CB7ACDCEC983F38903A6482F2123877403BB8866",
+        "path": "animations/ressources/OHHNECR/runs/ohhnecr-reboutcx-apo8-x4-30fps-20261010-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/OHHNECR/runs/ohhnecr-reboutcx-x4-20261010-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "2B0C85421D6B4AA3045E620CF536FCC29152FEE544B23B1C646FAE7F57B17103",
+        "path": "animations/ressources/OHHNECR/runs/ohhnecr-reboutcx-x4-20261010-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/OHHNECR/runs/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/manifest.json",
+        "manifest_sha256": "E329DA846E422AE15A73CF56B9BE795D09D23394F189A3486E3E2EAF028186F9",
+        "path": "animations/ressources/OHHNECR/runs/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1",
+        "schema": "bg2-upscale-blended-rgb-neutral-run-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/OHHNECR/runs/ohhnecr-reboutcx-apo8-x4-30fps-20261010-v1/manifest.json",
+        "manifest_sha256": "83D79EC37034B40A701726C88D8F70E62A1A870E4E3392FCFB4820A948CC4B85",
+        "path": "animations/ressources/OHHNECR/runs/ohhnecr-reboutcx-apo8-x4-30fps-20261010-v1",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/OHHNECR/runs/ohhnecr-reboutcx-x4-20261010-v1/manifest.json",
+        "manifest_sha256": "B8D3DC72134C51D9D45103580F79052488C518C98D187081DB546D5D2E634B8C",
+        "path": "animations/ressources/OHHNECR/runs/ohhnecr-reboutcx-x4-20261010-v1",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "effet-blended-reboutcx-apo8-premul",
+  "recorded_at_utc": "2026-10-09T23:17:50Z",
+  "resref": "OHHNECR",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "OH7300",
+        "manifest_path": "animations/packs-par-zone/oh7300-bulles-pieges-complete-20261010-v1/OH7300/manifest.json",
+        "manifest_sha256": "098C98BAF6D1F7FF5745F6C42CFCF82037E0D9C4026EF2A8EC5DF09C295DD72F",
+        "path": "animations/packs-par-zone/oh7300-bulles-pieges-complete-20261010-v1/OH7300",
+        "registry_sha256": "2E8AB0958AB8F5EF312AEBAE8A77F29119F05719CB64D55D034C390A9A8ED613",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/oh7300-bulles-pieges-complete-20261010-v1/manifest.json",
+    "manifest_sha256": "0E490DFED1BD77210F1AF1328DBDCB8DD9BF881ED9E471CAF8A3A7CE9EB3F990",
+    "path": "animations/packs-par-zone/oh7300-bulles-pieges-complete-20261010-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "OH7300"
+  ]
+}

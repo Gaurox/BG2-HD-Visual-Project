@@ -1,0 +1,97 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AMOH7300",
+  "correction_id": "xbr2blend-nearest2-apo8-premultiply",
+  "decision": "Validation ingame explicite utilisateur du lot AMOH7300/OHHNECR dans OH7300 : valide.",
+  "decision_date": "2026-10-10",
+  "decision_id": "2026-10-10-accepted-amoh7300-bulles-xbr2blend-apo8-premul-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AMOH7300/runs/amoh7300-bulles-selection-accepted-20261010/manifest.json",
+    "manifest_sha256": "3A1F42F9365C69E9E50EDD2880004FB319FBC7DAACBC3F4EDCDD810C9C81051E",
+    "path": "animations/ressources/AMOH7300/runs/amoh7300-bulles-selection-accepted-20261010",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/amoh7300-xbr2blend-apo8-20261010-v1/manifest.json",
+        "manifest_sha256": "5C72C8AD5AAC3E3A3C8AA4D763F3BE261DFB2A458A2786BD6BDA485FCA8056B1",
+        "path": "animations/packs-par-zone/amoh7300-xbr2blend-apo8-20261010-v1",
+        "schema": "bg2-upscale-area-animation-pack-index-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/packs-par-zone/amoh7300-xbr2blend-apo8-premul-20261010-v1/OH7300/manifest.json",
+        "manifest_sha256": "4B96C7A6B026AC87CAF069BFA21EBEDF6C1EF14AA6048C8AF86DECB48FB7D979",
+        "path": "animations/packs-par-zone/amoh7300-xbr2blend-apo8-premul-20261010-v1/OH7300",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AMOH7300/runs/amoh7300-xbr2blend-apo8-x4-30fps-20261010-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "733D3C131F0C3F5FB985F99D4DF49A4E11354518AFE6FCA72F7D1455CDA4B262",
+        "path": "animations/ressources/AMOH7300/runs/amoh7300-xbr2blend-apo8-x4-30fps-20261010-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AMOH7300/runs/amoh7300-xbr2blend-nearest2-x4-20261010-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "B1488CA47F37F4D557881584A95DAC102FDDF365AEAB37481461CC44EBEA5D16",
+        "path": "animations/ressources/AMOH7300/runs/amoh7300-xbr2blend-nearest2-x4-20261010-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/AMOH7300/runs/amoh7300-xbr2blend-apo8-premul-20261010-v1/manifest.json",
+        "manifest_sha256": "A5160C0C1136135594F062DA9E77BFA68B92F924B6A34B6272EAB20B06D02624",
+        "path": "animations/ressources/AMOH7300/runs/amoh7300-xbr2blend-apo8-premul-20261010-v1",
+        "schema": "bg2-upscale-blended-rgb-neutral-run-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AMOH7300/runs/amoh7300-xbr2blend-apo8-x4-30fps-20261010-v1/manifest.json",
+        "manifest_sha256": "C990A1D58079F1084BB68655B53F8C9570600D122F6CB30E10B199B8FFFBB961",
+        "path": "animations/ressources/AMOH7300/runs/amoh7300-xbr2blend-apo8-x4-30fps-20261010-v1",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AMOH7300/runs/amoh7300-xbr2blend-nearest2-x4-20261010-v1/manifest.json",
+        "manifest_sha256": "59427BA617A457526D69396FB698BB84A58366059F4D754785DDF60E7CAB6810",
+        "path": "animations/ressources/AMOH7300/runs/amoh7300-xbr2blend-nearest2-x4-20261010-v1",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "bulles-xbr2blend-nearest2-apo8-premul",
+  "recorded_at_utc": "2026-10-09T23:17:50Z",
+  "resref": "AMOH7300",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "OH7300",
+        "manifest_path": "animations/packs-par-zone/oh7300-bulles-pieges-complete-20261010-v1/OH7300/manifest.json",
+        "manifest_sha256": "098C98BAF6D1F7FF5745F6C42CFCF82037E0D9C4026EF2A8EC5DF09C295DD72F",
+        "path": "animations/packs-par-zone/oh7300-bulles-pieges-complete-20261010-v1/OH7300",
+        "registry_sha256": "2E8AB0958AB8F5EF312AEBAE8A77F29119F05719CB64D55D034C390A9A8ED613",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/oh7300-bulles-pieges-complete-20261010-v1/manifest.json",
+    "manifest_sha256": "0E490DFED1BD77210F1AF1328DBDCB8DD9BF881ED9E471CAF8A3A7CE9EB3F990",
+    "path": "animations/packs-par-zone/oh7300-bulles-pieges-complete-20261010-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "OH7300"
+  ]
+}
