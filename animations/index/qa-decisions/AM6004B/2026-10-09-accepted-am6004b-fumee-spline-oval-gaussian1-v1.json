@@ -1,0 +1,106 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM6004B",
+  "correction_id": "spline-fit1-feather4-oval20x6-rgbgaussian1",
+  "decision": "Validation ingame explicite utilisateur de AM6004B dans le lot AR6003/AR6004 : valide.",
+  "decision_date": "2026-10-09",
+  "decision_id": "2026-10-09-accepted-am6004b-fumee-spline-oval-gaussian1-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM6004B/runs/am6004b-fumee-selection-accepted-20261009/manifest.json",
+    "manifest_sha256": "FDAEF8B858EA332A1AB343AFDCB00C08EA58328D95553CF7350E7E9B62B3FEB5",
+    "path": "animations/ressources/AM6004B/runs/am6004b-fumee-selection-accepted-20261009",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM6004B/runs/am6004b-seedvr7b-apo8-x4-30fps-20261009-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "C8292075A09FD035B978A0C2465E1433D3AC9D0CBA048ECFEDD04BF5639D35D2",
+        "path": "animations/ressources/AM6004B/runs/am6004b-seedvr7b-apo8-x4-30fps-20261009-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM6004B/runs/am6004b-seedvr7b-lab-x4-20261009-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "418C6A9AA96FA4CC2142D11B33CBC5682D84B2EC8E2854154307F1EC234FDB4A",
+        "path": "animations/ressources/AM6004B/runs/am6004b-seedvr7b-lab-x4-20261009-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM6004B/runs/am6004b-spline-fit1-feather4-oval20x6-20261009-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "D25AD6BADC57D3E556F76F3167F0BC80316282595C81BBBECFECBB5CFF39A922",
+        "path": "animations/ressources/AM6004B/runs/am6004b-spline-fit1-feather4-oval20x6-20261009-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM6004B/runs/am6004b-spline-fit1-feather4-oval20x6-rgbgaussian1-20261009-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "A618F4948AC32E12AE2C02BEA9C14800E9F3C99E217D30E25790D923E5C2CD6C",
+        "path": "animations/ressources/AM6004B/runs/am6004b-spline-fit1-feather4-oval20x6-rgbgaussian1-20261009-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/AM6004B/runs/am6004b-seedvr7b-apo8-x4-30fps-20261009-v1/manifest.json",
+        "manifest_sha256": "E901DE3066AACC29F6420E3DF304F3D0FE2129DB32F7549424399E19A49AA0E2",
+        "path": "animations/ressources/AM6004B/runs/am6004b-seedvr7b-apo8-x4-30fps-20261009-v1",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM6004B/runs/am6004b-seedvr7b-lab-x4-20261009-v1/manifest.json",
+        "manifest_sha256": "0B1C4FD1F8953C0ED3412D4CF1B40B188D09506AD9814BD3E2B0BD0D9FD5112B",
+        "path": "animations/ressources/AM6004B/runs/am6004b-seedvr7b-lab-x4-20261009-v1",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM6004B/runs/am6004b-spline-fit1-feather4-oval20x6-rgbgaussian1-20261009-v1/manifest.json",
+        "manifest_sha256": "007F1522A805BB205DFEB9B6053BF088B13441E1A4703DBBFEEB98D235972A70",
+        "path": "animations/ressources/AM6004B/runs/am6004b-spline-fit1-feather4-oval20x6-rgbgaussian1-20261009-v1",
+        "schema": "bg2-upscale-animation-visual-treatment-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "fumee-seedvr-spline4-edgefade",
+  "recorded_at_utc": "2026-10-09T21:45:03Z",
+  "resref": "AM6004B",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR6003",
+        "manifest_path": "animations/packs-par-zone/ar6003-ar6004-fumee-complete-20261009-v1/AR6003/manifest.json",
+        "manifest_sha256": "8C2EE644501F5F57E7113CEA7EC99FA65329266B40F098ED658D78787E851ADC",
+        "path": "animations/packs-par-zone/ar6003-ar6004-fumee-complete-20261009-v1/AR6003",
+        "registry_sha256": "7609C3221506A794674B8760EA7F88731A0091C8ED84E2578C0482B85E8262B8",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR6004",
+        "manifest_path": "animations/packs-par-zone/ar6003-ar6004-fumee-complete-20261009-v1/AR6004/manifest.json",
+        "manifest_sha256": "73B75B372022EF7BD2BAA4C43B778FC152DB30305D80B5F4002241C1C58BD0C2",
+        "path": "animations/packs-par-zone/ar6003-ar6004-fumee-complete-20261009-v1/AR6004",
+        "registry_sha256": "7609C3221506A794674B8760EA7F88731A0091C8ED84E2578C0482B85E8262B8",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar6003-ar6004-fumee-complete-20261009-v1/manifest.json",
+    "manifest_sha256": "A3D742C2EA5E9907F28D100861B670716F9303CA5E6DEDD5FBEB87F657DCA989",
+    "path": "animations/packs-par-zone/ar6003-ar6004-fumee-complete-20261009-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR6003",
+    "AR6004"
+  ]
+}
