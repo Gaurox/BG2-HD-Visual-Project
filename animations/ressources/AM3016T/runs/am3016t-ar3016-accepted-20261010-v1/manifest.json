@@ -1,0 +1,44 @@
+{
+  "schema": "bg2-upscale-animation-final-selection-v1",
+  "status": "completed",
+  "created_utc": "2026-10-10T21:39:33Z",
+  "resrefs": [
+    "AM3016T"
+  ],
+  "source_run": "animations/batches/ar3016-qa-finalization-x4-20260916",
+  "source_run_manifest_sha256": "4925A791446D680C85BBD140C1361BCC29310582E9AB2585A20EC33E8A233406",
+  "output_split_root": "animations/packs-par-zone/ar3016-complete-seedvr-flame-anchor-repair-v5-20260916",
+  "output_manifest_sha256": "6070E7E268152F6E9A3B18A4059DBA25C14AAB2F296942A1DB3404F2B3C67179",
+  "selection_reason": "QA ingame explicite utilisateur 2026-10-10 : AM3016T valide dans AR3016 apres activation et visualisation du grand ventilateur. Octets et registre installes verifies identiques au pack ; aucune transformation.",
+  "qa": {
+    "tested_areas": [
+      "AR3016"
+    ],
+    "accepted": [
+      "AM3016T"
+    ],
+    "instances": [
+      "AM3016T"
+    ],
+    "native_positions": [
+      [
+        2053,
+        241
+      ]
+    ],
+    "sequences": [
+      0
+    ]
+  },
+  "runtime_contract": {
+    "scale": 4,
+    "playback_mode": "TimedTimeline",
+    "target_fps": {
+      "numerator": 30,
+      "denominator": 1
+    },
+    "frame_count": 6,
+    "cycle_count": 1
+  },
+  "release": "not-selected"
+}

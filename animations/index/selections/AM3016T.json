@@ -1,0 +1,53 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM3016T",
+  "lineage": {
+    "source_packs": [],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/ar3016-qa-finalization-x4-20260916/manifest.json",
+        "manifest_sha256": "4925A791446D680C85BBD140C1361BCC29310582E9AB2585A20EC33E8A233406",
+        "path": "animations/batches/ar3016-qa-finalization-x4-20260916",
+        "schema": "bg2-upscale-animation-qa-finalization-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-10",
+    "path": "animations/index/qa-decisions/AM3016T/2026-10-10-accepted-am3016t-ar3016-v1.json",
+    "sha256": "48521C856EA9C5D0EA317909656E405F65DC09E2876496E12B32B7F9F17D8F5F",
+    "status": "accepted"
+  },
+  "resref": "AM3016T",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM3016T/runs/am3016t-ar3016-accepted-20261010-v1/manifest.json",
+    "manifest_sha256": "83305C5A7A71AE4EF1D8ED8005D68D0C311F14368E68EED633428A03855AD6D8",
+    "path": "animations/ressources/AM3016T/runs/am3016t-ar3016-accepted-20261010-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR3016",
+        "manifest_path": "animations/packs-par-zone/ar3016-complete-seedvr-flame-anchor-repair-v5-20260916/AR3016/manifest.json",
+        "manifest_sha256": "4C0C463780CAD3830C929EAD8EA304DE5D996CF6BF703252065BF18FC2022EBB",
+        "path": "animations/packs-par-zone/ar3016-complete-seedvr-flame-anchor-repair-v5-20260916/AR3016",
+        "registry_sha256": "3BB894CBD4815EA3A07CBB4B911FAC3E582BD1338A39A6B0DAE5D3ACE8C0A1C0",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar3016-complete-seedvr-flame-anchor-repair-v5-20260916/manifest.json",
+    "manifest_sha256": "6070E7E268152F6E9A3B18A4059DBA25C14AAB2F296942A1DB3404F2B3C67179",
+    "path": "animations/packs-par-zone/ar3016-complete-seedvr-flame-anchor-repair-v5-20260916",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR3016"
+  ],
+  "updated_at_utc": "2026-10-10T21:39:34Z"
+}
