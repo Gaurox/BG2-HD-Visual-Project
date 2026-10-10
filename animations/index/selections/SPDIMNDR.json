@@ -1,0 +1,91 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:SPDIMNDR",
+  "correction_id": "linear-cycles-0-2-3-4-innerfeather2-premultiply",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/manifest.json",
+        "manifest_sha256": "6764AAFDA841D2B83320F71647D52092944456C7A2DBE78155F5B4ADF4DD161D",
+        "path": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split",
+        "schema": "bg2-upscale-area-animation-pack-index-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/SPDIMNDR/runs/spdimndr-seedvr7b-apo8-20261010-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "A02614C659E75963CB72A743ADF17C5D45B001333CDE10891BF3D4467ABB09FE",
+        "path": "animations/ressources/SPDIMNDR/runs/spdimndr-seedvr7b-apo8-20261010-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/SPDIMNDR/runs/spdimndr-seedvr7b-spatial-20261010-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "93DE6594DCB7A76844181117B5D8F390F63CDC0E105E77F34A11C7018BDC134C",
+        "path": "animations/ressources/SPDIMNDR/runs/spdimndr-seedvr7b-spatial-20261010-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/SPDIMNDR/runs/spdimndr-seedvr7b-apo8-20261010-v1/manifest.json",
+        "manifest_sha256": "9692303587A206674250FFECAE71D96311CE8B0F8A9AA7725F57D51A78E39EE7",
+        "path": "animations/ressources/SPDIMNDR/runs/spdimndr-seedvr7b-apo8-20261010-v1",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/SPDIMNDR/runs/spdimndr-seedvr7b-inner2-final-20261010-v1/manifest.json",
+        "manifest_sha256": "781A219F19D636DA9005E15C9021D8F34902A4D730FB37D1E0CA54437376C67E",
+        "path": "animations/ressources/SPDIMNDR/runs/spdimndr-seedvr7b-inner2-final-20261010-v1",
+        "schema": "bg2-upscale-animation-visual-treatment-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/SPDIMNDR/runs/spdimndr-seedvr7b-spatial-20261010-v1/manifest.json",
+        "manifest_sha256": "ADE69DB03D31F8BF6FEADD96614B3CEBB3D55CD610D9E0816B774D5D56A045B9",
+        "path": "animations/ressources/SPDIMNDR/runs/spdimndr-seedvr7b-spatial-20261010-v1",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-10",
+    "path": "animations/index/qa-decisions/SPDIMNDR/2026-10-10-accepted-spdimndr-portails-final-v1.json",
+    "sha256": "BCD556BC3CF9AB66E9E2B7840350834703837601EBE44E61AD834276AA14BD5B",
+    "status": "accepted"
+  },
+  "recipe_id": "seedvr7b-lab-apo8-linear-inner2-premul",
+  "resref": "SPDIMNDR",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/SPDIMNDR/runs/spdimndr-portails-accepted-20261010-v1/manifest.json",
+    "manifest_sha256": "8E59FED9A5B0D1F61DED5C24A794FCD2DDBA1B54B0C61DAAE39C92C8F684F0ED",
+    "path": "animations/ressources/SPDIMNDR/runs/spdimndr-portails-accepted-20261010-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR6108",
+        "manifest_path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/AR6108/manifest.json",
+        "manifest_sha256": "E96DAFB1269A554DA2E5FA534DAD8CE860F3AB2E82F364B2253217A2877C00DE",
+        "path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/AR6108",
+        "registry_sha256": "04CE53D1331F2FE66FBCA773E724373626AE8439C748A964283BCA49847B288D",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/manifest.json",
+    "manifest_sha256": "3F5264FF63C6546E8F6936E52C3FF2A4B868BAF0CFC6206F68743E82099BF91C",
+    "path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR6108"
+  ],
+  "updated_at_utc": "2026-10-10T15:06:45Z"
+}

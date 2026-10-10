@@ -1894,20 +1894,24 @@
    }
   },
   "AR0811": {
-   "recorded_utc": "2026-09-18T23:05:30.026810+00:00",
+   "recorded_utc": "2026-10-10T14:30:02.285484+00:00",
    "resources": {
     "FIRE_1": {
      "sig": "073eb78953a7",
      "frames": 15
+    },
+    "OHHPORT": {
+     "sig": "9a14c9eed46f",
+     "frames": 12
     }
    },
    "fingerprint": {
-    "files": 16,
-    "bytes": 1632264,
-    "max_mtime_ns": 1789772729975216800
+    "files": 28,
+    "bytes": 14215404,
+    "max_mtime_ns": 1791642602148350700
    },
    "build": {
-    "leaf": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0811"
+    "leaf": "animations/packs-par-zone/portails-deux-correctif-20261010-v1-complete/AR0811"
    }
   },
   "AR0900": {
@@ -4602,6 +4606,23 @@
     ]
    }
   },
+  "AR6108": {
+   "recorded_utc": "2026-10-10T13:08:05.357882+00:00",
+   "resources": {
+    "SPDIMNDR": {
+     "sig": "9b979f82c86f",
+     "frames": 324
+    }
+   },
+   "fingerprint": {
+    "files": 325,
+    "bytes": 165238340,
+    "max_mtime_ns": 1791637684255050400
+   },
+   "build": {
+    "leaf": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/AR6108"
+   }
+  },
   "AR6111": {
    "recorded_utc": "2026-09-21T20:09:25.167433+00:00",
    "resources": {
@@ -4834,7 +4855,7 @@
    }
   },
   "OH4220": {
-   "recorded_utc": "2026-09-21T19:26:03.827986+00:00",
+   "recorded_utc": "2026-10-10T13:08:07.279344+00:00",
    "resources": {
     "FIRE_3": {
      "sig": "c2cebb655fd3",
@@ -4843,18 +4864,36 @@
     "FLAME2L": {
      "sig": "9cf8e8eea5c5",
      "frames": 9
+    },
+    "OHRSGATE": {
+     "sig": "1e5f1ca5d274",
+     "frames": 60
     }
    },
    "fingerprint": {
-    "files": 24,
-    "bytes": 935140,
-    "max_mtime_ns": 1790018763744864300
+    "files": 84,
+    "bytes": 41953640,
+    "max_mtime_ns": 1791637686894975100
    },
    "build": {
-    "merged_from": [
-     "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH4220",
-     "animations/packs-par-zone/flame2l-reboutcx-x4-innerfeather16-premul-20260921/OH4220"
-    ]
+    "leaf": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/OH4220"
+   }
+  },
+  "OH4230": {
+   "recorded_utc": "2026-10-10T13:08:08.496047+00:00",
+   "resources": {
+    "OHRSGATE": {
+     "sig": "1e5f1ca5d274",
+     "frames": 60
+    }
+   },
+   "fingerprint": {
+    "files": 61,
+    "bytes": 41018524,
+    "max_mtime_ns": 1791637688224533000
+   },
+   "build": {
+    "leaf": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/OH4230"
    }
   },
   "OH5000": {
@@ -4896,37 +4935,45 @@
    }
   },
   "OH5400": {
-   "recorded_utc": "2026-09-18T22:53:04.036000+00:00",
+   "recorded_utc": "2026-10-10T13:08:11.510333+00:00",
    "resources": {
     "AM0411RN": {
      "sig": "e2f350a7ef51",
      "frames": 60
+    },
+    "OHDLPORT": {
+     "sig": "4684a29298e1",
+     "frames": 52
     }
    },
    "fingerprint": {
-    "files": 61,
-    "bytes": 31672604,
-    "max_mtime_ns": 1789771983804141300
+    "files": 113,
+    "bytes": 80350896,
+    "max_mtime_ns": 1791637690982231000
    },
    "build": {
-    "leaf": "animations/packs-par-zone/am0411rn-magic-sphere-apo8-x4-30fps-spline-fit1-feather4-20260911/OH5400"
+    "leaf": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/OH5400"
    }
   },
   "OH5500": {
-   "recorded_utc": "2026-09-18T22:53:05.297303+00:00",
+   "recorded_utc": "2026-10-10T13:08:14.311118+00:00",
    "resources": {
     "AM0411RN": {
      "sig": "e2f350a7ef51",
      "frames": 60
+    },
+    "OHDLPORT": {
+     "sig": "4684a29298e1",
+     "frames": 52
     }
    },
    "fingerprint": {
-    "files": 61,
-    "bytes": 31672604,
-    "max_mtime_ns": 1789771985072048500
+    "files": 113,
+    "bytes": 80350896,
+    "max_mtime_ns": 1791637693765620800
    },
    "build": {
-    "leaf": "animations/packs-par-zone/am0411rn-magic-sphere-apo8-x4-30fps-spline-fit1-feather4-20260911/OH5500"
+    "leaf": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/OH5500"
    }
   },
   "OH6000": {
@@ -5135,8 +5182,12 @@
    }
   },
   "OH8100": {
-   "recorded_utc": "2026-09-18T22:53:12.633246+00:00",
+   "recorded_utc": "2026-10-10T14:30:13.787307+00:00",
    "resources": {
+    "BDFORCEW": {
+     "sig": "6b58a6cebafc",
+     "frames": 340
+    },
     "FIRE_4": {
      "sig": "414b3adf5fa8",
      "frames": 14
@@ -5147,15 +5198,12 @@
     }
    },
    "fingerprint": {
-    "files": 27,
-    "bytes": 654432,
-    "max_mtime_ns": 1789771992561891400
+    "files": 367,
+    "bytes": 441317356,
+    "max_mtime_ns": 1791642611498409500
    },
    "build": {
-    "merged_from": [
-     "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH8100::FIRE_4",
-     "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/OH8100::FPIT1S"
-    ]
+    "leaf": "animations/packs-par-zone/portails-deux-correctif-20261010-v1-complete/OH8100"
    }
   },
   "OH8200": {
@@ -5240,5 +5288,5 @@
    }
   }
  },
- "updated_utc": "2026-10-10T11:39:47.865102+00:00"
+ "updated_utc": "2026-10-10T14:30:13.788307+00:00"
 }

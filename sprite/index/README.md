@@ -1,5 +1,9 @@
 # Inventaire normalisé des sprites BG2EE — contrat agent
 
+- **État final validé 2026-10-07 : 15 familles /331 IDs produits/installés/acceptés**, Monster77 et runtime commun confirmés ; aucun lot/retest restant du périmètre retenu. [QA finale](../../docs/measurements/q3m-sprites-final-accepted-x2-20261007-v1/README.md).
+
+- **Runtime commun installé 2026-10-07** : 331 IDs/15 familles, attente à froid +Loop/Clamp CVidCell généralisés ; Character6110 seq15 slot12 corrigé. 0 recalcul, mêmes assets ; confirmation ingame requise. [Preuves](../../docs/measurements/q3m-all-sprite-playback-x2-20261007-v1/README.md).
+
 Utiliser cet index comme source de vérité pour toute identité de sprite, famille BAM, variante
 Character, équipement et diagnostic automatisable du pipeline x2/x4. Ne pas remplacer ces relations
 par une déduction depuis un nom de PNJ ou un dossier historique.

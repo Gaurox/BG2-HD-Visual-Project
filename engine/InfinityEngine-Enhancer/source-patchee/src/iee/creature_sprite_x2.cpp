@@ -4477,7 +4477,8 @@ bool resolve_frame(std::uint16_t animationId,
                    FrameResolveMode mode, FramePlaybackMode playback) noexcept {
   out = {};
   const bool nativePlayback =
-      ((mode == FrameResolveMode::WaitForMultiNewMetadata && is_multi_new_animation(animationId)) ||
+      ((mode == FrameResolveMode::WaitForRegisteredMetadata) ||
+       (mode == FrameResolveMode::WaitForMultiNewMetadata && is_multi_new_animation(animationId)) ||
        (mode == FrameResolveMode::WaitForIcewindMetadata && (animationId & 0xF000u) == 0xE000u) ||
        (mode == FrameResolveMode::WaitForMonsterMetadata && (animationId & 0xF000u) == 0x7000u)) &&
       (playback == FramePlaybackMode::Clamp || playback == FramePlaybackMode::Loop);
@@ -4496,11 +4497,15 @@ bool resolve_frame(std::uint16_t animationId,
     if (g_catalog.active) {
       const auto* animation = find_catalog_animation_locked(animationId);
       if (!animation) return false;
+      if (mode == FrameResolveMode::WaitForRegisteredMetadata &&
+          !catalog_owner_matches_animation(animation->owner, animationId)) return false;
       if (mode == FrameResolveMode::WaitForMonsterMetadata &&
           animation->owner != kCatalogMonsterOwner) return false;
       const bool waitForMetadata =
           g_catalog.version == kRegistryCatalogDirectoryVersion &&
-          ((mode == FrameResolveMode::WaitForCharacterMetadata &&
+          ((mode == FrameResolveMode::WaitForRegisteredMetadata &&
+            catalog_owner_matches_animation(animation->owner, animationId)) ||
+           (mode == FrameResolveMode::WaitForCharacterMetadata &&
             animation->owner == kCatalogCharacterOwner) ||
            (mode == FrameResolveMode::WaitForAnkhegMetadata &&
             animationId == 0x3000u && animation->owner == kCatalogAnkhegOwner) ||
@@ -4566,7 +4571,7 @@ bool resolve_frame(std::uint16_t animationId,
     if (nativePlayback) {
       // CVidCell::GetCurrentFrameSize (BG2EE 2.7.3, RVA 0x4117F8..0x41185F):
       // mode!=0 wraps signed slots; mode==0 clamps to first/last frame.
-      // Do not change native cell state or normalize other sprite families.
+      // All owners share this CVidCell rule; do not change native cell state.
       const int count = static_cast<int>(cycle.size());
       if (currentFrame >= count)
         currentFrame = playback == FramePlaybackMode::Loop ? currentFrame % count : count - 1;

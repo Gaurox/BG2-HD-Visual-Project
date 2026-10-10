@@ -138,3 +138,17 @@ C:Eval('StaticSequence("AMB_FinalSeal",1)')
 ```
 
 AM3022D : `C:MoveToArea("AR3022")`, puis `C:Eval('JumpToPoint([1550.1760])')` ; nom d'animation `AM3022D`, cycle0.
+
+## Portails — cinq assets validés ingame le 2026-10-10
+
+| Asset / zones | Recette retenue | Autorité |
+|---|---|---|
+| BDFORCEW / OH8100 | ReboutCX x4 → Apollo8 15→30 → Spline Fit1 / inner16 → prémultiplication unique. Pont WED natif : garde4 / fondu16 x4 (premier correctif lissé restauré). Après masquage, translation visuelle +6 pixels x1 horizontaux des deux occurrences2286,820 /2350,866 ; état non vanilla explicitement demandé et accepté. | [Sélection](index/selections/BDFORCEW.json) |
+| OHDLPORT / OH5400, OH5500 | xBR2 blend → nearest2 → Apollo8 15→30 ; sans fondu supplémentaire ; prémultiplication unique. | [Sélection](index/selections/OHDLPORT.json) |
+| OHHPORT / AR0811 | xBR2 blend → nearest2 → Apollo8 15→30 ; fond noir opaque de la frame native2 rendu transparent, fond parasite runtime corrigé ; prémultiplication unique. | [Sélection](index/selections/OHHPORT.json) |
+| OHRSGATE / OH4220, OH4230 | SeedVR2 7B INT8/LAB seed4220 → Apollo8 15→30 `nearest-opaque-dilate` → inner16 → prémultiplication unique. | [Sélection](index/selections/OHRSGATE.json) |
+| SPDIMNDR / AR6108 | SeedVR2 7B INT8/LAB seed6108 → Apollo8 15→30 ; cycles0/2/3/4 linéaires, sans raccord fin→début ; inner2 → prémultiplication unique. | [Sélection](index/selections/SPDIMNDR.json) |
+
+- Packs actifs : `animations/packs-par-zone/portails-deux-correctif-20261010-v1-complete/{AR0811,OH8100}` ; `portails-cinq-selection-20261010-v1-complete/{AR6108,OH4220,OH4230,OH5400,OH5500}`.
+- Contrat BDFORCEW : DLL `748fe476d24ffa32007d33d34f5c6e506b56147570772ee40b810556ad317c56` ; reçu `backups/renderer/20261010T150141567331Z-182aac70/renderer-install-receipt.json`. Translation après masque WED indispensable : déplacer seulement l'ARE accentue la coupe. Centres/dimensions BAM et coordonnées ARE/sauvegardes conservés ; seul le dessin final se décale. Tests natifs et concordance du fondu C++/preview GLSL acquis.
+- [Acceptation finale et recettes](../pipeline/recipes/portails-cinq-validation-20261010-v1/acceptance.json), [enregistrement reproductible](../pipeline/recipes/portails-cinq-validation-20261010-v1/record.py). Décisions/runs/reçus antérieurs conservés ; essais WED4 et SeedVR non retenus pour BDFORCEW. Aucune intégration release.

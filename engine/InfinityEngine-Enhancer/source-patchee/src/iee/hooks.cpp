@@ -41,6 +41,7 @@
 #include "iee/core/map_texture_telemetry.h"
 #include "iee/core/map_view_burst_telemetry.h"
 #include "iee/core/native_occlusion_probe.h"
+#include "iee/core/bdforcew_visual_placement.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/core/performance_samples.h"
 #include "iee/core/process_resource_telemetry.h"
@@ -931,8 +932,7 @@ void trace_mdr1_native_cell(void* cell, std::uintptr_t caller,
 
 bool read_registered_creature_cell(std::uint16_t animationId, void* cell,
                                    const char* ownerLabel,
-                                   ResolvedCreatureSpriteFrame& resolved,
-                                   bool waitForCharacterMetadata = false) noexcept {
+                                   ResolvedCreatureSpriteFrame& resolved) noexcept {
   if (!cell || !g_ctx || !g_ctx->manifest) return false;
   const auto& runtime = g_ctx->manifest->areaAnimations;
   const auto cellBase = reinterpret_cast<std::uintptr_t>(cell);
@@ -951,31 +951,17 @@ bool read_registered_creature_cell(std::uint16_t animationId, void* cell,
     }
     return false;
   }
-  auto playback = creature_sprite_x2::FramePlaybackMode::Strict;
-  const bool icewind = (animationId & 0xF000u) == 0xE000u;
-  const bool monster = std::string_view{ownerLabel} == "CGameAnimationTypeMonster";
-  if (monster || icewind || (animationId >= 0x1200u && animationId <= 0x1208u) || animationId == 0x1300u) {
-    // Icewind native sizing (RVA 0x3175B0) calls GetCurrentFrameSize for
-    // both body (+0xCD8) and equipped weapon (+0x2F10). Same playback field.
-    const auto playbackOffset = g_ctx->manifest->itemIcons.vidCellPlaybackMode;
-    std::int32_t nativeMode = 0;
-    if (!playbackOffset || !core::safe_read(
-        reinterpret_cast<const void*>(cellBase + playbackOffset), nativeMode)) return false;
-    playback = nativeMode != 0 ? creature_sprite_x2::FramePlaybackMode::Loop
-                               : creature_sprite_x2::FramePlaybackMode::Clamp;
-  }
+  // The same CVidCell::GetCurrentFrameSize playback field applies to every
+  // registered body, equipment layer and spatial part, independent of owner.
+  const auto playbackOffset = g_ctx->manifest->itemIcons.vidCellPlaybackMode;
+  std::int32_t nativeMode = 0;
+  if (!playbackOffset || !core::safe_read(
+      reinterpret_cast<const void*>(cellBase + playbackOffset), nativeMode)) return false;
+  const auto playback = nativeMode != 0 ? creature_sprite_x2::FramePlaybackMode::Loop
+                                      : creature_sprite_x2::FramePlaybackMode::Clamp;
   if (!creature_sprite_x2::resolve_frame(animationId, resref, currentSequence,
           currentFrame, resolved.handle,
-          waitForCharacterMetadata
-              ? creature_sprite_x2::FrameResolveMode::WaitForCharacterMetadata
-              : (animationId == 0x3000u
-                  ? creature_sprite_x2::FrameResolveMode::WaitForAnkhegMetadata
-                  : ((animationId >= 0x1200u && animationId <= 0x1208u) ||
-                     animationId == 0x1300u)
-                      ? creature_sprite_x2::FrameResolveMode::WaitForMultiNewMetadata
-                      : (icewind ? creature_sprite_x2::FrameResolveMode::WaitForIcewindMetadata
-                                 : (monster ? creature_sprite_x2::FrameResolveMode::WaitForMonsterMetadata
-                                            : creature_sprite_x2::FrameResolveMode::NonBlocking))), playback)) {
+          creature_sprite_x2::FrameResolveMode::WaitForRegisteredMetadata, playback)) {
     if (g_ctx->cfg.enableCreatureSpritePaletteTrace && animationId == 0x6110) {
       thread_local std::set<std::array<char, 8>> unresolved;
       if (unresolved.size() < 64 && unresolved.insert(resref).second) {
@@ -984,14 +970,14 @@ bool read_registered_creature_cell(std::uint16_t animationId, void* cell,
                  creature_sprite_x2::contains_resource(animationId, resref));
       }
     }
-    static std::atomic<bool> unresolvedFrameLogged{false};
-    if (!unresolvedFrameLogged.exchange(true, std::memory_order_relaxed)) {
+    static std::array<std::atomic<bool>, 65'536> unresolvedFrameLogged{};
+    if (!unresolvedFrameLogged[animationId].exchange(true, std::memory_order_relaxed)) {
       LOG_WARN(
           "Registered creature CVidCell frame could not be resolved: owner={}, "
-          "animation=0x{:04X}, resref={}, sequence={}, slot={}; native rendering "
+          "animation=0x{:04X}, resref={}, sequence={}, slot={}, playback={}; native rendering "
           "retained",
           ownerLabel, animationId, effect_animation_resref_name(resref),
-          currentSequence, currentFrame);
+          currentSequence, currentFrame, nativeMode);
     }
     return false;
   }
@@ -1023,8 +1009,7 @@ bool read_creature_sprite_frame(void* animation, CreatureSpriteOwner owner,
     }
     return false;
   }
-  if (!read_registered_creature_cell(animationId, cell, ownerLabel, resolved,
-                                     owner == CreatureSpriteOwner::Character)) {
+  if (!read_registered_creature_cell(animationId, cell, ownerLabel, resolved)) {
     return false;
   }
   static std::array<std::atomic<bool>, 65'536> animationReachedLogged{};
@@ -3058,7 +3043,7 @@ static void detour_character_render(
         }
         ResolvedCreatureSpriteFrame overlay{};
         if (read_registered_creature_cell(scope.animationId, overlayCell,
-                                          kOverlayLabels[index], overlay, true)) {
+                                          kOverlayLabels[index], overlay)) {
           (void)append_creature_sprite_layer(scope, overlay);
         } else {
           (void)append_unregistered_palette_owner(scope, overlayCell);
@@ -3429,8 +3414,7 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
   if (scope->layeredComposition) {
     ResolvedCreatureSpriteFrame current{};
     if (!read_registered_creature_cell(scope->animationId, layer.cell,
-                                       creature_sprite_owner_label(scope->owner), current,
-                                       scope->owner == CreatureSpriteOwner::Character) ||
+                                       creature_sprite_owner_label(scope->owner), current) ||
         scope->compositionCount >= scope->composition.size()) {
       scope->compositionIncomplete = true;
       return;
@@ -3856,7 +3840,11 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
           current_engine_texture_id(g_nativeOcclusionTextureApi);
       (void)native_occlusion_bridge::bind_masked_texture(
           visibilityTransfer, logicalWidth, logicalHeight, replacementTextureId,
-          g_nativeOcclusionTextureApi, transientOcclusionTextureId);
+          g_nativeOcclusionTextureApi, transientOcclusionTextureId,
+          replacement == ReplacementKind::AreaRegistry &&
+              nativeOcclusionSample->owner == core::NativeOcclusionOwner::AreaAnimation &&
+              nativeOcclusionSample->subjectId == 0x574543524F464442ull && // BDFORCEW
+              nativeOcclusionSample->lastClippingCall.dither == 0);
     } else if (g_nativeOcclusionMaskCapture->successful_call_count() > 0 &&
                (g_nativeOcclusionMaskCapture->width() != logicalWidth ||
                 g_nativeOcclusionMaskCapture->height() != logicalHeight)) {
@@ -3886,7 +3874,24 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
       }
     }
   }
-  original(x, y, sourceRect, logicalSize, clipRect, flags);
+  int visualX = x;
+  if (replacement == ReplacementKind::AreaRegistry && nativeOcclusionSample && g_ctx) {
+    const auto wed = g_ctx->wed.load(std::memory_order_acquire);
+    visualX = core::bdforcew_visual_draw_x(
+        *nativeOcclusionSample, wed ? wed->areaResrefView() : std::string_view{},
+        transientOcclusionTextureId > 0, x);
+    if (visualX != x && g_ctx->cfg.enablePerformanceLogging) {
+      static std::array<std::atomic<bool>, 2> placementLogged{};
+      const auto& clip = nativeOcclusionSample->lastClippingCall;
+      const std::size_t occurrence = clip.x == 2286 ? 0 : 1;
+      if (!placementLogged[occurrence].exchange(true, std::memory_order_relaxed)) {
+        LOG_INFO("BDFORCEW visual placement: area=OH8100 world=({}, {}) "
+                 "post-WED dx=6 x1, fade=16 x4, drawX={}->{}",
+                 clip.x, clip.y, x, visualX);
+      }
+    }
+  }
+  original(visualX, y, sourceRect, logicalSize, clipRect, flags);
   if (preserveCreatureHdFpDraw) {
     g_drawColorToneHook.original()(static_cast<int>(game::ShaderTone::Sprite));
   }

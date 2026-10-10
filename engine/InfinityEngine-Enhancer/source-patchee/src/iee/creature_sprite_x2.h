@@ -267,8 +267,10 @@ enum class FrameResolveMode : std::uint8_t {
   WaitForIcewindMetadata,
   // Owner-3 generic Monster: action changes resolve their exact HD metadata.
   WaitForMonsterMetadata,
+  // Any authenticated catalog owner: wait for this exact resource only.
+  WaitForRegisteredMetadata,
 };
-// Native CVidCell playback is opt-in for MultiNew, Icewind and generic Monster.
+// Native CVidCell playback is explicit; Strict remains the default for offline callers.
 enum class FramePlaybackMode : std::uint8_t { Strict, Clamp, Loop };
 bool resolve_frame(std::uint16_t animationId, const std::array<char, 8>& resref,
                    int sequence, int currentFrame, FrameHandle& out,

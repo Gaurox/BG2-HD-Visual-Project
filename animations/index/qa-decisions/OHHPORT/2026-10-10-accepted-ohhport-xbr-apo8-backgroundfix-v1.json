@@ -1,0 +1,61 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "schema_version": 1,
+  "decision_id": "2026-10-10-accepted-ohhport-xbr-apo8-backgroundfix-v1",
+  "asset_id": "animations:bam:OHHPORT",
+  "resref": "OHHPORT",
+  "status": "accepted",
+  "result_kind": "x4",
+  "decision_origin": "explicit-user-ingame-qa",
+  "decision_date": "2026-10-10",
+  "recorded_at_utc": "2026-10-10T14:48:11.744321+00:00",
+  "decision": "Utilisateur : « ok pour ohhpot » après installation AR0811 ; fond parasite frame8 corrigé. Validation limitée à OHHPORT/AR0811. Aucun changement release.",
+  "tested_areas": [
+    "AR0811"
+  ],
+  "recipe_id": "xbr2-blend-nearest2-apo8-backgroundfix-premul",
+  "correction_id": "native-frame2-opaque-black-background-transparent",
+  "final_run": {
+    "path": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/OHHPORT-final-split",
+    "manifest_path": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/OHHPORT-final-split/manifest.json",
+    "manifest_sha256": "F4C52087EBD48A5F59986BEA45B26A2E2A36861B7DC4889A74B29DF65F842AB7",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "path": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/OHHPORT-final-split",
+    "manifest_path": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/OHHPORT-final-split/manifest.json",
+    "manifest_sha256": "F4C52087EBD48A5F59986BEA45B26A2E2A36861B7DC4889A74B29DF65F842AB7",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed",
+    "areas": [
+      {
+        "area": "AR0811",
+        "path": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/OHHPORT-final-split/AR0811",
+        "manifest_path": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/OHHPORT-final-split/AR0811/manifest.json",
+        "manifest_sha256": "DE1488EA84D3DB1DB705A9CFABE4D8CC760431DE1BFDF841854DE439B37C52AC",
+        "registry_sha256": "AB9717C96AF983D8D72EA2074C3C98AA66EA4391848EEFA16A7C39EC1A37F097",
+        "resource_entries": 1
+      }
+    ]
+  },
+  "lineage": {
+    "source_runs": [
+      {
+        "path": "animations/ressources/OHHPORT/runs/ohhport-xbr-backgroundfix-20261010-v1",
+        "manifest_path": "animations/ressources/OHHPORT/runs/ohhport-xbr-backgroundfix-20261010-v1/manifest.json",
+        "manifest_sha256": "095277F3FCC24AB094276719D9F71175505F0661A391F279E8369037B57B934C",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      },
+      {
+        "path": "animations/ressources/OHHPORT/runs/ohhport-apo8-backgroundfix-20261010-v1",
+        "manifest_path": "animations/ressources/OHHPORT/runs/ohhport-apo8-backgroundfix-20261010-v1/manifest.json",
+        "manifest_sha256": "86B7A1BF636A3AD338776BD3C8ADD0181D52340E16218D684400039A7ECDA97D",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      }
+    ],
+    "source_packs": []
+  }
+}

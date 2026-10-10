@@ -28,7 +28,8 @@ struct EngineTextureApi {
 bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
                          int logicalWidth, int logicalHeight,
                          int replacementTextureId, const EngineTextureApi& api,
-                         int& transientTextureId) noexcept;
+                         int& transientTextureId,
+                         bool inwardFeather = false) noexcept;
 
 void finish_masked_texture(const EngineTextureApi& api, int nativeTextureId,
                            int transientTextureId) noexcept;

@@ -1,0 +1,62 @@
+{
+  "schema": "bg2-upscale-animation-batch-acceptance-v1",
+  "status": "accepted-ingame",
+  "decision_date": "2026-10-10",
+  "recorded_at_utc": "2026-10-10T15:06:45.399264+00:00",
+  "decision_origin": "explicit-user-ingame-qa",
+  "resources": [
+    {
+      "resref": "BDFORCEW",
+      "areas": [
+        "OH8100"
+      ],
+      "final_run": "animations/ressources/BDFORCEW/runs/bdforcew-portails-accepted-20261010-v1",
+      "decision_id": "2026-10-10-accepted-bdforcew-portails-final-v1",
+      "recipe_id": "reboutcx-apo8-splinefit1-inner16-wed16-shift6"
+    },
+    {
+      "resref": "OHDLPORT",
+      "areas": [
+        "OH5400",
+        "OH5500"
+      ],
+      "final_run": "animations/ressources/OHDLPORT/runs/ohdlport-portails-accepted-20261010-v1",
+      "decision_id": "2026-10-10-accepted-ohdlport-portails-final-v1",
+      "recipe_id": "xbr2-blend-nearest2-apo8-premul"
+    },
+    {
+      "resref": "OHHPORT",
+      "areas": [
+        "AR0811"
+      ],
+      "final_run": "animations/ressources/OHHPORT/runs/ohhport-portails-accepted-20261010-v1",
+      "decision_id": "2026-10-10-accepted-ohhport-portails-final-v1",
+      "recipe_id": "xbr2-blend-nearest2-apo8-backgroundfix-premul"
+    },
+    {
+      "resref": "OHRSGATE",
+      "areas": [
+        "OH4220",
+        "OH4230"
+      ],
+      "final_run": "animations/ressources/OHRSGATE/runs/ohrsgate-portails-accepted-20261010-v1",
+      "decision_id": "2026-10-10-accepted-ohrsgate-portails-final-v1",
+      "recipe_id": "seedvr7b-lab-apo8-inner16-premul"
+    },
+    {
+      "resref": "SPDIMNDR",
+      "areas": [
+        "AR6108"
+      ],
+      "final_run": "animations/ressources/SPDIMNDR/runs/spdimndr-portails-accepted-20261010-v1",
+      "decision_id": "2026-10-10-accepted-spdimndr-portails-final-v1",
+      "recipe_id": "seedvr7b-lab-apo8-linear-inner2-premul"
+    }
+  ],
+  "renderer_dll_sha256": "748fe476d24ffa32007d33d34f5c6e506b56147570772ee40b810556ad317c56",
+  "renderer_receipt": "backups/renderer/20261010T150141567331Z-182aac70/renderer-install-receipt.json",
+  "renderer_installation": "animations/batches/bdforcew-shift-right-20261010-v3/installation.json",
+  "renderer_installation_sha256": "edd7309cd347e3c9b32fda0f81ac39a323335d4a1368082431abbfea4024859f",
+  "historical_OHHPORT_approval_preserved": true,
+  "release": "not-selected"
+}

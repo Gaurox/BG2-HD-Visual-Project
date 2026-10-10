@@ -308,6 +308,11 @@ else()
 endif()
 
 if(BUILD_TESTING)
+    add_executable(iee_native_occlusion_feather_tests tests/native_occlusion_feather_tests.cpp)
+    target_include_directories(iee_native_occlusion_feather_tests PRIVATE "${CMAKE_SOURCE_DIR}/src")
+    iee_configure_target(iee_native_occlusion_feather_tests)
+    add_test(NAME iee_native_occlusion_feather_tests COMMAND iee_native_occlusion_feather_tests)
+
     add_executable(iee_map_page_shadow_preflight
         tools/map_page_shadow_preflight.cpp
     )

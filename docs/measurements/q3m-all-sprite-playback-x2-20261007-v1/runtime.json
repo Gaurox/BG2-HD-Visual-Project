@@ -1,0 +1,54 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-delta-v1",
+  "runtime_id": "q3m-all-sprite-playback-x2-20261007-v1",
+  "inherited_runtime": {
+    "path": "docs/measurements/q3m-mfie-native-palettes-x2-20261007-v3/runtime.json",
+    "sha256": "c0b61c777fefea7399d6aa295202ef70d98c0e8733a3b0fb1ac64ed1bd1a0e10",
+    "bytes": 2000
+  },
+  "inherited_dll": {
+    "path": "sprite/.work/q3m-mfie-native-palettes-x2-20261007-v3/runtime-build/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "c8690b4edd978d28eafabd1e6aafbd2533820c0bfbc0ea88192ea161850e5697",
+    "bytes": 2122240
+  },
+  "dll": {
+    "path": "sprite/.work/q3m-all-sprite-playback-x2-20261007-v1/runtime-build/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "70a2745b212babe378c6ccd8b1660110ad3aac5a9ef7523ecbbfcea776bb6d09",
+    "bytes": 2122240
+  },
+  "runtime_patch": {
+    "path": "docs/measurements/q3m-all-sprite-playback-x2-20261007-v1/runtime-delta.patch",
+    "sha256": "ea9bc7582007ea751cd106875778b1aaa169cddb47c8c5773c32241d12db8776",
+    "bytes": 8801
+  },
+  "source_provenance": [
+    {
+      "path": "sprite/.work/q3m-all-sprite-playback-x2-20261007-v1/runtime-src/src/iee/creature_sprite_x2.h",
+      "sha256": "1aa90fdebd014e30a36d26ed3981b5b73ccdf9164d40a2662a2f7f2d43343cab",
+      "bytes": 17798
+    },
+    {
+      "path": "sprite/.work/q3m-all-sprite-playback-x2-20261007-v1/runtime-src/src/iee/creature_sprite_x2.cpp",
+      "sha256": "102b42b3bcb711a339b5bdea526a44997ddb3297141ad9101b22bdc7329c2536",
+      "bytes": 233755
+    },
+    {
+      "path": "sprite/.work/q3m-all-sprite-playback-x2-20261007-v1/runtime-src/src/iee/hooks.cpp",
+      "sha256": "551aa06a8c61c898b77097183b6fcfc6ad28cf851d0803b31c471f8119486188",
+      "bytes": 289142
+    }
+  ],
+  "capability_delta": {
+    "scope": "every registered creature CVidCell; bodies/equipment/spatial parts",
+    "native_playback": "signed Loop/Clamp from native CVidCell+0x11C; invalid sequence->0",
+    "metadata": "exact authenticated resource; existing 5-second bound; payloads lazy",
+    "diagnostics": "first unresolved frame per animation ID, includes native playback",
+    "sprites_recalculated": 0,
+    "catalog_changed": false,
+    "palette_guards_changed": false
+  },
+  "native_general_tests_passed": true,
+  "installation": false,
+  "ingame_QA": false,
+  "release": false
+}

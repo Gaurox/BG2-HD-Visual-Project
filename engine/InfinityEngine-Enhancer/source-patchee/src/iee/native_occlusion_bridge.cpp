@@ -8,6 +8,7 @@
 #include <string>
 
 #include "iee/core/logger.h"
+#include "iee/core/native_occlusion_feather.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/core/sprite_p4_probe.h"
 #include "iee/creature_sprite_filter.h"
@@ -37,6 +38,7 @@ int g_replacementUniform{-1};
 int g_maskUniform{-1};
 int g_scaleUniform{-1};
 int g_premultipliedUniform{-1};
+int g_inwardFeatherUniform{-1};
 bool g_failureLogged{};
 bool g_activeLogged{};
 bool g_routingFailureLogged{};
@@ -60,6 +62,19 @@ uniform sampler2D uReplacement;
 uniform sampler2D uVisibility;
 uniform int uScale;
 uniform int uPremultiplied;
+uniform int uInwardFeather;
+
+float inwardCoverage(ivec2 highCoord) {
+    vec2 p = (vec2(highCoord) + vec2(0.5)) / float(uScale) - vec2(0.5);
+    ivec2 base = ivec2(floor(p));
+    vec2 t = fract(p);
+    ivec2 last = textureSize(uVisibility, 0) - ivec2(1);
+    float a = texelFetch(uVisibility, clamp(base, ivec2(0), last), 0).a;
+    float b = texelFetch(uVisibility, clamp(base + ivec2(1, 0), ivec2(0), last), 0).a;
+    float c = texelFetch(uVisibility, clamp(base + ivec2(0, 1), ivec2(0), last), 0).a;
+    float d = texelFetch(uVisibility, clamp(base + ivec2(1, 1), ivec2(0), last), 0).a;
+    return mix(mix(a, b, t.x), mix(c, d, t.x), t.y);
+}
 
 void main() {
     ivec2 highCoord = ivec2(gl_FragCoord.xy);
@@ -78,8 +93,9 @@ void main() {
         // smoothing. Zero is the neutral element of both composition paths.
         outColor = vec4(0.0, 0.0, 0.0, 0.0);
     } else {
-        outColor = vec4(replacement.rgb * (uPremultiplied != 0 ? transfer.r : 1.0),
-                        replacement.a * transfer.r);
+        float coverage = transfer.r * (uInwardFeather != 0 ? inwardCoverage(highCoord) : 1.0);
+        outColor = vec4(replacement.rgb * (uPremultiplied != 0 || uInwardFeather != 0 ? coverage : 1.0),
+                        replacement.a * coverage);
     }
 }
 )glsl";
@@ -257,6 +273,7 @@ void forget_resources() noexcept {
   g_maskUniform = -1;
   g_scaleUniform = -1;
   g_premultipliedUniform = -1;
+  g_inwardFeatherUniform = -1;
 }
 
 bool resources_available(const OpenGLFunctions& gl) noexcept {
@@ -312,8 +329,9 @@ bool initialize_resources(const OpenGLFunctions& gl, HGLRC context) {
   g_maskUniform = gl.glGetUniformLocation(program, "uVisibility");
   g_scaleUniform = gl.glGetUniformLocation(program, "uScale");
   g_premultipliedUniform = gl.glGetUniformLocation(program, "uPremultiplied");
+  g_inwardFeatherUniform = gl.glGetUniformLocation(program, "uInwardFeather");
   if (g_replacementUniform >= 0 && g_maskUniform >= 0 && g_scaleUniform >= 0 &&
-      g_premultipliedUniform >= 0) {
+      g_premultipliedUniform >= 0 && g_inwardFeatherUniform >= 0) {
     return true;
   }
   gl.glDeleteFramebuffers(1, &g_framebuffer);
@@ -343,7 +361,7 @@ void log_failure_once(const char* reason) noexcept {
 bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
                          int logicalWidth, int logicalHeight,
                          int replacementTextureId, const EngineTextureApi& api,
-                         int& transientTextureId) noexcept {
+                         int& transientTextureId, bool inwardFeather) noexcept {
   transientTextureId = 0;
   if (logicalWidth <= 0 || logicalHeight <= 0 || replacementTextureId <= 0 ||
       !api.DrawGenTexture || !api.DrawBindTexture || !api.DrawDeleteTexture ||
@@ -359,6 +377,11 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
   }
 
   try {
+    std::vector<std::uint8_t> featherTransfer;
+    if (inwardFeather) {
+      featherTransfer = visibilityTransfer;
+      inwardFeather = core::inward_occlusion_coverage(featherTransfer, logicalWidth, logicalHeight);
+    }
     auto& gl = game::gl::get_gl_functions();
     if ((!gl.valid && !gl.initialize()) || !gl.glGetTexLevelParameteriv ||
         !gl.glGetError) {
@@ -490,7 +513,7 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
     gl.glPixelStorei(game::gl::UNPACK_SKIP_PIXELS, 0);
     gl.glTexImage2D(game::gl::TEXTURE_2D, 0, static_cast<int>(game::gl::RGBA8),
                     logicalWidth, logicalHeight, 0, game::gl::RGBA,
-                    game::gl::UNSIGNED_BYTE, visibilityTransfer.data());
+                    game::gl::UNSIGNED_BYTE, inwardFeather ? featherTransfer.data() : visibilityTransfer.data());
     gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MIN_FILTER,
                        static_cast<int>(game::gl::NEAREST));
     gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAG_FILTER,
@@ -526,6 +549,7 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
     gl.glUniform1i(g_maskUniform, 1);
     gl.glUniform1i(g_scaleUniform, scale);
     gl.glUniform1i(g_premultipliedUniform, mips ? 1 : 0);
+    gl.glUniform1i(g_inwardFeatherUniform, inwardFeather ? 1 : 0);
     gl.glBindVertexArray(g_vao);
     gl.glDrawArrays(game::gl::TRIANGLES, 0, 3);
     const bool rendered = game::gl::check_error("native occlusion phase1 mask draw");

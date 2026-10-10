@@ -1,0 +1,100 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:OHRSGATE",
+  "correction_id": "innerfeather16-premultiply",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/manifest.json",
+        "manifest_sha256": "CF3AD9826F4B97F3E9CAC783DD557312BC37DC62BB88E73835B45D134E515B1F",
+        "path": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split",
+        "schema": "bg2-upscale-area-animation-pack-index-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/OHRSGATE/runs/ohrsgate-seedvr7b-apo8-20261010-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "925A014B0A432FF62F00635FA603A04AF2E13356D5DBEEAE76C40693DE614611",
+        "path": "animations/ressources/OHRSGATE/runs/ohrsgate-seedvr7b-apo8-20261010-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/OHRSGATE/runs/ohrsgate-seedvr7b-spatial-20261010-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "76D597AB598D6D3637EA54425E158DF1BEF4A6BE34E237FBC2CB2400C1B876E2",
+        "path": "animations/ressources/OHRSGATE/runs/ohrsgate-seedvr7b-spatial-20261010-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/OHRSGATE/runs/ohrsgate-seedvr7b-apo8-20261010-v1/manifest.json",
+        "manifest_sha256": "46FEFC2A9BD0F28E6A86CB9FD9CC17E9160EA916036B670E7400F18F63F7EBBC",
+        "path": "animations/ressources/OHRSGATE/runs/ohrsgate-seedvr7b-apo8-20261010-v1",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/OHRSGATE/runs/ohrsgate-seedvr7b-inner16-final-20261010-v1/manifest.json",
+        "manifest_sha256": "8309058F89901C73BBF2C9F6ED674F43C5F1DEA9D6F35DAFC1055AF6AED7BA96",
+        "path": "animations/ressources/OHRSGATE/runs/ohrsgate-seedvr7b-inner16-final-20261010-v1",
+        "schema": "bg2-upscale-animation-visual-treatment-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/OHRSGATE/runs/ohrsgate-seedvr7b-spatial-20261010-v1/manifest.json",
+        "manifest_sha256": "19DCECA1B83D7464F38AFB515EA8E9B6BD86589CEDD4798994944C9BBEEE7C7B",
+        "path": "animations/ressources/OHRSGATE/runs/ohrsgate-seedvr7b-spatial-20261010-v1",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-10",
+    "path": "animations/index/qa-decisions/OHRSGATE/2026-10-10-accepted-ohrsgate-portails-final-v1.json",
+    "sha256": "8606EF52DEFD9E4258597F78310A4777D212920369CBA45E23A1854F8904EDB9",
+    "status": "accepted"
+  },
+  "recipe_id": "seedvr7b-lab-apo8-inner16-premul",
+  "resref": "OHRSGATE",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/OHRSGATE/runs/ohrsgate-portails-accepted-20261010-v1/manifest.json",
+    "manifest_sha256": "B0FE642FA169ED460417FD80BF4C1EE5736F7397EE60840FF720917D3177D345",
+    "path": "animations/ressources/OHRSGATE/runs/ohrsgate-portails-accepted-20261010-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "OH4220",
+        "manifest_path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/OH4220/manifest.json",
+        "manifest_sha256": "8E4FA6591912419A2540D8EF20003B7CAAC68D0EE6E9A5EAFE5CD192E879C44E",
+        "path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/OH4220",
+        "registry_sha256": "8B38750C18E133AA3B0F78DA2B4124860776D03BA4080591DB11731EB35CD76B",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH4230",
+        "manifest_path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/OH4230/manifest.json",
+        "manifest_sha256": "A3D2D5CE4743A50A9C05C57C08D917DC6030E7D671C64BACC231044B44112A21",
+        "path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/OH4230",
+        "registry_sha256": "9026157291F66F99FB7951A0D53F5477F1BB4729B438D8019DE6B0A260338520",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/manifest.json",
+    "manifest_sha256": "3F5264FF63C6546E8F6936E52C3FF2A4B868BAF0CFC6206F68743E82099BF91C",
+    "path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "OH4220",
+    "OH4230"
+  ],
+  "updated_at_utc": "2026-10-10T15:06:44Z"
+}

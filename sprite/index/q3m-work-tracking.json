@@ -41,8 +41,8 @@
     "does_not_measure": "asset-coverage-or-QA",
     "integration_reference": "docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json",
     "candidate_reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json",
-    "installed_candidate_reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/current-generation.json",
-    "latest_installation_verification_reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/installation-verification.json"
+    "installed_candidate_reference": "docs/measurements/q3m-all-sprite-playback-x2-20261007-v1/current-generation.json",
+    "latest_installation_verification_reference": "docs/measurements/q3m-all-sprite-playback-x2-20261007-v1/installation-verification.json"
   },
   "method": {
     "current": "Q3m-K6-four-partners-eight-levels",
@@ -93,17 +93,19 @@
     "counting_rule": "IDs count consumers; BAMs/frames shared; family counts not summed as physical work",
     "current_recipe_witness_ids": 15,
     "current_recipe_complete_animation_ids": 253,
-    "current_recipe_ingame_accepted_families": 13,
+    "current_recipe_ingame_accepted_families": 14,
     "current_recipe_complete_families": 14,
     "current_recipe_installed_animation_ids": 253,
-    "current_recipe_ingame_accepted_animation_ids": 176,
+    "current_recipe_ingame_accepted_animation_ids": 253,
     "ingame_acceptance_counting_rule": "unique families/IDs across accepted full productions and current contour trials; QA belongs to exact variant/runtime",
-    "current_recipe_partial_user_accepted_animation_ids": 75,
-    "remaining_user_QA_animation_ids": 2,
-    "partial_QA_counting_rule": "75 Monster IDs retain exact accepted contracts including MFIE; changed G2 assets7312/7313 need new user QA; prior77 decisions immutable; total active accepted329 with CharacterV6, installed331",
+    "current_recipe_partial_user_accepted_animation_ids": 0,
+    "remaining_user_QA_animation_ids": 0,
+    "partial_QA_counting_rule": "All77 Monster IDs accepted cumulatively; no partial IDs remaining; with retained CharacterV6 all331 selected IDs accepted",
     "known_technical_defect_animation_ids": 0,
     "remaining_complete_available_family_productions": 0,
-    "corrected_pending_user_QA_animation_ids": 2
+    "corrected_pending_user_QA_animation_ids": 0,
+    "selected_recipe_ingame_accepted_families": 15,
+    "selected_recipe_ingame_accepted_animation_ids": 331
   },
   "families": [
     {
@@ -581,7 +583,7 @@
         "state": "installed-user-accepted-with-complete-Monster-QA-union",
         "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json",
         "installation_reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/installation-verification.json",
-        "qa_reference": "sprite/index/qa-decisions/monsters/2026-10-07-accepted-partial-monster-73-q3m-v7-x2-nearest-v1.json"
+        "qa_reference": "sprite/index/qa-decisions/monsters/2026-10-07-accepted-full-monster-q3m-v7-x2-nearest-v4.json"
       },
       "current_full_production": {
         "reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/production-generation.json",
@@ -713,19 +715,16 @@
         "resume_cache_hits": 102953,
         "verification_reference": "docs/measurements/q3m-monster-full-x2-20261006-v2/verification.json",
         "previews_reference": "docs/measurements/q3m-monster-full-x2-20261006-v2/previews.json",
-        "state": "family-complete-installed-G2-corrected-native-verified-two-user-retests-pending",
+        "state": "selected-recipe-complete-installed-ingame-accepted",
         "registry_version": 7,
         "SDF": false,
         "installation": true,
-        "qa_ingame": false,
+        "qa_ingame": true,
         "release": false,
-        "installation_reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/ingame-installation/active-test.json",
-        "installation_snapshot": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/installation-verification.json",
-        "installation_generation_reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/current-generation.json",
-        "remaining_user_QA_animation_ids": [
-          "0x7312",
-          "0x7313"
-        ],
+        "installation_reference": "docs/measurements/q3m-all-sprite-playback-x2-20261007-v1/ingame-installation/active-test.json",
+        "installation_snapshot": "docs/measurements/q3m-all-sprite-playback-x2-20261007-v1/installation-verification.json",
+        "installation_generation_reference": "docs/measurements/q3m-all-sprite-playback-x2-20261007-v1/current-generation.json",
+        "remaining_user_QA_animation_ids": [],
         "runtime_stability_verification": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/verification.json",
         "parent_full_production_reference": "docs/measurements/q3m-mfie-native-palettes-x2-20261007-v3/production-generation.json",
         "native_palette_correction": {
@@ -744,23 +743,26 @@
         "visual_QA_references": [
           "sprite/index/qa-decisions/monsters/2026-10-07-accepted-partial-monster-73-q3m-v7-x2-nearest-v1.json",
           "sprite/index/qa-decisions/monsters/2026-10-07-accepted-three-monster-stability-retests-q3m-v7-x2-nearest-v2.json",
-          "sprite/index/qa-decisions/monsters/2026-10-07-accepted-MFIE-native-palettes-q3m-v7-x2-nearest-v3.json"
+          "sprite/index/qa-decisions/monsters/2026-10-07-accepted-MFIE-native-palettes-q3m-v7-x2-nearest-v3.json",
+          "sprite/index/qa-decisions/monsters/2026-10-07-accepted-full-monster-q3m-v7-x2-nearest-v4.json"
         ],
         "technical_defect_animation_ids": [],
         "technical_verification_reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/verification.json",
         "prepared_correction_reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/current-generation.json",
         "selection_provenance": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/full-selection-provenance.json",
         "work_statistics_scope": "original complete batch before native palette deltas; not global keys recounted after corrections",
-        "correction_cost_reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/production-resume-evidence.json"
+        "correction_cost_reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/production-resume-evidence.json",
+        "qa_reference": "sprite/index/qa-decisions/monsters/2026-10-07-accepted-full-monster-q3m-v7-x2-nearest-v4.json",
+        "runtime_QA_reference": "sprite/index/qa-decisions/runtime/2026-10-07-accepted-common-sprite-playback-x2-v1.json"
       },
-      "state": "family-complete-installed-G2-corrected-native-verified-two-user-retests-pending",
+      "state": "selected-recipe-complete-installed-ingame-accepted",
       "current_installation": {
-        "state": "installed-G2-corrected-two-user-retests-pending",
-        "reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/installation-verification.json",
-        "receipt": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/ingame-installation/active-test.json",
-        "generation_reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/current-generation.json",
+        "state": "installed-ingame-accepted",
+        "reference": "docs/measurements/q3m-all-sprite-playback-x2-20261007-v1/installation-verification.json",
+        "receipt": "docs/measurements/q3m-all-sprite-playback-x2-20261007-v1/ingame-installation/active-test.json",
+        "generation_reference": "docs/measurements/q3m-all-sprite-playback-x2-20261007-v1/current-generation.json",
         "catalogue_sha256": "2ad7838cb4157b3b3226dbf3635d59ed17ce028e209f33615499a7e1700b289c",
-        "dll_sha256": "c8690b4edd978d28eafabd1e6aafbd2533820c0bfbc0ea88192ea161850e5697",
+        "dll_sha256": "70a2745b212babe378c6ccd8b1660110ad3aac5a9ef7523ecbbfcea776bb6d09",
         "animation_ids": [
           "0x7300",
           "0x7301",
@@ -841,7 +843,7 @@
           "0x7F60"
         ],
         "SDF": false,
-        "qa_ingame": false,
+        "qa_ingame": true,
         "partial_QA_references": [
           "sprite/index/qa-decisions/monsters/2026-10-07-accepted-partial-monster-73-q3m-v7-x2-nearest-v1.json",
           "sprite/index/qa-decisions/monsters/2026-10-07-accepted-three-monster-stability-retests-q3m-v7-x2-nearest-v2.json"
@@ -857,10 +859,7 @@
           "sprite/index/qa-decisions/monsters/2026-10-07-accepted-MFIE-native-palettes-q3m-v7-x2-nearest-v3.json"
         ],
         "known_technical_defect_animation_ids": [],
-        "corrected_assets_pending_user_QA_ids": [
-          "0x7312",
-          "0x7313"
-        ],
+        "corrected_assets_pending_user_QA_ids": [],
         "retained_Monster_user_QA_ids": [
           "0x7300",
           "0x7301",
@@ -937,16 +936,20 @@
           "0x7F54",
           "0x7F55",
           "0x7F60"
-        ]
+        ],
+        "qa_reference": "sprite/index/qa-decisions/monsters/2026-10-07-accepted-full-monster-q3m-v7-x2-nearest-v4.json",
+        "runtime_QA_reference": "sprite/index/qa-decisions/runtime/2026-10-07-accepted-common-sprite-playback-x2-v1.json"
       },
       "current_visual_QA": {
-        "state": "accepted-retained-75-current-contracts-two-new-G2-assets-await-user-QA",
+        "state": "accepted-full-available-family-x2-nearest-common-native-playback",
         "animation_ids": [
           "0x7300",
           "0x7301",
           "0x7302",
           "0x7310",
           "0x7311",
+          "0x7312",
+          "0x7313",
           "0x7314",
           "0x7320",
           "0x7321",
@@ -1018,33 +1021,23 @@
           "0x7F55",
           "0x7F60"
         ],
+        "excluded_animation_ids": [],
+        "qa_reference": "sprite/index/qa-decisions/monsters/2026-10-07-accepted-full-monster-q3m-v7-x2-nearest-v4.json",
         "qa_references": [
           "sprite/index/qa-decisions/monsters/2026-10-07-accepted-partial-monster-73-q3m-v7-x2-nearest-v1.json",
           "sprite/index/qa-decisions/monsters/2026-10-07-accepted-three-monster-stability-retests-q3m-v7-x2-nearest-v2.json",
-          "sprite/index/qa-decisions/monsters/2026-10-07-accepted-MFIE-native-palettes-q3m-v7-x2-nearest-v3.json"
+          "sprite/index/qa-decisions/monsters/2026-10-07-accepted-MFIE-native-palettes-q3m-v7-x2-nearest-v3.json",
+          "sprite/index/qa-decisions/monsters/2026-10-07-accepted-full-monster-q3m-v7-x2-nearest-v4.json"
         ],
-        "excluded_animation_ids": [
-          "0x7312",
-          "0x7313"
-        ],
-        "catalogue_sha256": "86e6b4d5ab614fb9e8698337dc7850635a1818fbb3874f258b0ef58b2534c928",
-        "MFIE_ingame_QA": true,
-        "MFIE_palette_v1_user_result": "still-vanilla",
-        "runtime_verification_reference": "docs/measurements/q3m-mfie-palette-stability-x2-20261007-v2/runtime-verification.json",
-        "retained_by_catalog_proof": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/catalog-proof.json",
-        "MFIE_palette_v2_user_result": "still-vanilla",
-        "MFIE_current_retest_generation": "docs/measurements/q3m-mfie-native-palettes-x2-20261007-v3/current-generation.json",
-        "MFIE_qa_reference": "sprite/index/qa-decisions/monsters/2026-10-07-accepted-MFIE-native-palettes-q3m-v7-x2-nearest-v3.json",
-        "MFIE_accepted_catalogue_sha256": "d013ac44d8925cbaa972f15697e1e6b49d4230e1f09747bb11779a63c56f2ff6",
-        "technical_audit_reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/verification.json",
+        "qa_ingame": true,
+        "runtime_QA_reference": "sprite/index/qa-decisions/runtime/2026-10-07-accepted-common-sprite-playback-x2-v1.json",
+        "catalogue_sha256": "2ad7838cb4157b3b3226dbf3635d59ed17ce028e209f33615499a7e1700b289c",
+        "corrected_assets_pending_user_QA_ids": [],
         "known_technical_defect_animation_ids": [],
-        "corrected_assets_pending_user_QA_ids": [
-          "0x7312",
-          "0x7313"
-        ]
+        "MFIE_ingame_QA": true
       },
       "current_technical_correction": {
-        "state": "corrected-installed-native-verified-awaiting-user-QA",
+        "state": "corrected-installed-ingame-accepted",
         "animation_ids": [
           "0x7312",
           "0x7313"
@@ -1060,13 +1053,15 @@
         "runtime_change_required": false,
         "inference_started": true,
         "installation": true,
-        "new_assets_require_ingame_retest": true,
+        "new_assets_require_ingame_retest": false,
         "historical_QA_preserved": true,
         "generation_reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/current-generation.json",
         "production_reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/production.json",
         "production_complete": true,
         "installation_reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/installation-verification.json",
-        "open_native_palette_defects": 0
+        "open_native_palette_defects": 0,
+        "qa_reference": "sprite/index/qa-decisions/monsters/2026-10-07-accepted-full-monster-q3m-v7-x2-nearest-v4.json",
+        "runtime_QA_reference": "sprite/index/qa-decisions/runtime/2026-10-07-accepted-common-sprite-playback-x2-v1.json"
       }
     },
     {
@@ -4381,19 +4376,16 @@
       "resume_cache_hits": 102953,
       "verification_reference": "docs/measurements/q3m-monster-full-x2-20261006-v2/verification.json",
       "previews_reference": "docs/measurements/q3m-monster-full-x2-20261006-v2/previews.json",
-      "state": "family-complete-installed-G2-corrected-native-verified-two-user-retests-pending",
+      "state": "selected-recipe-complete-installed-ingame-accepted",
       "registry_version": 7,
       "SDF": false,
       "installation": true,
-      "qa_ingame": false,
+      "qa_ingame": true,
       "release": false,
-      "installation_reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/ingame-installation/active-test.json",
-      "installation_snapshot": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/installation-verification.json",
-      "installation_generation_reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/current-generation.json",
-      "remaining_user_QA_animation_ids": [
-        "0x7312",
-        "0x7313"
-      ],
+      "installation_reference": "docs/measurements/q3m-all-sprite-playback-x2-20261007-v1/ingame-installation/active-test.json",
+      "installation_snapshot": "docs/measurements/q3m-all-sprite-playback-x2-20261007-v1/installation-verification.json",
+      "installation_generation_reference": "docs/measurements/q3m-all-sprite-playback-x2-20261007-v1/current-generation.json",
+      "remaining_user_QA_animation_ids": [],
       "runtime_stability_verification": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/verification.json",
       "parent_full_production_reference": "docs/measurements/q3m-mfie-native-palettes-x2-20261007-v3/production-generation.json",
       "native_palette_correction": {
@@ -4412,14 +4404,17 @@
       "visual_QA_references": [
         "sprite/index/qa-decisions/monsters/2026-10-07-accepted-partial-monster-73-q3m-v7-x2-nearest-v1.json",
         "sprite/index/qa-decisions/monsters/2026-10-07-accepted-three-monster-stability-retests-q3m-v7-x2-nearest-v2.json",
-        "sprite/index/qa-decisions/monsters/2026-10-07-accepted-MFIE-native-palettes-q3m-v7-x2-nearest-v3.json"
+        "sprite/index/qa-decisions/monsters/2026-10-07-accepted-MFIE-native-palettes-q3m-v7-x2-nearest-v3.json",
+        "sprite/index/qa-decisions/monsters/2026-10-07-accepted-full-monster-q3m-v7-x2-nearest-v4.json"
       ],
       "technical_defect_animation_ids": [],
       "technical_verification_reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/verification.json",
       "prepared_correction_reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/current-generation.json",
       "selection_provenance": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/full-selection-provenance.json",
       "work_statistics_scope": "original complete batch before native palette deltas; not global keys recounted after corrections",
-      "correction_cost_reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/production-resume-evidence.json"
+      "correction_cost_reference": "docs/measurements/q3m-monster-g2-palettes-x2-20261007-v1/production-resume-evidence.json",
+      "qa_reference": "sprite/index/qa-decisions/monsters/2026-10-07-accepted-full-monster-q3m-v7-x2-nearest-v4.json",
+      "runtime_QA_reference": "sprite/index/qa-decisions/runtime/2026-10-07-accepted-common-sprite-playback-x2-v1.json"
     },
     {
       "family": "monster_icewind",
@@ -5098,5 +5093,44 @@
   ],
   "selected_recipe_complete_productions_role": "accepted exceptions only; combine with current_recipe_complete_productions, deduplicate IDs/families",
   "remaining_full_production_families": [],
-  "remaining_full_production_counting": "sources present; Character V6 accepted exception; production only, independent of installation and QA"
+  "remaining_full_production_counting": "sources present; Character V6 accepted exception; production only, independent of installation and QA",
+  "current_shared_runtime_correction": {
+    "state": "installed-native-verified-ingame-confirmed",
+    "scope": "all15 installed creature/character families;331 IDs",
+    "issue": "cold metadata and signed native CVidCell cycle slots",
+    "observed_animation_id": "0x6110",
+    "observed_resref": "CHFF4G1",
+    "observed_sequence": 15,
+    "observed_slot": 12,
+    "generation_reference": "docs/measurements/q3m-all-sprite-playback-x2-20261007-v1/current-generation.json",
+    "verification_reference": "docs/measurements/q3m-all-sprite-playback-x2-20261007-v1/runtime-verification.json",
+    "installation_reference": "docs/measurements/q3m-all-sprite-playback-x2-20261007-v1/installation-verification.json",
+    "dll_sha256": "70a2745b212babe378c6ccd8b1660110ad3aac5a9ef7523ecbbfcea776bb6d09",
+    "sprites_recalculated": 0,
+    "assets_unchanged": true,
+    "existing_QA_decisions_immutable": true,
+    "new_runtime_ingame_QA": true,
+    "previously_pending_G2_asset_QA_ids": [
+      "0x7312",
+      "0x7313"
+    ],
+    "release": false,
+    "qa_reference": "sprite/index/qa-decisions/runtime/2026-10-07-accepted-common-sprite-playback-x2-v1.json",
+    "remaining_G2_asset_QA_ids": []
+  },
+  "final_selected_recipe_status": {
+    "state": "complete-produced-installed-ingame-accepted",
+    "families": 15,
+    "animation_ids": 331,
+    "improved_recipe_families": 14,
+    "improved_recipe_ids": 253,
+    "retained_Character_V6_ids": 78,
+    "remaining_production_families": [],
+    "remaining_ingame_QA_ids": [],
+    "runtime_QA_reference": "sprite/index/qa-decisions/runtime/2026-10-07-accepted-common-sprite-playback-x2-v1.json",
+    "monster_QA_reference": "sprite/index/qa-decisions/monsters/2026-10-07-accepted-full-monster-q3m-v7-x2-nearest-v4.json",
+    "release": false,
+    "release_integration_inferred": false,
+    "accepted_variants_reference": "docs/measurements/q3m-sprites-final-accepted-x2-20261007-v1/closure-verification.json"
+  }
 }

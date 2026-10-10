@@ -1,0 +1,83 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:OHHPORT",
+  "correction_id": "native-frame2-opaque-black-background-transparent",
+  "decision": "Validation ingame explicite utilisateur du lot final de cinq animations. Recette retenue : xbr2-blend-nearest2-apo8-backgroundfix-premul. Aucun changement release.",
+  "decision_date": "2026-10-10",
+  "decision_id": "2026-10-10-accepted-ohhport-portails-final-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/OHHPORT/runs/ohhport-portails-accepted-20261010-v1/manifest.json",
+    "manifest_sha256": "E4F8CEA6B23F13A57B5DE5FDDD04F9811F39D0974146DD36CB4F36B4D8F01907",
+    "path": "animations/ressources/OHHPORT/runs/ohhport-portails-accepted-20261010-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/OHHPORT-final-split/manifest.json",
+        "manifest_sha256": "F4C52087EBD48A5F59986BEA45B26A2E2A36861B7DC4889A74B29DF65F842AB7",
+        "path": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/OHHPORT-final-split",
+        "schema": "bg2-upscale-area-animation-pack-index-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/OHHPORT/runs/ohhport-apo8-backgroundfix-20261010-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "E3B4343F8B36B673405744DB8EDB712856B3D949FD42929FC44A61C1DE774940",
+        "path": "animations/ressources/OHHPORT/runs/ohhport-apo8-backgroundfix-20261010-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/OHHPORT/runs/ohhport-xbr-backgroundfix-20261010-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "B717F0D8290A1CB194D08680A1F2362788FD7F3767AE389C17BAE9A0108A9C2D",
+        "path": "animations/ressources/OHHPORT/runs/ohhport-xbr-backgroundfix-20261010-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/OHHPORT/runs/ohhport-apo8-backgroundfix-20261010-v1/manifest.json",
+        "manifest_sha256": "86B7A1BF636A3AD338776BD3C8ADD0181D52340E16218D684400039A7ECDA97D",
+        "path": "animations/ressources/OHHPORT/runs/ohhport-apo8-backgroundfix-20261010-v1",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/OHHPORT/runs/ohhport-xbr-backgroundfix-20261010-v1/manifest.json",
+        "manifest_sha256": "095277F3FCC24AB094276719D9F71175505F0661A391F279E8369037B57B934C",
+        "path": "animations/ressources/OHHPORT/runs/ohhport-xbr-backgroundfix-20261010-v1",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "xbr2-blend-nearest2-apo8-backgroundfix-premul",
+  "recorded_at_utc": "2026-10-10T15:06:43Z",
+  "resref": "OHHPORT",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0811",
+        "manifest_path": "animations/packs-par-zone/portails-deux-correctif-20261010-v1-complete/AR0811/manifest.json",
+        "manifest_sha256": "5FB4B68C2EB2312AF7BA2C6DF7CB56E0CFA3C98555E9FCF87EA6E411F4F79A3F",
+        "path": "animations/packs-par-zone/portails-deux-correctif-20261010-v1-complete/AR0811",
+        "registry_sha256": "001114CA32C3FF9721A12A736B59FC1DCAB6C6BF4C8D412EFA427981782A1C36",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/portails-deux-correctif-20261010-v1-complete/manifest.json",
+    "manifest_sha256": "155CC828C5182E9B8517E650C9C955A3564A42200F75FA6E30D2A851388A0525",
+    "path": "animations/packs-par-zone/portails-deux-correctif-20261010-v1-complete",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0811"
+  ]
+}

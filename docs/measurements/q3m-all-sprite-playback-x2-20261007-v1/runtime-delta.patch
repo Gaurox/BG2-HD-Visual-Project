@@ -1,0 +1,154 @@
+--- acquired/creature_sprite_x2.h
++++ common/creature_sprite_x2.h
+@@ -267,8 +267,10 @@
+   WaitForIcewindMetadata,
+   // Owner-3 generic Monster: action changes resolve their exact HD metadata.
+   WaitForMonsterMetadata,
+-};
+-// Native CVidCell playback is opt-in for MultiNew, Icewind and generic Monster.
++  // Any authenticated catalog owner: wait for this exact resource only.
++  WaitForRegisteredMetadata,
++};
++// Native CVidCell playback is explicit; Strict remains the default for offline callers.
+ enum class FramePlaybackMode : std::uint8_t { Strict, Clamp, Loop };
+ bool resolve_frame(std::uint16_t animationId, const std::array<char, 8>& resref,
+                    int sequence, int currentFrame, FrameHandle& out,
+--- acquired/creature_sprite_x2.cpp
++++ common/creature_sprite_x2.cpp
+@@ -4463,7 +4463,8 @@
+                    FrameResolveMode mode, FramePlaybackMode playback) noexcept {
+   out = {};
+   const bool nativePlayback =
+-      ((mode == FrameResolveMode::WaitForMultiNewMetadata && is_multi_new_animation(animationId)) ||
++      ((mode == FrameResolveMode::WaitForRegisteredMetadata) ||
++       (mode == FrameResolveMode::WaitForMultiNewMetadata && is_multi_new_animation(animationId)) ||
+        (mode == FrameResolveMode::WaitForIcewindMetadata && (animationId & 0xF000u) == 0xE000u) ||
+        (mode == FrameResolveMode::WaitForMonsterMetadata && (animationId & 0xF000u) == 0x7000u)) &&
+       (playback == FramePlaybackMode::Clamp || playback == FramePlaybackMode::Loop);
+@@ -4482,11 +4483,15 @@
+     if (g_catalog.active) {
+       const auto* animation = find_catalog_animation_locked(animationId);
+       if (!animation) return false;
++      if (mode == FrameResolveMode::WaitForRegisteredMetadata &&
++          !catalog_owner_matches_animation(animation->owner, animationId)) return false;
+       if (mode == FrameResolveMode::WaitForMonsterMetadata &&
+           animation->owner != kCatalogMonsterOwner) return false;
+       const bool waitForMetadata =
+           g_catalog.version == kRegistryCatalogDirectoryVersion &&
+-          ((mode == FrameResolveMode::WaitForCharacterMetadata &&
++          ((mode == FrameResolveMode::WaitForRegisteredMetadata &&
++            catalog_owner_matches_animation(animation->owner, animationId)) ||
++           (mode == FrameResolveMode::WaitForCharacterMetadata &&
+             animation->owner == kCatalogCharacterOwner) ||
+            (mode == FrameResolveMode::WaitForAnkhegMetadata &&
+             animationId == 0x3000u && animation->owner == kCatalogAnkhegOwner) ||
+@@ -4552,7 +4557,7 @@
+     if (nativePlayback) {
+       // CVidCell::GetCurrentFrameSize (BG2EE 2.7.3, RVA 0x4117F8..0x41185F):
+       // mode!=0 wraps signed slots; mode==0 clamps to first/last frame.
+-      // Do not change native cell state or normalize other sprite families.
++      // All owners share this CVidCell rule; do not change native cell state.
+       const int count = static_cast<int>(cycle.size());
+       if (currentFrame >= count)
+         currentFrame = playback == FramePlaybackMode::Loop ? currentFrame % count : count - 1;
+--- acquired/hooks.cpp
++++ common/hooks.cpp
+@@ -931,8 +931,7 @@
+ 
+ bool read_registered_creature_cell(std::uint16_t animationId, void* cell,
+                                    const char* ownerLabel,
+-                                   ResolvedCreatureSpriteFrame& resolved,
+-                                   bool waitForCharacterMetadata = false) noexcept {
++                                   ResolvedCreatureSpriteFrame& resolved) noexcept {
+   if (!cell || !g_ctx || !g_ctx->manifest) return false;
+   const auto& runtime = g_ctx->manifest->areaAnimations;
+   const auto cellBase = reinterpret_cast<std::uintptr_t>(cell);
+@@ -951,31 +950,17 @@
+     }
+     return false;
+   }
+-  auto playback = creature_sprite_x2::FramePlaybackMode::Strict;
+-  const bool icewind = (animationId & 0xF000u) == 0xE000u;
+-  const bool monster = std::string_view{ownerLabel} == "CGameAnimationTypeMonster";
+-  if (monster || icewind || (animationId >= 0x1200u && animationId <= 0x1208u) || animationId == 0x1300u) {
+-    // Icewind native sizing (RVA 0x3175B0) calls GetCurrentFrameSize for
+-    // both body (+0xCD8) and equipped weapon (+0x2F10). Same playback field.
+-    const auto playbackOffset = g_ctx->manifest->itemIcons.vidCellPlaybackMode;
+-    std::int32_t nativeMode = 0;
+-    if (!playbackOffset || !core::safe_read(
+-        reinterpret_cast<const void*>(cellBase + playbackOffset), nativeMode)) return false;
+-    playback = nativeMode != 0 ? creature_sprite_x2::FramePlaybackMode::Loop
+-                               : creature_sprite_x2::FramePlaybackMode::Clamp;
+-  }
++  // The same CVidCell::GetCurrentFrameSize playback field applies to every
++  // registered body, equipment layer and spatial part, independent of owner.
++  const auto playbackOffset = g_ctx->manifest->itemIcons.vidCellPlaybackMode;
++  std::int32_t nativeMode = 0;
++  if (!playbackOffset || !core::safe_read(
++      reinterpret_cast<const void*>(cellBase + playbackOffset), nativeMode)) return false;
++  const auto playback = nativeMode != 0 ? creature_sprite_x2::FramePlaybackMode::Loop
++                                      : creature_sprite_x2::FramePlaybackMode::Clamp;
+   if (!creature_sprite_x2::resolve_frame(animationId, resref, currentSequence,
+           currentFrame, resolved.handle,
+-          waitForCharacterMetadata
+-              ? creature_sprite_x2::FrameResolveMode::WaitForCharacterMetadata
+-              : (animationId == 0x3000u
+-                  ? creature_sprite_x2::FrameResolveMode::WaitForAnkhegMetadata
+-                  : ((animationId >= 0x1200u && animationId <= 0x1208u) ||
+-                     animationId == 0x1300u)
+-                      ? creature_sprite_x2::FrameResolveMode::WaitForMultiNewMetadata
+-                      : (icewind ? creature_sprite_x2::FrameResolveMode::WaitForIcewindMetadata
+-                                 : (monster ? creature_sprite_x2::FrameResolveMode::WaitForMonsterMetadata
+-                                            : creature_sprite_x2::FrameResolveMode::NonBlocking))), playback)) {
++          creature_sprite_x2::FrameResolveMode::WaitForRegisteredMetadata, playback)) {
+     if (g_ctx->cfg.enableCreatureSpritePaletteTrace && animationId == 0x6110) {
+       thread_local std::set<std::array<char, 8>> unresolved;
+       if (unresolved.size() < 64 && unresolved.insert(resref).second) {
+@@ -984,14 +969,14 @@
+                  creature_sprite_x2::contains_resource(animationId, resref));
+       }
+     }
+-    static std::atomic<bool> unresolvedFrameLogged{false};
+-    if (!unresolvedFrameLogged.exchange(true, std::memory_order_relaxed)) {
++    static std::array<std::atomic<bool>, 65'536> unresolvedFrameLogged{};
++    if (!unresolvedFrameLogged[animationId].exchange(true, std::memory_order_relaxed)) {
+       LOG_WARN(
+           "Registered creature CVidCell frame could not be resolved: owner={}, "
+-          "animation=0x{:04X}, resref={}, sequence={}, slot={}; native rendering "
++          "animation=0x{:04X}, resref={}, sequence={}, slot={}, playback={}; native rendering "
+           "retained",
+           ownerLabel, animationId, effect_animation_resref_name(resref),
+-          currentSequence, currentFrame);
++          currentSequence, currentFrame, nativeMode);
+     }
+     return false;
+   }
+@@ -1023,8 +1008,7 @@
+     }
+     return false;
+   }
+-  if (!read_registered_creature_cell(animationId, cell, ownerLabel, resolved,
+-                                     owner == CreatureSpriteOwner::Character)) {
++  if (!read_registered_creature_cell(animationId, cell, ownerLabel, resolved)) {
+     return false;
+   }
+   static std::array<std::atomic<bool>, 65'536> animationReachedLogged{};
+@@ -3058,7 +3042,7 @@
+         }
+         ResolvedCreatureSpriteFrame overlay{};
+         if (read_registered_creature_cell(scope.animationId, overlayCell,
+-                                          kOverlayLabels[index], overlay, true)) {
++                                          kOverlayLabels[index], overlay)) {
+           (void)append_creature_sprite_layer(scope, overlay);
+         } else {
+           (void)append_unregistered_palette_owner(scope, overlayCell);
+@@ -3429,8 +3413,7 @@
+   if (scope->layeredComposition) {
+     ResolvedCreatureSpriteFrame current{};
+     if (!read_registered_creature_cell(scope->animationId, layer.cell,
+-                                       creature_sprite_owner_label(scope->owner), current,
+-                                       scope->owner == CreatureSpriteOwner::Character) ||
++                                       creature_sprite_owner_label(scope->owner), current) ||
+         scope->compositionCount >= scope->composition.size()) {
+       scope->compositionIncomplete = true;
+       return;

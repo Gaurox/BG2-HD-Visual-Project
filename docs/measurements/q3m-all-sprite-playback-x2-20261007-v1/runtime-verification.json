@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "native_x64_oracle": {
+    "passed": true,
+    "native_instruction_cases": 231,
+    "exe_sha256": "b51093a49140b2b8a7c046b4652bb8e535be24ebbc12b1d735e0b94217a14d57",
+    "native_rva_start": "0x4117F8",
+    "native_rva_end": "0x411863",
+    "playback_field": "CVidCell+0x11C",
+    "no_game_launched": true
+  },
+  "all_playback": {
+    "passed": true,
+    "animation_ids": 331,
+    "owner_types": 15,
+    "resources": 14370,
+    "routes": 63029,
+    "cycles": 452011,
+    "empty_cycles": 11963,
+    "playback_checks": 15691299,
+    "invalid_lookup_checks": 183234,
+    "strict_rejections": 880096,
+    "first_cold_requests": 14370,
+    "observed_6110_fixed": true,
+    "missing_or_wrong_frames": 0
+  },
+  "native_pixels": [
+    {
+      "resources": 27,
+      "frames": 11774,
+      "native_cycle_slots": 19479,
+      "decoded_pixels": 1133696160,
+      "palette_encodings": 3,
+      "K": 6,
+      "passed": true
+    }
+  ],
+  "unchanged_parent_source_files": 250,
+  "dll_sha256": "70a2745b212babe378c6ccd8b1660110ad3aac5a9ef7523ecbbfcea776bb6d09",
+  "catalog_sha256": "2ad7838cb4157b3b3226dbf3635d59ed17ce028e209f33615499a7e1700b289c",
+  "sprites_recalculated": 0,
+  "palette_guards_changed": false,
+  "source_geometry_changed": false,
+  "installation": false,
+  "ingame_QA": false,
+  "release": false
+}

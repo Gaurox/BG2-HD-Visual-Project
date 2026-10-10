@@ -1,0 +1,98 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:BDFORCEW",
+  "correction_id": "splinefit1-inner16-native-wed-guard4-fade16-postmask-dx6",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/manifest.json",
+        "manifest_sha256": "DD99AE78AD10F2A1E0345BCD1234CADFBEA9663DE573C4C8204E9DAF671FA825",
+        "path": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split",
+        "schema": "bg2-upscale-area-animation-pack-index-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/BDFORCEW/runs/bdforcew-apo8-portails-20261010-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "67154D27842A7E2ED285FC097ECE138B81FB9F74DC629293C31A0908228BF147",
+        "path": "animations/ressources/BDFORCEW/runs/bdforcew-apo8-portails-20261010-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/BDFORCEW/runs/bdforcew-rebout-spatial-20261010-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "1F864A4E0BAD9BBBAA69B2AA450F2B4C109EEA4E63FBF2164ABA64D4D80FDDE4",
+        "path": "animations/ressources/BDFORCEW/runs/bdforcew-rebout-spatial-20261010-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/BDFORCEW/runs/bdforcew-splinefit1-20261010-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "F70DABD8293E189735ED7ACE7B79A8EF3B06BF52256F970B54F967D133E3EF03",
+        "path": "animations/ressources/BDFORCEW/runs/bdforcew-splinefit1-20261010-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/BDFORCEW/runs/bdforcew-apo8-portails-20261010-v1/manifest.json",
+        "manifest_sha256": "9BC3B44B1EDD78C74BC4D448FEFB1FCCF88F78F24459079A27883FF2C4C09AEE",
+        "path": "animations/ressources/BDFORCEW/runs/bdforcew-apo8-portails-20261010-v1",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/BDFORCEW/runs/bdforcew-rebout-spatial-20261010-v1/manifest.json",
+        "manifest_sha256": "7A0F7A8DAD45AE3AF2E4EC433A856F53E7617073483657599F4E666F42960862",
+        "path": "animations/ressources/BDFORCEW/runs/bdforcew-rebout-spatial-20261010-v1",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/BDFORCEW/runs/bdforcew-splinefit1-20261010-v1/manifest.json",
+        "manifest_sha256": "29D62812A31031F5E6014C37DEB9A69E9E528F0A57F004538355A0F3AA629EF3",
+        "path": "animations/ressources/BDFORCEW/runs/bdforcew-splinefit1-20261010-v1",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-10",
+    "path": "animations/index/qa-decisions/BDFORCEW/2026-10-10-accepted-bdforcew-portails-final-v1.json",
+    "sha256": "7BB8E647A93AD7AA3AD11F310F25581395956B07989B1F1C0F475DE4DC664DDA",
+    "status": "accepted"
+  },
+  "recipe_id": "reboutcx-apo8-splinefit1-inner16-wed16-shift6",
+  "resref": "BDFORCEW",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/BDFORCEW/runs/bdforcew-portails-accepted-20261010-v1/manifest.json",
+    "manifest_sha256": "34A24B95E420AB80C4B7F9F0EE3B30662E4A69906B3A663A572A78AD4F5EA9D1",
+    "path": "animations/ressources/BDFORCEW/runs/bdforcew-portails-accepted-20261010-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "OH8100",
+        "manifest_path": "animations/packs-par-zone/portails-deux-correctif-20261010-v1-complete/OH8100/manifest.json",
+        "manifest_sha256": "1045E44C67A86FEA20AB42791949443CDD4BBA18D25A200CB6C8999BCF5180FA",
+        "path": "animations/packs-par-zone/portails-deux-correctif-20261010-v1-complete/OH8100",
+        "registry_sha256": "076A6B135F501291B8592479F3DBD7D763EEEAF8FA0B94D925338334505DCD2B",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/portails-deux-correctif-20261010-v1-complete/manifest.json",
+    "manifest_sha256": "155CC828C5182E9B8517E650C9C955A3564A42200F75FA6E30D2A851388A0525",
+    "path": "animations/packs-par-zone/portails-deux-correctif-20261010-v1-complete",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "OH8100"
+  ],
+  "updated_at_utc": "2026-10-10T15:06:42Z"
+}

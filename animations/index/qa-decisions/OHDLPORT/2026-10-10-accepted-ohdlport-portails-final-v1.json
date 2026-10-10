@@ -1,0 +1,99 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:OHDLPORT",
+  "correction_id": "premultiply-once",
+  "decision": "Validation ingame explicite utilisateur du lot final de cinq animations. Recette retenue : xbr2-blend-nearest2-apo8-premul. Aucun changement release.",
+  "decision_date": "2026-10-10",
+  "decision_id": "2026-10-10-accepted-ohdlport-portails-final-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/OHDLPORT/runs/ohdlport-portails-accepted-20261010-v1/manifest.json",
+    "manifest_sha256": "A152CE20DD4383D04F7F4AF24E9692D3B721ED84F3AB9C69D113FE36481B6C90",
+    "path": "animations/ressources/OHDLPORT/runs/ohdlport-portails-accepted-20261010-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/manifest.json",
+        "manifest_sha256": "52DB2AD2334384DA7D78EB7735F31EE81801387C3FB1D9B8B2833E99DFED710B",
+        "path": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split",
+        "schema": "bg2-upscale-area-animation-pack-index-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/OHDLPORT/runs/ohdlport-apo8-portails-20261010-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "1E057623C427E3E2992D999DA8F377B6FF709F70813125A3FBCDCC7ECACA2411",
+        "path": "animations/ressources/OHDLPORT/runs/ohdlport-apo8-portails-20261010-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/OHDLPORT/runs/ohdlport-xbr-spatial-20261010-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "14B9100FE4A85FB000ED366CB19D587C2E65F48C6EB0FB1208BED677D324F2F9",
+        "path": "animations/ressources/OHDLPORT/runs/ohdlport-xbr-spatial-20261010-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/OHDLPORT/runs/ohdlport-apo8-portails-20261010-v1/manifest.json",
+        "manifest_sha256": "36601A352A9F469D6A33F2AB60BD0B0B3A30E06A02DF431AA9B67A4EA1CCAD61",
+        "path": "animations/ressources/OHDLPORT/runs/ohdlport-apo8-portails-20261010-v1",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/OHDLPORT/runs/ohdlport-portails-final-20261010-v1/manifest.json",
+        "manifest_sha256": "BED85A7D6C2E4A89BAF76DB76C72A043BA46722CC30CEC85F45AB5B354B86E66",
+        "path": "animations/ressources/OHDLPORT/runs/ohdlport-portails-final-20261010-v1",
+        "schema": "bg2-upscale-animation-visual-treatment-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/OHDLPORT/runs/ohdlport-xbr-spatial-20261010-v1/manifest.json",
+        "manifest_sha256": "8B4B12216224ECE03279DC6E108158331D42527DFAA8EC35F631FBD39D83E88E",
+        "path": "animations/ressources/OHDLPORT/runs/ohdlport-xbr-spatial-20261010-v1",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "xbr2-blend-nearest2-apo8-premul",
+  "recorded_at_utc": "2026-10-10T15:06:43Z",
+  "resref": "OHDLPORT",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "OH5400",
+        "manifest_path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/OH5400/manifest.json",
+        "manifest_sha256": "C6F8AD961F3240FA9D6078417EEF5D403B8A3D58A7F03315723008C815B35AAB",
+        "path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/OH5400",
+        "registry_sha256": "CEEEA2B5E2D5BF7381F25103A6B8BE028E74CA21F75BDEFE7A32D9139B910EEC",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH5500",
+        "manifest_path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/OH5500/manifest.json",
+        "manifest_sha256": "73823A3EF93EC2A6B1EA372E808CF05B3442106C6C5B594B40A29A44E4169EFE",
+        "path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/OH5500",
+        "registry_sha256": "CEEEA2B5E2D5BF7381F25103A6B8BE028E74CA21F75BDEFE7A32D9139B910EEC",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/manifest.json",
+    "manifest_sha256": "3F5264FF63C6546E8F6936E52C3FF2A4B868BAF0CFC6206F68743E82099BF91C",
+    "path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "OH5400",
+    "OH5500"
+  ]
+}

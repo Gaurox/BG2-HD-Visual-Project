@@ -1,6 +1,10 @@
 # Suivi sprites Q3m — 2026-10-07
 
+- **État final validé — 2026-10-07 : 15 familles /331 IDs produits, installés et acceptés ingame** (14 familles améliorées/253 IDs +Character V6/78). Monster77 complet et correctif CVidCell commun confirmés ; aucun calcul ni retest restant dans le périmètre retenu. QA historiques conservées ; release non modifiée. [Décisions finales](../docs/measurements/q3m-sprites-final-accepted-x2-20261007-v1/README.md).
+
 ## Portée / méthode
+
+- **Correctif runtime commun installé (2026-10-07)** : 331 IDs/15 familles ; attente métadonnées exactes +Loop/Clamp natifs pour tous corps/équipements/parties. Cas Character6110/CHFF4G1/seq15/slot12 reproduit puis corrigé ; 0 sprite recalculé, catalogue/14330 feuilles inchangés. Tests natifs acquis ; confirmation ingame du nouveau runtime encore requise, QA historiques et deux G2 Monster en attente conservées. [Diagnostic/tests/installation](../docs/measurements/q3m-all-sprite-playback-x2-20261007-v1/README.md).
 
 - Familles = `engine_section` des INI, autorité `index/family-groups.csv` ; 15 profils personnages/créatures. `effect` et IDs sans INI : hors queue, conservés dans l'inventaire source.
 - Personnages jouables, compagnons, PNJ, monstres, animaux et figurants inclus ; un PNJ utilisant `character` appartient au même profil que les jouables.

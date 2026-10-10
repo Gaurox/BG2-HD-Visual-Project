@@ -1,0 +1,35 @@
+{
+  "current_five_asset_authorities_valid": true,
+  "checks": [
+    {
+      "resref": "BDFORCEW",
+      "current_authority_valid": true,
+      "historical_errors": []
+    },
+    {
+      "resref": "OHDLPORT",
+      "current_authority_valid": true,
+      "historical_errors": []
+    },
+    {
+      "resref": "OHHPORT",
+      "current_authority_valid": true,
+      "historical_errors": [
+        "animations/index/qa-decisions/OHHPORT/2026-10-10-accepted-ohhport-xbr-apo8-backgroundfix-v1.json: preuve x4 invalide: emplacement de run animation non canonique : G:/AI/BG2_Upscale/animations/batches/portails-deux-correctif-20261010-v1/artifacts/OHHPORT-final-split"
+      ]
+    },
+    {
+      "resref": "OHRSGATE",
+      "current_authority_valid": true,
+      "historical_errors": []
+    },
+    {
+      "resref": "SPDIMNDR",
+      "current_authority_valid": true,
+      "historical_errors": []
+    }
+  ],
+  "historical_OHHPORT_QA_preserved_without_rewrite": true,
+  "renderer_tests": "animations/batches/bdforcew-shift-right-20261010-v3/tests.json",
+  "release_mutation": false
+}
