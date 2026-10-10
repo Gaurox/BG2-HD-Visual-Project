@@ -1,0 +1,37 @@
+{
+  "schema": "bg2-upscale-animation-final-selection-v1",
+  "status": "completed",
+  "created_utc": "2026-10-10T21:43:06Z",
+  "resrefs": [
+    "FISH2S"
+  ],
+  "source_run": "animations/batches/ar3000-fish-xbr-apo8-x4-30fps-v2-20260918",
+  "source_run_manifest_sha256": "1D373DC934DB93BCA88B899216BC3BF1D5A08B3BEED5E2021BBC6A6ABFBD43B9",
+  "output_split_root": "animations/packs-par-zone/ar3000-fish-xbr-apo8-split-20260918",
+  "output_manifest_sha256": "80C57E124FA852559E80154F0F80F4C444A77BD015C2775085A292B06D1A0DB3",
+  "selection_reason": "Utilisateur valide FISH3L ingame sur AR5000 et demande explicitement de valider directement tous les autres poissons du meme style. Extension de validation a la recette commune xBR2 sans blend + nearest2 x4 / Apollo8 30fps / maintiens segmentes / alpha binaire conserve. AR3000 deja accepte le 2026-09-18 ; aucune nouvelle observation individuelle AR5000 revendiquee.",
+  "qa": {
+    "accepted": [
+      "FISH2S"
+    ],
+    "areas": [
+      "AR3000",
+      "AR5000"
+    ],
+    "previous_direct_ingame_area": "AR3000",
+    "family_approval_area": "AR5000",
+    "family_reference": "FISH3L",
+    "approval_basis": "explicit-user-request-to-accept-same-style-fish"
+  },
+  "runtime_contract": {
+    "scale": 4,
+    "playback_mode": "TimedTimeline",
+    "target_fps": 30,
+    "spatial": "xbr2-no-blend-nearest2",
+    "interpolation": "apo-8",
+    "holds": "preserve-segmented-holds",
+    "alpha": "binary-xbr-unchanged"
+  },
+  "installation_note": "AR5000 x4 family frames not installed; approval does not change installation.",
+  "release": "not-selected"
+}

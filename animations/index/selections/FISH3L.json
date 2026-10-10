@@ -1,0 +1,62 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:FISH3L",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/FISH3L/runs/ar5000-fish3l-xbr2x-nearest2-x4-20260922/03_runtime_pack/manifest.json",
+        "manifest_sha256": "F8C84EA0235663737582919AFA80F6201B451BAEE8CDD91D5AC8C826522BC154",
+        "path": "animations/ressources/FISH3L/runs/ar5000-fish3l-xbr2x-nearest2-x4-20260922/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/FISH3L/runs/ar5000-fish3l-xbr2x-nearest2-x4-20260922/manifest.json",
+        "manifest_sha256": "0BABA25E516B1DB730DF0824D85111F72D775FCB391039AFA14C6C01E230B24B",
+        "path": "animations/ressources/FISH3L/runs/ar5000-fish3l-xbr2x-nearest2-x4-20260922",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-10",
+    "path": "animations/index/qa-decisions/FISH3L/2026-10-10-accepted-fish3l-ar5000-v1.json",
+    "sha256": "CDE043FD06BF0E51DBF55E8C6EF5FD9C821923DF905C3796618F89E7D0B85C97",
+    "status": "accepted"
+  },
+  "recipe_id": "small-subject-xbr2-nearest2-apo8-30fps-segmented-holds",
+  "resref": "FISH3L",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/FISH3L/runs/ar5000-fish3l-apo8-x4-30fps-v2-20260922/manifest.json",
+    "manifest_sha256": "B00B7A9FB748FDFE6B67E0D24DFD2532F7E2493F9C303AB6AE298D5BE34D7A37",
+    "path": "animations/ressources/FISH3L/runs/ar5000-fish3l-apo8-x4-30fps-v2-20260922",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR5000",
+        "manifest_path": "animations/packs-par-zone/ar5000-fish3l-apo8-x4-30fps-v2-20260922/AR5000/manifest.json",
+        "manifest_sha256": "930E8523337EE8FBEAD513769B75400897532CBC155D82768D453613AF33147D",
+        "path": "animations/packs-par-zone/ar5000-fish3l-apo8-x4-30fps-v2-20260922/AR5000",
+        "registry_sha256": "73F0795C84F9F9493E53DAE263E6C702F662D0CD79FD7E32F96565F16EC69986",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar5000-fish3l-apo8-x4-30fps-v2-20260922/manifest.json",
+    "manifest_sha256": "417CFAE46C5B2B9F1748CE1A8E30AA0AEED41F070C24F4A578D4A2CD38DC22A6",
+    "path": "animations/packs-par-zone/ar5000-fish3l-apo8-x4-30fps-v2-20260922",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR5000"
+  ],
+  "updated_at_utc": "2026-10-10T21:43:08Z"
+}

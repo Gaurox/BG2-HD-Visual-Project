@@ -1,0 +1,84 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:FISH2L",
+  "decision": "Validation explicite utilisateur par extension famille : apres validation ingame FISH3L sur AR5000, valider tous les autres poissons du meme style. FISH2L accepte pour AR3000/AR5000 avec recette commune xBR2/nearest2 x4, Apollo8 30fps, maintiens segmentes et alpha binaire. QA directe AR3000 acquise 2026-09-18 ; AR5000 approuve par extension demandee, sans observation individuelle ni nouvelle installation.",
+  "decision_date": "2026-10-10",
+  "decision_id": "2026-10-10-accepted-fish2l-family-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/FISH2L/runs/fish2l-family-accepted-20261010-v1/manifest.json",
+    "manifest_sha256": "51988689DFDE3F1EFED0ED66FA342A62ECB40556FB8CC938E8E802E8FE6F0901",
+    "path": "animations/ressources/FISH2L/runs/fish2l-family-accepted-20261010-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/ar3000-fish-xbr-apo8-x4-30fps-v2-20260918/03_runtime_pack/manifest.json",
+        "manifest_sha256": "BD521587C9C501157941727EB76163103E5AE5B0E8F8FEF0754A6493886195B1",
+        "path": "animations/batches/ar3000-fish-xbr-apo8-x4-30fps-v2-20260918/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar3000-fish-xbr2x-nearest2-x4-20260918/03_runtime_pack/manifest.json",
+        "manifest_sha256": "5A681A39862938913B525D49429C9DF1CDA4E446D5791FC28BCE1EC4738FFE94",
+        "path": "animations/batches/ar3000-fish-xbr2x-nearest2-x4-20260918/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/ar3000-fish-xbr-apo8-x4-30fps-v2-20260918/manifest.json",
+        "manifest_sha256": "1D373DC934DB93BCA88B899216BC3BF1D5A08B3BEED5E2021BBC6A6ABFBD43B9",
+        "path": "animations/batches/ar3000-fish-xbr-apo8-x4-30fps-v2-20260918",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar3000-fish-xbr2x-nearest2-x4-20260918/manifest.json",
+        "manifest_sha256": "D7796D72BB984365C3B5E90E0E7981CD11A8345D8EA14D3154C182CC2868F23A",
+        "path": "animations/batches/ar3000-fish-xbr2x-nearest2-x4-20260918",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "small-subject-xbr2-nearest2-apo8-30fps-segmented-holds",
+  "recorded_at_utc": "2026-10-10T21:43:05Z",
+  "resref": "FISH2L",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR3000",
+        "manifest_path": "animations/packs-par-zone/ar3000-fish-xbr-apo8-split-20260918/AR3000/manifest.json",
+        "manifest_sha256": "F8909F84717A13CF6C683CD9A286025B4FAA761C79A8A0F4FBFBCC9E44DF86F8",
+        "path": "animations/packs-par-zone/ar3000-fish-xbr-apo8-split-20260918/AR3000",
+        "registry_sha256": "8B9EB9F93CAAEB9327FFED3AC7A973670340D9D1E3FE93AEFE83FEB72FBCA4F5",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5000",
+        "manifest_path": "animations/packs-par-zone/ar3000-fish-xbr-apo8-split-20260918/AR5000/manifest.json",
+        "manifest_sha256": "51E474F727CAD21BE9E4C48A3F2A78E077A92445FBA24FCFD645BFAD7F918161",
+        "path": "animations/packs-par-zone/ar3000-fish-xbr-apo8-split-20260918/AR5000",
+        "registry_sha256": "CB0382A2DC8B475DAA945D6EF3CC4C197FC886B8FF54A7F33D4277CA8750DA93",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar3000-fish-xbr-apo8-split-20260918/manifest.json",
+    "manifest_sha256": "80C57E124FA852559E80154F0F80F4C444A77BD015C2775085A292B06D1A0DB3",
+    "path": "animations/packs-par-zone/ar3000-fish-xbr-apo8-split-20260918",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR3000",
+    "AR5000"
+  ]
+}
