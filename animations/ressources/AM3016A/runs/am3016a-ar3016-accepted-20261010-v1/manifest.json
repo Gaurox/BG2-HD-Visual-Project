@@ -1,0 +1,47 @@
+{
+  "schema": "bg2-upscale-animation-final-selection-v1",
+  "status": "completed",
+  "created_utc": "2026-10-10T21:34:39Z",
+  "resrefs": [
+    "AM3016A"
+  ],
+  "source_run": "animations/batches/ar3016-qa-finalization-x4-20260916",
+  "source_run_manifest_sha256": "4925A791446D680C85BBD140C1361BCC29310582E9AB2585A20EC33E8A233406",
+  "output_split_root": "animations/packs-par-zone/ar3016-complete-seedvr-flame-anchor-repair-v5-20260916",
+  "output_manifest_sha256": "6070E7E268152F6E9A3B18A4059DBA25C14AAB2F296942A1DB3404F2B3C67179",
+  "selection_reason": "QA ingame explicite utilisateur 2026-10-10 : AM3016A valide dans AR3016 apres commandes activation et visualisation des deux eclairs. Octets et registre installes verifies identiques au pack ; aucune transformation.",
+  "qa": {
+    "tested_areas": [
+      "AR3016"
+    ],
+    "accepted": [
+      "AM3016A"
+    ],
+    "instances": [
+      "AMB_Lightning1",
+      "AMB_Lightning2"
+    ],
+    "native_positions": [
+      [
+        1748,
+        365
+      ],
+      [
+        2356,
+        368
+      ]
+    ],
+    "sequences": [
+      1,
+      2
+    ]
+  },
+  "runtime_contract": {
+    "scale": 4,
+    "playback_mode": "TimedTimeline",
+    "target_fps": 30,
+    "frame_count": 54,
+    "cycle_count": 3
+  },
+  "release": "not-selected"
+}

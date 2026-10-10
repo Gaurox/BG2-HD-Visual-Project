@@ -1,0 +1,52 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM3016A",
+  "decision": "Utilisateur : ok valide. MAJ le suivi et committe. AM3016A (deux eclairs bleus verticaux) accepte ingame dans AR3016 apres activation AMB_Lightning1/2, sequences 1/2. Portee AM3016A uniquement.",
+  "decision_date": "2026-10-10",
+  "decision_id": "2026-10-10-accepted-am3016a-ar3016-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM3016A/runs/am3016a-ar3016-accepted-20261010-v1/manifest.json",
+    "manifest_sha256": "2707B3EB2A4B5E2E90907B40FEEE4B0F8037EF71F47C629D78493EA74350D354",
+    "path": "animations/ressources/AM3016A/runs/am3016a-ar3016-accepted-20261010-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/ar3016-qa-finalization-x4-20260916/manifest.json",
+        "manifest_sha256": "4925A791446D680C85BBD140C1361BCC29310582E9AB2585A20EC33E8A233406",
+        "path": "animations/batches/ar3016-qa-finalization-x4-20260916",
+        "schema": "bg2-upscale-animation-qa-finalization-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recorded_at_utc": "2026-10-10T21:34:40Z",
+  "resref": "AM3016A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR3016",
+        "manifest_path": "animations/packs-par-zone/ar3016-complete-seedvr-flame-anchor-repair-v5-20260916/AR3016/manifest.json",
+        "manifest_sha256": "4C0C463780CAD3830C929EAD8EA304DE5D996CF6BF703252065BF18FC2022EBB",
+        "path": "animations/packs-par-zone/ar3016-complete-seedvr-flame-anchor-repair-v5-20260916/AR3016",
+        "registry_sha256": "3BB894CBD4815EA3A07CBB4B911FAC3E582BD1338A39A6B0DAE5D3ACE8C0A1C0",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar3016-complete-seedvr-flame-anchor-repair-v5-20260916/manifest.json",
+    "manifest_sha256": "6070E7E268152F6E9A3B18A4059DBA25C14AAB2F296942A1DB3404F2B3C67179",
+    "path": "animations/packs-par-zone/ar3016-complete-seedvr-flame-anchor-repair-v5-20260916",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR3016"
+  ]
+}
