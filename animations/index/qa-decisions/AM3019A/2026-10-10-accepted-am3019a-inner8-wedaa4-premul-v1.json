@@ -1,0 +1,83 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM3019A",
+  "correction_id": "inner8-wed67-wed69-aa4-premultiply",
+  "decision": "Validation ingame explicite utilisateur : parfait je valide tout. AM3019A, AM3020D et AM3022D acceptes dans leurs trois zones.",
+  "decision_date": "2026-10-10",
+  "decision_id": "2026-10-10-accepted-am3019a-inner8-wedaa4-premul-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM3019A/runs/am3019a-watchers-selection-accepted-20261010/manifest.json",
+    "manifest_sha256": "B05C94037AE421EF2723635665FF39E921A5EE67EAF92FB8329CF900A2B8FC12",
+    "path": "animations/ressources/AM3019A/runs/am3019a-watchers-selection-accepted-20261010",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/watchers-seals-reboutcx-spatial-20261010-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "893F9A5F778A592092040326AE2DA567EAB7ED60AB0EB4A74AA5E8515DA05237",
+        "path": "animations/batches/watchers-seals-reboutcx-spatial-20261010-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/packs-par-zone/am3019a-watchers-final-20261010-v1/AR3019/manifest.json",
+        "manifest_sha256": "EB61F630D5E6AA3187377E652E1705CA2ED0016BD1686B5F39BDCF6E86C63170",
+        "path": "animations/packs-par-zone/am3019a-watchers-final-20261010-v1/AR3019",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM3019A/runs/am3019a-reboutcx-apo8-holds-20261010-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "ABDD3BAC979D51A9C23F3BC676684843EC5DD874A795C16D217E7115C171A06A",
+        "path": "animations/ressources/AM3019A/runs/am3019a-reboutcx-apo8-holds-20261010-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/AM3019A/runs/am3019a-reboutcx-apo8-holds-20261010-v1/manifest.json",
+        "manifest_sha256": "FE256C19B91EA2FFBF63A0933C791CC188A0D0B5193D6F06455380AC0E313E27",
+        "path": "animations/ressources/AM3019A/runs/am3019a-reboutcx-apo8-holds-20261010-v1",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM3019A/runs/am3019a-watchers-final-20261010-v1/manifest.json",
+        "manifest_sha256": "641844B17B7A1F07B5242BC1E3A5B1D6348032B71532E40121FF7F6A602A2FBB",
+        "path": "animations/ressources/AM3019A/runs/am3019a-watchers-final-20261010-v1",
+        "schema": "bg2-upscale-animation-visual-treatment-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "effet-blended-reboutcx-apo8-premul",
+  "recorded_at_utc": "2026-10-10T11:57:11Z",
+  "resref": "AM3019A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR3019",
+        "manifest_path": "animations/packs-par-zone/watchers-seals-trois-animations-20261010-v1-complete-v2/AR3019/manifest.json",
+        "manifest_sha256": "1B7C568F7E666839CA100691331C80F0CCF1657CAC5C83D847B117F3BC06DBBC",
+        "path": "animations/packs-par-zone/watchers-seals-trois-animations-20261010-v1-complete-v2/AR3019",
+        "registry_sha256": "59DBD20311D88D2289ABEBBB200AC87F51EAB2A84C902F7AC9CD0CF988F8D611",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/watchers-seals-trois-animations-20261010-v1-complete-v2/manifest.json",
+    "manifest_sha256": "8D1B6297DB70B30F407DB4420D95525BD1D4E21E780CEF64DCDE873D6E266FD1",
+    "path": "animations/packs-par-zone/watchers-seals-trois-animations-20261010-v1-complete-v2",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR3019"
+  ]
+}

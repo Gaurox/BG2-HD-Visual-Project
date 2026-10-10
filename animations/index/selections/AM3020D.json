@@ -1,0 +1,84 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM3020D",
+  "correction_id": "wed11-aa4-native-alpha",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/am3020d-watchers-final-20261010-v1/AR3020/manifest.json",
+        "manifest_sha256": "B34047196A68E2DE01355FB0EDB059EF43838B10F6583A5CAA7B89665F4AB9A8",
+        "path": "animations/packs-par-zone/am3020d-watchers-final-20261010-v1/AR3020",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM3020D/runs/am3020d-seedvr-apo8-holds-20261010-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "D4B9559B895426BE8EF803DFB99F2A19057F63B2CB41D60464443BA258D46663",
+        "path": "animations/ressources/AM3020D/runs/am3020d-seedvr-apo8-holds-20261010-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM3020D/runs/am3020d-seedvr-spatial-20261010-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "7E5886A579A001C095FDF7FE65B5C1B417E1775AFBED52CF2E1BF7D924F0E5F6",
+        "path": "animations/ressources/AM3020D/runs/am3020d-seedvr-spatial-20261010-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/AM3020D/runs/am3020d-seedvr-apo8-holds-20261010-v1/manifest.json",
+        "manifest_sha256": "65B7A6CAFC842622A04702944D37E6C24E91DD0A12BEF773F6A6FF1214B48953",
+        "path": "animations/ressources/AM3020D/runs/am3020d-seedvr-apo8-holds-20261010-v1",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM3020D/runs/am3020d-watchers-final-20261010-v1/manifest.json",
+        "manifest_sha256": "E3521A36215EB0F92BC7A0ED27CD09BCA73BA679C533BD946D1ADDCE8581787E",
+        "path": "animations/ressources/AM3020D/runs/am3020d-watchers-final-20261010-v1",
+        "schema": "bg2-upscale-animation-visual-treatment-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-10",
+    "path": "animations/index/qa-decisions/AM3020D/2026-10-10-accepted-am3020d-nativealpha-wed11-aa4-v1.json",
+    "sha256": "BCAC9310FAA570211B436CFC06A1E96E3C994027865A2B19C67821F38B4AC442",
+    "status": "accepted"
+  },
+  "recipe_id": "mecanique-seedvr-alpha-native",
+  "resref": "AM3020D",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM3020D/runs/am3020d-watchers-selection-accepted-20261010/manifest.json",
+    "manifest_sha256": "E87D1A26A203B626685645AF27508DC69628FD797215B1783E6CA74F716A4F73",
+    "path": "animations/ressources/AM3020D/runs/am3020d-watchers-selection-accepted-20261010",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR3020",
+        "manifest_path": "animations/packs-par-zone/watchers-seals-trois-animations-20261010-v1-complete-v2/AR3020/manifest.json",
+        "manifest_sha256": "CA0CC8F000040BB8ECF12C5920C5694EFC9A7A596A2C4A2554107AD2586185FB",
+        "path": "animations/packs-par-zone/watchers-seals-trois-animations-20261010-v1-complete-v2/AR3020",
+        "registry_sha256": "D9AE7C3D36DCF2439708739588DDB5F5FFD185E670C033C58CDCBF6A30A42EE2",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/watchers-seals-trois-animations-20261010-v1-complete-v2/manifest.json",
+    "manifest_sha256": "8D1B6297DB70B30F407DB4420D95525BD1D4E21E780CEF64DCDE873D6E266FD1",
+    "path": "animations/packs-par-zone/watchers-seals-trois-animations-20261010-v1-complete-v2",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR3020"
+  ],
+  "updated_at_utc": "2026-10-10T11:57:24Z"
+}

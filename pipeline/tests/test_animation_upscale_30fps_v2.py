@@ -361,6 +361,32 @@ class AnimationUpscale30FpsV2Tests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "réutilisée"):
             pipeline.collapse_uniform_duplicate_hold_slots([0, 0, 1, 1, 0, 0, 2, 2])
 
+    def test_segmented_holds_allows_a_second_cycle_without_holds(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source_run, base_pack = self.make_fixture(root, [0, 0, 1])
+            path = source_run / "resources/TESTA/01_frames_x1/manifest.json"
+            manifest = json.loads(path.read_text())
+            manifest["cycles"].append({"cycle": 1, "frame_indices": [1, 0]})
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            path = base_pack / "manifest.json"
+            manifest = json.loads(path.read_text())
+            resource = manifest["resources"][0]
+            resource["cycles"].append({"cycle": 1, "frame_indices": [1, 0]})
+            resource["cycle_count"] = 2
+            registry = base_pack / runtime_v1.REGISTRY_NAME
+            registry.write_bytes(runtime_v1.registry_from_resources([resource]))
+            manifest["registry_sha256"] = sha(registry)
+            manifest["registry_bytes"] = registry.stat().st_size
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            plan = pipeline.build_plan(source_run, base_pack, ["TESTA"],
+                                       preserve_segmented_holds=True)
+            held, moving = plan["targets"][0]["cycles"]
+            self.assertEqual(held["timeline_phases"], 6)
+            self.assertEqual(held["timeline_frame_indices"][:3], [0, 0, 0])
+            self.assertEqual(moving["timeline_phases"], 4)
+            self.assertEqual(moving["timeline_frame_indices"][::2], [1, 0])
+
     def test_preserves_nonuniform_duplicate_holds_by_segments(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -613,6 +639,27 @@ class AnimationUpscale30FpsV2Tests(unittest.TestCase):
             pipeline.save_input_rgb(root, context, 0, output, "preserve-hidden-rgb")
             with Image.open(output) as image:
                 self.assertEqual(image.size, (20, 8))
+
+    def test_runtime_base_aligns_smaller_later_frame_inside_first_frame(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            frames = []
+            for index, logical in enumerate(([3, 2], [3, 1])):
+                path = root / pipeline.asset_name("TESTA", index)
+                physical = [value * 4 for value in logical]
+                path.write_bytes(bytes((30, 60, 90, 255)) * (physical[0] * physical[1]))
+                frames.append({"frame": index, "logical_size_x1": logical,
+                               "physical_size_x4": physical, "centre_x1": [1, 1],
+                               "asset": path.name, "sha256": sha(path),
+                               "bytes": path.stat().st_size})
+            resource = {"resref": "TESTA", "playback_mode": "Native", "frame_count": 2,
+                        "cycle_count": 1, "frames": frames,
+                        "cycles": [{"cycle": 0, "native_frame_indices": [0, 1]}]}
+            context = pipeline.load_runtime_uniform_context(root, resource)
+            images = [pipeline.input_source_image(root, context, k) for k in range(2)]
+            self.assertEqual([image.size for image in images], [(12, 8), (12, 8)])
+            self.assertEqual(images[1].getpixel((0, 7))[3], 0)
+            self.assertEqual(context["frames"][1]["physical_size_x4"], [12, 4])
 
     def test_manual_mask_replaces_anchors_and_restores(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

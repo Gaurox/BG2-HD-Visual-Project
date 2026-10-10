@@ -581,7 +581,9 @@ def load_runtime_uniform_context(base_pack: Path, resource: dict[str, Any]) -> d
         "frame_manifest_sha256": None,
         "upscale_manifest_sha256": None,
         "aligned_size_x4": aligned_x4,
-        "geometry_mode": ("runtime-uniform-base" if aligned_x4 == first_physical
+        "geometry_mode": ("runtime-uniform-base" if all(
+            frame["physical_size_x4"] == aligned_x4 and frame["crop_box_x4"][:2] == [0, 0]
+            for frame in validated_frames)
                           else "runtime-centre-aligned-base"),
         "frames": validated_frames,
         "cycles": lookups,
@@ -996,9 +998,9 @@ def build_plan(source_run: Path | None, base_pack: Path, resrefs: list[str],
                     "timeline_phases": len(timeline),
                     "duration_seconds": len(lookup) / NATIVE_FPS[0],
                 })
-            elif preserve_segmented_holds:
-                require(hold_analysis["has_consecutive_duplicates"],
-                        "la préservation segmentée exige au moins un maintien dupliqué")
+            elif preserve_segmented_holds and hold_analysis["has_consecutive_duplicates"]:
+                # Mixed-cycle assets can have holds in only some cycles.  Let
+                # hold-free cycles use the ordinary 15->30 path below.
                 runs = [int(item["frame_index"]) for item in hold_analysis["runs"]]
                 linear_path = len(runs) >= 2 and runs[0] == runs[-1]
                 video_lookup = runs if linear_path else runs + [runs[0]]

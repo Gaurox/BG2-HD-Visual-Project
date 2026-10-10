@@ -1,0 +1,98 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM3022D",
+  "correction_id": "spline-fit1-feather8-rgb-preserve",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/watchers-seals-reboutcx-spatial-20261010-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "893F9A5F778A592092040326AE2DA567EAB7ED60AB0EB4A74AA5E8515DA05237",
+        "path": "animations/batches/watchers-seals-reboutcx-spatial-20261010-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/packs-par-zone/am3022d-watchers-source-20261010-v1/AR3022/manifest.json",
+        "manifest_sha256": "BB44E06B4C7B9B22B2878E30C503D727537D1829CC39B149702150524AB04D25",
+        "path": "animations/packs-par-zone/am3022d-watchers-source-20261010-v1/AR3022",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM3022D/runs/am3022d-reboutcx-apo8-aligned-20261010-v2/03_runtime_pack/manifest.json",
+        "manifest_sha256": "9D9A5130E382F05512E58C35E78C0EAE00FC717552BEFC58B8EB84A41BCEED97",
+        "path": "animations/ressources/AM3022D/runs/am3022d-reboutcx-apo8-aligned-20261010-v2/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM3022D/runs/am3022d-reboutcx-apo8-splinefit1-feather8-20261010-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "17AC835D4E06EC6431A0A3977CE1C40555EFB7EACFCA82F028DBEDBA2E06C8A9",
+        "path": "animations/ressources/AM3022D/runs/am3022d-reboutcx-apo8-splinefit1-feather8-20261010-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/AM3022D/runs/am3022d-reboutcx-apo8-aligned-20261010-v2/manifest.json",
+        "manifest_sha256": "2E8EB161807B3731218C55E9D83400D5B9FC578F15211F378ACCF162F634BEA2",
+        "path": "animations/ressources/AM3022D/runs/am3022d-reboutcx-apo8-aligned-20261010-v2",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM3022D/runs/am3022d-reboutcx-apo8-splinefit1-feather8-20261010-v1/manifest.json",
+        "manifest_sha256": "82EB0FCFB1E636C6306E0B15197DAA0029314F77978AC4484453AF505DD91288",
+        "path": "animations/ressources/AM3022D/runs/am3022d-reboutcx-apo8-splinefit1-feather8-20261010-v1",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM3022D/runs/am3022d-watchers-final-20261010-v1/manifest.json",
+        "manifest_sha256": "93FB669035C3C44B2600989BE90B9EDFB832521FAA4378841FBA3C3BF4A0FA2C",
+        "path": "animations/ressources/AM3022D/runs/am3022d-watchers-final-20261010-v1",
+        "schema": "bg2-upscale-animation-visual-treatment-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-10",
+    "path": "animations/index/qa-decisions/AM3022D/2026-10-10-accepted-am3022d-splinefit1-feather8-v1.json",
+    "sha256": "3A20F12D6DF4D9FBC099399951CA75A0DECE30453F34237D69BC860740BC2F35",
+    "status": "accepted"
+  },
+  "recipe_id": "disque-ferme-reboutcx-spline8",
+  "resref": "AM3022D",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM3022D/runs/am3022d-watchers-selection-accepted-20261010/manifest.json",
+    "manifest_sha256": "2D1942031008FB75502362F2FB73291E513BC7E18DC5FEE3634D4293CCB16038",
+    "path": "animations/ressources/AM3022D/runs/am3022d-watchers-selection-accepted-20261010",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR3022",
+        "manifest_path": "animations/packs-par-zone/watchers-seals-trois-animations-20261010-v1-complete-v2/AR3022/manifest.json",
+        "manifest_sha256": "23563E7FBFC6F90A0B1EA9D5C4E59EF84C1DE839A77B30B1565DA3EDCB697F55",
+        "path": "animations/packs-par-zone/watchers-seals-trois-animations-20261010-v1-complete-v2/AR3022",
+        "registry_sha256": "250930492AA1D7DDB4F08DC915AB1600163D883A6A850AB97D569C94959D38DB",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/watchers-seals-trois-animations-20261010-v1-complete-v2/manifest.json",
+    "manifest_sha256": "8D1B6297DB70B30F407DB4420D95525BD1D4E21E780CEF64DCDE873D6E266FD1",
+    "path": "animations/packs-par-zone/watchers-seals-trois-animations-20261010-v1-complete-v2",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR3022"
+  ],
+  "updated_at_utc": "2026-10-10T11:57:25Z"
+}
