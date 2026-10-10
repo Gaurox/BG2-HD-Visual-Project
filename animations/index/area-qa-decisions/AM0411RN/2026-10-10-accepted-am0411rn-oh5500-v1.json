@@ -1,0 +1,75 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "schema_version": 1,
+  "decision_id": "2026-10-10-accepted-am0411rn-oh5500-v1",
+  "asset_id": "animations:bam:AM0411RN",
+  "resref": "AM0411RN",
+  "status": "accepted",
+  "result_kind": "x4",
+  "decision_origin": "explicit-user-ingame-qa",
+  "decision_date": "2026-10-10",
+  "recorded_at_utc": "2026-10-10T21:23:34Z",
+  "decision": "Utilisateur : parfait alors c est ok je le valide MAJ le suivi et committe. QA ingame acceptee sur OH5500 apres visualisation de AM0411RN, session 2026-10-10 23:18:52-23:19:53 Europe/Paris ; rendu area-registry et boucle confirmes dans InfinityEngine-Enhancer.log. Portee OH5500 uniquement ; AR0411 deja accepte le 2026-09-11 ; OH5400 reste a verifier. Aucun changement runtime, installation ou release.",
+  "recipe_id": "seedvr7b-lab-apo8-spline-fit1-feather4",
+  "final_run": {
+    "path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-apo8-x4-30fps-spline-fit1-feather4-20260911",
+    "manifest_path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-apo8-x4-30fps-spline-fit1-feather4-20260911/manifest.json",
+    "manifest_sha256": "18E0760428FE2B188B580D8101171E2159F81EA9632FF426590BD39DCEDBA5A1",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
+  "source_pack": {
+    "path": "animations/batches/portails-cinq-selection-20261010-v1/complete-area-packs/OH5500",
+    "manifest_path": "animations/batches/portails-cinq-selection-20261010-v1/complete-area-packs/OH5500/manifest.json",
+    "manifest_sha256": "317DC469A4892C33FD660F64B2733022FCE69A114D594D27718AD12A1E75BCD6",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed",
+    "areas": [
+      {
+        "area": "OH5500",
+        "path": "animations/batches/portails-cinq-selection-20261010-v1/complete-area-packs/OH5500/OH5500",
+        "manifest_path": "animations/batches/portails-cinq-selection-20261010-v1/complete-area-packs/OH5500/OH5500/manifest.json",
+        "manifest_sha256": "73823A3EF93EC2A6B1EA372E808CF05B3442106C6C5B594B40A29A44E4169EFE",
+        "registry_sha256": "CEEEA2B5E2D5BF7381F25103A6B8BE028E74CA21F75BDEFE7A32D9139B910EEC",
+        "resource_entries": 1
+      }
+    ]
+  },
+  "lineage": {
+    "source_runs": [
+      {
+        "path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-apo8-x4-30fps-20260911",
+        "manifest_path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-apo8-x4-30fps-20260911/manifest.json",
+        "manifest_sha256": "35851A7A0B92335541BC4E09A7A69572E18E84CCFBE9416F3F3431A1DDDD517C",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-seedvr7b-lab-x4-v2-20260911",
+        "manifest_path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-seedvr7b-lab-x4-v2-20260911/manifest.json",
+        "manifest_sha256": "A1E34BAA3ED69E0DD42E1C4A83E028DA5D560269E33625E9089675E679F7CE9C",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ],
+    "source_packs": [
+      {
+        "path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-apo8-x4-30fps-20260911/03_runtime_pack",
+        "manifest_path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-apo8-x4-30fps-20260911/03_runtime_pack/manifest.json",
+        "manifest_sha256": "D402C3241483EA691DDECB8B195642AD3448830314A78C6C39E728C2874057FE",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-seedvr7b-lab-x4-v2-20260911/03_runtime_pack",
+        "manifest_path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-seedvr7b-lab-x4-v2-20260911/03_runtime_pack/manifest.json",
+        "manifest_sha256": "D0E73F3410EAB5FB634C3E026595EFAC817C0964883F045DB16A151C5A3E8747",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "tested_areas": [
+    "OH5500"
+  ]
+}
