@@ -1,0 +1,93 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM0411RN",
+  "decision": "Utilisateur : completement valide. MAJ le suivi et committe. AM0411RN accepte ingame sur OH5400 le 2026-10-11, apres activation Portal et masquage Portal2. Validation globale cloturee : AR0411 acquise le 2026-09-11, OH5500 explicitement acceptee le 2026-10-10 (decision partielle historique conservee), OH5400 acceptee le 2026-10-11. Memes frames x4 installees confirmees dans les trois maps.",
+  "decision_date": "2026-10-11",
+  "decision_id": "2026-10-11-accepted-am0411rn-all-areas-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-apo8-x4-30fps-spline-fit1-feather4-20260911/manifest.json",
+    "manifest_sha256": "18E0760428FE2B188B580D8101171E2159F81EA9632FF426590BD39DCEDBA5A1",
+    "path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-apo8-x4-30fps-spline-fit1-feather4-20260911",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-apo8-x4-30fps-20260911/03_runtime_pack/manifest.json",
+        "manifest_sha256": "D402C3241483EA691DDECB8B195642AD3448830314A78C6C39E728C2874057FE",
+        "path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-apo8-x4-30fps-20260911/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-seedvr7b-lab-x4-v2-20260911/03_runtime_pack/manifest.json",
+        "manifest_sha256": "D0E73F3410EAB5FB634C3E026595EFAC817C0964883F045DB16A151C5A3E8747",
+        "path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-seedvr7b-lab-x4-v2-20260911/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-apo8-x4-30fps-20260911/manifest.json",
+        "manifest_sha256": "35851A7A0B92335541BC4E09A7A69572E18E84CCFBE9416F3F3431A1DDDD517C",
+        "path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-apo8-x4-30fps-20260911",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-seedvr7b-lab-x4-v2-20260911/manifest.json",
+        "manifest_sha256": "A1E34BAA3ED69E0DD42E1C4A83E028DA5D560269E33625E9089675E679F7CE9C",
+        "path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-seedvr7b-lab-x4-v2-20260911",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "seedvr7b-lab-apo8-spline-fit1-feather4",
+  "recorded_at_utc": "2026-10-10T22:25:54Z",
+  "resref": "AM0411RN",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0411",
+        "manifest_path": "animations/packs-par-zone/am0411rn-magic-sphere-apo8-x4-30fps-spline-fit1-feather4-20260911/AR0411/manifest.json",
+        "manifest_sha256": "B8E73A1D508AE99257654AA1257BDBF648BC5C22EBEA2A3F24022B69B2FD0AC2",
+        "path": "animations/packs-par-zone/am0411rn-magic-sphere-apo8-x4-30fps-spline-fit1-feather4-20260911/AR0411",
+        "registry_sha256": "D66258FA84F38A92AC36FFD65955CE80FA1110508784C9E68C0C4E4866E5F1F5",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH5400",
+        "manifest_path": "animations/packs-par-zone/am0411rn-magic-sphere-apo8-x4-30fps-spline-fit1-feather4-20260911/OH5400/manifest.json",
+        "manifest_sha256": "0BC3BA12C90FC480D06469A2FEAC41190CDB1EE47C8C89F23873C669857F4A0A",
+        "path": "animations/packs-par-zone/am0411rn-magic-sphere-apo8-x4-30fps-spline-fit1-feather4-20260911/OH5400",
+        "registry_sha256": "D66258FA84F38A92AC36FFD65955CE80FA1110508784C9E68C0C4E4866E5F1F5",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH5500",
+        "manifest_path": "animations/packs-par-zone/am0411rn-magic-sphere-apo8-x4-30fps-spline-fit1-feather4-20260911/OH5500/manifest.json",
+        "manifest_sha256": "633C6A6ED27A1B646D0D5B1D00B2C51EBC197D314CF67D671A935DD504F24845",
+        "path": "animations/packs-par-zone/am0411rn-magic-sphere-apo8-x4-30fps-spline-fit1-feather4-20260911/OH5500",
+        "registry_sha256": "D66258FA84F38A92AC36FFD65955CE80FA1110508784C9E68C0C4E4866E5F1F5",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am0411rn-magic-sphere-apo8-x4-30fps-spline-fit1-feather4-20260911/manifest.json",
+    "manifest_sha256": "BD53CBF7FFCCCF11EF2560D4AC46110E403D270B79CA517DE14DB1FD76D6542E",
+    "path": "animations/packs-par-zone/am0411rn-magic-sphere-apo8-x4-30fps-spline-fit1-feather4-20260911",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0411",
+    "OH5400",
+    "OH5500"
+  ]
+}
