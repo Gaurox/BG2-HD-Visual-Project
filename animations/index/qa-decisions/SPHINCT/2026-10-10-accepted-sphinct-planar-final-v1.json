@@ -1,0 +1,99 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:SPHINCT",
+  "correction_id": "planar-sphinct-wed-crisp-20261010-v7",
+  "decision": "Validation explicite utilisateur de SPHINCT sur toutes les maps AR0516-AR0521, en etat installe. Contrat runtime et DLL fixes dans le manifeste final ; aucune extension QA implicite.",
+  "decision_date": "2026-10-10",
+  "decision_id": "2026-10-10-accepted-sphinct-planar-final-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/SPHINCT/runs/sphinct-planar-accepted-20261010-v1/manifest.json",
+    "manifest_sha256": "16E5B4246B1B105A14CAF61A8A21C95007CD51CB00ADDE5135D440DC0A5987C1",
+    "path": "animations/ressources/SPHINCT/runs/sphinct-planar-accepted-20261010-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/SPHINCT/runs/planar-sphinct-wed-crisp-20261010-v7/manifest.json",
+        "manifest_sha256": "C060994FC58BB876B0F1467E73E14B153F7AE8DBE3F5663CC4769BE633A16499",
+        "path": "animations/ressources/SPHINCT/runs/planar-sphinct-wed-crisp-20261010-v7",
+        "schema": "bg2-upscale-animation-world-occlusion-planar-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "world-wed-spline-fit1-ss4-box-crisp",
+  "recorded_at_utc": "2026-10-10T17:42:27Z",
+  "resref": "SPHINCT",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0516",
+        "manifest_path": "animations/packs-par-zone/sphinct-planar-accepted-20261010-v1/AR0516/manifest.json",
+        "manifest_sha256": "6A6F93E4AC27C6A3F71A37F36D5B84A07E1769E9C0560653C9449529F6E7C0A8",
+        "path": "animations/packs-par-zone/sphinct-planar-accepted-20261010-v1/AR0516",
+        "registry_sha256": "6D23F517A779EF5B656C1EB9CF6E7CD9CD77A6F9B785CC06CB8A0E05030C1028",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0517",
+        "manifest_path": "animations/packs-par-zone/sphinct-planar-accepted-20261010-v1/AR0517/manifest.json",
+        "manifest_sha256": "5BE2703CB83108CFB869B90B6ED64C78E9157B6D12FF5EA390F8EF7B5D24B25B",
+        "path": "animations/packs-par-zone/sphinct-planar-accepted-20261010-v1/AR0517",
+        "registry_sha256": "465FB375021872963AEFCF58BE9158BC4FF2070B546DE43639088B57B533A6BA",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0518",
+        "manifest_path": "animations/packs-par-zone/sphinct-planar-accepted-20261010-v1/AR0518/manifest.json",
+        "manifest_sha256": "66C54D33A88EB9A34709924869BD110B366684E582F6A4690FA935C6F1425B61",
+        "path": "animations/packs-par-zone/sphinct-planar-accepted-20261010-v1/AR0518",
+        "registry_sha256": "950988BB9D82DE7F138CA79BB6306776658ADEA9ED627D43CF0A17EA9BCE5D70",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0519",
+        "manifest_path": "animations/packs-par-zone/sphinct-planar-accepted-20261010-v1/AR0519/manifest.json",
+        "manifest_sha256": "FCE2F8FA6E4AD8CE238089B74C80EBE6BD64C16768830BB21B362D163B8CE143",
+        "path": "animations/packs-par-zone/sphinct-planar-accepted-20261010-v1/AR0519",
+        "registry_sha256": "901D0122C36408B184B96B36847DAA632EBC0DF9C889BF0A0F6BEA50DEFC2A6E",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0520",
+        "manifest_path": "animations/packs-par-zone/sphinct-planar-accepted-20261010-v1/AR0520/manifest.json",
+        "manifest_sha256": "4CBF5ACABC0EF15F093A9E03FD2C14A34187DBDC1569AFEA530EC9394C069D83",
+        "path": "animations/packs-par-zone/sphinct-planar-accepted-20261010-v1/AR0520",
+        "registry_sha256": "950988BB9D82DE7F138CA79BB6306776658ADEA9ED627D43CF0A17EA9BCE5D70",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0521",
+        "manifest_path": "animations/packs-par-zone/sphinct-planar-accepted-20261010-v1/AR0521/manifest.json",
+        "manifest_sha256": "8E532F32A0E1D26883AAFE0B6B6E8BD2B92C656202196C9A2A22BA15CC8255ED",
+        "path": "animations/packs-par-zone/sphinct-planar-accepted-20261010-v1/AR0521",
+        "registry_sha256": "A51AF0656BABD3E36AC949A4E542D56057F205BF117D37DF0A63E364FBADEE21",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/sphinct-planar-accepted-20261010-v1/manifest.json",
+    "manifest_sha256": "AF1902B5C9C9182ADC0479BBF75723D691191F83826BEE455DD2B05171A9EA81",
+    "path": "animations/packs-par-zone/sphinct-planar-accepted-20261010-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0516",
+    "AR0517",
+    "AR0518",
+    "AR0519",
+    "AR0520",
+    "AR0521"
+  ]
+}

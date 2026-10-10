@@ -1,5 +1,7 @@
 #include "iee/core/native_occlusion_feather.h"
 #include "iee/core/bdforcew_visual_placement.h"
+#include "iee/core/area_occlusion_smoothing.h"
+#include "iee/core/planar_sphinct_world_masks.h"
 #include <fstream>
 #include <iostream>
 #include <iterator>
@@ -93,6 +95,53 @@ int main(int argc, char** argv) {
             std::numeric_limits<int>::max(), "draw coordinate overflow");
     require(shifted("OH8100", true, std::numeric_limits<int>::min()) ==
             std::numeric_limits<int>::min() + 6, "negative draw coordinate failed");
-    std::cout << "inward coverage and scoped BDFORCEW placement: passed\n";
+    sample = {};
+    sample.owner = iee::core::NativeOcclusionOwner::AreaAnimation;
+    sample.subjectId = 0x0054434E49485053ull;
+    sample.successfulClippingCallCount = 1;
+    sample.lastClippingCall.x = 497; sample.lastClippingCall.y = 452;
+    const auto smooth = [&](std::string_view area) {
+      return iee::core::area_occlusion_smoothing_enabled(sample, area);
+    };
+    require(smooth("AR0517"), "SPHINCT target not smoothed");
+    require(!smooth("AR0516") && !smooth("AR0518"), "SPHINCT other area changed");
+    sample.lastClippingCall.x = 498;
+    require(!smooth("AR0517"), "SPHINCT other occurrence changed");
+    sample.lastClippingCall.x = 497; sample.lastClippingCall.dither = 1;
+    require(!smooth("AR0517"), "SPHINCT dither changed");
+    sample.lastClippingCall.dither = 0; sample.successfulClippingCallCount = 0;
+    require(!smooth("AR0517"), "SPHINCT failed clip changed");
+    sample.successfulClippingCallCount = 1;
+    sample.owner = iee::core::NativeOcclusionOwner::Character;
+    require(!smooth("AR0517"), "creature smoothed");
+    sample.owner = iee::core::NativeOcclusionOwner::AreaAnimation;
+    sample.draw.replacement = iee::core::NativeOcclusionReplacement::AreaPrototype;
+    require(!smooth("AR0517"), "prototype smoothed");
+    sample.draw.replacement = iee::core::NativeOcclusionReplacement::AreaRegistry;
+    sample.subjectId = 0;
+    require(!smooth("AR0517"), "unselected asset smoothed");
+    sample.subjectId = 0x574543524F464442ull;
+    require(smooth("OH8100"), "accepted BDFORCEW smoothing lost");
+    sample = {};sample.owner = iee::core::NativeOcclusionOwner::AreaAnimation;
+    sample.draw.replacement = iee::core::NativeOcclusionReplacement::AreaRegistry;
+    sample.subjectId = 0x0054434E49485053ull;sample.successfulClippingCallCount = 1;
+    const std::array<std::pair<int,int>,3> planarPositions = {{{1520,1287},{1529,1447},{2948,1776}}};
+    for(int index=0;index<3;++index) {
+      sample.lastClippingCall.x=planarPositions[index].first;
+      sample.lastClippingCall.y=planarPositions[index].second;
+      require(iee::core::planar_sphinct_mask_index(sample,"AR0516",160,120)==index,"planar occurrence missing");
+      require(iee::core::planar_sphinct_mask_index(sample,"AR0517",160,120)==-1,"planar mask escaped area");
+      require(iee::core::planar_sphinct_mask_index(sample,"AR0516",161,120)==-1,"planar mask wrong geometry");
+      auto mask=iee::core::decode_planar_mask(index);require(mask.size()==640*480*4,"planar mask length");
+      sample.lastClippingCall.dither=1;
+      require(iee::core::planar_sphinct_mask_index(sample,"AR0516",160,120)==-1,"planar dither escaped");
+      sample.lastClippingCall.dither=0;
+    }
+    sample.subjectId=0;require(iee::core::planar_sphinct_mask_index(sample,"AR0516",160,120)==-1,"other planar asset changed");
+    sample.subjectId=0x0054434E49485053ull;sample.successfulClippingCallCount=0;
+    require(iee::core::planar_sphinct_mask_index(sample,"AR0516",160,120)==-1,"failed planar clip changed");
+    sample.successfulClippingCallCount=1;sample.owner=iee::core::NativeOcclusionOwner::Character;
+    require(iee::core::planar_sphinct_mask_index(sample,"AR0516",160,120)==-1,"planar creature changed");
+    std::cout << "coverage, BDFORCEW placement, AR0517 and planar scope: passed\n";
   } catch (const std::exception& e) { std::cerr << e.what() << '\n'; return 1; }
 }

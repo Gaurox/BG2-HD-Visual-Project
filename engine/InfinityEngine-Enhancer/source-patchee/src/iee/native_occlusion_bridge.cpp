@@ -9,6 +9,7 @@
 
 #include "iee/core/logger.h"
 #include "iee/core/native_occlusion_feather.h"
+#include "iee/core/planar_sphinct_world_masks.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/core/sprite_p4_probe.h"
 #include "iee/creature_sprite_filter.h"
@@ -83,6 +84,11 @@ void main() {
     ivec2 maskCoord = highCoord / uScale;
     vec4 transfer = texelFetch(uVisibility, maskCoord, 0);
     vec4 replacement = texelFetch(uReplacement, highCoord, 0);
+    if (uInwardFeather == 3) {
+        // Full x4 spline coverage; straight-alpha RGB stays byte-identical.
+        outColor = vec4(replacement.rgb, replacement.a * transfer.r);
+        return;
+    }
     if (transfer.g > (0.5 / 255.0)) {
         outColor = vec4(0.0, 0.0, 0.0, transfer.g);
     } else if (transfer.r < (0.5 / 255.0) || transfer.b > (0.5 / 255.0)) {
@@ -94,7 +100,7 @@ void main() {
         outColor = vec4(0.0, 0.0, 0.0, 0.0);
     } else {
         float coverage = transfer.r * (uInwardFeather != 0 ? inwardCoverage(highCoord) : 1.0);
-        outColor = vec4(replacement.rgb * (uPremultiplied != 0 || uInwardFeather != 0 ? coverage : 1.0),
+        outColor = vec4(replacement.rgb * (uPremultiplied != 0 || uInwardFeather == 1 ? coverage : 1.0),
                         replacement.a * coverage);
     }
 }
@@ -358,10 +364,21 @@ void log_failure_once(const char* reason) noexcept {
 }
 }  // namespace
 
+const std::vector<std::uint8_t>* planar_sphinct_mask(int index) noexcept {
+  if (index < 0 || index > 2) return nullptr;
+  try {
+    static const std::array<std::vector<std::uint8_t>, 3> masks = {
+        core::decode_planar_mask(0), core::decode_planar_mask(1), core::decode_planar_mask(2)};
+    return &masks[static_cast<std::size_t>(index)];
+  } catch (...) { log_failure_once("planar world mask decode failed"); return nullptr; }
+}
+
 bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
                          int logicalWidth, int logicalHeight,
                          int replacementTextureId, const EngineTextureApi& api,
-                         int& transientTextureId, bool inwardFeather) noexcept {
+                         int& transientTextureId, bool inwardFeather,
+                         bool straightAlphaFeather,
+                         const std::vector<std::uint8_t>* physicalWorldTransfer) noexcept {
   transientTextureId = 0;
   if (logicalWidth <= 0 || logicalHeight <= 0 || replacementTextureId <= 0 ||
       !api.DrawGenTexture || !api.DrawBindTexture || !api.DrawDeleteTexture ||
@@ -378,7 +395,7 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
 
   try {
     std::vector<std::uint8_t> featherTransfer;
-    if (inwardFeather) {
+    if (inwardFeather && !physicalWorldTransfer) {
       featherTransfer = visibilityTransfer;
       inwardFeather = core::inward_occlusion_coverage(featherTransfer, logicalWidth, logicalHeight);
     }
@@ -443,6 +460,12 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
     }
     const int scale = physicalWidth / logicalWidth;
     if ((scale != 2 && scale != 4) || physicalHeight / logicalHeight != scale) {
+      restoreReplacement(0);
+      return false;
+    }
+    if (physicalWorldTransfer &&
+        (scale != 4 || physicalWorldTransfer->size() !=
+            static_cast<std::uint64_t>(physicalWidth) * physicalHeight * 4ull)) {
       restoreReplacement(0);
       return false;
     }
@@ -512,8 +535,10 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
     gl.glPixelStorei(game::gl::UNPACK_SKIP_ROWS, 0);
     gl.glPixelStorei(game::gl::UNPACK_SKIP_PIXELS, 0);
     gl.glTexImage2D(game::gl::TEXTURE_2D, 0, static_cast<int>(game::gl::RGBA8),
-                    logicalWidth, logicalHeight, 0, game::gl::RGBA,
-                    game::gl::UNSIGNED_BYTE, inwardFeather ? featherTransfer.data() : visibilityTransfer.data());
+                    physicalWorldTransfer ? physicalWidth : logicalWidth,
+                    physicalWorldTransfer ? physicalHeight : logicalHeight, 0, game::gl::RGBA,
+                    game::gl::UNSIGNED_BYTE, physicalWorldTransfer ? physicalWorldTransfer->data() :
+                        (inwardFeather ? featherTransfer.data() : visibilityTransfer.data()));
     gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MIN_FILTER,
                        static_cast<int>(game::gl::NEAREST));
     gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAG_FILTER,
@@ -547,9 +572,12 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
     gl.glUseProgram(g_program);
     gl.glUniform1i(g_replacementUniform, 0);
     gl.glUniform1i(g_maskUniform, 1);
-    gl.glUniform1i(g_scaleUniform, scale);
+    gl.glUniform1i(g_scaleUniform, physicalWorldTransfer ? 1 : scale);
     gl.glUniform1i(g_premultipliedUniform, mips ? 1 : 0);
-    gl.glUniform1i(g_inwardFeatherUniform, inwardFeather ? 1 : 0);
+    // Mode 1 keeps the accepted additive/premultiplied path; mode 2 changes
+    // alpha only for straight-alpha SPHINCT, avoiding a second RGB attenuation.
+    gl.glUniform1i(g_inwardFeatherUniform, physicalWorldTransfer ? 3 :
+        (inwardFeather ? (straightAlphaFeather ? 2 : 1) : 0));
     gl.glBindVertexArray(g_vao);
     gl.glDrawArrays(game::gl::TRIANGLES, 0, 3);
     const bool rendered = game::gl::check_error("native occlusion phase1 mask draw");

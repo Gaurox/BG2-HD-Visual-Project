@@ -42,6 +42,8 @@
 #include "iee/core/map_view_burst_telemetry.h"
 #include "iee/core/native_occlusion_probe.h"
 #include "iee/core/bdforcew_visual_placement.h"
+#include "iee/core/area_occlusion_smoothing.h"
+#include "iee/core/planar_sphinct_world_masks.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/core/performance_samples.h"
 #include "iee/core/process_resource_telemetry.h"
@@ -3838,13 +3840,18 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
         changed) {
       const int replacementTextureId =
           current_engine_texture_id(g_nativeOcclusionTextureApi);
+      const auto smoothingWed = g_ctx ? g_ctx->wed.load(std::memory_order_acquire) : nullptr;
+      const auto smoothingArea = smoothingWed ? smoothingWed->areaResrefView() : std::string_view{};
+      const auto planarMaskIndex = core::planar_sphinct_mask_index(
+          *nativeOcclusionSample, smoothingArea, logicalWidth, logicalHeight);
       (void)native_occlusion_bridge::bind_masked_texture(
           visibilityTransfer, logicalWidth, logicalHeight, replacementTextureId,
           g_nativeOcclusionTextureApi, transientOcclusionTextureId,
           replacement == ReplacementKind::AreaRegistry &&
-              nativeOcclusionSample->owner == core::NativeOcclusionOwner::AreaAnimation &&
-              nativeOcclusionSample->subjectId == 0x574543524F464442ull && // BDFORCEW
-              nativeOcclusionSample->lastClippingCall.dither == 0);
+              core::area_occlusion_smoothing_enabled(*nativeOcclusionSample,
+                  smoothingWed ? smoothingWed->areaResrefView() : std::string_view{}),
+          nativeOcclusionSample->subjectId == 0x0054434E49485053ull,
+          native_occlusion_bridge::planar_sphinct_mask(planarMaskIndex));
     } else if (g_nativeOcclusionMaskCapture->successful_call_count() > 0 &&
                (g_nativeOcclusionMaskCapture->width() != logicalWidth ||
                 g_nativeOcclusionMaskCapture->height() != logicalHeight)) {

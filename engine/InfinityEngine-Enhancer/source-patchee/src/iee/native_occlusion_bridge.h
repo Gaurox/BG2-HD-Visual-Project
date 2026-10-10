@@ -29,7 +29,12 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
                          int logicalWidth, int logicalHeight,
                          int replacementTextureId, const EngineTextureApi& api,
                          int& transientTextureId,
-                         bool inwardFeather = false) noexcept;
+                         bool inwardFeather = false,
+                         bool straightAlphaFeather = false,
+                         const std::vector<std::uint8_t>* physicalWorldTransfer = nullptr) noexcept;
+
+// Immutable x4 world masks for the three selected AR0516 SPHINCT occurrences.
+const std::vector<std::uint8_t>* planar_sphinct_mask(int index) noexcept;
 
 void finish_masked_texture(const EngineTextureApi& api, int nativeTextureId,
                            int transientTextureId) noexcept;

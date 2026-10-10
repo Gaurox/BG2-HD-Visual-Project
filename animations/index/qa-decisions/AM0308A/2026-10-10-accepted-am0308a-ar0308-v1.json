@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM0308A",
+  "decision": "QA ingame AM0308A dans AR0308 explicitement validee par utilisateur le 2026-10-10.",
+  "decision_date": "2026-10-10",
+  "decision_id": "2026-10-10-accepted-am0308a-ar0308-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM0308A/runs/am0308a-xbr2x-nearest2-x4-30fps-collapse-holds-spline-fit1-rgb-dilate-gaussian2-geometry-preserved-20260917/manifest.json",
+    "manifest_sha256": "A8B877D632A9FC091CE9C5E119A35B89A8E1AFB5EFC92AD779E04464C0DB2267",
+    "path": "animations/ressources/AM0308A/runs/am0308a-xbr2x-nearest2-x4-30fps-collapse-holds-spline-fit1-rgb-dilate-gaussian2-geometry-preserved-20260917",
+    "schema": "bg2-upscale-animation-visual-treatment-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM0308A/runs/am0308a-xbr2x-nearest2-x4-30fps-collapse-holds-spline-fit1-rgb-dilate-20260916/03_runtime_pack/manifest.json",
+        "manifest_sha256": "B0478DCFEE3DE92DF204F938D39433B422F6F2B37021C8C935E22244F83EC2E6",
+        "path": "animations/ressources/AM0308A/runs/am0308a-xbr2x-nearest2-x4-30fps-collapse-holds-spline-fit1-rgb-dilate-20260916/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "recipe_id": "xbr2x-nearest2-x4-collapse-holds-spline-fit1-gaussian2",
+  "recorded_at_utc": "2026-10-10T15:31:42Z",
+  "resref": "AM0308A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0308",
+        "manifest_path": "animations/packs-par-zone/combined-20260917-active-plus-visual-regression-fix/AR0308/manifest.json",
+        "manifest_sha256": "C30E4DC5A6C7EDFF777BBB6AA02DB8AE3F4251F268C66E6C9BC81110EFEFEA51",
+        "path": "animations/packs-par-zone/combined-20260917-active-plus-visual-regression-fix/AR0308",
+        "registry_sha256": "FDE3A1675700845D5B3A9BD4F82856DED4A9621A78D80C15A4DF53FCDD259041",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/combined-20260917-active-plus-visual-regression-fix/manifest.json",
+    "manifest_sha256": "1E676AF2338CEC2EAC3B18D9E42E33D06A2220303E48C07F6D17BD11481FCCD2",
+    "path": "animations/packs-par-zone/combined-20260917-active-plus-visual-regression-fix",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0308"
+  ]
+}
