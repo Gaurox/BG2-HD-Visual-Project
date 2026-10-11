@@ -12,9 +12,9 @@ The project combines **×4 environments**, improved environmental animation and 
 
 ### Environments at four times the resolution
 
-![Waukeen’s Promenade: the same map crop, vanilla on the left and upscaled four times on the right.](docs/images/readme/site-summary-20261011-v1/map-ar0700.webp)
+![Waukeen’s Promenade detail in a single image split down the middle: vanilla on the left and the x4 render on the right.](docs/images/readme/ar0700-gate-detail-vanilla-vs-x4.png)
 
-*AR0700 · Waukeen’s Promenade, daytime. The same crop at the same displayed size: vanilla on the left, ×4 on the right. Stonework, steps and ground textures gain definition while the scene keeps its original layout.*
+*AR0700 · Waukeen’s Promenade, daytime. One continuous close-up with a central divider: vanilla on the left, ×4 on the right. The stonework and ground textures show the change in detail directly across the split.*
 
 ### Environmental animation
 
