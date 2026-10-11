@@ -173,8 +173,22 @@ if(IEE_BUILD_WINDOWS_DLL)
 
     find_package(Python3 REQUIRED COMPONENTS Interpreter)
     set(IEE_WATER_ROUTE2_REGISTRY
-        "${CMAKE_SOURCE_DIR}/assets/water-route2/registry-v2.json"
-        CACHE FILEPATH "Versioned water route2 registry compiled into the DLL")
+        "" CACHE FILEPATH "Water registry override; empty follows the current workspace registry")
+    if(NOT IEE_WATER_ROUTE2_REGISTRY)
+        execute_process(
+            COMMAND "${Python3_EXECUTABLE}"
+                    "${CMAKE_SOURCE_DIR}/tools/generate_water_route2_registry.py" --print-default
+            OUTPUT_VARIABLE IEE_WATER_ROUTE2_DEFAULT
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+            COMMAND_ERROR_IS_FATAL ANY
+        )
+        string(JSON IEE_WATER_ROUTE2_REGISTRY GET "${IEE_WATER_ROUTE2_DEFAULT}" registry)
+        string(JSON IEE_WATER_ROUTE2_POINTER GET "${IEE_WATER_ROUTE2_DEFAULT}" pointer)
+        set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
+            "${IEE_WATER_ROUTE2_POINTER}"
+            "${CMAKE_SOURCE_DIR}/tools/generate_water_route2_registry.py")
+    endif()
+    message(STATUS "Water route2 registry: ${IEE_WATER_ROUTE2_REGISTRY}")
     set(IEE_WATER_ROUTE2_PARENT_REGISTRY
         "${CMAKE_SOURCE_DIR}/../../../pipeline/water/route2-registry-v1.json")
     set(IEE_WATER_ROUTE2_ACTIVE_REGISTRY

@@ -23,6 +23,19 @@ def stock_tile(tile):
 
 
 class BaseSeamMaskTests(unittest.TestCase):
+    def test_selected_interface_keeps_native_bank_safety(self):
+        def bank_tile(tile):
+            image = stock_tile(tile)
+            if tile == 1:
+                image[:10, :, 3] = 255
+            return image
+        rgb, _, _, interfaces = b.seam_masks(parsed_pair(), [[1, 2]], {(0, 0): 0},
+            bank_tile, {0, 1}, {2}, selected_interfaces={(0, 'right')})
+        self.assertEqual(len(interfaces), 1)
+        self.assertFalse(rgb[0][:44].any())
+        self.assertTrue(rgb[0][44:252, -1].all())
+        self.assertFalse(rgb[0][:, :-7].any())
+
     def test_family_group_finds_the_interface_between_different_slots(self):
         _, _, _, interfaces = b.seam_masks(parsed_pair(), [[1, 2]], {(0, 0): 0}, stock_tile, {0, 1}, {2})
         self.assertEqual([(i["cell"], i["neighbor"], i["side"]) for i in interfaces], [([0, 0], [1, 0], "right")])
@@ -30,6 +43,26 @@ class BaseSeamMaskTests(unittest.TestCase):
     def test_per_slot_groups_keep_materials_apart(self):
         _, _, _, interfaces = b.seam_masks(parsed_pair(), [[1], [2]], {(0, 0): 0}, stock_tile, {0, 1}, {2})
         self.assertEqual(interfaces, [])
+
+
+class LocalEdgeDifferenceTests(unittest.TestCase):
+    def test_one_pixel_fringe_is_not_diluted_by_clean_sides(self):
+        core = np.full((256, 256, 4), 40, np.uint8)
+        donor = core[:, :, :3].copy()
+        core[:, -1, :3] = 20
+        mask = np.zeros((256, 256), np.float32)
+        mask[:, :4] = mask[:, -4:] = mask[:4, :] = 1
+        metrics = b.rgb_seam_difference(core, donor, mask)
+        self.assertLess(metrics['band'], 6)
+        self.assertEqual(metrics['right'], 20)
+
+    def test_small_quantization_error_and_unselected_bank_are_ignored(self):
+        core = np.full((256, 256, 4), 40, np.uint8)
+        donor = np.full((256, 256, 3), 43, np.uint8)
+        mask = np.zeros((256, 256), np.float32)
+        mask[32:224, -4:] = 1
+        core[:32, -1, :3] = 0
+        self.assertEqual(max(b.rgb_seam_difference(core, donor, mask).values()), 3)
 
 
 

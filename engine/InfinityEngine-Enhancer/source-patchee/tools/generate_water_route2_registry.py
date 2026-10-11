@@ -11,8 +11,25 @@ from typing import Any
 
 
 SOURCE_ROOT = Path(__file__).resolve().parents[1]
-WORKSPACE_ROOT = SOURCE_ROOT.parents[2]
-DEFAULT_INPUT = SOURCE_ROOT / "assets" / "water-route2" / "registry-v2.json"
+WORKSPACE_ROOT = next(
+    (root for root in SOURCE_ROOT.parents if (root / "pipeline/water/route2-registry-v1.json").is_file()),
+    SOURCE_ROOT.parents[2],
+)
+
+
+def default_input(workspace: Path = WORKSPACE_ROOT, source: Path = SOURCE_ROOT) -> Path:
+    pointer_path = workspace / "pipeline/water/route2-registry-current.json"
+    if not pointer_path.exists():
+        return source / "assets/water-route2/registry-v2.json"
+    pointer = json.loads(pointer_path.read_text(encoding="utf-8"))
+    if pointer.get("schema") != "bg2-water-route2-registry-current-v1":
+        raise RuntimeError("unsupported current water registry pointer")
+    registry = (workspace / pointer["registry"]["path"]).resolve()
+    expected = pointer["registry"]["sha256_lf"]
+    actual = hashlib.sha256(registry.read_text(encoding="utf-8").encode("utf-8")).hexdigest()
+    if actual.upper() != expected.upper():
+        raise RuntimeError("current water registry is absent or divergent")
+    return registry
 
 
 def sha256(path: Path) -> str:
@@ -231,10 +248,17 @@ def generate(path: Path) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
-    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--input", type=Path)
+    parser.add_argument("--output", type=Path)
+    parser.add_argument("--print-default", action="store_true")
     args = parser.parse_args()
-    output = generate(args.input.resolve())
+    if args.print_default:
+        print(json.dumps({"registry": str(default_input()),
+                          "pointer": str(WORKSPACE_ROOT / "pipeline/water/route2-registry-current.json")}))
+        return 0
+    if args.output is None:
+        parser.error("--output is required when generating a registry")
+    output = generate((args.input or default_input()).resolve())
     args.output.parent.mkdir(parents=True, exist_ok=True)
     temporary = args.output.with_suffix(args.output.suffix + ".part")
     temporary.write_text(output, encoding="utf-8", newline="\n")

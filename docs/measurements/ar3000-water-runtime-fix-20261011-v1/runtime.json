@@ -1,0 +1,24 @@
+{
+  "schema": "bg2-water-runtime-recovery-candidate-v1",
+  "run": "ar3000-water-runtime-fix-20261011-v1",
+  "baseline_dll_sha256": "28651777499111BE1D94CFD878947BCD67C0AD5062E2673F8991E153D6A46DCD",
+  "baseline_source": "sprite/.work/monster-composite-fix-x2-20261011-v1/runtime-src",
+  "dll": "maps/water-batches/runs/ar3000-water-runtime-fix-20261011-v1/candidate/InfinityEngine-Enhancer.dll",
+  "dll_sha256": "3992155DB599FCB106A8CBD71D65C46027DBFF329C5066CD0D34483F9C8C8F88",
+  "ini_sha256": "5859F49562E89F71CC1A9B9DDBAC4F77B9B5AB95E5983D88E51C09E480042ABA",
+  "registry": "pipeline/water/requests/ar6300-water-30fps-20260929-v4/registry-v3.json",
+  "registry_version": 3,
+  "registry_sha256_lf": "E582C7879B50C0765DAC7918EF80AD9CE3CC17E884FAE6E599E81796FF635471",
+  "registry_entries": 188,
+  "ar3000_entries": 8,
+  "unchanged_source_files": 256,
+  "changed_source_files": [
+    "CMakeLists.txt",
+    "tools/generate_water_route2_registry.py"
+  ],
+  "native_tests_passed": true,
+  "ar3000_file_evidence_matches": true,
+  "installation": false,
+  "ingame_QA": false,
+  "release": false
+}

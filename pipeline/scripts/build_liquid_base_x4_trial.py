@@ -81,7 +81,23 @@ def block_mask(mask):
     return np.pad(mask, 4, mode='edge').reshape(66, 4, 66, 4).any((1, 3))
 
 
-def seam_masks(parsed, slot_groups, full_cells, stock_tile, unique_primary, unique_secondary):
+def rgb_seam_difference(core, donor, mask):
+    """Keep a one-pixel fringe detectable even when several clean sides dilute the band mean."""
+    error = np.abs(core[:, :, :3].astype(np.float32) - donor.astype(np.float32))
+    strong = mask == 1
+    metrics = {'band': float(error[strong].mean()) if strong.any() else 0.0}
+    # Exclude corners covered only by a perpendicular band.
+    for side, edge, valid in [('left', error[:, 0], strong[:, 0] & ~strong[:, 4]),
+                              ('right', error[:, -1], strong[:, -1] & ~strong[:, -5]),
+                              ('top', error[0], strong[0] & ~strong[4]),
+                              ('bottom', error[-1], strong[-1] & ~strong[-5])]:
+        if valid.any():
+            metrics[side] = float(edge[valid].mean())
+    return metrics
+
+
+def seam_masks(parsed, slot_groups, full_cells, stock_tile, unique_primary, unique_secondary,
+               *, selected_interfaces=None):
     """World-space masks per group of overlay bits; never cross materials or true banks.
     A group is one slot, or every slot of one tiled family (A-D pavings: neighbouring water
     cells always carry different slots of the same material, AR5000 WT5000A-D)."""
@@ -129,6 +145,8 @@ def seam_masks(parsed, slot_groups, full_cells, stock_tile, unique_primary, uniq
             x, y = xy
             own = safe[y*64:(y+1)*64, x*64:(x+1)*64]
             for side, dx, dy in [('left', -1, 0), ('right', 1, 0), ('top', 0, -1), ('bottom', 0, 1)]:
+                if selected_interfaces is not None and (tile, side) not in selected_interfaces:
+                    continue
                 nx, ny = x + dx, y + dy
                 neighbor = cells.get((nx, ny))
                 if not neighbor or not neighbor['flags'] & bit or neighbor['count'] != 1 \
@@ -388,10 +406,11 @@ def process_target(target, vanilla, live, destination, write):
                     core = np.array(decoded.crop((x, y, x+256, y+256)).convert('RGBA'))
                     replacement = np.asarray(donor.crop((cx*256, cy*256, (cx+1)*256, (cy+1)*256)).convert('RGB'))
                     weight = rgb[tile][:, :, None]
-                    strong = weight[:, :, 0] == 1
-                    difference = float(np.abs(core[:, :, :3][strong].astype(float) - replacement[strong]).mean())
-                    do_repair = difference > threshold
+                    differences = rgb_seam_difference(core, replacement, weight[:, :, 0])
+                    difference = differences['band']
+                    do_repair = max(differences.values()) > threshold
                     report['rgb_tiles'].append({'tile': tile, 'mean_absolute_donor_difference': difference,
+                                                'local_edge_differences': differences,
                                                 'repaired': do_repair})
                     if do_repair:
                         core[:, :, :3] = np.rint(core[:, :, :3]*(1-weight) + replacement*weight).clip(0, 255).astype(np.uint8)

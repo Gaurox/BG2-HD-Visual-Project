@@ -1,0 +1,50 @@
+{
+  "schema": "bg2-water-user-qa-v1",
+  "area": "AR3000",
+  "kind": "runtime-registry-recovery-and-all-water-rgb-edges",
+  "recorded_utc": "2026-10-11T15:28:50.265650+00:00",
+  "source": "user-message",
+  "quote": "ok validé. committe",
+  "result": "validated",
+  "reserve": null,
+  "scope": "AR3000 installed runtime opacity recovery and generalized RGB seam repair; 318 tiles / 1074 directed edges / 16 atlas pages",
+  "weather_and_variant_observed": "not-specified-by-user",
+  "runtime": {
+    "receipt": "backups/water/ar3000-water-runtime-fix-20261011-v1/runtime/install-backup.json",
+    "dll_sha256": "3992155DB599FCB106A8CBD71D65C46027DBFF329C5066CD0D34483F9C8C8F88",
+    "registry_version": 3,
+    "entries": 188
+  },
+  "selection": {
+    "request": "pipeline/recipes/ar3000-all-rgb-edges-20261011-v1/request.json",
+    "build": "maps/water-batches/runs/ar3000-all-rgb-edges-20261011-v1/build.json",
+    "build_sha256": "d71f5148dc0a763d87131cea026a770605622a6b9ec14179ca99576934f0c1a2",
+    "installation_receipt": "backups/water/ar3000-all-rgb-edges-20261011-v1/override-backup-20261011-172608/install-backup.json",
+    "installation_receipt_sha256": "8505eb968851f7d6d9cf6b90d91d43b8ab5722582bb1221aec0b2b0a03da7dfa",
+    "files": {
+      "A300000.PVRZ": "3081ed41feff7951fcbc5a7fe1348f48ced7074e5b791f099436feb3a068d55a",
+      "A300001.PVRZ": "b020a62920491ac39f47a1cd9db164f5e19baa267f8feaf135f8da769b349b5c",
+      "A300002.PVRZ": "65cb73b5fe9db86cd00c14936f807d1827d8e666eb60e96c161571c76619b4b8",
+      "A300003.PVRZ": "9cf60a7a74e54eead2808d945e34ac915063542041e4437b9610624e4c7eb819",
+      "A300004.PVRZ": "0c24221151edb5b1d04af992abb8bcde71cb983645ee99e6dea1f6756485bc97",
+      "A300005.PVRZ": "9bff5459db3c729e21836320be304cf9cb6c2642cc0178120218b326e0a46562",
+      "A300006.PVRZ": "457c8d4bb522f009faffaea09ec6c8fdd6e58e965c6def6c7f31d18a5db65463",
+      "A300007.PVRZ": "dd62807473cdfd43a322bc065d1abee389643f00d96b3220f1f6e7fc52eab639",
+      "A300008.PVRZ": "8147081c87efc73b2207504aa0adb677e1cdebdfc74d8e3560f1d23da734fd97",
+      "A300009.PVRZ": "e02545660cf8b0765e9889bfd1e7019e1e467311b7f9d119ce4efaf075b86d94",
+      "A300010.PVRZ": "f5cb60d9601cc610f67f2e9ca5892a3770965234f071ee7485910ee28842a607",
+      "A300011.PVRZ": "eca3057e149b212cd92724c43927973de5ceea063d8a0cc914868e97bb246a86",
+      "A300037.PVRZ": "9fef5e9bec154f9c4d557861fbdb2733e258a948d7c4485af339d3eafe6c3875",
+      "A300038.PVRZ": "9fcf7ddab903d034d7bf93ed736b2b38f215776c7075603d2e0fe639f66fb698",
+      "A300039.PVRZ": "2c2cb08d74fec8b7095a75d83a88fdf61d75b3d30901e3b50463a590a617e480",
+      "A300040.PVRZ": "58c0858a0a893d0ab1843140246863f52b3193b0758e6b0a35efb7f5843a9740"
+    }
+  },
+  "checks": {
+    "alpha_byte_exact": true,
+    "outside_rgb_block_footprint_byte_exact": true,
+    "worst_edge_mean_rgb_error": 2.25,
+    "targeted_tests_passed": true
+  },
+  "release": "not-requested"
+}
