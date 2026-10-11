@@ -1,0 +1,48 @@
+{
+  "schema": "bg2-upscale-animation-visual-treatment-v1",
+  "status": "completed",
+  "created_utc": "2026-09-17T17:56:34.510916+00:00",
+  "source_pack": "G:\\AI\\BG2_Upscale\\animations\\ressources\\FIRE_2B\\runs\\ar3017-fire2b-apo8-x4-30fps-v2-20260917\\03_runtime_pack",
+  "source_pack_manifest_sha256": "eb35636b7211c38de4138b83094789c811fa96241b782a1ab66d78f0765e724a",
+  "runtime_pack": "03_runtime_pack",
+  "runtime_pack_manifest_sha256": "7fadb0e8a860b100a579a20784742564e4771f8df45bea39ece83b7a222c6b15",
+  "resrefs": [
+    "FIRE_2B"
+  ],
+  "visual_treatment": {
+    "kind": "luminance-alpha-with-canvas-edge-fade",
+    "luminance_low": 0.0,
+    "luminance_high": 16.0,
+    "curve": "smoothstep",
+    "canvas_edge_fade_fraction": 0.02857142857142857,
+    "rgba_policy": "reconstruct-alpha-and-premultiply-rgb"
+  },
+  "metrics": {
+    "FIRE_2B": {
+      "frame_count": 30,
+      "changed_frame_count": 30,
+      "alpha_sum_before": 599760000,
+      "alpha_sum_after": 283686179,
+      "fade_width_x4_min": 8.0,
+      "fade_width_x4_max": 8.0,
+      "inner_contour_radius_x4": null,
+      "gaussian_padding_x4": 0,
+      "geometry_preserved": false
+    }
+  },
+  "reviews": [
+    {
+      "resref": "FIRE_2B",
+      "kind": "comparison-exact",
+      "file": "review/FIRE_2B/comparison-30fps-exact.mp4",
+      "sha256": "8e6a3850b0c7808d1dd8e0cebe4754668bb67f1724ad1a58945be0d20c4b38ee"
+    },
+    {
+      "resref": "FIRE_2B",
+      "kind": "comparison-loop-4s",
+      "file": "review/FIRE_2B/comparison-30fps-loop-4s.mp4",
+      "sha256": "b914a9b0d0a2f652e71c6cc2efacfbdbc130efa644650de169a80a0c985debae"
+    }
+  ],
+  "qa": "explicit visual approval required before installation"
+}

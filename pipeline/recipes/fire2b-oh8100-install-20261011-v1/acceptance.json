@@ -1,0 +1,27 @@
+{
+  "status": "accepted",
+  "resref": "FIRE_2B",
+  "tested_areas": [
+    "AR3017",
+    "OH8100"
+  ],
+  "proof": {
+    "AR3017": {
+      "frame_hashes_identical": true,
+      "runtime_record_identical": true,
+      "registry_sha256": "5e4253c0ae2db8a5c3755e2077b9a5f9f2c6bbd0124ae42b5ba6487036d9171d"
+    },
+    "OH8100": {
+      "frame_hashes_identical": true,
+      "runtime_record_identical": true,
+      "registry_sha256": "cb8544061147bb7f17c792f762bf8414da0d2eb02fcec4e9a24396ce414d7bb5"
+    }
+  },
+  "decision": "animations/index/qa-decisions/FIRE_2B/2026-10-11-accepted-fire2b-ar3017-oh8100-v1.json",
+  "qa_pack": "animations/packs-par-zone/fire2b-two-maps-validation-20261011-v1",
+  "installation": "pipeline/recipes/fire2b-oh8100-install-20261011-v1/installation.json",
+  "qa_origin": "explicit user OH8100 approval; prior AR3017 approval retained on identical bytes and runtime contract",
+  "documentation_only": true,
+  "game_files_changed": false,
+  "release_changed": false
+}

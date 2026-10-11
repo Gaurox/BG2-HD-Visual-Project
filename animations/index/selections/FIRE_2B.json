@@ -1,0 +1,63 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:FIRE_2B",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/FIRE_2B/runs/ar3017-fire2b-apo8-x4-30fps-v2-20260917/03_runtime_pack/manifest.json",
+        "manifest_sha256": "EB35636B7211C38DE4138B83094789C811FA96241B782A1AB66D78F0765E724A",
+        "path": "animations/ressources/FIRE_2B/runs/ar3017-fire2b-apo8-x4-30fps-v2-20260917/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-11",
+    "path": "animations/index/qa-decisions/FIRE_2B/2026-10-11-accepted-fire2b-ar3017-oh8100-v1.json",
+    "sha256": "B53EEA64D1A33F634EEE5117E3948F2130B68FA885DA87532403A4EBAE11BBDB",
+    "status": "accepted"
+  },
+  "recipe_id": "fire2b-oh8100-install-20261011-v1",
+  "resref": "FIRE_2B",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/FIRE_2B/runs/ar3017-fire2b-luma0-16-edge8-premult-20260917/manifest.json",
+    "manifest_sha256": "0D0BCEC55702B541451B59EA97C63D5C3C54851831249637F52455923DC4B8B7",
+    "path": "animations/ressources/FIRE_2B/runs/ar3017-fire2b-luma0-16-edge8-premult-20260917",
+    "schema": "bg2-upscale-animation-visual-treatment-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR3017",
+        "manifest_path": "animations/packs-par-zone/fire2b-two-maps-validation-20261011-v1/AR3017/manifest.json",
+        "manifest_sha256": "8E9F88D5A2CBDC7C52989AB21E345291A570EB738074BBB501896659BD229D89",
+        "path": "animations/packs-par-zone/fire2b-two-maps-validation-20261011-v1/AR3017",
+        "registry_sha256": "CFF360035710F6B27783E755B7B4CBEA47E66D9459E3BD39F47013C0A8F4DE55",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH8100",
+        "manifest_path": "animations/packs-par-zone/fire2b-two-maps-validation-20261011-v1/OH8100/manifest.json",
+        "manifest_sha256": "2717EDA9BA9BD6DAE5417C56EA4AA66207C2CDE3686A13785DBCD7C15204BC7B",
+        "path": "animations/packs-par-zone/fire2b-two-maps-validation-20261011-v1/OH8100",
+        "registry_sha256": "CFF360035710F6B27783E755B7B4CBEA47E66D9459E3BD39F47013C0A8F4DE55",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/fire2b-two-maps-validation-20261011-v1/manifest.json",
+    "manifest_sha256": "AF97A45F8F8B388F947710E56FDC58903A1C11B62A57AAAE6DB200CE61811D00",
+    "path": "animations/packs-par-zone/fire2b-two-maps-validation-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR3017",
+    "OH8100"
+  ],
+  "updated_at_utc": "2026-10-11T08:14:09Z"
+}
