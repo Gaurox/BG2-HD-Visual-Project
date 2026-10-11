@@ -42,7 +42,7 @@
       "AMWRPGT1": "animations/ressources/AMWRPGT1/runs/amwrpgt1-lot5-current-20261011-v1"
     }
   },
-  "cleanup_status": "partial-pending-shared-pack-approval",
+  "cleanup_status": "completed",
   "cleanup_targets": [
     {
       "path": "animations/ressources/AM0510A/runs/am0510a-seedvr7b-lab-x4-20260919",
@@ -84,7 +84,7 @@
       "path": "animations/packs-par-zone/lot45-final-20261011-v1-complete",
       "files": 2455,
       "bytes": 1246064529,
-      "status": "pending"
+      "status": "deleted"
     },
     {
       "path": "animations/batches/lot45-final-20261011-v1/preview.png",
@@ -230,16 +230,19 @@
   "backup_rollback_retired": "Old AM0510A frames removed from previous; historical receipt remains. This backup cannot restore the discarded portal.",
   "game_payload_changed": false,
   "release_status": "not-selected",
-  "cleanup_pending": [
-    "animations/packs-par-zone/lot45-final-20261011-v1-complete"
-  ],
-  "cleanup_deleted_bytes": 159932982,
+  "cleanup_pending": [],
+  "cleanup_deleted_bytes": 1405997511,
   "verification": {
     "accepted_qa_lineage_valid": true,
     "installed_area_payloads_identical": 21,
     "lock_recipes_valid": 21,
     "mask_sha256": "39564e36dacc98902cfce1c2e5866bfb50d022f049b77a21ec5e663670ca1105",
-    "verified_utc": "2026-10-11T14:04:24.438891+00:00"
+    "verified_utc": "2026-10-11T14:06:10.500670+00:00"
   },
-  "cleanup_approval_reason": "Automatic approval review rejected deletion of the shared complete index: other 20 lot5 areas need explicit authorization despite preserved exact copies."
+  "shared_pack_deletion_authorization": {
+    "date": "2026-10-11",
+    "origin": "explicit-user-confirmation",
+    "answer": "Oui, supprimer ce pack partagé",
+    "path": "animations/packs-par-zone/lot45-final-20261011-v1-complete"
+  }
 }

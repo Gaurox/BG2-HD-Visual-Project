@@ -2,7 +2,7 @@
 
 État courant : **lot4 accepté ingame et terminé**, AM0510A nouvel essai SeedVR7B seed20261011 retenu. **Lot5 seul en attente** :3assets/4variantes/20cartes/68occurrences, registre `à-valider`, release non sélectionnée. Lot3 accepté séparément (AM0902L SeedVR retenu). Détails QA/retrait : `../am0510a-seedvr7b-retest-20261011-v1/README.md` et `acceptance.json`. Ce document décrit aussi la production initiale historique.
 
-Index courant lot5 : `animations/packs-par-zone/lot5-current-20261011-v1` ;20feuilles byte-identiques à l'installation. Aperçu et commandes : `animations/batches/lot5-current-20261011-v1/{preview-lot5.png,CLUA.md}`. Les sorties propres/aperçus AM0510A écartés ont été supprimés ; l'ancien index complete21cartes reste présent après refus du contrôle automatique, en attente de confirmation explicite pour ce dossier partagé. Les métadonnées historiques restent immuables. Les scripts historiques ne sont pas à rejouer sur ces IDs.
+Index courant lot5 : `animations/packs-par-zone/lot5-current-20261011-v1` ;20feuilles byte-identiques à l'installation. Aperçu et commandes : `animations/batches/lot5-current-20261011-v1/{preview-lot5.png,CLUA.md}`. Sorties/aperçus AM0510A écartés et ancien index complete21cartes supprimés ; confirmation explicite pour le dossier partagé : « Oui, supprimer ce pack partagé ». Les métadonnées historiques restent immuables. Les scripts historiques ne sont pas à rejouer sur ces IDs.
 
 | Lot / asset | Recette finale | Durées / déduplication |
 |---|---|---|
