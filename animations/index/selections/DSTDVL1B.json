@@ -1,0 +1,143 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:DSTDVL1B",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/ar0411-dstdvl-family-misty-contour-20261011-v1/AR0411/manifest.json",
+        "manifest_sha256": "46B3AFA9451FAF95325AF50F846FC00E34F51FD4B86EAE7A516905E63732DE29",
+        "path": "animations/packs-par-zone/ar0411-dstdvl-family-misty-contour-20261011-v1/AR0411",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/dstdvl1abc-nine-maps-misty-20261011-v1/manifest.json",
+        "manifest_sha256": "DCDCE46178128E265B99C8FB31F9D48508E68CAC9CF1A527D0F4567E7759E82C",
+        "path": "animations/batches/dstdvl1abc-nine-maps-misty-20261011-v1",
+        "schema": "bg2-upscale-animation-final-selection-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-11",
+    "path": "animations/index/qa-decisions/DSTDVL1B/2026-10-11-accepted-dstdvl1b-all-maps-misty-v1.json",
+    "sha256": "0DA8D5D6044542B1CBB9614DB3A9E3098C7B7B87FEC5574C0CAC05A89D9EB1E9",
+    "status": "accepted"
+  },
+  "recipe_id": "dstdvl1abc-nine-maps-misty-20261011-v1",
+  "resref": "DSTDVL1B",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/dstdvl1abc-all-maps-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "B9441DE1A131F47F64D234D0DEDB859D499BAA223681456AB7C35179D8EEDE63",
+    "path": "animations/batches/dstdvl1abc-all-maps-accepted-20261011-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0411",
+        "manifest_path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1/AR0411/manifest.json",
+        "manifest_sha256": "DE4C63250F4F9C6522166BB7D277AC30292EB8C5B43378DBF191C02CDCBA970B",
+        "path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1/AR0411",
+        "registry_sha256": "DA96BF1AECAECA8414F87E3BDB672704C0972F306AACFE3320369F1226D4F026",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0414",
+        "manifest_path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1/AR0414/manifest.json",
+        "manifest_sha256": "686F570614FC6767C751325323134A2F331F49C443CD295BADB9E11768857322",
+        "path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1/AR0414",
+        "registry_sha256": "DA96BF1AECAECA8414F87E3BDB672704C0972F306AACFE3320369F1226D4F026",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1100",
+        "manifest_path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1/AR1100/manifest.json",
+        "manifest_sha256": "C1FCF3DF8B7EFFEFC9F84F853699FEC4252B1603ED759E1E9803E0027843041F",
+        "path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1/AR1100",
+        "registry_sha256": "DA96BF1AECAECA8414F87E3BDB672704C0972F306AACFE3320369F1226D4F026",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1200",
+        "manifest_path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1/AR1200/manifest.json",
+        "manifest_sha256": "5261A5717BCE208C12539F245C2AB1A77AA48361D8E87E80EE3FEA62509ED2AF",
+        "path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1/AR1200",
+        "registry_sha256": "DA96BF1AECAECA8414F87E3BDB672704C0972F306AACFE3320369F1226D4F026",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1600",
+        "manifest_path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1/AR1600/manifest.json",
+        "manifest_sha256": "AF3D8F9502C866C221A796820F3874A9F09D3E49462D1ADA93C5D9E12DE4541A",
+        "path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1/AR1600",
+        "registry_sha256": "8DFA378099F2751212C4D206B1C2EB0D67594F437326E3F28F8857365F6F73D3",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1700",
+        "manifest_path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1/AR1700/manifest.json",
+        "manifest_sha256": "2E359EF622BF39655523FE9DB57C40836BB054BF41A3A3CBF1E752C3F4B05A8B",
+        "path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1/AR1700",
+        "registry_sha256": "DA96BF1AECAECA8414F87E3BDB672704C0972F306AACFE3320369F1226D4F026",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5200",
+        "manifest_path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1/AR5200/manifest.json",
+        "manifest_sha256": "9B8BE7CF14339655B35ECDD4EB9218BC0DC6B2C0A08718BB9DA2AFFEE15DC4FD",
+        "path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1/AR5200",
+        "registry_sha256": "8DFA378099F2751212C4D206B1C2EB0D67594F437326E3F28F8857365F6F73D3",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5500",
+        "manifest_path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1/AR5500/manifest.json",
+        "manifest_sha256": "93872CD9245B75F5511BF37878F7E49A169BFE5266BFC39F3F55EEF4FB97B42D",
+        "path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1/AR5500",
+        "registry_sha256": "DA96BF1AECAECA8414F87E3BDB672704C0972F306AACFE3320369F1226D4F026",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR6300",
+        "manifest_path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1/AR6300/manifest.json",
+        "manifest_sha256": "2F219431D23C2732D5FCB417D3BA88685C6C8AB46367D9743CC8FB3D5663D6F9",
+        "path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1/AR6300",
+        "registry_sha256": "8DFA378099F2751212C4D206B1C2EB0D67594F437326E3F28F8857365F6F73D3",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH6400",
+        "manifest_path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1/OH6400/manifest.json",
+        "manifest_sha256": "1A06DFF098AF55DC6A4A801C8A0F2A8FC09CA661F213CED80AB17FE1C50220EF",
+        "path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1/OH6400",
+        "registry_sha256": "DA96BF1AECAECA8414F87E3BDB672704C0972F306AACFE3320369F1226D4F026",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "3C82BF446E4CA8A88FF921F52F20AA6B4F4D08370A1627C3745035C46030207F",
+    "path": "animations/packs-par-zone/dstdvl1abc-all-maps-accepted-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0411",
+    "AR0414",
+    "AR1100",
+    "AR1200",
+    "AR1600",
+    "AR1700",
+    "AR5200",
+    "AR5500",
+    "AR6300",
+    "OH6400"
+  ],
+  "updated_at_utc": "2026-10-11T08:24:58Z"
+}

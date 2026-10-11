@@ -1,0 +1,306 @@
+{
+  "schema": "bg2-upscale-animation-final-selection-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T08:21:21.843943+00:00",
+  "resrefs": [
+    "DSTDVL1A",
+    "DSTDVL1B",
+    "DSTDVL1C"
+  ],
+  "output_split_root": "animations/packs-par-zone/dstdvl1abc-nine-maps-misty-20261011-v1",
+  "output_manifest_sha256": "90c53faaaa0b3dbb85d9f6bf0caf30f1e6502967688616d7da649b73c5988355",
+  "source_area_packs": {
+    "AR0414": [
+      {
+        "path": "animations/packs-par-zone/ar0414-dstdvl1abc-plus-static-seedvr7b-lab-x4-20260906/AR0414",
+        "manifest_sha256": "020936972818e8c818f285ab3082e5dc2b21f400cd9ab85c8c0111a06935b145",
+        "selected_resource": "*"
+      }
+    ],
+    "AR1100": [
+      {
+        "path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR1100",
+        "manifest_sha256": "e97d089fa86e6c7ddb0a0f2f161ddce11584451339fc281a1ea63079abc175a0",
+        "selected_resource": "*"
+      }
+    ],
+    "AR1200": [
+      {
+        "path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR1200",
+        "manifest_sha256": "b9c40ed18a13b1a95723169b640524ee4005ff13afe63f09035855f5ca45481b",
+        "selected_resource": "*"
+      }
+    ],
+    "AR1600": [
+      {
+        "path": "animations/packs-par-zone/combined-20260917-active-plus-visual-regression-fix/AR1600",
+        "manifest_sha256": "f6196b19566bf25e7e5735a65052a5199dd5133a33a9a2360e836cbeb2fe43f0",
+        "selected_resource": "*"
+      }
+    ],
+    "AR1700": [
+      {
+        "path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR1700",
+        "manifest_sha256": "0fa8d78fe3cfe18e7080e718889c40df414332015f1889a62d123ae4e9668852",
+        "selected_resource": "*"
+      }
+    ],
+    "AR5200": [
+      {
+        "path": "animations/packs-par-zone/combined-20260917-active-plus-visual-regression-fix/AR5200",
+        "manifest_sha256": "6d54ac0a92de2891a78bf252cdd99d527e676a6f583a99f177dc2999c55ea344",
+        "selected_resource": "*"
+      }
+    ],
+    "AR5500": [
+      {
+        "path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR5500",
+        "manifest_sha256": "b8a16c9dd60c86319d6318e27c15208f8052dd0e5f9eacd92f9a4e209fc19819",
+        "selected_resource": "*"
+      },
+      {
+        "path": "animations/packs-par-zone/am5500a-spline-fit1-feather4-oval20x6-rgbgaussian1-20261009-v1/AR5500",
+        "manifest_sha256": "6ced215601d70a4342d695c8c9461b99f1d7d0139dc41b378cf650119ac5528b",
+        "selected_resource": "AM5500A"
+      },
+      {
+        "path": "animations/packs-par-zone/am5500d-reboutcx-apo8-aura24-sparkguard1-20261009-v1/AR5500",
+        "manifest_sha256": "364938488cd588f228264632f79f7b35ef958926b39c9a17eadbaac2243048dc",
+        "selected_resource": "AM5500D"
+      }
+    ],
+    "AR6300": [
+      {
+        "path": "animations/packs-par-zone/combined-20260917-active-plus-visual-regression-fix/AR6300",
+        "manifest_sha256": "cd46138e3a5521bb2bb2f5a434fa51e3ce61a3e12d820d3e0a160fffcc8a18e1",
+        "selected_resource": "*"
+      }
+    ],
+    "OH6400": [
+      {
+        "path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/OH6400",
+        "manifest_sha256": "d561cbfad0eaa25952c6d42de2beba8908400b1a3db14ee6565a3e7a8c9df93b",
+        "selected_resource": "*"
+      }
+    ]
+  },
+  "visual_treatment": {
+    "recipe": "pipeline/recipes/dstdvl1a-misty-contour-20261011-v1/build.py",
+    "inner_feather_x4": 20,
+    "gaussian_sigma_x4": 4,
+    "native_canvas_crop": true,
+    "core_distance36_byte_identical": true,
+    "premultiplied_RGBA": true,
+    "timing": "every installed area version preserved; 139 or 50 frames; no deduplication/interpolation"
+  },
+  "metrics": {
+    "AR0414": {
+      "DSTDVL1A": {
+        "frame_count": 139,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1082497,
+        "approved_AR0411_matching_frames": 139,
+        "geometry_centres_and_timeline_preserved": true
+      },
+      "DSTDVL1B": {
+        "frame_count": 139,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1082497,
+        "approved_AR0411_matching_frames": 139,
+        "geometry_centres_and_timeline_preserved": true
+      },
+      "DSTDVL1C": {
+        "frame_count": 139,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1082497,
+        "approved_AR0411_matching_frames": 139,
+        "geometry_centres_and_timeline_preserved": true
+      }
+    },
+    "AR1100": {
+      "DSTDVL1A": {
+        "frame_count": 139,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1082497,
+        "approved_AR0411_matching_frames": 139,
+        "geometry_centres_and_timeline_preserved": true
+      },
+      "DSTDVL1B": {
+        "frame_count": 139,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1082497,
+        "approved_AR0411_matching_frames": 139,
+        "geometry_centres_and_timeline_preserved": true
+      },
+      "DSTDVL1C": {
+        "frame_count": 139,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1082497,
+        "approved_AR0411_matching_frames": 139,
+        "geometry_centres_and_timeline_preserved": true
+      }
+    },
+    "AR1200": {
+      "DSTDVL1A": {
+        "frame_count": 139,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1082497,
+        "approved_AR0411_matching_frames": 139,
+        "geometry_centres_and_timeline_preserved": true
+      },
+      "DSTDVL1B": {
+        "frame_count": 139,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1082497,
+        "approved_AR0411_matching_frames": 139,
+        "geometry_centres_and_timeline_preserved": true
+      },
+      "DSTDVL1C": {
+        "frame_count": 139,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1082497,
+        "approved_AR0411_matching_frames": 139,
+        "geometry_centres_and_timeline_preserved": true
+      }
+    },
+    "AR1600": {
+      "DSTDVL1A": {
+        "frame_count": 50,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1244438,
+        "approved_AR0411_matching_frames": 0,
+        "geometry_centres_and_timeline_preserved": true
+      },
+      "DSTDVL1B": {
+        "frame_count": 50,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1244438,
+        "approved_AR0411_matching_frames": 0,
+        "geometry_centres_and_timeline_preserved": true
+      },
+      "DSTDVL1C": {
+        "frame_count": 50,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1244438,
+        "approved_AR0411_matching_frames": 0,
+        "geometry_centres_and_timeline_preserved": true
+      }
+    },
+    "AR1700": {
+      "DSTDVL1A": {
+        "frame_count": 139,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1082497,
+        "approved_AR0411_matching_frames": 139,
+        "geometry_centres_and_timeline_preserved": true
+      },
+      "DSTDVL1B": {
+        "frame_count": 139,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1082497,
+        "approved_AR0411_matching_frames": 139,
+        "geometry_centres_and_timeline_preserved": true
+      },
+      "DSTDVL1C": {
+        "frame_count": 139,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1082497,
+        "approved_AR0411_matching_frames": 139,
+        "geometry_centres_and_timeline_preserved": true
+      }
+    },
+    "AR5200": {
+      "DSTDVL1A": {
+        "frame_count": 50,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1244438,
+        "approved_AR0411_matching_frames": 0,
+        "geometry_centres_and_timeline_preserved": true
+      },
+      "DSTDVL1B": {
+        "frame_count": 50,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1244438,
+        "approved_AR0411_matching_frames": 0,
+        "geometry_centres_and_timeline_preserved": true
+      },
+      "DSTDVL1C": {
+        "frame_count": 50,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1244438,
+        "approved_AR0411_matching_frames": 0,
+        "geometry_centres_and_timeline_preserved": true
+      }
+    },
+    "AR5500": {
+      "DSTDVL1A": {
+        "frame_count": 139,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1082497,
+        "approved_AR0411_matching_frames": 139,
+        "geometry_centres_and_timeline_preserved": true
+      },
+      "DSTDVL1B": {
+        "frame_count": 139,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1082497,
+        "approved_AR0411_matching_frames": 139,
+        "geometry_centres_and_timeline_preserved": true
+      },
+      "DSTDVL1C": {
+        "frame_count": 139,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1082497,
+        "approved_AR0411_matching_frames": 139,
+        "geometry_centres_and_timeline_preserved": true
+      }
+    },
+    "AR6300": {
+      "DSTDVL1A": {
+        "frame_count": 50,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1244438,
+        "approved_AR0411_matching_frames": 0,
+        "geometry_centres_and_timeline_preserved": true
+      },
+      "DSTDVL1B": {
+        "frame_count": 50,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1244438,
+        "approved_AR0411_matching_frames": 0,
+        "geometry_centres_and_timeline_preserved": true
+      },
+      "DSTDVL1C": {
+        "frame_count": 50,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1244438,
+        "approved_AR0411_matching_frames": 0,
+        "geometry_centres_and_timeline_preserved": true
+      }
+    },
+    "OH6400": {
+      "DSTDVL1A": {
+        "frame_count": 139,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1082497,
+        "approved_AR0411_matching_frames": 139,
+        "geometry_centres_and_timeline_preserved": true
+      },
+      "DSTDVL1B": {
+        "frame_count": 139,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1082497,
+        "approved_AR0411_matching_frames": 139,
+        "geometry_centres_and_timeline_preserved": true
+      },
+      "DSTDVL1C": {
+        "frame_count": 139,
+        "changed_frames": 46,
+        "core_pixels_byte_identical": 1082497,
+        "approved_AR0411_matching_frames": 139,
+        "geometry_centres_and_timeline_preserved": true
+      }
+    }
+  },
+  "qa_status": "pending-user-ingame-QA on nine areas; previous AR0411 QA unchanged"
+}
