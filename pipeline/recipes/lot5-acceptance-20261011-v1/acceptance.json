@@ -1,0 +1,71 @@
+{
+  "schema": "bg2-upscale-animation-batch-acceptance-v1",
+  "status": "accepted-ingame",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "decision": "ok je valide tout le lot. maj le suivi et committe.",
+  "lot": 5,
+  "asset_count": 3,
+  "palette_variant_count": 4,
+  "area_count": 20,
+  "occurrences": 68,
+  "resources": [
+    {
+      "resref": "AM3000E",
+      "areas": [
+        "AR3000"
+      ],
+      "qa_decision": "animations/index/qa-decisions/AM3000E/2026-10-11-accepted-am3000e-native-contour-v1.json",
+      "existing_accepted_decision_retained": true,
+      "installed_payload_identical": true,
+      "qa_lineage_valid": true,
+      "recipe": "ReboutCX PLT_MAGE/Apollo8; fondu doux sigma2/canvas2; dimensions/centres natifs restaurés,61frames/48-36-20phases"
+    },
+    {
+      "resref": "FLM2PUR",
+      "areas": [
+        "AR1008",
+        "OH4210"
+      ],
+      "final_run": "animations/ressources/FLM2PUR/runs/flm2pur-lot5-accepted-20261011-v1",
+      "qa_decision": "animations/index/qa-decisions/FLM2PUR/2026-10-11-accepted-flm2pur-lot5-final-v1.json",
+      "recipe": "ReboutCX x4/Apollo8; AR1008 palette embarquée inner4, OH4210 PLT_PURP sigma2x4/étincelles sigma0,8/canvas1 ; dimensions natives exactes,32phases/1,066667s",
+      "installed_payload_identical": true,
+      "qa_lineage_valid": true
+    },
+    {
+      "resref": "AMWRPGT1",
+      "areas": [
+        "AR3003",
+        "AR3004",
+        "AR3005",
+        "AR3006",
+        "AR3007",
+        "AR3008",
+        "AR3009",
+        "AR3010",
+        "AR3011",
+        "AR3012",
+        "AR3013",
+        "AR3014",
+        "AR3015",
+        "AR3016",
+        "AR3017",
+        "AR3019",
+        "AR3020"
+      ],
+      "final_run": "animations/ressources/AMWRPGT1/runs/amwrpgt1-lot5-accepted-20261011-v1",
+      "qa_decision": "animations/index/qa-decisions/AMWRPGT1/2026-10-11-accepted-amwrpgt1-lot5-final-v1.json",
+      "recipe": "SeedVR2 7B LAB x4 réutilisé byte-identique; spline fit1 safe inner8/outer6/alpha gauss3, Apollo8;24phases/0,8s sur17cartes",
+      "installed_payload_identical": true,
+      "qa_lineage_valid": true
+    }
+  ],
+  "AMWRPGT1_prior_QA_retained": [
+    "AR3011",
+    "AR3016",
+    "AR3017"
+  ],
+  "game_payload_changed": false,
+  "release_status": "not-selected"
+}

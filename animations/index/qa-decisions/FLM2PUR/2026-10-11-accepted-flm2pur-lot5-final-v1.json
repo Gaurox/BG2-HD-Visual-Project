@@ -1,0 +1,92 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:FLM2PUR",
+  "correction_id": "lot5-accepted-20261011-v1",
+  "decision": "Utilisateur : ok je valide tout le lot. FLM2PUR accepté ingame sur AR1008,OH4210. ReboutCX x4/Apollo8; AR1008 palette embarquée inner4, OH4210 PLT_PURP sigma2x4/étincelles sigma0,8/canvas1 ; dimensions natives exactes,32phases/1,066667s.",
+  "decision_date": "2026-10-11",
+  "decision_id": "2026-10-11-accepted-flm2pur-lot5-final-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/FLM2PUR/runs/flm2pur-lot5-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "7C03C0E423FB7CA3B1D2E15613745500FEAA11BC5862DF5A3D1A3B1F4BC0203D",
+    "path": "animations/ressources/FLM2PUR/runs/flm2pur-lot5-accepted-20261011-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/lot45-final-20261011-v1/final-FLM2PUR-PLT_PURP/manifest.json",
+        "manifest_sha256": "D53E4D2915891238F545D2A8758756BC2411C80D455773CF15FCE17A2666FAA9",
+        "path": "animations/batches/lot45-final-20261011-v1/final-FLM2PUR-PLT_PURP",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/packs-par-zone/flm2pur-palette-selection-soft2-20261011-v1/AR1008/manifest.json",
+        "manifest_sha256": "0D611D1EF2DF74044F27F317B1B38FB4724AC51A405CE946DE66F177F030D3F4",
+        "path": "animations/packs-par-zone/flm2pur-palette-selection-soft2-20261011-v1/AR1008",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/packs-par-zone/flm2pur-palette-selection-soft2-20261011-v1/OH4210/manifest.json",
+        "manifest_sha256": "A787EE42CAEC4E4B3B92F4D2181584429534A766057019A38CAF57BD01FCC310",
+        "path": "animations/packs-par-zone/flm2pur-palette-selection-soft2-20261011-v1/OH4210",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/flm2pur-oh4210-contour-20261011-v1/manifest.json",
+        "manifest_sha256": "FD08CB39DB8FC812CEF097AC5E818D790DD30385A37E91E1EF9D71A6AFCD78A8",
+        "path": "animations/batches/flm2pur-oh4210-contour-20261011-v1",
+        "schema": "bg2-upscale-animation-trial-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/FLM2PUR/runs/flm2pur-palette-selection-soft2-20261011-v1/manifest.json",
+        "manifest_sha256": "87E952A2D26E0E9C871B3394CAAF144F9339CF63E65C6ED41BB2D90F71448A67",
+        "path": "animations/ressources/FLM2PUR/runs/flm2pur-palette-selection-soft2-20261011-v1",
+        "schema": "bg2-upscale-animation-visual-treatment-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "lot5-accepted-20261011-v1",
+  "recorded_at_utc": "2026-10-11T14:42:09Z",
+  "resref": "FLM2PUR",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR1008",
+        "manifest_path": "animations/packs-par-zone/flm2pur-palette-selection-soft2-20261011-v1/AR1008/manifest.json",
+        "manifest_sha256": "0D611D1EF2DF74044F27F317B1B38FB4724AC51A405CE946DE66F177F030D3F4",
+        "path": "animations/packs-par-zone/flm2pur-palette-selection-soft2-20261011-v1/AR1008",
+        "registry_sha256": "1917BE7C06EADED616BA0E83559BD5CD4B92224A34EB0C2E55ECC2005D4C24F1",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH4210",
+        "manifest_path": "animations/packs-par-zone/flm2pur-palette-selection-soft2-20261011-v1/OH4210/manifest.json",
+        "manifest_sha256": "A787EE42CAEC4E4B3B92F4D2181584429534A766057019A38CAF57BD01FCC310",
+        "path": "animations/packs-par-zone/flm2pur-palette-selection-soft2-20261011-v1/OH4210",
+        "registry_sha256": "2A9A18122C843AA52116E9BA13286A0CCA28F6424D29EC1562A8D5DADBE61E70",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/flm2pur-palette-selection-soft2-20261011-v1/manifest.json",
+    "manifest_sha256": "4D4150A8FE91A6728E612651940E35B807F48E6D6820C56D30591534619489B8",
+    "path": "animations/packs-par-zone/flm2pur-palette-selection-soft2-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR1008",
+    "OH4210"
+  ]
+}

@@ -1,0 +1,235 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AMWRPGT1",
+  "correction_id": "lot5-accepted-20261011-v1",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3003/manifest.json",
+        "manifest_sha256": "1DC32ED4DEA2D021700F0FCC834736C06937330F705B3FC73D198DF21C0309F9",
+        "path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3003",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AMWRPGT1/runs/amwrpgt1-spatial-spline-fit1-safe8x6-gauss3-20260906/03_runtime_pack/manifest.json",
+        "manifest_sha256": "694DC36657FF2E0EA63269259BD78761350DB1BC85513EDAD813924F673A9E29",
+        "path": "animations/ressources/AMWRPGT1/runs/amwrpgt1-spatial-spline-fit1-safe8x6-gauss3-20260906/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AMWRPGT1/runs/amwrpgt1-timeline30-apo8-safe8x6-gauss3-20260906/03_runtime_pack/manifest.json",
+        "manifest_sha256": "0B178F9074C74A4CAED3C52D6D000894E51B304DABC74C2ADC70CC1820AF107D",
+        "path": "animations/ressources/AMWRPGT1/runs/amwrpgt1-timeline30-apo8-safe8x6-gauss3-20260906/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/AMWRPGT1/runs/amwrpgt1-lot5-current-20261011-v1/manifest.json",
+        "manifest_sha256": "4C207AF707933A52C413953C92C30F0AC75AD8CA364FAF1945F5EF7A30AA16E5",
+        "path": "animations/ressources/AMWRPGT1/runs/amwrpgt1-lot5-current-20261011-v1",
+        "schema": "bg2-upscale-animation-visual-treatment-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AMWRPGT1/runs/amwrpgt1-seedvr2-7b-int8-lab-x4/manifest.json",
+        "manifest_sha256": "76E4A7DC1D85605820C66E1C5F9C57439E3693FA1EF9961307EC84655E58BFB7",
+        "path": "animations/ressources/AMWRPGT1/runs/amwrpgt1-seedvr2-7b-int8-lab-x4",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AMWRPGT1/runs/amwrpgt1-timeline30-apo8-safe8x6-gauss3-20260906/manifest.json",
+        "manifest_sha256": "1CAC547317CAF0D1533B948907445E02FD25BE504184BBCBBC49D18D2585E55D",
+        "path": "animations/ressources/AMWRPGT1/runs/amwrpgt1-timeline30-apo8-safe8x6-gauss3-20260906",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-11",
+    "path": "animations/index/qa-decisions/AMWRPGT1/2026-10-11-accepted-amwrpgt1-lot5-final-v1.json",
+    "sha256": "083B5CF3B58B0C9568909AD1CC525246C3A424870BD89613A8D4DD2064128D17",
+    "status": "accepted"
+  },
+  "recipe_id": "lot5-accepted-20261011-v1",
+  "resref": "AMWRPGT1",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AMWRPGT1/runs/amwrpgt1-lot5-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "0FB06CE431471090CD00224D939716F168D8F2D115AAF84B74B5D4AD22D43D20",
+    "path": "animations/ressources/AMWRPGT1/runs/amwrpgt1-lot5-accepted-20261011-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR3003",
+        "manifest_path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3003/manifest.json",
+        "manifest_sha256": "1DC32ED4DEA2D021700F0FCC834736C06937330F705B3FC73D198DF21C0309F9",
+        "path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3003",
+        "registry_sha256": "BA6748E527A24C43AF9FC7C53BD525F315C7531D8D6F587C3649F8D121CFA71F",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR3004",
+        "manifest_path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3004/manifest.json",
+        "manifest_sha256": "8ED045DE83140FFD58C51A4A4D722DD0ECAFA3A80E7E67CF7B84309A7B20366C",
+        "path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3004",
+        "registry_sha256": "BA6748E527A24C43AF9FC7C53BD525F315C7531D8D6F587C3649F8D121CFA71F",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR3005",
+        "manifest_path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3005/manifest.json",
+        "manifest_sha256": "CDD87CE6C0E061C128600A796A92E9DF72A75266D7964932C7A55F4D22587294",
+        "path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3005",
+        "registry_sha256": "BA6748E527A24C43AF9FC7C53BD525F315C7531D8D6F587C3649F8D121CFA71F",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR3006",
+        "manifest_path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3006/manifest.json",
+        "manifest_sha256": "A86B30973BC0A543F601D79D507E16AD739A71742599A0DC9B680193B624EEB9",
+        "path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3006",
+        "registry_sha256": "BA6748E527A24C43AF9FC7C53BD525F315C7531D8D6F587C3649F8D121CFA71F",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR3007",
+        "manifest_path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3007/manifest.json",
+        "manifest_sha256": "6656ECAF9560EDAD2A083FF22442EFF06E24EFE77E7D7ACAD24BA886F235E714",
+        "path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3007",
+        "registry_sha256": "BA6748E527A24C43AF9FC7C53BD525F315C7531D8D6F587C3649F8D121CFA71F",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR3008",
+        "manifest_path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3008/manifest.json",
+        "manifest_sha256": "24C52F0CAB005D4FB43C56CD4B970E177D3F5A125C66C9A6A770FA0575BC5F06",
+        "path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3008",
+        "registry_sha256": "BA6748E527A24C43AF9FC7C53BD525F315C7531D8D6F587C3649F8D121CFA71F",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR3009",
+        "manifest_path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3009/manifest.json",
+        "manifest_sha256": "F0AC68E223728DF901E456E43A5048627C6D809016C1951B29C99C16FF645337",
+        "path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3009",
+        "registry_sha256": "BA6748E527A24C43AF9FC7C53BD525F315C7531D8D6F587C3649F8D121CFA71F",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR3010",
+        "manifest_path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3010/manifest.json",
+        "manifest_sha256": "DEBB4F8A4E9EA18F1D3DE3973425A502901A82B1A52779E581D952E97A99A70C",
+        "path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3010",
+        "registry_sha256": "BA6748E527A24C43AF9FC7C53BD525F315C7531D8D6F587C3649F8D121CFA71F",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR3011",
+        "manifest_path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3011/manifest.json",
+        "manifest_sha256": "101F2DFF98D70C1BF9A935EFB280DE14D445D5C50C031C417986909103CA039B",
+        "path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3011",
+        "registry_sha256": "F0C26088D2732B14F27DDF232ADF3BCFE0C6BABB4553EA18237BFEA452C97D37",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR3012",
+        "manifest_path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3012/manifest.json",
+        "manifest_sha256": "2B6198EA7BADE68A7BC99C737A30A7F6146238D7512FA21C7EBB0FCD8CFFF370",
+        "path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3012",
+        "registry_sha256": "BA6748E527A24C43AF9FC7C53BD525F315C7531D8D6F587C3649F8D121CFA71F",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR3013",
+        "manifest_path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3013/manifest.json",
+        "manifest_sha256": "84990EE87573F65CB7C50D962627F857A3D683C75D7109B3C7FA2B97B66C1D27",
+        "path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3013",
+        "registry_sha256": "BA6748E527A24C43AF9FC7C53BD525F315C7531D8D6F587C3649F8D121CFA71F",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR3014",
+        "manifest_path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3014/manifest.json",
+        "manifest_sha256": "B256884F5186A55D838608ED08AFB576976CCE60ACED877D28C440F6EB0ECC62",
+        "path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3014",
+        "registry_sha256": "BA6748E527A24C43AF9FC7C53BD525F315C7531D8D6F587C3649F8D121CFA71F",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR3015",
+        "manifest_path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3015/manifest.json",
+        "manifest_sha256": "A63953603424B2E1C2D9E4C195C35CD5A5E9C14DB6BA191F34D368F619DF281E",
+        "path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3015",
+        "registry_sha256": "BA6748E527A24C43AF9FC7C53BD525F315C7531D8D6F587C3649F8D121CFA71F",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR3016",
+        "manifest_path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3016/manifest.json",
+        "manifest_sha256": "760BB4889104AEA09A97FBCB27F5E4A4C0ACCD27E6341607194525C2E98D24B0",
+        "path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3016",
+        "registry_sha256": "3BB894CBD4815EA3A07CBB4B911FAC3E582BD1338A39A6B0DAE5D3ACE8C0A1C0",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR3017",
+        "manifest_path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3017/manifest.json",
+        "manifest_sha256": "B37FEBA799777B001A3D9A912F24E8372ACBE74F01D4EF8F9B9B517089BB06D6",
+        "path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3017",
+        "registry_sha256": "5E4253C0AE2DB8A5C3755E2077B9A5F9F2C6BBD0124AE42B5BA6487036D9171D",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR3019",
+        "manifest_path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3019/manifest.json",
+        "manifest_sha256": "9488B19AABE3A9CD99B6BDE712DC0A722868302E018AD3A393BCF137A6A95AC1",
+        "path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3019",
+        "registry_sha256": "A18C7752355B583DD22A6D30C65B0660570174B44ED361E459EFE04DDFC5CFE0",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR3020",
+        "manifest_path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3020/manifest.json",
+        "manifest_sha256": "02F4587BEC6C3F46B1DB7BB5FF56F997A2D9CC3CBB4C4D99CECAD9DDE48D23DC",
+        "path": "animations/packs-par-zone/lot5-current-20261011-v1/AR3020",
+        "registry_sha256": "05DF73BB6F2DC3CBA56D7C536AC50E747212A119E449D3DA631B917081523096",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/lot5-current-20261011-v1/manifest.json",
+    "manifest_sha256": "8ED5202F80036DCF0BC8F1FE25C3C8F758B2D20A14B33BB9A41BC571DC9313B2",
+    "path": "animations/packs-par-zone/lot5-current-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR3003",
+    "AR3004",
+    "AR3005",
+    "AR3006",
+    "AR3007",
+    "AR3008",
+    "AR3009",
+    "AR3010",
+    "AR3011",
+    "AR3012",
+    "AR3013",
+    "AR3014",
+    "AR3015",
+    "AR3016",
+    "AR3017",
+    "AR3019",
+    "AR3020"
+  ],
+  "updated_at_utc": "2026-10-11T14:42:19Z"
+}

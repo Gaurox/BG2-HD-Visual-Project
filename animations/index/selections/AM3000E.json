@@ -1,0 +1,77 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM3000E",
+  "correction_id": "am3000e-contour-native-20261011-v2",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/lot45-final-20261011-v1/final-AM3000E-PLT_MAGE/manifest.json",
+        "manifest_sha256": "27F283243623593A34B66A97C82BE933381A3C2CF4B276BFF95C11FFF4AD96D9",
+        "path": "animations/batches/lot45-final-20261011-v1/final-AM3000E-PLT_MAGE",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/packs-par-zone/am3000e-contour-native-20261011-v2/AR3000/manifest.json",
+        "manifest_sha256": "4D7D18A019260BD7EE77FFDCEC11729488A361E785890679E2483D394160F10E",
+        "path": "animations/packs-par-zone/am3000e-contour-native-20261011-v2/AR3000",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/am3000e-contour-native-20261011-v2/manifest.json",
+        "manifest_sha256": "E0C178156DD9087907387C6FA1FD2A4FE9A27318F52C93258BE18ED77B79481C",
+        "path": "animations/batches/am3000e-contour-native-20261011-v2",
+        "schema": "bg2-upscale-animation-visual-treatment-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM3000E/runs/am3000e-contour-native-20261011-v2/manifest.json",
+        "manifest_sha256": "AA44388C299C731016903AB43544FB3E744251D12318331AFDCD2D6915482C4F",
+        "path": "animations/ressources/AM3000E/runs/am3000e-contour-native-20261011-v2",
+        "schema": "bg2-upscale-animation-visual-treatment-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-11",
+    "path": "animations/index/qa-decisions/AM3000E/2026-10-11-accepted-am3000e-native-contour-v1.json",
+    "sha256": "16C7EE312DEB03FD06985DCDC5CEFE73890658440421CD884BEBB4C09888A3BE",
+    "status": "accepted"
+  },
+  "recipe_id": "am3000e-contour-native-20261011-v2",
+  "resref": "AM3000E",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM3000E/runs/am3000e-contour-native-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "E5A7B63EA28487F51C9C00DBF5D3B1C262A80B5EABDD3AC28661358F7B0265F5",
+    "path": "animations/ressources/AM3000E/runs/am3000e-contour-native-accepted-20261011-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR3000",
+        "manifest_path": "animations/packs-par-zone/am3000e-contour-native-20261011-v2/AR3000/manifest.json",
+        "manifest_sha256": "4D7D18A019260BD7EE77FFDCEC11729488A361E785890679E2483D394160F10E",
+        "path": "animations/packs-par-zone/am3000e-contour-native-20261011-v2/AR3000",
+        "registry_sha256": "A5BB39ED28C2D00B2E9FB1005BB3F465BD3B3DBCB0F319D920C52AE8D88C67A0",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am3000e-contour-native-20261011-v2/manifest.json",
+    "manifest_sha256": "F21264004D0EA4AB18E5AC1494C0337F9F31F42E57565B8D8ABA92567ADB67BB",
+    "path": "animations/packs-par-zone/am3000e-contour-native-20261011-v2",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR3000"
+  ],
+  "updated_at_utc": "2026-10-11T14:28:56Z"
+}
