@@ -2,7 +2,7 @@
   "$schema": "ingame-map-tracking-v1.schema.json",
   "schema": "bg2-water-ingame-map-tracking-v1",
   "version": 1,
-  "updated": "2026-09-29",
+  "updated": "2026-10-12",
   "inventory": {
     "path": "pipeline/water/manifests/liquid-target-matrix-v1.json",
     "sha256": "223538407EB6942B11F3F90D36C3B31704CB393942CBDB3B2679515056543C37",
@@ -38,9 +38,9 @@
     },
     "review": {
       "id": "water-review-q-rain-night-20260929",
-      "state": "pending",
+      "state": "in-progress",
       "opened": "2026-09-29",
-      "principle": "Game INI WaterOverlayStrength = 1.00 (neutral cap). Route2 q is set per WED identity in the registry (DLL). Every map is re-checked visually to assign its own dry q, already validated maps included; rain variants of weather maps and night WEDs are re-checked too. Rain identities stay q0 unless a rain review decides otherwise.",
+      "principle": "WaterOverlayStrength = 1.00; q par identité dans le registre. Reprise documentaire des décisions explicites existantes; pending = contrôle distinct non attesté, sans annuler la QA du traitement. Une validation générique ne prouve ni météo ni cycle jour/nuit/jour. Réserves: maps/SUIVI.md. Les réserves visuelles AR3003/AR5200/AR2101/AR0604 sont levées le 2026-10-11. La revue complémentaire reste facultative et non bloquante pour la mise au propre du suivi ; aucune campagne ingame exhaustive demandée. Passe représentative AR0900/AR1000/AR0500 terminée et acceptée le 2026-10-12 (sec, pause, pluie, jour-nuit-jour, 6 WED). Observations complémentaires restantes non attestées, non bloquantes pour le suivi.",
       "registry_pointer": "pipeline/water/route2-registry-current.json",
       "kinds": [
         "q",
@@ -111,11 +111,14 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar0011-contour-user-qa-20260929-v1",
+        "ar0011-temporal-30fps-user-qa-20260929-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -138,7 +141,9 @@
               "q": 0.0
             }
           ],
-          "evidence": []
+          "evidence": [
+            "maps/qa-retour-ingame-20261011-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -178,12 +183,12 @@
         "water:AR0046:observed"
       ],
       "qa_evidence_ids": [
-        "wtlake-session-qa-v1"
+        "wtlake-family-user-qa-20260926-v1"
       ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -191,7 +196,9 @@
               "q": 0.0
             }
           ],
-          "evidence": []
+          "evidence": [
+            "maps/qa-retour-ingame-20261011-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -231,12 +238,12 @@
         "water:AR0046N:night"
       ],
       "qa_evidence_ids": [
-        "ar0046n-water-tint-qa-v7"
+        "wtlake-family-user-qa-20260926-v1"
       ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -244,7 +251,9 @@
               "q": 0.0
             }
           ],
-          "evidence": []
+          "evidence": [
+            "maps/qa-retour-ingame-20261011-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -284,12 +293,12 @@
         "water:AR0204:day"
       ],
       "qa_evidence_ids": [
-        "ar0204-ar1600-qa-v1"
+        "wtlake-family-user-qa-20260926-v1"
       ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -297,7 +306,9 @@
               "q": 0.0
             }
           ],
-          "evidence": []
+          "evidence": [
+            "maps/qa-retour-ingame-20261011-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -336,11 +347,13 @@
       "release_target_ids": [
         "water:AR0300:observed"
       ],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "wtlake-family-user-qa-20260926-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -348,7 +361,9 @@
               "q": 0.0
             }
           ],
-          "evidence": []
+          "evidence": [
+            "maps/qa-retour-ingame-20261011-v1.json"
+          ]
         },
         "rain": {
           "state": "pending",
@@ -394,12 +409,13 @@
         "water:AR0300N:night"
       ],
       "qa_evidence_ids": [
-        "ar0300n-reflections-alpha160-qa-v10"
+        "wtlake-family-user-qa-20260926-v1",
+        "ar0300n-opacity-weather-user-qa-20260926-v1"
       ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -407,7 +423,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "pending",
@@ -451,11 +469,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar0310-contour-user-qa-20260925-v1",
+        "ar0310-spatial-user-qa-20260925-v1",
+        "ar0310-temporal-30fps-user-qa-20260925-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -463,7 +485,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -504,7 +528,9 @@
         "water:AR0404:unique"
       ],
       "qa_evidence_ids": [
-        "wtsew-qa-v1"
+        "ar0404-contour-user-qa-20260929-v1",
+        "ar0404-spatial-user-qa-20260929-v1",
+        "ar0404-temporal-30fps-user-qa-20260929-v1"
       ],
       "blockers": [],
       "review": {
@@ -554,11 +580,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar0408-contour-user-qa-20260926-v1",
+        "ar0408-spatial-user-qa-20260926-v1",
+        "ar0408-temporal-30fps-user-qa-20260926-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -566,7 +596,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -604,11 +636,13 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar0413-temporal-30fps-user-qa-20260928-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -616,7 +650,9 @@
               "q": 0.25
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -654,11 +690,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar0500-contour-user-qa-20260925-v2",
+        "ar0500-temporal-30fps-user-qa-20260925-v1",
+        "water-final-pass-user-qa-20261012-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -666,10 +706,13 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json",
+            "pipeline/water/manifests/water-final-pass-user-qa-20261012-v1.json"
+          ]
         },
         "rain": {
-          "state": "pending",
+          "state": "validated",
           "weather": true,
           "current": [
             {
@@ -678,7 +721,9 @@
               "q": 0.0
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-final-pass-user-qa-20261012-v1.json"
+          ]
         },
         "night": {
           "state": "not-applicable",
@@ -710,11 +755,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar0500n-contour-user-qa-20260925-v2",
+        "ar0500n-temporal-30fps-user-qa-20260924-v1",
+        "water-final-pass-user-qa-20261012-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -722,10 +771,13 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json",
+            "pipeline/water/manifests/water-final-pass-user-qa-20261012-v1.json"
+          ]
         },
         "rain": {
-          "state": "pending",
+          "state": "validated",
           "weather": true,
           "current": [
             {
@@ -734,11 +786,15 @@
               "q": 0.0
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-final-pass-user-qa-20261012-v1.json"
+          ]
         },
         "night": {
-          "state": "pending",
-          "evidence": []
+          "state": "validated",
+          "evidence": [
+            "pipeline/water/manifests/water-final-pass-user-qa-20261012-v1.json"
+          ]
         }
       }
     },
@@ -766,7 +822,11 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar0503-contour-user-qa-20260925-v1",
+        "ar0503-spatial-user-qa-20260924-v1",
+        "ar0503-temporal-30fps-user-qa-20260924-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
@@ -815,11 +875,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar0506-contour-user-qa-20260926-v1",
+        "ar0506-spatial-user-qa-20260926-v1",
+        "ar0506-temporal-30fps-user-qa-20260926-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -827,7 +891,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -867,7 +933,7 @@
         "water:AR0512:unique"
       ],
       "qa_evidence_ids": [
-        "wtlake-session-qa-v1"
+        "wtlake-family-user-qa-20260926-v1"
       ],
       "blockers": [],
       "review": {
@@ -917,7 +983,11 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar0603-contour-user-qa-20260928-v1",
+        "ar0603-spatial-user-qa-20260928-v1",
+        "ar0603-temporal-30fps-user-qa-20260928-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
@@ -967,11 +1037,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar0604-contour-user-qa-20260925-v1",
+        "ar0604-spatial-user-qa-20260925-v1",
+        "ar0604-temporal-30fps-user-qa-20260925-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -979,7 +1053,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -1102,11 +1178,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar0703-contour-user-qa-20260926-v1",
+        "ar0703-spatial-user-qa-20260926-v1",
+        "ar0703-temporal-30fps-user-qa-20260926-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -1114,7 +1194,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -1152,11 +1234,14 @@
       "release_target_ids": [
         "water:AR0900:day"
       ],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "wtlake-family-user-qa-20260926-v1",
+        "water-final-pass-user-qa-20261012-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -1164,10 +1249,12 @@
               "q": 0.0
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-final-pass-user-qa-20261012-v1.json"
+          ]
         },
         "rain": {
-          "state": "pending",
+          "state": "validated",
           "weather": true,
           "current": [
             {
@@ -1176,7 +1263,9 @@
               "q": 0.0
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-final-pass-user-qa-20261012-v1.json"
+          ]
         },
         "night": {
           "state": "not-applicable",
@@ -1210,12 +1299,13 @@
         "water:AR0900N:night"
       ],
       "qa_evidence_ids": [
-        "ar0900-night-qa-v5"
+        "wtlake-family-user-qa-20260926-v1",
+        "water-final-pass-user-qa-20261012-v1"
       ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -1223,10 +1313,12 @@
               "q": 0.0
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-final-pass-user-qa-20261012-v1.json"
+          ]
         },
         "rain": {
-          "state": "pending",
+          "state": "validated",
           "weather": true,
           "current": [
             {
@@ -1235,11 +1327,15 @@
               "q": 0.0
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-final-pass-user-qa-20261012-v1.json"
+          ]
         },
         "night": {
-          "state": "pending",
-          "evidence": []
+          "state": "validated",
+          "evidence": [
+            "pipeline/water/manifests/water-final-pass-user-qa-20261012-v1.json"
+          ]
         }
       }
     },
@@ -1269,12 +1365,15 @@
         "water:AR1000:day"
       ],
       "qa_evidence_ids": [
-        "ar1000-wtpool-route2-qa-v5"
+        "ar1000-contour-user-qa-20260926-v1",
+        "ar1000-spatial-user-qa-20260926-v1",
+        "ar1000-temporal-30fps-user-qa-20260926-v1",
+        "water-final-pass-user-qa-20261012-v1"
       ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -1282,10 +1381,13 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json",
+            "pipeline/water/manifests/water-final-pass-user-qa-20261012-v1.json"
+          ]
         },
         "rain": {
-          "state": "pending",
+          "state": "validated",
           "weather": true,
           "current": [
             {
@@ -1294,7 +1396,10 @@
               "q": 0.0
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/ar1000-temporal-30fps-user-qa-20260926-v1.json",
+            "pipeline/water/manifests/water-final-pass-user-qa-20261012-v1.json"
+          ]
         },
         "night": {
           "state": "not-applicable",
@@ -1328,12 +1433,14 @@
         "water:AR1000N:night"
       ],
       "qa_evidence_ids": [
-        "ar1000n-wtswam-route2-qa-v1"
+        "ar1000n-contour-user-qa-20260929-v1",
+        "ar1000n-temporal-30fps-user-qa-20260929-v1",
+        "water-final-pass-user-qa-20261012-v1"
       ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -1341,10 +1448,12 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-final-pass-user-qa-20261012-v1.json"
+          ]
         },
         "rain": {
-          "state": "pending",
+          "state": "validated",
           "weather": true,
           "current": [
             {
@@ -1353,11 +1462,15 @@
               "q": 0.0
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-final-pass-user-qa-20261012-v1.json"
+          ]
         },
         "night": {
-          "state": "pending",
-          "evidence": []
+          "state": "validated",
+          "evidence": [
+            "pipeline/water/manifests/water-final-pass-user-qa-20261012-v1.json"
+          ]
         }
       }
     },
@@ -1384,11 +1497,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar1003-contour-user-qa-20260926-v1",
+        "ar1003-spatial-user-qa-20260926-v1",
+        "ar1003-temporal-30fps-user-qa-20260926-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -1396,7 +1513,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -1433,11 +1552,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar1004-contour-user-qa-20260926-v1",
+        "ar1004-spatial-user-qa-20260926-v1",
+        "ar1004-temporal-30fps-user-qa-20260926-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -1445,7 +1568,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -1495,11 +1620,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar1100-contour-user-qa-20260926-v1",
+        "ar1100-spatial-user-qa-20260926-v1",
+        "ar1100-temporal-30fps-user-qa-20260926-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -1512,7 +1641,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "pending",
@@ -1561,11 +1692,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar1106-contour-user-qa-20260925-v1",
+        "ar1106-spatial-user-qa-20260925-v1",
+        "ar1106-temporal-30fps-user-qa-20260925-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -1573,7 +1708,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -1613,7 +1750,7 @@
         "water:AR1200:unique"
       ],
       "qa_evidence_ids": [
-        "wtlake-session-qa-v1"
+        "wtlake-family-user-qa-20260926-v1"
       ],
       "blockers": [],
       "review": {
@@ -1670,11 +1807,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar1201-contour-user-qa-20260925-v1",
+        "ar1201-spatial-user-qa-20260925-v1",
+        "ar1201-temporal-30fps-user-qa-20260925-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -1682,7 +1823,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -1719,7 +1862,11 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar1203-contour-user-qa-20260928-v1",
+        "ar1203-spatial-user-qa-20260928-v1",
+        "ar1203-temporal-30fps-user-qa-20260928-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
@@ -1805,11 +1952,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar1401-contour-user-qa-20260928-v1",
+        "ar1401-spatial-user-qa-20260928-v1",
+        "ar1401-temporal-30fps-user-qa-20260928-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -1832,7 +1983,9 @@
               "q": 0.0
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -1870,11 +2023,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar1403-contour-user-qa-20260925-v1",
+        "ar1403-spatial-user-qa-20260925-v1",
+        "ar1403-temporal-30fps-user-qa-20260925-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -1882,7 +2039,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -1920,11 +2079,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar1500-contour-user-qa-20260925-v1",
+        "ar1500-spatial-user-qa-20260925-v1",
+        "ar1500-temporal-30fps-user-qa-20260925-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -1932,7 +2095,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -1972,7 +2137,9 @@
         "water:AR1600:unique"
       ],
       "qa_evidence_ids": [
-        "ar0204-ar1600-qa-v1"
+        "wtlake-family-user-qa-20260926-v1",
+        "ar1600-contour-user-qa-20260925-v2",
+        "ar1600-water-30fps-user-qa-20260923-v2"
       ],
       "blockers": [],
       "review": {
@@ -2028,11 +2195,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar1601-contour-user-qa-20260926-v1",
+        "ar1601-spatial-user-qa-20260926-v1",
+        "ar1601-temporal-30fps-user-qa-20260926-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -2040,7 +2211,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -2080,7 +2253,7 @@
         "water:AR1604:unique"
       ],
       "qa_evidence_ids": [
-        "wtlake-session-qa-v1"
+        "wtlake-family-user-qa-20260926-v1"
       ],
       "blockers": [],
       "review": {
@@ -2134,7 +2307,9 @@
         "water:AR1607:unique"
       ],
       "qa_evidence_ids": [
-        "wtswam-qa-v1"
+        "ar1607-contour-user-qa-20260929-v1",
+        "ar1607-spatial-user-qa-20260929-v1",
+        "ar1607-temporal-30fps-user-qa-20260929-v1"
       ],
       "blockers": [],
       "review": {
@@ -2193,7 +2368,7 @@
         "water:AR1700:unique"
       ],
       "qa_evidence_ids": [
-        "wtlake-session-qa-v1"
+        "wtlake-family-user-qa-20260926-v1"
       ],
       "blockers": [],
       "review": {
@@ -2253,7 +2428,9 @@
         "water:AR1800:unique"
       ],
       "qa_evidence_ids": [
-        "wtswam-qa-v1"
+        "ar1800-contour-user-qa-20260929-v1",
+        "ar1800-spatial-user-qa-20260929-v1",
+        "ar1800-temporal-30fps-user-qa-20260929-v1"
       ],
       "blockers": [],
       "review": {
@@ -2312,7 +2489,7 @@
         "water:AR1901:unique"
       ],
       "qa_evidence_ids": [
-        "wtlake-session-qa-v1"
+        "wtlake-family-user-qa-20260926-v1"
       ],
       "blockers": [],
       "review": {
@@ -2362,11 +2539,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar2000-contour-user-qa-20260926-v1",
+        "ar2000-spatial-user-qa-20260926-v1",
+        "ar2000-temporal-30fps-user-qa-20260926-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -2374,10 +2555,12 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
-          "state": "pending",
+          "state": "validated",
           "weather": true,
           "current": [
             {
@@ -2386,7 +2569,9 @@
               "q": 0.0
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/ar2000-temporal-30fps-user-qa-20260926-v1.json"
+          ]
         },
         "night": {
           "state": "not-applicable",
@@ -2417,11 +2602,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar2000n-contour-user-qa-20260926-v1",
+        "ar2000n-spatial-user-qa-20260926-v1",
+        "ar2000n-temporal-30fps-user-qa-20260926-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -2429,7 +2618,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "pending",
@@ -2472,11 +2663,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar2011-contour-user-qa-20260926-v1",
+        "ar2011-spatial-user-qa-20260926-v1",
+        "ar2011-temporal-30fps-user-qa-20260926-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -2484,7 +2679,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -2521,11 +2718,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar2012-contour-user-qa-20260926-v1",
+        "ar2012-spatial-user-qa-20260926-v1",
+        "ar2012-temporal-30fps-user-qa-20260926-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -2533,7 +2734,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -2574,7 +2777,9 @@
         "water:AR2100:fallback"
       ],
       "qa_evidence_ids": [
-        "wtsew-qa-v1"
+        "ar2100-contour-user-qa-20260925-v1",
+        "ar2100-spatial-user-qa-20260923-v1",
+        "ar2100-temporal-30fps-user-qa-20260923-v1"
       ],
       "blockers": [],
       "review": {
@@ -2625,7 +2830,11 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar2102-contour-user-qa-20260928-v1",
+        "ar2102-spatial-user-qa-20260928-v1",
+        "ar2102-temporal-30fps-user-qa-20260928-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
@@ -2675,11 +2884,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar2210-contour-user-qa-20260925-v1",
+        "ar2210-spatial-user-qa-20260925-v1",
+        "ar2210-temporal-30fps-user-qa-20260925-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -2687,7 +2900,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -2726,7 +2941,9 @@
       "release_target_ids": [
         "water:AR2300:unique"
       ],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "wtlake-family-user-qa-20260926-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
@@ -2776,11 +2993,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar2500-contour-user-qa-20260925-v1",
+        "ar2500-spatial-user-qa-20260925-v1",
+        "ar2500-temporal-30fps-user-qa-20260925-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -2788,7 +3009,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "pending",
@@ -2832,11 +3055,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar2600-contour-user-qa-20260925-v1",
+        "ar2600-spatial-user-qa-20260925-v1",
+        "ar2600-temporal-30fps-user-qa-20260925-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -2844,7 +3071,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "pending",
@@ -2888,11 +3117,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar2602-contour-user-qa-20260925-v1",
+        "ar2602-spatial-user-qa-20260925-v1",
+        "ar2602-temporal-30fps-user-qa-20260925-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -2900,7 +3133,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -2938,11 +3173,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar2700-contour-user-qa-20260925-v1",
+        "ar2700-spatial-user-qa-20260925-v1",
+        "ar2700-temporal-30fps-user-qa-20260925-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -2950,7 +3189,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "pending",
@@ -3116,11 +3357,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar2903-contour-user-qa-20260928-v1",
+        "ar2903-spatial-user-qa-20260928-v1",
+        "ar2903-temporal-30fps-user-qa-20260928-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -3143,7 +3388,9 @@
               "q": 0.6
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -3217,11 +3464,16 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar3000-contour-user-qa-20260929-v1",
+        "ar3000-runtime-and-all-rgb-edges-user-qa-20261011-v1",
+        "ar3000-spatial-user-qa-20260929-v1",
+        "ar3000-temporal-30fps-user-qa-20260929-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -3244,7 +3496,10 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/ar3000-temporal-30fps-user-qa-20260929-v1.json",
+            "pipeline/water/VALIDATED_WATER_RECIPES.md"
+          ]
         },
         "rain": {
           "state": "pending",
@@ -3302,7 +3557,11 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar3024-contour-user-qa-20260928-v1",
+        "ar3024-spatial-user-qa-20260928-v1",
+        "ar3024-temporal-30fps-user-qa-20260928-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
@@ -3352,11 +3611,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar3025-contour-user-qa-20260925-v1",
+        "ar3025-spatial-user-qa-20260925-v1",
+        "ar3025-temporal-30fps-user-qa-20260925-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -3364,7 +3627,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -3434,7 +3699,11 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar5000-contour-user-qa-20260925-v2",
+        "ar5000-spatial-user-qa-20260925-v1",
+        "ar5000-temporal-30fps-user-qa-20260925-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
@@ -3519,11 +3788,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar5010-contour-user-qa-20260926-v1",
+        "ar5010-spatial-user-qa-20260926-v1",
+        "ar5010-temporal-30fps-user-qa-20260926-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -3531,7 +3804,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -3605,11 +3880,14 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar5200-contour-user-qa-20260925-v1",
+        "ar5200-temporal-30fps-user-qa-20260924-v2"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -3632,7 +3910,9 @@
               "q": 0.0
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "pending",
@@ -3727,11 +4007,14 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar5201-contour-user-qa-20260928-v1",
+        "ar5201-temporal-30fps-user-qa-20260928-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -3754,7 +4037,9 @@
               "q": 0.0
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -3824,11 +4109,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar5203-contour-user-qa-20260929-v1",
+        "ar5203-spatial-user-qa-20260929-v1",
+        "ar5203-temporal-30fps-user-qa-20260929-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -3851,7 +4140,10 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/ar5203-temporal-30fps-user-qa-20260929-v1.json",
+            "pipeline/water/VALIDATED_WATER_RECIPES.md"
+          ]
         },
         "rain": {
           "state": "pending",
@@ -3946,11 +4238,14 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar5204-contour-user-qa-20260928-v1",
+        "ar5204-temporal-30fps-user-qa-20260928-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -3973,7 +4268,9 @@
               "q": 0.0
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -4010,11 +4307,15 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar6008-contour-user-qa-20260925-v1",
+        "ar6008-spatial-user-qa-20260925-v1",
+        "ar6008-temporal-30fps-user-qa-20260925-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -4022,7 +4323,9 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/water-q-decision-user-qa-20260929-v1.json"
+          ]
         },
         "rain": {
           "state": "not-applicable",
@@ -4092,11 +4395,14 @@
         }
       ],
       "release_target_ids": [],
-      "qa_evidence_ids": [],
+      "qa_evidence_ids": [
+        "ar6300-contour-user-qa-20260925-v2",
+        "ar6300-temporal-30fps-user-qa-20260929-v1"
+      ],
       "blockers": [],
       "review": {
         "q": {
-          "state": "pending",
+          "state": "validated",
           "current": [
             {
               "slot": 1,
@@ -4119,7 +4425,10 @@
               "q": 0.4
             }
           ],
-          "evidence": []
+          "evidence": [
+            "pipeline/water/manifests/ar6300-temporal-30fps-user-qa-20260929-v1.json",
+            "pipeline/water/VALIDATED_WATER_RECIPES.md"
+          ]
         },
         "rain": {
           "state": "pending",

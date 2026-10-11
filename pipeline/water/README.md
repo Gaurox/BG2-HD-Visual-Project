@@ -11,7 +11,9 @@ Chaînes : [spatiale x4](SPATIAL_X4_PIPELINE.md) → [30 FPS](TEMPORAL_30FPS_PIP
 paramètres par famille : [`liquid-family-standard-v1.json`](liquid-family-standard-v1.json).
 **État 2026-09-29 : toutes les maps à eau sont traitées** — les 63 WED à eau active sont validées en jeu
 (chaîne A/B/C, `campaign.treatment` de `ingame-map-tracking-v1.json`) ; AR0700/AR0700N/AR2804/AR2805 n'ont
-aucune cellule d'eau active. Une **revérification générale** (q, pluie, nuit) est ouverte : voir plus bas.
+aucune cellule d'eau active. Réconciliation documentaire et passe finale 2026-10-12 : références QA reliées aux
+63 WED ; revue q **46 validés / 17 pending**, pluie **7 / 17**, nuit **3 / 3**.
+Réserves acceptées, symptômes non clôturés et lacunes de preuve : [`../../maps/SUIVI.md`](../../maps/SUIVI.md).
 
 | Besoin | Référence |
 |---|---|
@@ -22,11 +24,15 @@ aucune cellule d'eau active. Une **revérification générale** (q, pluie, nuit)
 | Contours devant l'eau (frange sombre, cordes épaisses) | [`CONTOUR_MATTE_PIPELINE.md`](CONTOUR_MATTE_PIPELINE.md) |
 | Conception surfaces liquides | [`BASE_PIPELINES_SURFACES_LIQUIDES.md`](BASE_PIPELINES_SURFACES_LIQUIDES.md) |
 | File QA ingame exhaustive, une carte à la fois | `ingame-map-tracking-v1.json` |
-| Sélection finale et QA | [`WATER_RELEASE_TRACKING.md`](WATER_RELEASE_TRACKING.md) |
+| QA référencée / portée des sélections legacy | [`WATER_RELEASE_TRACKING.md`](WATER_RELEASE_TRACKING.md) |
+| Réserves à observer / liste exacte q, pluie, nuit, pause | [`../../maps/VERIFICATIONS_INGAME.md`](../../maps/VERIFICATIONS_INGAME.md) |
 | Politique machine par famille | `family-policy-v1.json` |
 | Registre route2 | `route2-registry-v1.json` et registre v2 du moteur |
 
-## Cas AR1000 jour et nuit validés
+## Historique AR1000 jour et nuit — témoins du 2026-09-12
+
+Ces versions expliquent les correctifs initiaux. Traitement courant : manifestes finaux
+2026-09-26/29 et registre `route2-registry-current.json`, distincts du snapshot legacy.
 
 - Famille : `pool-wtpool` ; identité : `AR1000` jour uniquement.
 - V1 : crash causé par un nom de page PVRZ incompatible.
@@ -37,10 +43,12 @@ aucune cellule d'eau active. Une **revérification générale** (q, pluie, nuit)
   `id=1`, route2 exacte `q=0.70`.
 - `AR1000N` appartient à `swamp-wtswam`, pas à `pool-wtpool` : alias sec `WSWPIL`, 36 phases à
   15 Hz, blend 30 FPS, matériau `id=5`, route2 exacte `q=0.70`.
-- Le rendu nocturne sec d'AR1000N est validé ingame avec son animation discrète ; `WSWPILR` pluie
-  est installé mais n'a pas été observé séparément.
+- Le rendu nocturne sec d'AR1000N est validé ingame avec son animation discrète ; la pluie
+  n'était pas attestée séparément dans les verdicts historiques du 12/29 septembre.
+  Elle est désormais acceptée dans la passe finale du 2026-10-12, jour/nuit et cycle complet :
+  `manifests/water-final-pass-user-qa-20261012-v1.json`.
 
-Références finales :
+Références historiques :
 
 - `manifests/ar1000-wtpool-route2-validated-20260912-v5.json`
 - `manifests/ar1000-wtpool-route2-installed-20260912-v5.json`
@@ -52,7 +60,9 @@ Références finales :
 ## État et sécurité
 
 `ingame-map-tracking-v1.json` suit les 67 WED liquides, variantes nuit incluses, en regroupant les
-overlays par carte. `release-tracking-v1.json` conserve séparément les sélections finales. Audits :
+overlays par carte. `release-tracking-v1.json` relie les QA et conserve les anciennes sélections
+avec leur portée et leurs lacunes (`defaults.tracking_scope`) ; ce n'est pas une photographie
+de l'installation courante. Audits :
 
 ```powershell
 python -B pipeline/scripts/audit_water_ingame_tracking.py --json
@@ -65,8 +75,11 @@ release sont deux décisions séparées ; aucun fichier de release n'est modifi�
 ## Revérification générale q, pluie, nuit
 
 Campagne `water-review-q-rain-night-20260929` (`campaign.review` + `maps[].review` de
-`ingame-map-tracking-v1.json`, audit `audit_water_ingame_tracking.py`). Toutes les maps sont revues, même
-déjà validées.
+`ingame-map-tracking-v1.json`). Les contrôles déjà attestés sont récupérés ; `pending` désigne
+seulement une observation distincte non attestée, sans annuler la QA du traitement.
+Revue nocturne/cycle jour→nuit→jour et météo ne sont pas déduits d'une acceptation générique.
+Dernière passe demandée terminée le 2026-10-12 sur AR0900/AR1000/AR0500 et leurs nuits ;
+les autres observations `pending` restent facultatives, sans bloquer la clôture du suivi maps.
 
 | Colonne | Portée | Contrôle |
 |---|---|---|

@@ -1,0 +1,39 @@
+{
+  "schema": "bg2-map-cleanup-portable-evidence-v1",
+  "date": "2026-10-12",
+  "receipt": "maps/cleanup-executed-20261012-v1.json",
+  "scope": "Lossless copies of the local execution evidence; original receipt and source evidence bytes unchanged.",
+  "verification": "gzip decompress each file; verify decoded SHA256 against the immutable cleanup receipt.",
+  "files": [
+    {
+      "receipt_key": "preflight",
+      "historical_local_path": ".tmp/maps-cleanup-20261012/execution-preflight.json",
+      "path": "maps/cleanup-evidence-20261012-v1/execution-preflight.json.gz",
+      "encoding": "gzip",
+      "decoded_sha256": "B764B215A5E2BE2B0E8A3B13764E43F7CB2E06466F582488BDBF06662704DADF",
+      "compressed_sha256": "67AFCC8F5F4D9809427D0260DB4721844B03D063D06D2820F2BC484F507B6AD8",
+      "decoded_bytes": 7623313,
+      "compressed_bytes": 387510
+    },
+    {
+      "receipt_key": "delete_result",
+      "historical_local_path": ".tmp/maps-cleanup-20261012/execution-delete-result.json",
+      "path": "maps/cleanup-evidence-20261012-v1/execution-delete-result.json.gz",
+      "encoding": "gzip",
+      "decoded_sha256": "12FCD187A35ADE0CA5A4E442A9B5C155027EC45CA88A8893328867213C9E330E",
+      "compressed_sha256": "830EEA4C244726E078D4A76CAAF9072CABDA9CE4C44CCAA57691E0A8DF33CDBC",
+      "decoded_bytes": 4489,
+      "compressed_bytes": 1002
+    },
+    {
+      "receipt_key": "delete_journal",
+      "historical_local_path": ".tmp/maps-cleanup-20261012/execution-delete-journal.jsonl",
+      "path": "maps/cleanup-evidence-20261012-v1/execution-delete-journal.jsonl.gz",
+      "encoding": "gzip",
+      "decoded_sha256": "7A201A0A220134FB9DB1CC2A591849CB0B4C1C169073436D4BE9DEFE96FCC73F",
+      "compressed_sha256": "3D85FD7A2A8B5BAE47AFC6256AF60D627AA88551D844E2865F842EE07913FBBE",
+      "decoded_bytes": 1875378,
+      "compressed_bytes": 98131
+    }
+  ]
+}

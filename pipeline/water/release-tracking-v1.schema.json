@@ -58,7 +58,7 @@
         "family": {"type": "string"},
         "payload_roots": {"type": "array", "items": {"type": "string"}, "minItems": 1},
         "evidence_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1},
-        "state": {"enum": ["selected", "mixed-qa", "superseded-partially"]},
+        "state": {"enum": ["selected", "mixed-qa", "superseded-partially", "rejected-crash", "rejected-visual"]},
         "notes": {"type": "string"}
       },
       "additionalProperties": false

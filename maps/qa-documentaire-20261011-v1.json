@@ -1,0 +1,166 @@
+{
+  "schema": "bg2-map-documentary-reconciliation-v1",
+  "recorded_date": "2026-10-11",
+  "scope": "Recovered historical decisions and provenance; no new ingame verdict, installation or release action.",
+  "watchers_keep": {
+    "areas": [
+      "AR3001",
+      "AR3003",
+      "AR3004",
+      "AR3005",
+      "AR3006",
+      "AR3007",
+      "AR3008",
+      "AR3009",
+      "AR3010",
+      "AR3011",
+      "AR3012",
+      "AR3013",
+      "AR3014",
+      "AR3015",
+      "AR3016",
+      "AR3017",
+      "AR3018",
+      "AR3019",
+      "AR3020",
+      "AR3021",
+      "AR3022",
+      "AR3023",
+      "AR3024",
+      "AR3025",
+      "AR3026",
+      "AR3027"
+    ],
+    "decor_decision": "validated-ingame-2026-09-05",
+    "water_reserve_at_that_date": [
+      "AR3024",
+      "AR3025"
+    ],
+    "source": {
+      "source_path": "C:/Users/Adrien/.codex/sessions/2026/09/05/rollout-2026-09-05T20-06-09-01a072bf-d5ce-7413-b81c-4600c25678f7.jsonl",
+      "source_line": 1590,
+      "source_sha256": "2BACEFAD2E0CB435310E3BD8C4507614DA7216613EC13F5D8AB7982C0E631555",
+      "timestamp_utc": "2026-09-05T21:18:48.319Z",
+      "message_id": "msg_01a07370-33ff-7bf1-be59-7ad339398c00",
+      "role": "user",
+      "quote": "ok les 26 maps sont validées. les maps avec eaux devront etre revues pour l'eau comme toutes les autres maps à eau. met a jour le csv et le manifeste\n"
+    },
+    "followup": {
+      "source_path": "C:/Users/Adrien/.codex/sessions/2026/09/05/rollout-2026-09-05T20-06-09-01a072bf-d5ce-7413-b81c-4600c25678f7.jsonl",
+      "source_line": 1729,
+      "source_sha256": "2BACEFAD2E0CB435310E3BD8C4507614DA7216613EC13F5D8AB7982C0E631555",
+      "timestamp_utc": "2026-09-05T21:24:50.088Z",
+      "message_id": "msg_01a07375-b928-7eb0-ab20-32b794cdc137",
+      "role": "user",
+      "quote": "oui oui integre les et valide les avec juste une note pour passe de vérif a faire sur l'eau plus tard\n"
+    },
+    "git_commit": "dae1d9bc2650714ac25f7451bdb9d4b2c9941fe0",
+    "later_reserve": "AR3003 cyan raster rim remains open; September 5 lot acceptance does not close a later issue."
+  },
+  "legacy_wtlake_absence": {
+    "reason": "User-authorized deletion of obsolete runs on 2026-09-26; replaced by the September 26 family treatment.",
+    "authorization": {
+      "source_path": "C:/Users/Adrien/.codex/sessions/2026/09/25/rollout-2026-09-25T20-05-10-01a0d9be-1e0a-7ca2-b675-18135bf45c13.jsonl",
+      "source_line": 1844,
+      "source_sha256": "3DD0761EF61F43410DBD8F86F6984E09C6B0962E8B2914D56AA82F0804CEB476",
+      "timestamp_utc": "2026-09-26T08:39:23.303Z",
+      "message_id": "msg_01a0dcde-7ba7-7523-9295-34fb9c2a28db",
+      "role": "user",
+      "quote": "si tu me confirme que tes traitements vont remplacer toutes les run supprimées, alors oui, supprime toutes les aciennes run obsolètes\n"
+    },
+    "action": {
+      "source_line": 1850,
+      "timestamp_utc": "2026-09-26T08:39:48.319Z",
+      "call_id": "call_CWod6fCgsUpQBaXUU6jFyRxS",
+      "deleted_run_names_in_command": [
+        "ar0204-ar1600-seams-wed-20260912-v1",
+        "ar0300n-local-art-alpha208-20260912-v8",
+        "ar0300n-native-composition-20260912-v9",
+        "ar0300n-reflections-alpha160-20260912-v10",
+        "ar0900-night-seams-runtime-20260912-v5",
+        "wtlake-remaining-nights-20260912-v6",
+        "wtlake-timeline30-q070-20260912-v2",
+        "wtlake-timeline30-q070-wed-relocation-20260912-v3"
+      ]
+    },
+    "result": {
+      "source_line": 1853,
+      "timestamp_utc": "2026-09-26T08:39:55.181Z",
+      "call_id": "call_CWod6fCgsUpQBaXUU6jFyRxS",
+      "output_excerpt": "REMOVED_TARGETS=36; ALL_GONE=True"
+    },
+    "missing_evidence_ids": [
+      "ar0300n-reflections-alpha160-run-v10",
+      "ar0300n-reflections-alpha160-report-v10",
+      "ar0300n-reflections-alpha160-registry-v10",
+      "ar0300n-reflections-alpha160-candidate-v10",
+      "ar0300n-native-composition-run-v9",
+      "ar0300n-native-composition-report-v9",
+      "ar0300n-native-composition-registry-v9",
+      "ar0300n-native-composition-candidate-v9",
+      "ar0300n-local-art-alpha208-run-v8",
+      "ar0300n-local-art-alpha208-registry-v8",
+      "ar0300n-local-art-alpha208-candidate-v8",
+      "ar0300n-local-art-alpha208-report-v8",
+      "wtlake-remaining-nights-run-v6",
+      "wtlake-remaining-nights-registry-v6",
+      "wtlake-remaining-nights-candidate-v6",
+      "ar0046n-seams-v6",
+      "ar0046n-alpha128-v6",
+      "ar0300n-seams-v6",
+      "ar0300n-alpha128-v6",
+      "ar0900-night-run-v5",
+      "ar0900-night-registry-v5",
+      "ar0900-night-candidate-v5",
+      "ar0900-night-seams-v5",
+      "ar0900-night-alpha128-v5",
+      "wtlake-candidate-v2",
+      "wtlake-registry-v2",
+      "ar0204-ar1600-candidate-v1",
+      "wtlake-relocation-run-v3",
+      "wtlake-relocation-batch-v3",
+      "wtlake-relocation-registry-v3"
+    ],
+    "missing_payload_roots": [
+      {
+        "artifact_set_id": "ar0300n-reflections-alpha160-v10",
+        "path": "maps/water-batches/runs/ar0300n-reflections-alpha160-20260912-v10/maps/AR0300N"
+      },
+      {
+        "artifact_set_id": "ar0300n-native-composition-v9",
+        "path": "maps/water-batches/runs/ar0300n-native-composition-20260912-v9/maps/AR0300N"
+      },
+      {
+        "artifact_set_id": "ar0300n-local-art-alpha208-v8",
+        "path": "maps/water-batches/runs/ar0300n-local-art-alpha208-20260912-v8/maps/AR0300N"
+      },
+      {
+        "artifact_set_id": "wtlake-remaining-nights-v6",
+        "path": "maps/water-batches/runs/wtlake-remaining-nights-20260912-v6/maps/AR0046N"
+      },
+      {
+        "artifact_set_id": "wtlake-remaining-nights-v6",
+        "path": "maps/water-batches/runs/wtlake-remaining-nights-20260912-v6/maps/AR0300N"
+      },
+      {
+        "artifact_set_id": "ar0900-night-repair-v5",
+        "path": "maps/water-batches/runs/ar0900-night-seams-runtime-20260912-v5/maps/AR0900N"
+      },
+      {
+        "artifact_set_id": "wtlake-timeline-q070-v2",
+        "path": "maps/water-batches/runs/wtlake-timeline30-q070-20260912-v2/candidate"
+      },
+      {
+        "artifact_set_id": "wtlake-night-relocation-v3",
+        "path": "maps/water-batches/runs/wtlake-timeline30-q070-wed-relocation-20260912-v3/candidate"
+      },
+      {
+        "artifact_set_id": "wtlake-map-repair-ar0204-ar1600-v1",
+        "path": "maps/water-batches/runs/ar0204-ar1600-seams-wed-20260912-v1/override-candidate"
+      }
+    ],
+    "searched": "G workspace maps/backups/archive/.tmp; Git history of the 8 runs; H:/logiciels/BG2_Upscale/projet at the 30 exact evidence paths.",
+    "availability": "Absent; cause established. Historical exact bytes not restored or certified.",
+    "replacement_qa": "pipeline/water/manifests/wtlake-family-user-qa-20260926-v1.json"
+  }
+}

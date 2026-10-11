@@ -25,26 +25,38 @@ Les décisions durables sont dans
 - Manque : campagnes A/B répétées, contrebalancées, binaire final et cache froid.
 - Conséquence : ne pas qualifier ni publier la fonctionnalité à partir du passage actuel.
 
-## MAP-QA-001 — Cartes installées en attente de QA
+## MAP-QA-001 — Décors acceptés, réserves et traçabilité
 
-`areas.csv` reste l'autorité. État courant à traiter :
+Au 2026-10-11 : `areas.csv` compte 369 zones + 31 nuits = **400 variantes**
+`validated-installed` ; aucune carte en attente de QA décor. Cette acceptation porte sur le
+**décor x4** ; eau, animations, installation courante et release restent indépendantes.
+Réserves et preuves : [`../maps/SUIVI.md`](../maps/SUIVI.md).
 
-| Zone | Point à reprendre |
-|---|---|
-| AR2300 | crash de carte complète et incohérence d'eau ; reprise complète |
+AR2300 : crash historique clos par repagination validée 2026-09-05 ; correction locale validée
+2026-09-06 ; traitement eau WTLAKE accepté 2026-09-26. Aucune reprise complète déduite.
 
-Ne jamais convertir `installed-pending-qa` en `validated-installed` sans décision explicite.
-
-Au 2026-09-21, `areas.csv` ne porte plus aucune carte `installed-pending-qa` : les 369 zones sont
-`validated-installed`, variantes nuit comprises. Cette validation ne couvre que **l'upscaling x4 du
-décor**. Restent ouverts sur des zones déjà validées :
+Points distincts conservés :
 
 | Sujet | Zones | Entrée |
 |---|---|---|
 | Famille liquide `WT5000A-D` : AR5000 et AR5203 traitées et validées (chaîne eau standard, 2026-09-25/29) ; reste le préflight décor | préflight AR5000/AR5203 | [WATER-005](#water-005--famille-wt5000a-d-ar5000-ar5203-non-classée) |
-| Partie eau signalée en QA | AR5200 | [WATER-004](#water-004--ar5200--partie-eau-restante-hors-overlays-lave) |
-| Contours C : résolu (spline fit 1 par défaut) ; reste le liseré jaune-clair mineur | Toutes familles | [WATER-006](#water-006--refonte-globale-des-contours-c) |
-| Animations de zone | toutes zones ToB/Black Pits des lots 2026-09-19 | `animations/index/` |
+| Réserves visuelles historiques levées | AR3003, AR5200, AR2101, AR0604 | vérification utilisateur 2026-10-11 : tout OK ; `maps/qa-retour-ingame-20261011-v1.json` |
+| Symptôme eau en pause ancien | liste dans `maps/SUIVI.md` | QA traitement acquise ; observation pause distincte non attestée |
+| Contours C acceptés ; liseré fin résiduel | familles concernées | [WATER-006](#water-006--refonte-globale-des-contours-c) |
+| Animations de zone | état courant propre à chaque ressource | `animations/index/` |
+
+Watcher's Keep : provenance QA retrouvée pour **26 maps AR3001, AR3003–AR3027**, message
+utilisateur 2026-09-05 à 21:18:48Z, commit `dae1d9bc` ;
+`maps/qa-documentaire-20261011-v1.json`. Incertitude des 24 notes sans référence levée ;
+réserve ultérieure AR3003 levée après vérification utilisateur le 2026-10-11. Anciennes références WTLAKE absentes : suppression autorisée
+2026-09-26 retrouvée, pas de QA ingame à refaire pour récupérer ces fichiers.
+Contrôles restants : [`../maps/VERIFICATIONS_INGAME.md`](../maps/VERIFICATIONS_INGAME.md).
+
+Passe finale 2026-10-12 : **AR0900, AR1000, AR0500, jour et nuit**, acceptées en sec,
+pause/reprise, pluie/retour au sec et cycle jour→nuit→jour. Ancien symptôme pause AR0900 clos.
+Preuve : `pipeline/water/manifests/water-final-pass-user-qa-20261012-v1.json`.
+Dernière passe demandée terminée ; conditions des autres zones non attestées conservées comme
+compléments facultatifs, sans nouvelle tournée imposée ni intégration release déduite.
 
 ## MAP-RELEASE-001 — OH6460 partage le tileset OH8100
 
@@ -79,8 +91,8 @@ ne sont pas réconciliés par une décision explicite.
   WTLAKE périodique, alpha128 central, bandes RGB/alpha des interfaces internes et marges.
 - Notice technique et preuves : [`WATER_REPAIR_RUNBOOK.md`](WATER_REPAIR_RUNBOOK.md).
 - 2026-09-29 : les 63 WED à eau active sont passées par la chaîne standard (A répare centrales et interfaces), AR6008 comprise (1 centrale, lot marais 2026-09-25) ; toutes validées en jeu.
-- Restent : orchestrateur paramétré, audits/builder legacy recommandant alpha0, qualification des
-  autres structures/familles et variantes nuit. Ne pas généraliser les constantes du témoin.
+- Dette technique : orchestrateur paramétré, audits/builder legacy recommandant alpha0.
+  Revues q/pluie/nuit distinctes : `water/ingame-map-tracking-v1.json` ; ne pas généraliser les constantes du témoin.
 - La configuration Core release impose encore `EnableWaterEffect=true`, contrairement au témoin ;
   intégration release distincte à décider, aucun bundle/payload à reconstruire implicitement.
 
@@ -89,7 +101,10 @@ ne sont pas réconciliés par une décision explicite.
 - Cause : insertion60octets dans la timeline sans déplacer les offsets internes des portes.
 - Producteurs corrigés par `scripts/water_wed.py` ; AR0204/AR1600 réinstallés et validés ingame
   le 2026-09-12.
-- Restent installés hors périmètre de ce correctif : AR0300/N, AR0900/N, AR2300.
+- Ancien périmètre hors correctif du 2026-09-12 : AR0300/N, AR0900/N, AR2300. Le traitement
+  WTLAKE de ces identités est accepté depuis le 2026-09-26
+  (`water/manifests/wtlake-family-user-qa-20260926-v1.json`). Cycle AR0900/N attesté le
+  2026-10-12 ; les autres cycles ne sont pas déduits de l'acceptation de lot.
 - AR0204 BRIDGE01 a0polygone : offset incohérent corrigé, pas de crash prouvé associé.
 - Preuves, reçus et QA : [`water/AR0204_AR1600_REPAIR_20260912.md`](water/AR0204_AR1600_REPAIR_20260912.md).
 
@@ -98,9 +113,12 @@ ne sont pas réconciliés par une décision explicite.
 - QA ingame du 2026-09-15 : `AR5200` validée avec réserve sur une partie eau distincte des
   overlays lave `WTLAVA/B/C/D` (déjà audités `keep-stock`, sans composition native — voir
   `maps/AR5200/runs/seedvr2-7b-int8-none-grid-2x2-x4/00_water_audit/AR5200-water-audit.json`).
-- Traitement reporté ; identifier le resref/la cellule concernée avant toute nouvelle passe.
-- `areas.csv` reste `validated-installed` pour AR5200 (le reste de la zone est accepté) ; ne pas
-  clore cette entrée sans preuve de la correction de la partie eau signalée.
+- **Clos visuellement le 2026-10-11** : l'utilisateur a vérifié la map et indique que tout est OK ;
+  `maps/qa-retour-ingame-20261011-v1.json`. Réserve levée par acceptation du rendu courant,
+  sans déduire qu'une correction d'asset a été effectuée. Aucun resref/cellule à rechercher
+  ni traitement supplémentaire demandé pour cette ancienne réserve.
+- La lave et son contour ont des validations ultérieures (2026-09-24/25/29) ; elles ne désignent
+  pas la portion eau distincte signalée le 2026-09-15.
 
 ## WATER-005 — Famille WT5000A-D (AR5000, AR5203) non classée
 
@@ -121,24 +139,16 @@ ne sont pas réconciliés par une décision explicite.
   `audit_area_preflight.py`/`audit_water_area.py`/`build_upscaled_area.py` (le préflight décor bloque toujours
   sans `--allow-blocked-test`) ; matériau route2 dédié (non requis : q0 validé).
 
-## WATER-006 — Refonte globale des contours C (résolue 2026-09-25)
+## WATER-006 — Contours C acceptés, réserves esthétiques
 
-- **Résolution 2026-09-25** : spline fit 1 validée sur toutes les familles et intégrée comme C par défaut
-  (`contour_spline_fit`) ; exceptions par map AR0408/AR0703 (matte antérieur). Reste mineur : liseré jaune-clair
-  du RGB de bord.
-
-- Décision utilisateur du 2026-09-24 : continuer le développement et les installations avec C actuel.
-- Dette : C reste provisoire et doit être amélioré sur toutes les familles.
-- Clôture : nouveau contrat C validé ingame, puis reconstruction/réinstallation de C sur chaque map/famille
-  déjà traitée ; conserver les anciens runs et reçus immuables.
-- 2026-09-25 (décision utilisateur) : C reste à améliorer pour **toutes** les familles, y compris celles
-  validées depuis (huile AR0503, rivière brune AR5000, turquoise AR6300, reprises AR1600/AR0500/AR0500N).
-  Acquis : `central_water` par défaut (lignes aux jonctions eau pure ↔ paire) ; essai spline fit 1 / fit 4 + AA
-  non retenu (AR6300). Défaut restant commun : liseré jaune-clair = RGB de bord recoloré (`edge_rgb`), pas la
-  géométrie → piste prioritaire de la refonte.
-- État et preuve : `water/CONTOUR_MATTE_PIPELINE.md`,
-  `water/manifests/ar0500n-contour-user-qa-20260924-v1.json`, `water/manifests/ar6300-contour-installed-20260925-v2.json`
-  (spline fit 1), `-v3.json` (fit 4 + AA).
+- Décision finale 2026-09-25 : spline fit1 acceptée pour toutes les familles, C par défaut
+  (`contour_spline_fit`, `central_water`). Exceptions AR0408/AR0703 : matte antérieur.
+- Preuve : `water/manifests/ar5200-contour-user-qa-20260925-v1.json` et manifestes finaux par zone.
+  Les anciennes mentions « C provisoire / refonte globale obligatoire » ne définissent plus l'état courant.
+- Réserves acceptées : liseré fin jaune-clair/cyan-vert, panneaux AR1604, arrondis
+  AR0506/AR1003/AR1004. Liste et portée : `../maps/SUIVI.md` ; géométrie et RGB à distinguer.
+- Amélioration éventuelle au cas par cas ; aucune reconstruction globale exigée par ces réserves.
+  Essai fit4 + AA AR6300 non retenu ; preuves historiques immuables.
 
 ## WTPOOL-001 — Piscines x4
 

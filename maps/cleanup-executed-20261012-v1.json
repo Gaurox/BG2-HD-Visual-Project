@@ -1,0 +1,173 @@
+{
+  "schema": "bg2-map-cleanup-executed-v1",
+  "date": "2026-10-12",
+  "state": "completed",
+  "authorization": "explicit-current-chat-user-request",
+  "authorization_quote": "ok supprime les médias des 29 dossiers identifiés, garde les preuves et les 19 cas ambigus. ne touche pas au travail validé ni à la release. mets le suivi à jour et dis-moi combien d’espace a été libéré",
+  "approved_proposal": {
+    "path": "maps/cleanup-candidates-20261012-v1.json",
+    "sha256": "30BE869EE7F1A41D20A46775683BC1487858B168737906A4ADAFCC0949DA960C"
+  },
+  "started_utc": "2026-10-11T22:38:21.0628847Z",
+  "ended_utc": "2026-10-11T22:38:43.4262655Z",
+  "deleted": {
+    "roots": 29,
+    "files": 14217,
+    "logical_bytes": 4453574085,
+    "unique_logical_bytes_after_hardlinks": 3368900963,
+    "unique_allocated_bytes_before_unlink": 3396148632,
+    "remaining_approved_files": 0,
+    "failures": []
+  },
+  "free_space": {
+    "available_free_before_bytes": 1196191653888,
+    "available_free_after_bytes": 1199171883008,
+    "available_free_delta_bytes": 2980229120,
+    "total_free_before_bytes": 1196191653888,
+    "total_free_after_bytes": 1199171883008,
+    "total_free_delta_bytes": 2980229120
+  },
+  "space_interpretation": "Allocated size of unique files whose final directory links were removed: 3396148632 bytes. Net free-space increase on G during the operation: 2980229120 bytes. Volume delta includes all concurrent disk activity; no attribution of the difference is inferred.",
+  "preservation": {
+    "files_hash_verified": 822,
+    "metadata_proofs_and_logs_preserved": true,
+    "ambiguous_roots_preserved": 19,
+    "selected_or_accepted_roots_preserved": 650,
+    "all_preserved_file_hashes_unchanged": true,
+    "map_qa_authorities_unchanged": true,
+    "other_authority_changes_during_operation": []
+  },
+  "boundaries": {
+    "accepted_work": "not-written-or-deleted",
+    "release": "no-write-or-delete-by-this-task",
+    "installed_game_files": "not-touched",
+    "native_sources": "not-touched",
+    "directories": "retained; only the approved literal files removed"
+  },
+  "by_root": {
+    "maps/water-batches/runs/ar5000-water-30fps-20260924-v1": {
+      "files": 1895,
+      "logical_bytes": 334750141
+    },
+    "maps/water-batches/runs/ar3000-water-x4-20260929-v2": {
+      "files": 43,
+      "logical_bytes": 55584195
+    },
+    "archive/tests-upscale/AR0700": {
+      "files": 10,
+      "logical_bytes": 65650940
+    },
+    "maps/water-batches/runs/ar5200-water-30fps-20260924-v1": {
+      "files": 2683,
+      "logical_bytes": 439834454
+    },
+    "maps/water-batches/runs/ar0413-water-x4-20260928-v1": {
+      "files": 175,
+      "logical_bytes": 99415114
+    },
+    "maps/water-batches/runs/voie1-alpha128-x4-20260912-v3": {
+      "files": 1273,
+      "logical_bytes": 1877120119
+    },
+    "maps/water-batches/runs/ar0413-contour-matte-20260928-v2": {
+      "files": 469,
+      "logical_bytes": 23135704
+    },
+    "maps/water-batches/runs/ar6300-contour-matte-20260925-v3": {
+      "files": 82,
+      "logical_bytes": 18170978
+    },
+    "maps/water-batches/runs/ar5000-contour-matte-20260924-v1": {
+      "files": 862,
+      "logical_bytes": 101165738
+    },
+    "maps/water-batches/runs/ar0413-water-x4-20260928-v2": {
+      "files": 182,
+      "logical_bytes": 99712164
+    },
+    "maps/water-batches/runs/ar5203-water-x4-20260929-v2": {
+      "files": 48,
+      "logical_bytes": 48598391
+    },
+    "maps/water-batches/runs/ar0413-contour-matte-20260928-v1": {
+      "files": 469,
+      "logical_bytes": 26173266
+    },
+    "maps/water-batches/runs/ar5000-water-30fps-20260924-v2": {
+      "files": 1895,
+      "logical_bytes": 334629595
+    },
+    "maps/AR0410/runs/legacy-upscale-tests-20260818": {
+      "files": 9,
+      "logical_bytes": 82873432
+    },
+    "maps/water-batches/runs/ar3000-contour-matte-20260929-v1": {
+      "files": 291,
+      "logical_bytes": 28798068
+    },
+    "maps/water-batches/runs/ar0413-water-x4-20260928-v4": {
+      "files": 28,
+      "logical_bytes": 10216938
+    },
+    "maps/water-batches/runs/ar6300-contour-matte-20260925-v2": {
+      "files": 82,
+      "logical_bytes": 18178845
+    },
+    "archive/abandoned/gigapixel/AR0500": {
+      "files": 2,
+      "logical_bytes": 169707290
+    },
+    "maps/water-batches/runs/ar3000-teal-opacity160-20260929-v1": {
+      "files": 12,
+      "logical_bytes": 13525171
+    },
+    "maps/water-batches/runs/ar6300-contour-matte-20260925-v4": {
+      "files": 82,
+      "logical_bytes": 18059742
+    },
+    "maps/water-batches/runs/ar5000-contour-matte-20260924-v2": {
+      "files": 862,
+      "logical_bytes": 101178903
+    },
+    "maps/water-batches/runs/ar0500n-contour-matte-20260924-v1": {
+      "files": 666,
+      "logical_bytes": 117137359
+    },
+    "maps/water-batches/runs/ar1000-wtpool-route1-page-alias-20260912-v2": {
+      "files": 3,
+      "logical_bytes": 1167101
+    },
+    "maps/water-batches/runs/voie1-secondary-alpha-seams-x4-20260912-v1": {
+      "files": 10,
+      "logical_bytes": 7368803
+    },
+    "maps/water-batches/runs/ar3000-water-x4-20260929-v3": {
+      "files": 43,
+      "logical_bytes": 55330048
+    },
+    "maps/water-batches/runs/ar5203-water-x4-20260929-v3": {
+      "files": 48,
+      "logical_bytes": 48033181
+    },
+    "maps/water-batches/runs/ar0404-contour-matte-20260929-v1": {
+      "files": 291,
+      "logical_bytes": 21919589
+    },
+    "maps/water-batches/runs/ar6300-water-30fps-20260925-v2": {
+      "files": 1620,
+      "logical_bytes": 218082428
+    },
+    "maps/water-batches/runs/ar6300-contour-matte-20260925-v5": {
+      "files": 82,
+      "logical_bytes": 18056388
+    }
+  },
+  "execution_evidence": {
+    "preflight": ".tmp/maps-cleanup-20261012/execution-preflight.json",
+    "preflight_sha256": "B764B215A5E2BE2B0E8A3B13764E43F7CB2E06466F582488BDBF06662704DADF",
+    "delete_result": ".tmp/maps-cleanup-20261012/execution-delete-result.json",
+    "delete_result_sha256": "12FCD187A35ADE0CA5A4E442A9B5C155027EC45CA88A8893328867213C9E330E",
+    "delete_journal": ".tmp/maps-cleanup-20261012/execution-delete-journal.jsonl",
+    "delete_journal_sha256": "7A201A0A220134FB9DB1CC2A591849CB0B4C1C169073436D4BE9DEFE96FCC73F"
+  }
+}

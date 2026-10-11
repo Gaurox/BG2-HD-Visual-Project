@@ -1,0 +1,145 @@
+{
+  "schema": "bg2-water-final-pass-user-qa-v1",
+  "date": "2026-10-12",
+  "source": "explicit-current-chat-user-message",
+  "quote": "AR0900, AR1000 et AR0500 : tout est ok, sec, pause, pluie et cycle jour nuit jour. mets le suivi au propre avec ces validations, sans toucher aux assets ni à la release.",
+  "decision": "validated-ingame",
+  "scope": "Final representative pass requested for AR0900/AR1000/AR0500: dry, pause/resume, rain/return to dry, day-night-day; same checks on the night variant as specified in the preceding instructions.",
+  "areas": [
+    "AR0500",
+    "AR0900",
+    "AR1000"
+  ],
+  "weds": [
+    "AR0500",
+    "AR0500N",
+    "AR0900",
+    "AR0900N",
+    "AR1000",
+    "AR1000N"
+  ],
+  "conditions": [
+    "dry-day",
+    "dry-night",
+    "pause-resume",
+    "rain-day",
+    "rain-night",
+    "rain-to-dry",
+    "day-night-day"
+  ],
+  "review_snapshot": {
+    "AR0500": {
+      "q": [
+        {
+          "slot": 1,
+          "overlay": "YFLRP9",
+          "q": 0.4
+        }
+      ],
+      "rain": [
+        {
+          "slot": 1,
+          "overlay": "YFLRP9R",
+          "q": 0.0
+        }
+      ]
+    },
+    "AR0500N": {
+      "q": [
+        {
+          "slot": 1,
+          "overlay": "YF7F6E",
+          "q": 0.4
+        }
+      ],
+      "rain": [
+        {
+          "slot": 1,
+          "overlay": "YF7F6ER",
+          "q": 0.0
+        }
+      ]
+    },
+    "AR0900": {
+      "q": [
+        {
+          "slot": 1,
+          "overlay": "YFU4T6",
+          "q": 0.0
+        }
+      ],
+      "rain": [
+        {
+          "slot": 1,
+          "overlay": "YFU4T6R",
+          "q": 0.0
+        }
+      ]
+    },
+    "AR0900N": {
+      "q": [
+        {
+          "slot": 1,
+          "overlay": "YFW9QQ",
+          "q": 0.0
+        }
+      ],
+      "rain": [
+        {
+          "slot": 1,
+          "overlay": "YFW9QQR",
+          "q": 0.0
+        }
+      ]
+    },
+    "AR1000": {
+      "q": [
+        {
+          "slot": 1,
+          "overlay": "YFBK9U",
+          "q": 0.4
+        }
+      ],
+      "rain": [
+        {
+          "slot": 1,
+          "overlay": "YFBK9UR",
+          "q": 0.0
+        }
+      ]
+    },
+    "AR1000N": {
+      "q": [
+        {
+          "slot": 1,
+          "overlay": "YF90L3",
+          "q": 0.4
+        }
+      ],
+      "rain": [
+        {
+          "slot": 1,
+          "overlay": "YF90L3R",
+          "q": 0.0
+        }
+      ]
+    }
+  },
+  "declared_runtime_reference": {
+    "pointer": "pipeline/water/route2-registry-current.json",
+    "pointer_sha256": "BF27AB5CA12CF6AFF06DF878438137CEB897E50817235B65D8414F16B7295D55",
+    "registry": {
+      "path": "pipeline/water/requests/ar6300-water-30fps-20260929-v4/registry-v3.json",
+      "sha256_lf": "E582C7879B50C0765DAC7918EF80AD9CE3CC17E884FAE6E599E81796FF635471"
+    }
+  },
+  "not_claimed": [
+    "QA of other areas or WEDs",
+    "independent verification of installed asset or DLL hashes",
+    "new asset correction",
+    "new installation",
+    "release integration or approval"
+  ],
+  "installation": "unchanged",
+  "release": "not-requested"
+}
