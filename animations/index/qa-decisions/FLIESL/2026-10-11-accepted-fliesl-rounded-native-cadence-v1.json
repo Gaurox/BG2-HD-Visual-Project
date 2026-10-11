@@ -1,0 +1,233 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:FLIESL",
+  "correction_id": "flies-rounded-native-cadence-20261011-v1",
+  "decision": "Utilisateur : ok je valide les 2. maj le suivi et committe. FLIESL x4 arrondi accepté ingame ; ressource partagée validée dans le déploiement de 21 cartes. Recette : Ellipses par composante 8-connexe, centres/surfaces conservés, aspect ≤1,6 ; supersampling16 → BOX x4. 18 frames et cadence/cycles/dimensions/centres BAM natifs conservés. Les octets et le contrat runtime du resref sont identiques dans toutes ses zones ; cette décision ne prétend pas à une visite individuelle des 216 occurrences. Aucun changement release.",
+  "decision_date": "2026-10-11",
+  "decision_id": "2026-10-11-accepted-fliesl-rounded-native-cadence-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/FLIESL/runs/fliesl-rounded-native-cadence-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "B3555D925DAD994BC18E032B75C206761E807B8CF8EC90DAAE6B3201910348DF",
+    "path": "animations/ressources/FLIESL/runs/fliesl-rounded-native-cadence-accepted-20261011-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar0201/AR0201/manifest.json",
+        "manifest_sha256": "87FE2D4C81BF0520F182048F72499993F22F0A450D5266CE525ACDFFF0BA211E",
+        "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar0201/AR0201",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/flies-rounded-native-cadence-20261011-v1/manifest.json",
+        "manifest_sha256": "EE2928D0D446487D397EF4C31BF2E9426131F00ED4E7916754144AE27C2E3F86",
+        "path": "animations/batches/flies-rounded-native-cadence-20261011-v1",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "fliesl-rounded-native-cadence-20261011-v1",
+  "recorded_at_utc": "2026-10-11T15:40:07Z",
+  "resref": "FLIESL",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0201",
+        "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar0201/AR0201/manifest.json",
+        "manifest_sha256": "87FE2D4C81BF0520F182048F72499993F22F0A450D5266CE525ACDFFF0BA211E",
+        "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar0201/AR0201",
+        "registry_sha256": "6EC33D7E1FDD9C406C7612CC1333D035E31AB8B09FB41DB3628758D947DA65A9",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0206",
+        "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar0206/AR0206/manifest.json",
+        "manifest_sha256": "E21018738E0E6D3935D7874C489E419E2A5E5580E5DB4354AF2A0D779A50EA78",
+        "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar0206/AR0206",
+        "registry_sha256": "AECDCFB1E10C9E60024E2A28B918161E38E5664BDD8CAE690FF51565B05B1230",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0400",
+        "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar0400/AR0400/manifest.json",
+        "manifest_sha256": "B3B6F3D41FF29E8A2C58F8D184CEFFB56F791B7924E89CDB1C0084CBF23A60F7",
+        "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar0400/AR0400",
+        "registry_sha256": "3B2A68685C0055606D07576C588647F59B993EADC7114591A46147B7B49F4673",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0406",
+        "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar0406/AR0406/manifest.json",
+        "manifest_sha256": "FE17CD4739CBDB0D9AAB7EF0EB6F57B87E3DC9E3A0A77D32F821C8168ACCD2F8",
+        "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar0406/AR0406",
+        "registry_sha256": "6AAEC86598642AC113E1CD5425C9E691952BDE390C794D3573FDFA086AD9E34F",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0500",
+        "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar0500/AR0500/manifest.json",
+        "manifest_sha256": "F4B2710CB4514A7B2B7D00FD4F24FF51B05030F1A3CF61A678BAA6DAB5A53BC6",
+        "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar0500/AR0500",
+        "registry_sha256": "D75011757B341A14E5C8F781D390F045FD2BC99F1C64B6FE66AE15F4DD7DAA6C",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0502",
+        "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar0502/AR0502/manifest.json",
+        "manifest_sha256": "A92E3E22840265EE054E4ED50E93BF4894B218277B16424C6B6CCA63D7085931",
+        "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar0502/AR0502",
+        "registry_sha256": "4FBA715C6EC32B3E20461D6D9EA85A86D0DF025D4EDEE812B3F926621B02563F",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1100",
+        "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar1100/AR1100/manifest.json",
+        "manifest_sha256": "118CC07B202E8662C76664CB39C3B7E0285358FFFC8DC13FAA2F8D8050A1ABC2",
+        "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar1100/AR1100",
+        "registry_sha256": "DF229DE220F77E82C79AC04D35E14AE57057D9EEB647F22EAC5424ADE9367A05",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1200",
+        "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar1200/AR1200/manifest.json",
+        "manifest_sha256": "CC472E4298BEF4022E6BFAE862A45845C27CF5FCCB62B5CAD4938126AFDA8A2F",
+        "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar1200/AR1200",
+        "registry_sha256": "0116C7285956DDC5EB4F49310D69E1FA4CA8088407B9174C995565D6300A1F60",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1302",
+        "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar1302/AR1302/manifest.json",
+        "manifest_sha256": "200F2203C1114E3AFDD9D6098FEE928AF06A62251500FAFC16663A3F3973226C",
+        "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar1302/AR1302",
+        "registry_sha256": "A27DC1E1234F9371967B3CFC3749DC14EC03ACA92728D9F5BCC7400EBC2D89E4",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1600",
+        "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar1600/AR1600/manifest.json",
+        "manifest_sha256": "524C441BCD43D9C0BC64A6131A248DB44B14D0FC3E9A7C5ADA40622F9EB2308D",
+        "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar1600/AR1600",
+        "registry_sha256": "09F478EBA46BD747BCDCBB00B7172B9E06875E8FE3FF7529E01E0C421F20A010",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1700",
+        "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar1700/AR1700/manifest.json",
+        "manifest_sha256": "55C7E1D46240BFB884AF712B45E6856301AFB5C2C2A8800036724A50DBF172AE",
+        "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar1700/AR1700",
+        "registry_sha256": "0116C7285956DDC5EB4F49310D69E1FA4CA8088407B9174C995565D6300A1F60",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1800",
+        "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar1800/AR1800/manifest.json",
+        "manifest_sha256": "89E90E385B5237C1F57B1584B9F419A1D23EE323B898B9539FB8C05F0D3DEA49",
+        "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar1800/AR1800",
+        "registry_sha256": "2CDF8EF3A1668776AE4DFE7F3FEA8D4BC4F2F9DD8485CEBCABDCFAA278CE889D",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1900",
+        "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar1900/AR1900/manifest.json",
+        "manifest_sha256": "16A5FDC816769F8741050F476CAB11E6A0C4EA5129F3AE16D50657D8B92D6D52",
+        "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar1900/AR1900",
+        "registry_sha256": "F42BCBE2C457D398112233B6918F08C961DF5581F059DCE10834867D990E9F48",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2000",
+        "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar2000/AR2000/manifest.json",
+        "manifest_sha256": "22F8F7668F574F950E5B93C362E196AD4F83552CBB01E1979A064855B204CBCB",
+        "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar2000/AR2000",
+        "registry_sha256": "04EF6AB1C412F93299DF26D4BD9C3D79C1BA0CF9D6F7EDB2E3756F31E6C87B7A",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5000",
+        "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar5000/AR5000/manifest.json",
+        "manifest_sha256": "13115D260230E263B406B10F25950986C02AB836C3A208FB331801EC2B74B392",
+        "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar5000/AR5000",
+        "registry_sha256": "643FA4AA54769C3BB7433D5AFAFE98B86DE8197FD41C5DF3904F83DF373D4E8F",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5203",
+        "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar5203/AR5203/manifest.json",
+        "manifest_sha256": "A55061E53A1BDB3AAE8625B24DC4F24DB307F6C0AD4FA6A65B96225196074881",
+        "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar5203/AR5203",
+        "registry_sha256": "4CB0F390FC08C76F806A86E07A5E81C0C01998695942D4E17290B70EDD87747E",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR6300",
+        "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar6300/AR6300/manifest.json",
+        "manifest_sha256": "BFA6742D81A007FF2A4B562DC0928F3FBC4AC14C2503E48DCA97E9C945CA9E69",
+        "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar6300/AR6300",
+        "registry_sha256": "5E4C1E453822FCC8B346B3EB0D22CEF1D25E7D0B6E6F78F106C19B81D1491222",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR6400",
+        "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar6400/AR6400/manifest.json",
+        "manifest_sha256": "F1F43B6FD75EF8C7A857B6EDA48945C2E020BE4D9C94AC2DDFC11EE4B2F440D9",
+        "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/ar6400/AR6400",
+        "registry_sha256": "BFABCE473E15DD0408652635659BBC62E877F643ACD8BF035CAEBAFE69514571",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH6100",
+        "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/oh6100/OH6100/manifest.json",
+        "manifest_sha256": "0790A1147A39B16E4363F0B4FFDB2558EA207C0E158476F8D2196E5E0926C165",
+        "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/oh6100/OH6100",
+        "registry_sha256": "2BC4861DDC05B0EDD6105E77978A937F2C24936B7A84A473EA34A6B58D9B9B49",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH6200",
+        "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/oh6200/OH6200/manifest.json",
+        "manifest_sha256": "988A987B3427791227593D393B16AEBDCC8CA7F4E0E94BF3E3D3B693FD4AD7D6",
+        "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/oh6200/OH6200",
+        "registry_sha256": "EB5F9BB61E60A148BABD2F4C318B1FD522CC00B62B3A72BB47C67A1B547ACACD",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/manifest.json",
+    "manifest_sha256": "09D38E9AB35A35624B8431279F0143F1527D7D3F437BC4369D2EFAD28AC4A3C8",
+    "path": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0201",
+    "AR0206",
+    "AR0400",
+    "AR0406",
+    "AR0500",
+    "AR0502",
+    "AR1100",
+    "AR1200",
+    "AR1302",
+    "AR1600",
+    "AR1700",
+    "AR1800",
+    "AR1900",
+    "AR2000",
+    "AR5000",
+    "AR5203",
+    "AR6300",
+    "AR6400",
+    "OH6100",
+    "OH6200"
+  ]
+}

@@ -1,0 +1,793 @@
+{
+  "schema": "bg2-upscale-flies-preparation-v1",
+  "status": "prepared-not-installed",
+  "created_utc": "2026-10-11T15:09:08.174520+00:00",
+  "production_run": "animations/batches/flies-rounded-native-cadence-20261011-v1",
+  "complete_split_root": "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1",
+  "complete_manifest_sha256": "09d38e9ab35a35624b8431279f0143f1527d7d3f437bc4369d2efad28ac4a3c8",
+  "area_count": 21,
+  "occurrence_count": 216,
+  "source_frame_count": 36,
+  "native_cadence_preserved": true,
+  "existing_resources_byte_identical": true,
+  "area_installer_pack_validation": "passed-for-all-21-leaves",
+  "installation": {
+    "status": "deferred-by-user",
+    "must_wait_for": "User confirms parallel DLL work finished and committed",
+    "before_install": "Compare relevant lock entries and installed signatures to baseline; recompose a new version if changed; close game and InfinityLoader; run targeted installer VerifyOnly",
+    "installer": "pipeline/scripts/Install-AreaAnimation-AreaTest.ps1",
+    "do_not_use": "Install-AreaAnimations-PerArea.ps1: split-root covers only 21 affected zones"
+  },
+  "qa": "PNG previews accepted; ingame QA pending; native selections unchanged",
+  "release": "not-selected",
+  "baseline_lock_sha256": "691e3ba7845b0380de0712840bc989f9e2ef5346023f094bce82e0cc54bf9b24",
+  "largest_area_raw_bytes": 206365440,
+  "total_raw_bytes": 781813888,
+  "areas": {
+    "AR0201": {
+      "lock_entry": {
+        "recorded_utc": "2026-09-18T23:05:19.946091+00:00",
+        "resources": {
+          "FIRE_4": {
+            "sig": "414b3adf5fa8",
+            "frames": 14
+          }
+        },
+        "fingerprint": {
+          "files": 15,
+          "bytes": 315644,
+          "max_mtime_ns": 1789772719902835400
+        },
+        "build": {
+          "merged_from": [
+            "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0201::FIRE_4"
+          ]
+        }
+      },
+      "installed_resource_signatures": {
+        "FIRE_4": "414b3adf5fa8"
+      },
+      "installed_fingerprint": {
+        "files": 15,
+        "bytes": 315644,
+        "max_mtime_ns": 1789772719902835400
+      },
+      "installed_registry_sha256": "e4f4928d1c707cea6843070ac30861834c9c16d98d8a620bcfbdd8efbf47ec06"
+    },
+    "AR0206": {
+      "lock_entry": null,
+      "installed_resource_signatures": {},
+      "installed_fingerprint": null,
+      "installed_registry_sha256": null
+    },
+    "AR0400": {
+      "lock_entry": {
+        "recorded_utc": "2026-09-18T22:43:19.697950+00:00",
+        "resources": {
+          "CHIMSMK": {
+            "sig": "0c17449089e0",
+            "frames": 24
+          },
+          "FIRE_4": {
+            "sig": "414b3adf5fa8",
+            "frames": 14
+          }
+        },
+        "fingerprint": {
+          "files": 39,
+          "bytes": 6115976,
+          "max_mtime_ns": 1789771399583055800
+        },
+        "build": {
+          "merged_from": [
+            "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0400::CHIMSMK",
+            "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0400::FIRE_4"
+          ]
+        }
+      },
+      "installed_resource_signatures": {
+        "CHIMSMK": "0c17449089e0",
+        "FIRE_4": "414b3adf5fa8"
+      },
+      "installed_fingerprint": {
+        "files": 39,
+        "bytes": 6115976,
+        "max_mtime_ns": 1789771399583055800
+      },
+      "installed_registry_sha256": "65b5216fb5db1d7f440fb590b0e4b64233f6b8813a602edf4b3b2143949cacf6"
+    },
+    "AR0406": {
+      "lock_entry": {
+        "recorded_utc": "2026-09-18T23:34:28.184987+00:00",
+        "resources": {
+          "AM0406A": {
+            "sig": "a7f3777dcdec",
+            "frames": 20
+          },
+          "AM0406B": {
+            "sig": "0b91ca78e0c5",
+            "frames": 36
+          },
+          "FIRE_4": {
+            "sig": "414b3adf5fa8",
+            "frames": 14
+          },
+          "FLAME2S": {
+            "sig": "6fd483b997af",
+            "frames": 27
+          },
+          "FPIT1S": {
+            "sig": "6b56712a5a67",
+            "frames": 12
+          }
+        },
+        "fingerprint": {
+          "files": 110,
+          "bytes": 50996256,
+          "max_mtime_ns": 1789774467724063900
+        },
+        "build": {
+          "merged_from": [
+            "animations/packs-par-zone/ar0406-complete-map-lot-20260918/AR0406",
+            "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0406"
+          ]
+        }
+      },
+      "installed_resource_signatures": {
+        "AM0406A": "a7f3777dcdec",
+        "AM0406B": "0b91ca78e0c5",
+        "FIRE_4": "414b3adf5fa8",
+        "FLAME2S": "6fd483b997af",
+        "FPIT1S": "6b56712a5a67"
+      },
+      "installed_fingerprint": {
+        "files": 110,
+        "bytes": 50996256,
+        "max_mtime_ns": 1789774467724063900
+      },
+      "installed_registry_sha256": "ddd27df73f0719a1fd9b884bb902cb17d239a35cf665c5fa7e7d9b431bb8e005"
+    },
+    "AR0500": {
+      "lock_entry": {
+        "recorded_utc": "2026-09-21T19:26:01.475076+00:00",
+        "resources": {
+          "CHIMSMK": {
+            "sig": "0c17449089e0",
+            "frames": 24
+          },
+          "FIRE_3": {
+            "sig": "c2cebb655fd3",
+            "frames": 14
+          },
+          "FLAME2L": {
+            "sig": "9cf8e8eea5c5",
+            "frames": 9
+          }
+        },
+        "fingerprint": {
+          "files": 48,
+          "bytes": 6735472,
+          "max_mtime_ns": 1790018761301928400
+        },
+        "build": {
+          "merged_from": [
+            "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0500",
+            "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0500",
+            "animations/packs-par-zone/flame2l-reboutcx-x4-innerfeather16-premul-20260921/AR0500"
+          ]
+        }
+      },
+      "installed_resource_signatures": {
+        "CHIMSMK": "0c17449089e0",
+        "FIRE_3": "c2cebb655fd3",
+        "FLAME2L": "9cf8e8eea5c5"
+      },
+      "installed_fingerprint": {
+        "files": 48,
+        "bytes": 6735472,
+        "max_mtime_ns": 1790018761301928400
+      },
+      "installed_registry_sha256": "d7c3fd79b9e7ea3a1424df7714b37f6998b71e6bf6407d2783aa2f6882601eff"
+    },
+    "AR0502": {
+      "lock_entry": {
+        "recorded_utc": "2026-10-11T09:59:38.410032+00:00",
+        "resources": {
+          "FLAME2S": {
+            "sig": "6fd483b997af",
+            "frames": 27
+          },
+          "WTRBODY1": {
+            "sig": "0c73a35a71b0",
+            "frames": 40
+          }
+        },
+        "fingerprint": {
+          "files": 68,
+          "bytes": 2871228,
+          "max_mtime_ns": 1791712777984967200
+        },
+        "build": {
+          "merged_from": [
+            "G:/AI/BG2_Upscale/animations/packs-par-zone/lot2-small-effects-20261011-v1-complete/AR0502::FLAME2S",
+            "G:/AI/BG2_Upscale/animations/ressources/WTRBODY1/runs/wtrbody1-xbr-apo8-collapse-20261011-v1/03_runtime_pack::WTRBODY1"
+          ]
+        }
+      },
+      "installed_resource_signatures": {
+        "FLAME2S": "6fd483b997af",
+        "WTRBODY1": "0c73a35a71b0"
+      },
+      "installed_fingerprint": {
+        "files": 68,
+        "bytes": 2871228,
+        "max_mtime_ns": 1791712777984967200
+      },
+      "installed_registry_sha256": "511e5ac0ee300ee245ba8f2ddc867d2324791d6766b1223aad2559ebcb426338"
+    },
+    "AR1100": {
+      "lock_entry": {
+        "recorded_utc": "2026-10-11T08:22:06.594890+00:00",
+        "resources": {
+          "BUTRFLY": {
+            "sig": "f8cb283031ba",
+            "frames": 36
+          },
+          "CHIMSMK": {
+            "sig": "0c17449089e0",
+            "frames": 24
+          },
+          "DSTDVL1A": {
+            "sig": "452568ad94f3",
+            "frames": 139
+          },
+          "DSTDVL1B": {
+            "sig": "f2f1c0463d43",
+            "frames": 139
+          },
+          "DSTDVL1C": {
+            "sig": "b5787201aa74",
+            "frames": 139
+          }
+        },
+        "fingerprint": {
+          "files": 478,
+          "bytes": 62498400,
+          "max_mtime_ns": 1791706848093970000
+        },
+        "build": {
+          "leaf": "animations/packs-par-zone/dstdvl1abc-nine-maps-misty-20261011-v1/AR1100"
+        }
+      },
+      "installed_resource_signatures": {
+        "BUTRFLY": "f8cb283031ba",
+        "CHIMSMK": "0c17449089e0",
+        "DSTDVL1A": "452568ad94f3",
+        "DSTDVL1B": "f2f1c0463d43",
+        "DSTDVL1C": "b5787201aa74"
+      },
+      "installed_fingerprint": {
+        "files": 478,
+        "bytes": 62498400,
+        "max_mtime_ns": 1791706848093970000
+      },
+      "installed_registry_sha256": "1befac2d20ec71088d8abf8b02de02a62226088949db10baba92d594fbec9ba7"
+    },
+    "AR1200": {
+      "lock_entry": {
+        "recorded_utc": "2026-10-11T08:22:06.864212+00:00",
+        "resources": {
+          "BUTRFLY": {
+            "sig": "f8cb283031ba",
+            "frames": 36
+          },
+          "DSTDVL1A": {
+            "sig": "452568ad94f3",
+            "frames": 139
+          },
+          "DSTDVL1B": {
+            "sig": "f2f1c0463d43",
+            "frames": 139
+          },
+          "DSTDVL1C": {
+            "sig": "b5787201aa74",
+            "frames": 139
+          }
+        },
+        "fingerprint": {
+          "files": 454,
+          "bytes": 56698068,
+          "max_mtime_ns": 1791706853073973500
+        },
+        "build": {
+          "leaf": "animations/packs-par-zone/dstdvl1abc-nine-maps-misty-20261011-v1/AR1200"
+        }
+      },
+      "installed_resource_signatures": {
+        "BUTRFLY": "f8cb283031ba",
+        "DSTDVL1A": "452568ad94f3",
+        "DSTDVL1B": "f2f1c0463d43",
+        "DSTDVL1C": "b5787201aa74"
+      },
+      "installed_fingerprint": {
+        "files": 454,
+        "bytes": 56698068,
+        "max_mtime_ns": 1791706853073973500
+      },
+      "installed_registry_sha256": "3d881dd1b1a9d35fbb75f2cf1bd44b03ee95beff5d7fe2ad032a717acb2e52ae"
+    },
+    "AR1302": {
+      "lock_entry": {
+        "recorded_utc": "2026-09-18T23:35:42.914891+00:00",
+        "resources": {
+          "FIRE_4": {
+            "sig": "414b3adf5fa8",
+            "frames": 14
+          },
+          "FLAME2S": {
+            "sig": "6fd483b997af",
+            "frames": 27
+          }
+        },
+        "fingerprint": {
+          "files": 42,
+          "bytes": 564788,
+          "max_mtime_ns": 1789774542799652100
+        },
+        "build": {
+          "merged_from": [
+            "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1302",
+            "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1302"
+          ]
+        }
+      },
+      "installed_resource_signatures": {
+        "FIRE_4": "414b3adf5fa8",
+        "FLAME2S": "6fd483b997af"
+      },
+      "installed_fingerprint": {
+        "files": 42,
+        "bytes": 564788,
+        "max_mtime_ns": 1789774542799652100
+      },
+      "installed_registry_sha256": "f563d98d53dab083c251caa21ab49b3958e0589e7832664093864ad68b97c0fb"
+    },
+    "AR1600": {
+      "lock_entry": {
+        "recorded_utc": "2026-10-11T08:22:06.965406+00:00",
+        "resources": {
+          "DSTDVL1A": {
+            "sig": "2f1127c1ec93",
+            "frames": 50
+          },
+          "DSTDVL1B": {
+            "sig": "99b5b956cba5",
+            "frames": 50
+          },
+          "DSTDVL1C": {
+            "sig": "99b5b956cba5",
+            "frames": 50
+          }
+        },
+        "fingerprint": {
+          "files": 151,
+          "bytes": 52441224,
+          "max_mtime_ns": 1791706859223788500
+        },
+        "build": {
+          "leaf": "animations/packs-par-zone/dstdvl1abc-nine-maps-misty-20261011-v1/AR1600"
+        }
+      },
+      "installed_resource_signatures": {
+        "DSTDVL1A": "2f1127c1ec93",
+        "DSTDVL1B": "99b5b956cba5",
+        "DSTDVL1C": "99b5b956cba5"
+      },
+      "installed_fingerprint": {
+        "files": 151,
+        "bytes": 52441224,
+        "max_mtime_ns": 1791706859223788500
+      },
+      "installed_registry_sha256": "8dfa378099f2751212c4d206b1c2eb0d67594f437326e3f28f8857365f6f73d3"
+    },
+    "AR1700": {
+      "lock_entry": {
+        "recorded_utc": "2026-10-11T08:22:07.232776+00:00",
+        "resources": {
+          "BUTRFLY": {
+            "sig": "f8cb283031ba",
+            "frames": 36
+          },
+          "DSTDVL1A": {
+            "sig": "452568ad94f3",
+            "frames": 139
+          },
+          "DSTDVL1B": {
+            "sig": "f2f1c0463d43",
+            "frames": 139
+          },
+          "DSTDVL1C": {
+            "sig": "b5787201aa74",
+            "frames": 139
+          }
+        },
+        "fingerprint": {
+          "files": 454,
+          "bytes": 56698068,
+          "max_mtime_ns": 1791706863130227600
+        },
+        "build": {
+          "leaf": "animations/packs-par-zone/dstdvl1abc-nine-maps-misty-20261011-v1/AR1700"
+        }
+      },
+      "installed_resource_signatures": {
+        "BUTRFLY": "f8cb283031ba",
+        "DSTDVL1A": "452568ad94f3",
+        "DSTDVL1B": "f2f1c0463d43",
+        "DSTDVL1C": "b5787201aa74"
+      },
+      "installed_fingerprint": {
+        "files": 454,
+        "bytes": 56698068,
+        "max_mtime_ns": 1791706863130227600
+      },
+      "installed_registry_sha256": "3d881dd1b1a9d35fbb75f2cf1bd44b03ee95beff5d7fe2ad032a717acb2e52ae"
+    },
+    "AR1800": {
+      "lock_entry": {
+        "recorded_utc": "2026-09-18T23:05:55.797605+00:00",
+        "resources": {
+          "BUTRFLY": {
+            "sig": "f8cb283031ba",
+            "frames": 36
+          }
+        },
+        "fingerprint": {
+          "files": 37,
+          "bytes": 9437772,
+          "max_mtime_ns": 1789772755695042800
+        },
+        "build": {
+          "leaf": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR1800"
+        }
+      },
+      "installed_resource_signatures": {
+        "BUTRFLY": "f8cb283031ba"
+      },
+      "installed_fingerprint": {
+        "files": 37,
+        "bytes": 9437772,
+        "max_mtime_ns": 1789772755695042800
+      },
+      "installed_registry_sha256": "d07e64961e2acc8a23fa77d961a73ea838f8649c7a2cafa090e8b81cd7c0c16b"
+    },
+    "AR1900": {
+      "lock_entry": null,
+      "installed_resource_signatures": {},
+      "installed_fingerprint": null,
+      "installed_registry_sha256": null
+    },
+    "AR2000": {
+      "lock_entry": {
+        "recorded_utc": "2026-09-18T21:48:50.441834+00:00",
+        "resources": {
+          "AM2000A": {
+            "sig": "5c26316e98f9",
+            "frames": 56
+          },
+          "AM2000B": {
+            "sig": "2773e69c8f19",
+            "frames": 56
+          },
+          "BUTRFLY": {
+            "sig": "f8cb283031ba",
+            "frames": 36
+          },
+          "CHIMSMK": {
+            "sig": "0c17449089e0",
+            "frames": 24
+          }
+        },
+        "fingerprint": {
+          "files": 173,
+          "bytes": 201570208,
+          "max_mtime_ns": 1789763376307444600
+        },
+        "build": {
+          "leaf": "animations/packs-par-zone/ar2000-complete-map-lot-20260918/AR2000"
+        }
+      },
+      "installed_resource_signatures": {
+        "AM2000A": "5c26316e98f9",
+        "AM2000B": "2773e69c8f19",
+        "BUTRFLY": "f8cb283031ba",
+        "CHIMSMK": "0c17449089e0"
+      },
+      "installed_fingerprint": {
+        "files": 173,
+        "bytes": 201570208,
+        "max_mtime_ns": 1789763376307444600
+      },
+      "installed_registry_sha256": "6cbddd8f50731d5f41d14d4666964c2fe70d38bcea5222da6480023b19748ca1"
+    },
+    "AR5000": {
+      "lock_entry": {
+        "recorded_utc": "2026-09-22T22:25:50.470997+00:00",
+        "resources": {
+          "AM5000A": {
+            "sig": "9c2b7661729d",
+            "frames": 10
+          },
+          "AM5000B": {
+            "sig": "735cd6b76360",
+            "frames": 10
+          },
+          "FIRE_1": {
+            "sig": "073eb78953a7",
+            "frames": 15
+          },
+          "FIRE_3": {
+            "sig": "c2cebb655fd3",
+            "frames": 14
+          },
+          "FIRE_4": {
+            "sig": "414b3adf5fa8",
+            "frames": 14
+          },
+          "FISH3L": {
+            "sig": "0f462700251d",
+            "frames": 36
+          }
+        },
+        "fingerprint": {
+          "files": 100,
+          "bytes": 38316820,
+          "max_mtime_ns": 1790115950080576700
+        },
+        "build": {
+          "merged_from": [
+            "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR5000::FIRE_1",
+            "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5000::FIRE_4",
+            "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5000::FIRE_3",
+            "animations/packs-par-zone/ar5000-am5000ab-potrace0p8fill6-apo8-x4-30fps-v2-20260923/AR5000::AM5000A",
+            "animations/packs-par-zone/ar5000-am5000ab-potrace0p8fill6-apo8-x4-30fps-v2-20260923/AR5000::AM5000B",
+            "animations/packs-par-zone/ar5000-fish3l-apo8-x4-30fps-v2-20260922/AR5000::FISH3L"
+          ]
+        }
+      },
+      "installed_resource_signatures": {
+        "AM5000A": "9c2b7661729d",
+        "AM5000B": "735cd6b76360",
+        "FIRE_1": "073eb78953a7",
+        "FIRE_3": "c2cebb655fd3",
+        "FIRE_4": "414b3adf5fa8",
+        "FISH3L": "0f462700251d"
+      },
+      "installed_fingerprint": {
+        "files": 100,
+        "bytes": 38316820,
+        "max_mtime_ns": 1790115950080576700
+      },
+      "installed_registry_sha256": "0888283c70bee068c3de203729f0ab771a61a5bf7ac20c01209212ee748c8e64"
+    },
+    "AR5203": {
+      "lock_entry": {
+        "recorded_utc": "2026-10-09T23:40:04.522958+00:00",
+        "resources": {
+          "FPIT1L": {
+            "sig": "e93f3450731f",
+            "frames": 12
+          },
+          "FPIT1L-v1": {
+            "sig": "630baafe7780",
+            "frames": 12
+          },
+          "FPIT1L-v2": {
+            "sig": "28e49e15475e",
+            "frames": 12
+          }
+        },
+        "fingerprint": {
+          "files": 37,
+          "bytes": 11212356,
+          "max_mtime_ns": 1791589204382269700
+        },
+        "build": {
+          "leaf": "animations/packs-par-zone/mir-camps-trois-animations-complete-20261010-v1/AR5203"
+        }
+      },
+      "installed_resource_signatures": {
+        "FPIT1L": "e93f3450731f",
+        "FPIT1L-v1": "630baafe7780",
+        "FPIT1L-v2": "28e49e15475e"
+      },
+      "installed_fingerprint": {
+        "files": 37,
+        "bytes": 11212356,
+        "max_mtime_ns": 1791589204382269700
+      },
+      "installed_registry_sha256": "9acc901274b34f663ea2939bb2e092f93a2903404500408a8769d13950157a74"
+    },
+    "AR6300": {
+      "lock_entry": {
+        "recorded_utc": "2026-10-11T08:22:07.714643+00:00",
+        "resources": {
+          "DSTDVL1A": {
+            "sig": "2f1127c1ec93",
+            "frames": 50
+          },
+          "DSTDVL1B": {
+            "sig": "99b5b956cba5",
+            "frames": 50
+          },
+          "DSTDVL1C": {
+            "sig": "99b5b956cba5",
+            "frames": 50
+          }
+        },
+        "fingerprint": {
+          "files": 151,
+          "bytes": 52441224,
+          "max_mtime_ns": 1791706875229468100
+        },
+        "build": {
+          "leaf": "animations/packs-par-zone/dstdvl1abc-nine-maps-misty-20261011-v1/AR6300"
+        }
+      },
+      "installed_resource_signatures": {
+        "DSTDVL1A": "2f1127c1ec93",
+        "DSTDVL1B": "99b5b956cba5",
+        "DSTDVL1C": "99b5b956cba5"
+      },
+      "installed_fingerprint": {
+        "files": 151,
+        "bytes": 52441224,
+        "max_mtime_ns": 1791706875229468100
+      },
+      "installed_registry_sha256": "8dfa378099f2751212c4d206b1c2eb0d67594f437326e3f28f8857365f6f73d3"
+    },
+    "AR6400": {
+      "lock_entry": {
+        "recorded_utc": "2026-09-18T23:06:11.528243+00:00",
+        "resources": {
+          "BUTRFLY": {
+            "sig": "f8cb283031ba",
+            "frames": 36
+          }
+        },
+        "fingerprint": {
+          "files": 37,
+          "bytes": 9437772,
+          "max_mtime_ns": 1789772771424661200
+        },
+        "build": {
+          "leaf": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR6400"
+        }
+      },
+      "installed_resource_signatures": {
+        "BUTRFLY": "f8cb283031ba"
+      },
+      "installed_fingerprint": {
+        "files": 37,
+        "bytes": 9437772,
+        "max_mtime_ns": 1789772771424661200
+      },
+      "installed_registry_sha256": "d07e64961e2acc8a23fa77d961a73ea838f8649c7a2cafa090e8b81cd7c0c16b"
+    },
+    "OH6100": {
+      "lock_entry": {
+        "recorded_utc": "2026-09-21T20:09:24.092172+00:00",
+        "resources": {
+          "BUTRFLY": {
+            "sig": "f8cb283031ba",
+            "frames": 36
+          },
+          "FIRE_4": {
+            "sig": "414b3adf5fa8",
+            "frames": 14
+          },
+          "FPIT1M": {
+            "sig": "d64836e30571",
+            "frames": 12
+          }
+        },
+        "fingerprint": {
+          "files": 63,
+          "bytes": 11180948,
+          "max_mtime_ns": 1790021363865947200
+        },
+        "build": {
+          "merged_from": [
+            "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/OH6100::BUTRFLY",
+            "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH6100::FIRE_4",
+            "animations/packs-par-zone/fpit1m-reboutcx-apo8-x4-30fps-v2-aura24-20260921/OH6100"
+          ]
+        }
+      },
+      "installed_resource_signatures": {
+        "BUTRFLY": "f8cb283031ba",
+        "FIRE_4": "414b3adf5fa8",
+        "FPIT1M": "d64836e30571"
+      },
+      "installed_fingerprint": {
+        "files": 63,
+        "bytes": 11180948,
+        "max_mtime_ns": 1790021363865947200
+      },
+      "installed_registry_sha256": "9f4ee437531e6d6594993a3c775b14a809f0b8e0dd8751fd17a5ecbc31ee208d"
+    },
+    "OH6200": {
+      "lock_entry": {
+        "recorded_utc": "2026-09-18T23:06:16.314553+00:00",
+        "resources": {
+          "FIRE_4": {
+            "sig": "414b3adf5fa8",
+            "frames": 14
+          }
+        },
+        "fingerprint": {
+          "files": 15,
+          "bytes": 315644,
+          "max_mtime_ns": 1789772776248409500
+        },
+        "build": {
+          "merged_from": [
+            "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH6200::FIRE_4"
+          ]
+        }
+      },
+      "installed_resource_signatures": {
+        "FIRE_4": "414b3adf5fa8"
+      },
+      "installed_fingerprint": {
+        "files": 15,
+        "bytes": 315644,
+        "max_mtime_ns": 1789772776248409500
+      },
+      "installed_registry_sha256": "e4f4928d1c707cea6843070ac30861834c9c16d98d8a620bcfbdd8efbf47ec06"
+    },
+    "OH6400": {
+      "lock_entry": {
+        "recorded_utc": "2026-10-11T08:22:07.985096+00:00",
+        "resources": {
+          "BUTRFLY": {
+            "sig": "f8cb283031ba",
+            "frames": 36
+          },
+          "DSTDVL1A": {
+            "sig": "452568ad94f3",
+            "frames": 139
+          },
+          "DSTDVL1B": {
+            "sig": "f2f1c0463d43",
+            "frames": 139
+          },
+          "DSTDVL1C": {
+            "sig": "b5787201aa74",
+            "frames": 139
+          }
+        },
+        "fingerprint": {
+          "files": 454,
+          "bytes": 56698068,
+          "max_mtime_ns": 1791706878856539500
+        },
+        "build": {
+          "leaf": "animations/packs-par-zone/dstdvl1abc-nine-maps-misty-20261011-v1/OH6400"
+        }
+      },
+      "installed_resource_signatures": {
+        "BUTRFLY": "f8cb283031ba",
+        "DSTDVL1A": "452568ad94f3",
+        "DSTDVL1B": "f2f1c0463d43",
+        "DSTDVL1C": "b5787201aa74"
+      },
+      "installed_fingerprint": {
+        "files": 454,
+        "bytes": 56698068,
+        "max_mtime_ns": 1791706878856539500
+      },
+      "installed_registry_sha256": "3d881dd1b1a9d35fbb75f2cf1bd44b03ee95beff5d7fe2ad032a717acb2e52ae"
+    }
+  }
+}

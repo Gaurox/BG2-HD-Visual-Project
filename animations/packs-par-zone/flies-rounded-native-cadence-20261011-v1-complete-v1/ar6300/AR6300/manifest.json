@@ -1,0 +1,6104 @@
+{
+  "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+  "status": "completed",
+  "created_utc": "2026-10-11T15:07:05.720210+00:00",
+  "scale": 4,
+  "registry_version": 3,
+  "runtime_contract": {
+    "feature": "TimedTimeline",
+    "clock": "QPC-pause-aware",
+    "registry_version": 3
+  },
+  "registry": "AreaAnimations-X4.registry",
+  "registry_sha256": "5e4c1e453822fcc8b346b3eb0d22cef1d25e7d0b6e6f78f106c19b81d1491222",
+  "registry_bytes": 5808,
+  "resource_count": 5,
+  "frame_count": 186,
+  "timed_resources": [
+    "DSTDVL1A",
+    "DSTDVL1B",
+    "DSTDVL1C"
+  ],
+  "area_id": "AR6300",
+  "merged_from": [
+    "animations/packs-par-zone/dstdvl1abc-nine-maps-misty-20261011-v1/AR6300",
+    "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1/AR6300"
+  ],
+  "raw_bytes": 57233920,
+  "runtime_budget_enforced": true,
+  "base_assets": [],
+  "new_assets": [],
+  "resources": [
+    {
+      "resref": "DSTDVL1A",
+      "frame_count": 50,
+      "cycle_count": 1,
+      "geometry_mode": "per-frame",
+      "frames": [
+        {
+          "frame": 0,
+          "logical_size_x1": [
+            1,
+            1
+          ],
+          "physical_size_x4": [
+            4,
+            4
+          ],
+          "centre_x1": [
+            10,
+            90
+          ],
+          "asset": "AAX4-DSTDVL1A-frame000.rgba",
+          "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+          "bytes": 64
+        },
+        {
+          "frame": 1,
+          "logical_size_x1": [
+            52,
+            47
+          ],
+          "physical_size_x4": [
+            208,
+            188
+          ],
+          "centre_x1": [
+            10,
+            32
+          ],
+          "asset": "AAX4-DSTDVL1A-frame001.rgba",
+          "sha256": "0e72d91f8f16edf5a02d90ca52f7667a61cb8614277e8a87a116edd3110b0fff",
+          "bytes": 156416
+        },
+        {
+          "frame": 2,
+          "logical_size_x1": [
+            60,
+            57
+          ],
+          "physical_size_x4": [
+            240,
+            228
+          ],
+          "centre_x1": [
+            12,
+            40
+          ],
+          "asset": "AAX4-DSTDVL1A-frame002.rgba",
+          "sha256": "566e5007a0218c4551fd6b9dce74f6e92b0b1e4014a273b21dc04634cfc474f4",
+          "bytes": 218880
+        },
+        {
+          "frame": 3,
+          "logical_size_x1": [
+            66,
+            69
+          ],
+          "physical_size_x4": [
+            264,
+            276
+          ],
+          "centre_x1": [
+            12,
+            50
+          ],
+          "asset": "AAX4-DSTDVL1A-frame003.rgba",
+          "sha256": "d64f7f93305a3318f7a8ab13400ac72d9ac42ac813b60ebbe12fcfeb397be068",
+          "bytes": 291456
+        },
+        {
+          "frame": 4,
+          "logical_size_x1": [
+            75,
+            72
+          ],
+          "physical_size_x4": [
+            300,
+            288
+          ],
+          "centre_x1": [
+            12,
+            51
+          ],
+          "asset": "AAX4-DSTDVL1A-frame004.rgba",
+          "sha256": "c46668fd49cb0a45a076262e0d95bbf994d3de6257adf7c829f8a2310eacf11d",
+          "bytes": 345600
+        },
+        {
+          "frame": 5,
+          "logical_size_x1": [
+            82,
+            74
+          ],
+          "physical_size_x4": [
+            328,
+            296
+          ],
+          "centre_x1": [
+            11,
+            55
+          ],
+          "asset": "AAX4-DSTDVL1A-frame005.rgba",
+          "sha256": "bb1becc76a484c086c872f4b7aab7f1f68c2f80659a2af5185d55b64dd26f074",
+          "bytes": 388352
+        },
+        {
+          "frame": 6,
+          "logical_size_x1": [
+            87,
+            77
+          ],
+          "physical_size_x4": [
+            348,
+            308
+          ],
+          "centre_x1": [
+            9,
+            56
+          ],
+          "asset": "AAX4-DSTDVL1A-frame006.rgba",
+          "sha256": "2435cae43aa42b012296196d605c819a07aaa31542aeb665ed2aa4e170016a86",
+          "bytes": 428736
+        },
+        {
+          "frame": 7,
+          "logical_size_x1": [
+            97,
+            77
+          ],
+          "physical_size_x4": [
+            388,
+            308
+          ],
+          "centre_x1": [
+            7,
+            60
+          ],
+          "asset": "AAX4-DSTDVL1A-frame007.rgba",
+          "sha256": "86d82309bfe9fcf1a0bc829449cf4e8c1d272221790c22d60a8477c98f4d5b2a",
+          "bytes": 478016
+        },
+        {
+          "frame": 8,
+          "logical_size_x1": [
+            108,
+            82
+          ],
+          "physical_size_x4": [
+            432,
+            328
+          ],
+          "centre_x1": [
+            5,
+            65
+          ],
+          "asset": "AAX4-DSTDVL1A-frame008.rgba",
+          "sha256": "d01005ae333a927039eb4eed1dcf8384f571345d31c1c8fb7af4a653106d05ae",
+          "bytes": 566784
+        },
+        {
+          "frame": 9,
+          "logical_size_x1": [
+            117,
+            78
+          ],
+          "physical_size_x4": [
+            468,
+            312
+          ],
+          "centre_x1": [
+            3,
+            64
+          ],
+          "asset": "AAX4-DSTDVL1A-frame009.rgba",
+          "sha256": "188e07e4d0b57b8ab1a9c06c6b34ff5d0a9cb5891a6a92ab871cb52531149502",
+          "bytes": 584064
+        },
+        {
+          "frame": 10,
+          "logical_size_x1": [
+            107,
+            82
+          ],
+          "physical_size_x4": [
+            428,
+            328
+          ],
+          "centre_x1": [
+            -12,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1A-frame010.rgba",
+          "sha256": "266a0a5e7bb43883025792344865d60a7f70ba523e45aabb2d718d54fc4b653d",
+          "bytes": 561536
+        },
+        {
+          "frame": 11,
+          "logical_size_x1": [
+            105,
+            81
+          ],
+          "physical_size_x4": [
+            420,
+            324
+          ],
+          "centre_x1": [
+            -15,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1A-frame011.rgba",
+          "sha256": "dcac05962c97b1b33e39e7aafb64fb2959f6a3f42d101264e933b93fde4d7f9f",
+          "bytes": 544320
+        },
+        {
+          "frame": 12,
+          "logical_size_x1": [
+            101,
+            81
+          ],
+          "physical_size_x4": [
+            404,
+            324
+          ],
+          "centre_x1": [
+            -19,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1A-frame012.rgba",
+          "sha256": "b88e7272400beff6b496a8ade14471770259ca0e1470a14f546299979db9a5ab",
+          "bytes": 523584
+        },
+        {
+          "frame": 13,
+          "logical_size_x1": [
+            99,
+            80
+          ],
+          "physical_size_x4": [
+            396,
+            320
+          ],
+          "centre_x1": [
+            -21,
+            71
+          ],
+          "asset": "AAX4-DSTDVL1A-frame013.rgba",
+          "sha256": "8695afca00056c93231c3d94ba95f021d3be2f99f00ee0a11775cec53d2c9168",
+          "bytes": 506880
+        },
+        {
+          "frame": 14,
+          "logical_size_x1": [
+            94,
+            75
+          ],
+          "physical_size_x4": [
+            376,
+            300
+          ],
+          "centre_x1": [
+            -26,
+            71
+          ],
+          "asset": "AAX4-DSTDVL1A-frame014.rgba",
+          "sha256": "06508e1fa94a1add2703d32b5c9c898f2402259ec2c1a8f79f9a26aae5214d3d",
+          "bytes": 451200
+        },
+        {
+          "frame": 15,
+          "logical_size_x1": [
+            87,
+            60
+          ],
+          "physical_size_x4": [
+            348,
+            240
+          ],
+          "centre_x1": [
+            -33,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1A-frame015.rgba",
+          "sha256": "665701b86bbfe83913c1d6530dc3575f04c4bdc79f287d04cb50f5983c65dbc5",
+          "bytes": 334080
+        },
+        {
+          "frame": 16,
+          "logical_size_x1": [
+            79,
+            55
+          ],
+          "physical_size_x4": [
+            316,
+            220
+          ],
+          "centre_x1": [
+            -36,
+            65
+          ],
+          "asset": "AAX4-DSTDVL1A-frame016.rgba",
+          "sha256": "c56387c4771544872ae56df77afb8e867066ecc5350610dfc18c534999801699",
+          "bytes": 278080
+        },
+        {
+          "frame": 17,
+          "logical_size_x1": [
+            59,
+            57
+          ],
+          "physical_size_x4": [
+            236,
+            228
+          ],
+          "centre_x1": [
+            -39,
+            68
+          ],
+          "asset": "AAX4-DSTDVL1A-frame017.rgba",
+          "sha256": "c802c6779299ba1c3aa86b39728d40fbd9fcea07376907467bf8452b5c2e7b34",
+          "bytes": 215232
+        },
+        {
+          "frame": 18,
+          "logical_size_x1": [
+            52,
+            47
+          ],
+          "physical_size_x4": [
+            208,
+            188
+          ],
+          "centre_x1": [
+            10,
+            32
+          ],
+          "asset": "AAX4-DSTDVL1A-frame018.rgba",
+          "sha256": "3d471ed9719f8d03cf9c05a33d55b624006b44127ef6428f734fea21652282df",
+          "bytes": 156416,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 0,
+            "left_native_frame": 1,
+            "right_native_frame": 2
+          }
+        },
+        {
+          "frame": 19,
+          "logical_size_x1": [
+            60,
+            57
+          ],
+          "physical_size_x4": [
+            240,
+            228
+          ],
+          "centre_x1": [
+            12,
+            40
+          ],
+          "asset": "AAX4-DSTDVL1A-frame019.rgba",
+          "sha256": "53d1392e89a1fa927cc03a69b4a0c8b002bf617d24f6a0fc34b3b847e1df9a55",
+          "bytes": 218880,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 1,
+            "left_native_frame": 2,
+            "right_native_frame": 3
+          }
+        },
+        {
+          "frame": 20,
+          "logical_size_x1": [
+            66,
+            69
+          ],
+          "physical_size_x4": [
+            264,
+            276
+          ],
+          "centre_x1": [
+            12,
+            50
+          ],
+          "asset": "AAX4-DSTDVL1A-frame020.rgba",
+          "sha256": "4b2e7ce7606f50bd6288ca5efa2af950379d41c57c0c62248f38c4895826af7e",
+          "bytes": 291456,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 2,
+            "left_native_frame": 3,
+            "right_native_frame": 4
+          }
+        },
+        {
+          "frame": 21,
+          "logical_size_x1": [
+            75,
+            72
+          ],
+          "physical_size_x4": [
+            300,
+            288
+          ],
+          "centre_x1": [
+            12,
+            51
+          ],
+          "asset": "AAX4-DSTDVL1A-frame021.rgba",
+          "sha256": "bec2ed7ef9a7d8005eabaf1d56aebbaf0b698b89119dc424a2e4c9d73711e686",
+          "bytes": 345600,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 3,
+            "left_native_frame": 4,
+            "right_native_frame": 5
+          }
+        },
+        {
+          "frame": 22,
+          "logical_size_x1": [
+            82,
+            74
+          ],
+          "physical_size_x4": [
+            328,
+            296
+          ],
+          "centre_x1": [
+            11,
+            55
+          ],
+          "asset": "AAX4-DSTDVL1A-frame022.rgba",
+          "sha256": "68274db532cd17b760d5d174823947ed1659fc822e7db3547b64f99fb5e0e0fe",
+          "bytes": 388352,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 4,
+            "left_native_frame": 5,
+            "right_native_frame": 6
+          }
+        },
+        {
+          "frame": 23,
+          "logical_size_x1": [
+            87,
+            77
+          ],
+          "physical_size_x4": [
+            348,
+            308
+          ],
+          "centre_x1": [
+            9,
+            56
+          ],
+          "asset": "AAX4-DSTDVL1A-frame023.rgba",
+          "sha256": "e01157a0c2504d3f06ebe69b550bb3ceea74e570ddf9b671e6a5e6dee6d6a343",
+          "bytes": 428736,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 5,
+            "left_native_frame": 6,
+            "right_native_frame": 7
+          }
+        },
+        {
+          "frame": 24,
+          "logical_size_x1": [
+            97,
+            77
+          ],
+          "physical_size_x4": [
+            388,
+            308
+          ],
+          "centre_x1": [
+            7,
+            60
+          ],
+          "asset": "AAX4-DSTDVL1A-frame024.rgba",
+          "sha256": "80062ed522bcdc50fdc8a420780a066b2f0dcc71dd7f1044e4c5cd46d755cbc9",
+          "bytes": 478016,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 6,
+            "left_native_frame": 7,
+            "right_native_frame": 8
+          }
+        },
+        {
+          "frame": 25,
+          "logical_size_x1": [
+            108,
+            82
+          ],
+          "physical_size_x4": [
+            432,
+            328
+          ],
+          "centre_x1": [
+            5,
+            65
+          ],
+          "asset": "AAX4-DSTDVL1A-frame025.rgba",
+          "sha256": "dfbe990282fd1732597a89fe9f01ef5ac2a9c8e91890b4cc30dc66d312e15984",
+          "bytes": 566784,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 7,
+            "left_native_frame": 8,
+            "right_native_frame": 9
+          }
+        },
+        {
+          "frame": 26,
+          "logical_size_x1": [
+            117,
+            78
+          ],
+          "physical_size_x4": [
+            468,
+            312
+          ],
+          "centre_x1": [
+            3,
+            64
+          ],
+          "asset": "AAX4-DSTDVL1A-frame026.rgba",
+          "sha256": "8d5916bf86e3d87b9720a903dca8519305115ebc3f8e14681ec640a67fbbcafc",
+          "bytes": 584064,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 8,
+            "left_native_frame": 9,
+            "right_native_frame": 10
+          }
+        },
+        {
+          "frame": 27,
+          "logical_size_x1": [
+            107,
+            82
+          ],
+          "physical_size_x4": [
+            428,
+            328
+          ],
+          "centre_x1": [
+            -12,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1A-frame027.rgba",
+          "sha256": "519fcca9b95f5cccb06f83fa53d7346a7fa19d03373ef9edc7d8f03f151639e8",
+          "bytes": 561536,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 9,
+            "left_native_frame": 10,
+            "right_native_frame": 11
+          }
+        },
+        {
+          "frame": 28,
+          "logical_size_x1": [
+            105,
+            81
+          ],
+          "physical_size_x4": [
+            420,
+            324
+          ],
+          "centre_x1": [
+            -15,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1A-frame028.rgba",
+          "sha256": "518bf37f5810a59779ea6cf581f29508ec583cc51051c4fafd5d98f53052d540",
+          "bytes": 544320,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 10,
+            "left_native_frame": 11,
+            "right_native_frame": 12
+          }
+        },
+        {
+          "frame": 29,
+          "logical_size_x1": [
+            101,
+            81
+          ],
+          "physical_size_x4": [
+            404,
+            324
+          ],
+          "centre_x1": [
+            -19,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1A-frame029.rgba",
+          "sha256": "a65772100cf5c5102f76fdd2b1fb3655b6f5fb2287f44ecfac31fb6320054c31",
+          "bytes": 523584,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 11,
+            "left_native_frame": 12,
+            "right_native_frame": 13
+          }
+        },
+        {
+          "frame": 30,
+          "logical_size_x1": [
+            99,
+            80
+          ],
+          "physical_size_x4": [
+            396,
+            320
+          ],
+          "centre_x1": [
+            -21,
+            71
+          ],
+          "asset": "AAX4-DSTDVL1A-frame030.rgba",
+          "sha256": "d431881768b32ed00bcd3707134b2cecd5e61d3cc0e794b5e39876ac71494e60",
+          "bytes": 506880,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 12,
+            "left_native_frame": 13,
+            "right_native_frame": 14
+          }
+        },
+        {
+          "frame": 31,
+          "logical_size_x1": [
+            94,
+            75
+          ],
+          "physical_size_x4": [
+            376,
+            300
+          ],
+          "centre_x1": [
+            -26,
+            71
+          ],
+          "asset": "AAX4-DSTDVL1A-frame031.rgba",
+          "sha256": "184d322d4912408322f448a6d24be7f6c5ed232999bb03e4aac7af572c070089",
+          "bytes": 451200,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 13,
+            "left_native_frame": 14,
+            "right_native_frame": 15
+          }
+        },
+        {
+          "frame": 32,
+          "logical_size_x1": [
+            87,
+            60
+          ],
+          "physical_size_x4": [
+            348,
+            240
+          ],
+          "centre_x1": [
+            -33,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1A-frame032.rgba",
+          "sha256": "1e90d510c8bd3a1fa9678523dbfb57bd117406e9468b5009197bb1e0dadd2259",
+          "bytes": 334080,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 14,
+            "left_native_frame": 15,
+            "right_native_frame": 16
+          }
+        },
+        {
+          "frame": 33,
+          "logical_size_x1": [
+            79,
+            55
+          ],
+          "physical_size_x4": [
+            316,
+            220
+          ],
+          "centre_x1": [
+            -36,
+            65
+          ],
+          "asset": "AAX4-DSTDVL1A-frame033.rgba",
+          "sha256": "db67ef3e6a2e7e78fbe4d167fa89ed832a9d8eccfe63d8ccbc6c36d181a59aad",
+          "bytes": 278080,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 15,
+            "left_native_frame": 16,
+            "right_native_frame": 17
+          }
+        },
+        {
+          "frame": 34,
+          "logical_size_x1": [
+            59,
+            57
+          ],
+          "physical_size_x4": [
+            236,
+            228
+          ],
+          "centre_x1": [
+            -39,
+            68
+          ],
+          "asset": "AAX4-DSTDVL1A-frame034.rgba",
+          "sha256": "df4254fc1779d791ab82b8a03c820541eb1a3c60a8403c26152e471d0f033086",
+          "bytes": 215232,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 16,
+            "left_native_frame": 17,
+            "right_native_frame": 0
+          }
+        },
+        {
+          "frame": 35,
+          "logical_size_x1": [
+            1,
+            1
+          ],
+          "physical_size_x4": [
+            4,
+            4
+          ],
+          "centre_x1": [
+            10,
+            90
+          ],
+          "asset": "AAX4-DSTDVL1A-frame035.rgba",
+          "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+          "bytes": 64,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 106,
+            "left_native_frame": 0,
+            "right_native_frame": 1
+          }
+        },
+        {
+          "frame": 36,
+          "logical_size_x1": [
+            48,
+            43
+          ],
+          "physical_size_x4": [
+            192,
+            172
+          ],
+          "centre_x1": [
+            8,
+            30
+          ],
+          "asset": "AAX4-DSTDVL1A-frame036.rgba",
+          "sha256": "8675651898d77ef1cbe478e28b4ef7e367fabcdd4e667f536d1a1a0ab6b7c2f2",
+          "bytes": 132096,
+          "timeline_active_fade_phase": 0,
+          "timeline_active_fade_weight": 0.0,
+          "review_source_asset": "AAX4-DSTDVL1A-frame001.rgba"
+        },
+        {
+          "frame": 37,
+          "logical_size_x1": [
+            52,
+            47
+          ],
+          "physical_size_x4": [
+            208,
+            188
+          ],
+          "centre_x1": [
+            10,
+            32
+          ],
+          "asset": "AAX4-DSTDVL1A-frame037.rgba",
+          "sha256": "b0ed14c8b245446e29d172cff7cf910a2ce09f69db46f7c3701e06e7d3da8351",
+          "bytes": 156416,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 0,
+            "left_native_frame": 1,
+            "right_native_frame": 2
+          },
+          "timeline_active_fade_phase": 1,
+          "timeline_active_fade_weight": 0.05539358779788017,
+          "review_source_asset": "AAX4-DSTDVL1A-frame018.rgba"
+        },
+        {
+          "frame": 38,
+          "logical_size_x1": [
+            60,
+            57
+          ],
+          "physical_size_x4": [
+            240,
+            228
+          ],
+          "centre_x1": [
+            12,
+            40
+          ],
+          "asset": "AAX4-DSTDVL1A-frame038.rgba",
+          "sha256": "693ebbf7595f7f583589263b7aef44f9d2b6e5e7b7f1897beb0110a2b4cfae8e",
+          "bytes": 218880,
+          "timeline_active_fade_phase": 2,
+          "timeline_active_fade_weight": 0.19825074076652527,
+          "review_source_asset": "AAX4-DSTDVL1A-frame002.rgba"
+        },
+        {
+          "frame": 39,
+          "logical_size_x1": [
+            60,
+            57
+          ],
+          "physical_size_x4": [
+            240,
+            228
+          ],
+          "centre_x1": [
+            12,
+            40
+          ],
+          "asset": "AAX4-DSTDVL1A-frame039.rgba",
+          "sha256": "52adc7f37843aa9e77551ace184ec458345ef1aba5c349c4e97641ae9458a297",
+          "bytes": 218880,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 1,
+            "left_native_frame": 2,
+            "right_native_frame": 3
+          },
+          "timeline_active_fade_phase": 3,
+          "timeline_active_fade_weight": 0.39358600974082947,
+          "review_source_asset": "AAX4-DSTDVL1A-frame019.rgba"
+        },
+        {
+          "frame": 40,
+          "logical_size_x1": [
+            66,
+            69
+          ],
+          "physical_size_x4": [
+            264,
+            276
+          ],
+          "centre_x1": [
+            12,
+            50
+          ],
+          "asset": "AAX4-DSTDVL1A-frame040.rgba",
+          "sha256": "27e9d57d150b579fdc373ef747fc6a3c2036affcb4f8c8edf54e515311e927d5",
+          "bytes": 291456,
+          "timeline_active_fade_phase": 4,
+          "timeline_active_fade_weight": 0.6064140200614929,
+          "review_source_asset": "AAX4-DSTDVL1A-frame003.rgba"
+        },
+        {
+          "frame": 41,
+          "logical_size_x1": [
+            66,
+            69
+          ],
+          "physical_size_x4": [
+            264,
+            276
+          ],
+          "centre_x1": [
+            12,
+            50
+          ],
+          "asset": "AAX4-DSTDVL1A-frame041.rgba",
+          "sha256": "d7b4069babbe8736722f48a5c132f4ae6cbebcb40cfe56d4618b9256c95c52d1",
+          "bytes": 291456,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 2,
+            "left_native_frame": 3,
+            "right_native_frame": 4
+          },
+          "timeline_active_fade_phase": 5,
+          "timeline_active_fade_weight": 0.8017492294311523,
+          "review_source_asset": "AAX4-DSTDVL1A-frame020.rgba"
+        },
+        {
+          "frame": 42,
+          "logical_size_x1": [
+            75,
+            72
+          ],
+          "physical_size_x4": [
+            300,
+            288
+          ],
+          "centre_x1": [
+            12,
+            51
+          ],
+          "asset": "AAX4-DSTDVL1A-frame042.rgba",
+          "sha256": "66c441e68eaf963052bd8e93e2e53cd9a1114c93bef8435e46b6919ee6036572",
+          "bytes": 345600,
+          "timeline_active_fade_phase": 6,
+          "timeline_active_fade_weight": 0.9446064233779907,
+          "review_source_asset": "AAX4-DSTDVL1A-frame004.rgba"
+        },
+        {
+          "frame": 43,
+          "logical_size_x1": [
+            94,
+            75
+          ],
+          "physical_size_x4": [
+            376,
+            300
+          ],
+          "centre_x1": [
+            -26,
+            71
+          ],
+          "asset": "AAX4-DSTDVL1A-frame043.rgba",
+          "sha256": "9ce6f1dbf979aef5483a87d2c14ae9d09ec0f221c773b29567a393267e59920e",
+          "bytes": 451200,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 13,
+            "left_native_frame": 14,
+            "right_native_frame": 15
+          },
+          "timeline_active_fade_phase": 27,
+          "timeline_active_fade_weight": 0.9446064233779907,
+          "review_source_asset": "AAX4-DSTDVL1A-frame031.rgba"
+        },
+        {
+          "frame": 44,
+          "logical_size_x1": [
+            87,
+            60
+          ],
+          "physical_size_x4": [
+            348,
+            240
+          ],
+          "centre_x1": [
+            -33,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1A-frame044.rgba",
+          "sha256": "2ecdb68c9ba06b90ec071a8744f7ca560f069082f31907cdb62674c954cb6a8d",
+          "bytes": 334080,
+          "timeline_active_fade_phase": 28,
+          "timeline_active_fade_weight": 0.8017492294311523,
+          "review_source_asset": "AAX4-DSTDVL1A-frame015.rgba"
+        },
+        {
+          "frame": 45,
+          "logical_size_x1": [
+            87,
+            60
+          ],
+          "physical_size_x4": [
+            348,
+            240
+          ],
+          "centre_x1": [
+            -33,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1A-frame045.rgba",
+          "sha256": "b17ea920cafacc0dfe40c196e65c618a31738eba9362f6af92bcec17890c8192",
+          "bytes": 334080,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 14,
+            "left_native_frame": 15,
+            "right_native_frame": 16
+          },
+          "timeline_active_fade_phase": 29,
+          "timeline_active_fade_weight": 0.6064140200614929,
+          "review_source_asset": "AAX4-DSTDVL1A-frame032.rgba"
+        },
+        {
+          "frame": 46,
+          "logical_size_x1": [
+            79,
+            55
+          ],
+          "physical_size_x4": [
+            316,
+            220
+          ],
+          "centre_x1": [
+            -36,
+            65
+          ],
+          "asset": "AAX4-DSTDVL1A-frame046.rgba",
+          "sha256": "850b8a31d2c718389076d5380de1dc6f8dd26e3f859c914411317e759a722df3",
+          "bytes": 278080,
+          "timeline_active_fade_phase": 30,
+          "timeline_active_fade_weight": 0.39358600974082947,
+          "review_source_asset": "AAX4-DSTDVL1A-frame016.rgba"
+        },
+        {
+          "frame": 47,
+          "logical_size_x1": [
+            79,
+            55
+          ],
+          "physical_size_x4": [
+            316,
+            220
+          ],
+          "centre_x1": [
+            -36,
+            65
+          ],
+          "asset": "AAX4-DSTDVL1A-frame047.rgba",
+          "sha256": "173927694851c14f489d6098c098bb5f1daf422fa745350546313892fec32bcd",
+          "bytes": 278080,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 15,
+            "left_native_frame": 16,
+            "right_native_frame": 17
+          },
+          "timeline_active_fade_phase": 31,
+          "timeline_active_fade_weight": 0.19825074076652527,
+          "review_source_asset": "AAX4-DSTDVL1A-frame033.rgba"
+        },
+        {
+          "frame": 48,
+          "logical_size_x1": [
+            59,
+            57
+          ],
+          "physical_size_x4": [
+            236,
+            228
+          ],
+          "centre_x1": [
+            -39,
+            68
+          ],
+          "asset": "AAX4-DSTDVL1A-frame048.rgba",
+          "sha256": "91e86b965ae024b1074f8d30cabb0e3cb7770316b6d6cff145a19c9be4ea4c2c",
+          "bytes": 215232,
+          "timeline_active_fade_phase": 32,
+          "timeline_active_fade_weight": 0.05539358779788017,
+          "review_source_asset": "AAX4-DSTDVL1A-frame017.rgba"
+        },
+        {
+          "frame": 49,
+          "logical_size_x1": [
+            55,
+            53
+          ],
+          "physical_size_x4": [
+            220,
+            212
+          ],
+          "centre_x1": [
+            -41,
+            66
+          ],
+          "asset": "AAX4-DSTDVL1A-frame049.rgba",
+          "sha256": "541f33a43c35507f33291e564e6179fc7b81bef740cc17ccc246d8f1f6fb824c",
+          "bytes": 186560,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 16,
+            "left_native_frame": 17,
+            "right_native_frame": 0
+          },
+          "timeline_active_fade_phase": 33,
+          "timeline_active_fade_weight": 0.0,
+          "review_source_asset": "AAX4-DSTDVL1A-frame034.rgba"
+        }
+      ],
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_frame_indices": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "timeline_frame_indices": [
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            21,
+            5,
+            22,
+            6,
+            23,
+            7,
+            24,
+            8,
+            25,
+            9,
+            26,
+            10,
+            27,
+            11,
+            28,
+            12,
+            29,
+            13,
+            30,
+            14,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            35
+          ]
+        }
+      ],
+      "assets": [
+        {
+          "name": "AAX4-DSTDVL1A-frame000.rgba",
+          "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+          "bytes": 64
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame001.rgba",
+          "sha256": "0e72d91f8f16edf5a02d90ca52f7667a61cb8614277e8a87a116edd3110b0fff",
+          "bytes": 156416
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame002.rgba",
+          "sha256": "566e5007a0218c4551fd6b9dce74f6e92b0b1e4014a273b21dc04634cfc474f4",
+          "bytes": 218880
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame003.rgba",
+          "sha256": "d64f7f93305a3318f7a8ab13400ac72d9ac42ac813b60ebbe12fcfeb397be068",
+          "bytes": 291456
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame004.rgba",
+          "sha256": "c46668fd49cb0a45a076262e0d95bbf994d3de6257adf7c829f8a2310eacf11d",
+          "bytes": 345600
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame005.rgba",
+          "sha256": "bb1becc76a484c086c872f4b7aab7f1f68c2f80659a2af5185d55b64dd26f074",
+          "bytes": 388352
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame006.rgba",
+          "sha256": "2435cae43aa42b012296196d605c819a07aaa31542aeb665ed2aa4e170016a86",
+          "bytes": 428736
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame007.rgba",
+          "sha256": "86d82309bfe9fcf1a0bc829449cf4e8c1d272221790c22d60a8477c98f4d5b2a",
+          "bytes": 478016
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame008.rgba",
+          "sha256": "d01005ae333a927039eb4eed1dcf8384f571345d31c1c8fb7af4a653106d05ae",
+          "bytes": 566784
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame009.rgba",
+          "sha256": "188e07e4d0b57b8ab1a9c06c6b34ff5d0a9cb5891a6a92ab871cb52531149502",
+          "bytes": 584064
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame010.rgba",
+          "sha256": "266a0a5e7bb43883025792344865d60a7f70ba523e45aabb2d718d54fc4b653d",
+          "bytes": 561536
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame011.rgba",
+          "sha256": "dcac05962c97b1b33e39e7aafb64fb2959f6a3f42d101264e933b93fde4d7f9f",
+          "bytes": 544320
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame012.rgba",
+          "sha256": "b88e7272400beff6b496a8ade14471770259ca0e1470a14f546299979db9a5ab",
+          "bytes": 523584
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame013.rgba",
+          "sha256": "8695afca00056c93231c3d94ba95f021d3be2f99f00ee0a11775cec53d2c9168",
+          "bytes": 506880
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame014.rgba",
+          "sha256": "06508e1fa94a1add2703d32b5c9c898f2402259ec2c1a8f79f9a26aae5214d3d",
+          "bytes": 451200
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame015.rgba",
+          "sha256": "665701b86bbfe83913c1d6530dc3575f04c4bdc79f287d04cb50f5983c65dbc5",
+          "bytes": 334080
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame016.rgba",
+          "sha256": "c56387c4771544872ae56df77afb8e867066ecc5350610dfc18c534999801699",
+          "bytes": 278080
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame017.rgba",
+          "sha256": "c802c6779299ba1c3aa86b39728d40fbd9fcea07376907467bf8452b5c2e7b34",
+          "bytes": 215232
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame018.rgba",
+          "sha256": "3d471ed9719f8d03cf9c05a33d55b624006b44127ef6428f734fea21652282df",
+          "bytes": 156416
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame019.rgba",
+          "sha256": "53d1392e89a1fa927cc03a69b4a0c8b002bf617d24f6a0fc34b3b847e1df9a55",
+          "bytes": 218880
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame020.rgba",
+          "sha256": "4b2e7ce7606f50bd6288ca5efa2af950379d41c57c0c62248f38c4895826af7e",
+          "bytes": 291456
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame021.rgba",
+          "sha256": "bec2ed7ef9a7d8005eabaf1d56aebbaf0b698b89119dc424a2e4c9d73711e686",
+          "bytes": 345600
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame022.rgba",
+          "sha256": "68274db532cd17b760d5d174823947ed1659fc822e7db3547b64f99fb5e0e0fe",
+          "bytes": 388352
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame023.rgba",
+          "sha256": "e01157a0c2504d3f06ebe69b550bb3ceea74e570ddf9b671e6a5e6dee6d6a343",
+          "bytes": 428736
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame024.rgba",
+          "sha256": "80062ed522bcdc50fdc8a420780a066b2f0dcc71dd7f1044e4c5cd46d755cbc9",
+          "bytes": 478016
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame025.rgba",
+          "sha256": "dfbe990282fd1732597a89fe9f01ef5ac2a9c8e91890b4cc30dc66d312e15984",
+          "bytes": 566784
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame026.rgba",
+          "sha256": "8d5916bf86e3d87b9720a903dca8519305115ebc3f8e14681ec640a67fbbcafc",
+          "bytes": 584064
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame027.rgba",
+          "sha256": "519fcca9b95f5cccb06f83fa53d7346a7fa19d03373ef9edc7d8f03f151639e8",
+          "bytes": 561536
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame028.rgba",
+          "sha256": "518bf37f5810a59779ea6cf581f29508ec583cc51051c4fafd5d98f53052d540",
+          "bytes": 544320
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame029.rgba",
+          "sha256": "a65772100cf5c5102f76fdd2b1fb3655b6f5fb2287f44ecfac31fb6320054c31",
+          "bytes": 523584
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame030.rgba",
+          "sha256": "d431881768b32ed00bcd3707134b2cecd5e61d3cc0e794b5e39876ac71494e60",
+          "bytes": 506880
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame031.rgba",
+          "sha256": "184d322d4912408322f448a6d24be7f6c5ed232999bb03e4aac7af572c070089",
+          "bytes": 451200
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame032.rgba",
+          "sha256": "1e90d510c8bd3a1fa9678523dbfb57bd117406e9468b5009197bb1e0dadd2259",
+          "bytes": 334080
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame033.rgba",
+          "sha256": "db67ef3e6a2e7e78fbe4d167fa89ed832a9d8eccfe63d8ccbc6c36d181a59aad",
+          "bytes": 278080
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame034.rgba",
+          "sha256": "df4254fc1779d791ab82b8a03c820541eb1a3c60a8403c26152e471d0f033086",
+          "bytes": 215232
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame035.rgba",
+          "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+          "bytes": 64
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame036.rgba",
+          "sha256": "8675651898d77ef1cbe478e28b4ef7e367fabcdd4e667f536d1a1a0ab6b7c2f2",
+          "bytes": 132096
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame037.rgba",
+          "sha256": "b0ed14c8b245446e29d172cff7cf910a2ce09f69db46f7c3701e06e7d3da8351",
+          "bytes": 156416
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame038.rgba",
+          "sha256": "693ebbf7595f7f583589263b7aef44f9d2b6e5e7b7f1897beb0110a2b4cfae8e",
+          "bytes": 218880
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame039.rgba",
+          "sha256": "52adc7f37843aa9e77551ace184ec458345ef1aba5c349c4e97641ae9458a297",
+          "bytes": 218880
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame040.rgba",
+          "sha256": "27e9d57d150b579fdc373ef747fc6a3c2036affcb4f8c8edf54e515311e927d5",
+          "bytes": 291456
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame041.rgba",
+          "sha256": "d7b4069babbe8736722f48a5c132f4ae6cbebcb40cfe56d4618b9256c95c52d1",
+          "bytes": 291456
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame042.rgba",
+          "sha256": "66c441e68eaf963052bd8e93e2e53cd9a1114c93bef8435e46b6919ee6036572",
+          "bytes": 345600
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame043.rgba",
+          "sha256": "9ce6f1dbf979aef5483a87d2c14ae9d09ec0f221c773b29567a393267e59920e",
+          "bytes": 451200
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame044.rgba",
+          "sha256": "2ecdb68c9ba06b90ec071a8744f7ca560f069082f31907cdb62674c954cb6a8d",
+          "bytes": 334080
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame045.rgba",
+          "sha256": "b17ea920cafacc0dfe40c196e65c618a31738eba9362f6af92bcec17890c8192",
+          "bytes": 334080
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame046.rgba",
+          "sha256": "850b8a31d2c718389076d5380de1dc6f8dd26e3f859c914411317e759a722df3",
+          "bytes": 278080
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame047.rgba",
+          "sha256": "173927694851c14f489d6098c098bb5f1daf422fa745350546313892fec32bcd",
+          "bytes": 278080
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame048.rgba",
+          "sha256": "91e86b965ae024b1074f8d30cabb0e3cb7770316b6d6cff145a19c9be4ea4c2c",
+          "bytes": 215232
+        },
+        {
+          "name": "AAX4-DSTDVL1A-frame049.rgba",
+          "sha256": "541f33a43c35507f33291e564e6179fc7b81bef740cc17ccc246d8f1f6fb824c",
+          "bytes": 186560
+        }
+      ],
+      "playback_mode": "TimedTimeline",
+      "native_fps": {
+        "numerator": 15,
+        "denominator": 1
+      },
+      "target_fps": {
+        "numerator": 30,
+        "denominator": 1
+      },
+      "variant_index": 0
+    },
+    {
+      "resref": "DSTDVL1B",
+      "frame_count": 50,
+      "cycle_count": 1,
+      "geometry_mode": "per-frame",
+      "frames": [
+        {
+          "frame": 0,
+          "logical_size_x1": [
+            1,
+            1
+          ],
+          "physical_size_x4": [
+            4,
+            4
+          ],
+          "centre_x1": [
+            10,
+            90
+          ],
+          "asset": "AAX4-DSTDVL1B-frame000.rgba",
+          "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+          "bytes": 64
+        },
+        {
+          "frame": 1,
+          "logical_size_x1": [
+            52,
+            47
+          ],
+          "physical_size_x4": [
+            208,
+            188
+          ],
+          "centre_x1": [
+            10,
+            32
+          ],
+          "asset": "AAX4-DSTDVL1B-frame001.rgba",
+          "sha256": "0e72d91f8f16edf5a02d90ca52f7667a61cb8614277e8a87a116edd3110b0fff",
+          "bytes": 156416
+        },
+        {
+          "frame": 2,
+          "logical_size_x1": [
+            60,
+            57
+          ],
+          "physical_size_x4": [
+            240,
+            228
+          ],
+          "centre_x1": [
+            12,
+            40
+          ],
+          "asset": "AAX4-DSTDVL1B-frame002.rgba",
+          "sha256": "566e5007a0218c4551fd6b9dce74f6e92b0b1e4014a273b21dc04634cfc474f4",
+          "bytes": 218880
+        },
+        {
+          "frame": 3,
+          "logical_size_x1": [
+            66,
+            69
+          ],
+          "physical_size_x4": [
+            264,
+            276
+          ],
+          "centre_x1": [
+            12,
+            50
+          ],
+          "asset": "AAX4-DSTDVL1B-frame003.rgba",
+          "sha256": "d64f7f93305a3318f7a8ab13400ac72d9ac42ac813b60ebbe12fcfeb397be068",
+          "bytes": 291456
+        },
+        {
+          "frame": 4,
+          "logical_size_x1": [
+            75,
+            72
+          ],
+          "physical_size_x4": [
+            300,
+            288
+          ],
+          "centre_x1": [
+            12,
+            51
+          ],
+          "asset": "AAX4-DSTDVL1B-frame004.rgba",
+          "sha256": "c46668fd49cb0a45a076262e0d95bbf994d3de6257adf7c829f8a2310eacf11d",
+          "bytes": 345600
+        },
+        {
+          "frame": 5,
+          "logical_size_x1": [
+            82,
+            74
+          ],
+          "physical_size_x4": [
+            328,
+            296
+          ],
+          "centre_x1": [
+            11,
+            55
+          ],
+          "asset": "AAX4-DSTDVL1B-frame005.rgba",
+          "sha256": "bb1becc76a484c086c872f4b7aab7f1f68c2f80659a2af5185d55b64dd26f074",
+          "bytes": 388352
+        },
+        {
+          "frame": 6,
+          "logical_size_x1": [
+            87,
+            77
+          ],
+          "physical_size_x4": [
+            348,
+            308
+          ],
+          "centre_x1": [
+            9,
+            56
+          ],
+          "asset": "AAX4-DSTDVL1B-frame006.rgba",
+          "sha256": "2435cae43aa42b012296196d605c819a07aaa31542aeb665ed2aa4e170016a86",
+          "bytes": 428736
+        },
+        {
+          "frame": 7,
+          "logical_size_x1": [
+            97,
+            77
+          ],
+          "physical_size_x4": [
+            388,
+            308
+          ],
+          "centre_x1": [
+            7,
+            60
+          ],
+          "asset": "AAX4-DSTDVL1B-frame007.rgba",
+          "sha256": "86d82309bfe9fcf1a0bc829449cf4e8c1d272221790c22d60a8477c98f4d5b2a",
+          "bytes": 478016
+        },
+        {
+          "frame": 8,
+          "logical_size_x1": [
+            108,
+            82
+          ],
+          "physical_size_x4": [
+            432,
+            328
+          ],
+          "centre_x1": [
+            5,
+            65
+          ],
+          "asset": "AAX4-DSTDVL1B-frame008.rgba",
+          "sha256": "d01005ae333a927039eb4eed1dcf8384f571345d31c1c8fb7af4a653106d05ae",
+          "bytes": 566784
+        },
+        {
+          "frame": 9,
+          "logical_size_x1": [
+            117,
+            78
+          ],
+          "physical_size_x4": [
+            468,
+            312
+          ],
+          "centre_x1": [
+            3,
+            64
+          ],
+          "asset": "AAX4-DSTDVL1B-frame009.rgba",
+          "sha256": "188e07e4d0b57b8ab1a9c06c6b34ff5d0a9cb5891a6a92ab871cb52531149502",
+          "bytes": 584064
+        },
+        {
+          "frame": 10,
+          "logical_size_x1": [
+            107,
+            82
+          ],
+          "physical_size_x4": [
+            428,
+            328
+          ],
+          "centre_x1": [
+            -12,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1B-frame010.rgba",
+          "sha256": "266a0a5e7bb43883025792344865d60a7f70ba523e45aabb2d718d54fc4b653d",
+          "bytes": 561536
+        },
+        {
+          "frame": 11,
+          "logical_size_x1": [
+            105,
+            81
+          ],
+          "physical_size_x4": [
+            420,
+            324
+          ],
+          "centre_x1": [
+            -15,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1B-frame011.rgba",
+          "sha256": "dcac05962c97b1b33e39e7aafb64fb2959f6a3f42d101264e933b93fde4d7f9f",
+          "bytes": 544320
+        },
+        {
+          "frame": 12,
+          "logical_size_x1": [
+            101,
+            81
+          ],
+          "physical_size_x4": [
+            404,
+            324
+          ],
+          "centre_x1": [
+            -19,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1B-frame012.rgba",
+          "sha256": "b88e7272400beff6b496a8ade14471770259ca0e1470a14f546299979db9a5ab",
+          "bytes": 523584
+        },
+        {
+          "frame": 13,
+          "logical_size_x1": [
+            99,
+            80
+          ],
+          "physical_size_x4": [
+            396,
+            320
+          ],
+          "centre_x1": [
+            -21,
+            71
+          ],
+          "asset": "AAX4-DSTDVL1B-frame013.rgba",
+          "sha256": "8695afca00056c93231c3d94ba95f021d3be2f99f00ee0a11775cec53d2c9168",
+          "bytes": 506880
+        },
+        {
+          "frame": 14,
+          "logical_size_x1": [
+            94,
+            75
+          ],
+          "physical_size_x4": [
+            376,
+            300
+          ],
+          "centre_x1": [
+            -26,
+            71
+          ],
+          "asset": "AAX4-DSTDVL1B-frame014.rgba",
+          "sha256": "06508e1fa94a1add2703d32b5c9c898f2402259ec2c1a8f79f9a26aae5214d3d",
+          "bytes": 451200
+        },
+        {
+          "frame": 15,
+          "logical_size_x1": [
+            87,
+            60
+          ],
+          "physical_size_x4": [
+            348,
+            240
+          ],
+          "centre_x1": [
+            -33,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1B-frame015.rgba",
+          "sha256": "665701b86bbfe83913c1d6530dc3575f04c4bdc79f287d04cb50f5983c65dbc5",
+          "bytes": 334080
+        },
+        {
+          "frame": 16,
+          "logical_size_x1": [
+            79,
+            55
+          ],
+          "physical_size_x4": [
+            316,
+            220
+          ],
+          "centre_x1": [
+            -36,
+            65
+          ],
+          "asset": "AAX4-DSTDVL1B-frame016.rgba",
+          "sha256": "c56387c4771544872ae56df77afb8e867066ecc5350610dfc18c534999801699",
+          "bytes": 278080
+        },
+        {
+          "frame": 17,
+          "logical_size_x1": [
+            59,
+            57
+          ],
+          "physical_size_x4": [
+            236,
+            228
+          ],
+          "centre_x1": [
+            -39,
+            68
+          ],
+          "asset": "AAX4-DSTDVL1B-frame017.rgba",
+          "sha256": "c802c6779299ba1c3aa86b39728d40fbd9fcea07376907467bf8452b5c2e7b34",
+          "bytes": 215232
+        },
+        {
+          "frame": 18,
+          "logical_size_x1": [
+            1,
+            1
+          ],
+          "physical_size_x4": [
+            4,
+            4
+          ],
+          "centre_x1": [
+            10,
+            90
+          ],
+          "asset": "AAX4-DSTDVL1B-frame018.rgba",
+          "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+          "bytes": 64,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 4,
+            "left_native_frame": 0,
+            "right_native_frame": 1
+          }
+        },
+        {
+          "frame": 19,
+          "logical_size_x1": [
+            52,
+            47
+          ],
+          "physical_size_x4": [
+            208,
+            188
+          ],
+          "centre_x1": [
+            10,
+            32
+          ],
+          "asset": "AAX4-DSTDVL1B-frame019.rgba",
+          "sha256": "5d5a68fc10785c9615e8c27252f789b37e3421a4b24510e768f0ee7753d887e2",
+          "bytes": 156416,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 5,
+            "left_native_frame": 1,
+            "right_native_frame": 2
+          }
+        },
+        {
+          "frame": 20,
+          "logical_size_x1": [
+            60,
+            57
+          ],
+          "physical_size_x4": [
+            240,
+            228
+          ],
+          "centre_x1": [
+            12,
+            40
+          ],
+          "asset": "AAX4-DSTDVL1B-frame020.rgba",
+          "sha256": "53d1392e89a1fa927cc03a69b4a0c8b002bf617d24f6a0fc34b3b847e1df9a55",
+          "bytes": 218880,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 6,
+            "left_native_frame": 2,
+            "right_native_frame": 3
+          }
+        },
+        {
+          "frame": 21,
+          "logical_size_x1": [
+            66,
+            69
+          ],
+          "physical_size_x4": [
+            264,
+            276
+          ],
+          "centre_x1": [
+            12,
+            50
+          ],
+          "asset": "AAX4-DSTDVL1B-frame021.rgba",
+          "sha256": "4b2e7ce7606f50bd6288ca5efa2af950379d41c57c0c62248f38c4895826af7e",
+          "bytes": 291456,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 7,
+            "left_native_frame": 3,
+            "right_native_frame": 4
+          }
+        },
+        {
+          "frame": 22,
+          "logical_size_x1": [
+            75,
+            72
+          ],
+          "physical_size_x4": [
+            300,
+            288
+          ],
+          "centre_x1": [
+            12,
+            51
+          ],
+          "asset": "AAX4-DSTDVL1B-frame022.rgba",
+          "sha256": "bec2ed7ef9a7d8005eabaf1d56aebbaf0b698b89119dc424a2e4c9d73711e686",
+          "bytes": 345600,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 8,
+            "left_native_frame": 4,
+            "right_native_frame": 5
+          }
+        },
+        {
+          "frame": 23,
+          "logical_size_x1": [
+            82,
+            74
+          ],
+          "physical_size_x4": [
+            328,
+            296
+          ],
+          "centre_x1": [
+            11,
+            55
+          ],
+          "asset": "AAX4-DSTDVL1B-frame023.rgba",
+          "sha256": "68274db532cd17b760d5d174823947ed1659fc822e7db3547b64f99fb5e0e0fe",
+          "bytes": 388352,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 9,
+            "left_native_frame": 5,
+            "right_native_frame": 6
+          }
+        },
+        {
+          "frame": 24,
+          "logical_size_x1": [
+            87,
+            77
+          ],
+          "physical_size_x4": [
+            348,
+            308
+          ],
+          "centre_x1": [
+            9,
+            56
+          ],
+          "asset": "AAX4-DSTDVL1B-frame024.rgba",
+          "sha256": "e01157a0c2504d3f06ebe69b550bb3ceea74e570ddf9b671e6a5e6dee6d6a343",
+          "bytes": 428736,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 10,
+            "left_native_frame": 6,
+            "right_native_frame": 7
+          }
+        },
+        {
+          "frame": 25,
+          "logical_size_x1": [
+            97,
+            77
+          ],
+          "physical_size_x4": [
+            388,
+            308
+          ],
+          "centre_x1": [
+            7,
+            60
+          ],
+          "asset": "AAX4-DSTDVL1B-frame025.rgba",
+          "sha256": "80062ed522bcdc50fdc8a420780a066b2f0dcc71dd7f1044e4c5cd46d755cbc9",
+          "bytes": 478016,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 11,
+            "left_native_frame": 7,
+            "right_native_frame": 8
+          }
+        },
+        {
+          "frame": 26,
+          "logical_size_x1": [
+            108,
+            82
+          ],
+          "physical_size_x4": [
+            432,
+            328
+          ],
+          "centre_x1": [
+            5,
+            65
+          ],
+          "asset": "AAX4-DSTDVL1B-frame026.rgba",
+          "sha256": "dfbe990282fd1732597a89fe9f01ef5ac2a9c8e91890b4cc30dc66d312e15984",
+          "bytes": 566784,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 12,
+            "left_native_frame": 8,
+            "right_native_frame": 9
+          }
+        },
+        {
+          "frame": 27,
+          "logical_size_x1": [
+            117,
+            78
+          ],
+          "physical_size_x4": [
+            468,
+            312
+          ],
+          "centre_x1": [
+            3,
+            64
+          ],
+          "asset": "AAX4-DSTDVL1B-frame027.rgba",
+          "sha256": "8d5916bf86e3d87b9720a903dca8519305115ebc3f8e14681ec640a67fbbcafc",
+          "bytes": 584064,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 13,
+            "left_native_frame": 9,
+            "right_native_frame": 10
+          }
+        },
+        {
+          "frame": 28,
+          "logical_size_x1": [
+            107,
+            82
+          ],
+          "physical_size_x4": [
+            428,
+            328
+          ],
+          "centre_x1": [
+            -12,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1B-frame028.rgba",
+          "sha256": "519fcca9b95f5cccb06f83fa53d7346a7fa19d03373ef9edc7d8f03f151639e8",
+          "bytes": 561536,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 14,
+            "left_native_frame": 10,
+            "right_native_frame": 11
+          }
+        },
+        {
+          "frame": 29,
+          "logical_size_x1": [
+            105,
+            81
+          ],
+          "physical_size_x4": [
+            420,
+            324
+          ],
+          "centre_x1": [
+            -15,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1B-frame029.rgba",
+          "sha256": "518bf37f5810a59779ea6cf581f29508ec583cc51051c4fafd5d98f53052d540",
+          "bytes": 544320,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 15,
+            "left_native_frame": 11,
+            "right_native_frame": 12
+          }
+        },
+        {
+          "frame": 30,
+          "logical_size_x1": [
+            101,
+            81
+          ],
+          "physical_size_x4": [
+            404,
+            324
+          ],
+          "centre_x1": [
+            -19,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1B-frame030.rgba",
+          "sha256": "a65772100cf5c5102f76fdd2b1fb3655b6f5fb2287f44ecfac31fb6320054c31",
+          "bytes": 523584,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 16,
+            "left_native_frame": 12,
+            "right_native_frame": 13
+          }
+        },
+        {
+          "frame": 31,
+          "logical_size_x1": [
+            99,
+            80
+          ],
+          "physical_size_x4": [
+            396,
+            320
+          ],
+          "centre_x1": [
+            -21,
+            71
+          ],
+          "asset": "AAX4-DSTDVL1B-frame031.rgba",
+          "sha256": "d431881768b32ed00bcd3707134b2cecd5e61d3cc0e794b5e39876ac71494e60",
+          "bytes": 506880,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 17,
+            "left_native_frame": 13,
+            "right_native_frame": 14
+          }
+        },
+        {
+          "frame": 32,
+          "logical_size_x1": [
+            94,
+            75
+          ],
+          "physical_size_x4": [
+            376,
+            300
+          ],
+          "centre_x1": [
+            -26,
+            71
+          ],
+          "asset": "AAX4-DSTDVL1B-frame032.rgba",
+          "sha256": "184d322d4912408322f448a6d24be7f6c5ed232999bb03e4aac7af572c070089",
+          "bytes": 451200,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 18,
+            "left_native_frame": 14,
+            "right_native_frame": 15
+          }
+        },
+        {
+          "frame": 33,
+          "logical_size_x1": [
+            87,
+            60
+          ],
+          "physical_size_x4": [
+            348,
+            240
+          ],
+          "centre_x1": [
+            -33,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1B-frame033.rgba",
+          "sha256": "1e90d510c8bd3a1fa9678523dbfb57bd117406e9468b5009197bb1e0dadd2259",
+          "bytes": 334080,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 19,
+            "left_native_frame": 15,
+            "right_native_frame": 16
+          }
+        },
+        {
+          "frame": 34,
+          "logical_size_x1": [
+            79,
+            55
+          ],
+          "physical_size_x4": [
+            316,
+            220
+          ],
+          "centre_x1": [
+            -36,
+            65
+          ],
+          "asset": "AAX4-DSTDVL1B-frame034.rgba",
+          "sha256": "db67ef3e6a2e7e78fbe4d167fa89ed832a9d8eccfe63d8ccbc6c36d181a59aad",
+          "bytes": 278080,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 20,
+            "left_native_frame": 16,
+            "right_native_frame": 17
+          }
+        },
+        {
+          "frame": 35,
+          "logical_size_x1": [
+            59,
+            57
+          ],
+          "physical_size_x4": [
+            236,
+            228
+          ],
+          "centre_x1": [
+            -39,
+            68
+          ],
+          "asset": "AAX4-DSTDVL1B-frame035.rgba",
+          "sha256": "db2ce546f1478727952d05b111bdfda66161271e86c536c7a6b1b6e29c9db89f",
+          "bytes": 215232,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 21,
+            "left_native_frame": 17,
+            "right_native_frame": 0
+          }
+        },
+        {
+          "frame": 36,
+          "logical_size_x1": [
+            48,
+            43
+          ],
+          "physical_size_x4": [
+            192,
+            172
+          ],
+          "centre_x1": [
+            8,
+            30
+          ],
+          "asset": "AAX4-DSTDVL1B-frame036.rgba",
+          "sha256": "8675651898d77ef1cbe478e28b4ef7e367fabcdd4e667f536d1a1a0ab6b7c2f2",
+          "bytes": 132096,
+          "timeline_active_fade_phase": 10,
+          "timeline_active_fade_weight": 0.0,
+          "review_source_asset": "AAX4-DSTDVL1B-frame001.rgba"
+        },
+        {
+          "frame": 37,
+          "logical_size_x1": [
+            52,
+            47
+          ],
+          "physical_size_x4": [
+            208,
+            188
+          ],
+          "centre_x1": [
+            10,
+            32
+          ],
+          "asset": "AAX4-DSTDVL1B-frame037.rgba",
+          "sha256": "ff8e2e4a52617e4be28e30aea26a403a36a78d516da4a37fabb41f1879881b1e",
+          "bytes": 156416,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 5,
+            "left_native_frame": 1,
+            "right_native_frame": 2
+          },
+          "timeline_active_fade_phase": 11,
+          "timeline_active_fade_weight": 0.05539358779788017,
+          "review_source_asset": "AAX4-DSTDVL1B-frame019.rgba"
+        },
+        {
+          "frame": 38,
+          "logical_size_x1": [
+            60,
+            57
+          ],
+          "physical_size_x4": [
+            240,
+            228
+          ],
+          "centre_x1": [
+            12,
+            40
+          ],
+          "asset": "AAX4-DSTDVL1B-frame038.rgba",
+          "sha256": "693ebbf7595f7f583589263b7aef44f9d2b6e5e7b7f1897beb0110a2b4cfae8e",
+          "bytes": 218880,
+          "timeline_active_fade_phase": 12,
+          "timeline_active_fade_weight": 0.19825074076652527,
+          "review_source_asset": "AAX4-DSTDVL1B-frame002.rgba"
+        },
+        {
+          "frame": 39,
+          "logical_size_x1": [
+            60,
+            57
+          ],
+          "physical_size_x4": [
+            240,
+            228
+          ],
+          "centre_x1": [
+            12,
+            40
+          ],
+          "asset": "AAX4-DSTDVL1B-frame039.rgba",
+          "sha256": "52adc7f37843aa9e77551ace184ec458345ef1aba5c349c4e97641ae9458a297",
+          "bytes": 218880,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 6,
+            "left_native_frame": 2,
+            "right_native_frame": 3
+          },
+          "timeline_active_fade_phase": 13,
+          "timeline_active_fade_weight": 0.39358600974082947,
+          "review_source_asset": "AAX4-DSTDVL1B-frame020.rgba"
+        },
+        {
+          "frame": 40,
+          "logical_size_x1": [
+            66,
+            69
+          ],
+          "physical_size_x4": [
+            264,
+            276
+          ],
+          "centre_x1": [
+            12,
+            50
+          ],
+          "asset": "AAX4-DSTDVL1B-frame040.rgba",
+          "sha256": "27e9d57d150b579fdc373ef747fc6a3c2036affcb4f8c8edf54e515311e927d5",
+          "bytes": 291456,
+          "timeline_active_fade_phase": 14,
+          "timeline_active_fade_weight": 0.6064140200614929,
+          "review_source_asset": "AAX4-DSTDVL1B-frame003.rgba"
+        },
+        {
+          "frame": 41,
+          "logical_size_x1": [
+            66,
+            69
+          ],
+          "physical_size_x4": [
+            264,
+            276
+          ],
+          "centre_x1": [
+            12,
+            50
+          ],
+          "asset": "AAX4-DSTDVL1B-frame041.rgba",
+          "sha256": "d7b4069babbe8736722f48a5c132f4ae6cbebcb40cfe56d4618b9256c95c52d1",
+          "bytes": 291456,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 7,
+            "left_native_frame": 3,
+            "right_native_frame": 4
+          },
+          "timeline_active_fade_phase": 15,
+          "timeline_active_fade_weight": 0.8017492294311523,
+          "review_source_asset": "AAX4-DSTDVL1B-frame021.rgba"
+        },
+        {
+          "frame": 42,
+          "logical_size_x1": [
+            75,
+            72
+          ],
+          "physical_size_x4": [
+            300,
+            288
+          ],
+          "centre_x1": [
+            12,
+            51
+          ],
+          "asset": "AAX4-DSTDVL1B-frame042.rgba",
+          "sha256": "66c441e68eaf963052bd8e93e2e53cd9a1114c93bef8435e46b6919ee6036572",
+          "bytes": 345600,
+          "timeline_active_fade_phase": 16,
+          "timeline_active_fade_weight": 0.9446064233779907,
+          "review_source_asset": "AAX4-DSTDVL1B-frame004.rgba"
+        },
+        {
+          "frame": 43,
+          "logical_size_x1": [
+            94,
+            75
+          ],
+          "physical_size_x4": [
+            376,
+            300
+          ],
+          "centre_x1": [
+            -26,
+            71
+          ],
+          "asset": "AAX4-DSTDVL1B-frame043.rgba",
+          "sha256": "9ce6f1dbf979aef5483a87d2c14ae9d09ec0f221c773b29567a393267e59920e",
+          "bytes": 451200,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 18,
+            "left_native_frame": 14,
+            "right_native_frame": 15
+          },
+          "timeline_active_fade_phase": 37,
+          "timeline_active_fade_weight": 0.9446064233779907,
+          "review_source_asset": "AAX4-DSTDVL1B-frame032.rgba"
+        },
+        {
+          "frame": 44,
+          "logical_size_x1": [
+            87,
+            60
+          ],
+          "physical_size_x4": [
+            348,
+            240
+          ],
+          "centre_x1": [
+            -33,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1B-frame044.rgba",
+          "sha256": "2ecdb68c9ba06b90ec071a8744f7ca560f069082f31907cdb62674c954cb6a8d",
+          "bytes": 334080,
+          "timeline_active_fade_phase": 38,
+          "timeline_active_fade_weight": 0.8017492294311523,
+          "review_source_asset": "AAX4-DSTDVL1B-frame015.rgba"
+        },
+        {
+          "frame": 45,
+          "logical_size_x1": [
+            87,
+            60
+          ],
+          "physical_size_x4": [
+            348,
+            240
+          ],
+          "centre_x1": [
+            -33,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1B-frame045.rgba",
+          "sha256": "b17ea920cafacc0dfe40c196e65c618a31738eba9362f6af92bcec17890c8192",
+          "bytes": 334080,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 19,
+            "left_native_frame": 15,
+            "right_native_frame": 16
+          },
+          "timeline_active_fade_phase": 39,
+          "timeline_active_fade_weight": 0.6064140200614929,
+          "review_source_asset": "AAX4-DSTDVL1B-frame033.rgba"
+        },
+        {
+          "frame": 46,
+          "logical_size_x1": [
+            79,
+            55
+          ],
+          "physical_size_x4": [
+            316,
+            220
+          ],
+          "centre_x1": [
+            -36,
+            65
+          ],
+          "asset": "AAX4-DSTDVL1B-frame046.rgba",
+          "sha256": "850b8a31d2c718389076d5380de1dc6f8dd26e3f859c914411317e759a722df3",
+          "bytes": 278080,
+          "timeline_active_fade_phase": 40,
+          "timeline_active_fade_weight": 0.39358600974082947,
+          "review_source_asset": "AAX4-DSTDVL1B-frame016.rgba"
+        },
+        {
+          "frame": 47,
+          "logical_size_x1": [
+            79,
+            55
+          ],
+          "physical_size_x4": [
+            316,
+            220
+          ],
+          "centre_x1": [
+            -36,
+            65
+          ],
+          "asset": "AAX4-DSTDVL1B-frame047.rgba",
+          "sha256": "173927694851c14f489d6098c098bb5f1daf422fa745350546313892fec32bcd",
+          "bytes": 278080,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 20,
+            "left_native_frame": 16,
+            "right_native_frame": 17
+          },
+          "timeline_active_fade_phase": 41,
+          "timeline_active_fade_weight": 0.19825074076652527,
+          "review_source_asset": "AAX4-DSTDVL1B-frame034.rgba"
+        },
+        {
+          "frame": 48,
+          "logical_size_x1": [
+            59,
+            57
+          ],
+          "physical_size_x4": [
+            236,
+            228
+          ],
+          "centre_x1": [
+            -39,
+            68
+          ],
+          "asset": "AAX4-DSTDVL1B-frame048.rgba",
+          "sha256": "91e86b965ae024b1074f8d30cabb0e3cb7770316b6d6cff145a19c9be4ea4c2c",
+          "bytes": 215232,
+          "timeline_active_fade_phase": 42,
+          "timeline_active_fade_weight": 0.05539358779788017,
+          "review_source_asset": "AAX4-DSTDVL1B-frame017.rgba"
+        },
+        {
+          "frame": 49,
+          "logical_size_x1": [
+            55,
+            53
+          ],
+          "physical_size_x4": [
+            220,
+            212
+          ],
+          "centre_x1": [
+            -41,
+            66
+          ],
+          "asset": "AAX4-DSTDVL1B-frame049.rgba",
+          "sha256": "541f33a43c35507f33291e564e6179fc7b81bef740cc17ccc246d8f1f6fb824c",
+          "bytes": 186560,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 21,
+            "left_native_frame": 17,
+            "right_native_frame": 0
+          },
+          "timeline_active_fade_phase": 43,
+          "timeline_active_fade_weight": 0.0,
+          "review_source_asset": "AAX4-DSTDVL1B-frame035.rgba"
+        }
+      ],
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_frame_indices": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "timeline_frame_indices": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            18,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            22,
+            5,
+            23,
+            6,
+            24,
+            7,
+            25,
+            8,
+            26,
+            9,
+            27,
+            10,
+            28,
+            11,
+            29,
+            12,
+            30,
+            13,
+            31,
+            14,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "assets": [
+        {
+          "name": "AAX4-DSTDVL1B-frame000.rgba",
+          "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+          "bytes": 64
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame001.rgba",
+          "sha256": "0e72d91f8f16edf5a02d90ca52f7667a61cb8614277e8a87a116edd3110b0fff",
+          "bytes": 156416
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame002.rgba",
+          "sha256": "566e5007a0218c4551fd6b9dce74f6e92b0b1e4014a273b21dc04634cfc474f4",
+          "bytes": 218880
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame003.rgba",
+          "sha256": "d64f7f93305a3318f7a8ab13400ac72d9ac42ac813b60ebbe12fcfeb397be068",
+          "bytes": 291456
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame004.rgba",
+          "sha256": "c46668fd49cb0a45a076262e0d95bbf994d3de6257adf7c829f8a2310eacf11d",
+          "bytes": 345600
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame005.rgba",
+          "sha256": "bb1becc76a484c086c872f4b7aab7f1f68c2f80659a2af5185d55b64dd26f074",
+          "bytes": 388352
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame006.rgba",
+          "sha256": "2435cae43aa42b012296196d605c819a07aaa31542aeb665ed2aa4e170016a86",
+          "bytes": 428736
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame007.rgba",
+          "sha256": "86d82309bfe9fcf1a0bc829449cf4e8c1d272221790c22d60a8477c98f4d5b2a",
+          "bytes": 478016
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame008.rgba",
+          "sha256": "d01005ae333a927039eb4eed1dcf8384f571345d31c1c8fb7af4a653106d05ae",
+          "bytes": 566784
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame009.rgba",
+          "sha256": "188e07e4d0b57b8ab1a9c06c6b34ff5d0a9cb5891a6a92ab871cb52531149502",
+          "bytes": 584064
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame010.rgba",
+          "sha256": "266a0a5e7bb43883025792344865d60a7f70ba523e45aabb2d718d54fc4b653d",
+          "bytes": 561536
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame011.rgba",
+          "sha256": "dcac05962c97b1b33e39e7aafb64fb2959f6a3f42d101264e933b93fde4d7f9f",
+          "bytes": 544320
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame012.rgba",
+          "sha256": "b88e7272400beff6b496a8ade14471770259ca0e1470a14f546299979db9a5ab",
+          "bytes": 523584
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame013.rgba",
+          "sha256": "8695afca00056c93231c3d94ba95f021d3be2f99f00ee0a11775cec53d2c9168",
+          "bytes": 506880
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame014.rgba",
+          "sha256": "06508e1fa94a1add2703d32b5c9c898f2402259ec2c1a8f79f9a26aae5214d3d",
+          "bytes": 451200
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame015.rgba",
+          "sha256": "665701b86bbfe83913c1d6530dc3575f04c4bdc79f287d04cb50f5983c65dbc5",
+          "bytes": 334080
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame016.rgba",
+          "sha256": "c56387c4771544872ae56df77afb8e867066ecc5350610dfc18c534999801699",
+          "bytes": 278080
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame017.rgba",
+          "sha256": "c802c6779299ba1c3aa86b39728d40fbd9fcea07376907467bf8452b5c2e7b34",
+          "bytes": 215232
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame018.rgba",
+          "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+          "bytes": 64
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame019.rgba",
+          "sha256": "5d5a68fc10785c9615e8c27252f789b37e3421a4b24510e768f0ee7753d887e2",
+          "bytes": 156416
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame020.rgba",
+          "sha256": "53d1392e89a1fa927cc03a69b4a0c8b002bf617d24f6a0fc34b3b847e1df9a55",
+          "bytes": 218880
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame021.rgba",
+          "sha256": "4b2e7ce7606f50bd6288ca5efa2af950379d41c57c0c62248f38c4895826af7e",
+          "bytes": 291456
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame022.rgba",
+          "sha256": "bec2ed7ef9a7d8005eabaf1d56aebbaf0b698b89119dc424a2e4c9d73711e686",
+          "bytes": 345600
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame023.rgba",
+          "sha256": "68274db532cd17b760d5d174823947ed1659fc822e7db3547b64f99fb5e0e0fe",
+          "bytes": 388352
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame024.rgba",
+          "sha256": "e01157a0c2504d3f06ebe69b550bb3ceea74e570ddf9b671e6a5e6dee6d6a343",
+          "bytes": 428736
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame025.rgba",
+          "sha256": "80062ed522bcdc50fdc8a420780a066b2f0dcc71dd7f1044e4c5cd46d755cbc9",
+          "bytes": 478016
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame026.rgba",
+          "sha256": "dfbe990282fd1732597a89fe9f01ef5ac2a9c8e91890b4cc30dc66d312e15984",
+          "bytes": 566784
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame027.rgba",
+          "sha256": "8d5916bf86e3d87b9720a903dca8519305115ebc3f8e14681ec640a67fbbcafc",
+          "bytes": 584064
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame028.rgba",
+          "sha256": "519fcca9b95f5cccb06f83fa53d7346a7fa19d03373ef9edc7d8f03f151639e8",
+          "bytes": 561536
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame029.rgba",
+          "sha256": "518bf37f5810a59779ea6cf581f29508ec583cc51051c4fafd5d98f53052d540",
+          "bytes": 544320
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame030.rgba",
+          "sha256": "a65772100cf5c5102f76fdd2b1fb3655b6f5fb2287f44ecfac31fb6320054c31",
+          "bytes": 523584
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame031.rgba",
+          "sha256": "d431881768b32ed00bcd3707134b2cecd5e61d3cc0e794b5e39876ac71494e60",
+          "bytes": 506880
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame032.rgba",
+          "sha256": "184d322d4912408322f448a6d24be7f6c5ed232999bb03e4aac7af572c070089",
+          "bytes": 451200
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame033.rgba",
+          "sha256": "1e90d510c8bd3a1fa9678523dbfb57bd117406e9468b5009197bb1e0dadd2259",
+          "bytes": 334080
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame034.rgba",
+          "sha256": "db67ef3e6a2e7e78fbe4d167fa89ed832a9d8eccfe63d8ccbc6c36d181a59aad",
+          "bytes": 278080
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame035.rgba",
+          "sha256": "db2ce546f1478727952d05b111bdfda66161271e86c536c7a6b1b6e29c9db89f",
+          "bytes": 215232
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame036.rgba",
+          "sha256": "8675651898d77ef1cbe478e28b4ef7e367fabcdd4e667f536d1a1a0ab6b7c2f2",
+          "bytes": 132096
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame037.rgba",
+          "sha256": "ff8e2e4a52617e4be28e30aea26a403a36a78d516da4a37fabb41f1879881b1e",
+          "bytes": 156416
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame038.rgba",
+          "sha256": "693ebbf7595f7f583589263b7aef44f9d2b6e5e7b7f1897beb0110a2b4cfae8e",
+          "bytes": 218880
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame039.rgba",
+          "sha256": "52adc7f37843aa9e77551ace184ec458345ef1aba5c349c4e97641ae9458a297",
+          "bytes": 218880
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame040.rgba",
+          "sha256": "27e9d57d150b579fdc373ef747fc6a3c2036affcb4f8c8edf54e515311e927d5",
+          "bytes": 291456
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame041.rgba",
+          "sha256": "d7b4069babbe8736722f48a5c132f4ae6cbebcb40cfe56d4618b9256c95c52d1",
+          "bytes": 291456
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame042.rgba",
+          "sha256": "66c441e68eaf963052bd8e93e2e53cd9a1114c93bef8435e46b6919ee6036572",
+          "bytes": 345600
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame043.rgba",
+          "sha256": "9ce6f1dbf979aef5483a87d2c14ae9d09ec0f221c773b29567a393267e59920e",
+          "bytes": 451200
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame044.rgba",
+          "sha256": "2ecdb68c9ba06b90ec071a8744f7ca560f069082f31907cdb62674c954cb6a8d",
+          "bytes": 334080
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame045.rgba",
+          "sha256": "b17ea920cafacc0dfe40c196e65c618a31738eba9362f6af92bcec17890c8192",
+          "bytes": 334080
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame046.rgba",
+          "sha256": "850b8a31d2c718389076d5380de1dc6f8dd26e3f859c914411317e759a722df3",
+          "bytes": 278080
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame047.rgba",
+          "sha256": "173927694851c14f489d6098c098bb5f1daf422fa745350546313892fec32bcd",
+          "bytes": 278080
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame048.rgba",
+          "sha256": "91e86b965ae024b1074f8d30cabb0e3cb7770316b6d6cff145a19c9be4ea4c2c",
+          "bytes": 215232
+        },
+        {
+          "name": "AAX4-DSTDVL1B-frame049.rgba",
+          "sha256": "541f33a43c35507f33291e564e6179fc7b81bef740cc17ccc246d8f1f6fb824c",
+          "bytes": 186560
+        }
+      ],
+      "playback_mode": "TimedTimeline",
+      "native_fps": {
+        "numerator": 15,
+        "denominator": 1
+      },
+      "target_fps": {
+        "numerator": 30,
+        "denominator": 1
+      },
+      "variant_index": 0
+    },
+    {
+      "resref": "DSTDVL1C",
+      "frame_count": 50,
+      "cycle_count": 1,
+      "geometry_mode": "per-frame",
+      "frames": [
+        {
+          "frame": 0,
+          "logical_size_x1": [
+            1,
+            1
+          ],
+          "physical_size_x4": [
+            4,
+            4
+          ],
+          "centre_x1": [
+            10,
+            90
+          ],
+          "asset": "AAX4-DSTDVL1C-frame000.rgba",
+          "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+          "bytes": 64
+        },
+        {
+          "frame": 1,
+          "logical_size_x1": [
+            52,
+            47
+          ],
+          "physical_size_x4": [
+            208,
+            188
+          ],
+          "centre_x1": [
+            10,
+            32
+          ],
+          "asset": "AAX4-DSTDVL1C-frame001.rgba",
+          "sha256": "0e72d91f8f16edf5a02d90ca52f7667a61cb8614277e8a87a116edd3110b0fff",
+          "bytes": 156416
+        },
+        {
+          "frame": 2,
+          "logical_size_x1": [
+            60,
+            57
+          ],
+          "physical_size_x4": [
+            240,
+            228
+          ],
+          "centre_x1": [
+            12,
+            40
+          ],
+          "asset": "AAX4-DSTDVL1C-frame002.rgba",
+          "sha256": "566e5007a0218c4551fd6b9dce74f6e92b0b1e4014a273b21dc04634cfc474f4",
+          "bytes": 218880
+        },
+        {
+          "frame": 3,
+          "logical_size_x1": [
+            66,
+            69
+          ],
+          "physical_size_x4": [
+            264,
+            276
+          ],
+          "centre_x1": [
+            12,
+            50
+          ],
+          "asset": "AAX4-DSTDVL1C-frame003.rgba",
+          "sha256": "d64f7f93305a3318f7a8ab13400ac72d9ac42ac813b60ebbe12fcfeb397be068",
+          "bytes": 291456
+        },
+        {
+          "frame": 4,
+          "logical_size_x1": [
+            75,
+            72
+          ],
+          "physical_size_x4": [
+            300,
+            288
+          ],
+          "centre_x1": [
+            12,
+            51
+          ],
+          "asset": "AAX4-DSTDVL1C-frame004.rgba",
+          "sha256": "c46668fd49cb0a45a076262e0d95bbf994d3de6257adf7c829f8a2310eacf11d",
+          "bytes": 345600
+        },
+        {
+          "frame": 5,
+          "logical_size_x1": [
+            82,
+            74
+          ],
+          "physical_size_x4": [
+            328,
+            296
+          ],
+          "centre_x1": [
+            11,
+            55
+          ],
+          "asset": "AAX4-DSTDVL1C-frame005.rgba",
+          "sha256": "bb1becc76a484c086c872f4b7aab7f1f68c2f80659a2af5185d55b64dd26f074",
+          "bytes": 388352
+        },
+        {
+          "frame": 6,
+          "logical_size_x1": [
+            87,
+            77
+          ],
+          "physical_size_x4": [
+            348,
+            308
+          ],
+          "centre_x1": [
+            9,
+            56
+          ],
+          "asset": "AAX4-DSTDVL1C-frame006.rgba",
+          "sha256": "2435cae43aa42b012296196d605c819a07aaa31542aeb665ed2aa4e170016a86",
+          "bytes": 428736
+        },
+        {
+          "frame": 7,
+          "logical_size_x1": [
+            97,
+            77
+          ],
+          "physical_size_x4": [
+            388,
+            308
+          ],
+          "centre_x1": [
+            7,
+            60
+          ],
+          "asset": "AAX4-DSTDVL1C-frame007.rgba",
+          "sha256": "86d82309bfe9fcf1a0bc829449cf4e8c1d272221790c22d60a8477c98f4d5b2a",
+          "bytes": 478016
+        },
+        {
+          "frame": 8,
+          "logical_size_x1": [
+            108,
+            82
+          ],
+          "physical_size_x4": [
+            432,
+            328
+          ],
+          "centre_x1": [
+            5,
+            65
+          ],
+          "asset": "AAX4-DSTDVL1C-frame008.rgba",
+          "sha256": "d01005ae333a927039eb4eed1dcf8384f571345d31c1c8fb7af4a653106d05ae",
+          "bytes": 566784
+        },
+        {
+          "frame": 9,
+          "logical_size_x1": [
+            117,
+            78
+          ],
+          "physical_size_x4": [
+            468,
+            312
+          ],
+          "centre_x1": [
+            3,
+            64
+          ],
+          "asset": "AAX4-DSTDVL1C-frame009.rgba",
+          "sha256": "188e07e4d0b57b8ab1a9c06c6b34ff5d0a9cb5891a6a92ab871cb52531149502",
+          "bytes": 584064
+        },
+        {
+          "frame": 10,
+          "logical_size_x1": [
+            107,
+            82
+          ],
+          "physical_size_x4": [
+            428,
+            328
+          ],
+          "centre_x1": [
+            -12,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1C-frame010.rgba",
+          "sha256": "266a0a5e7bb43883025792344865d60a7f70ba523e45aabb2d718d54fc4b653d",
+          "bytes": 561536
+        },
+        {
+          "frame": 11,
+          "logical_size_x1": [
+            105,
+            81
+          ],
+          "physical_size_x4": [
+            420,
+            324
+          ],
+          "centre_x1": [
+            -15,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1C-frame011.rgba",
+          "sha256": "dcac05962c97b1b33e39e7aafb64fb2959f6a3f42d101264e933b93fde4d7f9f",
+          "bytes": 544320
+        },
+        {
+          "frame": 12,
+          "logical_size_x1": [
+            101,
+            81
+          ],
+          "physical_size_x4": [
+            404,
+            324
+          ],
+          "centre_x1": [
+            -19,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1C-frame012.rgba",
+          "sha256": "b88e7272400beff6b496a8ade14471770259ca0e1470a14f546299979db9a5ab",
+          "bytes": 523584
+        },
+        {
+          "frame": 13,
+          "logical_size_x1": [
+            99,
+            80
+          ],
+          "physical_size_x4": [
+            396,
+            320
+          ],
+          "centre_x1": [
+            -21,
+            71
+          ],
+          "asset": "AAX4-DSTDVL1C-frame013.rgba",
+          "sha256": "8695afca00056c93231c3d94ba95f021d3be2f99f00ee0a11775cec53d2c9168",
+          "bytes": 506880
+        },
+        {
+          "frame": 14,
+          "logical_size_x1": [
+            94,
+            75
+          ],
+          "physical_size_x4": [
+            376,
+            300
+          ],
+          "centre_x1": [
+            -26,
+            71
+          ],
+          "asset": "AAX4-DSTDVL1C-frame014.rgba",
+          "sha256": "06508e1fa94a1add2703d32b5c9c898f2402259ec2c1a8f79f9a26aae5214d3d",
+          "bytes": 451200
+        },
+        {
+          "frame": 15,
+          "logical_size_x1": [
+            87,
+            60
+          ],
+          "physical_size_x4": [
+            348,
+            240
+          ],
+          "centre_x1": [
+            -33,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1C-frame015.rgba",
+          "sha256": "665701b86bbfe83913c1d6530dc3575f04c4bdc79f287d04cb50f5983c65dbc5",
+          "bytes": 334080
+        },
+        {
+          "frame": 16,
+          "logical_size_x1": [
+            79,
+            55
+          ],
+          "physical_size_x4": [
+            316,
+            220
+          ],
+          "centre_x1": [
+            -36,
+            65
+          ],
+          "asset": "AAX4-DSTDVL1C-frame016.rgba",
+          "sha256": "c56387c4771544872ae56df77afb8e867066ecc5350610dfc18c534999801699",
+          "bytes": 278080
+        },
+        {
+          "frame": 17,
+          "logical_size_x1": [
+            59,
+            57
+          ],
+          "physical_size_x4": [
+            236,
+            228
+          ],
+          "centre_x1": [
+            -39,
+            68
+          ],
+          "asset": "AAX4-DSTDVL1C-frame017.rgba",
+          "sha256": "c802c6779299ba1c3aa86b39728d40fbd9fcea07376907467bf8452b5c2e7b34",
+          "bytes": 215232
+        },
+        {
+          "frame": 18,
+          "logical_size_x1": [
+            1,
+            1
+          ],
+          "physical_size_x4": [
+            4,
+            4
+          ],
+          "centre_x1": [
+            10,
+            90
+          ],
+          "asset": "AAX4-DSTDVL1C-frame018.rgba",
+          "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+          "bytes": 64,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 9,
+            "left_native_frame": 0,
+            "right_native_frame": 1
+          }
+        },
+        {
+          "frame": 19,
+          "logical_size_x1": [
+            52,
+            47
+          ],
+          "physical_size_x4": [
+            208,
+            188
+          ],
+          "centre_x1": [
+            10,
+            32
+          ],
+          "asset": "AAX4-DSTDVL1C-frame019.rgba",
+          "sha256": "5d5a68fc10785c9615e8c27252f789b37e3421a4b24510e768f0ee7753d887e2",
+          "bytes": 156416,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 10,
+            "left_native_frame": 1,
+            "right_native_frame": 2
+          }
+        },
+        {
+          "frame": 20,
+          "logical_size_x1": [
+            60,
+            57
+          ],
+          "physical_size_x4": [
+            240,
+            228
+          ],
+          "centre_x1": [
+            12,
+            40
+          ],
+          "asset": "AAX4-DSTDVL1C-frame020.rgba",
+          "sha256": "53d1392e89a1fa927cc03a69b4a0c8b002bf617d24f6a0fc34b3b847e1df9a55",
+          "bytes": 218880,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 11,
+            "left_native_frame": 2,
+            "right_native_frame": 3
+          }
+        },
+        {
+          "frame": 21,
+          "logical_size_x1": [
+            66,
+            69
+          ],
+          "physical_size_x4": [
+            264,
+            276
+          ],
+          "centre_x1": [
+            12,
+            50
+          ],
+          "asset": "AAX4-DSTDVL1C-frame021.rgba",
+          "sha256": "4b2e7ce7606f50bd6288ca5efa2af950379d41c57c0c62248f38c4895826af7e",
+          "bytes": 291456,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 12,
+            "left_native_frame": 3,
+            "right_native_frame": 4
+          }
+        },
+        {
+          "frame": 22,
+          "logical_size_x1": [
+            75,
+            72
+          ],
+          "physical_size_x4": [
+            300,
+            288
+          ],
+          "centre_x1": [
+            12,
+            51
+          ],
+          "asset": "AAX4-DSTDVL1C-frame022.rgba",
+          "sha256": "bec2ed7ef9a7d8005eabaf1d56aebbaf0b698b89119dc424a2e4c9d73711e686",
+          "bytes": 345600,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 13,
+            "left_native_frame": 4,
+            "right_native_frame": 5
+          }
+        },
+        {
+          "frame": 23,
+          "logical_size_x1": [
+            82,
+            74
+          ],
+          "physical_size_x4": [
+            328,
+            296
+          ],
+          "centre_x1": [
+            11,
+            55
+          ],
+          "asset": "AAX4-DSTDVL1C-frame023.rgba",
+          "sha256": "68274db532cd17b760d5d174823947ed1659fc822e7db3547b64f99fb5e0e0fe",
+          "bytes": 388352,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 14,
+            "left_native_frame": 5,
+            "right_native_frame": 6
+          }
+        },
+        {
+          "frame": 24,
+          "logical_size_x1": [
+            87,
+            77
+          ],
+          "physical_size_x4": [
+            348,
+            308
+          ],
+          "centre_x1": [
+            9,
+            56
+          ],
+          "asset": "AAX4-DSTDVL1C-frame024.rgba",
+          "sha256": "e01157a0c2504d3f06ebe69b550bb3ceea74e570ddf9b671e6a5e6dee6d6a343",
+          "bytes": 428736,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 15,
+            "left_native_frame": 6,
+            "right_native_frame": 7
+          }
+        },
+        {
+          "frame": 25,
+          "logical_size_x1": [
+            97,
+            77
+          ],
+          "physical_size_x4": [
+            388,
+            308
+          ],
+          "centre_x1": [
+            7,
+            60
+          ],
+          "asset": "AAX4-DSTDVL1C-frame025.rgba",
+          "sha256": "80062ed522bcdc50fdc8a420780a066b2f0dcc71dd7f1044e4c5cd46d755cbc9",
+          "bytes": 478016,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 16,
+            "left_native_frame": 7,
+            "right_native_frame": 8
+          }
+        },
+        {
+          "frame": 26,
+          "logical_size_x1": [
+            108,
+            82
+          ],
+          "physical_size_x4": [
+            432,
+            328
+          ],
+          "centre_x1": [
+            5,
+            65
+          ],
+          "asset": "AAX4-DSTDVL1C-frame026.rgba",
+          "sha256": "dfbe990282fd1732597a89fe9f01ef5ac2a9c8e91890b4cc30dc66d312e15984",
+          "bytes": 566784,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 17,
+            "left_native_frame": 8,
+            "right_native_frame": 9
+          }
+        },
+        {
+          "frame": 27,
+          "logical_size_x1": [
+            117,
+            78
+          ],
+          "physical_size_x4": [
+            468,
+            312
+          ],
+          "centre_x1": [
+            3,
+            64
+          ],
+          "asset": "AAX4-DSTDVL1C-frame027.rgba",
+          "sha256": "8d5916bf86e3d87b9720a903dca8519305115ebc3f8e14681ec640a67fbbcafc",
+          "bytes": 584064,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 18,
+            "left_native_frame": 9,
+            "right_native_frame": 10
+          }
+        },
+        {
+          "frame": 28,
+          "logical_size_x1": [
+            107,
+            82
+          ],
+          "physical_size_x4": [
+            428,
+            328
+          ],
+          "centre_x1": [
+            -12,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1C-frame028.rgba",
+          "sha256": "519fcca9b95f5cccb06f83fa53d7346a7fa19d03373ef9edc7d8f03f151639e8",
+          "bytes": 561536,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 19,
+            "left_native_frame": 10,
+            "right_native_frame": 11
+          }
+        },
+        {
+          "frame": 29,
+          "logical_size_x1": [
+            105,
+            81
+          ],
+          "physical_size_x4": [
+            420,
+            324
+          ],
+          "centre_x1": [
+            -15,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1C-frame029.rgba",
+          "sha256": "518bf37f5810a59779ea6cf581f29508ec583cc51051c4fafd5d98f53052d540",
+          "bytes": 544320,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 20,
+            "left_native_frame": 11,
+            "right_native_frame": 12
+          }
+        },
+        {
+          "frame": 30,
+          "logical_size_x1": [
+            101,
+            81
+          ],
+          "physical_size_x4": [
+            404,
+            324
+          ],
+          "centre_x1": [
+            -19,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1C-frame030.rgba",
+          "sha256": "a65772100cf5c5102f76fdd2b1fb3655b6f5fb2287f44ecfac31fb6320054c31",
+          "bytes": 523584,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 21,
+            "left_native_frame": 12,
+            "right_native_frame": 13
+          }
+        },
+        {
+          "frame": 31,
+          "logical_size_x1": [
+            99,
+            80
+          ],
+          "physical_size_x4": [
+            396,
+            320
+          ],
+          "centre_x1": [
+            -21,
+            71
+          ],
+          "asset": "AAX4-DSTDVL1C-frame031.rgba",
+          "sha256": "d431881768b32ed00bcd3707134b2cecd5e61d3cc0e794b5e39876ac71494e60",
+          "bytes": 506880,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 22,
+            "left_native_frame": 13,
+            "right_native_frame": 14
+          }
+        },
+        {
+          "frame": 32,
+          "logical_size_x1": [
+            94,
+            75
+          ],
+          "physical_size_x4": [
+            376,
+            300
+          ],
+          "centre_x1": [
+            -26,
+            71
+          ],
+          "asset": "AAX4-DSTDVL1C-frame032.rgba",
+          "sha256": "184d322d4912408322f448a6d24be7f6c5ed232999bb03e4aac7af572c070089",
+          "bytes": 451200,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 23,
+            "left_native_frame": 14,
+            "right_native_frame": 15
+          }
+        },
+        {
+          "frame": 33,
+          "logical_size_x1": [
+            87,
+            60
+          ],
+          "physical_size_x4": [
+            348,
+            240
+          ],
+          "centre_x1": [
+            -33,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1C-frame033.rgba",
+          "sha256": "1e90d510c8bd3a1fa9678523dbfb57bd117406e9468b5009197bb1e0dadd2259",
+          "bytes": 334080,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 24,
+            "left_native_frame": 15,
+            "right_native_frame": 16
+          }
+        },
+        {
+          "frame": 34,
+          "logical_size_x1": [
+            79,
+            55
+          ],
+          "physical_size_x4": [
+            316,
+            220
+          ],
+          "centre_x1": [
+            -36,
+            65
+          ],
+          "asset": "AAX4-DSTDVL1C-frame034.rgba",
+          "sha256": "db67ef3e6a2e7e78fbe4d167fa89ed832a9d8eccfe63d8ccbc6c36d181a59aad",
+          "bytes": 278080,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 25,
+            "left_native_frame": 16,
+            "right_native_frame": 17
+          }
+        },
+        {
+          "frame": 35,
+          "logical_size_x1": [
+            59,
+            57
+          ],
+          "physical_size_x4": [
+            236,
+            228
+          ],
+          "centre_x1": [
+            -39,
+            68
+          ],
+          "asset": "AAX4-DSTDVL1C-frame035.rgba",
+          "sha256": "db2ce546f1478727952d05b111bdfda66161271e86c536c7a6b1b6e29c9db89f",
+          "bytes": 215232,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 26,
+            "left_native_frame": 17,
+            "right_native_frame": 0
+          }
+        },
+        {
+          "frame": 36,
+          "logical_size_x1": [
+            48,
+            43
+          ],
+          "physical_size_x4": [
+            192,
+            172
+          ],
+          "centre_x1": [
+            8,
+            30
+          ],
+          "asset": "AAX4-DSTDVL1C-frame036.rgba",
+          "sha256": "8675651898d77ef1cbe478e28b4ef7e367fabcdd4e667f536d1a1a0ab6b7c2f2",
+          "bytes": 132096,
+          "timeline_active_fade_phase": 20,
+          "timeline_active_fade_weight": 0.0,
+          "review_source_asset": "AAX4-DSTDVL1C-frame001.rgba"
+        },
+        {
+          "frame": 37,
+          "logical_size_x1": [
+            52,
+            47
+          ],
+          "physical_size_x4": [
+            208,
+            188
+          ],
+          "centre_x1": [
+            10,
+            32
+          ],
+          "asset": "AAX4-DSTDVL1C-frame037.rgba",
+          "sha256": "ff8e2e4a52617e4be28e30aea26a403a36a78d516da4a37fabb41f1879881b1e",
+          "bytes": 156416,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 10,
+            "left_native_frame": 1,
+            "right_native_frame": 2
+          },
+          "timeline_active_fade_phase": 21,
+          "timeline_active_fade_weight": 0.05539358779788017,
+          "review_source_asset": "AAX4-DSTDVL1C-frame019.rgba"
+        },
+        {
+          "frame": 38,
+          "logical_size_x1": [
+            60,
+            57
+          ],
+          "physical_size_x4": [
+            240,
+            228
+          ],
+          "centre_x1": [
+            12,
+            40
+          ],
+          "asset": "AAX4-DSTDVL1C-frame038.rgba",
+          "sha256": "693ebbf7595f7f583589263b7aef44f9d2b6e5e7b7f1897beb0110a2b4cfae8e",
+          "bytes": 218880,
+          "timeline_active_fade_phase": 22,
+          "timeline_active_fade_weight": 0.19825074076652527,
+          "review_source_asset": "AAX4-DSTDVL1C-frame002.rgba"
+        },
+        {
+          "frame": 39,
+          "logical_size_x1": [
+            60,
+            57
+          ],
+          "physical_size_x4": [
+            240,
+            228
+          ],
+          "centre_x1": [
+            12,
+            40
+          ],
+          "asset": "AAX4-DSTDVL1C-frame039.rgba",
+          "sha256": "52adc7f37843aa9e77551ace184ec458345ef1aba5c349c4e97641ae9458a297",
+          "bytes": 218880,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 11,
+            "left_native_frame": 2,
+            "right_native_frame": 3
+          },
+          "timeline_active_fade_phase": 23,
+          "timeline_active_fade_weight": 0.39358600974082947,
+          "review_source_asset": "AAX4-DSTDVL1C-frame020.rgba"
+        },
+        {
+          "frame": 40,
+          "logical_size_x1": [
+            66,
+            69
+          ],
+          "physical_size_x4": [
+            264,
+            276
+          ],
+          "centre_x1": [
+            12,
+            50
+          ],
+          "asset": "AAX4-DSTDVL1C-frame040.rgba",
+          "sha256": "27e9d57d150b579fdc373ef747fc6a3c2036affcb4f8c8edf54e515311e927d5",
+          "bytes": 291456,
+          "timeline_active_fade_phase": 24,
+          "timeline_active_fade_weight": 0.6064140200614929,
+          "review_source_asset": "AAX4-DSTDVL1C-frame003.rgba"
+        },
+        {
+          "frame": 41,
+          "logical_size_x1": [
+            66,
+            69
+          ],
+          "physical_size_x4": [
+            264,
+            276
+          ],
+          "centre_x1": [
+            12,
+            50
+          ],
+          "asset": "AAX4-DSTDVL1C-frame041.rgba",
+          "sha256": "d7b4069babbe8736722f48a5c132f4ae6cbebcb40cfe56d4618b9256c95c52d1",
+          "bytes": 291456,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 12,
+            "left_native_frame": 3,
+            "right_native_frame": 4
+          },
+          "timeline_active_fade_phase": 25,
+          "timeline_active_fade_weight": 0.8017492294311523,
+          "review_source_asset": "AAX4-DSTDVL1C-frame021.rgba"
+        },
+        {
+          "frame": 42,
+          "logical_size_x1": [
+            75,
+            72
+          ],
+          "physical_size_x4": [
+            300,
+            288
+          ],
+          "centre_x1": [
+            12,
+            51
+          ],
+          "asset": "AAX4-DSTDVL1C-frame042.rgba",
+          "sha256": "66c441e68eaf963052bd8e93e2e53cd9a1114c93bef8435e46b6919ee6036572",
+          "bytes": 345600,
+          "timeline_active_fade_phase": 26,
+          "timeline_active_fade_weight": 0.9446064233779907,
+          "review_source_asset": "AAX4-DSTDVL1C-frame004.rgba"
+        },
+        {
+          "frame": 43,
+          "logical_size_x1": [
+            94,
+            75
+          ],
+          "physical_size_x4": [
+            376,
+            300
+          ],
+          "centre_x1": [
+            -26,
+            71
+          ],
+          "asset": "AAX4-DSTDVL1C-frame043.rgba",
+          "sha256": "9ce6f1dbf979aef5483a87d2c14ae9d09ec0f221c773b29567a393267e59920e",
+          "bytes": 451200,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 23,
+            "left_native_frame": 14,
+            "right_native_frame": 15
+          },
+          "timeline_active_fade_phase": 47,
+          "timeline_active_fade_weight": 0.9446064233779907,
+          "review_source_asset": "AAX4-DSTDVL1C-frame032.rgba"
+        },
+        {
+          "frame": 44,
+          "logical_size_x1": [
+            87,
+            60
+          ],
+          "physical_size_x4": [
+            348,
+            240
+          ],
+          "centre_x1": [
+            -33,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1C-frame044.rgba",
+          "sha256": "2ecdb68c9ba06b90ec071a8744f7ca560f069082f31907cdb62674c954cb6a8d",
+          "bytes": 334080,
+          "timeline_active_fade_phase": 48,
+          "timeline_active_fade_weight": 0.8017492294311523,
+          "review_source_asset": "AAX4-DSTDVL1C-frame015.rgba"
+        },
+        {
+          "frame": 45,
+          "logical_size_x1": [
+            87,
+            60
+          ],
+          "physical_size_x4": [
+            348,
+            240
+          ],
+          "centre_x1": [
+            -33,
+            67
+          ],
+          "asset": "AAX4-DSTDVL1C-frame045.rgba",
+          "sha256": "b17ea920cafacc0dfe40c196e65c618a31738eba9362f6af92bcec17890c8192",
+          "bytes": 334080,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 24,
+            "left_native_frame": 15,
+            "right_native_frame": 16
+          },
+          "timeline_active_fade_phase": 49,
+          "timeline_active_fade_weight": 0.6064140200614929,
+          "review_source_asset": "AAX4-DSTDVL1C-frame033.rgba"
+        },
+        {
+          "frame": 46,
+          "logical_size_x1": [
+            79,
+            55
+          ],
+          "physical_size_x4": [
+            316,
+            220
+          ],
+          "centre_x1": [
+            -36,
+            65
+          ],
+          "asset": "AAX4-DSTDVL1C-frame046.rgba",
+          "sha256": "850b8a31d2c718389076d5380de1dc6f8dd26e3f859c914411317e759a722df3",
+          "bytes": 278080,
+          "timeline_active_fade_phase": 50,
+          "timeline_active_fade_weight": 0.39358600974082947,
+          "review_source_asset": "AAX4-DSTDVL1C-frame016.rgba"
+        },
+        {
+          "frame": 47,
+          "logical_size_x1": [
+            79,
+            55
+          ],
+          "physical_size_x4": [
+            316,
+            220
+          ],
+          "centre_x1": [
+            -36,
+            65
+          ],
+          "asset": "AAX4-DSTDVL1C-frame047.rgba",
+          "sha256": "173927694851c14f489d6098c098bb5f1daf422fa745350546313892fec32bcd",
+          "bytes": 278080,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 25,
+            "left_native_frame": 16,
+            "right_native_frame": 17
+          },
+          "timeline_active_fade_phase": 51,
+          "timeline_active_fade_weight": 0.19825074076652527,
+          "review_source_asset": "AAX4-DSTDVL1C-frame034.rgba"
+        },
+        {
+          "frame": 48,
+          "logical_size_x1": [
+            59,
+            57
+          ],
+          "physical_size_x4": [
+            236,
+            228
+          ],
+          "centre_x1": [
+            -39,
+            68
+          ],
+          "asset": "AAX4-DSTDVL1C-frame048.rgba",
+          "sha256": "91e86b965ae024b1074f8d30cabb0e3cb7770316b6d6cff145a19c9be4ea4c2c",
+          "bytes": 215232,
+          "timeline_active_fade_phase": 52,
+          "timeline_active_fade_weight": 0.05539358779788017,
+          "review_source_asset": "AAX4-DSTDVL1C-frame017.rgba"
+        },
+        {
+          "frame": 49,
+          "logical_size_x1": [
+            55,
+            53
+          ],
+          "physical_size_x4": [
+            220,
+            212
+          ],
+          "centre_x1": [
+            -41,
+            66
+          ],
+          "asset": "AAX4-DSTDVL1C-frame049.rgba",
+          "sha256": "541f33a43c35507f33291e564e6179fc7b81bef740cc17ccc246d8f1f6fb824c",
+          "bytes": 186560,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 26,
+            "left_native_frame": 17,
+            "right_native_frame": 0
+          },
+          "timeline_active_fade_phase": 53,
+          "timeline_active_fade_weight": 0.0,
+          "review_source_asset": "AAX4-DSTDVL1C-frame035.rgba"
+        }
+      ],
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_frame_indices": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "timeline_frame_indices": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            18,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            22,
+            5,
+            23,
+            6,
+            24,
+            7,
+            25,
+            8,
+            26,
+            9,
+            27,
+            10,
+            28,
+            11,
+            29,
+            12,
+            30,
+            13,
+            31,
+            14,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "assets": [
+        {
+          "name": "AAX4-DSTDVL1C-frame000.rgba",
+          "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+          "bytes": 64
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame001.rgba",
+          "sha256": "0e72d91f8f16edf5a02d90ca52f7667a61cb8614277e8a87a116edd3110b0fff",
+          "bytes": 156416
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame002.rgba",
+          "sha256": "566e5007a0218c4551fd6b9dce74f6e92b0b1e4014a273b21dc04634cfc474f4",
+          "bytes": 218880
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame003.rgba",
+          "sha256": "d64f7f93305a3318f7a8ab13400ac72d9ac42ac813b60ebbe12fcfeb397be068",
+          "bytes": 291456
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame004.rgba",
+          "sha256": "c46668fd49cb0a45a076262e0d95bbf994d3de6257adf7c829f8a2310eacf11d",
+          "bytes": 345600
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame005.rgba",
+          "sha256": "bb1becc76a484c086c872f4b7aab7f1f68c2f80659a2af5185d55b64dd26f074",
+          "bytes": 388352
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame006.rgba",
+          "sha256": "2435cae43aa42b012296196d605c819a07aaa31542aeb665ed2aa4e170016a86",
+          "bytes": 428736
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame007.rgba",
+          "sha256": "86d82309bfe9fcf1a0bc829449cf4e8c1d272221790c22d60a8477c98f4d5b2a",
+          "bytes": 478016
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame008.rgba",
+          "sha256": "d01005ae333a927039eb4eed1dcf8384f571345d31c1c8fb7af4a653106d05ae",
+          "bytes": 566784
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame009.rgba",
+          "sha256": "188e07e4d0b57b8ab1a9c06c6b34ff5d0a9cb5891a6a92ab871cb52531149502",
+          "bytes": 584064
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame010.rgba",
+          "sha256": "266a0a5e7bb43883025792344865d60a7f70ba523e45aabb2d718d54fc4b653d",
+          "bytes": 561536
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame011.rgba",
+          "sha256": "dcac05962c97b1b33e39e7aafb64fb2959f6a3f42d101264e933b93fde4d7f9f",
+          "bytes": 544320
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame012.rgba",
+          "sha256": "b88e7272400beff6b496a8ade14471770259ca0e1470a14f546299979db9a5ab",
+          "bytes": 523584
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame013.rgba",
+          "sha256": "8695afca00056c93231c3d94ba95f021d3be2f99f00ee0a11775cec53d2c9168",
+          "bytes": 506880
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame014.rgba",
+          "sha256": "06508e1fa94a1add2703d32b5c9c898f2402259ec2c1a8f79f9a26aae5214d3d",
+          "bytes": 451200
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame015.rgba",
+          "sha256": "665701b86bbfe83913c1d6530dc3575f04c4bdc79f287d04cb50f5983c65dbc5",
+          "bytes": 334080
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame016.rgba",
+          "sha256": "c56387c4771544872ae56df77afb8e867066ecc5350610dfc18c534999801699",
+          "bytes": 278080
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame017.rgba",
+          "sha256": "c802c6779299ba1c3aa86b39728d40fbd9fcea07376907467bf8452b5c2e7b34",
+          "bytes": 215232
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame018.rgba",
+          "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+          "bytes": 64
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame019.rgba",
+          "sha256": "5d5a68fc10785c9615e8c27252f789b37e3421a4b24510e768f0ee7753d887e2",
+          "bytes": 156416
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame020.rgba",
+          "sha256": "53d1392e89a1fa927cc03a69b4a0c8b002bf617d24f6a0fc34b3b847e1df9a55",
+          "bytes": 218880
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame021.rgba",
+          "sha256": "4b2e7ce7606f50bd6288ca5efa2af950379d41c57c0c62248f38c4895826af7e",
+          "bytes": 291456
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame022.rgba",
+          "sha256": "bec2ed7ef9a7d8005eabaf1d56aebbaf0b698b89119dc424a2e4c9d73711e686",
+          "bytes": 345600
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame023.rgba",
+          "sha256": "68274db532cd17b760d5d174823947ed1659fc822e7db3547b64f99fb5e0e0fe",
+          "bytes": 388352
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame024.rgba",
+          "sha256": "e01157a0c2504d3f06ebe69b550bb3ceea74e570ddf9b671e6a5e6dee6d6a343",
+          "bytes": 428736
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame025.rgba",
+          "sha256": "80062ed522bcdc50fdc8a420780a066b2f0dcc71dd7f1044e4c5cd46d755cbc9",
+          "bytes": 478016
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame026.rgba",
+          "sha256": "dfbe990282fd1732597a89fe9f01ef5ac2a9c8e91890b4cc30dc66d312e15984",
+          "bytes": 566784
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame027.rgba",
+          "sha256": "8d5916bf86e3d87b9720a903dca8519305115ebc3f8e14681ec640a67fbbcafc",
+          "bytes": 584064
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame028.rgba",
+          "sha256": "519fcca9b95f5cccb06f83fa53d7346a7fa19d03373ef9edc7d8f03f151639e8",
+          "bytes": 561536
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame029.rgba",
+          "sha256": "518bf37f5810a59779ea6cf581f29508ec583cc51051c4fafd5d98f53052d540",
+          "bytes": 544320
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame030.rgba",
+          "sha256": "a65772100cf5c5102f76fdd2b1fb3655b6f5fb2287f44ecfac31fb6320054c31",
+          "bytes": 523584
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame031.rgba",
+          "sha256": "d431881768b32ed00bcd3707134b2cecd5e61d3cc0e794b5e39876ac71494e60",
+          "bytes": 506880
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame032.rgba",
+          "sha256": "184d322d4912408322f448a6d24be7f6c5ed232999bb03e4aac7af572c070089",
+          "bytes": 451200
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame033.rgba",
+          "sha256": "1e90d510c8bd3a1fa9678523dbfb57bd117406e9468b5009197bb1e0dadd2259",
+          "bytes": 334080
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame034.rgba",
+          "sha256": "db67ef3e6a2e7e78fbe4d167fa89ed832a9d8eccfe63d8ccbc6c36d181a59aad",
+          "bytes": 278080
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame035.rgba",
+          "sha256": "db2ce546f1478727952d05b111bdfda66161271e86c536c7a6b1b6e29c9db89f",
+          "bytes": 215232
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame036.rgba",
+          "sha256": "8675651898d77ef1cbe478e28b4ef7e367fabcdd4e667f536d1a1a0ab6b7c2f2",
+          "bytes": 132096
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame037.rgba",
+          "sha256": "ff8e2e4a52617e4be28e30aea26a403a36a78d516da4a37fabb41f1879881b1e",
+          "bytes": 156416
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame038.rgba",
+          "sha256": "693ebbf7595f7f583589263b7aef44f9d2b6e5e7b7f1897beb0110a2b4cfae8e",
+          "bytes": 218880
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame039.rgba",
+          "sha256": "52adc7f37843aa9e77551ace184ec458345ef1aba5c349c4e97641ae9458a297",
+          "bytes": 218880
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame040.rgba",
+          "sha256": "27e9d57d150b579fdc373ef747fc6a3c2036affcb4f8c8edf54e515311e927d5",
+          "bytes": 291456
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame041.rgba",
+          "sha256": "d7b4069babbe8736722f48a5c132f4ae6cbebcb40cfe56d4618b9256c95c52d1",
+          "bytes": 291456
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame042.rgba",
+          "sha256": "66c441e68eaf963052bd8e93e2e53cd9a1114c93bef8435e46b6919ee6036572",
+          "bytes": 345600
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame043.rgba",
+          "sha256": "9ce6f1dbf979aef5483a87d2c14ae9d09ec0f221c773b29567a393267e59920e",
+          "bytes": 451200
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame044.rgba",
+          "sha256": "2ecdb68c9ba06b90ec071a8744f7ca560f069082f31907cdb62674c954cb6a8d",
+          "bytes": 334080
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame045.rgba",
+          "sha256": "b17ea920cafacc0dfe40c196e65c618a31738eba9362f6af92bcec17890c8192",
+          "bytes": 334080
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame046.rgba",
+          "sha256": "850b8a31d2c718389076d5380de1dc6f8dd26e3f859c914411317e759a722df3",
+          "bytes": 278080
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame047.rgba",
+          "sha256": "173927694851c14f489d6098c098bb5f1daf422fa745350546313892fec32bcd",
+          "bytes": 278080
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame048.rgba",
+          "sha256": "91e86b965ae024b1074f8d30cabb0e3cb7770316b6d6cff145a19c9be4ea4c2c",
+          "bytes": 215232
+        },
+        {
+          "name": "AAX4-DSTDVL1C-frame049.rgba",
+          "sha256": "541f33a43c35507f33291e564e6179fc7b81bef740cc17ccc246d8f1f6fb824c",
+          "bytes": 186560
+        }
+      ],
+      "playback_mode": "TimedTimeline",
+      "native_fps": {
+        "numerator": 15,
+        "denominator": 1
+      },
+      "target_fps": {
+        "numerator": 30,
+        "denominator": 1
+      },
+      "variant_index": 0
+    },
+    {
+      "resref": "FLIESL",
+      "frame_count": 18,
+      "cycle_count": 1,
+      "geometry_mode": "uniform",
+      "frames": [
+        {
+          "frame": 0,
+          "logical_size_x1": [
+            64,
+            64
+          ],
+          "physical_size_x4": [
+            256,
+            256
+          ],
+          "centre_x1": [
+            32,
+            55
+          ],
+          "asset": "AAX4-FLIESL-frame000.rgba",
+          "sha256": "fb9945488a47423d40526a56f6c8df73b88ee8ab8c1bd0d79337db25a06441ae",
+          "bytes": 262144
+        },
+        {
+          "frame": 1,
+          "logical_size_x1": [
+            64,
+            64
+          ],
+          "physical_size_x4": [
+            256,
+            256
+          ],
+          "centre_x1": [
+            32,
+            55
+          ],
+          "asset": "AAX4-FLIESL-frame001.rgba",
+          "sha256": "fb76a200d7276a62a03dfd126e8fafe1fc10119d097e1a9f4543b5a8f456300d",
+          "bytes": 262144
+        },
+        {
+          "frame": 2,
+          "logical_size_x1": [
+            64,
+            64
+          ],
+          "physical_size_x4": [
+            256,
+            256
+          ],
+          "centre_x1": [
+            32,
+            55
+          ],
+          "asset": "AAX4-FLIESL-frame002.rgba",
+          "sha256": "52007565118f0b26aca0df145a4a095e327b641d308fe4f088df5a342b5dbc14",
+          "bytes": 262144
+        },
+        {
+          "frame": 3,
+          "logical_size_x1": [
+            64,
+            64
+          ],
+          "physical_size_x4": [
+            256,
+            256
+          ],
+          "centre_x1": [
+            32,
+            55
+          ],
+          "asset": "AAX4-FLIESL-frame003.rgba",
+          "sha256": "d08fc80e76204d435f30ae8961a7c9cdfa15753951f9ae6ccf96d0090721bee4",
+          "bytes": 262144
+        },
+        {
+          "frame": 4,
+          "logical_size_x1": [
+            64,
+            64
+          ],
+          "physical_size_x4": [
+            256,
+            256
+          ],
+          "centre_x1": [
+            32,
+            55
+          ],
+          "asset": "AAX4-FLIESL-frame004.rgba",
+          "sha256": "76a9cb6473b4d4867301a955350734c68394b414e6370e1969f81793ec0bc336",
+          "bytes": 262144
+        },
+        {
+          "frame": 5,
+          "logical_size_x1": [
+            64,
+            64
+          ],
+          "physical_size_x4": [
+            256,
+            256
+          ],
+          "centre_x1": [
+            32,
+            55
+          ],
+          "asset": "AAX4-FLIESL-frame005.rgba",
+          "sha256": "57f5f8d56ebbf58dde8b5e18590cacc3d6a9290c891d680f16e0b91eeece5b2b",
+          "bytes": 262144
+        },
+        {
+          "frame": 6,
+          "logical_size_x1": [
+            64,
+            64
+          ],
+          "physical_size_x4": [
+            256,
+            256
+          ],
+          "centre_x1": [
+            32,
+            55
+          ],
+          "asset": "AAX4-FLIESL-frame006.rgba",
+          "sha256": "ffda278a8661e53800f63561b3350a9504fab7cbfd3cda07c7da68c74adfe4b9",
+          "bytes": 262144
+        },
+        {
+          "frame": 7,
+          "logical_size_x1": [
+            64,
+            64
+          ],
+          "physical_size_x4": [
+            256,
+            256
+          ],
+          "centre_x1": [
+            32,
+            55
+          ],
+          "asset": "AAX4-FLIESL-frame007.rgba",
+          "sha256": "1b1691df226cb6a303593f81e5ad39ad1008ee26c1b4d7f8804b81143208fbcf",
+          "bytes": 262144
+        },
+        {
+          "frame": 8,
+          "logical_size_x1": [
+            64,
+            64
+          ],
+          "physical_size_x4": [
+            256,
+            256
+          ],
+          "centre_x1": [
+            32,
+            55
+          ],
+          "asset": "AAX4-FLIESL-frame008.rgba",
+          "sha256": "777e51366e367e5c7127ae43e543d5c8e7fdb412e8dc1f2acd52327d95918885",
+          "bytes": 262144
+        },
+        {
+          "frame": 9,
+          "logical_size_x1": [
+            64,
+            64
+          ],
+          "physical_size_x4": [
+            256,
+            256
+          ],
+          "centre_x1": [
+            32,
+            55
+          ],
+          "asset": "AAX4-FLIESL-frame009.rgba",
+          "sha256": "5300f807e1fee0ebe4c37649f32c68765e610fba2c801bd603c08349b2c052ea",
+          "bytes": 262144
+        },
+        {
+          "frame": 10,
+          "logical_size_x1": [
+            64,
+            64
+          ],
+          "physical_size_x4": [
+            256,
+            256
+          ],
+          "centre_x1": [
+            32,
+            55
+          ],
+          "asset": "AAX4-FLIESL-frame010.rgba",
+          "sha256": "cb64e4e998fb82a02289ae9acd7f37d2908d6411e95f016d78ea0d04844bf88b",
+          "bytes": 262144
+        },
+        {
+          "frame": 11,
+          "logical_size_x1": [
+            64,
+            64
+          ],
+          "physical_size_x4": [
+            256,
+            256
+          ],
+          "centre_x1": [
+            32,
+            55
+          ],
+          "asset": "AAX4-FLIESL-frame011.rgba",
+          "sha256": "17c7b6bcfc8fb551c85661591e817c9e109f6b33ae27303ad74197cd1fb3879f",
+          "bytes": 262144
+        },
+        {
+          "frame": 12,
+          "logical_size_x1": [
+            64,
+            64
+          ],
+          "physical_size_x4": [
+            256,
+            256
+          ],
+          "centre_x1": [
+            32,
+            55
+          ],
+          "asset": "AAX4-FLIESL-frame012.rgba",
+          "sha256": "fb8cff9073bdc9ff577f88ac11493a5d84ca9cd19cc6177506944f40e484c857",
+          "bytes": 262144
+        },
+        {
+          "frame": 13,
+          "logical_size_x1": [
+            64,
+            64
+          ],
+          "physical_size_x4": [
+            256,
+            256
+          ],
+          "centre_x1": [
+            32,
+            55
+          ],
+          "asset": "AAX4-FLIESL-frame013.rgba",
+          "sha256": "27d164a668d9b88015b14118b5e9fe36fe252cef5b1abb846f4d5cd4dac0e995",
+          "bytes": 262144
+        },
+        {
+          "frame": 14,
+          "logical_size_x1": [
+            64,
+            64
+          ],
+          "physical_size_x4": [
+            256,
+            256
+          ],
+          "centre_x1": [
+            32,
+            55
+          ],
+          "asset": "AAX4-FLIESL-frame014.rgba",
+          "sha256": "8f3edb8cb783d0806ea1b374bf0fd479e7f7a1eaf857672ed1a371cfd6e54b29",
+          "bytes": 262144
+        },
+        {
+          "frame": 15,
+          "logical_size_x1": [
+            64,
+            64
+          ],
+          "physical_size_x4": [
+            256,
+            256
+          ],
+          "centre_x1": [
+            32,
+            55
+          ],
+          "asset": "AAX4-FLIESL-frame015.rgba",
+          "sha256": "f6a24e1e078db731c6ae9340a69226ffc198aec519da1c7c631b2c6343ad2013",
+          "bytes": 262144
+        },
+        {
+          "frame": 16,
+          "logical_size_x1": [
+            64,
+            64
+          ],
+          "physical_size_x4": [
+            256,
+            256
+          ],
+          "centre_x1": [
+            32,
+            55
+          ],
+          "asset": "AAX4-FLIESL-frame016.rgba",
+          "sha256": "28e7583b83e624f640cce7cf418287fcef91c6e7575d26e6edfb4031ac069f37",
+          "bytes": 262144
+        },
+        {
+          "frame": 17,
+          "logical_size_x1": [
+            64,
+            64
+          ],
+          "physical_size_x4": [
+            256,
+            256
+          ],
+          "centre_x1": [
+            32,
+            55
+          ],
+          "asset": "AAX4-FLIESL-frame017.rgba",
+          "sha256": "d3c66853b7eb9002ad6b056c28dc8b0de6b4f55fbfdc539472bb60c9c4079f41",
+          "bytes": 262144
+        }
+      ],
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ],
+          "timeline_frame_indices": []
+        }
+      ],
+      "assets": [
+        {
+          "name": "AAX4-FLIESL-frame000.rgba",
+          "sha256": "fb9945488a47423d40526a56f6c8df73b88ee8ab8c1bd0d79337db25a06441ae",
+          "bytes": 262144
+        },
+        {
+          "name": "AAX4-FLIESL-frame001.rgba",
+          "sha256": "fb76a200d7276a62a03dfd126e8fafe1fc10119d097e1a9f4543b5a8f456300d",
+          "bytes": 262144
+        },
+        {
+          "name": "AAX4-FLIESL-frame002.rgba",
+          "sha256": "52007565118f0b26aca0df145a4a095e327b641d308fe4f088df5a342b5dbc14",
+          "bytes": 262144
+        },
+        {
+          "name": "AAX4-FLIESL-frame003.rgba",
+          "sha256": "d08fc80e76204d435f30ae8961a7c9cdfa15753951f9ae6ccf96d0090721bee4",
+          "bytes": 262144
+        },
+        {
+          "name": "AAX4-FLIESL-frame004.rgba",
+          "sha256": "76a9cb6473b4d4867301a955350734c68394b414e6370e1969f81793ec0bc336",
+          "bytes": 262144
+        },
+        {
+          "name": "AAX4-FLIESL-frame005.rgba",
+          "sha256": "57f5f8d56ebbf58dde8b5e18590cacc3d6a9290c891d680f16e0b91eeece5b2b",
+          "bytes": 262144
+        },
+        {
+          "name": "AAX4-FLIESL-frame006.rgba",
+          "sha256": "ffda278a8661e53800f63561b3350a9504fab7cbfd3cda07c7da68c74adfe4b9",
+          "bytes": 262144
+        },
+        {
+          "name": "AAX4-FLIESL-frame007.rgba",
+          "sha256": "1b1691df226cb6a303593f81e5ad39ad1008ee26c1b4d7f8804b81143208fbcf",
+          "bytes": 262144
+        },
+        {
+          "name": "AAX4-FLIESL-frame008.rgba",
+          "sha256": "777e51366e367e5c7127ae43e543d5c8e7fdb412e8dc1f2acd52327d95918885",
+          "bytes": 262144
+        },
+        {
+          "name": "AAX4-FLIESL-frame009.rgba",
+          "sha256": "5300f807e1fee0ebe4c37649f32c68765e610fba2c801bd603c08349b2c052ea",
+          "bytes": 262144
+        },
+        {
+          "name": "AAX4-FLIESL-frame010.rgba",
+          "sha256": "cb64e4e998fb82a02289ae9acd7f37d2908d6411e95f016d78ea0d04844bf88b",
+          "bytes": 262144
+        },
+        {
+          "name": "AAX4-FLIESL-frame011.rgba",
+          "sha256": "17c7b6bcfc8fb551c85661591e817c9e109f6b33ae27303ad74197cd1fb3879f",
+          "bytes": 262144
+        },
+        {
+          "name": "AAX4-FLIESL-frame012.rgba",
+          "sha256": "fb8cff9073bdc9ff577f88ac11493a5d84ca9cd19cc6177506944f40e484c857",
+          "bytes": 262144
+        },
+        {
+          "name": "AAX4-FLIESL-frame013.rgba",
+          "sha256": "27d164a668d9b88015b14118b5e9fe36fe252cef5b1abb846f4d5cd4dac0e995",
+          "bytes": 262144
+        },
+        {
+          "name": "AAX4-FLIESL-frame014.rgba",
+          "sha256": "8f3edb8cb783d0806ea1b374bf0fd479e7f7a1eaf857672ed1a371cfd6e54b29",
+          "bytes": 262144
+        },
+        {
+          "name": "AAX4-FLIESL-frame015.rgba",
+          "sha256": "f6a24e1e078db731c6ae9340a69226ffc198aec519da1c7c631b2c6343ad2013",
+          "bytes": 262144
+        },
+        {
+          "name": "AAX4-FLIESL-frame016.rgba",
+          "sha256": "28e7583b83e624f640cce7cf418287fcef91c6e7575d26e6edfb4031ac069f37",
+          "bytes": 262144
+        },
+        {
+          "name": "AAX4-FLIESL-frame017.rgba",
+          "sha256": "d3c66853b7eb9002ad6b056c28dc8b0de6b4f55fbfdc539472bb60c9c4079f41",
+          "bytes": 262144
+        }
+      ],
+      "playback_mode": "Native",
+      "native_fps": {
+        "numerator": 0,
+        "denominator": 0
+      },
+      "target_fps": {
+        "numerator": 0,
+        "denominator": 0
+      },
+      "variant_index": 0
+    },
+    {
+      "resref": "FLIESS",
+      "frame_count": 18,
+      "cycle_count": 1,
+      "geometry_mode": "per-frame",
+      "frames": [
+        {
+          "frame": 0,
+          "logical_size_x1": [
+            7,
+            9
+          ],
+          "physical_size_x4": [
+            28,
+            36
+          ],
+          "centre_x1": [
+            3,
+            9
+          ],
+          "asset": "AAX4-FLIESS-frame000.rgba",
+          "sha256": "d28adf40da6ae91a155d24e8f0254bfb4f7fa9746a2ba0a6a70f3e63364e310a",
+          "bytes": 4032
+        },
+        {
+          "frame": 1,
+          "logical_size_x1": [
+            8,
+            8
+          ],
+          "physical_size_x4": [
+            32,
+            32
+          ],
+          "centre_x1": [
+            3,
+            10
+          ],
+          "asset": "AAX4-FLIESS-frame001.rgba",
+          "sha256": "d786840d5764ebcd66ff125ed61d0a4fd55d74d39e61dd80d9042af55f18a817",
+          "bytes": 4096
+        },
+        {
+          "frame": 2,
+          "logical_size_x1": [
+            7,
+            8
+          ],
+          "physical_size_x4": [
+            28,
+            32
+          ],
+          "centre_x1": [
+            1,
+            12
+          ],
+          "asset": "AAX4-FLIESS-frame002.rgba",
+          "sha256": "5f5d398665ae56f6edc344f22e5ed379925df88714e4200c57c7ad60059a93f5",
+          "bytes": 3584
+        },
+        {
+          "frame": 3,
+          "logical_size_x1": [
+            5,
+            6
+          ],
+          "physical_size_x4": [
+            20,
+            24
+          ],
+          "centre_x1": [
+            -1,
+            13
+          ],
+          "asset": "AAX4-FLIESS-frame003.rgba",
+          "sha256": "4b9e8d933c957f8dfaad9fbcd32138c9cd0e7ae317a6ee759e4f97a256a11f9b",
+          "bytes": 1920
+        },
+        {
+          "frame": 4,
+          "logical_size_x1": [
+            6,
+            7
+          ],
+          "physical_size_x4": [
+            24,
+            28
+          ],
+          "centre_x1": [
+            0,
+            13
+          ],
+          "asset": "AAX4-FLIESS-frame004.rgba",
+          "sha256": "cc38f1f22916163031c9275969f38771e5c88fe582e1b4367dc94e6d5d7161ed",
+          "bytes": 2688
+        },
+        {
+          "frame": 5,
+          "logical_size_x1": [
+            6,
+            7
+          ],
+          "physical_size_x4": [
+            24,
+            28
+          ],
+          "centre_x1": [
+            1,
+            12
+          ],
+          "asset": "AAX4-FLIESS-frame005.rgba",
+          "sha256": "a5f72afa30312382e5b8075305e60f30420563b74b48232eff37b6e0578857f1",
+          "bytes": 2688
+        },
+        {
+          "frame": 6,
+          "logical_size_x1": [
+            9,
+            10
+          ],
+          "physical_size_x4": [
+            36,
+            40
+          ],
+          "centre_x1": [
+            2,
+            13
+          ],
+          "asset": "AAX4-FLIESS-frame006.rgba",
+          "sha256": "75e566092d4b9a5d160305efc787a55c5b119cff429a62524e6b9e376df7ee25",
+          "bytes": 5760
+        },
+        {
+          "frame": 7,
+          "logical_size_x1": [
+            11,
+            12
+          ],
+          "physical_size_x4": [
+            44,
+            48
+          ],
+          "centre_x1": [
+            3,
+            14
+          ],
+          "asset": "AAX4-FLIESS-frame007.rgba",
+          "sha256": "771bd4ff6c918020cd9433b3131f3e6a8f8c8e29ce924fcd54c195dabee978ad",
+          "bytes": 8448
+        },
+        {
+          "frame": 8,
+          "logical_size_x1": [
+            12,
+            13
+          ],
+          "physical_size_x4": [
+            48,
+            52
+          ],
+          "centre_x1": [
+            4,
+            15
+          ],
+          "asset": "AAX4-FLIESS-frame008.rgba",
+          "sha256": "72d2b1e989dd75dd7c2e754f3c8ef8cd09a39b2897d512cba9d63fbf3b7d6bd5",
+          "bytes": 9984
+        },
+        {
+          "frame": 9,
+          "logical_size_x1": [
+            12,
+            9
+          ],
+          "physical_size_x4": [
+            48,
+            36
+          ],
+          "centre_x1": [
+            5,
+            14
+          ],
+          "asset": "AAX4-FLIESS-frame009.rgba",
+          "sha256": "f245446a91a624c41a0e4a053899f764e0130f772f4558c55907806e44388628",
+          "bytes": 6912
+        },
+        {
+          "frame": 10,
+          "logical_size_x1": [
+            11,
+            10
+          ],
+          "physical_size_x4": [
+            44,
+            40
+          ],
+          "centre_x1": [
+            5,
+            13
+          ],
+          "asset": "AAX4-FLIESS-frame010.rgba",
+          "sha256": "9143ed152b60f2dbf44f212729bfb97bb86c471fa751b20a7cf561fa37478b62",
+          "bytes": 7040
+        },
+        {
+          "frame": 11,
+          "logical_size_x1": [
+            10,
+            10
+          ],
+          "physical_size_x4": [
+            40,
+            40
+          ],
+          "centre_x1": [
+            5,
+            11
+          ],
+          "asset": "AAX4-FLIESS-frame011.rgba",
+          "sha256": "d2242732d53c170ff3f69858c683c86b87791cae5119d26f5ea1d9acf9161421",
+          "bytes": 6400
+        },
+        {
+          "frame": 12,
+          "logical_size_x1": [
+            8,
+            10
+          ],
+          "physical_size_x4": [
+            32,
+            40
+          ],
+          "centre_x1": [
+            4,
+            9
+          ],
+          "asset": "AAX4-FLIESS-frame012.rgba",
+          "sha256": "c90d1085124ec0ba8f29adaac9583ce6562849818adcd966c039e770808c2a20",
+          "bytes": 5120
+        },
+        {
+          "frame": 13,
+          "logical_size_x1": [
+            5,
+            8
+          ],
+          "physical_size_x4": [
+            20,
+            32
+          ],
+          "centre_x1": [
+            3,
+            6
+          ],
+          "asset": "AAX4-FLIESS-frame013.rgba",
+          "sha256": "7926c8b5a21b6facbe4b3c3f7b0f4b62356c56ef676db1dec90bd2aada5f3640",
+          "bytes": 2560
+        },
+        {
+          "frame": 14,
+          "logical_size_x1": [
+            3,
+            6
+          ],
+          "physical_size_x4": [
+            12,
+            24
+          ],
+          "centre_x1": [
+            2,
+            4
+          ],
+          "asset": "AAX4-FLIESS-frame014.rgba",
+          "sha256": "dd1c385afbc94bd2f5c4f2458ab877c1319cf316747e562a6e7de69d5849b19e",
+          "bytes": 1152
+        },
+        {
+          "frame": 15,
+          "logical_size_x1": [
+            3,
+            5
+          ],
+          "physical_size_x4": [
+            12,
+            20
+          ],
+          "centre_x1": [
+            2,
+            6
+          ],
+          "asset": "AAX4-FLIESS-frame015.rgba",
+          "sha256": "1697b5339b68cda5d3e39c4aaf30aa655456de7c1e68e062c7e67b3028f9f34e",
+          "bytes": 960
+        },
+        {
+          "frame": 16,
+          "logical_size_x1": [
+            5,
+            8
+          ],
+          "physical_size_x4": [
+            20,
+            32
+          ],
+          "centre_x1": [
+            3,
+            7
+          ],
+          "asset": "AAX4-FLIESS-frame016.rgba",
+          "sha256": "a69b07805ee64d29d174d3526f687a14e68d17d08d6eeac801297822817c57d3",
+          "bytes": 2560
+        },
+        {
+          "frame": 17,
+          "logical_size_x1": [
+            9,
+            6
+          ],
+          "physical_size_x4": [
+            36,
+            24
+          ],
+          "centre_x1": [
+            -2,
+            1
+          ],
+          "asset": "AAX4-FLIESS-frame017.rgba",
+          "sha256": "ca1399ebd603316aeb175ac6b72cd37ab613d91167109e041bfee6ee01c9e533",
+          "bytes": 3456
+        }
+      ],
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ],
+          "timeline_frame_indices": []
+        }
+      ],
+      "assets": [
+        {
+          "name": "AAX4-FLIESS-frame000.rgba",
+          "sha256": "d28adf40da6ae91a155d24e8f0254bfb4f7fa9746a2ba0a6a70f3e63364e310a",
+          "bytes": 4032
+        },
+        {
+          "name": "AAX4-FLIESS-frame001.rgba",
+          "sha256": "d786840d5764ebcd66ff125ed61d0a4fd55d74d39e61dd80d9042af55f18a817",
+          "bytes": 4096
+        },
+        {
+          "name": "AAX4-FLIESS-frame002.rgba",
+          "sha256": "5f5d398665ae56f6edc344f22e5ed379925df88714e4200c57c7ad60059a93f5",
+          "bytes": 3584
+        },
+        {
+          "name": "AAX4-FLIESS-frame003.rgba",
+          "sha256": "4b9e8d933c957f8dfaad9fbcd32138c9cd0e7ae317a6ee759e4f97a256a11f9b",
+          "bytes": 1920
+        },
+        {
+          "name": "AAX4-FLIESS-frame004.rgba",
+          "sha256": "cc38f1f22916163031c9275969f38771e5c88fe582e1b4367dc94e6d5d7161ed",
+          "bytes": 2688
+        },
+        {
+          "name": "AAX4-FLIESS-frame005.rgba",
+          "sha256": "a5f72afa30312382e5b8075305e60f30420563b74b48232eff37b6e0578857f1",
+          "bytes": 2688
+        },
+        {
+          "name": "AAX4-FLIESS-frame006.rgba",
+          "sha256": "75e566092d4b9a5d160305efc787a55c5b119cff429a62524e6b9e376df7ee25",
+          "bytes": 5760
+        },
+        {
+          "name": "AAX4-FLIESS-frame007.rgba",
+          "sha256": "771bd4ff6c918020cd9433b3131f3e6a8f8c8e29ce924fcd54c195dabee978ad",
+          "bytes": 8448
+        },
+        {
+          "name": "AAX4-FLIESS-frame008.rgba",
+          "sha256": "72d2b1e989dd75dd7c2e754f3c8ef8cd09a39b2897d512cba9d63fbf3b7d6bd5",
+          "bytes": 9984
+        },
+        {
+          "name": "AAX4-FLIESS-frame009.rgba",
+          "sha256": "f245446a91a624c41a0e4a053899f764e0130f772f4558c55907806e44388628",
+          "bytes": 6912
+        },
+        {
+          "name": "AAX4-FLIESS-frame010.rgba",
+          "sha256": "9143ed152b60f2dbf44f212729bfb97bb86c471fa751b20a7cf561fa37478b62",
+          "bytes": 7040
+        },
+        {
+          "name": "AAX4-FLIESS-frame011.rgba",
+          "sha256": "d2242732d53c170ff3f69858c683c86b87791cae5119d26f5ea1d9acf9161421",
+          "bytes": 6400
+        },
+        {
+          "name": "AAX4-FLIESS-frame012.rgba",
+          "sha256": "c90d1085124ec0ba8f29adaac9583ce6562849818adcd966c039e770808c2a20",
+          "bytes": 5120
+        },
+        {
+          "name": "AAX4-FLIESS-frame013.rgba",
+          "sha256": "7926c8b5a21b6facbe4b3c3f7b0f4b62356c56ef676db1dec90bd2aada5f3640",
+          "bytes": 2560
+        },
+        {
+          "name": "AAX4-FLIESS-frame014.rgba",
+          "sha256": "dd1c385afbc94bd2f5c4f2458ab877c1319cf316747e562a6e7de69d5849b19e",
+          "bytes": 1152
+        },
+        {
+          "name": "AAX4-FLIESS-frame015.rgba",
+          "sha256": "1697b5339b68cda5d3e39c4aaf30aa655456de7c1e68e062c7e67b3028f9f34e",
+          "bytes": 960
+        },
+        {
+          "name": "AAX4-FLIESS-frame016.rgba",
+          "sha256": "a69b07805ee64d29d174d3526f687a14e68d17d08d6eeac801297822817c57d3",
+          "bytes": 2560
+        },
+        {
+          "name": "AAX4-FLIESS-frame017.rgba",
+          "sha256": "ca1399ebd603316aeb175ac6b72cd37ab613d91167109e041bfee6ee01c9e533",
+          "bytes": 3456
+        }
+      ],
+      "playback_mode": "Native",
+      "native_fps": {
+        "numerator": 0,
+        "denominator": 0
+      },
+      "target_fps": {
+        "numerator": 0,
+        "denominator": 0
+      },
+      "variant_index": 0
+    }
+  ]
+}

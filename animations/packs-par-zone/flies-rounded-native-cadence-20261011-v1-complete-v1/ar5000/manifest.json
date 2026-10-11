@@ -1,0 +1,42 @@
+{
+  "schema": "bg2-upscale-area-animation-pack-index-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T15:07:03.578209+00:00",
+  "merged_from": [
+    "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR5000::FIRE_1",
+    "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5000::FIRE_4",
+    "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5000::FIRE_3",
+    "animations/packs-par-zone/ar5000-am5000ab-potrace0p8fill6-apo8-x4-30fps-v2-20260923/AR5000::AM5000A",
+    "animations/packs-par-zone/ar5000-am5000ab-potrace0p8fill6-apo8-x4-30fps-v2-20260923/AR5000::AM5000B",
+    "animations/packs-par-zone/ar5000-fish3l-apo8-x4-30fps-v2-20260922/AR5000::FISH3L",
+    "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1/AR5000"
+  ],
+  "runtime_budget_bytes": 536870912,
+  "area_count": 1,
+  "largest_area_raw_bytes": 43112128,
+  "total_raw_bytes": 43112128,
+  "areas_over_budget": [],
+  "resrefs_without_area": [],
+  "areas": [
+    {
+      "area_id": "AR5000",
+      "directory": "AR5000",
+      "resrefs": [
+        "AM5000A",
+        "AM5000B",
+        "FIRE_1",
+        "FIRE_3",
+        "FIRE_4",
+        "FISH3L",
+        "FLIESL",
+        "FLIESS"
+      ],
+      "resource_count": 8,
+      "frame_count": 135,
+      "raw_bytes": 43112128,
+      "registry_sha256": "643fa4aa54769c3bb7433d5afafe98b86de8197fd41c5df3904f83df373d4e8f",
+      "manifest_sha256": "13115d260230e263b406b10f25950986c02ab836c3a208fb331801ec2b74b392",
+      "over_runtime_budget": false
+    }
+  ]
+}

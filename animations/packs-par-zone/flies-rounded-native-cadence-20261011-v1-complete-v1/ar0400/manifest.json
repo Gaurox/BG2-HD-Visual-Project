@@ -1,0 +1,34 @@
+{
+  "schema": "bg2-upscale-area-animation-pack-index-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T15:06:38.442118+00:00",
+  "merged_from": [
+    "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0400::CHIMSMK",
+    "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0400::FIRE_4",
+    "animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1/AR0400"
+  ],
+  "runtime_budget_bytes": 536870912,
+  "area_count": 1,
+  "largest_area_raw_bytes": 10913280,
+  "total_raw_bytes": 10913280,
+  "areas_over_budget": [],
+  "resrefs_without_area": [],
+  "areas": [
+    {
+      "area_id": "AR0400",
+      "directory": "AR0400",
+      "resrefs": [
+        "CHIMSMK",
+        "FIRE_4",
+        "FLIESL",
+        "FLIESS"
+      ],
+      "resource_count": 4,
+      "frame_count": 74,
+      "raw_bytes": 10913280,
+      "registry_sha256": "3b2a68685c0055606d07576c588647f59b993eadc7114591a46147b7b49f4673",
+      "manifest_sha256": "b3b6f3d41ff29e8a2c58f8d184ceffb56f791b7924e89cdb1c0084cbf23a60f7",
+      "over_runtime_budget": false
+    }
+  ]
+}
