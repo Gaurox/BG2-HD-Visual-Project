@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "OH6000",
+  "status": "accepted",
+  "decision_date": "2026-09-01",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T19:44:35Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/OH6000",
+  "pack_manifest_sha256": "68B1DFBFB10BDCE1DB662565FF00DD2F77C2B688E3B193814F3E450A8BF8C4FA",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+  "required_resrefs": [
+    "BUTRFLY"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/BUTRFLY/2026-10-11-preserved-historical-butrfly-v1.json",
+      "sha256": "50656651AB9E628345B5FCF8D0730FA1F3038357BFEEC5F93C1FD5DCA0B194A6",
+      "accepted_resrefs": [
+        "BUTRFLY"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

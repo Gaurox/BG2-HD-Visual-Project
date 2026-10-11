@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR1900",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T15:40:07Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR1900",
+  "pack_manifest_sha256": "03FFC22DF838034783269B5391AF39D24670ECAE4F69FA9201A94276B7BEC2EA",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "F42BCBE2C457D398112233B6918F08C961DF5581F059DCE10834867D990E9F48",
+  "required_resrefs": [
+    "FLIESL"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLIESL/2026-10-11-accepted-fliesl-rounded-native-cadence-v1.json",
+      "sha256": "B2B690383C47014A962DBB0C1082B69F3518A8BE8D2F450CC6B74CA4159A03B6",
+      "accepted_resrefs": [
+        "FLIESL"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

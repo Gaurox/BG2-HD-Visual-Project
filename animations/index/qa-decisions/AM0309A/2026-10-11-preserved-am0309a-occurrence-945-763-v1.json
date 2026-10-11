@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM0309A",
+  "correction_id": "ar0309-am0309a-holefill1024-animzone-mask-v1",
+  "decision": "Formalisation du contrat déjà accepté le 2026-09-21, occurrence ARE945,763 ; textures, géométrie, cadence et masque identiques. Aucune nouvelle visite ingame. Source immuable : animations/index/qa-decisions/AM0309A/2026-09-21-accepted-ar0309-am0309a-holefill1024-animzone-mask-v1-20260921.json. QA ingame validee par l'utilisateur le 2026-09-21 sur AR0309 apres deux correctifs : trous de tramage combles + masque de zone animee (plus de rectangle visible), puis pack lie a l'occurrence 945,763 pour couper le pont d'occlusion natif du polygone WED 90 (plus de zone en escalier dans le foyer).",
+  "decision_date": "2026-09-21",
+  "decision_id": "2026-10-11-preserved-am0309a-occurrence-945-763-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM0309A/runs/am0309a-acquired-occurrence-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "305EE43C831DB091963308D6FE0AD4E7B7990DF210C47E1F1D79D101ABED3143",
+    "path": "animations/ressources/AM0309A/runs/am0309a-acquired-occurrence-bound-20261011-v1",
+    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "recipe_id": "seedvr7b-apo8-30fps-holefill-animzone-mask-occurrence-bound",
+  "recorded_at_utc": "2026-10-11T21:14:14Z",
+  "resref": "AM0309A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0309",
+        "manifest_path": "animations/packs-par-zone/animations-release-20261011-v1/AR0309/manifest.json",
+        "manifest_sha256": "3F58F6EA30CF3383B935695BDD00D97A6D1907B1ADD5FFD375855EF26E957031",
+        "path": "animations/packs-par-zone/animations-release-20261011-v1/AR0309",
+        "registry_sha256": "29C9F51BB81A493EF66C9240D295722F1D7DB1D740FF2BA25D94AFB29C593972",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/animations-release-20261011-v1/manifest.json",
+    "manifest_sha256": "3E0D5E0BDFDFB9A2AE96F21268E524A29A9C2231EDD36828DD42E41EC3E66A09",
+    "path": "animations/packs-par-zone/animations-release-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0309"
+  ]
+}

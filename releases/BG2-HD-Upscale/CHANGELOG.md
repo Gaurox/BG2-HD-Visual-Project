@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.1.0-alpha.6 — validated area-animation release
+
+- Packages the complete current animation composition of 234 areas, with exact
+  runtime registries and immutable QA evidence for the 246 accepted BAM assets.
+- Includes FIRE_3 at 30 FPS with a 4 px alpha fade, the accepted AR0205 pods and
+  AR0604 fountain, restored AR3021 assets and the four AR5000 fish.
+- Freezes the accepted current renderer as alpha.9, preserving SPHINCT world
+  masks and the validated tree lighting/night corrections. Core activation now
+  writes EnableAreaAnimationX4 in the Shaders section consumed by this renderer.
+- Preserves existing QA decisions and resolves the historical alpha-catalogue
+  hash through its committed snapshot.
+- Preserves UTF-8 and UTF-16 INI encodings when activating renderer options.
+- Builds local ZIP archives without compression until project finalization.
+- Remains a local alpha: clean-game install, save and full-uninstall lifecycle
+  tests and public provenance/contact records still gate public distribution.
+
 ## 0.1.0-alpha.4 — consolidated validated asset build
 
 - Projects every approved area-animation candidate, including AR0411, AR2201,

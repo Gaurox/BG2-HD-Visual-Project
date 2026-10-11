@@ -1,0 +1,201 @@
+{
+  "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+  "status": "completed",
+  "created_utc": "2026-10-11T21:08:58.551416+00:00",
+  "scale": 4,
+  "registry_version": 3,
+  "runtime_contract": {
+    "feature": "TimedTimeline",
+    "clock": "QPC-pause-aware",
+    "registry_version": 3
+  },
+  "registry": "AreaAnimations-X4.registry",
+  "registry_sha256": "6f7da8cfc946d9c453fa891dd791418d30132fcc521002ae067a1487f853bf24",
+  "registry_bytes": 156,
+  "area_id": "OH7200",
+  "resource_count": 1,
+  "frame_count": 6,
+  "raw_bytes": 36864,
+  "runtime_budget_enforced": true,
+  "base_assets": [],
+  "new_assets": [],
+  "resources": [
+    {
+      "resref": "FLMM",
+      "frame_count": 6,
+      "cycle_count": 1,
+      "geometry_mode": "per-frame",
+      "frames": [
+        {
+          "frame": 0,
+          "logical_size_x1": [
+            8,
+            15
+          ],
+          "physical_size_x4": [
+            32,
+            60
+          ],
+          "centre_x1": [
+            3,
+            7
+          ],
+          "asset": "AAX4-FLMM-frame000.rgba",
+          "sha256": "569c04f101c9a5544b6e9d355f23086ea466231481b0fb2fbeceb96233d43784",
+          "bytes": 7680
+        },
+        {
+          "frame": 1,
+          "logical_size_x1": [
+            7,
+            14
+          ],
+          "physical_size_x4": [
+            28,
+            56
+          ],
+          "centre_x1": [
+            3,
+            6
+          ],
+          "asset": "AAX4-FLMM-frame001.rgba",
+          "sha256": "d7d426120104738353c36c50228685cbcfbd6a424478331f15264c0406d93c1b",
+          "bytes": 6272
+        },
+        {
+          "frame": 2,
+          "logical_size_x1": [
+            7,
+            13
+          ],
+          "physical_size_x4": [
+            28,
+            52
+          ],
+          "centre_x1": [
+            3,
+            6
+          ],
+          "asset": "AAX4-FLMM-frame002.rgba",
+          "sha256": "25697c334bb7f01fa95b0f94e44f82556f1a20a9c1014c5dedd3cf64113224d9",
+          "bytes": 5824
+        },
+        {
+          "frame": 3,
+          "logical_size_x1": [
+            7,
+            14
+          ],
+          "physical_size_x4": [
+            28,
+            56
+          ],
+          "centre_x1": [
+            3,
+            6
+          ],
+          "asset": "AAX4-FLMM-frame003.rgba",
+          "sha256": "c0e2aa6754a0e9d1094d22adec1c0500aa38dc4dfa50583da2ad940db63b67e4",
+          "bytes": 6272
+        },
+        {
+          "frame": 4,
+          "logical_size_x1": [
+            6,
+            13
+          ],
+          "physical_size_x4": [
+            24,
+            52
+          ],
+          "centre_x1": [
+            2,
+            6
+          ],
+          "asset": "AAX4-FLMM-frame004.rgba",
+          "sha256": "be94b72e7542b029a0ce99347af1bdf61bd87b9637f3f6831cfc1751ceb3bc37",
+          "bytes": 4992
+        },
+        {
+          "frame": 5,
+          "logical_size_x1": [
+            7,
+            13
+          ],
+          "physical_size_x4": [
+            28,
+            52
+          ],
+          "centre_x1": [
+            3,
+            6
+          ],
+          "asset": "AAX4-FLMM-frame005.rgba",
+          "sha256": "b34b6b2ccde1da269b32de0ad35b1d30662d5003a010c4ea987d36b41dc06e2c",
+          "bytes": 5824
+        }
+      ],
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "timeline_frame_indices": []
+        }
+      ],
+      "assets": [
+        {
+          "name": "AAX4-FLMM-frame000.rgba",
+          "sha256": "569c04f101c9a5544b6e9d355f23086ea466231481b0fb2fbeceb96233d43784",
+          "bytes": 7680
+        },
+        {
+          "name": "AAX4-FLMM-frame001.rgba",
+          "sha256": "d7d426120104738353c36c50228685cbcfbd6a424478331f15264c0406d93c1b",
+          "bytes": 6272
+        },
+        {
+          "name": "AAX4-FLMM-frame002.rgba",
+          "sha256": "25697c334bb7f01fa95b0f94e44f82556f1a20a9c1014c5dedd3cf64113224d9",
+          "bytes": 5824
+        },
+        {
+          "name": "AAX4-FLMM-frame003.rgba",
+          "sha256": "c0e2aa6754a0e9d1094d22adec1c0500aa38dc4dfa50583da2ad940db63b67e4",
+          "bytes": 6272
+        },
+        {
+          "name": "AAX4-FLMM-frame004.rgba",
+          "sha256": "be94b72e7542b029a0ce99347af1bdf61bd87b9637f3f6831cfc1751ceb3bc37",
+          "bytes": 4992
+        },
+        {
+          "name": "AAX4-FLMM-frame005.rgba",
+          "sha256": "b34b6b2ccde1da269b32de0ad35b1d30662d5003a010c4ea987d36b41dc06e2c",
+          "bytes": 5824
+        }
+      ],
+      "playback_mode": "Native",
+      "native_fps": {
+        "numerator": 0,
+        "denominator": 0
+      },
+      "target_fps": {
+        "numerator": 0,
+        "denominator": 0
+      }
+    }
+  ],
+  "timed_resources": [],
+  "provenance": {
+    "operation": "release snapshot, exact installed bytes, QA checked separately",
+    "source_lock": "animations/index/area-pack-lock.json",
+    "game_mutation": false
+  }
+}

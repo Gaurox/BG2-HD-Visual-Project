@@ -47,7 +47,7 @@ $runtime = Get-Content -LiteralPath (Join-Path $release 'manifests\runtime-compa
 Require ($runtime.renderer.area_animation_runtime.status -eq 'integrated') 'Le renderer doit etre declare integre avec le pack AR0602 approuve.'
 Require ($runtime.renderer.area_animation_runtime.payload_layout -eq 'iee-assets/areas/<AREA>') 'Layout renderer animation inattendu.'
 Require ([int]$runtime.renderer.area_animation_runtime.registry_version -eq 3 -and (($runtime.renderer.area_animation_runtime.supported_registry_versions -join ',') -eq '1,2,3')) 'Compatibilite renderer v1/v2/v3 absente.'
-Require ($runtime.owned_ini_keys.'core-steam'.Core.EnableAreaAnimationX4 -eq 'true') 'Le Core doit posseder l activation area-animation.'
+Require ($runtime.owned_ini_keys.'core-steam'.Shaders.EnableAreaAnimationX4 -eq 'true') 'Le Core doit activer area-animation dans la section Shaders lue par le renderer.'
 Require ($runtime.owned_ini_keys.'core-steam'.Shaders.EnableNativeOcclusionBridge -eq 'true') 'Le Core doit posseder l activation du bridge d occlusion.'
 $rendererCandidatePath = Join-Path $release 'manifests\renderer-animation-pilot.json'
 Require (Test-Json -Path $rendererCandidatePath -SchemaFile (Join-Path $release 'schemas\renderer-bundle.schema.json')) 'Schema du renderer candidat animation invalide.'

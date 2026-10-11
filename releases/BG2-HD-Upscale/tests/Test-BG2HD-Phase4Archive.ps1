@@ -40,12 +40,17 @@ try {
     $originalRendererFiles=Get-RendererSnapshot $game $rendererRuntimeFiles
     $fixture=Join-Path $game 'override/AR0300.TIS';New-Item -ItemType Directory -Path (Split-Path -Parent $fixture) -Force|Out-Null;[IO.File]::WriteAllBytes($fixture,[byte[]](7,4,2,1));$fixtureHash=Get-Hash $fixture
     $uiFixture=Join-Path $game 'iee-assets/BIGLOGO-MOS0017-x4.dxt5';New-Item -ItemType Directory -Path (Split-Path -Parent $uiFixture) -Force|Out-Null;[IO.File]::WriteAllBytes($uiFixture,[byte[]](8,6,4,2));$uiFixtureHash=Get-Hash $uiFixture
+    $animationFixture=Join-Path $game 'iee-assets/areas/AR0603/AreaAnimations-X4.registry';New-Item -ItemType Directory -Path (Split-Path -Parent $animationFixture) -Force|Out-Null;[IO.File]::WriteAllBytes($animationFixture,[byte[]](5,3,1));$animationFixtureHash=Get-Hash $animationFixture
+    $wedFixture=Join-Path $game 'override/AR0516.WED';[IO.File]::WriteAllBytes($wedFixture,[byte[]](6,5,1));$wedFixtureHash=Get-Hash $wedFixture
     Expand-Archive -LiteralPath $archive -DestinationPath $game
     $layoutPath=Join-Path $game 'bg2hd/state/install-layout.json';New-Item -ItemType Directory -Path (Split-Path -Parent $layoutPath) -Force|Out-Null;[IO.File]::WriteAllText($layoutPath,([ordered]@{schema_version=1;source_game_root=$steamSource;hd_game_root=$game;source_baldur_sha256=$runtime.target_game.sha256;launch_mode='dedicated-shortcut-only';steam_source_untouched=$true;created_at=(Get-Date).ToUniversalTime().ToString('o');package_version='test'}|ConvertTo-Json),[Text.UTF8Encoding]::new($false))
     $env:BG2HD_DESKTOP_PATH=$desktop
     Push-Location $game
     try {
-        $componentIds=@(0,100,110,1000,1010,1020,1030,1040,1050,1060)
+        $animationCandidates=(Get-Content -LiteralPath (Join-Path $game 'bg2hd/manifests/animation-release-candidates.json') -Raw -Encoding utf8|ConvertFrom-Json).candidates
+        $animationSamples=@($animationCandidates|Where-Object{$_.area-in@('AR0603','AR0900','AR0516')})
+        Require ($animationSamples.Count-eq3 -and @($animationSamples|Where-Object{$_.approval_status-ne'approved-for-release'}).Count-eq0) 'Echantillons release animation absents ou non approuves.'
+        $componentIds=@(@(0,100,110,1000,1010,1020,1030,1040,1050,1060,1580)+@($animationSamples|ForEach-Object{[int]$_.component_id})|Sort-Object -Unique)
         foreach($id in $componentIds){$output=& .\setup-bg2hd.exe '--noautoupdate' '--force-install-list' "$id" '--language' '0' '--no-exit-pause' 2>&1|Out-String;$code=$LASTEXITCODE;Require ($code -eq 0) "Installation WeiDU echouee : composant $id ($code) $output"}
         $content=Get-Content -LiteralPath (Join-Path $game 'bg2hd/manifests/content.json') -Raw -Encoding utf8|ConvertFrom-Json
         $byDestination=@{};foreach($entry in @($content.entries|Where-Object{[int]$_.component_id-in$componentIds})){if(-not $byDestination.ContainsKey($entry.destination) -or [int]$entry.install_order -ge [int]$byDestination[$entry.destination].install_order){$byDestination[$entry.destination]=$entry}}
@@ -63,6 +68,9 @@ try {
     Require-RendererSnapshot $game $originalRendererFiles $rendererRuntimeFiles
     Require ((Get-Hash $fixture) -eq $fixtureHash) 'Le fichier override precedent n a pas ete restaure.'
     Require ((Get-Hash $uiFixture) -eq $uiFixtureHash) 'L atlas UI precedent n a pas ete restaure.'
+    Require ((Get-Hash $animationFixture) -eq $animationFixtureHash) 'Le registre animation precedent n a pas ete restaure.'
+    Require ((Get-ChildItem -LiteralPath (Split-Path -Parent $animationFixture) -File).Count-eq1) 'Des payloads animation nouveaux subsistent apres desinstallation.'
+    Require ((Get-Hash $wedFixture) -eq $wedFixtureHash) 'Le WED AR0516 precedent n a pas ete restaure.'
     Require ((Get-ChildItem -LiteralPath $desktop -File -ErrorAction SilentlyContinue).Count -eq 0) 'Le raccourci de test subsiste.'
     Write-Output 'PHASE4_ARCHIVE_INSTALL_UNINSTALL=PASSED'
 }

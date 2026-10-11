@@ -1,0 +1,55 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR1302",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T15:40:12Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR1302",
+  "pack_manifest_sha256": "9B084174A5A83B33DBB4FEF0518648A2C09639B93915889BB1B9CF2EA0498FEC",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "A27DC1E1234F9371967B3CFC3749DC14EC03ACA92728D9F5BCC7400EBC2D89E4",
+  "required_resrefs": [
+    "FIRE_4",
+    "FLAME2S",
+    "FLIESL",
+    "FLIESS"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_4/2026-09-16-accepted-fire4-ar0202-feather2-x4.json",
+      "sha256": "4FD7A3EC60D7CECC0269AA6AC2005008D12630A9DBD366FE4034902A9E17FE23",
+      "accepted_resrefs": [
+        "FIRE_4"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLAME2S/2026-09-19-accepted-flame2s-reboutcx-selection-accepted-20260919.json",
+      "sha256": "4248293576F5B5771CE6C930669266F2131FC3263EB6ED351ADEA54391F04125",
+      "accepted_resrefs": [
+        "FLAME2S"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLIESL/2026-10-11-accepted-fliesl-rounded-native-cadence-v1.json",
+      "sha256": "B2B690383C47014A962DBB0C1082B69F3518A8BE8D2F450CC6B74CA4159A03B6",
+      "accepted_resrefs": [
+        "FLIESL"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLIESS/2026-10-11-accepted-fliess-rounded-native-cadence-v1.json",
+      "sha256": "F408BD3F1AD7EE4B38F72BFEF775884F0CD1DF82E620A4B9BC404B2432E41C3B",
+      "accepted_resrefs": [
+        "FLIESS"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

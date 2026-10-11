@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0802",
+  "status": "accepted",
+  "decision_date": "2026-09-19",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T19:44:40Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR0802",
+  "pack_manifest_sha256": "7DA9FF2A41619E7E1AB949C0A5A881947BB4A92587B47ACB86B2C52876573596",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "6CD742D7DE00224F85D5067DFAEA60500B83F5A827613F9B5BD5325438698FE8",
+  "required_resrefs": [
+    "FIRE_1",
+    "FIRE_4",
+    "FLAME2S"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_1/2026-10-11-preserved-historical-fire_1-v1.json",
+      "sha256": "B72BB0DE2DB51B404F622DC1B4586FCFB88813DF0A826841FF8469520F69C983",
+      "accepted_resrefs": [
+        "FIRE_1"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_4/2026-09-16-accepted-fire4-ar0202-feather2-x4.json",
+      "sha256": "4FD7A3EC60D7CECC0269AA6AC2005008D12630A9DBD366FE4034902A9E17FE23",
+      "accepted_resrefs": [
+        "FIRE_4"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLAME2S/2026-09-19-accepted-flame2s-reboutcx-selection-accepted-20260919.json",
+      "sha256": "4248293576F5B5771CE6C930669266F2131FC3263EB6ED351ADEA54391F04125",
+      "accepted_resrefs": [
+        "FLAME2S"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

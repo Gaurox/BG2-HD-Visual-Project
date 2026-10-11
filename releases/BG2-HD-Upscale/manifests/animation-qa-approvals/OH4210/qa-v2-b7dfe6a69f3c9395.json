@@ -1,0 +1,73 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "OH4210",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T18:14:43Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/OH4210",
+  "pack_manifest_sha256": "87FB78904BB7A533331FD7E6FEA72E03A61749A68C37ED0204B3FE59B1BF6812",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "FC858AA9CF176C444944B311B9CF6BF19FD8DB9FA249D78BA03BD94D09D27A6A",
+  "required_resrefs": [
+    "AM5204C",
+    "FIREBRN",
+    "FIRE_3",
+    "FIRE_4",
+    "FIRE_4GS",
+    "FLM2PUR"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM5204C/2026-10-11-accepted-am5204c-lot1-all-maps-v1.json",
+      "sha256": "A8952FEFD83696FEAEF78E30CC5DDC7DDF470BC35A5A666CE75A331F1D40656E",
+      "accepted_resrefs": [
+        "AM5204C"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIREBRN/2026-09-22-accepted-firebrn-reboutcx-apo8-selection-accepted-20260922.json",
+      "sha256": "F17EB6B4D44F5CCACF21C474A63A9041B346DD32AC3F81DECA5A3BA5BEB4F407",
+      "accepted_resrefs": [
+        "FIREBRN"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_3/2026-10-11-accepted-fire3-fade4-30fps-all-maps-v1.json",
+      "sha256": "4E8472E45E9C758978C575C550D69BFF76BD8BD5FC1639150729E0F22D21275A",
+      "accepted_resrefs": [
+        "FIRE_3"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_4/2026-09-16-accepted-fire4-ar0202-feather2-x4.json",
+      "sha256": "4FD7A3EC60D7CECC0269AA6AC2005008D12630A9DBD366FE4034902A9E17FE23",
+      "accepted_resrefs": [
+        "FIRE_4"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_4GS/2026-09-22-accepted-fire_4gs-reboutcx-apo8-selection-accepted-20260922.json",
+      "sha256": "6FA2B93CDD75BFA1AFDCA6F582868AF962C1C35D4E83B26B65B3A69CA0BD1690",
+      "accepted_resrefs": [
+        "FIRE_4GS"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLM2PUR/2026-10-11-accepted-flm2pur-lot5-final-v1.json",
+      "sha256": "E41A4F1A4FFD88DC42256746324AD484C343FE3D3F837138893A39F49467B42F",
+      "accepted_resrefs": [
+        "FLM2PUR"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

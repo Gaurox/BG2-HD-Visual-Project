@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0811",
+  "status": "accepted",
+  "decision_date": "2026-10-10",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T21:26:42Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR0811",
+  "pack_manifest_sha256": "65876B95BF225DA4A68AD80A4462487EBA716941CF1143E5D108FB9CDA55A4B6",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "001114CA32C3FF9721A12A736B59FC1DCAB6C6BF4C8D412EFA427981782A1C36",
+  "required_resrefs": [
+    "FIRE_1",
+    "OHHPORT"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_1/2026-10-11-preserved-historical-fire_1-v1.json",
+      "sha256": "B72BB0DE2DB51B404F622DC1B4586FCFB88813DF0A826841FF8469520F69C983",
+      "accepted_resrefs": [
+        "FIRE_1"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/OHHPORT/2026-10-11-preserved-ohhport-canonical-v1.json",
+      "sha256": "B6D15E4645BCB8A2274035D10528A00BB93A812378CB488F415956A90B5FA6CE",
+      "accepted_resrefs": [
+        "OHHPORT"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

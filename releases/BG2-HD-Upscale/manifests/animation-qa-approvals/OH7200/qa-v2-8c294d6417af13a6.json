@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "OH7200",
+  "status": "accepted",
+  "decision_date": "2026-09-21",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-21T20:50:50Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/OH7200",
+  "pack_manifest_sha256": "42791D6961807ABA09E859F0B602EFB52E8826FF97D5BC833E9CC08CAA63B76F",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "6F7DA8CFC946D9C453FA891DD791418D30132FCC521002AE067A1487F853BF24",
+  "required_resrefs": [
+    "FLMM"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLMM/2026-09-21-accepted-flmm-reboutcx-selection-accepted-20260921.json",
+      "sha256": "F22354D217EB485608BC0F4F4884AF26CF71D7B37A1A885B1798974622F59CC6",
+      "accepted_resrefs": [
+        "FLMM"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

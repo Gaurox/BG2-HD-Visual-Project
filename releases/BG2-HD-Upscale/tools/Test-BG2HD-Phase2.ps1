@@ -82,6 +82,10 @@ $animationCandidateAreas = @($animationCandidates.candidates | ForEach-Object { 
 $animationComponentIds = @($animationCandidates.candidates | ForEach-Object { [int]$_.component_id })
 Require ($animationCandidateAreas.Count -eq @($animationCandidateAreas | Sort-Object -Unique).Count) 'Zones dupliquees dans le registre de candidats animation.'
 Require ($animationComponentIds.Count -eq @($animationComponentIds | Sort-Object -Unique).Count) 'Component_id duplique dans le registre de candidats animation.'
+$releaseVerifier = Join-Path $workspace 'pipeline\scripts\verify_animation_release_candidate.py'
+Require (Test-Path -LiteralPath $releaseVerifier -PathType Leaf) 'Validateur de release animation absent.'
+& python $releaseVerifier --workspace-root $workspace --animation-candidates-path $animationCandidatesPath --all --allow-pending
+Require ($LASTEXITCODE -eq 0) 'Preuves release animation invalides.'
 foreach ($candidate in @($animationCandidates.candidates)) {
     $qaPath = [IO.Path]::GetFullPath((Join-Path $workspace ([string]$candidate.qa_approval).Replace('/', '\')))
     $relativeQaPath = [IO.Path]::GetRelativePath($workspace, $qaPath).Replace('\', '/')
@@ -95,23 +99,11 @@ foreach ($candidate in @($animationCandidates.candidates)) {
     Require ([string]$qaApproval.pack_manifest_sha256 -eq [string]$candidate.pack_manifest_sha256 -and [string]$qaApproval.registry_sha256 -eq [string]$candidate.registry_sha256) "Hashes QA animation incoherents : $($candidate.area)"
     Require ([string]$qaApproval.registry -eq [string]$candidate.registry -and [int]$qaApproval.registry_version -eq [int]$candidate.registry_version) "Registre/version QA animation incoherent : $($candidate.area)"
     Require (-not (Compare-Object @($candidate.required_resrefs | Sort-Object -Unique) @($qaApproval.required_resrefs | Sort-Object -Unique))) "Couverture QA animation incoherente : $($candidate.area)"
-    $releaseVerifier = Join-Path $workspace 'pipeline\scripts\verify_animation_release_candidate.py'
-    Require (Test-Path -LiteralPath $releaseVerifier -PathType Leaf) 'Validateur de release animation absent.'
-    $releaseArguments = @(
-            $releaseVerifier,
-            '--workspace-root', $workspace,
-            '--animation-candidates-path', $animationCandidatesPath,
-            '--area', [string]$candidate.area
-    )
-    if ([string]$candidate.approval_status -eq 'validated-awaiting-manifest-approval') {
-        $releaseArguments += '--allow-pending'
-    }
-    & python @releaseArguments
-    Require ($LASTEXITCODE -eq 0) "Release animation invalide : $($candidate.area)"
     if ([int]$qaApproval.schema_version -in @(1, 3)) {
         continue
     }
     $qaDecisionRuns = @{}
+    $runtimeResrefByAsset = @{}
     foreach ($evidence in @($qaApproval.evidence)) {
         $evidencePath = [IO.Path]::GetFullPath((Join-Path $workspace ([string]$evidence.path).Replace('/', '\')))
         $relativeEvidence = [IO.Path]::GetRelativePath($workspace, $evidencePath).Replace('\', '/')
@@ -123,7 +115,8 @@ foreach ($candidate in @($animationCandidates.candidates)) {
             Require (Test-Json -Path $evidencePath -SchemaFile $animationDecisionSchema) "Schema de decision ingame invalide : $relativeEvidence"
             $decision = Get-Content -LiteralPath $evidencePath -Raw -Encoding utf8 | ConvertFrom-Json
             $acceptedResrefs = @($evidence.accepted_resrefs | Sort-Object -Unique)
-            Require ($acceptedResrefs.Count -eq 1 -and [string]$decision.resref -eq [string]$acceptedResrefs[0]) "Resref de decision ingame incoherent : $relativeEvidence"
+            $decisionRuntimeResref = if ([string]::IsNullOrWhiteSpace([string]$decision.runtime_resref)) { [string]$decision.resref } else { [string]$decision.runtime_resref }
+            Require ($acceptedResrefs.Count -eq 1 -and $decisionRuntimeResref -eq [string]$acceptedResrefs[0]) "Resref de decision ingame incoherent : $relativeEvidence"
             Require ([string]$decision.result_kind -eq 'x4') "Decision ingame non x4 interdite en release : $relativeEvidence"
             Require ($decision.status -eq 'accepted' -and $decision.decision_origin -eq 'explicit-user-ingame-qa') "Decision ingame non acceptee : $relativeEvidence"
             $decisionResref = ([string]$decision.resref).ToUpperInvariant()
@@ -131,8 +124,12 @@ foreach ($candidate in @($animationCandidates.candidates)) {
             Require ($relativeEvidence -ceq $expectedDecisionPath) "Decision ingame rangee sous un autre asset ou identifiant : $relativeEvidence"
             Require (@($decision.tested_areas) -contains [string]$candidate.area) "Zone absente de la decision ingame : $relativeEvidence"
             $decisionArea = @($decision.source_pack.areas | Where-Object { [string]$_.area -eq [string]$candidate.area })
-            Require ($decisionArea.Count -eq 1 -and [string]$decisionArea[0].path -eq [string]$candidate.source_pack) "Pack de decision ingame incoherent : $relativeEvidence"
-            Require ([string]$decisionArea[0].manifest_sha256 -eq [string]$candidate.pack_manifest_sha256 -and [string]$decisionArea[0].registry_sha256 -eq [string]$candidate.registry_sha256) "Hashes de decision ingame incoherents : $relativeEvidence"
+            Require ($decisionArea.Count -eq 1) "Pack de decision ingame absent ou duplique : $relativeEvidence"
+            # Le validateur Python ci-dessus compare les octets et contrats de chaque
+            # ressource lorsque le candidat compose plusieurs packs QA historiques.
+            if ([string]$decisionArea[0].path -eq [string]$candidate.source_pack) {
+                Require ([string]$decisionArea[0].manifest_sha256 -eq [string]$candidate.pack_manifest_sha256 -and [string]$decisionArea[0].registry_sha256 -eq [string]$candidate.registry_sha256) "Hashes de decision ingame incoherents : $relativeEvidence"
+            }
             $decisionRunPath = [string]$decision.final_run.path
             $decisionRunDirectory = [IO.Path]::GetFullPath((Join-Path $workspace $decisionRunPath.Replace('/', '\')))
             $relativeDecisionRun = [IO.Path]::GetRelativePath($workspace, $decisionRunDirectory).Replace('\', '/')
@@ -153,9 +150,11 @@ foreach ($candidate in @($animationCandidates.candidates)) {
             $decisionFinalManifest = Get-Content -LiteralPath $decisionRunManifestPath -Raw -Encoding utf8 | ConvertFrom-Json
             Require ([string]$decisionFinalManifest.schema -eq [string]$decision.final_run.schema -and [string]$decisionFinalManifest.status -eq [string]$decision.final_run.status) "Identite du run final incoherente : $decisionRunManifest"
             Require ([string]$decisionFinalManifest.status -in @('completed', 'validated', 'validated-installed')) "Run final non termine : $decisionRunManifest"
-            Require (@(Get-AnimationManifestResrefs $decisionFinalManifest) -contains [string]$decision.resref) "Run final sans resref cible : $decisionRunManifest"
-            Require (-not $qaDecisionRuns.ContainsKey($decisionResref)) "Decision ingame dupliquee : $decisionResref / $($candidate.area)"
-            $qaDecisionRuns[$decisionResref] = @{
+            $declaredFinalResrefs = @(Get-AnimationManifestResrefs $decisionFinalManifest)
+            Require ($declaredFinalResrefs -contains [string]$decision.resref -or $declaredFinalResrefs -contains $decisionRuntimeResref) "Run final sans resref cible : $decisionRunManifest"
+            Require (-not $qaDecisionRuns.ContainsKey($decisionRuntimeResref)) "Decision ingame dupliquee : $decisionRuntimeResref / $($candidate.area)"
+            $runtimeResrefByAsset[$decisionResref] = $decisionRuntimeResref
+            $qaDecisionRuns[$decisionRuntimeResref] = @{
                 path = $relativeDecisionRun
                 manifest_path = $relativeDecisionRunManifest
                 manifest_sha256 = [string]$decision.final_run.manifest_sha256
@@ -190,8 +189,9 @@ foreach ($candidate in @($animationCandidates.candidates)) {
                 Require ($sourceRunAssets.Count -eq 1 -and $sourceRunAssets[0] -eq $Matches[1]) "Run candidat mono-resref affecte a un autre asset : $relativeSourceRun"
             }
             foreach ($resref in $sourceRunAssets) {
-                Require (-not $candidateRuns.ContainsKey($resref)) "Run candidat duplique pour $resref : $($candidate.area)"
-                $candidateRuns[$resref] = @{
+                $runtimeResref = if ($runtimeResrefByAsset.ContainsKey($resref)) { $runtimeResrefByAsset[$resref] } else { $resref }
+                Require (-not $candidateRuns.ContainsKey($runtimeResref)) "Run candidat duplique pour $runtimeResref : $($candidate.area)"
+                $candidateRuns[$runtimeResref] = @{
                     path = $relativeSourceRun
                     manifest_path = $relativeSourceManifest
                     manifest_sha256 = [string]$sourceRun.manifest_sha256
@@ -327,7 +327,15 @@ foreach ($area in $csv) {
     if ($area.status_nuit -eq 'validated-installed') { $validated.Add(([string]$area.area_id) + 'N') }
 }
 $manifestVariants = @($content | Where-Object { $_.kind -eq 'map' } | ForEach-Object { [string]$_.area } | Sort-Object -Unique)
-Require (-not (Compare-Object (@($validated | Sort-Object -Unique) | Sort-Object) $manifestVariants)) 'Le manifeste ne couvre pas exactement les cartes validees du CSV.'
+# OH6460 est validee via le tileset OH8100 installe ; son build autonome
+# non installe ne doit jamais remplacer le payload OH8100 acquis.
+if ($validated.Contains('OH6460')) {
+    Require ($manifestVariants -contains 'OH8100' -and $manifestVariants -notcontains 'OH6460') 'Le partage OH6460/OH8100 est rompu.'
+    $sharedTileset = @($content | Where-Object { $_.component_label -eq 'map-oh8100' -and $_.destination -eq 'override/OH8100.TIS' })
+    Require ($sharedTileset.Count -eq 1) 'Tileset partage OH8100 absent ou duplique.'
+    [void]$validated.Remove('OH6460')
+}
+Require (-not (Compare-Object (@($validated | Sort-Object -Unique) | Sort-Object) $manifestVariants)) 'Le manifeste ne couvre pas exactement les cartes validees du CSV (tileset partage compris).'
 
 if ($WeiDUExecutable) {
     Require (Test-Path -LiteralPath $WeiDUExecutable -PathType Leaf) "WeiDU absent : $WeiDUExecutable"

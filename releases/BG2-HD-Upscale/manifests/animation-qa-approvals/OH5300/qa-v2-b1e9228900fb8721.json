@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "OH5300",
+  "status": "accepted",
+  "decision_date": "2026-10-10",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-09T23:45:20Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/OH5300",
+  "pack_manifest_sha256": "1BBB8BB15EA8EFD4484B0AEFCF8573440453FAD7154A074689E137EE4BF99CEA",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "D8CB1891DB82B4886E10249B62C2978DB5603C692E4BC2BE66FF9365AF276785",
+  "required_resrefs": [
+    "FIRE_4",
+    "FPIT1L"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_4/2026-09-16-accepted-fire4-ar0202-feather2-x4.json",
+      "sha256": "4FD7A3EC60D7CECC0269AA6AC2005008D12630A9DBD366FE4034902A9E17FE23",
+      "accepted_resrefs": [
+        "FIRE_4"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FPIT1L/2026-10-10-accepted-fpit1l-aura12-sparkguard1-wed83-v1.json",
+      "sha256": "9F7A7AB06D7BB1D663FE7F9DCB95F7E0E0525F4ECCF9B02F4E2F3422C033F8AC",
+      "accepted_resrefs": [
+        "FPIT1L"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

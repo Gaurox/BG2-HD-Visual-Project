@@ -1,0 +1,100 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR3000",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T19:44:35Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR3000",
+  "pack_manifest_sha256": "F2A583C30EAF907A52893DE1E116832D9DF9C0562A988B7447D42E8D33107ECB",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "A5BB39ED28C2D00B2E9FB1005BB3F465BD3B3DBCB0F319D920C52AE8D88C67A0",
+  "required_resrefs": [
+    "AM3000A",
+    "AM3000E",
+    "AM3000H",
+    "BUTRFLY",
+    "FISH1L",
+    "FISH1S",
+    "FISH2L",
+    "FISH2S",
+    "FISH3S"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM3000A/2026-09-18-accepted-am3000a-ar3000-fade36-straightrgb.json",
+      "sha256": "11B55B112DD01B33B6EDF942A7328A3FBF9EA673ECD6D56B9864262C98CC449E",
+      "accepted_resrefs": [
+        "AM3000A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM3000E/2026-10-11-accepted-am3000e-native-contour-v1.json",
+      "sha256": "16C7EE312DEB03FD06985DCDC5CEFE73890658440421CD884BEBB4C09888A3BE",
+      "accepted_resrefs": [
+        "AM3000E"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM3000H/2026-09-18-accepted-am3000h-ar3000-spline-fit1-feather4-innerfade36.json",
+      "sha256": "8EF9770DA7DEA122AC98D49B9EA274B5B4C24EB443F9BEFFFA4DC8292E4611CA",
+      "accepted_resrefs": [
+        "AM3000H"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/BUTRFLY/2026-10-11-preserved-historical-butrfly-v1.json",
+      "sha256": "50656651AB9E628345B5FCF8D0730FA1F3038357BFEEC5F93C1FD5DCA0B194A6",
+      "accepted_resrefs": [
+        "BUTRFLY"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FISH1L/2026-10-10-accepted-fish1l-family-v1.json",
+      "sha256": "71EDF657834E2BF622899A375792451DD1F109428096059E1D230F0A55CDD2DA",
+      "accepted_resrefs": [
+        "FISH1L"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FISH1S/2026-09-18-accepted-fish1s-ar3000-xbr2x-apo8-segmented-holds.json",
+      "sha256": "C85A7C0AE73F0655F5C2A2BF4F8BDD70E3A7DDBA517123956B50C18023D98A18",
+      "accepted_resrefs": [
+        "FISH1S"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FISH2L/2026-10-10-accepted-fish2l-family-v1.json",
+      "sha256": "A388FA78E26A83E2CCBCBC3B09FC717ED6997FE6542262E64B17D5518559F6C7",
+      "accepted_resrefs": [
+        "FISH2L"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FISH2S/2026-10-10-accepted-fish2s-family-v1.json",
+      "sha256": "DC97A92E93B5A8F8444849E0510C09C70C84E7EA03F16B3C0CBD444A2AA1113D",
+      "accepted_resrefs": [
+        "FISH2S"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FISH3S/2026-10-10-accepted-fish3s-family-v1.json",
+      "sha256": "7BF9385121F2E917F0DB752998754CA05DD1E4A183F65103BE81774889D791A4",
+      "accepted_resrefs": [
+        "FISH3S"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

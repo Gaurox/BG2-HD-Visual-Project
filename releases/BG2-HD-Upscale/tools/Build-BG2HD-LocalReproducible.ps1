@@ -4,7 +4,9 @@ param(
     [string]$ReleaseRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path,
     [string]$PayloadRoot = (Join-Path $PSScriptRoot '..\bg2hd\payload-allvalidated'),
     [string]$OutputRoot = (Join-Path $PSScriptRoot '..\dist-local\phase6b-candidate'),
-    [string]$WeiDUSourceArchive
+    [string]$WeiDUSourceArchive,
+    [ValidateSet('NoCompression', 'Optimal')]
+    [string]$ZipCompression = 'NoCompression'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -25,7 +27,8 @@ function New-DeterministicZip([string]$Source, [string]$Archive) {
     try {
         Get-ChildItem -LiteralPath $Source -File -Recurse | Sort-Object FullName | ForEach-Object {
             $relative = [IO.Path]::GetRelativePath($Source, $_.FullName).Replace('\', '/')
-            $entry = $zip.CreateEntry($relative, [IO.Compression.CompressionLevel]::Optimal)
+            $level = [IO.Compression.CompressionLevel]([Enum]::Parse([IO.Compression.CompressionLevel], $ZipCompression))
+            $entry = $zip.CreateEntry($relative, $level)
             $entry.LastWriteTime = $epoch
             $input = [IO.File]::OpenRead($_.FullName)
             $output = $entry.Open()
@@ -106,6 +109,7 @@ try {
         bootstrap_launcher_sha256 = Get-Hash (Join-Path $temporary 'Install-BG2HD.exe')
         uninstall_launcher_sha256 = Get-Hash (Join-Path $temporary 'Uninstall-BG2HD.exe')
         fixed_zip_timestamp_utc = '1980-01-01T00:00:00Z'
+        zip_compression_level = $ZipCompression
         public_documents = $publicDocuments
         excluded = @('game executables', 'EEex', 'InfinityLoader', 'logs', 'saves', 'development backups', 'unselected or unapproved assets')
     }

@@ -1,0 +1,91 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0307",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T19:44:30Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR0307",
+  "pack_manifest_sha256": "25F64B9965B265F1C1BCBFDB2B9AF2B801E0B2CB5F5BAECB98297137204022CD",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "D5FAA4A59192CA844D072136CA63151EC2015A3EF331F77DBAE581189010CC8E",
+  "required_resrefs": [
+    "AM0307BH",
+    "AM307RED",
+    "AM307TT1",
+    "AM307UR1",
+    "AM307UR2",
+    "AM307UR3",
+    "FIRE_4",
+    "FLAME2S"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0307BH/2026-10-11-accepted-am0307bh-water-only-feather-v1.json",
+      "sha256": "9EC6BCCB1DE6315645A85935AA18AB844C87262B3D079D4D359F75AA90321565",
+      "accepted_resrefs": [
+        "AM0307BH"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM307RED/2026-10-11-accepted-am307red-collapse-preserve-look-v1.json",
+      "sha256": "0B9403949BEFEA410DA60AE4F96599D9C5BB95C510FD25004F3E59C195055DCF",
+      "accepted_resrefs": [
+        "AM307RED"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM307TT1/2026-10-11-preserved-historical-am307tt1-v1.json",
+      "sha256": "13F769EDFAB3138D37216FD364D6FFAA95AFF731EA31289CEBC750A9D554C2F5",
+      "accepted_resrefs": [
+        "AM307TT1"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM307UR1/2026-10-11-preserved-historical-am307ur1-v1.json",
+      "sha256": "072E110866981265F8A44B822A45BFE8D466998C3ECF0259D21BC35B3C983B7B",
+      "accepted_resrefs": [
+        "AM307UR1"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM307UR2/2026-10-11-preserved-historical-am307ur2-v1.json",
+      "sha256": "E11CE6A4B5239E87A4DA2547CE11862F88E87B48B9BCEDF98EA7392E3EF602D8",
+      "accepted_resrefs": [
+        "AM307UR2"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM307UR3/2026-10-11-preserved-historical-am307ur3-v1.json",
+      "sha256": "CECEBBD357A74871AA72607F147FDA0A147B626BD8933C1F9D0C55E501AF2FA1",
+      "accepted_resrefs": [
+        "AM307UR3"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_4/2026-09-16-accepted-fire4-ar0202-feather2-x4.json",
+      "sha256": "4FD7A3EC60D7CECC0269AA6AC2005008D12630A9DBD366FE4034902A9E17FE23",
+      "accepted_resrefs": [
+        "FIRE_4"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLAME2S/2026-09-19-accepted-flame2s-reboutcx-selection-accepted-20260919.json",
+      "sha256": "4248293576F5B5771CE6C930669266F2131FC3263EB6ED351ADEA54391F04125",
+      "accepted_resrefs": [
+        "FLAME2S"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

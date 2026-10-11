@@ -1,0 +1,43 @@
+{
+  "outcome": {
+    "command": "finalize",
+    "mode": "applied",
+    "resref": "AM0309A",
+    "result_kind": "x4",
+    "decision_status": "accepted",
+    "decision_id": "2026-10-11-preserved-am0309a-occurrence-945-763-v1",
+    "tracked_files": [
+      "animations/index/qa-decisions/AM0309A/2026-10-11-preserved-am0309a-occurrence-945-763-v1.json",
+      "animations/index/selections/AM0309A.json",
+      "animations/index/animation_upscale_registry.csv"
+    ],
+    "changed_files": [
+      "animations/index/qa-decisions/AM0309A/2026-10-11-preserved-am0309a-occurrence-945-763-v1.json",
+      "animations/index/selections/AM0309A.json",
+      "animations/index/animation_upscale_registry.csv"
+    ],
+    "reservation_to_consume": null,
+    "consumed_reservation": null,
+    "data_paths": [
+      "animations/packs-par-zone/animations-release-20261011-v1",
+      "animations/packs-par-zone/animations-release-20261011-v1/AR0309",
+      "animations/ressources/AM0309A/runs/am0309a-acquired-occurrence-bound-20261011-v1"
+    ],
+    "tested_areas": [
+      "AR0309"
+    ],
+    "release_mutation": false,
+    "release_next_step": "separate-explicit-decision",
+    "recovered_before_apply": []
+  },
+  "source_qa": {
+    "decision_date": "2026-09-21",
+    "path": "animations/index/qa-decisions/AM0309A/2026-09-21-accepted-ar0309-am0309a-holefill1024-animzone-mask-v1-20260921.json",
+    "sha256": "FE72836FA432FD5F65E45FDC4A656AA7D6419BACDCAECDF3B4517D7C77EC7F40",
+    "status": "accepted"
+  },
+  "modified_current_selection": "animations/index/selections/AM0309A.json",
+  "all_prior_qa_preserved": true,
+  "new_ingame_qa": false,
+  "game_mutation": false
+}

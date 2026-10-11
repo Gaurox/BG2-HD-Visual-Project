@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0205",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T20:16:00Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR0205",
+  "pack_manifest_sha256": "F46703A9B6B672FB450BAD6A7A31A668567E558E21F33B4C0793622364F29FE9",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "0D876FE78ABCA67C34B9FBABFC93DAC35D81CE8627493285EF8907685873F549",
+  "required_resrefs": [
+    "AM0205A",
+    "AM0205B",
+    "AM0205C",
+    "AM0205D",
+    "AM0205E"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0205A/2026-10-11-accepted-current-am0205a-v1.json",
+      "sha256": "6DE3FC217EA18D2A609B37C1E6F0438BC4181A031079FFB31211F07B0BE53759",
+      "accepted_resrefs": [
+        "AM0205A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0205B/2026-10-11-accepted-current-am0205b-v1.json",
+      "sha256": "2D1CB05AFB326DDC10DCD13E32CD1113920EA92EB3A9406070AF50E7346820A2",
+      "accepted_resrefs": [
+        "AM0205B"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0205C/2026-10-11-accepted-current-am0205c-v1.json",
+      "sha256": "42B042066D02B4E35D52B91745E88441A308F6CBE7B1FF793060A4011A52EFE1",
+      "accepted_resrefs": [
+        "AM0205C"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0205D/2026-10-11-accepted-current-am0205d-v1.json",
+      "sha256": "0B81B22E4079ECCB36F7E3CA7B03C3792DFAF55E2BAE5FFAC014FE803B37F0CA",
+      "accepted_resrefs": [
+        "AM0205D"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0205E/2026-10-11-preserved-historical-am0205e-v1.json",
+      "sha256": "AC9763ED81FF920AA3A551A155DDDF2870165F0CE88BFF9007B217920D4AFB30",
+      "accepted_resrefs": [
+        "AM0205E"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

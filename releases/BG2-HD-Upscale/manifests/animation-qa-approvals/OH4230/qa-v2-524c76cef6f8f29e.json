@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "OH4230",
+  "status": "accepted",
+  "decision_date": "2026-10-10",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-10T15:06:44Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/OH4230",
+  "pack_manifest_sha256": "89E2267E688EF9A761E1A377C406E5376336F4AF52B0DEAD9EB98F40E88D5971",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "9026157291F66F99FB7951A0D53F5477F1BB4729B438D8019DE6B0A260338520",
+  "required_resrefs": [
+    "OHRSGATE"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/OHRSGATE/2026-10-10-accepted-ohrsgate-portails-final-v1.json",
+      "sha256": "8606EF52DEFD9E4258597F78310A4777D212920369CBA45E23A1854F8904EDB9",
+      "accepted_resrefs": [
+        "OHRSGATE"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

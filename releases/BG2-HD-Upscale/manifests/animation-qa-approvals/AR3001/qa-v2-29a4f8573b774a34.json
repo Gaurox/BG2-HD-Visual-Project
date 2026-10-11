@@ -1,0 +1,55 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR3001",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T18:14:43Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR3001",
+  "pack_manifest_sha256": "7D92F96427E0382956A87A76599C4E7D6022F59AEE882C2C82EE1C4B7079E08F",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "DB9837755CAB6B0104852E7B39661D5CE7B5D1BDE54F7EA9A88AEA6746739EF1",
+  "required_resrefs": [
+    "AM3001D",
+    "AM3001F",
+    "AM3001G",
+    "FIRE_3"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM3001D/2026-09-11-accepted-ar3001-altar-three-apo8-x4-30fps-spline-fit1-feather4-20260911.json",
+      "sha256": "B97D083CF108E850C420025E8F69A88FEEF2F88CD68E1D01D3F11C70B6BDACF6",
+      "accepted_resrefs": [
+        "AM3001D"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM3001F/2026-09-11-accepted-ar3001-altar-three-apo8-x4-30fps-spline-fit1-feather4-20260911.json",
+      "sha256": "C9E36BFAB3543E47DB9EB3958474146350C8D7C2212E0E4A6412ED04B8423A8A",
+      "accepted_resrefs": [
+        "AM3001F"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM3001G/2026-09-19-accepted-ar3001-altar-three-apo8-x4-30fps-spline-fit1-feather4-20260911.json",
+      "sha256": "33747BC94519DEC60B22BFF3830255BE264A8C13D124A3AEEC4FF8145C74AE92",
+      "accepted_resrefs": [
+        "AM3001G"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_3/2026-10-11-accepted-fire3-fade4-30fps-all-maps-v1.json",
+      "sha256": "4E8472E45E9C758978C575C550D69BFF76BD8BD5FC1639150729E0F22D21275A",
+      "accepted_resrefs": [
+        "FIRE_3"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

@@ -1,0 +1,73 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0516",
+  "status": "accepted",
+  "decision_date": "2026-10-10",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-10T17:42:27Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR0516",
+  "pack_manifest_sha256": "38EE76BE3F11A9D00D9A25996D659FF058436643C58D3FA38044B220510BECAA",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "6D23F517A779EF5B656C1EB9CF6E7CD9CD77A6F9B785CC06CB8A0E05030C1028",
+  "required_resrefs": [
+    "AM0516LA",
+    "AM0516LB",
+    "AM0516LC",
+    "AM0516LD",
+    "SPHINCT",
+    "SPHINCT2"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0516LA/2026-09-17-accepted-ar0516-labc-apo8-x4-30fps-hybrid-custom-blink-lc-exact-repeat-20260917.json",
+      "sha256": "E9DBFD2140AF2E60FC54E09D7E81829C7420DF98CF8FF450106F5C0CE3B88E3D",
+      "accepted_resrefs": [
+        "AM0516LA"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0516LB/2026-09-17-accepted-ar0516-labc-apo8-x4-30fps-hybrid-custom-blink-lc-exact-repeat-20260917.json",
+      "sha256": "AD75F4CF5FAAA4F4D49B756BE1B76FFA4BBC868CB0EF18CA1BD6EDC802C3F71E",
+      "accepted_resrefs": [
+        "AM0516LB"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0516LC/2026-09-17-accepted-ar0516-labc-apo8-x4-30fps-hybrid-custom-blink-lc-exact-repeat-20260917.json",
+      "sha256": "7AF6DEDAA62B187118196005DCDACBED1B04E90B656FBB041452EA9815DB80A9",
+      "accepted_resrefs": [
+        "AM0516LC"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0516LD/2026-09-17-accepted-am0516ld-apo8-x4-30fps-custom-blink-exact-repeat-20260917.json",
+      "sha256": "B59B9DF2CB53B7E5BF847D43B33BBFFB4B67B67DEE1DAF47B82829D68A7F6908",
+      "accepted_resrefs": [
+        "AM0516LD"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/SPHINCT/2026-10-10-accepted-sphinct-planar-final-v1.json",
+      "sha256": "E540E0AFAB0FA05FB20C5F3C3EFF4320256EF9A13DA1C68A27987A70600906A8",
+      "accepted_resrefs": [
+        "SPHINCT"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/SPHINCT2/2026-09-17-accepted-ar0516-five-bam-segmented-holds-geometric-sigma3-erode2-alpha-30fps-20260916.json",
+      "sha256": "315D6AC6650BD91617C94DEBE070EBEC6E416242EDD8C0BB8751174477ABEDB5",
+      "accepted_resrefs": [
+        "SPHINCT2"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

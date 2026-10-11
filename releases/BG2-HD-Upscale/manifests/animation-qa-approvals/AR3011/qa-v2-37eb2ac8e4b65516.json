@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR3011",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T14:42:19Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR3011",
+  "pack_manifest_sha256": "8B1AD192C17B195264733739129BC2D5CD051CB1DC111CFD1243123CCE1FF734",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "F0C26088D2732B14F27DDF232ADF3BCFE0C6BABB4553EA18237BFEA452C97D37",
+  "required_resrefs": [
+    "AM3011A",
+    "AM3011B",
+    "AMWRPGT1"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM3011A/2026-09-11-accepted-ar3011-qa-finalization-x4-20260911.json",
+      "sha256": "0D74C046B95AD98EF44BB1401A70F45CF5E226B7C82B287D2D96D07947C9CEC3",
+      "accepted_resrefs": [
+        "AM3011A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM3011B/2026-09-11-accepted-ar3011-qa-finalization-x4-20260911.json",
+      "sha256": "0FFACF595EFCA6F8DBD189ADA2CFF55E7FA19FD003CAB229B162E7E09CDE4D3F",
+      "accepted_resrefs": [
+        "AM3011B"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AMWRPGT1/2026-10-11-accepted-amwrpgt1-lot5-final-v1.json",
+      "sha256": "083B5CF3B58B0C9568909AD1CC525246C3A424870BD89613A8D4DD2064128D17",
+      "accepted_resrefs": [
+        "AMWRPGT1"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0315",
+  "status": "accepted",
+  "decision_date": "2026-09-19",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T19:44:09Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR0315",
+  "pack_manifest_sha256": "35A1C4EBE17A8083F953468634E0762379E4005815231C3398772C519216B72C",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "172BB6D929BC19968BAE7428A5322B375682F79E929B3148557BDF17CCB413BB",
+  "required_resrefs": [
+    "AM0033AB",
+    "FLAME2S"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0033AB/2026-10-11-preserved-historical-am0033ab-v1.json",
+      "sha256": "9719DB2381A85A40881233980CFE28C61526A84855B8E5EB2BD35129DE18C1E0",
+      "accepted_resrefs": [
+        "AM0033AB"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLAME2S/2026-09-19-accepted-flame2s-reboutcx-selection-accepted-20260919.json",
+      "sha256": "4248293576F5B5771CE6C930669266F2131FC3263EB6ED351ADEA54391F04125",
+      "accepted_resrefs": [
+        "FLAME2S"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

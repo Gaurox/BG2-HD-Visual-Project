@@ -1,0 +1,73 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0700",
+  "status": "accepted",
+  "decision_date": "2026-09-16",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T19:44:40Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR0700",
+  "pack_manifest_sha256": "8E97B3B7A9FA488CA1B608AEE2FE0F23D7A857BF581049C544A5802B5CFD6B18",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "CA2E6C5D797CD54A5FE81AB10BB059AFE39C74D19EDBD0CDB94A8CA8B63DCF14",
+  "required_resrefs": [
+    "AM0700A",
+    "AM0700B",
+    "AM0700C",
+    "AM0700D",
+    "FIRE_1",
+    "FIRE_4"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0700A/2026-10-11-preserved-historical-am0700a-v1.json",
+      "sha256": "45BB1039BC0DBB6EFEF773DF9DF5EA352C1700FCF59BFFE8A2A130A64FE2E373",
+      "accepted_resrefs": [
+        "AM0700A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0700B/2026-10-11-preserved-historical-am0700b-v1.json",
+      "sha256": "D0B88977D23BE11CB4069EE8AAA5621FB1B3179DFC7999072246FA9781B7F22C",
+      "accepted_resrefs": [
+        "AM0700B"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0700C/2026-10-11-preserved-historical-am0700c-v1.json",
+      "sha256": "60092E0DEECA81C9266677D540B26CBD6A7C1DC0FA8E1547A27E5AC8A386F7B8",
+      "accepted_resrefs": [
+        "AM0700C"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0700D/2026-10-11-preserved-historical-am0700d-v1.json",
+      "sha256": "E5A26B5C3632F30F5CBB906ED0458F8FC040C38E1B161B0FDFA38F859B303AAA",
+      "accepted_resrefs": [
+        "AM0700D"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_1/2026-10-11-preserved-historical-fire_1-v1.json",
+      "sha256": "B72BB0DE2DB51B404F622DC1B4586FCFB88813DF0A826841FF8469520F69C983",
+      "accepted_resrefs": [
+        "FIRE_1"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_4/2026-09-16-accepted-fire4-ar0202-feather2-x4.json",
+      "sha256": "4FD7A3EC60D7CECC0269AA6AC2005008D12630A9DBD366FE4034902A9E17FE23",
+      "accepted_resrefs": [
+        "FIRE_4"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

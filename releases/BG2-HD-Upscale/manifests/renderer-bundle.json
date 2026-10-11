@@ -1,26 +1,26 @@
 {
   "$schema": "../schemas/renderer-bundle.schema.json",
   "schema_version": 1,
-  "bundle_id": "iee-0.1.0-alpha.8",
+  "bundle_id": "iee-0.1.0-alpha.9",
   "status": "integrated-awaiting-clean-lifecycle-test",
-  "source_tree": "git:c3bab523:engine/InfinityEngine-Enhancer/source-patchee",
+  "source_tree": "releases/BG2-HD-Upscale/release-inputs/renderer/iee-0.1.0-alpha.9-source",
   "build_environment": {
     "cmake": "4.0.2",
     "generator": "Visual Studio 16 2019, x64",
     "compiler": "MSVC 19.29.30133 (v142, x64)",
     "build_type": "Release",
-    "command": "cmake -S engine/InfinityEngine-Enhancer/source-patchee -B <build-dir> -G \"Visual Studio 16 2019\" -A x64 -DIEE_BUILD_WINDOWS_DLL=ON -DBUILD_TESTING=ON; cmake --build <build-dir> --config Release --target release_bundle; ctest --test-dir <build-dir> -C Release --output-on-failure"
+    "command": "Pinned accepted installed DLL, retained exact source snapshot; source inventory: pipeline/recipes/animations-release-finalization-20261011-v1/renderer-source-inventory.json"
   },
   "files": [
     {
       "path": "InfinityEngine-Enhancer.dll",
-      "bytes": 1786368,
-      "sha256": "C0D7BBAE0DACD1ED794A34300B8523BFFC63C9894F95C866715513848FC2BA98"
+      "bytes": 2244608,
+      "sha256": "5D4EE06D84E0D6C6F6FB81797EAB0E9756B3ECE335EBF537E57C5597E0B40BCF"
     },
     {
       "path": "InfinityEngine-Enhancer.sample.ini",
-      "bytes": 5463,
-      "sha256": "FCA76514327C7B22F0E41EFE142099B103FB270468D54F2177F713837D34BCA8"
+      "bytes": 5691,
+      "sha256": "4ACD42B6F2E571FA6C2EA78B0B01C2E58F4AA4C1DD555106A6106BAFAC8DD553"
     },
     {
       "path": "iee-textures/iee_water_dudv.rgba",
@@ -39,13 +39,13 @@
     },
     {
       "path": "iee-textures/README.md",
-      "bytes": 2936,
-      "sha256": "0E34BEBEB719825EB373E2D04CF8B8FE0C7CAA7679BBD85A724083AB07AC5FDE"
+      "bytes": 3002,
+      "sha256": "4855884146FE6DB8ED47B8CD23C4418BCB45C10BD4C266E38A9D52B97A8D6B4E"
     },
     {
       "path": "override/fpDraw.glsl",
-      "bytes": 15476,
-      "sha256": "1B38768899DDD9E764B7B66A6935E86C52076BB1AE4062CF36D8A824E9F99C29"
+      "bytes": 21082,
+      "sha256": "C6F1F23D99D16BFD34FC3EAC1577F24C096C4C00F0427CEA69E8BDE779311827"
     },
     {
       "path": "override/fpFONT.glsl",
@@ -59,13 +59,13 @@
     },
     {
       "path": "override/fpSELECT.glsl",
-      "bytes": 16716,
-      "sha256": "D5E76628C119024C6FC471CEE9812D7BB5C7AC8D56F52C289D0A86215178EA3A"
+      "bytes": 22346,
+      "sha256": "E4E70C98DE1E6826C47F934AC3E600AF06F105F69CC80F84E2289D28E5952815"
     },
     {
       "path": "override/fpSprite.glsl",
-      "bytes": 16402,
-      "sha256": "85A5853F5BA7A0CA9874F8D5A2898893C1895601406F2AED5480B788CE59B234"
+      "bytes": 22085,
+      "sha256": "065E28C595AF84A7ADDCBD97793BC8EEDCB5052BB26BAB1D92710CB0E2FD0816"
     },
     {
       "path": "override/fpTone.glsl",
@@ -84,8 +84,8 @@
     },
     {
       "path": "override/M_IEEE.lua",
-      "bytes": 388,
-      "sha256": "ADC3053C9A94587D393EC65F4E8EBA41198FC4C33B120132A55FF0AB78BE34CD"
+      "bytes": 380,
+      "sha256": "6FED5BAE7C6293B92AAC628325565578E4AB91210D59E19358C7F08DD72454E0"
     }
   ],
   "validation_required": [

@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "OH5500",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-10T22:25:54Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/OH5500",
+  "pack_manifest_sha256": "EF818C7988D4AD42CA210C1FB3DC50C52433F28D3D9C28B361832BB3ED055C06",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "CEEEA2B5E2D5BF7381F25103A6B8BE028E74CA21F75BDEFE7A32D9139B910EEC",
+  "required_resrefs": [
+    "AM0411RN",
+    "OHDLPORT"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0411RN/2026-10-11-accepted-am0411rn-all-areas-v1.json",
+      "sha256": "00739CCD13A5428B9C67C62827FBB944F99A34AAB51063C7D4B4F7233E8DD9B7",
+      "accepted_resrefs": [
+        "AM0411RN"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/OHDLPORT/2026-10-10-accepted-ohdlport-portails-final-v1.json",
+      "sha256": "11CD530BC5000C6C0C0757F4A84AC0166BF911C60FD5A25662DE04D2D7A03FC2",
+      "accepted_resrefs": [
+        "OHDLPORT"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

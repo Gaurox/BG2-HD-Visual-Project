@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR1800",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T19:44:35Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR1800",
+  "pack_manifest_sha256": "2C8250735B723C37823654EABE01C163E1CC8FE1DE3580320DD0B51C444EFC38",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "2CDF8EF3A1668776AE4DFE7F3FEA8D4BC4F2F9DD8485CEBCABDCFAA278CE889D",
+  "required_resrefs": [
+    "BUTRFLY",
+    "FLIESL"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/BUTRFLY/2026-10-11-preserved-historical-butrfly-v1.json",
+      "sha256": "50656651AB9E628345B5FCF8D0730FA1F3038357BFEEC5F93C1FD5DCA0B194A6",
+      "accepted_resrefs": [
+        "BUTRFLY"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLIESL/2026-10-11-accepted-fliesl-rounded-native-cadence-v1.json",
+      "sha256": "B2B690383C47014A962DBB0C1082B69F3518A8BE8D2F450CC6B74CA4159A03B6",
+      "accepted_resrefs": [
+        "FLIESL"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

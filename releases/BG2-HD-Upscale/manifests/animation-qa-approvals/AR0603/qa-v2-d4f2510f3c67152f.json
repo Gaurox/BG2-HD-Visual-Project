@@ -1,0 +1,118 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0603",
+  "status": "accepted",
+  "decision_date": "2026-09-17",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T19:44:42Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR0603",
+  "pack_manifest_sha256": "DBD401C15E68913E757553BA3584C7E6FDCE16C0CB9E1F4220B9474E67E8F5FC",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "BA9857DDFF0670C3271CFC68214875BC9A03FC87236FEA090CDAA64071F7B422",
+  "required_resrefs": [
+    "AM0603A",
+    "AM0603B",
+    "AM0603C1",
+    "AM0603C2",
+    "AM0603D1",
+    "AM0603D2",
+    "AM0603D3",
+    "AM0603H",
+    "AM0603I",
+    "BUBBLES2",
+    "PORTL2A"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0603A/2026-09-17-accepted-am0603a-ar0603-collapse-holds-apo8-30fps.json",
+      "sha256": "3B9423C97AC8878354F3972C8290655B472BF2BC799E708370D6E3436AEEF30F",
+      "accepted_resrefs": [
+        "AM0603A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0603B/2026-09-17-accepted-am0603b-ar0603-collapse-holds-apo8-30fps.json",
+      "sha256": "67763527B6EA0786274AFDF42E029138A726C3B1088FED2EB7C4C6733898BB7C",
+      "accepted_resrefs": [
+        "AM0603B"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0603C1/2026-09-17-accepted-am0603c1-ar0603-mechanical-native-alpha-apo8-30fps.json",
+      "sha256": "7E664C4E14749CF24C6C407D834E1ED6D3CB7FD9BE449BE2BE59902BF890FC73",
+      "accepted_resrefs": [
+        "AM0603C1"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0603C2/2026-09-17-accepted-am0603c2-ar0603-mechanical-native-alpha-apo8-30fps.json",
+      "sha256": "0D3FF2A29C129E40D70930918F98CD5AF44EED40C76B29BDEE0CFD4F107599D5",
+      "accepted_resrefs": [
+        "AM0603C2"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0603D1/2026-09-17-accepted-am0603d1-ar0603-collapse-holds-apo8-30fps.json",
+      "sha256": "D9266E93BE097A183518D372AD05B8563023971C825E8600647B28ECAD15DA1F",
+      "accepted_resrefs": [
+        "AM0603D1"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0603D2/2026-09-17-accepted-am0603d2-ar0603-collapse-holds-apo8-30fps.json",
+      "sha256": "E897E3C4D02EE63B1C92A6DC066B2C9B4FEE7930A3F1BFFA4F50A6F766A5FCED",
+      "accepted_resrefs": [
+        "AM0603D2"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0603D3/2026-09-17-accepted-am0603d3-ar0603-weighted-segments-apo8-30fps.json",
+      "sha256": "EB6782808FFA06EC630A4F9DA16A5D421D08EA68B3AE28DBC5C82B4AB5ABCBFA",
+      "accepted_resrefs": [
+        "AM0603D3"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0603H/2026-09-17-accepted-am0603h-ar0603-collapse-holds-apo8-30fps.json",
+      "sha256": "6772AE511664411D451EB6AD5CC45B8828210F95B830E1034E05A0A93874A254",
+      "accepted_resrefs": [
+        "AM0603H"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0603I/2026-09-17-accepted-am0603i-ar0603-collapse-holds-apo8-30fps.json",
+      "sha256": "870BE8A580EED74FF0B2113D22B82952197B85BE1C98E24AD3F5921FB538DD25",
+      "accepted_resrefs": [
+        "AM0603I"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/BUBBLES2/2026-09-05-accepted-bubbles2-xbr2x-blend-premultiply-budget-20260905.json",
+      "sha256": "2BEBE590F0F27C2B21E0D9E696B74E2D89193C5A77C698039D41285DAFA744B0",
+      "accepted_resrefs": [
+        "BUBBLES2"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/PORTL2A/2026-10-11-preserved-historical-portl2a-v1.json",
+      "sha256": "97CA591870ACD1F622E7FFEABFE9EE4BA8396DF085E51E2E2C68864CD76EE6FF",
+      "accepted_resrefs": [
+        "PORTL2A"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

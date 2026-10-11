@@ -1,0 +1,91 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0411",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T08:25:03Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR0411",
+  "pack_manifest_sha256": "3E34C7B6215EFC80C908EEE4717CCCAC5697E414BE3253C6751D621093B50A3A",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "AD9A8C8D490FD6E043232539CD5A9CD3BA803CC326DD9A7E5504A6A67D263787",
+  "required_resrefs": [
+    "AM0411RN",
+    "AM411MAC",
+    "BUBBLES2",
+    "DSTDVL1A",
+    "DSTDVL1B",
+    "DSTDVL1C",
+    "DSTDVL2B",
+    "DSTDVL2C"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0411RN/2026-10-11-accepted-am0411rn-all-areas-v1.json",
+      "sha256": "00739CCD13A5428B9C67C62827FBB944F99A34AAB51063C7D4B4F7233E8DD9B7",
+      "accepted_resrefs": [
+        "AM0411RN"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM411MAC/2026-09-11-accepted-ar0411-planar-sphere-apo8-x4-30fps-spline-fit1-dstdvl2-coreguard16-activefade-20260911.json",
+      "sha256": "016F11E58BB9146572B249488392F9FEBF91C1F77A191BC80FA38066FC4B501A",
+      "accepted_resrefs": [
+        "AM411MAC"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/BUBBLES2/2026-09-05-accepted-bubbles2-xbr2x-blend-premultiply-budget-20260905.json",
+      "sha256": "2BEBE590F0F27C2B21E0D9E696B74E2D89193C5A77C698039D41285DAFA744B0",
+      "accepted_resrefs": [
+        "BUBBLES2"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/DSTDVL1A/2026-10-11-accepted-dstdvl1a-all-maps-misty-v1.json",
+      "sha256": "0219E8EA833B830248199C4CF3DEBEC835E9EE3E5FCF539FE99333150276A490",
+      "accepted_resrefs": [
+        "DSTDVL1A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/DSTDVL1B/2026-10-11-accepted-dstdvl1b-all-maps-misty-v1.json",
+      "sha256": "0DA8D5D6044542B1CBB9614DB3A9E3098C7B7B87FEC5574C0CAC05A89D9EB1E9",
+      "accepted_resrefs": [
+        "DSTDVL1B"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/DSTDVL1C/2026-10-11-accepted-dstdvl1c-all-maps-misty-v1.json",
+      "sha256": "E1095ED7077C1B1BFA83B4EE47E1759C4A13382FC271D3CF94AAC1177F8804FF",
+      "accepted_resrefs": [
+        "DSTDVL1C"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/DSTDVL2B/2026-10-11-accepted-dstdvl2b-ar0411-misty-contour-v1.json",
+      "sha256": "45A7A24AF5C6A7AF9781074B39B84A7B3FEBEBE0A39953139BBAF4E5384D3044",
+      "accepted_resrefs": [
+        "DSTDVL2B"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/DSTDVL2C/2026-10-11-accepted-dstdvl2c-ar0411-misty-contour-v1.json",
+      "sha256": "B6FE6A722914B7A7BB22009DA55C393077C69547FCCDBDCBDB011AD5F6804F57",
+      "accepted_resrefs": [
+        "DSTDVL2C"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

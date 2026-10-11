@@ -24,6 +24,7 @@ $animationAuthorityLease = Enter-BG2HDAnimationAuthorityLock -WorkspaceRoot $wor
 try {
 & (Join-Path $release 'tools/Test-BG2HD-Phase5A-Assets.ps1') -ReleaseRoot $release
 & (Join-Path $release 'tools/Test-BG2HD-FutureSaveCompatibility.ps1') -ReleaseRoot $release
+& (Join-Path $release 'tests/Test-BG2HD-ConfigEncoding.ps1') -ReleaseRoot $release
 & (Join-Path $release 'tests/Test-BG2HD-Phase5A-Core.ps1') -GameRoot $GameRoot -ReleaseRoot $release
 & (Join-Path $release 'tests/Test-BG2HD-Phase5A-WeiDUUpdate.ps1') -WeiDUExecutable $WeiDUExecutable -GameRoot $GameRoot -ReleaseRoot $release
 & (Join-Path $release 'tests/Test-BG2HD-Phase4Archive.ps1') -ArchivePath $ArchivePath -GameRoot $GameRoot -ReleaseRoot $release

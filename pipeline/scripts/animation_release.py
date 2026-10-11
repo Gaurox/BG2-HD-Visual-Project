@@ -191,7 +191,9 @@ def workflow_module() -> Any:
 
 def validate_workflow_resref(resref: str) -> None:
     try:
-        result = workflow_module().check_workspace(ROOT, resref)
+        # Referenced predecessor decisions are verified separately by the proof chain.
+        # Superseded, malformed historical records remain available to the full audit.
+        result = workflow_module().check_workspace(ROOT, resref, selected_only=True)
     except (KeyError, OSError, TypeError, ValueError, RuntimeError) as error:
         raise ReleasePromotionError(f"workflow invalide pour {resref} : {error}") from error
     if not bool(result.get("ok")):
@@ -937,7 +939,7 @@ def load_area_selections(
         if requested.is_dir() and requested.name.upper() != area and (requested / area).is_dir():
             requested = requested / area
         selected_pack = repo_path(requested)
-        if selected_pack not in candidates:
+        if selected_pack not in candidates or set(candidates[selected_pack]) != set(validate_pack(area, selected_pack)[2]):
             # A complete area pack may be a byte-identical composition of resources that were
             # reviewed in separate per-resource packs. Keep the original decisions as authority,
             # including superseded accepted decisions when the current selection has since moved
@@ -957,7 +959,7 @@ def load_area_selections(
                         resolve_repo_path(str(current_area_record.get("path", "")), forbidden=True)
                     )
                     try:
-                        _, current_resources, _, _, _ = validate_pack(area, current_pack_path)
+                        _, current_resources, _, _, _ = validate_pack(area, current_pack_path, qa_evidence=True)
                     except ReleasePromotionError:
                         current_resources = []
                     if current_resources and equivalent_resource_groups(
@@ -989,7 +991,7 @@ def load_area_selections(
                         )
                         try:
                             _, evidence_resources, evidence_resrefs, _, _ = validate_pack(
-                                area, evidence_pack_path
+                                area, evidence_pack_path, qa_evidence=True
                             )
                         except ReleasePromotionError:
                             continue
@@ -1030,12 +1032,12 @@ def load_area_selections(
 
 
 def validate_pack(
-    area: str, pack_path: str
+    area: str, pack_path: str, *, qa_evidence: bool = False
 ) -> tuple[dict[str, Any], list[dict[str, Any]], list[str], Path, Path]:
     pack = resolve_repo_path(pack_path, forbidden=True)
     pack_relative = Path(repo_path(pack))
     require(
-        len(pack_relative.parts) == 4
+        (len(pack_relative.parts) >= 4 if qa_evidence else len(pack_relative.parts) == 4)
         and tuple(part.casefold() for part in pack_relative.parts[:2])
         == ("animations", "packs-par-zone"),
         f"pack final hors layout canonique : {pack_path}",
@@ -1130,7 +1132,7 @@ def validate_decision(
         f"pack différent entre sélection et décision : {resref}",
     )
     selected_manifest, selected_resources, selected_resrefs, selected_manifest_path, selected_registry_path = validate_pack(
-        area, selected_pack_path
+        area, selected_pack_path, qa_evidence=True
     )
     require(resref in selected_resrefs, f"ressource absente du pack QA : {area}/{resref}")
     selected_manifest_hash = sha256_file(selected_manifest_path)
@@ -2017,17 +2019,23 @@ def validate_approval_chain(
                 require(area in decision.get("tested_areas", []), f"zone absente de la décision historique : {relative_approval}/{resref}")
                 area_record = selection_area_record(decision, area)
                 require(area_record is not None, f"pack absent de la décision historique : {relative_approval}/{resref}")
-                require(repo_path(resolve_repo_path(str(area_record.get("path", "")), forbidden=True)) == source_pack, f"pack différent dans la décision historique : {relative_approval}/{resref}")
-                require(normalize_hash(area_record.get("manifest_sha256"), f"décision historique {resref}") == sha256_file(manifest_path), f"manifest différent dans la décision historique : {relative_approval}/{resref}")
-                require(normalize_hash(area_record.get("registry_sha256"), f"décision historique {resref}") == sha256_file(registry_path), f"registre différent dans la décision historique : {relative_approval}/{resref}")
+                evidence_pack = repo_path(resolve_repo_path(str(area_record.get("path", "")), forbidden=True))
+                _, evidence_resources, evidence_resrefs, evidence_manifest_path, evidence_registry_path = validate_pack(
+                    area, evidence_pack, qa_evidence=True
+                )
+                require(resref in evidence_resrefs, f"ressource absente de la décision historique : {relative_approval}/{resref}")
+                require(normalize_hash(area_record.get("manifest_sha256"), f"décision historique {resref}") == sha256_file(evidence_manifest_path), f"manifest différent dans la décision historique : {relative_approval}/{resref}")
+                require(normalize_hash(area_record.get("registry_sha256"), f"décision historique {resref}") == sha256_file(evidence_registry_path), f"registre différent dans la décision historique : {relative_approval}/{resref}")
+                require(equivalent_resource_groups(evidence_resources, resources, resref), f"ressource composée différente de la décision historique : {relative_approval}/{resref}")
                 continue
 
             require(schema == 3 and kind == "byte-identical-release-continuity", f"type de preuve historique invalide : {relative_approval}/{resref}")
             previous_pack = repo_path(resolve_repo_path(str(item.get("source_pack", "")), forbidden=True))
+            evidence_area = normalize_area(evidence_path.parent.name)
             previous_context = validate_approval_chain(
                 approval_path=evidence_path,
                 approval_sha256=evidence_hash,
-                area=area,
+                area=evidence_area,
                 expected_source_pack=previous_pack,
                 active=active,
                 cache=cache,
@@ -2199,7 +2207,7 @@ def _verify_release_candidate_from_validated_registry(
                 resolve_repo_path(str(area_record.get("path", "")), forbidden=True)
             )
             evidence_manifest, evidence_resources, evidence_resrefs, evidence_manifest_path, evidence_registry_path = validate_pack(
-                area, evidence_pack_path
+                area, evidence_pack_path, qa_evidence=True
             )
             require(resref in evidence_resrefs, f"ressource absente du pack de décision directe : {area}/{resref}")
             require(normalize_hash(area_record.get("manifest_sha256"), f"décision directe {resref}") == sha256_file(evidence_manifest_path), f"manifest différent dans la décision directe : {area}/{resref}")

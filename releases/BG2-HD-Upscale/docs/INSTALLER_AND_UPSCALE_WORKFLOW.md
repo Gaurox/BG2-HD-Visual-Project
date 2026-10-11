@@ -10,6 +10,9 @@ WeiDU remain compatible with Windows PowerShell.
 
 Release gates run only when finalization or the corresponding validation is explicitly requested.
 
+Local ZIP: `Build-BG2HD-LocalReproducible.ps1 -ZipCompression NoCompression`
+(default; user decision 2026-10-12). `Optimal` reserved for project finalization.
+
 ## Source of truth
 
 | State | Authority |
@@ -62,8 +65,9 @@ tier does not build the full staging or archive.
 ## Renderer prerequisite
 
 An asset candidate relying on a renderer fix must not be integrated against a rejected or
-different bundled DLL. Stage the exact fifteen-file `iee-0.1.0-alpha.8` candidate from a source
-`release-bundle`, with a `git:<commit>:<source-root>` provenance value, then validate it before
+different bundled DLL. Current candidate: exact fifteen-file `iee-0.1.0-alpha.9`, accepted installed
+DLL with retained source snapshot and SHA inventory in
+`pipeline/recipes/animations-release-finalization-20261011-v1/renderer-source-inventory.json`. Validate it before
 promotion. The promotion must atomically replace `bg2hd/renderer` and both copies of
 `renderer-bundle.json`; `runtime-compatibility.json` must pin the same DLL hash/bytes. Keep the
 release blocked until the clean-game and lifecycle gates are recorded.

@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "OH4101",
+  "status": "accepted",
+  "decision_date": "2026-09-21",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-21T21:10:41Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/OH4101",
+  "pack_manifest_sha256": "20762A716F7CFD39A685EB759F8701730F0C40A659AA36CBB358DFCD08543DF9",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "9826F5C4F4D1C32DF3F49437B35161F58B65A4EE1504D6C8FFCA3B88EB6DD734",
+  "required_resrefs": [
+    "FIRE_3GS"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_3GS/2026-09-21-accepted-fire-3gs-reboutcx-apo8-selection-accepted-20260921.json",
+      "sha256": "70DB996FF11779C69FE8DFC89BFA1201049AA367F98CBD626F3E13CEA27C678D",
+      "accepted_resrefs": [
+        "FIRE_3GS"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

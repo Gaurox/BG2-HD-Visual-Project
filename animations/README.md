@@ -29,9 +29,9 @@ uniquement si le format ou le défaut rencontré l'exige.
 
 Runs, packs, captures, backups et présence dans le jeu ne prouvent aucun statut.
 
-## Suivi au 2026-10-11 — QA et nettoyage clôturés
+## Suivi au 2026-10-12 — QA, nettoyage et release animations intégrés
 
-- [Rapport courant](../docs/validation/animations-cleanup-status-20261011-v4.json) ; rapports `v1`/`v2`/`v3` historiques immuables.
+- [Rapport courant](../docs/validation/animations-release-status-20261012-v1.json) ; [nettoyage v4](../docs/validation/animations-cleanup-status-20261011-v4.json) et rapports antérieurs immuables.
 - AR3021 : `AM3021D/E/F` acceptés réinstallés. AR5000 : quatre poissons acceptés ajoutés, ressources voisines identiques.
 - AR0307/AR0411 : verrous réalignés sans toucher au jeu. AR6001/AR6005 : recettes réparées par snapshots complets identiques.
 - 43 anciennes QA formalisées ; 246/246 BAM ont décision et sélection. Aucune nouvelle visite ingame déduite.
@@ -41,7 +41,10 @@ Runs, packs, captures, backups et présence dans le jeu ne prouvent aucun statut
 - Audit complémentaire : 43 runs supprimés (~0,98 Gio net), diagnostics archivés ; 29 cas ambigus et 22 anciennes réservations déplacés dans `../corbeille/animations-20261011-v1/` ; 665 runs conservés dans l'arbre actif. [Reçu](../pipeline/recipes/animations-trash-cleanup-20261011-v1/receipt.json), `index/run-quarantine-20261011-v1.json` pour résoudre les anciens chemins. Quarantaine ≠ QA, aucune preuve historique réécrite.
 - Contrôles après purge : 1 265 manifests QA/sélection présents et SHA exacts ; 234 zones installées = verrou = registre. Provenances legacy déjà manquantes consignées dans le plan, sans modifier leurs preuves historiques.
 - AM0602F : note historique 18 phases/30 FPS conservée ; version Native 9 phases confirmée par la QA AR0602 du 2026-09-05.
-- Release : finalisation séparée ; aucun payload, candidat, manifeste release ou paquet modifié.
+- Release alpha.6 : 234 zones approuvées, composition complète figée sous `packs-par-zone/animations-release-20261011-v1/` ; 246 BAM acceptés, aucune QA ingame nouvelle déduite. AM0309A/OHHPORT rattachés aux octets et contrats acquis ; anciennes décisions conservées.
+- Renderer alpha.9 : DLL acceptée arbres/nuit + contrats SPHINCT conservés ; activation `Shaders.EnableAreaAnimationX4=true`. WED AR0516 inchangé, preuve acquise reliée au registre courant.
+- Payload global : 28 630 fichiers / 616 composants ; schémas, neuf langues, TP2, SHA du staging, intégrité ZIP et installation/restauration sur fixtures passent. ZIP sans compression (méthode ZIP_STORED vérifiée) ; scratch de construction supprimé, anciens paquets conservés. Comparaison de deux builds non effectuée.
+- Publication `blocked` : cycle réel jeu propre/Steam/EEex, sauvegardes futures vanilla, désinstallation complète, cycle renderer combiné et contact/provenance publics. Assets retenus : aucun cas ambigu supplémentaire.
 
 ## Routage
 

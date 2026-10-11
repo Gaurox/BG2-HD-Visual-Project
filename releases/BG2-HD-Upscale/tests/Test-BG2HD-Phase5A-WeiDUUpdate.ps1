@@ -38,7 +38,15 @@ try {
     $originalBaldur=Get-Hash (Join-Path $game 'Baldur.exe');$fixture=Join-Path $game 'override/AR0703.TIS';New-Item -ItemType Directory -Path (Split-Path -Parent $fixture) -Force|Out-Null;[IO.File]::WriteAllBytes($fixture,[byte[]](5,4,3,2));$fixtureHash=Get-Hash $fixture
     $fixtureMod=Join-Path $game 'bg2hd';New-Item -ItemType Directory -Path $fixtureMod -Force|Out-Null
     foreach($item in Get-ChildItem -LiteralPath (Join-Path $release 'bg2hd') -Force){if($item.Name-in@('payload','payload-allvalidated')){continue};Copy-Item -LiteralPath $item.FullName -Destination (Join-Path $fixtureMod $item.Name) -Recurse}
-    Copy-Item -LiteralPath (Join-Path $release 'bg2hd/payload-allvalidated') -Destination (Join-Path $fixtureMod 'payload') -Recurse;Copy-Item -LiteralPath $weidu -Destination (Join-Path $game 'setup-bg2hd.exe')
+    # This fixture installs only Core and AR0703. Full archive coverage belongs
+    # to Test-BG2HD-Phase4Archive; avoid copying unrelated payloads here.
+    $fixtureEntries=@((Get-Content -LiteralPath (Join-Path $release 'manifests/content.json') -Raw -Encoding utf8|ConvertFrom-Json).entries|Where-Object{[int]$_.component_id-in@(0,1060)})
+    Require ($fixtureEntries.Count-gt0) 'Payload AR0703 absent du manifeste.'
+    foreach($entry in $fixtureEntries){
+        $relative=Join-Path $entry.payload_group ([IO.Path]::GetFileName($entry.source))
+        Copy-Required (Join-Path $release ('bg2hd/payload-allvalidated/'+$relative)) (Join-Path $fixtureMod ('payload/'+$relative))
+    }
+    Copy-Item -LiteralPath $weidu -Destination (Join-Path $game 'setup-bg2hd.exe')
     $env:BG2HD_DESKTOP_PATH=$desktop;Push-Location $game
     try {
         foreach($id in @(0,1060)){$result=Invoke-WeiDU '.\setup-bg2hd.exe' @('--noautoupdate','--force-install-list',"$id",'--language','0','--no-exit-pause');Require ($result.code -eq 0) "Installation initiale $id echouee : $($result.output)"}

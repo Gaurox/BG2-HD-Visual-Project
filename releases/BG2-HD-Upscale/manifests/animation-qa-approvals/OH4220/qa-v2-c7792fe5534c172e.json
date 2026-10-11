@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "OH4220",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T18:14:43Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/OH4220",
+  "pack_manifest_sha256": "4834BFB1DDA6C47632D5958EBB3D0E3989AAB9A696CA3F5BC1B304DB5C754BB4",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "62BAD63CC32697B856D541B85D61FA479E11EEB0CB644D0852CB56B8D506E061",
+  "required_resrefs": [
+    "FIRE_3",
+    "FLAME2L",
+    "OHRSGATE"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_3/2026-10-11-accepted-fire3-fade4-30fps-all-maps-v1.json",
+      "sha256": "4E8472E45E9C758978C575C550D69BFF76BD8BD5FC1639150729E0F22D21275A",
+      "accepted_resrefs": [
+        "FIRE_3"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLAME2L/2026-09-21-accepted-flame2l-reboutcx-selection-accepted-20260921.json",
+      "sha256": "835AE49D2128A3BD6406A955371C1F5C65B19F964DA6F80560C07F7C71F784F8",
+      "accepted_resrefs": [
+        "FLAME2L"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/OHRSGATE/2026-10-10-accepted-ohrsgate-portails-final-v1.json",
+      "sha256": "8606EF52DEFD9E4258597F78310A4777D212920369CBA45E23A1854F8904EDB9",
+      "accepted_resrefs": [
+        "OHRSGATE"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "OH4200",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T18:14:43Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/OH4200",
+  "pack_manifest_sha256": "71A77B19DB927363057A0EAC25E469FB113EE990D1C303F1625BE80BA786016F",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "84AA0C211B0EB6CE78DC55A86C357D441375B7E897ED72D485E4199F929E071E",
+  "required_resrefs": [
+    "FIRE",
+    "FIRE_3",
+    "FPIT1M"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE/2026-09-21-accepted-fire-reboutcx-apo8-selection-accepted-20260921.json",
+      "sha256": "14DCBA2D69C20127EEDD8E6D2E5D745B49CC04E82FD5AABD699137C36569D751",
+      "accepted_resrefs": [
+        "FIRE"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_3/2026-10-11-accepted-fire3-fade4-30fps-all-maps-v1.json",
+      "sha256": "4E8472E45E9C758978C575C550D69BFF76BD8BD5FC1639150729E0F22D21275A",
+      "accepted_resrefs": [
+        "FIRE_3"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FPIT1M/2026-09-21-accepted-fpit1m-reboutcx-apo8-selection-accepted-20260921.json",
+      "sha256": "88222CE7514189BC111C376C6467161728AC42E5210C8C5A6573A75276FABCA5",
+      "accepted_resrefs": [
+        "FPIT1M"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

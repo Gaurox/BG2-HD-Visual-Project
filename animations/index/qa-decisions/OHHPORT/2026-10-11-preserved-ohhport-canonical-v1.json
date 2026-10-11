@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:OHHPORT",
+  "correction_id": "native-frame2-opaque-black-background-transparent",
+  "decision": "Rattachement canonique de la QA acquise le 2026-10-10, octets et contrat identiques. Aucune nouvelle visite ingame. Source : animations/index/qa-decisions/OHHPORT/2026-10-10-accepted-ohhport-portails-final-v1.json. Validation ingame explicite utilisateur du lot final de cinq animations. Recette retenue : xbr2-blend-nearest2-apo8-backgroundfix-premul. Aucun changement release.",
+  "decision_date": "2026-10-10",
+  "decision_id": "2026-10-11-preserved-ohhport-canonical-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/OHHPORT/runs/ohhport-acquired-canonical-binding-20261011-v1/manifest.json",
+    "manifest_sha256": "81FA67A0D929FF62BB637D1ADD0A22CE0C3C81705BF4A0F96C5522506AD0A905",
+    "path": "animations/ressources/OHHPORT/runs/ohhport-acquired-canonical-binding-20261011-v1",
+    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "recipe_id": "xbr2-blend-nearest2-apo8-backgroundfix-premul",
+  "recorded_at_utc": "2026-10-11T21:26:42Z",
+  "resref": "OHHPORT",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0811",
+        "manifest_path": "animations/packs-par-zone/animations-release-20261011-v1/AR0811/manifest.json",
+        "manifest_sha256": "65876B95BF225DA4A68AD80A4462487EBA716941CF1143E5D108FB9CDA55A4B6",
+        "path": "animations/packs-par-zone/animations-release-20261011-v1/AR0811",
+        "registry_sha256": "001114CA32C3FF9721A12A736B59FC1DCAB6C6BF4C8D412EFA427981782A1C36",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/animations-release-20261011-v1/manifest.json",
+    "manifest_sha256": "3E0D5E0BDFDFB9A2AE96F21268E524A29A9C2231EDD36828DD42E41EC3E66A09",
+    "path": "animations/packs-par-zone/animations-release-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0811"
+  ]
+}

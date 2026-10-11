@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0904",
+  "status": "accepted",
+  "decision_date": "2026-09-16",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-15T23:21:38Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR0904",
+  "pack_manifest_sha256": "15B10E6CCEFD86DB71D1E2BB40AC93B6693D551F288B116488B19B9FCA9E0322",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "B55DCD19C33E953A7576BD31318C004A85ECB8838867A879921C5E197CECFAF2",
+  "required_resrefs": [
+    "AM904TL1",
+    "AM904TL2",
+    "AM904TL3",
+    "AM904TL4",
+    "FIRE_4"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM904TL1/2026-09-06-accepted-ar0904-taloscircle-ellipsefade-30fps-v2-20260906.json",
+      "sha256": "7C6B0EFAE8EDF5907C8F29D5A72E953290C8B0FBCED26817D45F0A06775E299B",
+      "accepted_resrefs": [
+        "AM904TL1"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM904TL2/2026-09-06-accepted-ar0904-taloscircle-ellipsefade-30fps-v2-20260906.json",
+      "sha256": "63C2B1C4932BE7C3CF33BB19D273D68C4B5865AFE71A2AC1978C4895E9B2F472",
+      "accepted_resrefs": [
+        "AM904TL2"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM904TL3/2026-09-06-accepted-ar0904-taloscircle-ellipsefade-30fps-v2-20260906.json",
+      "sha256": "37B08614548B036CADEBBA96A3E053159E3E4CFE300E211678BF07E419D8B3F2",
+      "accepted_resrefs": [
+        "AM904TL3"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM904TL4/2026-09-06-accepted-ar0904-taloscircle-ellipsefade-30fps-v2-20260906.json",
+      "sha256": "E8787D0D0D37914B3C7F4C8CCA8A0CDAAAFF55BDABB54F11AE892E1BFAA6FE2C",
+      "accepted_resrefs": [
+        "AM904TL4"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_4/2026-09-16-accepted-fire4-ar0202-feather2-x4.json",
+      "sha256": "4FD7A3EC60D7CECC0269AA6AC2005008D12630A9DBD366FE4034902A9E17FE23",
+      "accepted_resrefs": [
+        "FIRE_4"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

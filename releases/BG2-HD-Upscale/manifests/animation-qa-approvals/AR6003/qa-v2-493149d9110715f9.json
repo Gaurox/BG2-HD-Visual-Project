@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR6003",
+  "status": "accepted",
+  "decision_date": "2026-10-09",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-09T21:45:03Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR6003",
+  "pack_manifest_sha256": "7AB92575C17B0ABC19D485D65082198D96463541A0B10B511EF57A07388CDD93",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "7609C3221506A794674B8760EA7F88731A0091C8ED84E2578C0482B85E8262B8",
+  "required_resrefs": [
+    "AM6004B"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM6004B/2026-10-09-accepted-am6004b-fumee-spline-oval-gaussian1-v1.json",
+      "sha256": "D7840D71FC6899DC746575748AC95F21FBB18CFE19EA6E6EBAF2EA47E54A05D0",
+      "accepted_resrefs": [
+        "AM6004B"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

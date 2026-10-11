@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR1000",
+  "status": "accepted",
+  "decision_date": "2026-09-16",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-15T22:01:09Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR1000",
+  "pack_manifest_sha256": "E30C1C86D5341D15551E67656D020024FB830638101FA95A689F526345BE140E",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "A89F3FC237429EE56F0412576996DDF499C63C7F9FDFDE13A3E2012642672DAA",
+  "required_resrefs": [
+    "FOUNT1"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FOUNT1/2026-09-16-accepted-fount1-xbr2x-gaussian045-30fps-contour-aura-accepted-20260915.json",
+      "sha256": "5E43B85DBAF2FD29C114E3F043F9F9C9D184A919EF3477195B4491A80FBA9BFA",
+      "accepted_resrefs": [
+        "FOUNT1"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

@@ -1,0 +1,78 @@
+{
+  "bundle_id": "iee-0.1.0-alpha.9",
+  "source_inventory": "pipeline/recipes/animations-release-finalization-20261011-v1/renderer-source-inventory.json",
+  "current_dll_sha256": "5d4ee06d84e0d6c6f6fb81797eab0e9756b3ece335ebf537e57c5597e0b40bcf",
+  "source_acceptance": "pipeline/recipes/trees-night-color-20261011-v2/acceptance.json",
+  "ar0516_first_promotion": {
+    "mode": "plan",
+    "area": "AR0516",
+    "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR0516",
+    "required_resrefs": [
+      "AM0516LA",
+      "AM0516LB",
+      "AM0516LC",
+      "AM0516LD",
+      "SPHINCT",
+      "SPHINCT2"
+    ],
+    "direct_resrefs": [
+      "AM0516LA",
+      "AM0516LB",
+      "AM0516LC",
+      "AM0516LD",
+      "SPHINCT",
+      "SPHINCT2"
+    ],
+    "carried_resrefs": [],
+    "component_id": 3002,
+    "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0516/qa-v2-9f5d051dec44f57b.json",
+    "source_runs": [
+      {
+        "path": "animations/batches/ar0516-five-bam-segmented-holds-geometric-sigma3-erode2-alpha-30fps-20260916",
+        "manifest_path": "animations/batches/ar0516-five-bam-segmented-holds-geometric-sigma3-erode2-alpha-30fps-20260916/manifest.json",
+        "manifest_sha256": "9DE083F498EFBCB3E77461DF3F72DFEB3C2CBBB775CF93F516EC649F8C13E805",
+        "role": "final",
+        "asset_ids": [
+          "SPHINCT2"
+        ]
+      },
+      {
+        "path": "animations/batches/ar0516-labc-apo8-x4-30fps-hybrid-custom-blink-lc-exact-repeat-20260917",
+        "manifest_path": "animations/batches/ar0516-labc-apo8-x4-30fps-hybrid-custom-blink-lc-exact-repeat-20260917/manifest.json",
+        "manifest_sha256": "B29070A4D8CAA726BB6821C949B570EEF75F60E3759E2957EA50FD071D8387A8",
+        "role": "final",
+        "asset_ids": [
+          "AM0516LA",
+          "AM0516LB",
+          "AM0516LC"
+        ]
+      },
+      {
+        "path": "animations/ressources/AM0516LD/runs/am0516ld-apo8-x4-30fps-custom-blink-exact-repeat-20260917",
+        "manifest_path": "animations/ressources/AM0516LD/runs/am0516ld-apo8-x4-30fps-custom-blink-exact-repeat-20260917/manifest.json",
+        "manifest_sha256": "E2ADE4DAB0AF5A76EF5183E737BB34D25770A17DCC2A9B2B8310BA82C558C72E",
+        "role": "final",
+        "asset_ids": [
+          "AM0516LD"
+        ]
+      },
+      {
+        "path": "animations/ressources/SPHINCT/runs/sphinct-planar-accepted-20261010-v1",
+        "manifest_path": "animations/ressources/SPHINCT/runs/sphinct-planar-accepted-20261010-v1/manifest.json",
+        "manifest_sha256": "16E5B4246B1B105A14CAF61A8A21C95007CD51CB00ADDE5135D440DC0A5987C1",
+        "role": "final",
+        "asset_ids": [
+          "SPHINCT"
+        ]
+      }
+    ],
+    "writes": [
+      "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0516/qa-v2-9f5d051dec44f57b.json",
+      "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json"
+    ]
+  },
+  "new_wed_spec": "maps/wed-corrections/AR0516/lower-sphinct-cover-acquired-20261011-v2.json",
+  "evidence": "engine/InfinityEngine-Enhancer/source-patchee/docs/validation/ar0516-acquired-release-binding-20261011-v1.md",
+  "game_mutation": false,
+  "new_ingame_qa": false
+}

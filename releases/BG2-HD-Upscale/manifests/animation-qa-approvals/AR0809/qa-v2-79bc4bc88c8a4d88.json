@@ -1,0 +1,73 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0809",
+  "status": "accepted",
+  "decision_date": "2026-09-16",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-15T23:21:38Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR0809",
+  "pack_manifest_sha256": "DD3912A842BC82DED46FA7C34CDE6B8347DAF2EA539F39080A5B802162D6963D",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "1ADBD7FA2CEC88CA4F1385BBDAB3B69D36D79EB33B23AD27E7B7C86BBF7B74A1",
+  "required_resrefs": [
+    "AM0803A",
+    "AM0803B",
+    "AM0803C",
+    "AM0803D",
+    "AM0803E",
+    "FIRE_4"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0803A/2026-09-07-accepted-am0803a-apo8-x4-30fps-v2-spline-fit1-feather4-20260907.json",
+      "sha256": "3ADB5E24FB9388D519CE61E6FFB62BA9FA93C63B38C428A8C3CACE5D512A0426",
+      "accepted_resrefs": [
+        "AM0803A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0803B/2026-09-07-accepted-am0803b-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-20260907.json",
+      "sha256": "EE226A6155A2CB85E25DC6A8258AE950CB58C3D2FEF93B39DFF28AAA62E98045",
+      "accepted_resrefs": [
+        "AM0803B"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0803C/2026-09-07-accepted-am0803c-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-20260907.json",
+      "sha256": "C77FE75AD43EB94F8AD7B352257DBA4456301A728F8D962E5A88F13073ED6493",
+      "accepted_resrefs": [
+        "AM0803C"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0803D/2026-09-07-accepted-am0803d-apo8-x4-30fps-v2-spline-fit1-feather4-20260907.json",
+      "sha256": "735E52C24B99DA76449A6509AC8A54049B2F933B4356644EB1CD5ED91E30D37B",
+      "accepted_resrefs": [
+        "AM0803D"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0803E/2026-09-07-accepted-am0803e-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-20260907.json",
+      "sha256": "7AF8B562135788E3D7E3F4E4AA93BE080A7C043C79E2164D4A0D33D2D8F7F65C",
+      "accepted_resrefs": [
+        "AM0803E"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_4/2026-09-16-accepted-fire4-ar0202-feather2-x4.json",
+      "sha256": "4FD7A3EC60D7CECC0269AA6AC2005008D12630A9DBD366FE4034902A9E17FE23",
+      "accepted_resrefs": [
+        "FIRE_4"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

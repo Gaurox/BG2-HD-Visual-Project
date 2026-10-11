@@ -7,7 +7,7 @@
     "setup_executable": "setup-bg2hd.exe",
     "release_repository": "BG2-HD-Upscale"
   },
-  "version": "0.1.0-alpha.5",
+  "version": "0.1.0-alpha.6",
   "target": {
     "store": "Steam",
     "steam_app_id": 257350,
@@ -23,8 +23,7 @@
     "full-vanilla-uninstall-restoration-test-pending",
     "bootstrap-clean-game-eeex-absent-lifecycle-test-pending",
     "renderer-clean-game-lifecycle-test-pending",
-    "renderer-alpha.8-clean-game-combined-lifecycle-test-pending",
-    "animation-qa-historical-alpha-catalogue-hash-71957-unresolved",
+    "renderer-alpha.9-clean-game-combined-lifecycle-test-pending",
     "public-contact-and-provenance-record-pending"
   ],
   "manifest_files": [
@@ -40,7 +39,7 @@
     "manifests/licenses-and-exclusions.json"
   ],
   "content_scope": {
-    "maps": "369 zones x4 validees ingame (variantes nuit comprises) : SeedVR2 7B INT8, correction couleur LAB, ou none pour les zones du lot eau ; plus les reparations eau/WED validees et epinglees a l'octet. Le bootstrap historique de New-BG2HD-ContentManifest.ps1 et map-release-candidates.csv sont les deux sources ; OH6460 en est absente car son payload est celui du composant map-oh8100 (tileset partage).",
+    "maps": "399 variantes de zone x4 validees ingame (variantes nuit comprises) : SeedVR2 7B INT8, correction couleur LAB, ou none pour les zones du lot eau ; plus les reparations eau/WED validees et epinglees a l'octet. Le bootstrap historique de New-BG2HD-ContentManifest.ps1 et map-release-candidates.csv sont les deux sources ; OH6460 en est absente car son payload est celui du composant map-oh8100 (tileset partage).",
     "ui": "approved Topaz Recovery v2 Detail 50 x4 atlas set",
     "overlays": "overlay-sources.json is authoritative: validated WTLAKE/WTPOOL2/WSWPIL aliases and WTLAV family; WTSWAM/WTSEW/WTOIL remain stock",
     "sprites": "approved 173-animation playable, monster and Icewind creature x2 Catmull-Rom catalog, projected byte-for-byte",
@@ -52,6 +51,7 @@
       "HUD",
       "development override",
       "backups, archives, previews and captures"
-    ]
+    ],
+    "animations": "234 zones : composition BAM actuelle complete, registres runtime et octets exacts rattaches aux QA acquises ; 246 assets BAM acceptes, aucune nouvelle validation ingame deduite."
   }
 }

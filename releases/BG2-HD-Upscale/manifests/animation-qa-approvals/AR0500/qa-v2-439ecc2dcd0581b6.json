@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0500",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T19:44:38Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR0500",
+  "pack_manifest_sha256": "A154BA93F822ECA6D2C39E2A37D783CA2F514542964D5C9D97808921BF139691",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "FC68D488147F2D81157B04D93991A4004C8D466C195F329E353A0C3A929B377F",
+  "required_resrefs": [
+    "CHIMSMK",
+    "FIRE_3",
+    "FLAME2L",
+    "FLIESL",
+    "FLIESS"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/CHIMSMK/2026-10-11-preserved-historical-chimsmk-v1.json",
+      "sha256": "7867039FB4DCD3C57EFADAE227B65851C25CD4A42AE5782947F4D5A2044EE748",
+      "accepted_resrefs": [
+        "CHIMSMK"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_3/2026-10-11-accepted-fire3-fade4-30fps-all-maps-v1.json",
+      "sha256": "4E8472E45E9C758978C575C550D69BFF76BD8BD5FC1639150729E0F22D21275A",
+      "accepted_resrefs": [
+        "FIRE_3"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLAME2L/2026-09-21-accepted-flame2l-reboutcx-selection-accepted-20260921.json",
+      "sha256": "835AE49D2128A3BD6406A955371C1F5C65B19F964DA6F80560C07F7C71F784F8",
+      "accepted_resrefs": [
+        "FLAME2L"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLIESL/2026-10-11-accepted-fliesl-rounded-native-cadence-v1.json",
+      "sha256": "B2B690383C47014A962DBB0C1082B69F3518A8BE8D2F450CC6B74CA4159A03B6",
+      "accepted_resrefs": [
+        "FLIESL"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLIESS/2026-10-11-accepted-fliess-rounded-native-cadence-v1.json",
+      "sha256": "F408BD3F1AD7EE4B38F72BFEF775884F0CD1DF82E620A4B9BC404B2432E41C3B",
+      "accepted_resrefs": [
+        "FLIESS"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

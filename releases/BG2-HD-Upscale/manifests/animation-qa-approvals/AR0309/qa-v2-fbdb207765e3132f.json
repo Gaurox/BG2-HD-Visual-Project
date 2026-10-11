@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0309",
+  "status": "accepted",
+  "decision_date": "2026-09-21",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T21:14:14Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR0309",
+  "pack_manifest_sha256": "3F58F6EA30CF3383B935695BDD00D97A6D1907B1ADD5FFD375855EF26E957031",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "29C9F51BB81A493EF66C9240D295722F1D7DB1D740FF2BA25D94AFB29C593972",
+  "required_resrefs": [
+    "AM0309A",
+    "BUTRFLY",
+    "FIRE_4"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0309A/2026-10-11-preserved-am0309a-occurrence-945-763-v1.json",
+      "sha256": "E54C221C1AF6B1CB9F104848C8A532B67F30A5705B2EAF8D396DF6FCFE077445",
+      "accepted_resrefs": [
+        "AM0309A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/BUTRFLY/2026-10-11-preserved-historical-butrfly-v1.json",
+      "sha256": "50656651AB9E628345B5FCF8D0730FA1F3038357BFEEC5F93C1FD5DCA0B194A6",
+      "accepted_resrefs": [
+        "BUTRFLY"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_4/2026-09-16-accepted-fire4-ar0202-feather2-x4.json",
+      "sha256": "4FD7A3EC60D7CECC0269AA6AC2005008D12630A9DBD366FE4034902A9E17FE23",
+      "accepted_resrefs": [
+        "FIRE_4"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR2008",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T13:40:39Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR2008",
+  "pack_manifest_sha256": "BA304F0987002AC1879E46A462C74A50E7BAAC399C3C67BDE7A5F34BAC9229FC",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "CC25D76C2A67068311CBF99ED558C0BBF54AB67B1A288C5BA3FD30037A7210A1",
+  "required_resrefs": [
+    "AM2008A",
+    "FIRE_4"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM2008A/2026-10-11-accepted-am2008a-lot3-final-v1.json",
+      "sha256": "B25D8F31360C1517E7D1559965D310989459801A0DE6783A51EC570127042296",
+      "accepted_resrefs": [
+        "AM2008A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_4/2026-09-16-accepted-fire4-ar0202-feather2-x4.json",
+      "sha256": "4FD7A3EC60D7CECC0269AA6AC2005008D12630A9DBD366FE4034902A9E17FE23",
+      "accepted_resrefs": [
+        "FIRE_4"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR4000",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T10:03:11Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR4000",
+  "pack_manifest_sha256": "958C0CDC561DF0A414CCF1EA9EE13FFA0F695589AE4F86BBD74A65F09687E324",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "915452D22EE677E1DF2B262B2EDB6B5EF9FA4ABE2A6514B111A818D43805453F",
+  "required_resrefs": [
+    "AM4000Z"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM4000Z/2026-10-11-accepted-am4000z-lot2-final-v1.json",
+      "sha256": "9127620CE493397AD2DD02943676A796738B921966824F66B0D14B6998D437E9",
+      "accepted_resrefs": [
+        "AM4000Z"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

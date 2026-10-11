@@ -1,0 +1,55 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR5503",
+  "status": "accepted",
+  "decision_date": "2026-09-22",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-22T20:20:57Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR5503",
+  "pack_manifest_sha256": "13D2EE57B1C1DAECC88E0B8CE624A329FBBF331DA64CF4112EE769691D64C4DA",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "5E72D2603F5D6A60AFB7E4887B3B0187019966F23373AB030E601DDAE16F2204",
+  "required_resrefs": [
+    "AM5503A",
+    "AM5503C",
+    "AM5503D",
+    "FIRE_4"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM5503A/2026-09-22-accepted-am5503a-reboutcx-apo8-selection-accepted-20260922.json",
+      "sha256": "9DA45D05A1B927AAF5536BC5D9F44F4CFFAAE5BA33522682D1F2F4F0F928AC26",
+      "accepted_resrefs": [
+        "AM5503A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM5503C/2026-09-22-accepted-am5503c-reboutcx-apo8-selection-accepted-20260922.json",
+      "sha256": "67DA169BCA206E1A97D3F6201D5B364E3F49B5B51F88C3D95D431BCC0F5717F6",
+      "accepted_resrefs": [
+        "AM5503C"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM5503D/2026-09-22-accepted-am5503d-reboutcx-apo8-selection-accepted-20260922.json",
+      "sha256": "EC00A780EB8C49F463ADCEC202568FF5444DEB8096041E124357F656723E43A3",
+      "accepted_resrefs": [
+        "AM5503D"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_4/2026-09-16-accepted-fire4-ar0202-feather2-x4.json",
+      "sha256": "4FD7A3EC60D7CECC0269AA6AC2005008D12630A9DBD366FE4034902A9E17FE23",
+      "accepted_resrefs": [
+        "FIRE_4"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

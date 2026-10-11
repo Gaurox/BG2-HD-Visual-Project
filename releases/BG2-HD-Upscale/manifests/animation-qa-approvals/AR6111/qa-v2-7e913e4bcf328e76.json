@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR6111",
+  "status": "accepted",
+  "decision_date": "2026-09-21",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-21T20:22:59Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR6111",
+  "pack_manifest_sha256": "2BBC3278052EFF8A647B5AD699E16402DE90CC5C2406AF059F4B3903A0C81EDB",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "2F3C5C914AD8F691FFB8039CE92FA3C9B061CEB97BF3C3F1A207E35E8D2AA135",
+  "required_resrefs": [
+    "FPIT1M"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FPIT1M/2026-09-21-accepted-fpit1m-reboutcx-apo8-selection-accepted-20260921.json",
+      "sha256": "88222CE7514189BC111C376C6467161728AC42E5210C8C5A6573A75276FABCA5",
+      "accepted_resrefs": [
+        "FPIT1M"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

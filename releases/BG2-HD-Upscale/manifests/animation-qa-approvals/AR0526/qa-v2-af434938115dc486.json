@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0526",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T18:14:43Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR0526",
+  "pack_manifest_sha256": "100E0763B346488A0C49BC7AE76A6D37538AB899AE45D35476EEEDACD8B35AB2",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "AFF74C8E851AC73B46799CBE1D53F743FE8F89662531927D091D9701682C7D04",
+  "required_resrefs": [
+    "AM0202FL",
+    "FIRE_3",
+    "FIRE_4"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0202FL/2026-09-16-accepted-am0202fl-projectile-magic-x4.json",
+      "sha256": "AD41F906FED18D1BE464309DDFF3CA6AC4F952322005C05EA71D25E87822E9B8",
+      "accepted_resrefs": [
+        "AM0202FL"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_3/2026-10-11-accepted-fire3-fade4-30fps-all-maps-v1.json",
+      "sha256": "4E8472E45E9C758978C575C550D69BFF76BD8BD5FC1639150729E0F22D21275A",
+      "accepted_resrefs": [
+        "FIRE_3"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_4/2026-09-16-accepted-fire4-ar0202-feather2-x4.json",
+      "sha256": "4FD7A3EC60D7CECC0269AA6AC2005008D12630A9DBD366FE4034902A9E17FE23",
+      "accepted_resrefs": [
+        "FIRE_4"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

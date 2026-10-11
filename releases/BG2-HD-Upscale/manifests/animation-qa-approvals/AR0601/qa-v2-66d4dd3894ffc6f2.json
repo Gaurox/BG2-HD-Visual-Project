@@ -1,0 +1,82 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0601",
+  "status": "accepted",
+  "decision_date": "2026-09-04",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T19:44:19Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR0601",
+  "pack_manifest_sha256": "AFF637EB50E9AA5E1432410662CE2A572F0DB0763339413C04DD2F1FFF9A13C0",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "1903754FFD37C0A5E7D14576F28B0762A571E12C5558F7796ECF81ED038DB651",
+  "required_resrefs": [
+    "AM0602J",
+    "AM0602K1",
+    "AM0602K2",
+    "AM0602L1",
+    "AM0602L2",
+    "AM0602M",
+    "FPIT1S"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0602J/2026-10-11-preserved-historical-am0602j-v1.json",
+      "sha256": "781B3B987E5E81A1C66B95103CF10B48F9169ED5F65A90DE5C331C6E4DDBC22B",
+      "accepted_resrefs": [
+        "AM0602J"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0602K1/2026-10-11-preserved-historical-am0602k1-v1.json",
+      "sha256": "988CB32FC1359886545A2B5DBFEBC5A4CD5723A30020411A38D633371C51CCC0",
+      "accepted_resrefs": [
+        "AM0602K1"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0602K2/2026-10-11-preserved-historical-am0602k2-v1.json",
+      "sha256": "ABFD6D664950C4B45B03661F2C62EA676617F80D9ABB01F309BC8FF2ACFE7B82",
+      "accepted_resrefs": [
+        "AM0602K2"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0602L1/2026-10-11-preserved-historical-am0602l1-v1.json",
+      "sha256": "FF07FAE8EC6FD13A9398F7E149E3AEC19A9F3DE5CB68BF4D9C2B77ACC1D60F8D",
+      "accepted_resrefs": [
+        "AM0602L1"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0602L2/2026-10-11-preserved-historical-am0602l2-v1.json",
+      "sha256": "9C75777EAF2E2D5483B7F8C343C51A5D29CD36BF11125B6A4ADC7E6C4C797849",
+      "accepted_resrefs": [
+        "AM0602L2"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0602M/2026-10-11-preserved-historical-am0602m-v1.json",
+      "sha256": "EFCF59E1EE81DEE2348D7C4171548982727B9B904209F5659701091C506D9E16",
+      "accepted_resrefs": [
+        "AM0602M"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FPIT1S/2026-09-04-accepted-fpit1s-contour-fondu-j-masques-20260904.json",
+      "sha256": "DEDE54A262D47539DEE19D2F08EBE8CC27FA512A592E32290F807DD9CB8F02B3",
+      "accepted_resrefs": [
+        "FPIT1S"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

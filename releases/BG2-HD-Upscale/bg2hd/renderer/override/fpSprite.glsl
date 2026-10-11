@@ -11,11 +11,14 @@ varying lowp vec4 vColor;
 // See licenses/DSHADERS-MIT.txt.
 // IEE_CREATURE_ROUTING_CONTRACT_V1
 // IEE_CREATURE_FILTER_CONTRACT_V1
+// IEE_CREATURE_MINIFICATION_CONTRACT_V1
 // IEE_CREATURE_STYLE_CONTRACT_V1
 // IEE_SPRITE_SCOPE_CONTRACT_V1
 
 uniform lowp float uIeeShaderSuiteEnabled;
 uniform lowp float uIeeCreatureFilterMode;
+uniform lowp float uIeeCreatureSdfEncoded;
+lowp vec4 ieeFetchCreatureSdf(in mediump vec2 texCoord);
 uniform mediump vec2 uIeeCreatureTexelSize;
 uniform lowp float uIeeCreatureStyleEnabled;
 uniform lowp float uIeeCreatureColorSpace;
@@ -60,9 +63,23 @@ lowp vec3 ieeCreatureWorkingRgb(in lowp vec3 color)
 	return color;
 }
 
+lowp vec4 ieeCreatureStoredSample(in mediump vec2 texCoord)
+{
+	if (uIeeCreatureSdfEncoded > 0.5) return ieeFetchCreatureSdf(texCoord);
+	lowp vec4 sampleColor = texture2D(uTex, texCoord);
+	if (uIeeCreatureFilterMode > 3.5 && uIeeCreatureFilterMode < 4.5)
+	{
+		// Mips and level zero are premultiplied. Decode before native tint,
+		// blur, selection and straight-alpha engine blending, including MAG.
+		if (sampleColor.a <= 0.000001) return vec4(0.0);
+		sampleColor.rgb = clamp(sampleColor.rgb / sampleColor.a, 0.0, 1.0);
+	}
+	return sampleColor;
+}
+
 lowp vec4 ieeCreatureWorkingSample(in mediump vec2 texCoord)
 {
-	lowp vec4 sampleColor = texture2D(uTex, texCoord);
+	lowp vec4 sampleColor = ieeCreatureStoredSample(texCoord);
 	mediump float alpha = clamp(sampleColor.a, 0.0, 1.0);
 	if (alpha <= 0.000001)
 	{
@@ -80,6 +97,70 @@ mediump vec4 ieeCreatureCatmullRomWeights(in mediump float phase)
 		 1.5 * phase3 - 2.5 * phase2 + 1.0,
 		-1.5 * phase3 + 2.0 * phase2 + 0.5 * phase,
 		 0.5 * phase3 - 0.5 * phase2);
+}
+
+// IEE_CREATURE_SDF_CONTRACT_V1
+// V9: RGB = extruded live Q3m material. A = 7-bit signed distance + shadow bit.
+// Distance units are x2 texels, encoded as round(distance*16)+64.
+lowp vec4 ieeFetchCreatureSdf(in mediump vec2 texCoord)
+{
+    mediump vec2 q = texCoord / uIeeCreatureTexelSize - vec2(0.5);
+    mediump vec2 base = floor(q);
+    mediump vec2 phase = q - base;
+    mediump vec4 wx = ieeCreatureCatmullRomWeights(phase.x);
+    mediump vec4 wy = ieeCreatureCatmullRomWeights(phase.y);
+    mediump float distances[16];
+    mediump vec3 rgb = vec3(0.0);
+    mediump float shadow = 0.0;
+    for (int y = 0; y < 4; ++y)
+    {
+        for (int x = 0; x < 4; ++x)
+        {
+            lowp vec4 tap = texture2D(uTex, (base + vec2(float(x-1), float(y-1)) + vec2(0.5)) * uIeeCreatureTexelSize);
+            mediump float code = floor(tap.a * 255.0 + 0.5);
+            distances[y*4+x] = (mod(code, 128.0) - 64.0) / 16.0;
+            mediump float weight = wx[x] * wy[y];
+            rgb += tap.rgb * weight;
+            shadow += floor(code / 128.0) * (127.0/255.0) * weight;
+        }
+    }
+    // Integrate the bilinear field over one screen pixel: same 8x8 rule as PDF.
+    mediump vec2 footprint = (abs(dFdx(texCoord)) + abs(dFdy(texCoord))) / uIeeCreatureTexelSize;
+    mediump float alpha = 0.0;
+    if (max(footprint.x, footprint.y) <= 2.0)
+    {
+        for (int y = 0; y < 8; ++y)
+        {
+            for (int x = 0; x < 8; ++x)
+            {
+                mediump vec2 p = phase + (vec2(float(x)+0.5, float(y)+0.5)/8.0 - vec2(0.5)) * footprint;
+                mediump vec2 cell = floor(p);
+                mediump vec2 f = p - cell;
+                int index = (int(cell.y)+1)*4 + int(cell.x)+1;
+                mediump float upper = mix(distances[index], distances[index+1], f.x);
+                mediump float lower = mix(distances[index+4], distances[index+5], f.x);
+                alpha += mix(upper, lower, f.y) > 0.0 ? 1.0/64.0 : 0.0;
+            }
+        }
+    }
+    else
+    {
+        // Extreme zoom-out exceeds this sixteen-texel stencil.
+        mediump float distance = mix(mix(distances[5],distances[6],phase.x), mix(distances[9],distances[10],phase.x),phase.y);
+        mediump float width = max(max(footprint.x,footprint.y),0.0001);
+        alpha = smoothstep(-width*0.5,width*0.5,distance);
+    }
+    mediump float total = alpha + clamp(shadow,0.0,1.0)*(1.0-alpha);
+    if (total <= 0.000001) return vec4(0.0);
+    return vec4(clamp(rgb,0.0,1.0)*alpha/total,total);
+}
+
+mediump float ieeCreatureNativeAlpha(in mediump vec2 texCoord)
+{
+    mediump float a = texture2D(uTex,texCoord).a;
+    if (uIeeCreatureSdfEncoded < 0.5) return a;
+    mediump float code = floor(a*255.0+0.5);
+    return mod(code,128.0) > 64.0 ? 1.0 : floor(code/128.0)*(127.0/255.0);
 }
 
 mediump float ieeCreatureNormalCdf(in mediump float x, in mediump float invScale)
@@ -178,6 +259,66 @@ mediump vec4 ieeFetchCreatureCatmullRom(in mediump vec2 texCoord,
 	return vec4(premultiplied / alpha, alpha);
 }
 
+lowp vec4 ieeFetchCreatureBox(in mediump vec2 texCoord,
+							in mediump vec2 texelSize)
+{
+	// Axis-aligned engine sprite quads, including mirrors. Integrate exact
+	// texel overlap over the screen-pixel footprint, with premultiplied sums.
+	highp vec2 footprint = fwidth(texCoord) / texelSize;
+	if (max(footprint.x, footprint.y) <= 1.0)
+		return ieeCreatureWorkingSample(texCoord); // MAG = NEAREST
+	footprint = max(footprint, vec2(1.0));
+	// Bounded cost: measured x4 minimum needs 4.86 texels/axis. Outside
+	// the supported <=16 footprint, retain nearest instead of truncating BOX.
+	if (max(footprint.x, footprint.y) > 16.0)
+		return ieeCreatureWorkingSample(texCoord);
+	highp vec2 firstEdge = texCoord / texelSize - footprint * 0.5;
+	highp vec2 lastEdge = firstEdge + footprint;
+	highp vec2 firstTexel = floor(firstEdge);
+	highp vec4 total = vec4(0.0);
+	for (int y = 0; y < 17; ++y)
+	{
+		highp float row = firstTexel.y + float(y);
+		if (row >= lastEdge.y) break;
+		highp float wy = max(0.0, min(row + 1.0, lastEdge.y) - max(row, firstEdge.y));
+		for (int x = 0; x < 17; ++x)
+		{
+			highp float column = firstTexel.x + float(x);
+			if (column >= lastEdge.x) break;
+			highp float wx = max(0.0, min(column + 1.0, lastEdge.x) - max(column, firstEdge.x));
+			lowp vec4 tap = ieeCreatureWorkingSample(
+				(vec2(column, row) + vec2(0.5)) * texelSize);
+			total += vec4(tap.rgb * tap.a, tap.a) * (wx * wy);
+		}
+	}
+	total /= footprint.x * footprint.y;
+	if (total.a <= 0.000001) return vec4(0.0);
+	return vec4(clamp(total.rgb / total.a, 0.0, 1.0), clamp(total.a, 0.0, 1.0));
+}
+
+lowp vec4 ieeFetchCreatureColor(in mediump vec2 texCoord,
+							  out mediump vec3 gaussianRgb)
+{
+	if (uIeeCreatureSdfEncoded > 0.5) { gaussianRgb = vec3(0.0); return ieeCreatureWorkingSample(texCoord); }
+	bool styleActive = ieeCreatureStyleActive();
+	bool validSize = uIeeCreatureTexelSize.x > 0.0 && uIeeCreatureTexelSize.y > 0.0;
+	bool reconstruct = uIeeCreatureFilterMode > 1.5 && uIeeCreatureFilterMode < 2.5 && validSize;
+	bool box = uIeeCreatureFilterMode > 2.5 && uIeeCreatureFilterMode < 3.5 && validSize;
+	bool sharpen = styleActive && abs(uIeeCreatureSharpen) > 0.000001;
+	gaussianRgb = vec3(0.0);
+	lowp vec4 color;
+	if (reconstruct || sharpen)
+		color = ieeFetchCreatureCatmullRom(texCoord, uIeeCreatureTexelSize, reconstruct, gaussianRgb);
+	else if (styleActive || box)
+		color = ieeCreatureWorkingSample(texCoord);
+	else
+		color = ieeCreatureStoredSample(texCoord);
+	if (box) color = ieeFetchCreatureBox(texCoord, uIeeCreatureTexelSize);
+	if (sharpen && color.a > 0.000001)
+		color.rgb = color.rgb * (1.0 + uIeeCreatureSharpen) - gaussianRgb * uIeeCreatureSharpen;
+	return color;
+}
+
 mediump float ieeCreatureSegmentDistance2(in mediump vec2 point,
 										  in mediump vec2 first,
 										  in mediump vec2 second)
@@ -205,7 +346,7 @@ void ieeFetchCreatureOutlineRegion(in mediump vec2 baseTexel,
 		{
 			mediump vec2 coordinate =
 				(baseTexel + vec2(float(x), float(y)) + vec2(0.5)) * texelSize;
-			region[index] = clamp(texture2D(uTex, coordinate).a, 0.0, 1.0);
+			region[index] = clamp(ieeCreatureNativeAlpha(coordinate), 0.0, 1.0);
 			++index;
 		}
 	}
@@ -373,32 +514,15 @@ mediump float normpdf(in mediump float x, in mediump float sigma)
 void main()
 {
 	bool styleActive = ieeCreatureStyleActive();
-	bool reconstruct = uIeeCreatureFilterMode > 1.5 &&
-		uIeeCreatureTexelSize.x > 0.0 && uIeeCreatureTexelSize.y > 0.0;
-	bool sharpenActive = styleActive && abs(uIeeCreatureSharpen) > 0.000001;
 	mediump vec3 gaussianRgb = vec3(0.0);
-	lowp vec4 texColor;
-	if (reconstruct || sharpenActive)
-	{
-		texColor = ieeFetchCreatureCatmullRom(
-			vTc, uIeeCreatureTexelSize, reconstruct, gaussianRgb);
-	}
-	else if (styleActive)
-	{
-		texColor = ieeCreatureWorkingSample(vTc);
-	}
-	else
-	{
-		texColor = texture2D(uTex, vTc);
-	}
-	if (sharpenActive && texColor.a > 0.000001)
-	{
-		texColor.rgb = texColor.rgb * (1.0 + uIeeCreatureSharpen) -
-			gaussianRgb * uIeeCreatureSharpen;
-	}
+	lowp vec4 texColor = ieeFetchCreatureColor(vTc, gaussianRgb);
 
 	lowp vec4 outColor = texColor;
-	if (!styleActive || uIeeCreatureOutlineMode <= 0.5)
+	if (uIeeCreatureSdfEncoded > 0.5)
+	{
+		outColor = texColor;
+	}
+	else if (!styleActive || uIeeCreatureOutlineMode <= 0.5)
 	{
 		const int mSize = 5;
 		const int kSize = (mSize-1)/2;
@@ -422,7 +546,7 @@ void main()
 				mediump vec2 coordinate = vTc + vec2(float(i) * .0005,float(j) * .0005);
 				lowp vec4 sampleColor = styleActive
 					? ieeCreatureWorkingSample(coordinate)
-					: texture2D(uTex, coordinate);
+					: ieeCreatureStoredSample(coordinate);
 				blurColour += kernel[kSize+j]*kernel[kSize+i]*sampleColor;
 				if (sampleColor.a > 0.5)
 				{

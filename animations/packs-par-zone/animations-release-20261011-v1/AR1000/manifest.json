@@ -1,0 +1,340 @@
+{
+  "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+  "status": "completed",
+  "created_utc": "2026-10-11T21:04:19.586526+00:00",
+  "scale": 4,
+  "registry_version": 3,
+  "runtime_contract": {
+    "feature": "TimedTimeline",
+    "clock": "QPC-pause-aware",
+    "registry_version": 3
+  },
+  "registry": "AreaAnimations-X4.registry",
+  "registry_sha256": "a89f3fc237429ee56f0412576996ddf499c63c7f9fdfde13a3e2012642672daa",
+  "registry_bytes": 224,
+  "area_id": "AR1000",
+  "resource_count": 1,
+  "frame_count": 10,
+  "raw_bytes": 2368000,
+  "runtime_budget_enforced": true,
+  "base_assets": [],
+  "new_assets": [],
+  "resources": [
+    {
+      "resref": "FOUNT1",
+      "frame_count": 10,
+      "cycle_count": 1,
+      "geometry_mode": "per-frame",
+      "frames": [
+        {
+          "frame": 0,
+          "logical_size_x1": [
+            53,
+            66
+          ],
+          "physical_size_x4": [
+            212,
+            264
+          ],
+          "centre_x1": [
+            27,
+            32
+          ],
+          "asset": "AAX4-FOUNT1-frame000.rgba",
+          "sha256": "4111ff40757ce38e926245db10fe3c5c381517ff834a5fda4bd240a873a5dc50",
+          "bytes": 223872
+        },
+        {
+          "frame": 1,
+          "logical_size_x1": [
+            56,
+            71
+          ],
+          "physical_size_x4": [
+            224,
+            284
+          ],
+          "centre_x1": [
+            28,
+            31
+          ],
+          "asset": "AAX4-FOUNT1-frame001.rgba",
+          "sha256": "ffd7dbf75eb845bba7474f38eaf253021e719141c7455d847f04cae460d17543",
+          "bytes": 254464
+        },
+        {
+          "frame": 2,
+          "logical_size_x1": [
+            57,
+            68
+          ],
+          "physical_size_x4": [
+            228,
+            272
+          ],
+          "centre_x1": [
+            28,
+            31
+          ],
+          "asset": "AAX4-FOUNT1-frame002.rgba",
+          "sha256": "34e31db5dc312f2f64e7386ebe12b374d6b989df4fbbe66cc0f72218eceb95db",
+          "bytes": 248064
+        },
+        {
+          "frame": 3,
+          "logical_size_x1": [
+            60,
+            65
+          ],
+          "physical_size_x4": [
+            240,
+            260
+          ],
+          "centre_x1": [
+            30,
+            32
+          ],
+          "asset": "AAX4-FOUNT1-frame003.rgba",
+          "sha256": "c399403ce4c7f1809cd47771af8170913aa6faf279c18ce509221a4cbb7ffa72",
+          "bytes": 249600
+        },
+        {
+          "frame": 4,
+          "logical_size_x1": [
+            50,
+            65
+          ],
+          "physical_size_x4": [
+            200,
+            260
+          ],
+          "centre_x1": [
+            24,
+            32
+          ],
+          "asset": "AAX4-FOUNT1-frame004.rgba",
+          "sha256": "2a599e04d010c7cf44ee9e1f7925800e3266f567bdf9aecf58ce2add93e08fac",
+          "bytes": 208000
+        },
+        {
+          "frame": 5,
+          "logical_size_x1": [
+            53,
+            66
+          ],
+          "physical_size_x4": [
+            212,
+            264
+          ],
+          "centre_x1": [
+            27,
+            32
+          ],
+          "asset": "AAX4-FOUNT1-frame005.rgba",
+          "sha256": "43d77caadc226289fde9d6a13eddce63c5f9e146192553d218175599309b7591",
+          "bytes": 223872,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 0,
+            "left_native_frame": 0,
+            "right_native_frame": 1
+          }
+        },
+        {
+          "frame": 6,
+          "logical_size_x1": [
+            56,
+            71
+          ],
+          "physical_size_x4": [
+            224,
+            284
+          ],
+          "centre_x1": [
+            28,
+            31
+          ],
+          "asset": "AAX4-FOUNT1-frame006.rgba",
+          "sha256": "72ddb8e10c28b5d097e39282fb8139c735fb0a6714aed0e45481cc5c6f78fabf",
+          "bytes": 254464,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 1,
+            "left_native_frame": 1,
+            "right_native_frame": 2
+          }
+        },
+        {
+          "frame": 7,
+          "logical_size_x1": [
+            57,
+            68
+          ],
+          "physical_size_x4": [
+            228,
+            272
+          ],
+          "centre_x1": [
+            28,
+            31
+          ],
+          "asset": "AAX4-FOUNT1-frame007.rgba",
+          "sha256": "bf953e0dfbc998f666b377dce2c51ae85fd1fe8eb0863341a5f8a243ea58ed80",
+          "bytes": 248064,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 2,
+            "left_native_frame": 2,
+            "right_native_frame": 3
+          }
+        },
+        {
+          "frame": 8,
+          "logical_size_x1": [
+            60,
+            65
+          ],
+          "physical_size_x4": [
+            240,
+            260
+          ],
+          "centre_x1": [
+            30,
+            32
+          ],
+          "asset": "AAX4-FOUNT1-frame008.rgba",
+          "sha256": "9b111ae2260b695bf41b0e7ed4cc74791d187c8c9a4df2c84d480b7744f20ae7",
+          "bytes": 249600,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 3,
+            "left_native_frame": 3,
+            "right_native_frame": 4
+          }
+        },
+        {
+          "frame": 9,
+          "logical_size_x1": [
+            50,
+            65
+          ],
+          "physical_size_x4": [
+            200,
+            260
+          ],
+          "centre_x1": [
+            24,
+            32
+          ],
+          "asset": "AAX4-FOUNT1-frame009.rgba",
+          "sha256": "1eb09af0e2dab9e058ad3e5dd533bdf5a08ad90103cb63fa60c68eba02c13367",
+          "bytes": 208000,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 4,
+            "left_native_frame": 4,
+            "right_native_frame": 0
+          }
+        }
+      ],
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "timeline_frame_indices": [
+            0,
+            5,
+            1,
+            6,
+            2,
+            7,
+            3,
+            8,
+            4,
+            9
+          ]
+        }
+      ],
+      "assets": [
+        {
+          "name": "AAX4-FOUNT1-frame000.rgba",
+          "sha256": "4111ff40757ce38e926245db10fe3c5c381517ff834a5fda4bd240a873a5dc50",
+          "bytes": 223872
+        },
+        {
+          "name": "AAX4-FOUNT1-frame001.rgba",
+          "sha256": "ffd7dbf75eb845bba7474f38eaf253021e719141c7455d847f04cae460d17543",
+          "bytes": 254464
+        },
+        {
+          "name": "AAX4-FOUNT1-frame002.rgba",
+          "sha256": "34e31db5dc312f2f64e7386ebe12b374d6b989df4fbbe66cc0f72218eceb95db",
+          "bytes": 248064
+        },
+        {
+          "name": "AAX4-FOUNT1-frame003.rgba",
+          "sha256": "c399403ce4c7f1809cd47771af8170913aa6faf279c18ce509221a4cbb7ffa72",
+          "bytes": 249600
+        },
+        {
+          "name": "AAX4-FOUNT1-frame004.rgba",
+          "sha256": "2a599e04d010c7cf44ee9e1f7925800e3266f567bdf9aecf58ce2add93e08fac",
+          "bytes": 208000
+        },
+        {
+          "name": "AAX4-FOUNT1-frame005.rgba",
+          "sha256": "43d77caadc226289fde9d6a13eddce63c5f9e146192553d218175599309b7591",
+          "bytes": 223872
+        },
+        {
+          "name": "AAX4-FOUNT1-frame006.rgba",
+          "sha256": "72ddb8e10c28b5d097e39282fb8139c735fb0a6714aed0e45481cc5c6f78fabf",
+          "bytes": 254464
+        },
+        {
+          "name": "AAX4-FOUNT1-frame007.rgba",
+          "sha256": "bf953e0dfbc998f666b377dce2c51ae85fd1fe8eb0863341a5f8a243ea58ed80",
+          "bytes": 248064
+        },
+        {
+          "name": "AAX4-FOUNT1-frame008.rgba",
+          "sha256": "9b111ae2260b695bf41b0e7ed4cc74791d187c8c9a4df2c84d480b7744f20ae7",
+          "bytes": 249600
+        },
+        {
+          "name": "AAX4-FOUNT1-frame009.rgba",
+          "sha256": "1eb09af0e2dab9e058ad3e5dd533bdf5a08ad90103cb63fa60c68eba02c13367",
+          "bytes": 208000
+        }
+      ],
+      "playback_mode": "TimedTimeline",
+      "native_fps": {
+        "numerator": 15,
+        "denominator": 1
+      },
+      "target_fps": {
+        "numerator": 30,
+        "denominator": 1
+      }
+    }
+  ],
+  "timed_resources": [
+    "FOUNT1"
+  ],
+  "provenance": {
+    "operation": "release snapshot, exact installed bytes, QA checked separately",
+    "source_lock": "animations/index/area-pack-lock.json",
+    "game_mutation": false
+  }
+}

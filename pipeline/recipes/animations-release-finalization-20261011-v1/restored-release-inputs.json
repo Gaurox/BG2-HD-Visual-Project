@@ -1,0 +1,17 @@
+{
+  "restored": [
+    {
+      "source": "releases/BG2-HD-Upscale/archive/staging-before-alpha6-20261011/payload-allvalidated/overlay-wtlake/WLAKE00.PVRZ",
+      "restored": "maps/technical-overlays/WTLAKE/runs/seedvr2-7b-int8-wavelet-periodic-x4/04_build_x4/WLAKE00.PVRZ",
+      "sha256": "BCC99E2E6E2881E9D216687044A661C68EC42D0EEC1A4103C341894BB5E2FA10",
+      "bytes": 166525
+    },
+    {
+      "source": "releases/BG2-HD-Upscale/archive/staging-before-alpha6-20261011/payload-allvalidated/overlay-wtlake/WTLAKE.TIS",
+      "restored": "maps/technical-overlays/WTLAKE/runs/seedvr2-7b-int8-wavelet-periodic-x4/04_build_x4/WTLAKE.TIS",
+      "sha256": "1743A734B7E94FA60AB927B6615933DBDF7B5BF998019C66428413801BB62EE1",
+      "bytes": 96
+    }
+  ],
+  "reason": "Rehydrate missing WTLAKE release inputs from retained staging; exact already-approved bytes, no policy or QA change"
+}

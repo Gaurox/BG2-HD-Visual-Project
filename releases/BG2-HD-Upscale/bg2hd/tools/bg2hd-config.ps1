@@ -23,9 +23,9 @@ function Read-TextPreservingEncoding([string]$Path) {
     $bytes = [IO.File]::ReadAllBytes($Path)
     $encoding = [Text.UTF8Encoding]::new($false)
     $bomLength = 0
-    if ($bytes.Length -ge 3 -and $bytes[0..2] -ceq @(0xEF,0xBB,0xBF)) { $encoding=[Text.UTF8Encoding]::new($true); $bomLength=3 }
-    elseif ($bytes.Length -ge 2 -and $bytes[0..1] -ceq @(0xFF,0xFE)) { $encoding=[Text.UnicodeEncoding]::new($false,$true); $bomLength=2 }
-    elseif ($bytes.Length -ge 2 -and $bytes[0..1] -ceq @(0xFE,0xFF)) { $encoding=[Text.UnicodeEncoding]::new($true,$true); $bomLength=2 }
+    if ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) { $encoding=[Text.UTF8Encoding]::new($true); $bomLength=3 }
+    elseif ($bytes.Length -ge 2 -and $bytes[0] -eq 0xFF -and $bytes[1] -eq 0xFE) { $encoding=[Text.UnicodeEncoding]::new($false,$true); $bomLength=2 }
+    elseif ($bytes.Length -ge 2 -and $bytes[0] -eq 0xFE -and $bytes[1] -eq 0xFF) { $encoding=[Text.UnicodeEncoding]::new($true,$true); $bomLength=2 }
     [PSCustomObject]@{ Text=$encoding.GetString($bytes,$bomLength,$bytes.Length-$bomLength); Encoding=$encoding; NewLine=if($bytes -contains 13){"`r`n"}else{"`n"} }
 }
 function Set-OwnedValues([string]$Path, [object]$Values) {

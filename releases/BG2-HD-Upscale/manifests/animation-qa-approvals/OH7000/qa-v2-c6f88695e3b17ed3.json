@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "OH7000",
+  "status": "accepted",
+  "decision_date": "2026-09-21",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-21T19:40:29Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/OH7000",
+  "pack_manifest_sha256": "766378F3E727A73DADD88C9D48E0E2F9E8E886591F58751B273A45E74BD493CC",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "4FC2BF25F1AEB9FF6A9DCCB863E9B13EA4013692DF806266A040C4FD7153F217",
+  "required_resrefs": [
+    "FLAME2L"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLAME2L/2026-09-21-accepted-flame2l-reboutcx-selection-accepted-20260921.json",
+      "sha256": "835AE49D2128A3BD6406A955371C1F5C65B19F964DA6F80560C07F7C71F784F8",
+      "accepted_resrefs": [
+        "FLAME2L"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

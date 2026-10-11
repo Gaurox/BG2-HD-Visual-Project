@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR5204",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T08:53:14Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR5204",
+  "pack_manifest_sha256": "14F15520E081B373C4FA48F868A482A98558B2AFDEC45088F40664B1E026232E",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "CD5ADF313EB36CF9B68A9AB58D046DD2DAC142693575C902506376E2F632F97A",
+  "required_resrefs": [
+    "AM5204A",
+    "AM5204C",
+    "AM5204D"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM5204A/2026-10-10-accepted-am5204a-inner20-premul-v1.json",
+      "sha256": "0BB4BFFA5F2F2B316141831DE5899396D1768D58D40515188CED66D183EC7534",
+      "accepted_resrefs": [
+        "AM5204A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM5204C/2026-10-11-accepted-am5204c-lot1-all-maps-v1.json",
+      "sha256": "A8952FEFD83696FEAEF78E30CC5DDC7DDF470BC35A5A666CE75A331F1D40656E",
+      "accepted_resrefs": [
+        "AM5204C"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM5204D/2026-10-11-accepted-am5204d-lot1-all-maps-v1.json",
+      "sha256": "C511A1FD6E6B28985B7C011F4643B698D7521F0C8630764AF8B9C68F38267A78",
+      "accepted_resrefs": [
+        "AM5204D"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

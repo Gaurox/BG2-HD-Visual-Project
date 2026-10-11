@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR1404",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T16:57:31Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR1404",
+  "pack_manifest_sha256": "D77977388B84422695698A02C4DEA4BC2F7D592B119439B356825F801BF2F138",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "D2C6EEB9A854EF69639ABA5434937184279885E1CDB5F526E59307F7C2A3423D",
+  "required_resrefs": [
+    "1400T001",
+    "1400T002",
+    "1400T003",
+    "1400T004",
+    "1400T005"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/1400T001/2026-10-11-accepted-1400t001-seedvr-native-lighting-night235-v1.json",
+      "sha256": "AE4841B15631546C763073E8376E76CC4572244E37633D258F808F39745E4565",
+      "accepted_resrefs": [
+        "1400T001"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/1400T002/2026-10-11-accepted-1400t002-seedvr-native-lighting-night235-v1.json",
+      "sha256": "B1EB0F4C3F37D925C144AC0770ACDCF9E00BA86D9FB684E7AE7DDC030AD863AF",
+      "accepted_resrefs": [
+        "1400T002"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/1400T003/2026-10-11-accepted-1400t003-seedvr-native-lighting-night235-v1.json",
+      "sha256": "1BD7F867D41178CE5FD71A4DC4B16C3521C6E17F164ABC032B4A488B29261592",
+      "accepted_resrefs": [
+        "1400T003"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/1400T004/2026-10-11-accepted-1400t004-seedvr-native-lighting-night235-v1.json",
+      "sha256": "C1999769B81FABD6F925EFC25FF2BC9AB85C11E8A9D0EE277E7CFF7F9262CD22",
+      "accepted_resrefs": [
+        "1400T004"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/1400T005/2026-10-11-accepted-1400t005-seedvr-native-lighting-night235-v1.json",
+      "sha256": "372F695952DAAAE44F0E5F8EEA8910F0A72365E74AFBC5C4430C24395AD1E55F",
+      "accepted_resrefs": [
+        "1400T005"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

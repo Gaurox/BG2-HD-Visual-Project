@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR4500",
+  "status": "accepted",
+  "decision_date": "2026-09-22",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-22T05:23:50Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR4500",
+  "pack_manifest_sha256": "14C95D6AA0969E9700DC3A9A864F70C6178C88CF683F821E9511C2E0FAE5A420",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "38211D546B9529A0F40F60D0D6A8FF0DC67B38A2605F50DAF2D876DCF3DE3207",
+  "required_resrefs": [
+    "AM4500A",
+    "AM4500B",
+    "AM4500C",
+    "AM4500D",
+    "AM4500E"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM4500A/2026-09-22-accepted-am4500a-selection-accepted-20260922.json",
+      "sha256": "E2E803F792B2C8D030B83BEAC4ACDB3F1FBF4DD87E23642EE95E2FE95A68776E",
+      "accepted_resrefs": [
+        "AM4500A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM4500B/2026-09-22-accepted-am4500b-selection-accepted-20260922.json",
+      "sha256": "FC9CC5D85B36A9FC03B82EA419016404B5DD06E4E0719D609C1578C3B879A8BC",
+      "accepted_resrefs": [
+        "AM4500B"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM4500C/2026-09-22-accepted-am4500c-selection-accepted-20260922.json",
+      "sha256": "BB3D7134C5E270255474D516E6E14D86E0276AB05A50F9BB5864DC9270CFFCF3",
+      "accepted_resrefs": [
+        "AM4500C"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM4500D/2026-09-22-accepted-am4500d-selection-accepted-20260922.json",
+      "sha256": "773DC12520A3016A378C2E7E2787EF1D68455FEBF5BFA1947D8F0D016E1060A7",
+      "accepted_resrefs": [
+        "AM4500D"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM4500E/2026-09-22-accepted-am4500e-selection-accepted-20260922.json",
+      "sha256": "2F2B992BC6C1588064D38A98EDE036AADF9C36A1EAF45AB631F3710429F76496",
+      "accepted_resrefs": [
+        "AM4500E"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

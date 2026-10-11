@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 3,
+  "area": "AR2001",
+  "status": "accepted",
+  "decision_date": "2026-09-19",
+  "decision_origin": "explicit-user-ingame-qa-with-byte-identical-carry-forward",
+  "recorded_at_utc": "2026-09-18T23:44:14Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR2001",
+  "pack_manifest_sha256": "76FCD3F9D69FED736F8C91CCE5C51C05D21BAAE4CA1F1302C240E26C590EC9D9",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "B370F06C2B6F2763358CA9E5CA92172FE1584DA04416151DC5DE6194F7A6AA73",
+  "required_resrefs": [
+    "FIRE_4",
+    "FLAME2S",
+    "FPIT1S"
+  ],
+  "evidence": [
+    {
+      "kind": "byte-identical-release-continuity",
+      "path": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR2001/qa-v3-4056b2bb41a18aab.json",
+      "sha256": "B74658E670371A4FFE1A0359B8A1A42FBD48C95DC57E469DEDA8127CC57C36BF",
+      "accepted_resrefs": [
+        "FIRE_4"
+      ],
+      "source_pack": "animations/packs-par-zone/release-validated-composed-20260921/AR2001",
+      "pack_manifest_sha256": "2CEEEE3352B2AB360844BE998C197453887ADDCD94A6AB5A58D6F87F8635E346",
+      "registry_version": 3,
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline",
+      "resource_sha256": "008E865ADBBBAA043BB9219D385326861B9CAC17F5ED568A33BAFAC7274CED60"
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLAME2S/2026-09-19-accepted-flame2s-reboutcx-selection-accepted-20260919.json",
+      "sha256": "4248293576F5B5771CE6C930669266F2131FC3263EB6ED351ADEA54391F04125",
+      "accepted_resrefs": [
+        "FLAME2S"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FPIT1S/2026-09-04-accepted-fpit1s-contour-fondu-j-masques-20260904.json",
+      "sha256": "DEDE54A262D47539DEE19D2F08EBE8CC27FA512A592E32290F807DD9CB8F02B3",
+      "accepted_resrefs": [
+        "FPIT1S"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

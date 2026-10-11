@@ -1,0 +1,55 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0510",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T14:02:28Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR0510",
+  "pack_manifest_sha256": "BD009530F66E36748A8957FAB4DDE1FC99486CACD951DA53653B8B4CB461EFA0",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "6249543D82ED87DE88869A3D619C26DC1687B33C92112CCE19D9631D782D8A7D",
+  "required_resrefs": [
+    "AM0510A",
+    "FLAME2M",
+    "FLAME2S",
+    "FLMS"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0510A/2026-10-11-accepted-am0510a-lot4-final-v1.json",
+      "sha256": "16B70A569AF9456A2F66AE2FB79DDB52CC6481F4D484D2EDE3B940C54FF4F00A",
+      "accepted_resrefs": [
+        "AM0510A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLAME2M/2026-09-19-accepted-flame2m-reboutcx-selection-accepted-20260919.json",
+      "sha256": "E0042B8C320712D93983860921E3396D1B86B26683B4A8BE5047EC28451124C4",
+      "accepted_resrefs": [
+        "FLAME2M"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLAME2S/2026-09-19-accepted-flame2s-reboutcx-selection-accepted-20260919.json",
+      "sha256": "4248293576F5B5771CE6C930669266F2131FC3263EB6ED351ADEA54391F04125",
+      "accepted_resrefs": [
+        "FLAME2S"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLMS/2026-09-19-accepted-flms-flame2m-visual-selection-accepted-20260919.json",
+      "sha256": "6D787D9B41E59ED85E9E5C508DA19701E9B05B2C1EC5476D7D82E3945B922F62",
+      "accepted_resrefs": [
+        "FLMS"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

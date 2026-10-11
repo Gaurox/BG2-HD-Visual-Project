@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR3021",
+  "status": "accepted",
+  "decision_date": "2026-09-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-11T19:13:50Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR3021",
+  "pack_manifest_sha256": "BF96D1F730F4816D6FD5853348472A7ACA59FE18EB80CFEBEDD1961BA28F0C5E",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "BE36E103CA5C6CAF37125A6180B229D7EC7730ED1591E19B72CDCBB1BE8DB722",
+  "required_resrefs": [
+    "AM3021D",
+    "AM3021E",
+    "AM3021F"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM3021D/2026-09-11-accepted-ar3021-illithids-apo8-x4-30fps-v2-spline-fit1-feather4-20260911.json",
+      "sha256": "777D7B73460B4D7A3E8845526C161B5F7227E0D255A96F21582742563985144A",
+      "accepted_resrefs": [
+        "AM3021D"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM3021E/2026-09-11-accepted-ar3021-illithids-apo8-x4-30fps-v2-spline-fit1-feather4-20260911.json",
+      "sha256": "5E4F5AE0525B66509641C720F28F241EC29E9A4E4FCF6142D684853F2CB47AB3",
+      "accepted_resrefs": [
+        "AM3021E"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM3021F/2026-09-11-accepted-ar3021-illithids-apo8-x4-30fps-v2-spline-fit1-feather4-20260911.json",
+      "sha256": "B2AA947140421E8D34538A43945C538E2AE25595EB7BEAB9118F17FC2FB2E363",
+      "accepted_resrefs": [
+        "AM3021F"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

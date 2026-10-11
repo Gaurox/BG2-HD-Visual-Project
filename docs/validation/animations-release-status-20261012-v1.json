@@ -1,0 +1,171 @@
+{
+  "schema": "bg2-animation-release-status-v1",
+  "generated_at_utc": "2026-10-11T23:32:48.917870+00:00",
+  "request_date": "2026-10-11",
+  "status": "animation-release-integrated-local-alpha",
+  "version": "0.1.0-alpha.6",
+  "qa": {
+    "accepted_assets": 246,
+    "new_ingame_validation": false,
+    "previous_decisions_unchanged": true,
+    "preserved_authority_hashes": 523,
+    "mutable_selections_rebound": [
+      "animations/index/selections/AM0309A.json",
+      "animations/index/selections/OHHPORT.json"
+    ],
+    "bindings": [
+      "ar0309-occurrence-binding.json",
+      "ohhport-canonical-binding.json"
+    ],
+    "previous_tracking": "docs/validation/animations-cleanup-status-20261011-v4.json"
+  },
+  "production": {
+    "frozen_pack_root": "animations/packs-par-zone/animations-release-20261011-v1",
+    "complete_areas": 234,
+    "max_area_raw_bytes": 462810368,
+    "budget_bytes": 536870912
+  },
+  "installation": {
+    "game_mutation": false,
+    "acquired_installed_payloads_preserved": true,
+    "ini_activation": "owned_ini_keys.core-steam.Shaders.EnableAreaAnimationX4=true"
+  },
+  "release": {
+    "approved_animation_areas": 234,
+    "pending_animation_areas": 0,
+    "components": 616,
+    "files": 28630,
+    "bytes": 20229817299,
+    "by_kind": {
+      "overlay": {
+        "files": 26,
+        "bytes": 4185910,
+        "areas": 9
+      },
+      "ui": {
+        "files": 15,
+        "bytes": 150994944,
+        "areas": 1
+      },
+      "map": {
+        "files": 8136,
+        "bytes": 8812457726,
+        "areas": 399
+      },
+      "area-animation": {
+        "files": 19858,
+        "bytes": 8665029635,
+        "areas": 234
+      },
+      "effect": {
+        "files": 164,
+        "bytes": 67091482,
+        "areas": 1
+      },
+      "sprite": {
+        "files": 431,
+        "bytes": 2530057602,
+        "areas": 1
+      }
+    },
+    "manifest_sha256": {
+      "release.json": "71BF8094555F4DA763B659C79165F1CAEFF53E81A81A46A66B0B449C292476A7",
+      "content.json": "D4E77221820063C776C61E6566D99442F2BC5BFCB9C11E9CF7DB6C3526926996",
+      "components.json": "0C93C599551779BAC0A4E27BBA548F8D40AFC99A8524B9BC18671C29A874F869",
+      "animation-release-candidates.json": "CC45CCB117C6FA73A594FFB236550B16282474B3726FC52433DAC26D3CAE4AD5",
+      "renderer-bundle.json": "7BFD90C4067B29D2BB7FA711CA70CECEC50D38D296F6161109A6CD166090192A",
+      "runtime-compatibility.json": "678DB501CFD53F7A940B0FD2AB09FAB3394587A7D8E21CF2806CC14E72A13D16"
+    },
+    "tp2_sha256": "DFB072AA8109539395ABB0350EA955AA3B8C02FDD32F29C33F58FDE92DE99564"
+  },
+  "renderer": {
+    "bundle_id": "iee-0.1.0-alpha.9",
+    "accepted_dll_sha256": "5D4EE06D84E0D6C6F6FB81797EAB0E9756B3ECE335EBF537E57C5597E0B40BCF",
+    "retained_source_inventory": "pipeline/recipes/animations-release-finalization-20261011-v1/renderer-source-inventory.json",
+    "source_rebuild_performed": false,
+    "continuity": "accepted trees/night DLL and preserved SPHINCT source contracts; exact binary retained"
+  },
+  "verification": {
+    "unit_tests": 64,
+    "static_schema_translations_tp2": "passed",
+    "all_candidates_full_proof_verification": "passed",
+    "staging_sha256": "passed",
+    "payload_and_renderer": "passed",
+    "archive_checksums_and_fixed_timestamps": "passed",
+    "installer_and_restoration_fixtures": "passed",
+    "animation_install_samples": [
+      "AR0603",
+      "AR0900",
+      "AR0516"
+    ],
+    "real_clean_game_lifecycle": "pending",
+    "proof_logs": {
+      "compile-batch": {
+        "path": "pipeline/recipes/animations-release-finalization-20261011-v1/verification/compile-batch.txt",
+        "sha256": "306F5DB7353AAFF887D3FE6E0068703952FA776B1DD631161B4FD68D6E8F4EE8"
+      },
+      "phase2": {
+        "path": "pipeline/recipes/animations-release-finalization-20261011-v1/verification/phase2.txt",
+        "sha256": "1FF3A02A23D0E25477636E7AA930F469ED6B00A32ACD820CFC03F6CCEC884E65"
+      },
+      "staging": {
+        "path": "pipeline/recipes/animations-release-finalization-20261011-v1/verification/staging.txt",
+        "sha256": "71172D420E5492E672DF420C268CB5E4E14AE47F448B093EDEFE7C81AA8D1CC7"
+      },
+      "phase4": {
+        "path": "pipeline/recipes/animations-release-finalization-20261011-v1/verification/phase4.txt",
+        "sha256": "891DF7EBC50EB37E610F2BC131B2FE26F52D26F91DA5BC49922F9D2AA1784B9F"
+      },
+      "phase6b-uncompressed": {
+        "path": "pipeline/recipes/animations-release-finalization-20261011-v1/verification/phase6b-uncompressed.txt",
+        "sha256": "3FD7E7EF3A73DA85DB206416A8C8D27FA8059B1B135DAA3A7BA014162FF18DF4"
+      },
+      "phase5a-uncompressed": {
+        "path": "pipeline/recipes/animations-release-finalization-20261011-v1/verification/phase5a-uncompressed.txt",
+        "sha256": "23586670F2852B57735A2BCCB5CD45890FA89A2ECDA195F5E9628D09D6E6C4A8"
+      },
+      "unit-tests": {
+        "path": "pipeline/recipes/animations-release-finalization-20261011-v1/verification/unit-tests.txt",
+        "sha256": "9BCB1F21F492504BD78A49DF0D8326F7AFA98AF701B9263C89840D17DB012693"
+      },
+      "config-encodings": {
+        "path": "pipeline/recipes/animations-release-finalization-20261011-v1/verification/config-encodings.txt",
+        "sha256": "8089848F0500BBD4626845810028EE292C1B383AE304AD9828E7EC54E48BFE20"
+      },
+      "build-uncompressed": {
+        "path": "pipeline/recipes/animations-release-finalization-20261011-v1/verification/build-uncompressed.txt",
+        "sha256": "13A4796D8A415D50F6AC01D8A6F8CA2475952425F93AF82847F57617CFD8CA89"
+      }
+    }
+  },
+  "package": {
+    "path": "releases/BG2-HD-Upscale/dist-local/alpha6-animations-20261012-v1/BG2HD-0.1.0-alpha.6-windows-local-alpha.zip",
+    "sha256": "84758CC3025439D530871C7DBA00A094F262C99CDF2FB411A5CD01B8E0EE5126",
+    "bytes": 20279238357,
+    "zip_compression": "NoCompression",
+    "storage_methods_verified": "ZIP_STORED",
+    "independent_builds_comparison_performed": false,
+    "build_receipts": [
+      "pipeline/recipes/animations-release-finalization-20261011-v1/build-uncompressed.json"
+    ],
+    "superseded_trial_receipt": "pipeline/recipes/animations-release-finalization-20261011-v1/build-a.json",
+    "disposable_build_scratch_removed": true
+  },
+  "remaining": {
+    "published_asset_ambiguities": [],
+    "historical_exceptions": [
+      "superseded OHHPORT final_run layout retained immutably; current canonical binding repaired",
+      "previous 29 uncertain runs remain in corbeille/animations-20261011-v1; not promoted"
+    ],
+    "public_status": "blocked",
+    "public_blocking_conditions": [
+      "in-place-steam-shim-clean-install-lifecycle-test-pending",
+      "future-hd-save-native-vanilla-lifecycle-test-pending",
+      "full-vanilla-uninstall-restoration-test-pending",
+      "bootstrap-clean-game-eeex-absent-lifecycle-test-pending",
+      "renderer-clean-game-lifecycle-test-pending",
+      "renderer-alpha.9-clean-game-combined-lifecycle-test-pending",
+      "public-contact-and-provenance-record-pending"
+    ]
+  }
+}

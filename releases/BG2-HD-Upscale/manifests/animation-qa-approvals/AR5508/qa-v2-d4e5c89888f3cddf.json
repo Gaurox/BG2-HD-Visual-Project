@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR5508",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T08:53:15Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR5508",
+  "pack_manifest_sha256": "2B4CCE0FC610534B626F6914D8885061A334249304BF002016EF5AE7CF16153C",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "90E369D2896A5823B297A5F63931C5B50CF23A32BBF633DFB35FCC2048D4A873",
+  "required_resrefs": [
+    "AM5508C",
+    "AM5508D"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM5508C/2026-10-11-accepted-am5508c-lot1-all-maps-v1.json",
+      "sha256": "67C76C0ED14712F87C58D266F83E95C202C57AD281CD9E7D330211ABD38ECCE8",
+      "accepted_resrefs": [
+        "AM5508C"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM5508D/2026-10-11-accepted-am5508d-lot1-all-maps-v1.json",
+      "sha256": "69FFEEDF07A95623B9A1C475CAD4C5AC1E9301B355ED0964F7D04A4E663047D0",
+      "accepted_resrefs": [
+        "AM5508D"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR2903",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T10:03:13Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR2903",
+  "pack_manifest_sha256": "9FA7DF2A179D8478AD28B5FEB712AAB4848D6A6E0D2BB4C31BCD99F04F5EAE0F",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "59FF73BD7F50E471FBFAA960591BD09ACF14EB8C564867D5E59E63D158B3C832",
+  "required_resrefs": [
+    "BUBBLEA"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/BUBBLEA/2026-10-11-accepted-bubblea-lot2-final-v1.json",
+      "sha256": "E8DD8ADF04A60D5FA89A7D3C362475B57A0EA62505239FDC337BDB02D9D21AC5",
+      "accepted_resrefs": [
+        "BUBBLEA"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

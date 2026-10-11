@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR1101",
+  "status": "accepted",
+  "decision_date": "2026-10-09",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-09T19:48:33Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR1101",
+  "pack_manifest_sha256": "F1832C636337AD1ACCDF3ACD0CD5CA1E82A00481C659D104D6E419B02E097564",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "50D7BC31AE060C862F947B4E6B557C69A97B736A67424C2157476993A4A474FC",
+  "required_resrefs": [
+    "AM1101A"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM1101A/2026-10-09-accepted-am1101a-wed15-aa-bench-restored-v5.json",
+      "sha256": "E887A13D589966768096A7AA9245A9E95EA6B864A0B795BD7B3A53F45D863798",
+      "accepted_resrefs": [
+        "AM1101A"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

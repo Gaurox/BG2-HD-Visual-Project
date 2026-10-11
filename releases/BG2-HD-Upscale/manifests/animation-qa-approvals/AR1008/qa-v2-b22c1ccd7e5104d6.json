@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR1008",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T14:42:09Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR1008",
+  "pack_manifest_sha256": "07F1412431A22C75BA1F9883413B145B10F795927E4EC6D3C4D86B7E611B4F49",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "1917BE7C06EADED616BA0E83559BD5CD4B92224A34EB0C2E55ECC2005D4C24F1",
+  "required_resrefs": [
+    "AM1008B",
+    "AM1008BL",
+    "FLM2PUR"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM1008B/2026-09-11-accepted-ar1008-twisted-rune-apo8-x4-30fps-spline-fit1-feather4-20260911.json",
+      "sha256": "6165D4C91207FAB144E493B6E1B0C3DC2913A1A6349CD9CC26B6297F0861B7A0",
+      "accepted_resrefs": [
+        "AM1008B"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM1008BL/2026-09-11-accepted-ar1008-twisted-rune-apo8-x4-30fps-spline-fit1-feather4-20260911.json",
+      "sha256": "C938C9823BD9B27C869186398D9DBA6EB99A00EEDECAEF4EDAD9DDE06598BF47",
+      "accepted_resrefs": [
+        "AM1008BL"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLM2PUR/2026-10-11-accepted-flm2pur-lot5-final-v1.json",
+      "sha256": "E41A4F1A4FFD88DC42256746324AD484C343FE3D3F837138893A39F49467B42F",
+      "accepted_resrefs": [
+        "FLM2PUR"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

@@ -15,12 +15,28 @@
     "version": "1.2.0",
     "dependency_contract": "manifests/dependency-bootstrap.json",
     "weidu_components": [
-      {"tp2": "EEEX/EEEX.TP2", "id": 0, "name": "Quick Menu Core"},
-      {"tp2": "EEEX/EEEX.TP2", "id": 1, "name": "EEex"}
+      {
+        "tp2": "EEEX/EEEX.TP2",
+        "id": 0,
+        "name": "Quick Menu Core"
+      },
+      {
+        "tp2": "EEEX/EEEX.TP2",
+        "id": 1,
+        "name": "EEex"
+      }
     ],
     "files": [
-      {"path": "EEex.dll", "sha256": "ADC09B72951A28FED7B56CA1EBA530F54C90505A495432F97401EA3C9B19A4C9", "bytes": 1282048},
-      {"path": "InfinityLoader.exe", "sha256": "DF0D3604CB91C127643126B7960429194F3333BCE8BAC0E59AECB6A178AC84B9", "bytes": 41472}
+      {
+        "path": "EEex.dll",
+        "sha256": "ADC09B72951A28FED7B56CA1EBA530F54C90505A495432F97401EA3C9B19A4C9",
+        "bytes": 1282048
+      },
+      {
+        "path": "InfinityLoader.exe",
+        "sha256": "DF0D3604CB91C127643126B7960429194F3333BCE8BAC0E59AECB6A178AC84B9",
+        "bytes": 41472
+      }
     ]
   },
   "steam_launch_contract": {
@@ -45,23 +61,27 @@
     "status": "integrated-awaiting-clean-lifecycle-test",
     "active_development_install": {
       "path": "InfinityEngine-Enhancer.dll",
-      "sha256": "C0D7BBAE0DACD1ED794A34300B8523BFFC63C9894F95C866715513848FC2BA98",
-      "bytes": 1786368,
-      "qa_evidence": "sprite/index/qa-decisions/playable-characters/2026-09-11-accepted-playable-characters-x2-catmull-rom-v1.json"
+      "sha256": "5D4EE06D84E0D6C6F6FB81797EAB0E9756B3ECE335EBF537E57C5597E0B40BCF",
+      "bytes": 2244608,
+      "qa_evidence": "pipeline/recipes/trees-night-color-20261011-v2/acceptance.json"
     },
     "reproducible_source_build": {
-      "source": "git:c3bab523:engine/InfinityEngine-Enhancer/source-patchee",
-      "output_sha256": "C0D7BBAE0DACD1ED794A34300B8523BFFC63C9894F95C866715513848FC2BA98",
-      "output_bytes": 1786368,
-      "build_status": "alpha.8 frozen from the current unified animation, effect, sprite and water runtime; native tests passed; clean-game lifecycle remains required",
+      "source": "releases/BG2-HD-Upscale/release-inputs/renderer/iee-0.1.0-alpha.9-source",
+      "output_sha256": "5D4EE06D84E0D6C6F6FB81797EAB0E9756B3ECE335EBF537E57C5597E0B40BCF",
+      "output_bytes": 2244608,
+      "build_status": "alpha.9 exact accepted installed DLL and retained source snapshot; clean-game lifecycle remains pending",
       "bundle_manifest": "manifests/renderer-bundle.json"
     },
-    "publication_rule": "Alpha.8 is the only current renderer bundle; keep the release blocked until clean-game, AR0516, future-save and full-uninstall lifecycle gates are recorded.",
+    "publication_rule": "Alpha.9 preserves acquired animation contracts; publication requires clean-game, future-save and full-uninstall lifecycle gates.",
     "area_animation_runtime": {
       "status": "integrated",
       "payload_layout": "iee-assets/areas/<AREA>",
       "registry_version": 3,
-      "supported_registry_versions": [1, 2, 3],
+      "supported_registry_versions": [
+        1,
+        2,
+        3
+      ],
       "timed_timeline": true,
       "config_owner": "core-steam",
       "native_occlusion_bridge": {
@@ -69,8 +89,8 @@
         "release_status": "automated-validation-passed-user-lifecycle-pending",
         "ini_section": "Shaders",
         "ini_key": "EnableNativeOcclusionBridge",
-        "qa_evidence": "engine/InfinityEngine-Enhancer/source-patchee/docs/validation/native-occlusion-reactivation-20260831.md",
-        "wed_correction": "maps/wed-corrections/AR0516/lower-sphinct-cover.json"
+        "qa_evidence": "engine/InfinityEngine-Enhancer/source-patchee/docs/validation/ar0516-acquired-release-binding-20261011-v1.md",
+        "wed_correction": "maps/wed-corrections/AR0516/lower-sphinct-cover-acquired-20261011-v2.json"
       }
     }
   },
@@ -78,15 +98,15 @@
     "core-steam": {
       "Core": {
         "VerboseLogs": "false",
-        "PerformanceLogs": "false",
-        "EnableAreaAnimationX4": "true"
+        "PerformanceLogs": "false"
       },
       "Shaders": {
         "EnableWaterEffect": "true",
         "EnableEffectAnimationX4": "true",
         "EnableCreatureSpriteUpscaleTest": "true",
         "CreatureSpriteFilter": "CatmullRom",
-        "EnableNativeOcclusionBridge": "true"
+        "EnableNativeOcclusionBridge": "true",
+        "EnableAreaAnimationX4": "true"
       }
     },
     "ui-mainmenu-x4": {

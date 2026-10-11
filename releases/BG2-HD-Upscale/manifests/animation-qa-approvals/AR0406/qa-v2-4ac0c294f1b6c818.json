@@ -1,0 +1,82 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0406",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T15:40:12Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR0406",
+  "pack_manifest_sha256": "10441D737C493295C87D1958F8B84A65FA82B7CBF271BC4AAD3F269047B44BA7",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "6AAEC86598642AC113E1CD5425C9E691952BDE390C794D3573FDFA086AD9E34F",
+  "required_resrefs": [
+    "AM0406A",
+    "AM0406B",
+    "FIRE_4",
+    "FLAME2S",
+    "FLIESL",
+    "FLIESS",
+    "FPIT1S"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0406A/2026-09-18-accepted-am0406a-ar0406-mosaic-innerfade8-open.json",
+      "sha256": "9444B76C8B14C1C29837A4A1426A4B4B13EAA887D0953F8A474FC4DC67DC3914",
+      "accepted_resrefs": [
+        "AM0406A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0406B/2026-09-18-accepted-am0406b-ar0406-mosaic-innerfade8-open.json",
+      "sha256": "8824F42EEB62AEA332E7561B26147E738DD1C376A71E862206D30DEB158132E2",
+      "accepted_resrefs": [
+        "AM0406B"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_4/2026-09-16-accepted-fire4-ar0202-feather2-x4.json",
+      "sha256": "4FD7A3EC60D7CECC0269AA6AC2005008D12630A9DBD366FE4034902A9E17FE23",
+      "accepted_resrefs": [
+        "FIRE_4"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLAME2S/2026-09-19-accepted-flame2s-reboutcx-selection-accepted-20260919.json",
+      "sha256": "4248293576F5B5771CE6C930669266F2131FC3263EB6ED351ADEA54391F04125",
+      "accepted_resrefs": [
+        "FLAME2S"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLIESL/2026-10-11-accepted-fliesl-rounded-native-cadence-v1.json",
+      "sha256": "B2B690383C47014A962DBB0C1082B69F3518A8BE8D2F450CC6B74CA4159A03B6",
+      "accepted_resrefs": [
+        "FLIESL"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLIESS/2026-10-11-accepted-fliess-rounded-native-cadence-v1.json",
+      "sha256": "F408BD3F1AD7EE4B38F72BFEF775884F0CD1DF82E620A4B9BC404B2432E41C3B",
+      "accepted_resrefs": [
+        "FLIESS"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FPIT1S/2026-09-04-accepted-fpit1s-contour-fondu-j-masques-20260904.json",
+      "sha256": "DEDE54A262D47539DEE19D2F08EBE8CC27FA512A592E32290F807DD9CB8F02B3",
+      "accepted_resrefs": [
+        "FPIT1S"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

@@ -183,6 +183,104 @@ def configured_workspace(root: Path):
 
 
 class AnimationReleaseTests(unittest.TestCase):
+    def test_selected_complete_pack_also_composes_other_resource_decisions(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary)
+            with configured_workspace(root):
+                complete='animations/packs-par-zone/complete/AR1234'
+                separate='animations/packs-par-zone/separate/AR1234'
+                (root/complete).mkdir(parents=True);(root/separate).mkdir(parents=True)
+                for ref,pack in [('FOO',complete),('BAR',separate)]:
+                    write_json(release.SELECTIONS/(ref+'.json'),dict(resref=ref,
+                        qa_decision={'status':'accepted'},tested_areas=['AR1234'],
+                        source_pack={'areas':[dict(area='AR1234',path=pack)]}))
+                groups=[dict(resref=ref,assets=[{'sha256':'A'*64}]) for ref in ['BAR','FOO']]
+                def validate(area,pack,**kwargs):
+                    rr=groups if pack==complete else groups[:1]
+                    return {},rr,[r['resref'] for r in rr],None,None
+                with mock.patch.object(release,'validate_pack',side_effect=validate):
+                    pack,selections=release.load_area_selections('AR1234',complete)
+                self.assertEqual(pack,complete)
+                self.assertEqual(set(selections),{'BAR','FOO'})
+
+    def test_nested_qa_pack_keeps_release_layout_and_area_guards(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            with configured_workspace(root):
+                relative = 'animations/packs-par-zone/accepted/ar1234/AR1234'
+                pack = root / relative
+                pack.mkdir(parents=True)
+                registry = pack / 'AreaAnimations-X4.registry'
+                registry.write_bytes(b'registry')
+                manifest = dict(schema='bg2-upscale-area-animation-runtime-pack-v2',
+                    status='completed', scale=4, registry_version=3, area_id='AR1234',
+                    registry_sha256=release.sha256_file(registry), registry_bytes=8,
+                    runtime_budget_enforced=True)
+                with mock.patch.object(release, 'validate_runtime_pack', return_value=(manifest, [{'resref':'FOO'}])):
+                    with self.assertRaisesRegex(release.ReleasePromotionError, 'layout canonique'):
+                        release.validate_pack('AR1234', relative)
+                    self.assertEqual(release.validate_pack('AR1234', relative, qa_evidence=True)[2], ['FOO'])
+                    with self.assertRaisesRegex(release.ReleasePromotionError, 'autre zone'):
+                        release.validate_pack('AR9999', relative, qa_evidence=True)
+                    with self.assertRaisesRegex(release.ReleasePromotionError, 'layout canonique'):
+                        release.validate_pack('AR1234', 'other/packs/accepted/AR1234', qa_evidence=True)
+
+    def test_historical_composition_and_cross_area_continuity_require_exact_resources(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            with configured_workspace(root):
+                contexts = {}; decisions = {}
+                def pack(area, tag, refs):
+                    relative = f'animations/packs-par-zone/{tag}/{area}'
+                    folder = root / relative; folder.mkdir(parents=True)
+                    manifest = folder/'manifest.json'; manifest.write_bytes(tag.encode())
+                    registry = folder/'AreaAnimations-X4.registry'; registry.write_bytes(b'registry')
+                    resources = [dict(resref=ref, variant_index=0, assets=[dict(name=ref+'.rgba',sha256='A'*64)]) for ref in refs]
+                    value = (dict(registry_version=3,runtime_contract={'clock':'QPC'}),resources,sorted(refs),manifest,registry)
+                    contexts[relative] = value
+                    return relative, value
+                def decision(area, ref, relative, context):
+                    file = root/f'animations/index/qa-decisions/{ref}/{area}.json'
+                    write_json(file, {'fixture':area})
+                    record = dict(status='accepted',result_kind='x4',tested_areas=[area],source_pack={'areas':[
+                        dict(area=area,path=relative,manifest_sha256=release.sha256_file(context[3]),registry_sha256=release.sha256_file(context[4]))]})
+                    decisions[file] = record
+                    return dict(kind='ingame-qa-decision',path=release.repo_path(file),sha256=release.sha256_file(file),accepted_resrefs=[ref])
+                def approval(area, relative, context, evidence):
+                    schema = 3 if any(e['kind']=='byte-identical-release-continuity' for e in evidence) else 2
+                    record = dict(schema_version=schema,area=area,status='accepted',decision_date='2026-09-21',
+                        decision_origin='explicit-user-ingame-qa' if schema==2 else 'explicit-user-ingame-qa-with-byte-identical-carry-forward',
+                        recorded_at_utc='2026-10-11T22:00:00Z',source_pack=relative,
+                        pack_manifest_sha256=release.sha256_file(context[3]),registry='AreaAnimations-X4.registry',registry_version=3,
+                        registry_sha256=release.sha256_file(context[4]),required_resrefs=context[2],
+                        evidence=sorted(evidence,key=lambda e:e['accepted_resrefs']),decision='Acquired QA fixture')
+                    file = release.QA_APPROVALS/area/'accepted.json'; write_json(file,record)
+                    return file
+                source, source_context = pack('AR1234','source',['FOO'])
+                source_qa, source_qa_context = pack('AR1234','separate-qa',['FOO'])
+                source_approval = approval('AR1234',source,source_context,[decision('AR1234','FOO',source_qa,source_qa_context)])
+                target, target_context = pack('AR5678','composed',['BAR','FOO'])
+                direct_qa, direct_context = pack('AR5678','direct-qa',['BAR'])
+                carry = dict(kind='byte-identical-release-continuity',path=release.repo_path(source_approval),
+                    sha256=release.sha256_file(source_approval),accepted_resrefs=['FOO'],source_pack=source,
+                    pack_manifest_sha256=release.sha256_file(source_context[3]),registry_version=3,
+                    renderer_contract=release.renderer_contract(3),
+                    resource_sha256=release.canonical_sha256(release.resource_group(source_context[1],'FOO')))
+                target_approval = approval('AR5678',target,target_context,[decision('AR5678','BAR',direct_qa,direct_context),carry])
+                workflow = mock.Mock()
+                workflow._validate_decision_record.side_effect = lambda workspace,file,ref,errors,**kwargs: decisions[file]
+                def validate(area,relative,**kwargs):
+                    self.assertEqual(Path(relative).name,area)
+                    return contexts[relative]
+                def check():
+                    return release.validate_approval_chain(approval_path=target_approval,
+                        approval_sha256=release.sha256_file(target_approval),area='AR5678',expected_source_pack=target,active=set(),cache={})
+                with mock.patch.object(release,'validate_pack',side_effect=validate), mock.patch.object(release,'workflow_module',return_value=workflow):
+                    self.assertEqual(check()[3],['BAR','FOO'])
+                    source_qa_context[1][0]['assets'][0]['sha256']='B'*64
+                    with self.assertRaisesRegex(release.ReleasePromotionError,'ressource composée différente'):
+                        check()
+
     def test_occlusion_contract_validates_physical_and_release_authorities(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

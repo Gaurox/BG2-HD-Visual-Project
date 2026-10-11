@@ -197,8 +197,24 @@ function Get-AnimationCandidateEntries {
         $approved = ([string]$matches[0].approval_status -eq 'approved-for-release')
         Require ($approved -or $IncludePending) "Candidat animation delta non approuve : $area"
     }
+    $verifiableCandidates = @($candidates.candidates | Where-Object {
+        ($requestedAreas.Count -eq 0 -or [string]$_.area -in $requestedAreas) -and
+        ([string]$_.approval_status -eq 'approved-for-release' -or $IncludePending)
+    } | Sort-Object component_id)
+    if ($verifiableCandidates.Count -gt 0) {
+        $releaseVerifier = Join-Path $Workspace 'pipeline\scripts\verify_animation_release_candidate.py'
+        Require (Test-Path -LiteralPath $releaseVerifier -PathType Leaf) 'Validateur de release animation absent.'
+        $releaseArguments = @($releaseVerifier, '--workspace-root', $Workspace, '--animation-candidates-path', $CandidatesPath)
+        foreach ($item in $verifiableCandidates) { $releaseArguments += @('--area', [string]$item.area) }
+        if (-not [string]::IsNullOrWhiteSpace($AnimationQaApprovalOverridePath)) {
+            $releaseArguments += @('--animation-qa-approval-override-path', [IO.Path]::GetFullPath($AnimationQaApprovalOverridePath))
+        }
+        if ($IncludePending) { $releaseArguments += '--allow-pending' }
+        $releaseOutput = @(& python @releaseArguments 2>&1)
+        Require ($LASTEXITCODE -eq 0) ('Preuves release animation invalides : ' + ($releaseOutput -join [Environment]::NewLine))
+    }
     $result = [System.Collections.Generic.List[object]]::new()
-    foreach ($candidate in @($candidates.candidates | Sort-Object component_id)) {
+    foreach ($candidate in $verifiableCandidates) {
         if ($requestedAreas.Count -gt 0 -and [string]$candidate.area -notin $requestedAreas) { continue }
         $approved = ([string]$candidate.approval_status -eq 'approved-for-release')
         if (-not $approved -and -not $IncludePending) { continue }
@@ -241,26 +257,6 @@ function Get-AnimationCandidateEntries {
         $qaResrefs = @($qaApproval.required_resrefs | Sort-Object -Unique)
         $candidateResrefs = @($candidate.required_resrefs | Sort-Object -Unique)
         Require (-not (Compare-Object $candidateResrefs $qaResrefs)) "Resrefs non couverts exactement par la QA : $($candidate.area)"
-        $releaseVerifier = Join-Path $Workspace 'pipeline\scripts\verify_animation_release_candidate.py'
-        Require (Test-Path -LiteralPath $releaseVerifier -PathType Leaf) 'Validateur de release animation absent.'
-        $releaseArguments = @(
-            $releaseVerifier,
-            '--workspace-root', $Workspace,
-            '--animation-candidates-path', $CandidatesPath,
-            '--area', [string]$candidate.area
-        )
-        if ($qaApprovalPath -ne $declaredQaApprovalPath) {
-            $releaseArguments += @('--animation-qa-approval-override-path', $qaApprovalPath)
-        }
-        if (-not $approved -and $IncludePending) {
-            $releaseArguments += '--allow-pending'
-        }
-        $releaseOutput = @(& python @releaseArguments 2>&1)
-        $releaseExitCode = $LASTEXITCODE
-        Require ($releaseExitCode -eq 0) (
-            "Release animation invalide : $($candidate.area)" +
-            $(if ($releaseOutput.Count -gt 0) { [Environment]::NewLine + ($releaseOutput -join [Environment]::NewLine) } else { '' })
-        )
         $coveredQaResrefs = @()
         $qaDecisionFinalRuns = @{}
         $runtimeResrefByAsset = @{}

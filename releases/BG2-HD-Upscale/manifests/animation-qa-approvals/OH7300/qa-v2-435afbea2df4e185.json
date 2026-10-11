@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "OH7300",
+  "status": "accepted",
+  "decision_date": "2026-10-10",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-09T23:17:50Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/OH7300",
+  "pack_manifest_sha256": "7FDEEB69F67F6534305AA9E2ED06109CBA8BD9CBFCA1753E74C43DBD831E02B1",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "2E8AB0958AB8F5EF312AEBAE8A77F29119F05719CB64D55D034C390A9A8ED613",
+  "required_resrefs": [
+    "AMOH7300",
+    "FIRE",
+    "FLMM",
+    "FPIT1S",
+    "OHHNECR"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AMOH7300/2026-10-10-accepted-amoh7300-bulles-xbr2blend-apo8-premul-v1.json",
+      "sha256": "F8D1F85D6F610FED94F7DDB9904DF5BF0F119803BAFF4FA6C711F6C00BDBB2EE",
+      "accepted_resrefs": [
+        "AMOH7300"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE/2026-09-21-accepted-fire-reboutcx-apo8-selection-accepted-20260921.json",
+      "sha256": "14DCBA2D69C20127EEDD8E6D2E5D745B49CC04E82FD5AABD699137C36569D751",
+      "accepted_resrefs": [
+        "FIRE"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLMM/2026-09-21-accepted-flmm-reboutcx-selection-accepted-20260921.json",
+      "sha256": "F22354D217EB485608BC0F4F4884AF26CF71D7B37A1A885B1798974622F59CC6",
+      "accepted_resrefs": [
+        "FLMM"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FPIT1S/2026-09-04-accepted-fpit1s-contour-fondu-j-masques-20260904.json",
+      "sha256": "DEDE54A262D47539DEE19D2F08EBE8CC27FA512A592E32290F807DD9CB8F02B3",
+      "accepted_resrefs": [
+        "FPIT1S"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/OHHNECR/2026-10-10-accepted-ohhnecr-pieges-reboutcx-apo8-inner16-v1.json",
+      "sha256": "3FBD7F838233B548F55A3AD2E0C56C4E207DCE90045597DF90181C5863CAC391",
+      "accepted_resrefs": [
+        "OHHNECR"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

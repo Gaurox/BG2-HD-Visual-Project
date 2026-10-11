@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR5015",
+  "status": "accepted",
+  "decision_date": "2026-09-21",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-21T19:10:23Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR5015",
+  "pack_manifest_sha256": "00A279C31F7EE438A5E484AEB1FB4B7ADB5946B5529121EB118E4C24F31F53B4",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "60D57C44CF3592D308953F21CBEACC96C2CD1D15B55A74B6C50C885AC167E0C2",
+  "required_resrefs": [
+    "AM003XA"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM003XA/2026-09-21-accepted-cheminees-am003xa-am0323a-am0309a-apo8-x4-30fps-v2-innerfade8-20260921.json",
+      "sha256": "0521910A7A8DDCDE28C945CD7B6354A0C926E27E3166E372D4BC93A2DF153DBF",
+      "accepted_resrefs": [
+        "AM003XA"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

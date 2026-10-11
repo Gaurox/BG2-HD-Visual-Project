@@ -333,6 +333,19 @@ class AnimationWorkflowTests(unittest.TestCase):
         result = workflow.list_assets(self.fixture.root, ["non-traité"])
         self.assertEqual(["AMTEST"], [item["resref"] for item in result["assets"]])
 
+    def test_selected_check_preserves_historical_audit_and_rejects_current_corruption(self) -> None:
+        self.fixture.finalize()
+        historical=self.fixture.root/'animations/index/qa-decisions/AMTEST/malformed-legacy.json'
+        write_json(historical,{'schema_version':1})
+        before=historical.read_bytes()
+        self.assertFalse(workflow.check_workspace(self.fixture.root,'AMTEST')['ok'])
+        selected=workflow.check_workspace(self.fixture.root,'AMTEST',selected_only=True)
+        self.assertTrue(selected['ok'],selected['errors'])
+        self.assertEqual(historical.read_bytes(),before)
+        manifest=self.fixture.final_run/'manifest.json'
+        value=json.loads(manifest.read_text());value['status']='partial';write_json(manifest,value)
+        self.assertFalse(workflow.check_workspace(self.fixture.root,'AMTEST',selected_only=True)['ok'])
+
     def test_new_run_plan_is_read_only_and_apply_reserves_without_creating_leaf(self) -> None:
         rows, _ = workflow._read_registry(self.fixture.root)
         rows.append(

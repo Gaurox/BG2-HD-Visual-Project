@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0521",
+  "status": "accepted",
+  "decision_date": "2026-10-10",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-10T17:42:27Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR0521",
+  "pack_manifest_sha256": "A6A7F636FD3DCA9E7253BAAC4E459E9EA63824256C2BD9D014DCDAADB8E3FEAC",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "A51AF0656BABD3E36AC949A4E542D56057F205BF117D37DF0A63E364FBADEE21",
+  "required_resrefs": [
+    "SPHINCT"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/SPHINCT/2026-10-10-accepted-sphinct-planar-final-v1.json",
+      "sha256": "E540E0AFAB0FA05FB20C5F3C3EFF4320256EF9A13DA1C68A27987A70600906A8",
+      "accepted_resrefs": [
+        "SPHINCT"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

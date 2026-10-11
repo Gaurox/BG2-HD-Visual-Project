@@ -1,0 +1,55 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "OH8100",
+  "status": "accepted",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T08:14:09Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/OH8100",
+  "pack_manifest_sha256": "5E3A374E5E5A81B20CFA88536A0CD79B619BDEF9B543EEF284483A8F6481F7B9",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "CB8544061147BB7F17C792F762BF8414DA0D2EB02FCEC4E9A24396CE414D7BB5",
+  "required_resrefs": [
+    "BDFORCEW",
+    "FIRE_2B",
+    "FIRE_4",
+    "FPIT1S"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/BDFORCEW/2026-10-10-accepted-bdforcew-portails-final-v1.json",
+      "sha256": "7BB8E647A93AD7AA3AD11F310F25581395956B07989B1F1C0F475DE4DC664DDA",
+      "accepted_resrefs": [
+        "BDFORCEW"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_2B/2026-10-11-accepted-fire2b-ar3017-oh8100-v1.json",
+      "sha256": "B53EEA64D1A33F634EEE5117E3948F2130B68FA885DA87532403A4EBAE11BBDB",
+      "accepted_resrefs": [
+        "FIRE_2B"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_4/2026-09-16-accepted-fire4-ar0202-feather2-x4.json",
+      "sha256": "4FD7A3EC60D7CECC0269AA6AC2005008D12630A9DBD366FE4034902A9E17FE23",
+      "accepted_resrefs": [
+        "FIRE_4"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FPIT1S/2026-09-04-accepted-fpit1s-contour-fondu-j-masques-20260904.json",
+      "sha256": "DEDE54A262D47539DEE19D2F08EBE8CC27FA512A592E32290F807DD9CB8F02B3",
+      "accepted_resrefs": [
+        "FPIT1S"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

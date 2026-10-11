@@ -1,0 +1,100 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR6200",
+  "status": "accepted",
+  "decision_date": "2026-09-22",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-22T05:23:55Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR6200",
+  "pack_manifest_sha256": "D246167BF703A18BB7F9A82ED7B57761BE8109ADDE79A57FE41E7272321E4CC9",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "DA3E2E8C6F4558C8C70A3FEE66D05B6CB19448A5A5790F74DFAFA42C31105A4B",
+  "required_resrefs": [
+    "AM6200A",
+    "AM6200B",
+    "AM6200E",
+    "AM6200F",
+    "AM6200G",
+    "AM6200H",
+    "AM6200I",
+    "AM6200J",
+    "MMELSPIN"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM6200A/2026-09-22-accepted-am6200a-selection-accepted-20260922.json",
+      "sha256": "4C3B4EAFBABCF651067EEFDFB621FFCB78EDDEF20FFC725DC322E80B9F1B91BA",
+      "accepted_resrefs": [
+        "AM6200A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM6200B/2026-09-22-accepted-am6200b-selection-accepted-20260922.json",
+      "sha256": "B0639C18D5D21E90CACA7ACC69213FE7BF5B91CA943E5F820B78FC3FDDCB562C",
+      "accepted_resrefs": [
+        "AM6200B"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM6200E/2026-09-22-accepted-am6200e-selection-accepted-20260922.json",
+      "sha256": "894A926CC2BCC62FA13F749C96598AAADD7E6D1BFF312B29A7333870DFE9E659",
+      "accepted_resrefs": [
+        "AM6200E"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM6200F/2026-09-22-accepted-am6200f-selection-accepted-20260922.json",
+      "sha256": "25CFBE6884D863B322B340F3D6FCDC39C26839EAB0FC33D86E5F89DF4A3C9FBE",
+      "accepted_resrefs": [
+        "AM6200F"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM6200G/2026-09-22-accepted-am6200g-selection-accepted-20260922.json",
+      "sha256": "594EA1F1BCA9A29699202F9482798687F0127ECDFD194E0F41653C555D2BD23E",
+      "accepted_resrefs": [
+        "AM6200G"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM6200H/2026-09-22-accepted-am6200h-selection-accepted-20260922.json",
+      "sha256": "423CD19ADBD5782B268C94D51C4C75867C0E3F5AB4BC6AE2CD1128541699BEFF",
+      "accepted_resrefs": [
+        "AM6200H"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM6200I/2026-09-22-accepted-am6200i-selection-accepted-20260922.json",
+      "sha256": "EB7854DBAC402EDD1B4A398C4F83BEC435C627C6A43DB1CBECA392473C0EC1E8",
+      "accepted_resrefs": [
+        "AM6200I"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM6200J/2026-09-22-accepted-am6200j-selection-accepted-20260922.json",
+      "sha256": "4846690CF508C4B1BEEE3B6F42FE363B0AB3A771B9ECC9A14CB5F9C2263A2058",
+      "accepted_resrefs": [
+        "AM6200J"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/MMELSPIN/2026-09-22-accepted-mmelspin-selection-accepted-20260922.json",
+      "sha256": "33D0CA26D15D289FA26736010DD91DFA8702D503F04EDB2F69DBB32BFA31B85D",
+      "accepted_resrefs": [
+        "MMELSPIN"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

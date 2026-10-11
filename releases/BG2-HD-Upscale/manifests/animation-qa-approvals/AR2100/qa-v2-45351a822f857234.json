@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR2100",
+  "status": "accepted",
+  "decision_date": "2026-09-01",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-11T19:44:26Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR2100",
+  "pack_manifest_sha256": "B6069AC9D2089F8EC0704DAF71729F58B59E06AF86F7390114EE4993B2E43397",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "577BFEBD66D2A4103969A4ED6DA35E84DCB5788F8FDD1504852302C70264B155",
+  "required_resrefs": [
+    "AM2100PA",
+    "AM2100PB",
+    "AM2100PC"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM2100PA/2026-10-11-preserved-historical-am2100pa-v1.json",
+      "sha256": "5C0B40784CBEEFA5E9ECF07E4EDC35394EC25976FE8514CE5EC08B10D6154B18",
+      "accepted_resrefs": [
+        "AM2100PA"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM2100PB/2026-10-11-preserved-historical-am2100pb-v1.json",
+      "sha256": "9DA3FD86FC9B3B6F161B57DEF87E0DEA334267E23509B8171FC888CF564199B2",
+      "accepted_resrefs": [
+        "AM2100PB"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM2100PC/2026-10-11-preserved-historical-am2100pc-v1.json",
+      "sha256": "43E2FBF17DDC0DBED345BB84DA8E63EE61E051712FB7A8CF5B3D5B32F2645E33",
+      "accepted_resrefs": [
+        "AM2100PC"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

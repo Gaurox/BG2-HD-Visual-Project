@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR6005",
+  "status": "accepted",
+  "decision_date": "2026-10-09",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-10-09T21:23:02Z",
+  "source_pack": "animations/packs-par-zone/animations-release-20261011-v1/AR6005",
+  "pack_manifest_sha256": "01993D7ABAAE2D2CE7B47ECA6202B717CDFE1536E4FFFEFBE9FD4DE64CE461EB",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "E25F49D5CD45563D602EB17E8211D310EB33CB15C4FC2E21855485D5AFB322AE",
+  "required_resrefs": [
+    "AM6004A",
+    "AM6005A"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM6004A/2026-10-09-accepted-am6004a-fumee-spline-oval-gaussian1-v1.json",
+      "sha256": "0B75C596055233A88704865B6D23B5083F4A61890545FA1A1C5AE93788EB0CCB",
+      "accepted_resrefs": [
+        "AM6004A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM6005A/2026-10-09-accepted-am6005a-effetvert-spline-feather8-v1.json",
+      "sha256": "98AF6DCECE78EA1DA0BFBB374B871E8F9AED46DF02E25D63A29AC54A1E06BB8A",
+      "accepted_resrefs": [
+        "AM6005A"
+      ]
+    }
+  ],
+  "decision": "Finalisation release autorisée le 2026-10-11 ; QA acquises conservées, composition exacte vérifiée sans nouvelle validation ingame."
+}

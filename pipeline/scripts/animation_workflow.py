@@ -2087,15 +2087,27 @@ def _validate_decision_record(
         return None
 
 
-def check_workspace(workspace_root: Path, raw_resref: str | None = None) -> dict[str, Any]:
+def check_workspace(workspace_root: Path, raw_resref: str | None = None, *, selected_only: bool = False) -> dict[str, Any]:
     resref = validate_resref(raw_resref) if raw_resref else None
     errors: list[str] = []
     checked: list[str] = []
     decision_records: dict[str, dict[str, Any]] = {}
     decision_root = repo_path(workspace_root, DECISIONS_REL)
     pattern = f"{resref}/*.json" if resref else "*/*.json"
-    if decision_root.is_dir():
-        for path in sorted(decision_root.glob(pattern)):
+    if selected_only:
+        selection_root = repo_path(workspace_root, SELECTIONS_REL)
+        selection_paths = [selection_root / f"{resref}.json"] if resref else sorted(selection_root.glob("*.json"))
+        decision_paths = []
+        for selection_path in selection_paths:
+            try:
+                selection = load_json(selection_path)
+                decision_paths.append(repo_path(workspace_root, selection["qa_decision"]["path"]))
+            except (WorkflowError, KeyError, TypeError) as error:
+                errors.append(f"{relative_path(workspace_root, selection_path)}: {error}")
+    else:
+        decision_paths = sorted(decision_root.glob(pattern)) if decision_root.is_dir() else []
+    if decision_paths:
+        for path in sorted(set(decision_paths)):
             checked.append(relative_path(workspace_root, path))
             record = _validate_decision_record(workspace_root, path, path.parent.name, errors)
             if record is not None:
@@ -2330,6 +2342,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     check_parser = subparsers.add_parser("check", help="contrôle décisions/sélections/hashes")
     check_parser.add_argument("--resref")
+    check_parser.add_argument("--selected-only", action="store_true", help="contrôler les autorités courantes ; audit historique complet par défaut")
     return parser
 
 
@@ -2366,7 +2379,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             )
         elif args.command == "check":
             with _stable_authority_read(root):
-                result = check_workspace(root, args.resref)
+                result = check_workspace(root, args.resref, selected_only=args.selected_only)
         else:  # pragma: no cover - argparse enforces the command set.
             parser.error(f"commande inconnue: {args.command}")
             return 2
