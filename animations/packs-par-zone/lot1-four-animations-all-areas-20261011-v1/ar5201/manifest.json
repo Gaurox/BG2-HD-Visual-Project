@@ -1,0 +1,33 @@
+{
+  "schema": "bg2-upscale-area-animation-pack-index-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T08:38:02.799106+00:00",
+  "merged_from": [
+    "animations/batches/lot1-four-animations-all-areas-20261011-v1/preserved-sources/ar5201/AR5201::AM5201A",
+    "animations/batches/lot1-four-animations-all-areas-20261011-v1/preserved-sources/ar5201/AR5201::AM5201B",
+    "animations/packs-par-zone/am5204d-seedvr7b-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR5201"
+  ],
+  "runtime_budget_bytes": 536870912,
+  "area_count": 1,
+  "largest_area_raw_bytes": 51083392,
+  "total_raw_bytes": 51083392,
+  "areas_over_budget": [],
+  "resrefs_without_area": [],
+  "areas": [
+    {
+      "area_id": "AR5201",
+      "directory": "AR5201",
+      "resrefs": [
+        "AM5201A",
+        "AM5201B",
+        "AM5204D"
+      ],
+      "resource_count": 3,
+      "frame_count": 84,
+      "raw_bytes": 51083392,
+      "registry_sha256": "9412ef104493d5c6ece9b0386ed8c53777dc89802fe46577808b977244c86cf8",
+      "manifest_sha256": "ca6f097f4aac033977e5aeb91fd6081bfb94117d9d445c9f3000499f50c1b14e",
+      "over_runtime_budget": false
+    }
+  ]
+}

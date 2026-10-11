@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "schema_version": 1,
+  "decision_id": "2026-10-11-accepted-am5204c-ar5204-lot1-v1",
+  "asset_id": "animations:bam:AM5204C",
+  "resref": "AM5204C",
+  "status": "accepted",
+  "result_kind": "x4",
+  "decision_origin": "explicit-user-ingame-qa",
+  "decision_date": "2026-10-11",
+  "recorded_at_utc": "2026-10-11T08:48:16.739859+00:00",
+  "decision": "Utilisateur : ok il est good dans la premiere map. AM5204C (tas de braises) accepte en jeu sur AR5204 uniquement ; OH4210 reste a verifier. Aucune validation des trois autres assets du lot.",
+  "recipe_id": "am5204c-reboutcx-apo8-aura16-20260922",
+  "final_run": {
+    "path": "animations/batches/lot1-four-animations-all-areas-20261011-v1",
+    "manifest_path": "animations/batches/lot1-four-animations-all-areas-20261011-v1/manifest.json",
+    "manifest_sha256": "CA89B50F7000611113729E18622E44C36DF62BD1A1CCB2ECB635696E2A7A5AEC",
+    "schema": "bg2-upscale-animation-installed-lot-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5204",
+    "manifest_path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5204/manifest.json",
+    "manifest_sha256": "930A033BE1053F408D29F9542FB15D943062DDF32E31BCCFD339B6202B3BD4CF",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed",
+    "areas": [
+      {
+        "path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5204/AR5204",
+        "manifest_path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5204/AR5204/manifest.json",
+        "manifest_sha256": "E7D18C90688A0594A0E175C9DE3DCE86BD50881D5CE323C4074A48000DAD13F7",
+        "area": "AR5204",
+        "registry_sha256": "CD5ADF313EB36CF9B68A9AB58D046DD2DAC142693575C902506376E2F632F97A",
+        "resource_entries": 1
+      }
+    ]
+  },
+  "tested_areas": [
+    "AR5204"
+  ],
+  "lineage": {
+    "source_runs": [],
+    "source_packs": [
+      {
+        "path": "animations/packs-par-zone/am5204c-reboutcx-apo8-x4-30fps-v2-aura16-20260922/AR5204",
+        "manifest_path": "animations/packs-par-zone/am5204c-reboutcx-apo8-x4-30fps-v2-aura16-20260922/AR5204/manifest.json",
+        "manifest_sha256": "8301EEC926A4824F3F28D6B1A827F50E1A0970A2BCC9256E11645687F9EE6AED",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "bg2-upscale-area-animation-pack-index-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T08:38:05.494319+00:00",
+  "merged_from": [
+    "animations/batches/lot1-four-animations-all-areas-20261011-v1/preserved-sources/ar5502/AR5502::AM5502D",
+    "animations/batches/lot1-four-animations-all-areas-20261011-v1/preserved-sources/ar5502/AR5502::AM5502F",
+    "animations/packs-par-zone/am5508c-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR5502",
+    "animations/packs-par-zone/am5508d-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR5502"
+  ],
+  "runtime_budget_bytes": 536870912,
+  "area_count": 1,
+  "largest_area_raw_bytes": 14120704,
+  "total_raw_bytes": 14120704,
+  "areas_over_budget": [],
+  "resrefs_without_area": [],
+  "areas": [
+    {
+      "area_id": "AR5502",
+      "directory": "AR5502",
+      "resrefs": [
+        "AM5502D",
+        "AM5502F",
+        "AM5508C",
+        "AM5508D"
+      ],
+      "resource_count": 4,
+      "frame_count": 92,
+      "raw_bytes": 14120704,
+      "registry_sha256": "9081dfbdb5d6fec3426d5563dc710a92db611a7a531037ec52b1a69c206e78ce",
+      "manifest_sha256": "f4cc62a6112baee3ebe312bf20ac297f5f1ec9a5fd9f4b7c2faf396f9f468666",
+      "over_runtime_budget": false
+    }
+  ]
+}

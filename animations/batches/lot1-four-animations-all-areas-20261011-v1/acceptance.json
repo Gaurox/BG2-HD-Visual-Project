@@ -1,0 +1,140 @@
+{
+  "status": "accepted",
+  "qa_date": "2026-10-11",
+  "scope": "4 assets / 8 areas / 40 occurrences",
+  "results": [
+    {
+      "resref": "AM5204C",
+      "qa_decision": {
+        "decision_date": "2026-10-11",
+        "path": "animations/index/qa-decisions/AM5204C/2026-10-11-accepted-am5204c-lot1-all-maps-v1.json",
+        "sha256": "A8952FEFD83696FEAEF78E30CC5DDC7DDF470BC35A5A666CE75A331F1D40656E",
+        "status": "accepted"
+      },
+      "selected_run": {
+        "manifest_path": "animations/ressources/AM5204C/runs/am5204c-lot1-selection-accepted-20261011-v1/manifest.json",
+        "manifest_sha256": "4E4D93C071439B65C235A662883981B299F35AF6A9B5E979AA3DD374D228D2B4",
+        "path": "animations/ressources/AM5204C/runs/am5204c-lot1-selection-accepted-20261011-v1",
+        "schema": "bg2-upscale-animation-final-selection-v1",
+        "status": "completed"
+      },
+      "tested_areas": [
+        "AR5204",
+        "OH4210"
+      ]
+    },
+    {
+      "resref": "AM5204D",
+      "qa_decision": {
+        "decision_date": "2026-10-11",
+        "path": "animations/index/qa-decisions/AM5204D/2026-10-11-accepted-am5204d-lot1-all-maps-v1.json",
+        "sha256": "C511A1FD6E6B28985B7C011F4643B698D7521F0C8630764AF8B9C68F38267A78",
+        "status": "accepted"
+      },
+      "selected_run": {
+        "manifest_path": "animations/ressources/AM5204D/runs/am5204d-lot1-selection-accepted-20261011-v1/manifest.json",
+        "manifest_sha256": "37118484123C375283CCF2265834F3E8420ECC5888516173CA4B8B4734C14975",
+        "path": "animations/ressources/AM5204D/runs/am5204d-lot1-selection-accepted-20261011-v1",
+        "schema": "bg2-upscale-animation-final-selection-v1",
+        "status": "completed"
+      },
+      "tested_areas": [
+        "AR5201",
+        "AR5204"
+      ]
+    },
+    {
+      "resref": "AM5508C",
+      "qa_decision": {
+        "decision_date": "2026-10-11",
+        "path": "animations/index/qa-decisions/AM5508C/2026-10-11-accepted-am5508c-lot1-all-maps-v1.json",
+        "sha256": "67C76C0ED14712F87C58D266F83E95C202C57AD281CD9E7D330211ABD38ECCE8",
+        "status": "accepted"
+      },
+      "selected_run": {
+        "manifest_path": "animations/ressources/AM5508C/runs/am5508c-lot1-selection-accepted-20261011-v1/manifest.json",
+        "manifest_sha256": "0A2B07FD818E1F67226E3210754A7ABACBC3962AFA975E21D4873E1AF8C00DE0",
+        "path": "animations/ressources/AM5508C/runs/am5508c-lot1-selection-accepted-20261011-v1",
+        "schema": "bg2-upscale-animation-final-selection-v1",
+        "status": "completed"
+      },
+      "tested_areas": [
+        "AR5501",
+        "AR5502",
+        "AR5506",
+        "AR5507",
+        "AR5508"
+      ]
+    },
+    {
+      "resref": "AM5508D",
+      "qa_decision": {
+        "decision_date": "2026-10-11",
+        "path": "animations/index/qa-decisions/AM5508D/2026-10-11-accepted-am5508d-lot1-all-maps-v1.json",
+        "sha256": "69FFEEDF07A95623B9A1C475CAD4C5AC1E9301B355ED0964F7D04A4E663047D0",
+        "status": "accepted"
+      },
+      "selected_run": {
+        "manifest_path": "animations/ressources/AM5508D/runs/am5508d-lot1-selection-accepted-20261011-v1/manifest.json",
+        "manifest_sha256": "8DDD1D7AFE62F4EE048C466666634A84B5D364DFCB526AEFACF1ECAC6B8D23D7",
+        "path": "animations/ressources/AM5508D/runs/am5508d-lot1-selection-accepted-20261011-v1",
+        "schema": "bg2-upscale-animation-final-selection-v1",
+        "status": "completed"
+      },
+      "tested_areas": [
+        "AR5501",
+        "AR5502",
+        "AR5506",
+        "AR5507",
+        "AR5508"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "command": "check",
+      "resref": "AM5204C",
+      "ok": true,
+      "checked_files": [
+        "animations/index/qa-decisions/AM5204C/2026-10-11-accepted-am5204c-lot1-all-maps-v1.json",
+        "animations/index/selections/AM5204C.json"
+      ],
+      "errors": [],
+      "release_mutation": false
+    },
+    {
+      "command": "check",
+      "resref": "AM5204D",
+      "ok": true,
+      "checked_files": [
+        "animations/index/qa-decisions/AM5204D/2026-10-11-accepted-am5204d-lot1-all-maps-v1.json",
+        "animations/index/selections/AM5204D.json"
+      ],
+      "errors": [],
+      "release_mutation": false
+    },
+    {
+      "command": "check",
+      "resref": "AM5508C",
+      "ok": true,
+      "checked_files": [
+        "animations/index/qa-decisions/AM5508C/2026-10-11-accepted-am5508c-lot1-all-maps-v1.json",
+        "animations/index/selections/AM5508C.json"
+      ],
+      "errors": [],
+      "release_mutation": false
+    },
+    {
+      "command": "check",
+      "resref": "AM5508D",
+      "ok": true,
+      "checked_files": [
+        "animations/index/qa-decisions/AM5508D/2026-10-11-accepted-am5508d-lot1-all-maps-v1.json",
+        "animations/index/selections/AM5508D.json"
+      ],
+      "errors": [],
+      "release_mutation": false
+    }
+  ],
+  "release_mutation": false
+}

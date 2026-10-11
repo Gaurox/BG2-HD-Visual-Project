@@ -1,0 +1,120 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM5508D",
+  "correction_id": "innerfeather16-premultiply",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/am5508d-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR5501/manifest.json",
+        "manifest_sha256": "D16260A905C48D4D7F349A963F4CA3B6823123E96B07C502172FEAC807552231",
+        "path": "animations/packs-par-zone/am5508d-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR5501",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM5508D/runs/am5508d-reboutcx-apo8-x4-30fps-v2-20260922/03_runtime_pack/manifest.json",
+        "manifest_sha256": "EBAC6B9ED5BE959E15DDBF6CCC50AE483CA80BBCE60F331B1FCC7FAF9F24B16C",
+        "path": "animations/ressources/AM5508D/runs/am5508d-reboutcx-apo8-x4-30fps-v2-20260922/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM5508D/runs/am5508d-reboutcx-x4-20260922/03_runtime_pack/manifest.json",
+        "manifest_sha256": "B125422086BCB413B805B7F0CC317557BD1985BFF1D08DDD8235C0CAADA4AB94",
+        "path": "animations/ressources/AM5508D/runs/am5508d-reboutcx-x4-20260922/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/AM5508D/runs/am5508d-reboutcx-apo8-x4-30fps-v2-20260922/manifest.json",
+        "manifest_sha256": "CD9156A2C887EF39618F0CE01B9D263E32DF61502C84D59CF5D3AC5622E058F0",
+        "path": "animations/ressources/AM5508D/runs/am5508d-reboutcx-apo8-x4-30fps-v2-20260922",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM5508D/runs/am5508d-reboutcx-x4-20260922/manifest.json",
+        "manifest_sha256": "ED81545E788FE87A39A54AAD75EF0B65CDED1CA76FD7A63BA02CA0719793903B",
+        "path": "animations/ressources/AM5508D/runs/am5508d-reboutcx-x4-20260922",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-11",
+    "path": "animations/index/qa-decisions/AM5508D/2026-10-11-accepted-am5508d-lot1-all-maps-v1.json",
+    "sha256": "69FFEEDF07A95623B9A1C475CAD4C5AC1E9301B355ED0964F7D04A4E663047D0",
+    "status": "accepted"
+  },
+  "recipe_id": "am5508d-lot1-innerfeather16-premultiply",
+  "resref": "AM5508D",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM5508D/runs/am5508d-lot1-selection-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "8DDD1D7AFE62F4EE048C466666634A84B5D364DFCB526AEFACF1ECAC6B8D23D7",
+    "path": "animations/ressources/AM5508D/runs/am5508d-lot1-selection-accepted-20261011-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR5501",
+        "manifest_path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5501/AR5501/manifest.json",
+        "manifest_sha256": "112A78E92306D984340569C698E375A727091C377470BCB551705133F59346EF",
+        "path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5501/AR5501",
+        "registry_sha256": "90E369D2896A5823B297A5F63931C5B50CF23A32BBF633DFB35FCC2048D4A873",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5502",
+        "manifest_path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5502/AR5502/manifest.json",
+        "manifest_sha256": "F4CC62A6112BAEE3EBE312BF20AC297F5F1EC9A5FD9F4B7C2FAF396F9F468666",
+        "path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5502/AR5502",
+        "registry_sha256": "9081DFBDB5D6FEC3426D5563DC710A92DB611A7A531037EC52B1A69C206E78CE",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5506",
+        "manifest_path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5506/AR5506/manifest.json",
+        "manifest_sha256": "61E7BD228742979DE47CC9FA5F85FE26DD48626AEC8773FA24F8C009195B4F72",
+        "path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5506/AR5506",
+        "registry_sha256": "90E369D2896A5823B297A5F63931C5B50CF23A32BBF633DFB35FCC2048D4A873",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5507",
+        "manifest_path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5507/AR5507/manifest.json",
+        "manifest_sha256": "5FA4F7D6FADC2B623D88B43CF51628045678E883CCD9246C63E7C9950218DAAC",
+        "path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5507/AR5507",
+        "registry_sha256": "90E369D2896A5823B297A5F63931C5B50CF23A32BBF633DFB35FCC2048D4A873",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5508",
+        "manifest_path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5508/AR5508/manifest.json",
+        "manifest_sha256": "DF565B303F7DA4FFC32A327698FEAD775235E8C02E40C34C1C6923B0682A92CE",
+        "path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5508/AR5508",
+        "registry_sha256": "90E369D2896A5823B297A5F63931C5B50CF23A32BBF633DFB35FCC2048D4A873",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/manifest.json",
+    "manifest_sha256": "E600A4B9119B745AB8111E9ED44965573731ED1B952DB10700CEF96E5F0CDA5F",
+    "path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR5501",
+    "AR5502",
+    "AR5506",
+    "AR5507",
+    "AR5508"
+  ],
+  "updated_at_utc": "2026-10-11T08:53:15Z"
+}

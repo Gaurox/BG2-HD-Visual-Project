@@ -1,0 +1,1394 @@
+{
+  "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+  "status": "completed",
+  "created_utc": "2026-09-22T19:21:49.590139+00:00",
+  "scale": 4,
+  "registry_version": 3,
+  "runtime_contract": {
+    "feature": "TimedTimeline",
+    "clock": "QPC-pause-aware",
+    "registry_version": 3
+  },
+  "registry": "AreaAnimations-X4.registry",
+  "registry_sha256": "9438f0cdc09aba4ce13a6f05ff0320925e42382ffee81977eeeab4d6237c551c",
+  "registry_bytes": 652,
+  "resource_count": 1,
+  "frame_count": 40,
+  "timed_resources": [
+    "AM5204D"
+  ],
+  "timed_resource_variants": [
+    {
+      "resref": "AM5204D",
+      "variant_index": 0,
+      "position": null
+    }
+  ],
+  "runtime_budget_enforced": false,
+  "authoring_pack_for_area_split": true,
+  "base_pack": "G:/AI/BG2_Upscale/animations/ressources/AM5204D/runs/am5204d-seedvr7b-lab-x4-20260922/03_runtime_pack",
+  "base_pack_manifest_sha256": "a2e597f11339838dabb8d00b24be3a86d6b618e28af2cd37018f54a4690166dc",
+  "base_registry_sha256": "1ae8a509ebce3b4e313bbba4019a00ef88015d2b504fee7479106ff4b4c69fe6",
+  "base_registry_bytes": 288,
+  "base_assets": [
+    {
+      "name": "AAX4-AM5204D-frame000.rgba",
+      "sha256": "7191ad10e7ea3e816d21c86d7adebcd2b886b6c8e2b469a9301558e990873695",
+      "bytes": 349440
+    },
+    {
+      "name": "AAX4-AM5204D-frame001.rgba",
+      "sha256": "d06e0166d37e2b083481eabf68c1851e167a99a1219f6c4506bc2a6c5e05e4cd",
+      "bytes": 379392
+    },
+    {
+      "name": "AAX4-AM5204D-frame002.rgba",
+      "sha256": "53a134f8f28853a7ec25a5ba0a8a975f345502b54b1da7962b4f374ea53d397d",
+      "bytes": 392704
+    },
+    {
+      "name": "AAX4-AM5204D-frame003.rgba",
+      "sha256": "a18335c47a1755a7737f47ec9a48d2f2c9cbc45d5ac25c59e4aff887ed750f93",
+      "bytes": 392704
+    },
+    {
+      "name": "AAX4-AM5204D-frame004.rgba",
+      "sha256": "9e222d29b254940f3959f26dd1b824de0539cdfa1b066c870ce781b401ef1caf",
+      "bytes": 392704
+    },
+    {
+      "name": "AAX4-AM5204D-frame005.rgba",
+      "sha256": "99d69715a67706dbfe0c2749504fbe34819ba32135f1b55ac82d42229fd4cb68",
+      "bytes": 392704
+    },
+    {
+      "name": "AAX4-AM5204D-frame006.rgba",
+      "sha256": "ac0c74a01f8194fbe8b16e66ffc767e68bfe2410bb130bee6dcdcc961bf16f1b",
+      "bytes": 322816
+    },
+    {
+      "name": "AAX4-AM5204D-frame007.rgba",
+      "sha256": "c5ed78e8fac8f15ddaff5b4876f3411fee6da71526c3feadd96fb9370a11748d",
+      "bytes": 366080
+    },
+    {
+      "name": "AAX4-AM5204D-frame008.rgba",
+      "sha256": "6bc64aa7c91aac2950a497dd924870acf53dc3e187f375d0e2a79585a1bf6289",
+      "bytes": 386048
+    },
+    {
+      "name": "AAX4-AM5204D-frame009.rgba",
+      "sha256": "a3f05d42c6d9d21d50403b69d7cdaa916ee5852076eeda0787884a1bc3dc6e21",
+      "bytes": 356096
+    },
+    {
+      "name": "AAX4-AM5204D-frame010.rgba",
+      "sha256": "fa7af48a67ef3f29f81d430e875f23d40964b7337a01bbc78647c7144d4bf318",
+      "bytes": 376064
+    },
+    {
+      "name": "AAX4-AM5204D-frame011.rgba",
+      "sha256": "85f95b8090f50b8ab91d84ae61bb4315a50cda024ebccf5fbf48cc34a825017b",
+      "bytes": 392704
+    },
+    {
+      "name": "AAX4-AM5204D-frame012.rgba",
+      "sha256": "93609ac9a5e0ad1da694e1dcc078f0ce645e34f8706b268e82a69dbb4639ab56",
+      "bytes": 392704
+    },
+    {
+      "name": "AAX4-AM5204D-frame013.rgba",
+      "sha256": "ada6ac9bc331f501e9f3702da7fe6f160743945bab209d590de3c1f06e0335cf",
+      "bytes": 389376
+    },
+    {
+      "name": "AAX4-AM5204D-frame014.rgba",
+      "sha256": "93564ece3ff949a8b50c7526ba95cbc1c81910444073e1113ddd4b4ac7c9cead",
+      "bytes": 356096
+    },
+    {
+      "name": "AAX4-AM5204D-frame015.rgba",
+      "sha256": "ff8dc6fbc0f27d914e48e9cb7c4f6a67bdeb0e8c161e3ad20e4a90949b78a6d4",
+      "bytes": 372736
+    },
+    {
+      "name": "AAX4-AM5204D-frame016.rgba",
+      "sha256": "b731975189554c7fa31ff3292738b9294d57b14804745373a6abacfd362fbf7d",
+      "bytes": 392704
+    },
+    {
+      "name": "AAX4-AM5204D-frame017.rgba",
+      "sha256": "16735dc152aeeb19e68c7306f2afd0022775a7a3f9d99678bf32ad2700c13d53",
+      "bytes": 392704
+    },
+    {
+      "name": "AAX4-AM5204D-frame018.rgba",
+      "sha256": "d845bc109bdbef33f62e53b5dac59bf7187b51224b0b3853818b0e04f002b7f3",
+      "bytes": 376064
+    },
+    {
+      "name": "AAX4-AM5204D-frame019.rgba",
+      "sha256": "71a7384a3fc5e4edad64a1009f4c4ab89a9c928db125d26b6453c71437066b4b",
+      "bytes": 362752
+    }
+  ],
+  "new_assets": [
+    {
+      "name": "AAX4-AM5204D-frame020.rgba",
+      "sha256": "7603ff75d16349be968810fa58b0491b72a633422ff30dd0797cb8796dc65670",
+      "bytes": 349440
+    },
+    {
+      "name": "AAX4-AM5204D-frame021.rgba",
+      "sha256": "812837f2b3f69fb6c685f86e0e97ea794d2ef712db410bc03b97fb88a9688c38",
+      "bytes": 379392
+    },
+    {
+      "name": "AAX4-AM5204D-frame022.rgba",
+      "sha256": "ea96fb723f2b18320dc8bf55d94c6ca8d9f7896f8cc5b6e2d05c831854bad8f6",
+      "bytes": 392704
+    },
+    {
+      "name": "AAX4-AM5204D-frame023.rgba",
+      "sha256": "90ba24f1f0bbad194593f79f8d6d2cf5acdac99c0c14aa538e14853b5e096c3f",
+      "bytes": 392704
+    },
+    {
+      "name": "AAX4-AM5204D-frame024.rgba",
+      "sha256": "45011be86a5505f712cd0915dac42fa442139e69f732f5dfbd6d4aa1872d8c4a",
+      "bytes": 392704
+    },
+    {
+      "name": "AAX4-AM5204D-frame025.rgba",
+      "sha256": "104634d85f494dc5b9fb092d119577ef13e0b35fbffe3720471cda89a93a711c",
+      "bytes": 392704
+    },
+    {
+      "name": "AAX4-AM5204D-frame026.rgba",
+      "sha256": "0eb996b9ba9eaa3e16349580c740528de6226ed0f232df869e33e4fe61f8af8e",
+      "bytes": 322816
+    },
+    {
+      "name": "AAX4-AM5204D-frame027.rgba",
+      "sha256": "50157ee68612736f4016cd2ead0feb9e61fc050313634a53d8a0db7421a804ed",
+      "bytes": 366080
+    },
+    {
+      "name": "AAX4-AM5204D-frame028.rgba",
+      "sha256": "f1e4a974c941ec90518dd2e2cfe168fd105013fb7d1bee902af3416ff9f44534",
+      "bytes": 386048
+    },
+    {
+      "name": "AAX4-AM5204D-frame029.rgba",
+      "sha256": "a68ac2301b6d9d5c1f59c6b8d98c8ca5139546630b568a31b1a6361e4e315ae9",
+      "bytes": 356096
+    },
+    {
+      "name": "AAX4-AM5204D-frame030.rgba",
+      "sha256": "6d28e8fee2f4a732e7047cf1aee4df0d18db01f65edcdad2d6e353134cc6b2ec",
+      "bytes": 376064
+    },
+    {
+      "name": "AAX4-AM5204D-frame031.rgba",
+      "sha256": "1cef31dab17ca6fba470233d01a470b95c92671d8780d417efe30a7cb52f5a89",
+      "bytes": 392704
+    },
+    {
+      "name": "AAX4-AM5204D-frame032.rgba",
+      "sha256": "8a03028525ca4fae4bd4ec29641dbe6e2d504885fa82334ba95e146ac64b629a",
+      "bytes": 392704
+    },
+    {
+      "name": "AAX4-AM5204D-frame033.rgba",
+      "sha256": "281495eef0774fcccfa02435349a7acbd7b6686b09f032fd4f11ef22bcdd1605",
+      "bytes": 389376
+    },
+    {
+      "name": "AAX4-AM5204D-frame034.rgba",
+      "sha256": "769ee2e1cfb42e809477b0cb72af231c18b7f2f4cf4db5c621982c198fe530f8",
+      "bytes": 356096
+    },
+    {
+      "name": "AAX4-AM5204D-frame035.rgba",
+      "sha256": "174c40c961c6e79d14cd12a7eaf585c92187ba1e0e9120ac6a12952efcc966ff",
+      "bytes": 372736
+    },
+    {
+      "name": "AAX4-AM5204D-frame036.rgba",
+      "sha256": "48f5009dffa8316850524f9828b242c7d17e29172d56d04c7faa3dd549bdb76d",
+      "bytes": 392704
+    },
+    {
+      "name": "AAX4-AM5204D-frame037.rgba",
+      "sha256": "c3a9c14a9cbf591e0be37b510d27040ca555206d7a042bcc0effeaec7970310a",
+      "bytes": 392704
+    },
+    {
+      "name": "AAX4-AM5204D-frame038.rgba",
+      "sha256": "e68b5fa2b01481d981b414d3c6bbe0d14ca0df9558ff4e939c19ef426ea30e66",
+      "bytes": 376064
+    },
+    {
+      "name": "AAX4-AM5204D-frame039.rgba",
+      "sha256": "9a39cb588d3af139b55c307e46e35cc6b132af62095fa43d7fdbc52404928a18",
+      "bytes": 362752
+    }
+  ],
+  "resources": [
+    {
+      "resref": "AM5204D",
+      "frame_count": 40,
+      "cycle_count": 2,
+      "geometry_mode": "per-frame",
+      "frames": [
+        {
+          "frame": 0,
+          "logical_size_x1": [
+            52,
+            105
+          ],
+          "physical_size_x4": [
+            208,
+            420
+          ],
+          "centre_x1": [
+            26,
+            47
+          ],
+          "asset": "AAX4-AM5204D-frame000.rgba",
+          "sha256": "7191ad10e7ea3e816d21c86d7adebcd2b886b6c8e2b469a9301558e990873695",
+          "bytes": 349440
+        },
+        {
+          "frame": 1,
+          "logical_size_x1": [
+            52,
+            114
+          ],
+          "physical_size_x4": [
+            208,
+            456
+          ],
+          "centre_x1": [
+            26,
+            56
+          ],
+          "asset": "AAX4-AM5204D-frame001.rgba",
+          "sha256": "d06e0166d37e2b083481eabf68c1851e167a99a1219f6c4506bc2a6c5e05e4cd",
+          "bytes": 379392
+        },
+        {
+          "frame": 2,
+          "logical_size_x1": [
+            52,
+            118
+          ],
+          "physical_size_x4": [
+            208,
+            472
+          ],
+          "centre_x1": [
+            26,
+            60
+          ],
+          "asset": "AAX4-AM5204D-frame002.rgba",
+          "sha256": "53a134f8f28853a7ec25a5ba0a8a975f345502b54b1da7962b4f374ea53d397d",
+          "bytes": 392704
+        },
+        {
+          "frame": 3,
+          "logical_size_x1": [
+            52,
+            118
+          ],
+          "physical_size_x4": [
+            208,
+            472
+          ],
+          "centre_x1": [
+            26,
+            60
+          ],
+          "asset": "AAX4-AM5204D-frame003.rgba",
+          "sha256": "a18335c47a1755a7737f47ec9a48d2f2c9cbc45d5ac25c59e4aff887ed750f93",
+          "bytes": 392704
+        },
+        {
+          "frame": 4,
+          "logical_size_x1": [
+            52,
+            118
+          ],
+          "physical_size_x4": [
+            208,
+            472
+          ],
+          "centre_x1": [
+            26,
+            60
+          ],
+          "asset": "AAX4-AM5204D-frame004.rgba",
+          "sha256": "9e222d29b254940f3959f26dd1b824de0539cdfa1b066c870ce781b401ef1caf",
+          "bytes": 392704
+        },
+        {
+          "frame": 5,
+          "logical_size_x1": [
+            52,
+            118
+          ],
+          "physical_size_x4": [
+            208,
+            472
+          ],
+          "centre_x1": [
+            26,
+            60
+          ],
+          "asset": "AAX4-AM5204D-frame005.rgba",
+          "sha256": "99d69715a67706dbfe0c2749504fbe34819ba32135f1b55ac82d42229fd4cb68",
+          "bytes": 392704
+        },
+        {
+          "frame": 6,
+          "logical_size_x1": [
+            52,
+            97
+          ],
+          "physical_size_x4": [
+            208,
+            388
+          ],
+          "centre_x1": [
+            26,
+            39
+          ],
+          "asset": "AAX4-AM5204D-frame006.rgba",
+          "sha256": "ac0c74a01f8194fbe8b16e66ffc767e68bfe2410bb130bee6dcdcc961bf16f1b",
+          "bytes": 322816
+        },
+        {
+          "frame": 7,
+          "logical_size_x1": [
+            52,
+            110
+          ],
+          "physical_size_x4": [
+            208,
+            440
+          ],
+          "centre_x1": [
+            26,
+            52
+          ],
+          "asset": "AAX4-AM5204D-frame007.rgba",
+          "sha256": "c5ed78e8fac8f15ddaff5b4876f3411fee6da71526c3feadd96fb9370a11748d",
+          "bytes": 366080
+        },
+        {
+          "frame": 8,
+          "logical_size_x1": [
+            52,
+            116
+          ],
+          "physical_size_x4": [
+            208,
+            464
+          ],
+          "centre_x1": [
+            26,
+            58
+          ],
+          "asset": "AAX4-AM5204D-frame008.rgba",
+          "sha256": "6bc64aa7c91aac2950a497dd924870acf53dc3e187f375d0e2a79585a1bf6289",
+          "bytes": 386048
+        },
+        {
+          "frame": 9,
+          "logical_size_x1": [
+            52,
+            107
+          ],
+          "physical_size_x4": [
+            208,
+            428
+          ],
+          "centre_x1": [
+            26,
+            49
+          ],
+          "asset": "AAX4-AM5204D-frame009.rgba",
+          "sha256": "a3f05d42c6d9d21d50403b69d7cdaa916ee5852076eeda0787884a1bc3dc6e21",
+          "bytes": 356096
+        },
+        {
+          "frame": 10,
+          "logical_size_x1": [
+            52,
+            113
+          ],
+          "physical_size_x4": [
+            208,
+            452
+          ],
+          "centre_x1": [
+            26,
+            55
+          ],
+          "asset": "AAX4-AM5204D-frame010.rgba",
+          "sha256": "fa7af48a67ef3f29f81d430e875f23d40964b7337a01bbc78647c7144d4bf318",
+          "bytes": 376064
+        },
+        {
+          "frame": 11,
+          "logical_size_x1": [
+            52,
+            118
+          ],
+          "physical_size_x4": [
+            208,
+            472
+          ],
+          "centre_x1": [
+            26,
+            60
+          ],
+          "asset": "AAX4-AM5204D-frame011.rgba",
+          "sha256": "85f95b8090f50b8ab91d84ae61bb4315a50cda024ebccf5fbf48cc34a825017b",
+          "bytes": 392704
+        },
+        {
+          "frame": 12,
+          "logical_size_x1": [
+            52,
+            118
+          ],
+          "physical_size_x4": [
+            208,
+            472
+          ],
+          "centre_x1": [
+            26,
+            60
+          ],
+          "asset": "AAX4-AM5204D-frame012.rgba",
+          "sha256": "93609ac9a5e0ad1da694e1dcc078f0ce645e34f8706b268e82a69dbb4639ab56",
+          "bytes": 392704
+        },
+        {
+          "frame": 13,
+          "logical_size_x1": [
+            52,
+            117
+          ],
+          "physical_size_x4": [
+            208,
+            468
+          ],
+          "centre_x1": [
+            26,
+            59
+          ],
+          "asset": "AAX4-AM5204D-frame013.rgba",
+          "sha256": "ada6ac9bc331f501e9f3702da7fe6f160743945bab209d590de3c1f06e0335cf",
+          "bytes": 389376
+        },
+        {
+          "frame": 14,
+          "logical_size_x1": [
+            52,
+            107
+          ],
+          "physical_size_x4": [
+            208,
+            428
+          ],
+          "centre_x1": [
+            26,
+            49
+          ],
+          "asset": "AAX4-AM5204D-frame014.rgba",
+          "sha256": "93564ece3ff949a8b50c7526ba95cbc1c81910444073e1113ddd4b4ac7c9cead",
+          "bytes": 356096
+        },
+        {
+          "frame": 15,
+          "logical_size_x1": [
+            52,
+            112
+          ],
+          "physical_size_x4": [
+            208,
+            448
+          ],
+          "centre_x1": [
+            26,
+            54
+          ],
+          "asset": "AAX4-AM5204D-frame015.rgba",
+          "sha256": "ff8dc6fbc0f27d914e48e9cb7c4f6a67bdeb0e8c161e3ad20e4a90949b78a6d4",
+          "bytes": 372736
+        },
+        {
+          "frame": 16,
+          "logical_size_x1": [
+            52,
+            118
+          ],
+          "physical_size_x4": [
+            208,
+            472
+          ],
+          "centre_x1": [
+            26,
+            60
+          ],
+          "asset": "AAX4-AM5204D-frame016.rgba",
+          "sha256": "b731975189554c7fa31ff3292738b9294d57b14804745373a6abacfd362fbf7d",
+          "bytes": 392704
+        },
+        {
+          "frame": 17,
+          "logical_size_x1": [
+            52,
+            118
+          ],
+          "physical_size_x4": [
+            208,
+            472
+          ],
+          "centre_x1": [
+            26,
+            60
+          ],
+          "asset": "AAX4-AM5204D-frame017.rgba",
+          "sha256": "16735dc152aeeb19e68c7306f2afd0022775a7a3f9d99678bf32ad2700c13d53",
+          "bytes": 392704
+        },
+        {
+          "frame": 18,
+          "logical_size_x1": [
+            52,
+            113
+          ],
+          "physical_size_x4": [
+            208,
+            452
+          ],
+          "centre_x1": [
+            26,
+            55
+          ],
+          "asset": "AAX4-AM5204D-frame018.rgba",
+          "sha256": "d845bc109bdbef33f62e53b5dac59bf7187b51224b0b3853818b0e04f002b7f3",
+          "bytes": 376064
+        },
+        {
+          "frame": 19,
+          "logical_size_x1": [
+            52,
+            109
+          ],
+          "physical_size_x4": [
+            208,
+            436
+          ],
+          "centre_x1": [
+            26,
+            51
+          ],
+          "asset": "AAX4-AM5204D-frame019.rgba",
+          "sha256": "71a7384a3fc5e4edad64a1009f4c4ab89a9c928db125d26b6453c71437066b4b",
+          "bytes": 362752
+        },
+        {
+          "frame": 20,
+          "logical_size_x1": [
+            52,
+            105
+          ],
+          "physical_size_x4": [
+            208,
+            420
+          ],
+          "centre_x1": [
+            26,
+            47
+          ],
+          "asset": "AAX4-AM5204D-frame020.rgba",
+          "sha256": "7603ff75d16349be968810fa58b0491b72a633422ff30dd0797cb8796dc65670",
+          "bytes": 349440,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 0,
+            "left_native_frame": 0,
+            "right_native_frame": 1
+          }
+        },
+        {
+          "frame": 21,
+          "logical_size_x1": [
+            52,
+            114
+          ],
+          "physical_size_x4": [
+            208,
+            456
+          ],
+          "centre_x1": [
+            26,
+            56
+          ],
+          "asset": "AAX4-AM5204D-frame021.rgba",
+          "sha256": "812837f2b3f69fb6c685f86e0e97ea794d2ef712db410bc03b97fb88a9688c38",
+          "bytes": 379392,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 1,
+            "left_native_frame": 1,
+            "right_native_frame": 2
+          }
+        },
+        {
+          "frame": 22,
+          "logical_size_x1": [
+            52,
+            118
+          ],
+          "physical_size_x4": [
+            208,
+            472
+          ],
+          "centre_x1": [
+            26,
+            60
+          ],
+          "asset": "AAX4-AM5204D-frame022.rgba",
+          "sha256": "ea96fb723f2b18320dc8bf55d94c6ca8d9f7896f8cc5b6e2d05c831854bad8f6",
+          "bytes": 392704,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 2,
+            "left_native_frame": 2,
+            "right_native_frame": 3
+          }
+        },
+        {
+          "frame": 23,
+          "logical_size_x1": [
+            52,
+            118
+          ],
+          "physical_size_x4": [
+            208,
+            472
+          ],
+          "centre_x1": [
+            26,
+            60
+          ],
+          "asset": "AAX4-AM5204D-frame023.rgba",
+          "sha256": "90ba24f1f0bbad194593f79f8d6d2cf5acdac99c0c14aa538e14853b5e096c3f",
+          "bytes": 392704,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 3,
+            "left_native_frame": 3,
+            "right_native_frame": 4
+          }
+        },
+        {
+          "frame": 24,
+          "logical_size_x1": [
+            52,
+            118
+          ],
+          "physical_size_x4": [
+            208,
+            472
+          ],
+          "centre_x1": [
+            26,
+            60
+          ],
+          "asset": "AAX4-AM5204D-frame024.rgba",
+          "sha256": "45011be86a5505f712cd0915dac42fa442139e69f732f5dfbd6d4aa1872d8c4a",
+          "bytes": 392704,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 4,
+            "left_native_frame": 4,
+            "right_native_frame": 5
+          }
+        },
+        {
+          "frame": 25,
+          "logical_size_x1": [
+            52,
+            118
+          ],
+          "physical_size_x4": [
+            208,
+            472
+          ],
+          "centre_x1": [
+            26,
+            60
+          ],
+          "asset": "AAX4-AM5204D-frame025.rgba",
+          "sha256": "104634d85f494dc5b9fb092d119577ef13e0b35fbffe3720471cda89a93a711c",
+          "bytes": 392704,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 5,
+            "left_native_frame": 5,
+            "right_native_frame": 6
+          }
+        },
+        {
+          "frame": 26,
+          "logical_size_x1": [
+            52,
+            97
+          ],
+          "physical_size_x4": [
+            208,
+            388
+          ],
+          "centre_x1": [
+            26,
+            39
+          ],
+          "asset": "AAX4-AM5204D-frame026.rgba",
+          "sha256": "0eb996b9ba9eaa3e16349580c740528de6226ed0f232df869e33e4fe61f8af8e",
+          "bytes": 322816,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 6,
+            "left_native_frame": 6,
+            "right_native_frame": 7
+          }
+        },
+        {
+          "frame": 27,
+          "logical_size_x1": [
+            52,
+            110
+          ],
+          "physical_size_x4": [
+            208,
+            440
+          ],
+          "centre_x1": [
+            26,
+            52
+          ],
+          "asset": "AAX4-AM5204D-frame027.rgba",
+          "sha256": "50157ee68612736f4016cd2ead0feb9e61fc050313634a53d8a0db7421a804ed",
+          "bytes": 366080,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 7,
+            "left_native_frame": 7,
+            "right_native_frame": 8
+          }
+        },
+        {
+          "frame": 28,
+          "logical_size_x1": [
+            52,
+            116
+          ],
+          "physical_size_x4": [
+            208,
+            464
+          ],
+          "centre_x1": [
+            26,
+            58
+          ],
+          "asset": "AAX4-AM5204D-frame028.rgba",
+          "sha256": "f1e4a974c941ec90518dd2e2cfe168fd105013fb7d1bee902af3416ff9f44534",
+          "bytes": 386048,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 8,
+            "left_native_frame": 8,
+            "right_native_frame": 9
+          }
+        },
+        {
+          "frame": 29,
+          "logical_size_x1": [
+            52,
+            107
+          ],
+          "physical_size_x4": [
+            208,
+            428
+          ],
+          "centre_x1": [
+            26,
+            49
+          ],
+          "asset": "AAX4-AM5204D-frame029.rgba",
+          "sha256": "a68ac2301b6d9d5c1f59c6b8d98c8ca5139546630b568a31b1a6361e4e315ae9",
+          "bytes": 356096,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 9,
+            "left_native_frame": 9,
+            "right_native_frame": 0
+          }
+        },
+        {
+          "frame": 30,
+          "logical_size_x1": [
+            52,
+            113
+          ],
+          "physical_size_x4": [
+            208,
+            452
+          ],
+          "centre_x1": [
+            26,
+            55
+          ],
+          "asset": "AAX4-AM5204D-frame030.rgba",
+          "sha256": "6d28e8fee2f4a732e7047cf1aee4df0d18db01f65edcdad2d6e353134cc6b2ec",
+          "bytes": 376064,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 1,
+            "slot": 0,
+            "left_native_frame": 10,
+            "right_native_frame": 11
+          }
+        },
+        {
+          "frame": 31,
+          "logical_size_x1": [
+            52,
+            118
+          ],
+          "physical_size_x4": [
+            208,
+            472
+          ],
+          "centre_x1": [
+            26,
+            60
+          ],
+          "asset": "AAX4-AM5204D-frame031.rgba",
+          "sha256": "1cef31dab17ca6fba470233d01a470b95c92671d8780d417efe30a7cb52f5a89",
+          "bytes": 392704,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 1,
+            "slot": 1,
+            "left_native_frame": 11,
+            "right_native_frame": 12
+          }
+        },
+        {
+          "frame": 32,
+          "logical_size_x1": [
+            52,
+            118
+          ],
+          "physical_size_x4": [
+            208,
+            472
+          ],
+          "centre_x1": [
+            26,
+            60
+          ],
+          "asset": "AAX4-AM5204D-frame032.rgba",
+          "sha256": "8a03028525ca4fae4bd4ec29641dbe6e2d504885fa82334ba95e146ac64b629a",
+          "bytes": 392704,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 1,
+            "slot": 2,
+            "left_native_frame": 12,
+            "right_native_frame": 13
+          }
+        },
+        {
+          "frame": 33,
+          "logical_size_x1": [
+            52,
+            117
+          ],
+          "physical_size_x4": [
+            208,
+            468
+          ],
+          "centre_x1": [
+            26,
+            59
+          ],
+          "asset": "AAX4-AM5204D-frame033.rgba",
+          "sha256": "281495eef0774fcccfa02435349a7acbd7b6686b09f032fd4f11ef22bcdd1605",
+          "bytes": 389376,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 1,
+            "slot": 3,
+            "left_native_frame": 13,
+            "right_native_frame": 14
+          }
+        },
+        {
+          "frame": 34,
+          "logical_size_x1": [
+            52,
+            107
+          ],
+          "physical_size_x4": [
+            208,
+            428
+          ],
+          "centre_x1": [
+            26,
+            49
+          ],
+          "asset": "AAX4-AM5204D-frame034.rgba",
+          "sha256": "769ee2e1cfb42e809477b0cb72af231c18b7f2f4cf4db5c621982c198fe530f8",
+          "bytes": 356096,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 1,
+            "slot": 4,
+            "left_native_frame": 14,
+            "right_native_frame": 15
+          }
+        },
+        {
+          "frame": 35,
+          "logical_size_x1": [
+            52,
+            112
+          ],
+          "physical_size_x4": [
+            208,
+            448
+          ],
+          "centre_x1": [
+            26,
+            54
+          ],
+          "asset": "AAX4-AM5204D-frame035.rgba",
+          "sha256": "174c40c961c6e79d14cd12a7eaf585c92187ba1e0e9120ac6a12952efcc966ff",
+          "bytes": 372736,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 1,
+            "slot": 5,
+            "left_native_frame": 15,
+            "right_native_frame": 16
+          }
+        },
+        {
+          "frame": 36,
+          "logical_size_x1": [
+            52,
+            118
+          ],
+          "physical_size_x4": [
+            208,
+            472
+          ],
+          "centre_x1": [
+            26,
+            60
+          ],
+          "asset": "AAX4-AM5204D-frame036.rgba",
+          "sha256": "48f5009dffa8316850524f9828b242c7d17e29172d56d04c7faa3dd549bdb76d",
+          "bytes": 392704,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 1,
+            "slot": 6,
+            "left_native_frame": 16,
+            "right_native_frame": 17
+          }
+        },
+        {
+          "frame": 37,
+          "logical_size_x1": [
+            52,
+            118
+          ],
+          "physical_size_x4": [
+            208,
+            472
+          ],
+          "centre_x1": [
+            26,
+            60
+          ],
+          "asset": "AAX4-AM5204D-frame037.rgba",
+          "sha256": "c3a9c14a9cbf591e0be37b510d27040ca555206d7a042bcc0effeaec7970310a",
+          "bytes": 392704,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 1,
+            "slot": 7,
+            "left_native_frame": 17,
+            "right_native_frame": 18
+          }
+        },
+        {
+          "frame": 38,
+          "logical_size_x1": [
+            52,
+            113
+          ],
+          "physical_size_x4": [
+            208,
+            452
+          ],
+          "centre_x1": [
+            26,
+            55
+          ],
+          "asset": "AAX4-AM5204D-frame038.rgba",
+          "sha256": "e68b5fa2b01481d981b414d3c6bbe0d14ca0df9558ff4e939c19ef426ea30e66",
+          "bytes": 376064,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 1,
+            "slot": 8,
+            "left_native_frame": 18,
+            "right_native_frame": 19
+          }
+        },
+        {
+          "frame": 39,
+          "logical_size_x1": [
+            52,
+            109
+          ],
+          "physical_size_x4": [
+            208,
+            436
+          ],
+          "centre_x1": [
+            26,
+            51
+          ],
+          "asset": "AAX4-AM5204D-frame039.rgba",
+          "sha256": "9a39cb588d3af139b55c307e46e35cc6b132af62095fa43d7fdbc52404928a18",
+          "bytes": 362752,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 1,
+            "slot": 9,
+            "left_native_frame": 19,
+            "right_native_frame": 10
+          }
+        }
+      ],
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "timeline_frame_indices": [
+            0,
+            20,
+            1,
+            21,
+            2,
+            22,
+            3,
+            23,
+            4,
+            24,
+            5,
+            25,
+            6,
+            26,
+            7,
+            27,
+            8,
+            28,
+            9,
+            29
+          ]
+        },
+        {
+          "cycle": 1,
+          "native_frame_indices": [
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "timeline_frame_indices": [
+            10,
+            30,
+            11,
+            31,
+            12,
+            32,
+            13,
+            33,
+            14,
+            34,
+            15,
+            35,
+            16,
+            36,
+            17,
+            37,
+            18,
+            38,
+            19,
+            39
+          ]
+        }
+      ],
+      "assets": [
+        {
+          "name": "AAX4-AM5204D-frame000.rgba",
+          "sha256": "7191ad10e7ea3e816d21c86d7adebcd2b886b6c8e2b469a9301558e990873695",
+          "bytes": 349440
+        },
+        {
+          "name": "AAX4-AM5204D-frame001.rgba",
+          "sha256": "d06e0166d37e2b083481eabf68c1851e167a99a1219f6c4506bc2a6c5e05e4cd",
+          "bytes": 379392
+        },
+        {
+          "name": "AAX4-AM5204D-frame002.rgba",
+          "sha256": "53a134f8f28853a7ec25a5ba0a8a975f345502b54b1da7962b4f374ea53d397d",
+          "bytes": 392704
+        },
+        {
+          "name": "AAX4-AM5204D-frame003.rgba",
+          "sha256": "a18335c47a1755a7737f47ec9a48d2f2c9cbc45d5ac25c59e4aff887ed750f93",
+          "bytes": 392704
+        },
+        {
+          "name": "AAX4-AM5204D-frame004.rgba",
+          "sha256": "9e222d29b254940f3959f26dd1b824de0539cdfa1b066c870ce781b401ef1caf",
+          "bytes": 392704
+        },
+        {
+          "name": "AAX4-AM5204D-frame005.rgba",
+          "sha256": "99d69715a67706dbfe0c2749504fbe34819ba32135f1b55ac82d42229fd4cb68",
+          "bytes": 392704
+        },
+        {
+          "name": "AAX4-AM5204D-frame006.rgba",
+          "sha256": "ac0c74a01f8194fbe8b16e66ffc767e68bfe2410bb130bee6dcdcc961bf16f1b",
+          "bytes": 322816
+        },
+        {
+          "name": "AAX4-AM5204D-frame007.rgba",
+          "sha256": "c5ed78e8fac8f15ddaff5b4876f3411fee6da71526c3feadd96fb9370a11748d",
+          "bytes": 366080
+        },
+        {
+          "name": "AAX4-AM5204D-frame008.rgba",
+          "sha256": "6bc64aa7c91aac2950a497dd924870acf53dc3e187f375d0e2a79585a1bf6289",
+          "bytes": 386048
+        },
+        {
+          "name": "AAX4-AM5204D-frame009.rgba",
+          "sha256": "a3f05d42c6d9d21d50403b69d7cdaa916ee5852076eeda0787884a1bc3dc6e21",
+          "bytes": 356096
+        },
+        {
+          "name": "AAX4-AM5204D-frame010.rgba",
+          "sha256": "fa7af48a67ef3f29f81d430e875f23d40964b7337a01bbc78647c7144d4bf318",
+          "bytes": 376064
+        },
+        {
+          "name": "AAX4-AM5204D-frame011.rgba",
+          "sha256": "85f95b8090f50b8ab91d84ae61bb4315a50cda024ebccf5fbf48cc34a825017b",
+          "bytes": 392704
+        },
+        {
+          "name": "AAX4-AM5204D-frame012.rgba",
+          "sha256": "93609ac9a5e0ad1da694e1dcc078f0ce645e34f8706b268e82a69dbb4639ab56",
+          "bytes": 392704
+        },
+        {
+          "name": "AAX4-AM5204D-frame013.rgba",
+          "sha256": "ada6ac9bc331f501e9f3702da7fe6f160743945bab209d590de3c1f06e0335cf",
+          "bytes": 389376
+        },
+        {
+          "name": "AAX4-AM5204D-frame014.rgba",
+          "sha256": "93564ece3ff949a8b50c7526ba95cbc1c81910444073e1113ddd4b4ac7c9cead",
+          "bytes": 356096
+        },
+        {
+          "name": "AAX4-AM5204D-frame015.rgba",
+          "sha256": "ff8dc6fbc0f27d914e48e9cb7c4f6a67bdeb0e8c161e3ad20e4a90949b78a6d4",
+          "bytes": 372736
+        },
+        {
+          "name": "AAX4-AM5204D-frame016.rgba",
+          "sha256": "b731975189554c7fa31ff3292738b9294d57b14804745373a6abacfd362fbf7d",
+          "bytes": 392704
+        },
+        {
+          "name": "AAX4-AM5204D-frame017.rgba",
+          "sha256": "16735dc152aeeb19e68c7306f2afd0022775a7a3f9d99678bf32ad2700c13d53",
+          "bytes": 392704
+        },
+        {
+          "name": "AAX4-AM5204D-frame018.rgba",
+          "sha256": "d845bc109bdbef33f62e53b5dac59bf7187b51224b0b3853818b0e04f002b7f3",
+          "bytes": 376064
+        },
+        {
+          "name": "AAX4-AM5204D-frame019.rgba",
+          "sha256": "71a7384a3fc5e4edad64a1009f4c4ab89a9c928db125d26b6453c71437066b4b",
+          "bytes": 362752
+        },
+        {
+          "name": "AAX4-AM5204D-frame020.rgba",
+          "sha256": "7603ff75d16349be968810fa58b0491b72a633422ff30dd0797cb8796dc65670",
+          "bytes": 349440
+        },
+        {
+          "name": "AAX4-AM5204D-frame021.rgba",
+          "sha256": "812837f2b3f69fb6c685f86e0e97ea794d2ef712db410bc03b97fb88a9688c38",
+          "bytes": 379392
+        },
+        {
+          "name": "AAX4-AM5204D-frame022.rgba",
+          "sha256": "ea96fb723f2b18320dc8bf55d94c6ca8d9f7896f8cc5b6e2d05c831854bad8f6",
+          "bytes": 392704
+        },
+        {
+          "name": "AAX4-AM5204D-frame023.rgba",
+          "sha256": "90ba24f1f0bbad194593f79f8d6d2cf5acdac99c0c14aa538e14853b5e096c3f",
+          "bytes": 392704
+        },
+        {
+          "name": "AAX4-AM5204D-frame024.rgba",
+          "sha256": "45011be86a5505f712cd0915dac42fa442139e69f732f5dfbd6d4aa1872d8c4a",
+          "bytes": 392704
+        },
+        {
+          "name": "AAX4-AM5204D-frame025.rgba",
+          "sha256": "104634d85f494dc5b9fb092d119577ef13e0b35fbffe3720471cda89a93a711c",
+          "bytes": 392704
+        },
+        {
+          "name": "AAX4-AM5204D-frame026.rgba",
+          "sha256": "0eb996b9ba9eaa3e16349580c740528de6226ed0f232df869e33e4fe61f8af8e",
+          "bytes": 322816
+        },
+        {
+          "name": "AAX4-AM5204D-frame027.rgba",
+          "sha256": "50157ee68612736f4016cd2ead0feb9e61fc050313634a53d8a0db7421a804ed",
+          "bytes": 366080
+        },
+        {
+          "name": "AAX4-AM5204D-frame028.rgba",
+          "sha256": "f1e4a974c941ec90518dd2e2cfe168fd105013fb7d1bee902af3416ff9f44534",
+          "bytes": 386048
+        },
+        {
+          "name": "AAX4-AM5204D-frame029.rgba",
+          "sha256": "a68ac2301b6d9d5c1f59c6b8d98c8ca5139546630b568a31b1a6361e4e315ae9",
+          "bytes": 356096
+        },
+        {
+          "name": "AAX4-AM5204D-frame030.rgba",
+          "sha256": "6d28e8fee2f4a732e7047cf1aee4df0d18db01f65edcdad2d6e353134cc6b2ec",
+          "bytes": 376064
+        },
+        {
+          "name": "AAX4-AM5204D-frame031.rgba",
+          "sha256": "1cef31dab17ca6fba470233d01a470b95c92671d8780d417efe30a7cb52f5a89",
+          "bytes": 392704
+        },
+        {
+          "name": "AAX4-AM5204D-frame032.rgba",
+          "sha256": "8a03028525ca4fae4bd4ec29641dbe6e2d504885fa82334ba95e146ac64b629a",
+          "bytes": 392704
+        },
+        {
+          "name": "AAX4-AM5204D-frame033.rgba",
+          "sha256": "281495eef0774fcccfa02435349a7acbd7b6686b09f032fd4f11ef22bcdd1605",
+          "bytes": 389376
+        },
+        {
+          "name": "AAX4-AM5204D-frame034.rgba",
+          "sha256": "769ee2e1cfb42e809477b0cb72af231c18b7f2f4cf4db5c621982c198fe530f8",
+          "bytes": 356096
+        },
+        {
+          "name": "AAX4-AM5204D-frame035.rgba",
+          "sha256": "174c40c961c6e79d14cd12a7eaf585c92187ba1e0e9120ac6a12952efcc966ff",
+          "bytes": 372736
+        },
+        {
+          "name": "AAX4-AM5204D-frame036.rgba",
+          "sha256": "48f5009dffa8316850524f9828b242c7d17e29172d56d04c7faa3dd549bdb76d",
+          "bytes": 392704
+        },
+        {
+          "name": "AAX4-AM5204D-frame037.rgba",
+          "sha256": "c3a9c14a9cbf591e0be37b510d27040ca555206d7a042bcc0effeaec7970310a",
+          "bytes": 392704
+        },
+        {
+          "name": "AAX4-AM5204D-frame038.rgba",
+          "sha256": "e68b5fa2b01481d981b414d3c6bbe0d14ca0df9558ff4e939c19ef426ea30e66",
+          "bytes": 376064
+        },
+        {
+          "name": "AAX4-AM5204D-frame039.rgba",
+          "sha256": "9a39cb588d3af139b55c307e46e35cc6b132af62095fa43d7fdbc52404928a18",
+          "bytes": 362752
+        }
+      ],
+      "playback_mode": "TimedTimeline",
+      "native_fps": {
+        "numerator": 15,
+        "denominator": 1
+      },
+      "target_fps": {
+        "numerator": 30,
+        "denominator": 1
+      }
+    }
+  ]
+}

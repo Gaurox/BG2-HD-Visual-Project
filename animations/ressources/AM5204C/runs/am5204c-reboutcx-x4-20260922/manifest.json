@@ -1,0 +1,86 @@
+{
+  "schema": "bg2-upscale-area-animation-run-v1",
+  "status": "completed",
+  "created_utc": "2026-09-22T19:06:00.635724+00:00",
+  "updated_utc": "2026-09-22T19:06:06.108038+00:00",
+  "run": "am5204c-reboutcx-x4-20260922",
+  "request_signature": "6c03f0e801476736d3ba458059b58924948c79050210ed5c3b28f30ca5ca65cf",
+  "request": {
+    "requested_resrefs": [
+      "AM5204C"
+    ],
+    "requested_areas": [],
+    "resolved_resrefs": [
+      "AM5204C"
+    ],
+    "sources": {
+      "AM5204C": "b3363159b1660e26cd92a66244464e40533072ab0a4d42dfbd93f3a56c1f3c44"
+    },
+    "scale": 4,
+    "padding_x1": 32,
+    "seed": null,
+    "workflow_sha256": "30dec619a4c1a3ecde076c0926a5ed8ee29d5f2ca8b4eb89a75d3b5f7811b61e"
+  },
+  "occurrences": [
+    {
+      "area_id": "AR5204",
+      "occurrence_index": "1",
+      "instance_name": "AM5204C",
+      "x": "2075",
+      "y": "1102",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001103",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM5204C",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "OH4210",
+      "occurrence_index": "38",
+      "instance_name": "Fireplace",
+      "x": "1597",
+      "y": "194",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001103",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM5204C",
+      "resource_kind": "BAM"
+    }
+  ],
+  "resources": [
+    {
+      "resref": "AM5204C",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/AM5204C/source.bam",
+      "source_sha256": "b3363159b1660e26cd92a66244464e40533072ab0a4d42dfbd93f3a56c1f3c44",
+      "inventory": {
+        "frames": 12,
+        "max_frame_width": 53,
+        "max_frame_height": 37,
+        "occurrences": 2,
+        "areas": [
+          "AR5204",
+          "OH4210"
+        ]
+      },
+      "source_copy": "resources/AM5204C/00_source/AM5204C.bam",
+      "frames_x1": "resources/AM5204C/01_frames_x1",
+      "frame_count": 12,
+      "aligned_canvas_size_x1": [
+        53,
+        37
+      ],
+      "geometry_mode": "uniform",
+      "frame_manifest_sha256": "5c6b7c9557df385bb86e300911e88f591c211b82c8544ac8cd2223bf63e33540",
+      "upscale": "resources/AM5204C/02_upscale_reboutcx_x4",
+      "upscale_manifest_sha256": "30ecddb098f01bb3988604948e5fabdc97730eda93f4c0652930a2121cf67393",
+      "preview": null,
+      "completed_utc": "2026-09-22T19:06:06.108038+00:00"
+    }
+  ],
+  "completed_utc": "2026-09-22T19:06:06.108038+00:00"
+}

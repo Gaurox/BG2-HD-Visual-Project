@@ -1,0 +1,274 @@
+{
+  "schema": "bg2-upscale-animation-installed-lot-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T08:38:09.426179+00:00",
+  "qa_status": "pending",
+  "game_root": "config://bg2ee_game_root",
+  "resrefs": [
+    "AM5204C",
+    "AM5204D",
+    "AM5508C",
+    "AM5508D"
+  ],
+  "source_recipe": "Existing 20260922 x4/30fps results, unchanged bytes; complete per-area merge",
+  "areas": [
+    {
+      "area": "AR5204",
+      "pack": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5204/AR5204",
+      "before": {
+        "AM5204A": {
+          "sig": "90d2c3c7abe6",
+          "frames": 30
+        }
+      },
+      "expected": {
+        "AM5204A": {
+          "sig": "90d2c3c7abe6",
+          "frames": 30
+        },
+        "AM5204C": {
+          "sig": "7cced8318324",
+          "frames": 24
+        },
+        "AM5204D": {
+          "sig": "e0691595b1d8",
+          "frames": 40
+        }
+      },
+      "lot_resources": [
+        "AM5204C",
+        "AM5204D"
+      ],
+      "files": 95,
+      "bytes": 22800896,
+      "manifest_sha256": "e7d18c90688a0594a0e175c9de3dce86bd50881d5ce323c4074a48000dad13f7"
+    },
+    {
+      "area": "OH4210",
+      "pack": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/oh4210/OH4210",
+      "before": {
+        "AM5204C": {
+          "sig": "7cced8318324",
+          "frames": 24
+        },
+        "FIREBRN": {
+          "sig": "f9948541f4a6",
+          "frames": 84
+        },
+        "FIRE_3": {
+          "sig": "c2cebb655fd3",
+          "frames": 14
+        },
+        "FIRE_4": {
+          "sig": "414b3adf5fa8",
+          "frames": 14
+        },
+        "FIRE_4GS": {
+          "sig": "2e8861b51ea3",
+          "frames": 28
+        }
+      },
+      "expected": {
+        "FIREBRN": {
+          "sig": "f9948541f4a6",
+          "frames": 84
+        },
+        "FIRE_3": {
+          "sig": "c2cebb655fd3",
+          "frames": 14
+        },
+        "FIRE_4": {
+          "sig": "414b3adf5fa8",
+          "frames": 14
+        },
+        "FIRE_4GS": {
+          "sig": "2e8861b51ea3",
+          "frames": 28
+        },
+        "AM5204C": {
+          "sig": "7cced8318324",
+          "frames": 24
+        }
+      },
+      "lot_resources": [
+        "AM5204C"
+      ],
+      "files": 165,
+      "bytes": 6353368,
+      "manifest_sha256": "cf697e38e01a5015e0e7880a8285c1087cb9445a93e46ca97badbad8cdc74a05"
+    },
+    {
+      "area": "AR5201",
+      "pack": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5201/AR5201",
+      "before": {
+        "AM5201A": {
+          "sig": "541b0ee606e9",
+          "frames": 16
+        },
+        "AM5201B": {
+          "sig": "a5b7d65670c0",
+          "frames": 28
+        },
+        "AM5204D": {
+          "sig": "e0691595b1d8",
+          "frames": 40
+        }
+      },
+      "expected": {
+        "AM5201A": {
+          "sig": "541b0ee606e9",
+          "frames": 16
+        },
+        "AM5201B": {
+          "sig": "a5b7d65670c0",
+          "frames": 28
+        },
+        "AM5204D": {
+          "sig": "e0691595b1d8",
+          "frames": 40
+        }
+      },
+      "lot_resources": [
+        "AM5204D"
+      ],
+      "files": 85,
+      "bytes": 51084788,
+      "manifest_sha256": "ca6f097f4aac033977e5aeb91fd6081bfb94117d9d445c9f3000499f50c1b14e"
+    },
+    {
+      "area": "AR5502",
+      "pack": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5502/AR5502",
+      "before": {
+        "AM5502D": {
+          "sig": "c480bec8c4f8",
+          "frames": 24
+        },
+        "AM5502F": {
+          "sig": "5c6e81eaf18f",
+          "frames": 24
+        },
+        "AM5508C": {
+          "sig": "943981ed910a",
+          "frames": 24
+        },
+        "AM5508D": {
+          "sig": "7e144843f43d",
+          "frames": 20
+        }
+      },
+      "expected": {
+        "AM5502D": {
+          "sig": "c480bec8c4f8",
+          "frames": 24
+        },
+        "AM5502F": {
+          "sig": "5c6e81eaf18f",
+          "frames": 24
+        },
+        "AM5508C": {
+          "sig": "943981ed910a",
+          "frames": 24
+        },
+        "AM5508D": {
+          "sig": "7e144843f43d",
+          "frames": 20
+        }
+      },
+      "lot_resources": [
+        "AM5508C",
+        "AM5508D"
+      ],
+      "files": 93,
+      "bytes": 14122256,
+      "manifest_sha256": "f4cc62a6112baee3ebe312bf20ac297f5f1ec9a5fd9f4b7c2faf396f9f468666"
+    },
+    {
+      "area": "AR5501",
+      "pack": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5501/AR5501",
+      "before": {},
+      "expected": {
+        "AM5508C": {
+          "sig": "943981ed910a",
+          "frames": 24
+        },
+        "AM5508D": {
+          "sig": "7e144843f43d",
+          "frames": 20
+        }
+      },
+      "lot_resources": [
+        "AM5508C",
+        "AM5508D"
+      ],
+      "files": 45,
+      "bytes": 9061624,
+      "manifest_sha256": "112a78e92306d984340569c698e375a727091c377470bcb551705133f59346ef"
+    },
+    {
+      "area": "AR5506",
+      "pack": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5506/AR5506",
+      "before": {},
+      "expected": {
+        "AM5508C": {
+          "sig": "943981ed910a",
+          "frames": 24
+        },
+        "AM5508D": {
+          "sig": "7e144843f43d",
+          "frames": 20
+        }
+      },
+      "lot_resources": [
+        "AM5508C",
+        "AM5508D"
+      ],
+      "files": 45,
+      "bytes": 9061624,
+      "manifest_sha256": "61e7bd228742979de47cc9fa5f85fe26dd48626aec8773fa24f8c009195b4f72"
+    },
+    {
+      "area": "AR5507",
+      "pack": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5507/AR5507",
+      "before": {},
+      "expected": {
+        "AM5508C": {
+          "sig": "943981ed910a",
+          "frames": 24
+        },
+        "AM5508D": {
+          "sig": "7e144843f43d",
+          "frames": 20
+        }
+      },
+      "lot_resources": [
+        "AM5508C",
+        "AM5508D"
+      ],
+      "files": 45,
+      "bytes": 9061624,
+      "manifest_sha256": "5fa4f7d6fadc2b623d88b43cf51628045678e883ccd9246c63e7c9950218daac"
+    },
+    {
+      "area": "AR5508",
+      "pack": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5508/AR5508",
+      "before": {},
+      "expected": {
+        "AM5508C": {
+          "sig": "943981ed910a",
+          "frames": 24
+        },
+        "AM5508D": {
+          "sig": "7e144843f43d",
+          "frames": 20
+        }
+      },
+      "lot_resources": [
+        "AM5508C",
+        "AM5508D"
+      ],
+      "files": 45,
+      "bytes": 9061624,
+      "manifest_sha256": "df565b303f7da4ffc32a327698fead775235e8c02e40c34c1c6923b0682a92ce"
+    }
+  ]
+}

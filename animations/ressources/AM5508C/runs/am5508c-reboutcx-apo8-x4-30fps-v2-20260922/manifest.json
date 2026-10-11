@@ -1,0 +1,61 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-22T19:20:44.565602+00:00",
+  "plan_sha256": "84acfc47e1a85f2a429e2724c2db6de3d76ca551f1935ce08a98eda1f2037a05",
+  "input_mode": "spatial-v1",
+  "source_run": "G:/AI/BG2_Upscale/animations/ressources/AM5508C/runs/am5508c-reboutcx-x4-20260922",
+  "source_run_manifest_sha256": "3c1cd52da381f4d81f558b3bc4c06cd2f31448efb8ad8cd2a50b2603018b9608",
+  "base_pack": "G:/AI/BG2_Upscale/animations/ressources/AM5508C/runs/am5508c-reboutcx-x4-20260922/03_runtime_pack",
+  "base_pack_manifest_sha256": "69ef82058cf8b6c45cb86beba9facdead7a0ddd1dba0f440b47647086d9da2cd",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM5508C"
+  ],
+  "timed_resource_variants": [
+    {
+      "resref": "AM5508C",
+      "variant_index": 0,
+      "position": null
+    }
+  ],
+  "topaz": {
+    "ffmpeg": "C:/Program Files/Topaz Labs LLC/Topaz Video AI/ffmpeg.exe",
+    "model_dir": "C:/ProgramData/Topaz Labs LLC/Topaz Video AI/models",
+    "model": "apo-8",
+    "device": "-2",
+    "replace_duplicate_threshold": -0.01,
+    "transparent_rgb_mode": "nearest-opaque-dilate"
+  },
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "a9e91d0e83484a266f39144cca2758cff9d2d7cd3116cc36ab9ac1d2330db0a9",
+  "registry_sha256": "0f57f9140e7a3e13c02c1aef161ffe7318013caff4e02b8a2f18d8951f4029ba",
+  "reviews": [
+    {
+      "resref": "AM5508C",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "exact",
+      "file": "work/AM5508C-v0/cycle_000/review-30fps-exact.mp4",
+      "sha256": "1495e1f6f12f4b1d8dc1c853081e32ee3be124aaeaa3c5feb0a66e886c5a5c85"
+    },
+    {
+      "resref": "AM5508C",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "loop-4s",
+      "file": "work/AM5508C-v0/cycle_000/review-30fps-loop-4s.mp4",
+      "sha256": "789d9180f9b73839873f4813a409a2500635d2f23ed967aa3f3305fed4eb41fc"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval"
+}

@@ -1,0 +1,79 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-22T19:21:49.632705+00:00",
+  "plan_sha256": "8278fd671e176ada2b34434038bec0325ce8bc62c3f0e1f3eef18375c1df0ebf",
+  "input_mode": "spatial-v1",
+  "source_run": "G:/AI/BG2_Upscale/animations/ressources/AM5204D/runs/am5204d-seedvr7b-lab-x4-20260922",
+  "source_run_manifest_sha256": "d7d232fceb56d8e7a1026b3af8234f9dc9ae2d818ec34e0eaa7b3f7dc86ca331",
+  "base_pack": "G:/AI/BG2_Upscale/animations/ressources/AM5204D/runs/am5204d-seedvr7b-lab-x4-20260922/03_runtime_pack",
+  "base_pack_manifest_sha256": "a2e597f11339838dabb8d00b24be3a86d6b618e28af2cd37018f54a4690166dc",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM5204D"
+  ],
+  "timed_resource_variants": [
+    {
+      "resref": "AM5204D",
+      "variant_index": 0,
+      "position": null
+    }
+  ],
+  "topaz": {
+    "ffmpeg": "C:/Program Files/Topaz Labs LLC/Topaz Video AI/ffmpeg.exe",
+    "model_dir": "C:/ProgramData/Topaz Labs LLC/Topaz Video AI/models",
+    "model": "apo-8",
+    "device": "-2",
+    "replace_duplicate_threshold": -0.01,
+    "transparent_rgb_mode": "nearest-opaque-dilate"
+  },
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "88e7457f4a516e7e0a9733fd2ec148f601fb780a4e13d388d56357eac36d2604",
+  "registry_sha256": "9438f0cdc09aba4ce13a6f05ff0320925e42382ffee81977eeeab4d6237c551c",
+  "reviews": [
+    {
+      "resref": "AM5204D",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "exact",
+      "file": "work/AM5204D-v0/cycle_000/review-30fps-exact.mp4",
+      "sha256": "ac6ea3aafaced4f84ff28bb3c60f01964344508d38ab7a1fd140e3d73af2a969"
+    },
+    {
+      "resref": "AM5204D",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "loop-4s",
+      "file": "work/AM5204D-v0/cycle_000/review-30fps-loop-4s.mp4",
+      "sha256": "264c54903ce5b2536b0419ea70b2bd093b03119ac868dd759fdaafa448216104"
+    },
+    {
+      "resref": "AM5204D",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 1,
+      "kind": "exact",
+      "file": "work/AM5204D-v0/cycle_001/review-30fps-exact.mp4",
+      "sha256": "1709caca2a13bf379ff19125fc05c031a816351da55a3f27eebc1a11ede457cd"
+    },
+    {
+      "resref": "AM5204D",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 1,
+      "kind": "loop-4s",
+      "file": "work/AM5204D-v0/cycle_001/review-30fps-loop-4s.mp4",
+      "sha256": "6ad629e00bad4ef522cbcb9da350b138c24f010233433462772a34819a5ac428"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval"
+}

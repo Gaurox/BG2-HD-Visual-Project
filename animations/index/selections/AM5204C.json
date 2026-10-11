@@ -1,0 +1,93 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM5204C",
+  "correction_id": "contour-aura16-sigma5-gain0p9-margin14-premultiply",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/am5204c-reboutcx-apo8-x4-30fps-v2-aura16-20260922/AR5204/manifest.json",
+        "manifest_sha256": "8301EEC926A4824F3F28D6B1A827F50E1A0970A2BCC9256E11645687F9EE6AED",
+        "path": "animations/packs-par-zone/am5204c-reboutcx-apo8-x4-30fps-v2-aura16-20260922/AR5204",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM5204C/runs/am5204c-reboutcx-apo8-x4-30fps-v2-20260922/03_runtime_pack/manifest.json",
+        "manifest_sha256": "51E9E893CEC6E92387E2A7663F33633CAB9B16BBC963E54D1463891F62399CFD",
+        "path": "animations/ressources/AM5204C/runs/am5204c-reboutcx-apo8-x4-30fps-v2-20260922/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM5204C/runs/am5204c-reboutcx-x4-20260922/03_runtime_pack/manifest.json",
+        "manifest_sha256": "9C89A317319A374771F0B18289D73FCA84A4F5CAB9679491DDC76170FDD42E80",
+        "path": "animations/ressources/AM5204C/runs/am5204c-reboutcx-x4-20260922/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/AM5204C/runs/am5204c-reboutcx-apo8-x4-30fps-v2-20260922/manifest.json",
+        "manifest_sha256": "E3041A8E49831384EAC8EB8F14F095B6476AC570A2A59FD4EDAB7E6E5E0870CD",
+        "path": "animations/ressources/AM5204C/runs/am5204c-reboutcx-apo8-x4-30fps-v2-20260922",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM5204C/runs/am5204c-reboutcx-x4-20260922/manifest.json",
+        "manifest_sha256": "6037D9CE87DA939DCFECAC331AEE0AB8E1BCC216633658170A20B1BFAF65A3FE",
+        "path": "animations/ressources/AM5204C/runs/am5204c-reboutcx-x4-20260922",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-11",
+    "path": "animations/index/qa-decisions/AM5204C/2026-10-11-accepted-am5204c-lot1-all-maps-v1.json",
+    "sha256": "A8952FEFD83696FEAEF78E30CC5DDC7DDF470BC35A5A666CE75A331F1D40656E",
+    "status": "accepted"
+  },
+  "recipe_id": "am5204c-lot1-contour-aura16-sigma5-gain0p9-margin14-premultiply",
+  "resref": "AM5204C",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM5204C/runs/am5204c-lot1-selection-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "4E4D93C071439B65C235A662883981B299F35AF6A9B5E979AA3DD374D228D2B4",
+    "path": "animations/ressources/AM5204C/runs/am5204c-lot1-selection-accepted-20261011-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR5204",
+        "manifest_path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5204/AR5204/manifest.json",
+        "manifest_sha256": "E7D18C90688A0594A0E175C9DE3DCE86BD50881D5CE323C4074A48000DAD13F7",
+        "path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/ar5204/AR5204",
+        "registry_sha256": "CD5ADF313EB36CF9B68A9AB58D046DD2DAC142693575C902506376E2F632F97A",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH4210",
+        "manifest_path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/oh4210/OH4210/manifest.json",
+        "manifest_sha256": "CF697E38E01A5015E0E7880A8285C1087CB9445A93E46CA97BADBAD8CDC74A05",
+        "path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/oh4210/OH4210",
+        "registry_sha256": "C1706B1A31EAE96F76CE4257B3D66310F50DD4F21D8017D553F6D41F33BE6B5C",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1/manifest.json",
+    "manifest_sha256": "E600A4B9119B745AB8111E9ED44965573731ED1B952DB10700CEF96E5F0CDA5F",
+    "path": "animations/packs-par-zone/lot1-four-animations-all-areas-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR5204",
+    "OH4210"
+  ],
+  "updated_at_utc": "2026-10-11T08:53:14Z"
+}
