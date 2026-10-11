@@ -1,0 +1,281 @@
+{
+  "schema": "bg2-upscale-animation-frames-v1",
+  "status": "completed",
+  "created_utc": "2026-09-15T21:38:10.250073+00:00",
+  "updated_utc": "2026-09-15T21:38:10.250073+00:00",
+  "job_signature": "895ea2329d02113e77b0d55db2bd213f0a02bf4760f205d7ea3e09967d0e9b2d",
+  "source": {
+    "rgb": "G:/AI/BG2_Upscale/animations/ressources/FOUNT1/runs/fount1-seedvr7b-lab-x2-20260915/resources/FOUNT1/01_frames_x1/rgb",
+    "alpha": "G:/AI/BG2_Upscale/animations/ressources/FOUNT1/runs/fount1-seedvr7b-lab-x2-20260915/resources/FOUNT1/01_frames_x1/alpha",
+    "frame_manifest": "G:/AI/BG2_Upscale/animations/ressources/FOUNT1/runs/fount1-seedvr7b-lab-x2-20260915/resources/FOUNT1/01_frames_x1/manifest.json",
+    "frame_manifest_sha256": "c3d9018e4e94994d408cd99ad2786150dd71ed5b3ff40b2e2d46543379102a44"
+  },
+  "workflow": {
+    "algorithm": "SeedVR2 7B/LAB x2 then nearest-neighbour x2",
+    "source_seedvr_x2_manifest": "G:\\AI\\BG2_Upscale\\animations\\ressources\\FOUNT1\\runs\\fount1-seedvr7b-lab-x2-20260915\\resources\\FOUNT1\\02_upscale_x2\\manifest.json",
+    "source_seedvr_x2_manifest_sha256": "90cb5fab437e1edb25a3897b0d9b287f6420614193fc8f0f8c1e6f8817a075db"
+  },
+  "parameters": {
+    "seedvr_scale": 2,
+    "post_scale": 2,
+    "post_scale_method": "nearest"
+  },
+  "scale": 4,
+  "padding_x1": 32,
+  "aligned_canvas_size_x1": [
+    60,
+    72
+  ],
+  "geometry_mode": "per-frame",
+  "alpha_policy": "SeedVR x2 source alpha nearest-neighbour x2 to runtime x4",
+  "raw_rgba_layout": "RGBA8, tightly packed, top-to-bottom rows",
+  "frames": [
+    {
+      "frame": 0,
+      "source_rgb": "frame_000.png",
+      "source_rgb_sha256": "4f23aa731f1049d644ce79244486277ccba20ec1d827acc54ef74278b0891973",
+      "source_alpha": "frame_000.png",
+      "source_alpha_sha256": "67f399d8e242063bee133633af0f3e7b2f5901add6703fd61800306d17bb8dc0",
+      "aligned_size_x1": [
+        60,
+        72
+      ],
+      "logical_size_x1": [
+        53,
+        66
+      ],
+      "physical_size_xn": [
+        212,
+        264
+      ],
+      "centre_x1": [
+        27,
+        32
+      ],
+      "canvas_offset_x1": [
+        3,
+        0
+      ],
+      "runtime_crop_box_xn": [
+        12,
+        0,
+        224,
+        264
+      ],
+      "padded_x1": "00_padded_x1/frame_000.png",
+      "comfy_padded_xn": "01_comfy_padded_x2/frame_000.png",
+      "aligned_rgba_xn": "aligned_rgba/frame_000.png",
+      "rgb_xn": "rgb/frame_000.png",
+      "alpha_xn": "alpha/frame_000.png",
+      "rgba_xn": "rgba/frame_000.png",
+      "raw_rgba_xn": "raw_rgba/frame_000.rgba",
+      "prompt_id": "2411fb02-8473-4b52-ad0f-9474b42a6127",
+      "aligned_rgba_xn_sha256": "b6ba7a7ff0cffe01f34534c9a7055ae7bdc3fc006c9a1451fc4420f8f7a0094c",
+      "rgb_xn_sha256": "4c5708c598107b035fec5125f23b86ff18949c0631d89d103fe9489fc7c01318",
+      "alpha_xn_sha256": "77291999db8b3edf61df97747a92cb1a388adafffb61f35bac44821f4737da2b",
+      "rgba_xn_sha256": "2feaf4e71cdf882d8ccbe2483868fc7a35d38475c0d55d881b8425b4a9c49a5b",
+      "raw_rgba_xn_sha256": "34766d7127ffdc9f11e306b1c1e04f416d6506137858f6ba04795e3be9257c85",
+      "seedvr_x2_aligned_rgba": "G:\\AI\\BG2_Upscale\\animations\\ressources\\FOUNT1\\runs\\fount1-seedvr7b-lab-x2-20260915\\resources\\FOUNT1\\02_upscale_x2\\aligned_rgba\\frame_000.png",
+      "seedvr_x2_aligned_rgba_sha256": "faccc08db0d7956b8836b581d4eeb8f6bc1a620f5bc9438209a7bd3177ea576a"
+    },
+    {
+      "frame": 1,
+      "source_rgb": "frame_001.png",
+      "source_rgb_sha256": "430266356b3ecb0a5fbf82380014d29ecbc3c15358372a6a6353ccfa88686b4f",
+      "source_alpha": "frame_001.png",
+      "source_alpha_sha256": "7474afe09a17d28a3113388c8deba5174bf9a72ce402dceffd4b0c41572405cc",
+      "aligned_size_x1": [
+        60,
+        72
+      ],
+      "logical_size_x1": [
+        56,
+        71
+      ],
+      "physical_size_xn": [
+        224,
+        284
+      ],
+      "centre_x1": [
+        28,
+        31
+      ],
+      "canvas_offset_x1": [
+        2,
+        1
+      ],
+      "runtime_crop_box_xn": [
+        8,
+        4,
+        232,
+        288
+      ],
+      "padded_x1": "00_padded_x1/frame_001.png",
+      "comfy_padded_xn": "01_comfy_padded_x2/frame_001.png",
+      "aligned_rgba_xn": "aligned_rgba/frame_001.png",
+      "rgb_xn": "rgb/frame_001.png",
+      "alpha_xn": "alpha/frame_001.png",
+      "rgba_xn": "rgba/frame_001.png",
+      "raw_rgba_xn": "raw_rgba/frame_001.rgba",
+      "prompt_id": "a652fda1-918e-4477-a35b-0381a1b1064a",
+      "aligned_rgba_xn_sha256": "1cc44dec90f0447b364f03e1d5e87bbf85a7d71efd891aac47b66eee2f62f7f8",
+      "rgb_xn_sha256": "539df79625026ce41e2d71a178e9f87d6ab51da21d23c1611a6299758560f45c",
+      "alpha_xn_sha256": "0f951cfe92241879680cdfa2cf8c5591c607ede628f87cc62d4224ccea69822e",
+      "rgba_xn_sha256": "284b5a0e877e813b02c6e79730aa63edae6027de8958d77b43fc4754375001ec",
+      "raw_rgba_xn_sha256": "1c44812452a18d7d8ae7181c561d6ab277efff2f6402fc236c7c734123a96b95",
+      "seedvr_x2_aligned_rgba": "G:\\AI\\BG2_Upscale\\animations\\ressources\\FOUNT1\\runs\\fount1-seedvr7b-lab-x2-20260915\\resources\\FOUNT1\\02_upscale_x2\\aligned_rgba\\frame_001.png",
+      "seedvr_x2_aligned_rgba_sha256": "e1c4f71fef93b27e3c345a33e1aef12b4a19151a117d9f583869527ae02a32db"
+    },
+    {
+      "frame": 2,
+      "source_rgb": "frame_002.png",
+      "source_rgb_sha256": "ade387c7eb7087527ffd079a0e3457f8ea3755f2e4fc7088182cfef8fb1c5bae",
+      "source_alpha": "frame_002.png",
+      "source_alpha_sha256": "08f678c58794dd0a8c5b793749c2bf6c42032598726a51ff8020c618d0580e97",
+      "aligned_size_x1": [
+        60,
+        72
+      ],
+      "logical_size_x1": [
+        57,
+        68
+      ],
+      "physical_size_xn": [
+        228,
+        272
+      ],
+      "centre_x1": [
+        28,
+        31
+      ],
+      "canvas_offset_x1": [
+        2,
+        1
+      ],
+      "runtime_crop_box_xn": [
+        8,
+        4,
+        236,
+        276
+      ],
+      "padded_x1": "00_padded_x1/frame_002.png",
+      "comfy_padded_xn": "01_comfy_padded_x2/frame_002.png",
+      "aligned_rgba_xn": "aligned_rgba/frame_002.png",
+      "rgb_xn": "rgb/frame_002.png",
+      "alpha_xn": "alpha/frame_002.png",
+      "rgba_xn": "rgba/frame_002.png",
+      "raw_rgba_xn": "raw_rgba/frame_002.rgba",
+      "prompt_id": "da259103-0834-4fbc-aa80-0b4fa38b7ab4",
+      "aligned_rgba_xn_sha256": "2685538abb98a64e7b086a8227e9fc2ec9cd807d1f78c83af8097eecce5c8fa5",
+      "rgb_xn_sha256": "d51e1c05de7998f2a7d146f03f9e8135415a2430c9583dd563fbc9b30116904a",
+      "alpha_xn_sha256": "c909f89b3e873c5efa61a46f2abeab32be3919857330fad11988b77e595e2778",
+      "rgba_xn_sha256": "5e4dbf6d80f3964a91bc8366bd764b2e70cf41ed5f604bd11ba56bd78d18985f",
+      "raw_rgba_xn_sha256": "ee5c931809516755b7a28d4db62ac72f61b227a235f6bf3b30ed8f3b3e66b15d",
+      "seedvr_x2_aligned_rgba": "G:\\AI\\BG2_Upscale\\animations\\ressources\\FOUNT1\\runs\\fount1-seedvr7b-lab-x2-20260915\\resources\\FOUNT1\\02_upscale_x2\\aligned_rgba\\frame_002.png",
+      "seedvr_x2_aligned_rgba_sha256": "65d19fbbb2d28e80a7ae5fa98f87bbd3eb1de86d86f6ff15008fef79acc7f6f4"
+    },
+    {
+      "frame": 3,
+      "source_rgb": "frame_003.png",
+      "source_rgb_sha256": "001236686e9242b47089b0f2fa389a7f105537b1e7b68b1cb5d689acd837f559",
+      "source_alpha": "frame_003.png",
+      "source_alpha_sha256": "325605bc96cd12e6731b2d1466227e5a89a3cf0a22edb0bf48411b1408ea2305",
+      "aligned_size_x1": [
+        60,
+        72
+      ],
+      "logical_size_x1": [
+        60,
+        65
+      ],
+      "physical_size_xn": [
+        240,
+        260
+      ],
+      "centre_x1": [
+        30,
+        32
+      ],
+      "canvas_offset_x1": [
+        0,
+        0
+      ],
+      "runtime_crop_box_xn": [
+        0,
+        0,
+        240,
+        260
+      ],
+      "padded_x1": "00_padded_x1/frame_003.png",
+      "comfy_padded_xn": "01_comfy_padded_x2/frame_003.png",
+      "aligned_rgba_xn": "aligned_rgba/frame_003.png",
+      "rgb_xn": "rgb/frame_003.png",
+      "alpha_xn": "alpha/frame_003.png",
+      "rgba_xn": "rgba/frame_003.png",
+      "raw_rgba_xn": "raw_rgba/frame_003.rgba",
+      "prompt_id": "bb6540b7-c0bd-4dd0-a615-875a5a7dd875",
+      "aligned_rgba_xn_sha256": "1c01fa292e233ceb369c992b6be2401e7d539c58873ba006939631d89920af3b",
+      "rgb_xn_sha256": "e43d55252e56b718793b5aec074810448edde12553b0479955b380112bb51f85",
+      "alpha_xn_sha256": "6a366444abceeeb0a208adf9308bbc6b984824a96b3d4023f99f8936b8e76f43",
+      "rgba_xn_sha256": "f7b42e52117b39e2a37013b1a6c202568f928da467e5cca99b4e5b709737a84f",
+      "raw_rgba_xn_sha256": "084e20eac631b871a5248de40204166c41ddbf959f8ba4f210df3c55502950bb",
+      "seedvr_x2_aligned_rgba": "G:\\AI\\BG2_Upscale\\animations\\ressources\\FOUNT1\\runs\\fount1-seedvr7b-lab-x2-20260915\\resources\\FOUNT1\\02_upscale_x2\\aligned_rgba\\frame_003.png",
+      "seedvr_x2_aligned_rgba_sha256": "c648f8b63112d411a8df578e8577425aed677811c17f8a70802f18bb71db8593"
+    },
+    {
+      "frame": 4,
+      "source_rgb": "frame_004.png",
+      "source_rgb_sha256": "869e75cb0340dbb471c8da3a958d61613c429e37160e32f761d0565ee9e7e76e",
+      "source_alpha": "frame_004.png",
+      "source_alpha_sha256": "a9c76663a229d89cc477e9ee5cf9ea34618170ee0921a00c303df3d2fb5d3458",
+      "aligned_size_x1": [
+        60,
+        72
+      ],
+      "logical_size_x1": [
+        50,
+        65
+      ],
+      "physical_size_xn": [
+        200,
+        260
+      ],
+      "centre_x1": [
+        24,
+        32
+      ],
+      "canvas_offset_x1": [
+        6,
+        0
+      ],
+      "runtime_crop_box_xn": [
+        24,
+        0,
+        224,
+        260
+      ],
+      "padded_x1": "00_padded_x1/frame_004.png",
+      "comfy_padded_xn": "01_comfy_padded_x2/frame_004.png",
+      "aligned_rgba_xn": "aligned_rgba/frame_004.png",
+      "rgb_xn": "rgb/frame_004.png",
+      "alpha_xn": "alpha/frame_004.png",
+      "rgba_xn": "rgba/frame_004.png",
+      "raw_rgba_xn": "raw_rgba/frame_004.rgba",
+      "prompt_id": "7a428327-3682-4e62-86c5-e1fcff441f6c",
+      "aligned_rgba_xn_sha256": "f7e93e0e53685a1216f4c5b67d0141f6529200ee158e276aa16f2c956767f077",
+      "rgb_xn_sha256": "bf2ba67c2f703910b66aca7a02eb8fecc7f95ad9d1598c6fb6e5591e75cbda95",
+      "alpha_xn_sha256": "3e6efb7a328d5e89bfd96f09e069db92d6a14e32b0141c1990886fd9a12046bb",
+      "rgba_xn_sha256": "a6e00344e04a216c6622bda613f59c31681c6db43e9fdbfd379330372030586b",
+      "raw_rgba_xn_sha256": "77b8b207c58c3ce92f3b13632eb4d75995c16df0d1cd750aa8e54e6e9ce6513d",
+      "seedvr_x2_aligned_rgba": "G:\\AI\\BG2_Upscale\\animations\\ressources\\FOUNT1\\runs\\fount1-seedvr7b-lab-x2-20260915\\resources\\FOUNT1\\02_upscale_x2\\aligned_rgba\\frame_004.png",
+      "seedvr_x2_aligned_rgba_sha256": "9f87d15c437959000cd58178e3c95415f811fd07f4b9322542b353b00487390a"
+    }
+  ],
+  "comfyui": {
+    "server": "http://127.0.0.1:8188",
+    "device": "cuda:0 NVIDIA GeForce RTX 5090 : cudaMallocAsync"
+  },
+  "preview": null,
+  "preview_sha256": "e453cfbacb5350371e85b4b8982d1b7e45e5cb9932d5b8eb90602e8981037ae7",
+  "completed_utc": "2026-09-15T21:38:10.250073+00:00"
+}

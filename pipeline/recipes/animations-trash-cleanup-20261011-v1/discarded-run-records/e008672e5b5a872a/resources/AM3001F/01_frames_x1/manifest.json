@@ -1,0 +1,156 @@
+{
+  "schema": "bg2-upscale-animation-frames-x1-v1",
+  "created_utc": "2026-09-11T19:17:57.570930+00:00",
+  "source": "G:/AI/BG2_Upscale/animations/batches/ar3001-altar-three-seedvr7b-lab-x4-20260911/resources/AM3001F/00_source/AM3001F.bam",
+  "source_sha256": "7aae71404d479311020c9b24f9ca5a1ee327d5584029d52b63864d8fec5d20d3",
+  "format": "BAM V1",
+  "frame_count": 6,
+  "source_transparent_index": 0,
+  "aligned_canvas_size": [
+    40,
+    40
+  ],
+  "anchor_bounds": {
+    "left": -20,
+    "top": -20,
+    "right": 20,
+    "bottom": 20
+  },
+  "geometry_mode": "uniform",
+  "frames": [
+    {
+      "frame": 0,
+      "file": "frame_000.png",
+      "source_size": [
+        40,
+        40
+      ],
+      "centre": [
+        20,
+        20
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "f495a8b268549227984b1b87925b7739319d513d7a5d5306848148e0162b7206",
+      "alpha_sha256": "de6af9cf4269724732b54ce5e066707af6d82e659976e1a7ab2a8cf0664d0c3c",
+      "rgba_sha256": "312f2ad8feb787a6ba056297d55bc57ea72be7566f9d9cfa497ed8ec88daee17"
+    },
+    {
+      "frame": 1,
+      "file": "frame_001.png",
+      "source_size": [
+        40,
+        40
+      ],
+      "centre": [
+        20,
+        20
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "94cf9d21c1a8b8e23537ff4d5cc60965e8c636fe398c68d5e82e1e9f93bd4c19",
+      "alpha_sha256": "de6af9cf4269724732b54ce5e066707af6d82e659976e1a7ab2a8cf0664d0c3c",
+      "rgba_sha256": "6f912ccddbba2485fea56023e530fac43fb796198ee0e7eb21bbe1c9cdf4f9da"
+    },
+    {
+      "frame": 2,
+      "file": "frame_002.png",
+      "source_size": [
+        40,
+        40
+      ],
+      "centre": [
+        20,
+        20
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "8be7da29619ab028ab29b1197e5272534e7abdc789b145cc92f85fdcafb2e4a3",
+      "alpha_sha256": "de6af9cf4269724732b54ce5e066707af6d82e659976e1a7ab2a8cf0664d0c3c",
+      "rgba_sha256": "723367d1c469619b6ce3fdc4c1570d9eeeadcd84a0dde176f47b405650020e3a"
+    },
+    {
+      "frame": 3,
+      "file": "frame_003.png",
+      "source_size": [
+        40,
+        40
+      ],
+      "centre": [
+        20,
+        20
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "8ea4ba561c8812008d37e09e447b24caacb0da2025cae0b6facae9037fe1c851",
+      "alpha_sha256": "de6af9cf4269724732b54ce5e066707af6d82e659976e1a7ab2a8cf0664d0c3c",
+      "rgba_sha256": "132fc366ee0ece31830ea19f7d5d896a9cdad30a0d73c96cd87b922cbef71b81"
+    },
+    {
+      "frame": 4,
+      "file": "frame_004.png",
+      "source_size": [
+        40,
+        40
+      ],
+      "centre": [
+        20,
+        20
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "2c845e0216736045140882d9e5d480b701ce5688f636233455dd23963f28d589",
+      "alpha_sha256": "de6af9cf4269724732b54ce5e066707af6d82e659976e1a7ab2a8cf0664d0c3c",
+      "rgba_sha256": "fe0ad6d417f13569a479434c41b8c6ccc5ba3b79b4e3389a33d130aa72012b5f"
+    },
+    {
+      "frame": 5,
+      "file": "frame_005.png",
+      "source_size": [
+        40,
+        40
+      ],
+      "centre": [
+        20,
+        20
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "f7ef853d49df47afb039dfd7e6311470f3c63b6dbc82240b5d5f90c16550521f",
+      "alpha_sha256": "de6af9cf4269724732b54ce5e066707af6d82e659976e1a7ab2a8cf0664d0c3c",
+      "rgba_sha256": "a475105bec940264a1d8c8e22a14cbb277993e84c96d03fe701320f074bca28b"
+    }
+  ],
+  "cycles": [
+    {
+      "cycle": 0,
+      "lookup_start": 0,
+      "frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        0
+      ]
+    }
+  ],
+  "notes": [
+    "Use rgb/ as input to an image-only interpolation model.",
+    "Keep alpha/ separate; rgba/ is the authoritative source export.",
+    "The BAM format does not store frames-per-second; preserve cycle duration at reconstruction."
+  ]
+}

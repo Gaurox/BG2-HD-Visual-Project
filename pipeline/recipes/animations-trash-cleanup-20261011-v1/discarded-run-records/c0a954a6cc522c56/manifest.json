@@ -1,0 +1,155 @@
+{
+  "schema": "bg2-upscale-area-animation-run-v1",
+  "status": "completed",
+  "created_utc": "2026-09-22T19:13:27.653695+00:00",
+  "updated_utc": "2026-09-22T19:15:41.170768+00:00",
+  "run": "firebrn-seedvr7b-lab-x4-20260922",
+  "request_signature": "94dd882455019d6ad8a182be14f5f60c7a8ebcfca0dbce1b2c2847d10bf0985c",
+  "request": {
+    "requested_resrefs": [
+      "FIREBRN"
+    ],
+    "requested_areas": [],
+    "resolved_resrefs": [
+      "FIREBRN"
+    ],
+    "sources": {
+      "FIREBRN": "4abd918ea23d661d311401f412331147df0c9aeab559d5b84ca4eb05fa6c7393"
+    },
+    "scale": 4,
+    "padding_x1": 32,
+    "seed": null,
+    "workflow_sha256": "30dec619a4c1a3ecde076c0926a5ed8ee29d5f2ca8b4eb89a75d3b5f7811b61e"
+  },
+  "occurrences": [
+    {
+      "area_id": "OH4210",
+      "occurrence_index": "39",
+      "instance_name": "Candle",
+      "x": "1651",
+      "y": "104",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001043",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "FIREBRN",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "OH4210",
+      "occurrence_index": "40",
+      "instance_name": "Candle",
+      "x": "1083",
+      "y": "339",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001043",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "FIREBRN",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "OH4210",
+      "occurrence_index": "41",
+      "instance_name": "Candle",
+      "x": "1846",
+      "y": "628",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001043",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "FIREBRN",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "OH4210",
+      "occurrence_index": "42",
+      "instance_name": "Candle",
+      "x": "1990",
+      "y": "529",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001043",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "FIREBRN",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "OH4210",
+      "occurrence_index": "43",
+      "instance_name": "Candle",
+      "x": "857",
+      "y": "1491",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001043",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "FIREBRN",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "OH4210",
+      "occurrence_index": "45",
+      "instance_name": "Candle",
+      "x": "1832",
+      "y": "117",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001043",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "FIREBRN",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "OH4210",
+      "occurrence_index": "46",
+      "instance_name": "Candle",
+      "x": "1821",
+      "y": "113",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001043",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "FIREBRN",
+      "resource_kind": "BAM"
+    }
+  ],
+  "resources": [
+    {
+      "resref": "FIREBRN",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/FIREBRN/source.bam",
+      "source_sha256": "4abd918ea23d661d311401f412331147df0c9aeab559d5b84ca4eb05fa6c7393",
+      "inventory": {
+        "frames": 63,
+        "max_frame_width": 15,
+        "max_frame_height": 28,
+        "occurrences": 7,
+        "areas": [
+          "OH4210"
+        ]
+      },
+      "source_copy": "resources/FIREBRN/00_source/FIREBRN.bam",
+      "frames_x1": "resources/FIREBRN/01_frames_x1",
+      "frame_count": 63,
+      "aligned_canvas_size_x1": [
+        15,
+        75
+      ],
+      "geometry_mode": "per-frame",
+      "frame_manifest_sha256": "f92bd3f011aa7b74ccdcc34dc8558c03e588fc665f68c3e650a07f67354a381e",
+      "upscale": "resources/FIREBRN/02_upscale_x4",
+      "upscale_manifest_sha256": "c640a4153b38b6481942f9bee111a25381af889da5700cbe8a735cf4848ae03b",
+      "preview": "resources/FIREBRN/02_upscale_x4/preview/animation-x4-contact-sheet.png",
+      "completed_utc": "2026-09-22T19:15:41.169765+00:00"
+    }
+  ],
+  "completed_utc": "2026-09-22T19:15:41.170768+00:00"
+}

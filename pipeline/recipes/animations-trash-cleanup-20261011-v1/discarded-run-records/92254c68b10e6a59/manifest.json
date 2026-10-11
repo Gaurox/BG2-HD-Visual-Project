@@ -1,0 +1,116 @@
+{
+  "schema": "bg2-upscale-area-animation-run-v1",
+  "status": "completed",
+  "created_utc": "2026-09-21T20:01:28.148921+00:00",
+  "updated_utc": "2026-09-21T20:01:45.346701+00:00",
+  "run": "fpit1m-seedvr7b-lab-x4-20260921",
+  "request_signature": "def8c1a020f00abac349c708a08074c57679307d70f558b5c32af9a52acb1639",
+  "request": {
+    "requested_resrefs": [
+      "FPIT1M"
+    ],
+    "requested_areas": [],
+    "resolved_resrefs": [
+      "FPIT1M"
+    ],
+    "sources": {
+      "FPIT1M": "0ec741cb3d4885e3db4563b72cd6c709826ec86d4733f979ad33d3a783d81321"
+    },
+    "scale": 4,
+    "padding_x1": 32,
+    "seed": null,
+    "workflow_sha256": "30dec619a4c1a3ecde076c0926a5ed8ee29d5f2ca8b4eb89a75d3b5f7811b61e"
+  },
+  "occurrences": [
+    {
+      "area_id": "AR6111",
+      "occurrence_index": "0",
+      "instance_name": "FPIT1M",
+      "x": "280",
+      "y": "187",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001003",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "FPIT1M",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "OH4000",
+      "occurrence_index": "0",
+      "instance_name": "Firepit",
+      "x": "4694",
+      "y": "3304",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001043",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "FPIT1M",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "OH4200",
+      "occurrence_index": "1",
+      "instance_name": "Firepit",
+      "x": "953",
+      "y": "2507",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001043",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "FPIT1M",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "OH6100",
+      "occurrence_index": "12",
+      "instance_name": "Firepit",
+      "x": "1471",
+      "y": "850",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001013",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "FPIT1M",
+      "resource_kind": "BAM"
+    }
+  ],
+  "resources": [
+    {
+      "resref": "FPIT1M",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/FPIT1M/source.bam",
+      "source_sha256": "0ec741cb3d4885e3db4563b72cd6c709826ec86d4733f979ad33d3a783d81321",
+      "inventory": {
+        "frames": 6,
+        "max_frame_width": 48,
+        "max_frame_height": 42,
+        "occurrences": 4,
+        "areas": [
+          "AR6111",
+          "OH4000",
+          "OH4200",
+          "OH6100"
+        ]
+      },
+      "source_copy": "resources/FPIT1M/00_source/FPIT1M.bam",
+      "frames_x1": "resources/FPIT1M/01_frames_x1",
+      "frame_count": 6,
+      "aligned_canvas_size_x1": [
+        48,
+        42
+      ],
+      "geometry_mode": "per-frame",
+      "frame_manifest_sha256": "6fc5748d0f90a047297ef2197ef266bfe613260c417b9b730f1001eacc7c79ff",
+      "upscale": "resources/FPIT1M/02_upscale_x4",
+      "upscale_manifest_sha256": "8fae5f750bb00a39b827c935139c527516e0c7e54260057777b29dcffb6a6b9e",
+      "preview": "resources/FPIT1M/02_upscale_x4/preview/animation-x4-contact-sheet.png",
+      "completed_utc": "2026-09-21T20:01:45.345700+00:00"
+    }
+  ],
+  "completed_utc": "2026-09-21T20:01:45.346701+00:00"
+}

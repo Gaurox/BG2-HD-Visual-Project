@@ -1,0 +1,71 @@
+{
+  "schema": "bg2-upscale-area-animation-run-v1",
+  "status": "completed",
+  "created_utc": "2026-09-21T22:33:11.391475+00:00",
+  "updated_utc": "2026-09-21T22:33:16.212850+00:00",
+  "run": "am6200f-reboutcx-x4-20260922",
+  "request_signature": "e94de421f9e976a5dca1b3f1b08ff5644884ee07b8e3f3dc013c4df8bc53a711",
+  "request": {
+    "requested_resrefs": [
+      "AM6200F"
+    ],
+    "requested_areas": [],
+    "resolved_resrefs": [
+      "AM6200F"
+    ],
+    "sources": {
+      "AM6200F": "5ed2bb00e183aa646b70d4aec052722a76e4ffb9279fdf1405824b818c8751c6"
+    },
+    "scale": 4,
+    "padding_x1": 32,
+    "seed": null,
+    "workflow_sha256": "30dec619a4c1a3ecde076c0926a5ed8ee29d5f2ca8b4eb89a75d3b5f7811b61e"
+  },
+  "occurrences": [
+    {
+      "area_id": "AR6200",
+      "occurrence_index": "2",
+      "instance_name": "AMB_Stream3",
+      "x": "1728",
+      "y": "605",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001103",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM6200F",
+      "resource_kind": "BAM"
+    }
+  ],
+  "resources": [
+    {
+      "resref": "AM6200F",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/AM6200F/source.bam",
+      "source_sha256": "5ed2bb00e183aa646b70d4aec052722a76e4ffb9279fdf1405824b818c8751c6",
+      "inventory": {
+        "frames": 5,
+        "max_frame_width": 94,
+        "max_frame_height": 86,
+        "occurrences": 1,
+        "areas": [
+          "AR6200"
+        ]
+      },
+      "source_copy": "resources/AM6200F/00_source/AM6200F.bam",
+      "frames_x1": "resources/AM6200F/01_frames_x1",
+      "frame_count": 5,
+      "aligned_canvas_size_x1": [
+        94,
+        87
+      ],
+      "geometry_mode": "per-frame",
+      "frame_manifest_sha256": "755b3a0b20612e0c9d9b3c6d01eb1c57fd506de994805fc3b17cecef053f3e88",
+      "upscale": "resources/AM6200F/02_upscale_reboutcx_x4",
+      "upscale_manifest_sha256": "d86b7921626e305a3eee24dbaed01e214a072fba61ea6dda90ff3888cff06258",
+      "preview": null,
+      "completed_utc": "2026-09-21T22:33:16.212850+00:00"
+    }
+  ],
+  "completed_utc": "2026-09-21T22:33:16.212850+00:00"
+}

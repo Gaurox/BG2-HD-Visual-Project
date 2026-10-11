@@ -1,0 +1,146 @@
+{
+  "schema": "bg2-upscale-area-animation-run-v1",
+  "status": "completed",
+  "created_utc": "2026-09-19T14:31:47.151380+00:00",
+  "updated_utc": "2026-09-19T14:32:05.536937+00:00",
+  "run": "am0322ab-reboutcx-x4-20260919",
+  "request_signature": "b0316e4c2120c0b63f6c9e58767bc814e5b527f68d58c60951c7c2fd4194a18d",
+  "request": {
+    "requested_resrefs": [
+      "AM0322A",
+      "AM0322B"
+    ],
+    "requested_areas": [],
+    "resolved_resrefs": [
+      "AM0322A",
+      "AM0322B"
+    ],
+    "sources": {
+      "AM0322A": "a57583156f7e1e669a19a2b1f94101936cba5d57c3360f9e5619d49c1c20fb29",
+      "AM0322B": "f29b830e04d93193246e6d93525d96e2651d56bc7400e9ded15e7cd7a583890a"
+    },
+    "scale": 4,
+    "padding_x1": 32,
+    "seed": null,
+    "workflow_sha256": "30dec619a4c1a3ecde076c0926a5ed8ee29d5f2ca8b4eb89a75d3b5f7811b61e"
+  },
+  "occurrences": [
+    {
+      "area_id": "AR0302",
+      "occurrence_index": "0",
+      "instance_name": "AM0322A",
+      "x": "800",
+      "y": "257",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001101",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM0322A",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "AR0322",
+      "occurrence_index": "0",
+      "instance_name": "AM0322A",
+      "x": "800",
+      "y": "259",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001101",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM0322A",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "AR0302",
+      "occurrence_index": "1",
+      "instance_name": "AM0322B",
+      "x": "1017",
+      "y": "408",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001101",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM0322B",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "AR0322",
+      "occurrence_index": "1",
+      "instance_name": "AM0322B",
+      "x": "1017",
+      "y": "408",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001101",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM0322B",
+      "resource_kind": "BAM"
+    }
+  ],
+  "resources": [
+    {
+      "resref": "AM0322A",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/AM0322A/source.bam",
+      "source_sha256": "a57583156f7e1e669a19a2b1f94101936cba5d57c3360f9e5619d49c1c20fb29",
+      "inventory": {
+        "frames": 9,
+        "max_frame_width": 164,
+        "max_frame_height": 138,
+        "occurrences": 2,
+        "areas": [
+          "AR0302",
+          "AR0322"
+        ]
+      },
+      "source_copy": "resources/AM0322A/00_source/AM0322A.bam",
+      "frames_x1": "resources/AM0322A/01_frames_x1",
+      "frame_count": 9,
+      "aligned_canvas_size_x1": [
+        164,
+        138
+      ],
+      "geometry_mode": "uniform",
+      "frame_manifest_sha256": "581cfe15ba7ac2487a7d1edaa828e5ae4c5a9b1bb6ec60e14640f9ef33f45ead",
+      "upscale": "resources/AM0322A/02_upscale_reboutcx_x4",
+      "upscale_manifest_sha256": "92155809c0d0625f3cd8f0bdb60fcd5df09f5435dd7145a7437fa424d8b2e65d",
+      "preview": null,
+      "completed_utc": "2026-09-19T14:31:58.296605+00:00"
+    },
+    {
+      "resref": "AM0322B",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/AM0322B/source.bam",
+      "source_sha256": "f29b830e04d93193246e6d93525d96e2651d56bc7400e9ded15e7cd7a583890a",
+      "inventory": {
+        "frames": 9,
+        "max_frame_width": 159,
+        "max_frame_height": 132,
+        "occurrences": 2,
+        "areas": [
+          "AR0302",
+          "AR0322"
+        ]
+      },
+      "source_copy": "resources/AM0322B/00_source/AM0322B.bam",
+      "frames_x1": "resources/AM0322B/01_frames_x1",
+      "frame_count": 9,
+      "aligned_canvas_size_x1": [
+        159,
+        132
+      ],
+      "geometry_mode": "uniform",
+      "frame_manifest_sha256": "2c0f808efe2c71b075b7ddf2b627b0c38f276cd9d40611b8cfb15118f0a4d0c1",
+      "upscale": "resources/AM0322B/02_upscale_reboutcx_x4",
+      "upscale_manifest_sha256": "5ddbd953d19a3bb964a31ba20e0fd00ce78b475000e9f99e68f366fd95af351a",
+      "preview": null,
+      "completed_utc": "2026-09-19T14:32:05.536937+00:00"
+    }
+  ],
+  "completed_utc": "2026-09-19T14:32:05.536937+00:00"
+}

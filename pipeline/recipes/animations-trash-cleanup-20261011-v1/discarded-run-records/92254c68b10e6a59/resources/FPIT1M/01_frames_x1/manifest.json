@@ -1,0 +1,155 @@
+{
+  "schema": "bg2-upscale-animation-frames-x1-v1",
+  "created_utc": "2026-09-21T20:01:28.394247+00:00",
+  "source": "G:/AI/BG2_Upscale/animations/ressources/FPIT1M/runs/fpit1m-seedvr7b-lab-x4-20260921/resources/FPIT1M/00_source/FPIT1M.bam",
+  "source_sha256": "0ec741cb3d4885e3db4563b72cd6c709826ec86d4733f979ad33d3a783d81321",
+  "format": "BAM V1",
+  "frame_count": 6,
+  "source_transparent_index": 0,
+  "aligned_canvas_size": [
+    48,
+    42
+  ],
+  "anchor_bounds": {
+    "left": -23,
+    "top": -18,
+    "right": 25,
+    "bottom": 24
+  },
+  "geometry_mode": "per-frame",
+  "frames": [
+    {
+      "frame": 0,
+      "file": "frame_000.png",
+      "source_size": [
+        46,
+        41
+      ],
+      "centre": [
+        22,
+        18
+      ],
+      "canvas_offset": [
+        1,
+        0
+      ],
+      "rgb_sha256": "87163fbc08d52fda438d875233713122a83bdba7212023b9e9e7b011beca9f35",
+      "alpha_sha256": "f8fbebb346e1a6fdf8af82853552ad8f0461e5229e426d6811c403d4132fa65a",
+      "rgba_sha256": "6950c30fa44421a72b6c4b7ba762913e050f8c21500dbcb7283a54caca708460"
+    },
+    {
+      "frame": 1,
+      "file": "frame_001.png",
+      "source_size": [
+        48,
+        39
+      ],
+      "centre": [
+        23,
+        16
+      ],
+      "canvas_offset": [
+        0,
+        2
+      ],
+      "rgb_sha256": "eed5560b2c69e2b5d6a1b5b237b79d63953375bcadbd6f6a965593cc74f68364",
+      "alpha_sha256": "9cb977df30b0f22f9195c2f21c97494ee326bd0f0d1a12aadb0b394e95c88cbf",
+      "rgba_sha256": "784a9f70e3f5aaf62d8cd1eeef5911ea0605b2766483519684462ba18eeeef27"
+    },
+    {
+      "frame": 2,
+      "file": "frame_002.png",
+      "source_size": [
+        48,
+        38
+      ],
+      "centre": [
+        23,
+        15
+      ],
+      "canvas_offset": [
+        0,
+        3
+      ],
+      "rgb_sha256": "eb8380b233ce74d39d6c575cbe0354a99964cceb411504bd0d8356044b6a6498",
+      "alpha_sha256": "ad5606a6cc6e928808a135c9862dc6f928474510b71da56e603026980710fbe1",
+      "rgba_sha256": "fd8cf57711b50b0bb859ea1b306d4b0c0b94e3dd17b57f135815a43d5e0412fc"
+    },
+    {
+      "frame": 3,
+      "file": "frame_003.png",
+      "source_size": [
+        47,
+        42
+      ],
+      "centre": [
+        23,
+        18
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "b8a94c5994f3e8f892790a85da4151405b3b6fb483aa0f9473a5ae6869261ab8",
+      "alpha_sha256": "fddea47a6cba22415bdc6df49da5c065bc0c53a1fc7e48958d806b6743750889",
+      "rgba_sha256": "108f3a425132a8c886704ff35a79dfa2b8292fd938db3bab00502236d8bb97d5"
+    },
+    {
+      "frame": 4,
+      "file": "frame_004.png",
+      "source_size": [
+        46,
+        40
+      ],
+      "centre": [
+        22,
+        17
+      ],
+      "canvas_offset": [
+        1,
+        1
+      ],
+      "rgb_sha256": "28ec0166c6cd262543ac60d8adade10a29bd79c9aac94250df2d0c842d27f5b9",
+      "alpha_sha256": "126b8abfb03cd65c494dd11d082b9b9472de28ef336d23cf22814b22d63c4b99",
+      "rgba_sha256": "54d5fb8b801bcb31bfb9408aa123d2d8bf5348a696dbfaaa544658b4a674ea49"
+    },
+    {
+      "frame": 5,
+      "file": "frame_005.png",
+      "source_size": [
+        45,
+        39
+      ],
+      "centre": [
+        21,
+        16
+      ],
+      "canvas_offset": [
+        2,
+        2
+      ],
+      "rgb_sha256": "ebbacdcc02256e1d1e2c09824613c81bd6bf3a1295420dc6c14d9262ecb9e7d5",
+      "alpha_sha256": "67e84905734d36d8ea6be8255682be18ca11700339ce8e33e0cb51ba19af4e77",
+      "rgba_sha256": "d645e3b4c204d016c3fb938fca1ee99d60dec05f8e2ee678d9c3a3ead6287313"
+    }
+  ],
+  "cycles": [
+    {
+      "cycle": 0,
+      "lookup_start": 0,
+      "frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    }
+  ],
+  "notes": [
+    "Use rgb/ as input to an image-only interpolation model.",
+    "Keep alpha/ separate; rgba/ is the authoritative source export.",
+    "The BAM format does not store frames-per-second; preserve cycle duration at reconstruction."
+  ]
+}

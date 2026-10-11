@@ -1,0 +1,71 @@
+{
+  "schema": "bg2-upscale-area-animation-run-v1",
+  "status": "completed",
+  "created_utc": "2026-09-21T22:36:01.131382+00:00",
+  "updated_utc": "2026-09-21T22:36:43.819706+00:00",
+  "run": "mmelspin-seedvr7b-lab-x4-20260922",
+  "request_signature": "662af215501db8ecaea104ed91cfb83afc0f9a44011641c753b8bf8a2b64f564",
+  "request": {
+    "requested_resrefs": [
+      "MMELSPIN"
+    ],
+    "requested_areas": [],
+    "resolved_resrefs": [
+      "MMELSPIN"
+    ],
+    "sources": {
+      "MMELSPIN": "48d1a8da69c23ac4c88f9ca00fbdd5d87e306ee05eb1511901280695446c7727"
+    },
+    "scale": 4,
+    "padding_x1": 32,
+    "seed": null,
+    "workflow_sha256": "30dec619a4c1a3ecde076c0926a5ed8ee29d5f2ca8b4eb89a75d3b5f7811b61e"
+  },
+  "occurrences": [
+    {
+      "area_id": "AR6200",
+      "occurrence_index": "7",
+      "instance_name": "MMELSPIN",
+      "x": "1281",
+      "y": "811",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001211",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "MMELSPIN",
+      "resource_kind": "BAM"
+    }
+  ],
+  "resources": [
+    {
+      "resref": "MMELSPIN",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/MMELSPIN/source.bam",
+      "source_sha256": "48d1a8da69c23ac4c88f9ca00fbdd5d87e306ee05eb1511901280695446c7727",
+      "inventory": {
+        "frames": 20,
+        "max_frame_width": 63,
+        "max_frame_height": 96,
+        "occurrences": 1,
+        "areas": [
+          "AR6200"
+        ]
+      },
+      "source_copy": "resources/MMELSPIN/00_source/MMELSPIN.bam",
+      "frames_x1": "resources/MMELSPIN/01_frames_x1",
+      "frame_count": 20,
+      "aligned_canvas_size_x1": [
+        70,
+        98
+      ],
+      "geometry_mode": "per-frame",
+      "frame_manifest_sha256": "783b6d713935fd7bbfb22a8856c6e68b70e879ac8da63ce4e91665a93e627ad8",
+      "upscale": "resources/MMELSPIN/02_upscale_x4",
+      "upscale_manifest_sha256": "8982829ffd544a82636f432253c9d4911a14c6885803b58fd4925efdf2bea6b7",
+      "preview": "resources/MMELSPIN/02_upscale_x4/preview/animation-x4-contact-sheet.png",
+      "completed_utc": "2026-09-21T22:36:43.818309+00:00"
+    }
+  ],
+  "completed_utc": "2026-09-21T22:36:43.819706+00:00"
+}

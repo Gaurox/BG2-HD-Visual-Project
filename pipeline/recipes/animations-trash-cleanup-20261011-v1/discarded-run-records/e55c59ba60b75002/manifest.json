@@ -1,0 +1,70 @@
+{
+  "schema": "bg2-upscale-area-animation-run-v1",
+  "status": "completed",
+  "created_utc": "2026-09-06T15:37:30.865108+00:00",
+  "updated_utc": "2026-09-06T15:37:44.182026+00:00",
+  "run": "ar0904-tl4-spatial-x4-20260906",
+  "request_signature": "061c2a5da28923a902c1c6191d0e40a5ed89d2ebe95a23dd62ecf86e6ebb6078",
+  "request": {
+    "requested_resrefs": [
+      "AM904TL4"
+    ],
+    "requested_areas": [],
+    "resolved_resrefs": [
+      "AM904TL4"
+    ],
+    "sources": {
+      "AM904TL4": "91f5ee6bd57096f18d5fc6aa3217b26642e3cfc17c3fa354eac6d5a07370c9f4"
+    },
+    "scale": 4,
+    "padding_x1": 32,
+    "workflow_sha256": "30dec619a4c1a3ecde076c0926a5ed8ee29d5f2ca8b4eb89a75d3b5f7811b61e"
+  },
+  "occurrences": [
+    {
+      "area_id": "AR0904",
+      "occurrence_index": "7",
+      "instance_name": "AM904TL4",
+      "x": "820",
+      "y": "464",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001001",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM904TL4",
+      "resource_kind": "BAM"
+    }
+  ],
+  "resources": [
+    {
+      "resref": "AM904TL4",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/AM904TL4/source.bam",
+      "source_sha256": "91f5ee6bd57096f18d5fc6aa3217b26642e3cfc17c3fa354eac6d5a07370c9f4",
+      "inventory": {
+        "frames": 6,
+        "max_frame_width": 102,
+        "max_frame_height": 74,
+        "occurrences": 1,
+        "areas": [
+          "AR0904"
+        ]
+      },
+      "source_copy": "resources/AM904TL4/00_source/AM904TL4.bam",
+      "frames_x1": "resources/AM904TL4/01_frames_x1",
+      "frame_count": 6,
+      "aligned_canvas_size_x1": [
+        102,
+        74
+      ],
+      "geometry_mode": "uniform",
+      "frame_manifest_sha256": "8fd4b79dfeba892b03f2e9b838a741f69fd86b34d147eca5c51876ad12b23bd9",
+      "upscale": "resources/AM904TL4/02_upscale_x4",
+      "upscale_manifest_sha256": "54d7bfe17b3bbb0b74fe396e56de7dd6d21cb987513becbfe56319d998abe496",
+      "preview": "resources/AM904TL4/02_upscale_x4/preview/animation-x4-contact-sheet.png",
+      "completed_utc": "2026-09-06T15:37:44.181026+00:00"
+    }
+  ],
+  "completed_utc": "2026-09-06T15:37:44.182026+00:00"
+}

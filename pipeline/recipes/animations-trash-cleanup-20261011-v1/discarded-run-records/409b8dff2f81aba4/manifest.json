@@ -1,0 +1,171 @@
+{
+  "schema": "bg2-upscale-area-animation-run-v1",
+  "status": "failed",
+  "created_utc": "2026-09-11T20:30:52.156037+00:00",
+  "updated_utc": "2026-09-11T20:31:59.128167+00:00",
+  "run": "am0411rn-magic-sphere-seedvr7b-lab-x4-20260911",
+  "request_signature": "a55a8e5ce28a8dfd1683bcbf6c186e7077adb64fd932032e563b1ac60f72aa7b",
+  "request": {
+    "requested_resrefs": [
+      "AM0411RN"
+    ],
+    "requested_areas": [],
+    "resolved_resrefs": [
+      "AM0411RN"
+    ],
+    "sources": {
+      "AM0411RN": "1964e37430b26e1665ac952617cd945bd549e7864042433870495ff5329188d0"
+    },
+    "scale": 4,
+    "padding_x1": 32,
+    "workflow_sha256": "30dec619a4c1a3ecde076c0926a5ed8ee29d5f2ca8b4eb89a75d3b5f7811b61e"
+  },
+  "occurrences": [
+    {
+      "area_id": "AR0411",
+      "occurrence_index": "16",
+      "instance_name": "AM0411RN",
+      "x": "1407",
+      "y": "1316",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001043",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM0411RN",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "OH5400",
+      "occurrence_index": "0",
+      "instance_name": "Portal",
+      "x": "924",
+      "y": "350",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00000003",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM0411RN",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "OH5500",
+      "occurrence_index": "0",
+      "instance_name": "Portal1A",
+      "x": "524",
+      "y": "3139",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001003",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM0411RN",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "OH5500",
+      "occurrence_index": "2",
+      "instance_name": "Portal2A",
+      "x": "1101",
+      "y": "3367",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001003",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM0411RN",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "OH5500",
+      "occurrence_index": "4",
+      "instance_name": "Portal3A",
+      "x": "229",
+      "y": "3088",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001003",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM0411RN",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "OH5500",
+      "occurrence_index": "6",
+      "instance_name": "Portal4A",
+      "x": "822",
+      "y": "3238",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001003",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM0411RN",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "OH5500",
+      "occurrence_index": "8",
+      "instance_name": "Portal5A",
+      "x": "1534",
+      "y": "3697",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001003",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM0411RN",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "OH5500",
+      "occurrence_index": "10",
+      "instance_name": "Portal6A",
+      "x": "1324",
+      "y": "3507",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001003",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM0411RN",
+      "resource_kind": "BAM"
+    }
+  ],
+  "resources": [
+    {
+      "resref": "AM0411RN",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/AM0411RN/source.bam",
+      "source_sha256": "1964e37430b26e1665ac952617cd945bd549e7864042433870495ff5329188d0",
+      "inventory": {
+        "frames": 30,
+        "max_frame_width": 99,
+        "max_frame_height": 99,
+        "occurrences": 8,
+        "areas": [
+          "AR0411",
+          "OH5400",
+          "OH5500"
+        ]
+      },
+      "source_copy": "resources/AM0411RN/00_source/AM0411RN.bam",
+      "frames_x1": "resources/AM0411RN/01_frames_x1",
+      "frame_count": 30,
+      "aligned_canvas_size_x1": [
+        106,
+        105
+      ],
+      "geometry_mode": "per-frame",
+      "frame_manifest_sha256": "48f2cda43eb791f9ab64803a153400359ce72f5a7c36b4d453764c077ecbddb5",
+      "upscale": "resources/AM0411RN/02_upscale_x4",
+      "upscale_manifest_sha256": "407e809a93187121b3334e930297d8af43e9c63d8bb9a03c4479b09719c24f6c",
+      "preview": "resources/AM0411RN/02_upscale_x4/preview/animation-x4-contact-sheet.png",
+      "completed_utc": "2026-09-11T20:31:58.795703+00:00"
+    }
+  ],
+  "completed_utc": "2026-09-11T20:31:58.796203+00:00",
+  "last_error": "Command '['C:\\\\Users\\\\Adrien\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python311\\\\python.exe', 'G:\\\\AI\\\\BG2_Upscale\\\\pipeline\\\\scripts\\\\build_animation_runtime_pack.py', 'G:\\\\AI\\\\BG2_Upscale\\\\animations\\\\ressources\\\\AM0411RN\\\\runs\\\\am0411rn-magic-sphere-seedvr7b-lab-x4-20260911', 'G:\\\\AI\\\\BG2_Upscale\\\\animations\\\\ressources\\\\AM0411RN\\\\runs\\\\am0411rn-magic-sphere-seedvr7b-lab-x4-20260911\\\\03_runtime_pack', '--resume']' returned non-zero exit status 1."
+}

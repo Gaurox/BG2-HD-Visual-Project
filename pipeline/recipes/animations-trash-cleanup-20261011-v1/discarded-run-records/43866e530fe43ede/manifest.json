@@ -1,0 +1,90 @@
+{
+  "schema": "bg2-upscale-area-animation-run-v1",
+  "status": "completed",
+  "created_utc": "2026-09-15T21:38:10.250073+00:00",
+  "updated_utc": "2026-09-15T21:38:10.250073+00:00",
+  "run": "fount1-seedvr2x-nearest2-x4-20260915",
+  "request_signature": "652ea1998767bb8935a9007935fc429b317cbf5858e975125851b8d4d35e72a9",
+  "request": {
+    "requested_resrefs": [
+      "FOUNT1"
+    ],
+    "requested_areas": [],
+    "resolved_resrefs": [
+      "FOUNT1"
+    ],
+    "sources": {
+      "FOUNT1": "9b55e650efd7b6dee3f95dafe4082bd0d0bbbe07fac6568ce4a0d2d20adffb71"
+    },
+    "scale": 4,
+    "padding_x1": 32,
+    "workflow_sha256": "30dec619a4c1a3ecde076c0926a5ed8ee29d5f2ca8b4eb89a75d3b5f7811b61e",
+    "source_seedvr_scale": 2
+  },
+  "occurrences": [
+    {
+      "area_id": "AR1000",
+      "occurrence_index": "0",
+      "instance_name": "FOUNT1",
+      "x": "3051",
+      "y": "1253",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001107",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "FOUNT1",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "AR1000",
+      "occurrence_index": "1",
+      "instance_name": "FOUNT1",
+      "x": "2423",
+      "y": "1247",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001107",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "FOUNT1",
+      "resource_kind": "BAM"
+    }
+  ],
+  "resources": [
+    {
+      "resref": "FOUNT1",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/FOUNT1/source.bam",
+      "source_sha256": "9b55e650efd7b6dee3f95dafe4082bd0d0bbbe07fac6568ce4a0d2d20adffb71",
+      "inventory": {
+        "frames": 5,
+        "max_frame_width": 60,
+        "max_frame_height": 71,
+        "occurrences": 2,
+        "areas": [
+          "AR1000"
+        ]
+      },
+      "source_copy": "resources/FOUNT1/00_source/FOUNT1.bam",
+      "frames_x1": "resources/FOUNT1/01_frames_x1",
+      "frame_count": 5,
+      "aligned_canvas_size_x1": [
+        60,
+        72
+      ],
+      "geometry_mode": "per-frame",
+      "frame_manifest_sha256": "c3d9018e4e94994d408cd99ad2786150dd71ed5b3ff40b2e2d46543379102a44",
+      "upscale": "resources/FOUNT1/02_upscale_seedvr_x2_nearest2_x4",
+      "upscale_manifest_sha256": "eb3b449ef6472aaef12cec0d9d59bf26c9ff30650e736bfc8f29368b1da88b07",
+      "preview": null,
+      "completed_utc": "2026-09-15T21:38:10.250073+00:00"
+    }
+  ],
+  "completed_utc": "2026-09-15T21:38:10.250073+00:00",
+  "derived_from": {
+    "run": "G:\\AI\\BG2_Upscale\\animations\\ressources\\FOUNT1\\runs\\fount1-seedvr7b-lab-x2-20260915",
+    "manifest_sha256": "83bdca9e4c080d343ffddb16b7f60654059bcd4172a9e84f21235c4c2158fe41",
+    "operation": "nearest-neighbour x2 from immutable SeedVR x2 output"
+  }
+}

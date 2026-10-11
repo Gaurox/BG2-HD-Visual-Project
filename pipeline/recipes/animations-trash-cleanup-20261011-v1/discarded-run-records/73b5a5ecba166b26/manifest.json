@@ -1,0 +1,71 @@
+{
+  "schema": "bg2-upscale-area-animation-run-v1",
+  "status": "completed",
+  "created_utc": "2026-09-21T22:33:05.271996+00:00",
+  "updated_utc": "2026-09-21T22:33:10.231487+00:00",
+  "run": "am6200e-reboutcx-x4-20260922",
+  "request_signature": "92d5e5c0f04c92484b93471c11dc36ec9d8e67460a47d5dd9c28d7440b73d9d4",
+  "request": {
+    "requested_resrefs": [
+      "AM6200E"
+    ],
+    "requested_areas": [],
+    "resolved_resrefs": [
+      "AM6200E"
+    ],
+    "sources": {
+      "AM6200E": "3136b35cb5ab31f160afe4c8316d27f64269a552f2c72fd28e6a013756dd527b"
+    },
+    "scale": 4,
+    "padding_x1": 32,
+    "seed": null,
+    "workflow_sha256": "30dec619a4c1a3ecde076c0926a5ed8ee29d5f2ca8b4eb89a75d3b5f7811b61e"
+  },
+  "occurrences": [
+    {
+      "area_id": "AR6200",
+      "occurrence_index": "1",
+      "instance_name": "AMB_Stream1",
+      "x": "845",
+      "y": "1250",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001103",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM6200E",
+      "resource_kind": "BAM"
+    }
+  ],
+  "resources": [
+    {
+      "resref": "AM6200E",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/AM6200E/source.bam",
+      "source_sha256": "3136b35cb5ab31f160afe4c8316d27f64269a552f2c72fd28e6a013756dd527b",
+      "inventory": {
+        "frames": 5,
+        "max_frame_width": 110,
+        "max_frame_height": 95,
+        "occurrences": 1,
+        "areas": [
+          "AR6200"
+        ]
+      },
+      "source_copy": "resources/AM6200E/00_source/AM6200E.bam",
+      "frames_x1": "resources/AM6200E/01_frames_x1",
+      "frame_count": 5,
+      "aligned_canvas_size_x1": [
+        113,
+        100
+      ],
+      "geometry_mode": "per-frame",
+      "frame_manifest_sha256": "45538ead4e1936de65fdba8ec6294ef778b1e8a2aec463d67dab469e98559487",
+      "upscale": "resources/AM6200E/02_upscale_reboutcx_x4",
+      "upscale_manifest_sha256": "739aa008e5ba7f69b01d98ecadc58e0b656934817b722ad212bf7bfaa5b59a80",
+      "preview": null,
+      "completed_utc": "2026-09-21T22:33:10.231487+00:00"
+    }
+  ],
+  "completed_utc": "2026-09-21T22:33:10.231487+00:00"
+}

@@ -1,0 +1,27 @@
+{
+  "schema": "bg2-animation-runs-trash-cleanup-receipt-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T20:54:01.693543+00:00",
+  "operation_plan": "pipeline/recipes/animations-trash-cleanup-20261011-v1/operation-plan.json",
+  "operation_plan_sha256": "c99e542d8a9effc78ad455b7d2284cf97f7a6d20ba16c499d7a42db694427ef5",
+  "deleted_runs": 43,
+  "quarantined_runs": 29,
+  "quarantined_reservations": 22,
+  "retained_runs": 665,
+  "gross_deleted_bytes": 1049804891,
+  "diagnostics_archived_bytes": 2874690,
+  "estimated_net_freed_bytes": 1046930201,
+  "quarantined_bytes": 653123007,
+  "trash_manifest": "corbeille/animations-20261011-v1/manifest.json",
+  "trash_manifest_sha256": "d6fac720c150dc0bbda9cd17737bd2dc35729aad4dd393f6f60cd9761900a6cd",
+  "verification": {
+    "all_quarantined_payload_hashes_identical": true,
+    "authority_files_unchanged_or_moved_exactly": 743,
+    "qa_selection_manifests_present_hash_identical": 1265,
+    "installation_status": "Zones installées : 234 | verrou : 234\nOK : installé = verrou = registre.",
+    "native_sources_preserved": true
+  },
+  "game_mutation": false,
+  "QA_mutation": false,
+  "release_mutation": false
+}

@@ -1,0 +1,85 @@
+{
+  "schema": "bg2-upscale-area-animation-run-v1",
+  "status": "completed",
+  "created_utc": "2026-09-22T19:10:21.870197+00:00",
+  "updated_utc": "2026-09-22T19:10:39.224021+00:00",
+  "run": "am5503c-seedvr7b-lab-x4-20260922",
+  "request_signature": "e3d1a9de33d250427b8871f71b821f19ea7f3d314c76c9d84253748802d77271",
+  "request": {
+    "requested_resrefs": [
+      "AM5503C"
+    ],
+    "requested_areas": [],
+    "resolved_resrefs": [
+      "AM5503C"
+    ],
+    "sources": {
+      "AM5503C": "17d4edf3a1ae62e2bc868c5c55616a6a3429bbbf84ff1a51c20086cfc3d72189"
+    },
+    "scale": 4,
+    "padding_x1": 32,
+    "seed": null,
+    "workflow_sha256": "30dec619a4c1a3ecde076c0926a5ed8ee29d5f2ca8b4eb89a75d3b5f7811b61e"
+  },
+  "occurrences": [
+    {
+      "area_id": "AR5503",
+      "occurrence_index": "4",
+      "instance_name": "AM5503C",
+      "x": "374",
+      "y": "132",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001103",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM5503C",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "AR5503",
+      "occurrence_index": "5",
+      "instance_name": "AM5503C",
+      "x": "526",
+      "y": "238",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001103",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM5503C",
+      "resource_kind": "BAM"
+    }
+  ],
+  "resources": [
+    {
+      "resref": "AM5503C",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/AM5503C/source.bam",
+      "source_sha256": "17d4edf3a1ae62e2bc868c5c55616a6a3429bbbf84ff1a51c20086cfc3d72189",
+      "inventory": {
+        "frames": 8,
+        "max_frame_width": 51,
+        "max_frame_height": 65,
+        "occurrences": 2,
+        "areas": [
+          "AR5503"
+        ]
+      },
+      "source_copy": "resources/AM5503C/00_source/AM5503C.bam",
+      "frames_x1": "resources/AM5503C/01_frames_x1",
+      "frame_count": 8,
+      "aligned_canvas_size_x1": [
+        51,
+        65
+      ],
+      "geometry_mode": "uniform",
+      "frame_manifest_sha256": "66525eea4057de00e73c7d36ac2dfa00a35eb408373bb60d86d9ec987c06ab2a",
+      "upscale": "resources/AM5503C/02_upscale_x4",
+      "upscale_manifest_sha256": "dc2976a628025bb8cfdc9c9edf8de98e1cba8323bbb0535b4d8a2c31fcee3fc0",
+      "preview": "resources/AM5503C/02_upscale_x4/preview/animation-x4-contact-sheet.png",
+      "completed_utc": "2026-09-22T19:10:39.223021+00:00"
+    }
+  ],
+  "completed_utc": "2026-09-22T19:10:39.224021+00:00"
+}

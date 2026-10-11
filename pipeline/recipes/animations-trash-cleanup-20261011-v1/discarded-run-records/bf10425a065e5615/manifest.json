@@ -1,0 +1,71 @@
+{
+  "schema": "bg2-upscale-area-animation-run-v1",
+  "status": "completed",
+  "created_utc": "2026-09-21T22:34:54.142475+00:00",
+  "updated_utc": "2026-09-21T22:35:15.049218+00:00",
+  "run": "am4500a-seedvr7b-lab-x4-20260922",
+  "request_signature": "c46acfd1237039c644328f3682581c78e3e8dab80994bb4623ecf9343421b7a9",
+  "request": {
+    "requested_resrefs": [
+      "AM4500A"
+    ],
+    "requested_areas": [],
+    "resolved_resrefs": [
+      "AM4500A"
+    ],
+    "sources": {
+      "AM4500A": "7386fb86811aac8cc20a71428f55afef0582f5a72874fe2eb76911816265957f"
+    },
+    "scale": 4,
+    "padding_x1": 32,
+    "seed": null,
+    "workflow_sha256": "30dec619a4c1a3ecde076c0926a5ed8ee29d5f2ca8b4eb89a75d3b5f7811b61e"
+  },
+  "occurrences": [
+    {
+      "area_id": "AR4500",
+      "occurrence_index": "0",
+      "instance_name": "AMB_Door01",
+      "x": "1473",
+      "y": "1204",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001003",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM4500A",
+      "resource_kind": "BAM"
+    }
+  ],
+  "resources": [
+    {
+      "resref": "AM4500A",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/AM4500A/source.bam",
+      "source_sha256": "7386fb86811aac8cc20a71428f55afef0582f5a72874fe2eb76911816265957f",
+      "inventory": {
+        "frames": 8,
+        "max_frame_width": 105,
+        "max_frame_height": 144,
+        "occurrences": 1,
+        "areas": [
+          "AR4500"
+        ]
+      },
+      "source_copy": "resources/AM4500A/00_source/AM4500A.bam",
+      "frames_x1": "resources/AM4500A/01_frames_x1",
+      "frame_count": 8,
+      "aligned_canvas_size_x1": [
+        105,
+        144
+      ],
+      "geometry_mode": "per-frame",
+      "frame_manifest_sha256": "aa168e89d9478b4a674abb0332ab1de60176cf15bd6ba5b62497091060b74870",
+      "upscale": "resources/AM4500A/02_upscale_x4",
+      "upscale_manifest_sha256": "c0bf888343adbe7b0c118c07fb53a7b14cc422774666f570b2afa9be5cb512be",
+      "preview": "resources/AM4500A/02_upscale_x4/preview/animation-x4-contact-sheet.png",
+      "completed_utc": "2026-09-21T22:35:15.048719+00:00"
+    }
+  ],
+  "completed_utc": "2026-09-21T22:35:15.049218+00:00"
+}

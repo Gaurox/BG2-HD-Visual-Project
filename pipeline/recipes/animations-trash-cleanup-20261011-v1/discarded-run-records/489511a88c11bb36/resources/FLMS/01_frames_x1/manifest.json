@@ -1,0 +1,204 @@
+{
+  "schema": "bg2-upscale-animation-frames-x1-v1",
+  "created_utc": "2026-09-19T00:19:44.046755+00:00",
+  "source": "G:/AI/BG2_Upscale/animations/ressources/FLMS/runs/flms-flame2m-x1-reboutcx-x4-20260919/resources/FLMS/00_source/FLMS.bam",
+  "source_sha256": "da581db75ad19ee29ee1a408bea70a04412efee79cbdef5f166972c030aa4185",
+  "format": "BAM V1",
+  "frame_count": 6,
+  "source_transparent_index": 0,
+  "aligned_canvas_size": [
+    2,
+    5
+  ],
+  "anchor_bounds": {
+    "left": -1,
+    "top": -2,
+    "right": 1,
+    "bottom": 3
+  },
+  "geometry_mode": "uniform",
+  "frames": [
+    {
+      "frame": 0,
+      "file": "frame_000.png",
+      "source_size": [
+        2,
+        5
+      ],
+      "centre": [
+        1,
+        2
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "8dec08fb4c1ae66f6c71ffb86c31b6c0fa4c7ff71c437d97e020a52a96e51812",
+      "alpha_sha256": "15d9da0e21d37b7ea86b36fea59fa2cc61e73a301cf84cc50297ea59802f8939",
+      "rgba_sha256": "22ed151fe7bf1efae18375609a3be286524647972b4c874825c364eb2b3c2833"
+    },
+    {
+      "frame": 1,
+      "file": "frame_001.png",
+      "source_size": [
+        2,
+        5
+      ],
+      "centre": [
+        1,
+        2
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "cd5240145fb4a546a33029545cc12ac85cf061a2a07dbec91d323ab77188917c",
+      "alpha_sha256": "15d9da0e21d37b7ea86b36fea59fa2cc61e73a301cf84cc50297ea59802f8939",
+      "rgba_sha256": "e77471feea7245fa2416d746b876ef5c979967d055a5a6775480c0eb44a32cca"
+    },
+    {
+      "frame": 2,
+      "file": "frame_002.png",
+      "source_size": [
+        2,
+        5
+      ],
+      "centre": [
+        1,
+        2
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "499533b4c7a5dea707a0e8b9f6b08047daa7e51f924e45fde95724bf9f4bcb18",
+      "alpha_sha256": "15d9da0e21d37b7ea86b36fea59fa2cc61e73a301cf84cc50297ea59802f8939",
+      "rgba_sha256": "97a599e69c27c1fe1da3dd0e30d4f56768dd424848286c4d45918fc2b3111466"
+    },
+    {
+      "frame": 3,
+      "file": "frame_003.png",
+      "source_size": [
+        2,
+        5
+      ],
+      "centre": [
+        1,
+        2
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "c623e38ec8cf207caa125b6d64c72683f290243a991ffd746982fd5e42169db2",
+      "alpha_sha256": "15d9da0e21d37b7ea86b36fea59fa2cc61e73a301cf84cc50297ea59802f8939",
+      "rgba_sha256": "f05840e9f6f3d5a6267eee53e4795b0cb4e61be4cf7e4473ad343c1046895c1f"
+    },
+    {
+      "frame": 4,
+      "file": "frame_004.png",
+      "source_size": [
+        2,
+        5
+      ],
+      "centre": [
+        1,
+        2
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "8baecfc4428d2c26b2a0cbbaeb71b1a1117a8bd90ace7e4d94ba2bd2eefdae7a",
+      "alpha_sha256": "15d9da0e21d37b7ea86b36fea59fa2cc61e73a301cf84cc50297ea59802f8939",
+      "rgba_sha256": "2e521a1c1bf0dba6a7c06225f2a5e29ac67ad19774f6b9b0968bf07d0d7ebda7"
+    },
+    {
+      "frame": 5,
+      "file": "frame_005.png",
+      "source_size": [
+        2,
+        5
+      ],
+      "centre": [
+        1,
+        2
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "4a1bcf807c9657117207939bead69a30309aa57a252cb0fc359412b332b70744",
+      "alpha_sha256": "15d9da0e21d37b7ea86b36fea59fa2cc61e73a301cf84cc50297ea59802f8939",
+      "rgba_sha256": "13804bc136efdb444cb7da77d0b751f9073096a8ed65a458c1793aa37e2c8492"
+    }
+  ],
+  "cycles": [
+    {
+      "cycle": 0,
+      "lookup_start": 0,
+      "frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    }
+  ],
+  "notes": [
+    "Use rgb/ as input to an image-only interpolation model.",
+    "Keep alpha/ separate; rgba/ is the authoritative source export.",
+    "The BAM format does not store frames-per-second; preserve cycle duration at reconstruction."
+  ],
+  "substituted_from": {
+    "donor_run": "G:\\AI\\BG2_Upscale\\animations\\ressources\\FLAME2M\\runs\\flame2m-reboutcx-x4-20260919",
+    "donor_resref": "FLAME2M",
+    "donor_frame_manifest_sha256": "9d05df7da3e362ae06ba1fcfa4b817cdb8e367a68429c86260e51d9bef2186e8",
+    "donor_frame_map": [
+      0,
+      1,
+      3,
+      4,
+      6,
+      7
+    ],
+    "reduction": "aire (BOX, float32), RGB pondéré par l'alpha donneur, alpha seuillé",
+    "alpha_threshold": 0.5,
+    "original_x1_stage": "01_frames_x1_bam_original",
+    "frames": [
+      {
+        "frame": 0,
+        "donor_frame": 0,
+        "donor_rgba_sha256": "ae9afaecb0643ff6f8d68b2cddb8c5613e60964686c3ffaef1e87ba98a1ea25a"
+      },
+      {
+        "frame": 1,
+        "donor_frame": 1,
+        "donor_rgba_sha256": "62fa9551cb1a3c1389c0da963b7539aa1d32be5e3a9b2f6498f19fcf61d458da"
+      },
+      {
+        "frame": 2,
+        "donor_frame": 3,
+        "donor_rgba_sha256": "87c3c8228527e2b09ff3e9c060389be81295915da44ec919b8177b720ba3d1c6"
+      },
+      {
+        "frame": 3,
+        "donor_frame": 4,
+        "donor_rgba_sha256": "dfca9d1eff354edf9a3631609e4bb309d3f757b6a22b105b1085d1ffb4173b6d"
+      },
+      {
+        "frame": 4,
+        "donor_frame": 6,
+        "donor_rgba_sha256": "314e22b2627b89f4281fbdf16da7943ae3a3e910301013ec8c01812ddabc9e44"
+      },
+      {
+        "frame": 5,
+        "donor_frame": 7,
+        "donor_rgba_sha256": "690d81ef0553436c6a8af72c63b6e344c844f76613e570c1a72936a182e51021"
+      }
+    ]
+  },
+  "updated_utc": "2026-09-19T00:19:44.442676+00:00"
+}

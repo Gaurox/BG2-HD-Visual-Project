@@ -1,0 +1,99 @@
+{
+  "schema": "bg2-upscale-area-animation-run-v1",
+  "status": "completed",
+  "created_utc": "2026-09-16T19:55:23.774930+00:00",
+  "updated_utc": "2026-09-16T19:58:24.774916+00:00",
+  "run": "am3016d-seedvr7b-lab-x4-seed959948902156063-20260916",
+  "request_signature": "f4e95c5a6a3870966806f720d64615c504675421535ecd4914af88b17d571c4b",
+  "request": {
+    "requested_resrefs": [
+      "AM3016D"
+    ],
+    "requested_areas": [],
+    "resolved_resrefs": [
+      "AM3016D"
+    ],
+    "sources": {
+      "AM3016D": "b22d2464dc5d9277f1f43a2d73f54e197c9e278ca90aaf49e957900a05b091e4"
+    },
+    "scale": 4,
+    "padding_x1": 32,
+    "seed": 959948902156063,
+    "workflow_sha256": "30dec619a4c1a3ecde076c0926a5ed8ee29d5f2ca8b4eb89a75d3b5f7811b61e"
+  },
+  "occurrences": [
+    {
+      "area_id": "AR3016",
+      "occurrence_index": "5",
+      "instance_name": "AM3016D",
+      "x": "425",
+      "y": "1717",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x000010C3",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM3016D",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "AR3016",
+      "occurrence_index": "6",
+      "instance_name": "AM3016D",
+      "x": "182",
+      "y": "1501",
+      "sequence": "1",
+      "initial_frame": "0",
+      "flags_hex": "0x000010C3",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM3016D",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "AR3016",
+      "occurrence_index": "7",
+      "instance_name": "AM3016D",
+      "x": "473",
+      "y": "1342",
+      "sequence": "2",
+      "initial_frame": "0",
+      "flags_hex": "0x000010C3",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM3016D",
+      "resource_kind": "BAM"
+    }
+  ],
+  "resources": [
+    {
+      "resref": "AM3016D",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/AM3016D/source.bam",
+      "source_sha256": "b22d2464dc5d9277f1f43a2d73f54e197c9e278ca90aaf49e957900a05b091e4",
+      "inventory": {
+        "frames": 64,
+        "max_frame_width": 32,
+        "max_frame_height": 67,
+        "occurrences": 3,
+        "areas": [
+          "AR3016"
+        ]
+      },
+      "source_copy": "resources/AM3016D/00_source/AM3016D.bam",
+      "frames_x1": "resources/AM3016D/01_frames_x1",
+      "frame_count": 64,
+      "aligned_canvas_size_x1": [
+        32,
+        104
+      ],
+      "geometry_mode": "per-frame",
+      "frame_manifest_sha256": "48349f4260b7ae7b514fd6a6b23d13d3985cafed25236c9e3422c86ec584dce6",
+      "upscale": "resources/AM3016D/02_upscale_x4",
+      "upscale_manifest_sha256": "9535fa053de5c2ce8a1dbbc68ca767ed55451bd4d3a236dfce4b3b3d5a16cdc5",
+      "preview": "resources/AM3016D/02_upscale_x4/preview/animation-x4-contact-sheet.png",
+      "completed_utc": "2026-09-16T19:58:24.773916+00:00"
+    }
+  ],
+  "completed_utc": "2026-09-16T19:58:24.774916+00:00"
+}

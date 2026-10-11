@@ -1,0 +1,71 @@
+{
+  "schema": "bg2-upscale-area-animation-run-v1",
+  "status": "completed",
+  "created_utc": "2026-09-21T22:36:44.606004+00:00",
+  "updated_utc": "2026-09-21T22:37:32.530932+00:00",
+  "run": "am6200a-seedvr7b-lab-x4-20260922",
+  "request_signature": "8574db31d97a197c3c350433c8e211ee965db3f47b805ad10079e0a47ce7ce52",
+  "request": {
+    "requested_resrefs": [
+      "AM6200A"
+    ],
+    "requested_areas": [],
+    "resolved_resrefs": [
+      "AM6200A"
+    ],
+    "sources": {
+      "AM6200A": "dc8357efe59f2187097ae5ef0d90c08e16690210724a02a5dde87a3adf91c8a3"
+    },
+    "scale": 4,
+    "padding_x1": 32,
+    "seed": null,
+    "workflow_sha256": "30dec619a4c1a3ecde076c0926a5ed8ee29d5f2ca8b4eb89a75d3b5f7811b61e"
+  },
+  "occurrences": [
+    {
+      "area_id": "AR6200",
+      "occurrence_index": "0",
+      "instance_name": "AM6200A",
+      "x": "1281",
+      "y": "706",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001243",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM6200A",
+      "resource_kind": "BAM"
+    }
+  ],
+  "resources": [
+    {
+      "resref": "AM6200A",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/AM6200A/source.bam",
+      "source_sha256": "dc8357efe59f2187097ae5ef0d90c08e16690210724a02a5dde87a3adf91c8a3",
+      "inventory": {
+        "frames": 20,
+        "max_frame_width": 149,
+        "max_frame_height": 179,
+        "occurrences": 1,
+        "areas": [
+          "AR6200"
+        ]
+      },
+      "source_copy": "resources/AM6200A/00_source/AM6200A.bam",
+      "frames_x1": "resources/AM6200A/01_frames_x1",
+      "frame_count": 20,
+      "aligned_canvas_size_x1": [
+        151,
+        358
+      ],
+      "geometry_mode": "per-frame",
+      "frame_manifest_sha256": "3f4b52964fe62dccdc92a48fae7585543d0c03942f5bed7a748aa66293331ea2",
+      "upscale": "resources/AM6200A/02_upscale_x4",
+      "upscale_manifest_sha256": "d867cd9eb8d17d71f3825522971248b7dba6748f8c90f0ab444807235faac6d4",
+      "preview": "resources/AM6200A/02_upscale_x4/preview/animation-x4-contact-sheet.png",
+      "completed_utc": "2026-09-21T22:37:32.528925+00:00"
+    }
+  ],
+  "completed_utc": "2026-09-21T22:37:32.530932+00:00"
+}

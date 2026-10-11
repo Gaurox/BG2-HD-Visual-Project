@@ -1,0 +1,1997 @@
+{
+  "schema": "bg2-animation-runs-reviewed-audit-v1",
+  "status": "completed-read-only",
+  "created_utc": "2026-10-11T20:46:22.256835+00:00",
+  "baseline": "pipeline/recipes/animations-remaining-runs-audit-20261011-v1/audit.json",
+  "baseline_sha256": "e5bad16322376139017c34b03a2a8f05e0c44c09bdd175ea4c202a9808712b6b",
+  "external_check": "pipeline/recipes/animations-remaining-runs-audit-20261011-v1/external-reference-check.json",
+  "external_check_sha256": "7319f72119fe9dc950880e6cd9bdf940c0c31cb0d4e559494dae332558238ab5",
+  "roots": 737,
+  "totals": {
+    "historical-provenance-only-review": {
+      "runs": 7,
+      "bytes": 334337368,
+      "GiB": 0.311
+    },
+    "keep-declared-approval": {
+      "runs": 10,
+      "bytes": 425831944,
+      "GiB": 0.397
+    },
+    "keep-used-or-qa-contract": {
+      "runs": 655,
+      "bytes": 59787670192,
+      "GiB": 55.682
+    },
+    "unused-unvalidated-removable": {
+      "runs": 43,
+      "bytes": 1049804891,
+      "GiB": 0.978
+    },
+    "unused-unvalidated-reservation-review": {
+      "runs": 22,
+      "bytes": 318776881,
+      "GiB": 0.297
+    }
+  },
+  "removable": [
+    {
+      "path": "animations/runs/ar0700-fountains-fire4-seedvr7b-lab-x4",
+      "bytes": 196132960,
+      "files": 485,
+      "latest_mtime_ns": 1787853014025995300,
+      "inventory_sha256": "1b21b931895cc895aa5707bb3403e8d50fbb5cd4e6fc864989973dda8179da34",
+      "bam_files": [
+        "animations/runs/ar0700-fountains-fire4-seedvr7b-lab-x4/resources/AM0700A/00_source/AM0700A.bam",
+        "animations/runs/ar0700-fountains-fire4-seedvr7b-lab-x4/resources/AM0700B/00_source/AM0700B.bam",
+        "animations/runs/ar0700-fountains-fire4-seedvr7b-lab-x4/resources/AM0700C/00_source/AM0700C.bam",
+        "animations/runs/ar0700-fountains-fire4-seedvr7b-lab-x4/resources/AM0700D/00_source/AM0700D.bam",
+        "animations/runs/ar0700-fountains-fire4-seedvr7b-lab-x4/resources/FIRE_4/00_source/FIRE_4.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/runs/ar0700-fountains-fire4-seedvr7b-lab-x4/resources/AM0700A/00_source/AM0700A.bam",
+          "sha256": "e86dec2e81bfd951a04af91db0a1a6a1a5a8d8f210d74d86750de39eaa934955",
+          "identical_canonical_sources": [
+            "animations/ressources/AM0700A/source.bam"
+          ]
+        },
+        {
+          "path": "animations/runs/ar0700-fountains-fire4-seedvr7b-lab-x4/resources/AM0700B/00_source/AM0700B.bam",
+          "sha256": "9832308a77e88473079c79bdc84359dee63fb2ec8d801b86f0d82b80b04dae6a",
+          "identical_canonical_sources": [
+            "animations/ressources/AM0700B/source.bam"
+          ]
+        },
+        {
+          "path": "animations/runs/ar0700-fountains-fire4-seedvr7b-lab-x4/resources/AM0700C/00_source/AM0700C.bam",
+          "sha256": "2188d72ad50cc0bd43c43f4ae9b7ee8b34a4c16a2688e6444d3c2c222c2747d4",
+          "identical_canonical_sources": [
+            "animations/ressources/AM0700C/source.bam"
+          ]
+        },
+        {
+          "path": "animations/runs/ar0700-fountains-fire4-seedvr7b-lab-x4/resources/AM0700D/00_source/AM0700D.bam",
+          "sha256": "1c49e5aad8a532694489353bea6e2255140bb8f9f6b74434ab854bd3e4115741",
+          "identical_canonical_sources": [
+            "animations/ressources/AM0700D/source.bam"
+          ]
+        },
+        {
+          "path": "animations/runs/ar0700-fountains-fire4-seedvr7b-lab-x4/resources/FIRE_4/00_source/FIRE_4.bam",
+          "sha256": "2a963f9b909d94830503d2239d7011552e5078d53f1ed9f457ebed833ba96367",
+          "identical_canonical_sources": [
+            "animations/ressources/FIRE_4/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/batches/ar2804-treelife-spatial-seedvr2-7b-lab-x4-20260907",
+      "bytes": 141407459,
+      "files": 246,
+      "latest_mtime_ns": 1788817425634434300,
+      "inventory_sha256": "a6057c1ecb7e4869b5ce2652d60307192c2d04ba603dec73464711962e06479e",
+      "bam_files": [
+        "animations/batches/ar2804-treelife-spatial-seedvr2-7b-lab-x4-20260907/resources/AM2805A/00_source/AM2805A.bam",
+        "animations/batches/ar2804-treelife-spatial-seedvr2-7b-lab-x4-20260907/resources/AM2805B/00_source/AM2805B.bam",
+        "animations/batches/ar2804-treelife-spatial-seedvr2-7b-lab-x4-20260907/resources/AM2805C/00_source/AM2805C.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/batches/ar2804-treelife-spatial-seedvr2-7b-lab-x4-20260907/resources/AM2805A/00_source/AM2805A.bam",
+          "sha256": "2b9825686913b15a81afd560fa3d97abbc3930b421cd9ac8e8d5b83baf19ec65",
+          "identical_canonical_sources": [
+            "animations/ressources/AM2805A/source.bam"
+          ]
+        },
+        {
+          "path": "animations/batches/ar2804-treelife-spatial-seedvr2-7b-lab-x4-20260907/resources/AM2805B/00_source/AM2805B.bam",
+          "sha256": "d28c6887e5409cc72249299f6badabb9e6e5133bb1896383e64fc91f02e60e86",
+          "identical_canonical_sources": [
+            "animations/ressources/AM2805B/source.bam"
+          ]
+        },
+        {
+          "path": "animations/batches/ar2804-treelife-spatial-seedvr2-7b-lab-x4-20260907/resources/AM2805C/00_source/AM2805C.bam",
+          "sha256": "f1b9ea14d9b3a9c3476aeb64cba1f7ed5950f89fd57035d3245e93977814671b",
+          "identical_canonical_sources": [
+            "animations/ressources/AM2805C/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM6200A/runs/am6200a-seedvr7b-lab-x4-20260922",
+      "bytes": 127447343,
+      "files": 227,
+      "latest_mtime_ns": 1790030252950760000,
+      "inventory_sha256": "7af5ef607020a97f1ad3dc8761341d647846a4e01d2d8780722db115f2e00e9b",
+      "bam_files": [
+        "animations/ressources/AM6200A/runs/am6200a-seedvr7b-lab-x4-20260922/resources/AM6200A/00_source/AM6200A.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/AM6200A/runs/am6200a-seedvr7b-lab-x4-20260922/resources/AM6200A/00_source/AM6200A.bam",
+          "sha256": "dc8357efe59f2187097ae5ef0d90c08e16690210724a02a5dde87a3adf91c8a3",
+          "identical_canonical_sources": [
+            "animations/ressources/AM6200A/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/batches/ar3001-altar-three-seedvr7b-lab-x4-20260911",
+      "bytes": 72158470,
+      "files": 378,
+      "latest_mtime_ns": 1789154318519098600,
+      "inventory_sha256": "b4ca5bc8eba84ee83245a6a8965070858d564e3e023d00249de370438f1a4eb3",
+      "bam_files": [
+        "animations/batches/ar3001-altar-three-seedvr7b-lab-x4-20260911/resources/AM3001D/00_source/AM3001D.bam",
+        "animations/batches/ar3001-altar-three-seedvr7b-lab-x4-20260911/resources/AM3001F/00_source/AM3001F.bam",
+        "animations/batches/ar3001-altar-three-seedvr7b-lab-x4-20260911/resources/AM3001G/00_source/AM3001G.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/batches/ar3001-altar-three-seedvr7b-lab-x4-20260911/resources/AM3001D/00_source/AM3001D.bam",
+          "sha256": "4653efeb9eab7e25fba8e008df6e750333892f03e5c3efa83e9484bc262e42f1",
+          "identical_canonical_sources": [
+            "animations/ressources/AM3001D/source.bam"
+          ]
+        },
+        {
+          "path": "animations/batches/ar3001-altar-three-seedvr7b-lab-x4-20260911/resources/AM3001F/00_source/AM3001F.bam",
+          "sha256": "7aae71404d479311020c9b24f9ca5a1ee327d5584029d52b63864d8fec5d20d3",
+          "identical_canonical_sources": [
+            "animations/ressources/AM3001F/source.bam"
+          ]
+        },
+        {
+          "path": "animations/batches/ar3001-altar-three-seedvr7b-lab-x4-20260911/resources/AM3001G/00_source/AM3001G.bam",
+          "sha256": "956f39a1a2d3e1052b725742829fa1fbe6dc4b7f4671cea1b5557eb0b72e84f5",
+          "identical_canonical_sources": [
+            "animations/ressources/AM3001G/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/batches/ar3001-altar-three-seedvr7b-lab-x4-v2-20260911",
+      "bytes": 65912619,
+      "files": 364,
+      "latest_mtime_ns": 1789154404485868100,
+      "inventory_sha256": "1066b4ce721fc51cab43c936c2526b0e4d6ec61b6184b6cf38e668ded1b75274",
+      "bam_files": [
+        "animations/batches/ar3001-altar-three-seedvr7b-lab-x4-v2-20260911/resources/AM3001D/00_source/AM3001D.bam",
+        "animations/batches/ar3001-altar-three-seedvr7b-lab-x4-v2-20260911/resources/AM3001F/00_source/AM3001F.bam",
+        "animations/batches/ar3001-altar-three-seedvr7b-lab-x4-v2-20260911/resources/AM3001G/00_source/AM3001G.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/batches/ar3001-altar-three-seedvr7b-lab-x4-v2-20260911/resources/AM3001D/00_source/AM3001D.bam",
+          "sha256": "4653efeb9eab7e25fba8e008df6e750333892f03e5c3efa83e9484bc262e42f1",
+          "identical_canonical_sources": [
+            "animations/ressources/AM3001D/source.bam"
+          ]
+        },
+        {
+          "path": "animations/batches/ar3001-altar-three-seedvr7b-lab-x4-v2-20260911/resources/AM3001F/00_source/AM3001F.bam",
+          "sha256": "7aae71404d479311020c9b24f9ca5a1ee327d5584029d52b63864d8fec5d20d3",
+          "identical_canonical_sources": [
+            "animations/ressources/AM3001F/source.bam"
+          ]
+        },
+        {
+          "path": "animations/batches/ar3001-altar-three-seedvr7b-lab-x4-v2-20260911/resources/AM3001G/00_source/AM3001G.bam",
+          "sha256": "956f39a1a2d3e1052b725742829fa1fbe6dc4b7f4671cea1b5557eb0b72e84f5",
+          "identical_canonical_sources": [
+            "animations/ressources/AM3001G/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-seedvr7b-lab-x4-20260911",
+      "bytes": 57297488,
+      "files": 337,
+      "latest_mtime_ns": 1789158719129167100,
+      "inventory_sha256": "e90e1b3688f27ed8721e942351cfdc5e948f07cd9a58d97991f8b52735f254de",
+      "bam_files": [
+        "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-seedvr7b-lab-x4-20260911/resources/AM0411RN/00_source/AM0411RN.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/AM0411RN/runs/am0411rn-magic-sphere-seedvr7b-lab-x4-20260911/resources/AM0411RN/00_source/AM0411RN.bam",
+          "sha256": "1964e37430b26e1665ac952617cd945bd549e7864042433870495ff5329188d0",
+          "identical_canonical_sources": [
+            "animations/ressources/AM0411RN/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM6200H/runs/am6200h-seedvr7b-lab-x4-20260922",
+      "bytes": 42846736,
+      "files": 106,
+      "latest_mtime_ns": 1790030136866085600,
+      "inventory_sha256": "3a05adcf7787fa0d447c2985dea1f5c57929a9496927aba54e8be45456fb2727",
+      "bam_files": [
+        "animations/ressources/AM6200H/runs/am6200h-seedvr7b-lab-x4-20260922/resources/AM6200H/00_source/AM6200H.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/AM6200H/runs/am6200h-seedvr7b-lab-x4-20260922/resources/AM6200H/00_source/AM6200H.bam",
+          "sha256": "b7f2fcb02001a020a7706c74e97f0152b452bab489221e4a0f86ef41bdfa7809",
+          "identical_canonical_sources": [
+            "animations/ressources/AM6200H/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/batches/am0322ab-reboutcx-x4-20260919",
+      "bytes": 41461058,
+      "files": 151,
+      "latest_mtime_ns": 1789828325595575500,
+      "inventory_sha256": "da0f11cda0a4c507d1fa665df106f2974a124eb3c78a171ff7ccf062739926b6",
+      "bam_files": [
+        "animations/batches/am0322ab-reboutcx-x4-20260919/resources/AM0322A/00_source/AM0322A.bam",
+        "animations/batches/am0322ab-reboutcx-x4-20260919/resources/AM0322B/00_source/AM0322B.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/batches/am0322ab-reboutcx-x4-20260919/resources/AM0322A/00_source/AM0322A.bam",
+          "sha256": "a57583156f7e1e669a19a2b1f94101936cba5d57c3360f9e5619d49c1c20fb29",
+          "identical_canonical_sources": [
+            "animations/ressources/AM0322A/source.bam"
+          ]
+        },
+        {
+          "path": "animations/batches/am0322ab-reboutcx-x4-20260919/resources/AM0322B/00_source/AM0322B.bam",
+          "sha256": "f29b830e04d93193246e6d93525d96e2651d56bc7400e9ded15e7cd7a583890a",
+          "identical_canonical_sources": [
+            "animations/ressources/AM0322B/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM5201A/runs/am5201a-seedvr7b-lab-x4-20260922",
+      "bytes": 34976310,
+      "files": 95,
+      "latest_mtime_ns": 1790104258658719800,
+      "inventory_sha256": "07ed2e13cca382daf4ccc469636722f40239a80d22c445d18652772f139f4880",
+      "bam_files": [
+        "animations/ressources/AM5201A/runs/am5201a-seedvr7b-lab-x4-20260922/resources/AM5201A/00_source/AM5201A.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/AM5201A/runs/am5201a-seedvr7b-lab-x4-20260922/resources/AM5201A/00_source/AM5201A.bam",
+          "sha256": "357f6b7ed8303152ebf66cc1a2940b4f228516b4f62ceb9cdf7c700b8471c83d",
+          "identical_canonical_sources": [
+            "animations/ressources/AM5201A/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM4500A/runs/am4500a-seedvr7b-lab-x4-20260922",
+      "bytes": 29354760,
+      "files": 95,
+      "latest_mtime_ns": 1790030115366682200,
+      "inventory_sha256": "11fe6052658c342775eb6ed53d37e17170b9fff57bc3c714e1573caa373ea750",
+      "bam_files": [
+        "animations/ressources/AM4500A/runs/am4500a-seedvr7b-lab-x4-20260922/resources/AM4500A/00_source/AM4500A.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/AM4500A/runs/am4500a-seedvr7b-lab-x4-20260922/resources/AM4500A/00_source/AM4500A.bam",
+          "sha256": "7386fb86811aac8cc20a71428f55afef0582f5a72874fe2eb76911816265957f",
+          "identical_canonical_sources": [
+            "animations/ressources/AM4500A/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM3016D/runs/am3016d-seedvr7b-lab-x4-seed959948902156063-20260916",
+      "bytes": 23826148,
+      "files": 712,
+      "latest_mtime_ns": 1789588733402963600,
+      "inventory_sha256": "21d92252344237d5f27cd923db895c96fd39b9d2d0d728f523c3bec8605a6183",
+      "bam_files": [
+        "animations/ressources/AM3016D/runs/am3016d-seedvr7b-lab-x4-seed959948902156063-20260916/resources/AM3016D/00_source/AM3016D.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/AM3016D/runs/am3016d-seedvr7b-lab-x4-seed959948902156063-20260916/resources/AM3016D/00_source/AM3016D.bam",
+          "sha256": "b22d2464dc5d9277f1f43a2d73f54e197c9e278ca90aaf49e957900a05b091e4",
+          "identical_canonical_sources": [
+            "animations/ressources/AM3016D/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM5201B/runs/am5201b-seedvr7b-lab-x4-20260922",
+      "bytes": 23484696,
+      "files": 161,
+      "latest_mtime_ns": 1790104195252682100,
+      "inventory_sha256": "c76c88c029c98472319983875ba06b3c1d43dc40b43e938597f1bb5fa60eac1f",
+      "bam_files": [
+        "animations/ressources/AM5201B/runs/am5201b-seedvr7b-lab-x4-20260922/resources/AM5201B/00_source/AM5201B.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/AM5201B/runs/am5201b-seedvr7b-lab-x4-20260922/resources/AM5201B/00_source/AM5201B.bam",
+          "sha256": "51d2f1a1cbdc3b2cfc112af6433d57375a10c6042632301e120f125f638f74c6",
+          "identical_canonical_sources": [
+            "animations/ressources/AM5201B/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM5204D/runs/am5204d-reboutcx-x4-20260922",
+      "bytes": 21545411,
+      "files": 186,
+      "latest_mtime_ns": 1790104009299099900,
+      "inventory_sha256": "e3c8bd6307cfbd42aa5c2a26cdfb1d3e00ca15f23b7b64da2cc47daa9d5f50dd",
+      "bam_files": [
+        "animations/ressources/AM5204D/runs/am5204d-reboutcx-x4-20260922/resources/AM5204D/00_source/AM5204D.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/AM5204D/runs/am5204d-reboutcx-x4-20260922/resources/AM5204D/00_source/AM5204D.bam",
+          "sha256": "d0e843d844e6b6752b156324406ab0c8aa6f20ac0fe10a696224dd1613bcb58e",
+          "identical_canonical_sources": [
+            "animations/ressources/AM5204D/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/MMELSPIN/runs/mmelspin-seedvr7b-lab-x4-20260922",
+      "bytes": 18504236,
+      "files": 227,
+      "latest_mtime_ns": 1790030204207344500,
+      "inventory_sha256": "ba946ed2f5697ba28d12b78f75ebf8e06f16fd103eb2fb4e5ce41f6bde57746d",
+      "bam_files": [
+        "animations/ressources/MMELSPIN/runs/mmelspin-seedvr7b-lab-x4-20260922/resources/MMELSPIN/00_source/MMELSPIN.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/MMELSPIN/runs/mmelspin-seedvr7b-lab-x4-20260922/resources/MMELSPIN/00_source/MMELSPIN.bam",
+          "sha256": "48d1a8da69c23ac4c88f9ca00fbdd5d87e306ee05eb1511901280695446c7727",
+          "identical_canonical_sources": [
+            "animations/ressources/MMELSPIN/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM904TL4/runs/ar0904-tl4-spatial-x4-20260906",
+      "bytes": 15400938,
+      "files": 82,
+      "latest_mtime_ns": 1788709106544114700,
+      "inventory_sha256": "cb781dcaa2751f3c6c0888f4e3d8423135bb2a9a2bc52684824b9aba50f260eb",
+      "bam_files": [
+        "animations/ressources/AM904TL4/runs/ar0904-tl4-spatial-x4-20260906/resources/AM904TL4/00_source/AM904TL4.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/AM904TL4/runs/ar0904-tl4-spatial-x4-20260906/resources/AM904TL4/00_source/AM904TL4.bam",
+          "sha256": "91f5ee6bd57096f18d5fc6aa3217b26642e3cfc17c3fa354eac6d5a07370c9f4",
+          "identical_canonical_sources": [
+            "animations/ressources/AM904TL4/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM904TL3/runs/ar0904-tl3-spatial-x4-20260906",
+      "bytes": 15333004,
+      "files": 118,
+      "latest_mtime_ns": 1788709106190387300,
+      "inventory_sha256": "e6e48578aab3e34eb86a6acf3bd060a3577f840f880848f8476bd3bebe945487",
+      "bam_files": [
+        "animations/ressources/AM904TL3/runs/ar0904-tl3-spatial-x4-20260906/resources/AM904TL3/00_source/AM904TL3.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/AM904TL3/runs/ar0904-tl3-spatial-x4-20260906/resources/AM904TL3/00_source/AM904TL3.bam",
+          "sha256": "c1faad3d34dfe0141737797ed6e75c583c09df8f87a43a6f497541145e693151",
+          "identical_canonical_sources": [
+            "animations/ressources/AM904TL3/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM904TL1/runs/ar0904-tl1-spatial-x4-20260906",
+      "bytes": 11944231,
+      "files": 118,
+      "latest_mtime_ns": 1788709105444087200,
+      "inventory_sha256": "86cc543af544ac90dbd9290e322ecf5e5deb6f06a4a318331a468499c279d94a",
+      "bam_files": [
+        "animations/ressources/AM904TL1/runs/ar0904-tl1-spatial-x4-20260906/resources/AM904TL1/00_source/AM904TL1.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/AM904TL1/runs/ar0904-tl1-spatial-x4-20260906/resources/AM904TL1/00_source/AM904TL1.bam",
+          "sha256": "d4821be51b429492ae5c079b9756f0c83f5257dbd98b2b5ac6dfc86fa32ecc4d",
+          "identical_canonical_sources": [
+            "animations/ressources/AM904TL1/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM904TL2/runs/ar0904-tl2-spatial-x4-20260906",
+      "bytes": 11506650,
+      "files": 118,
+      "latest_mtime_ns": 1788709105815164100,
+      "inventory_sha256": "f15455ddabcf964d70b1e740300bd3d52f8e4dc8d53379ad56da06109d5fdf9c",
+      "bam_files": [
+        "animations/ressources/AM904TL2/runs/ar0904-tl2-spatial-x4-20260906/resources/AM904TL2/00_source/AM904TL2.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/AM904TL2/runs/ar0904-tl2-spatial-x4-20260906/resources/AM904TL2/00_source/AM904TL2.bam",
+          "sha256": "db4018abecf2bfdc63421458bd18762a80c7a0b0cdb4addb9525f45a63e6eeb6",
+          "identical_canonical_sources": [
+            "animations/ressources/AM904TL2/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM6200E/runs/am6200e-reboutcx-x4-20260922",
+      "bytes": 8617524,
+      "files": 51,
+      "latest_mtime_ns": 1790029991038764300,
+      "inventory_sha256": "84037b080429dab6f455d292f6d79d2e62be61a1d64b76f392da399f314984d0",
+      "bam_files": [
+        "animations/ressources/AM6200E/runs/am6200e-reboutcx-x4-20260922/resources/AM6200E/00_source/AM6200E.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/AM6200E/runs/am6200e-reboutcx-x4-20260922/resources/AM6200E/00_source/AM6200E.bam",
+          "sha256": "3136b35cb5ab31f160afe4c8316d27f64269a552f2c72fd28e6a013756dd527b",
+          "identical_canonical_sources": [
+            "animations/ressources/AM6200E/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-nearest2-x4",
+      "bytes": 8598796,
+      "files": 1076,
+      "latest_mtime_ns": 1788558426057918900,
+      "inventory_sha256": "a23ccac37a19e1004f55040dcdd937b9bbb41b9d460e2a32132bc29d13c75295",
+      "bam_files": [
+        "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-nearest2-x4/resources/BUBBLES2/00_source/BUBBLES2.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-nearest2-x4/resources/BUBBLES2/00_source/BUBBLES2.bam",
+          "sha256": "a80b50f92940da7d067c27be6f138e3182986c09a706f4b3553d0e07ff1dfddf",
+          "identical_canonical_sources": [
+            "animations/ressources/BUBBLES2/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM5502F/runs/am5502f-seedvr7b-lab-x4-20260922",
+      "bytes": 8474932,
+      "files": 139,
+      "latest_mtime_ns": 1790104164017481600,
+      "inventory_sha256": "c35cf08e6f35dd260df2576b92b8ab76719bbcecb1ddef8c1490ba10f36ebd52",
+      "bam_files": [
+        "animations/ressources/AM5502F/runs/am5502f-seedvr7b-lab-x4-20260922/resources/AM5502F/00_source/AM5502F.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/AM5502F/runs/am5502f-seedvr7b-lab-x4-20260922/resources/AM5502F/00_source/AM5502F.bam",
+          "sha256": "7997e36f2ee70eb839edcac0068c4b104b547bec5593ce111d83b2375aafb34a",
+          "identical_canonical_sources": [
+            "animations/ressources/AM5502F/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM5503C/runs/am5503c-seedvr7b-lab-x4-20260922",
+      "bytes": 7344237,
+      "files": 95,
+      "latest_mtime_ns": 1790104239577690000,
+      "inventory_sha256": "f5c9f5186c476003034b2dda479ba9a1e9a81f1ca239521ae45b643644bee008",
+      "bam_files": [
+        "animations/ressources/AM5503C/runs/am5503c-seedvr7b-lab-x4-20260922/resources/AM5503C/00_source/AM5503C.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/AM5503C/runs/am5503c-seedvr7b-lab-x4-20260922/resources/AM5503C/00_source/AM5503C.bam",
+          "sha256": "17d4edf3a1ae62e2bc868c5c55616a6a3429bbbf84ff1a51c20086cfc3d72189",
+          "identical_canonical_sources": [
+            "animations/ressources/AM5503C/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM1516PT/runs/am1516pt-reboutcx-x4-20260921",
+      "bytes": 6969609,
+      "files": 60,
+      "latest_mtime_ns": 1790025898353456100,
+      "inventory_sha256": "ce95e3586a6d66d5b64d7174d76974107dc89edaf2467a02b1a5576d2e36efd7",
+      "bam_files": [
+        "animations/ressources/AM1516PT/runs/am1516pt-reboutcx-x4-20260921/resources/AM1516PT/00_source/AM1516PT.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/AM1516PT/runs/am1516pt-reboutcx-x4-20260921/resources/AM1516PT/00_source/AM1516PT.bam",
+          "sha256": "3a4415bd9ee62402ef9741139991ef94a3c01b1be0a1dfbe38a51ef1f80608de",
+          "identical_canonical_sources": [
+            "animations/ressources/AM1516PT/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM5204C/runs/am5204c-seedvr7b-lab-x4-20260922",
+      "bytes": 6960089,
+      "files": 139,
+      "latest_mtime_ns": 1790104111327803600,
+      "inventory_sha256": "9c38b87268836c0c002f0ba827d199021a43f57feac7924b7f4146d54d294e22",
+      "bam_files": [
+        "animations/ressources/AM5204C/runs/am5204c-seedvr7b-lab-x4-20260922/resources/AM5204C/00_source/AM5204C.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/AM5204C/runs/am5204c-seedvr7b-lab-x4-20260922/resources/AM5204C/00_source/AM5204C.bam",
+          "sha256": "b3363159b1660e26cd92a66244464e40533072ab0a4d42dfbd93f3a56c1f3c44",
+          "identical_canonical_sources": [
+            "animations/ressources/AM5204C/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM6200F/runs/am6200f-reboutcx-x4-20260922",
+      "bytes": 6894910,
+      "files": 51,
+      "latest_mtime_ns": 1790029997035942500,
+      "inventory_sha256": "3ce744e4cbe29d46e2eada9034230c5c510828daaf90790ef560506b8693463a",
+      "bam_files": [
+        "animations/ressources/AM6200F/runs/am6200f-reboutcx-x4-20260922/resources/AM6200F/00_source/AM6200F.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/AM6200F/runs/am6200f-reboutcx-x4-20260922/resources/AM6200F/00_source/AM6200F.bam",
+          "sha256": "5ed2bb00e183aa646b70d4aec052722a76e4ffb9279fdf1405824b818c8751c6",
+          "identical_canonical_sources": [
+            "animations/ressources/AM6200F/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/FIREBRN/runs/firebrn-seedvr7b-lab-x4-20260922",
+      "bytes": 6713347,
+      "files": 700,
+      "latest_mtime_ns": 1790104541890985700,
+      "inventory_sha256": "853df86b65f8c50b5927df1c89ee75159afd9b5dc65894aaecae4a93e3371138",
+      "bam_files": [
+        "animations/ressources/FIREBRN/runs/firebrn-seedvr7b-lab-x4-20260922/resources/FIREBRN/00_source/FIREBRN.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/FIREBRN/runs/firebrn-seedvr7b-lab-x4-20260922/resources/FIREBRN/00_source/FIREBRN.bam",
+          "sha256": "4abd918ea23d661d311401f412331147df0c9aeab559d5b84ca4eb05fa6c7393",
+          "identical_canonical_sources": [
+            "animations/ressources/FIREBRN/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM6200G/runs/am6200g-reboutcx-x4-20260922",
+      "bytes": 6271892,
+      "files": 51,
+      "latest_mtime_ns": 1790030002930383600,
+      "inventory_sha256": "632131397e5041764da970c56fb8972a87c83ad6047669163d37e6779160f300",
+      "bam_files": [
+        "animations/ressources/AM6200G/runs/am6200g-reboutcx-x4-20260922/resources/AM6200G/00_source/AM6200G.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/AM6200G/runs/am6200g-reboutcx-x4-20260922/resources/AM6200G/00_source/AM6200G.bam",
+          "sha256": "0e8624ab443a65524fd278ef517ca0bc40cd606739ed2b709909ecb82a83d621",
+          "identical_canonical_sources": [
+            "animations/ressources/AM6200G/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/FIRE_3GS/runs/fire-3gs-seedvr7b-lab-x4-20260921",
+      "bytes": 4200911,
+      "files": 161,
+      "latest_mtime_ns": 1790024613643059600,
+      "inventory_sha256": "19f4bf07df9018e6d4d9f510c638f03f049d2d25ab09e810c1e84bec0c4b1690",
+      "bam_files": [
+        "animations/ressources/FIRE_3GS/runs/fire-3gs-seedvr7b-lab-x4-20260921/resources/FIRE_3GS/00_source/FIRE_3GS.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/FIRE_3GS/runs/fire-3gs-seedvr7b-lab-x4-20260921/resources/FIRE_3GS/00_source/FIRE_3GS.bam",
+          "sha256": "83160593493bd0c098a2a43f163f7f598653ca98299f8c87b7bde12b72098a09",
+          "identical_canonical_sources": [
+            "animations/ressources/FIRE_3GS/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/FIRE_3GR/runs/fire-3gr-seedvr7b-lab-x4-20260921",
+      "bytes": 4154905,
+      "files": 161,
+      "latest_mtime_ns": 1790024644121819500,
+      "inventory_sha256": "42ea97b3fd694bb748e948fe9afb8d04c974018813d8219c5254a0ca14f5e78a",
+      "bam_files": [
+        "animations/ressources/FIRE_3GR/runs/fire-3gr-seedvr7b-lab-x4-20260921/resources/FIRE_3GR/00_source/FIRE_3GR.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/FIRE_3GR/runs/fire-3gr-seedvr7b-lab-x4-20260921/resources/FIRE_3GR/00_source/FIRE_3GR.bam",
+          "sha256": "0306d92d985c51712b823acad236ae612ff81fbbd6e00f56d74a0beeb7fa4d16",
+          "identical_canonical_sources": [
+            "animations/ressources/FIRE_3GR/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/FIRE_3/runs/ar0202-fire3-seed573983441-seedvr7b-lab-x4-20260916",
+      "bytes": 3598130,
+      "files": 161,
+      "latest_mtime_ns": 1789510952854149600,
+      "inventory_sha256": "84950f3d4e9554dbc3a03614fffdabc3a30851132cadc98e1c4d56938a432a36",
+      "bam_files": [
+        "animations/ressources/FIRE_3/runs/ar0202-fire3-seed573983441-seedvr7b-lab-x4-20260916/resources/FIRE_3/00_source/FIRE_3.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/FIRE_3/runs/ar0202-fire3-seed573983441-seedvr7b-lab-x4-20260916/resources/FIRE_3/00_source/FIRE_3.bam",
+          "sha256": "dd43ac2873a65ecb18bb7692015512ca9b3937459d7af4023d8ae0603c644b74",
+          "identical_canonical_sources": [
+            "animations/ressources/FIRE_3/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/FIRE_3/runs/ar0202-fire3-seed12648430-seedvr7b-lab-x4-20260916",
+      "bytes": 3597740,
+      "files": 161,
+      "latest_mtime_ns": 1789511026993582200,
+      "inventory_sha256": "1efa3d793dc81d11e855650b12c9a78a78767d3b83d5c7c0da5f59da9dac4dfa",
+      "bam_files": [
+        "animations/ressources/FIRE_3/runs/ar0202-fire3-seed12648430-seedvr7b-lab-x4-20260916/resources/FIRE_3/00_source/FIRE_3.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/FIRE_3/runs/ar0202-fire3-seed12648430-seedvr7b-lab-x4-20260916/resources/FIRE_3/00_source/FIRE_3.bam",
+          "sha256": "dd43ac2873a65ecb18bb7692015512ca9b3937459d7af4023d8ae0603c644b74",
+          "identical_canonical_sources": [
+            "animations/ressources/FIRE_3/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/FPIT1M/runs/fpit1m-seedvr7b-lab-x4-20260921",
+      "bytes": 3450038,
+      "files": 73,
+      "latest_mtime_ns": 1790020905702864900,
+      "inventory_sha256": "1f3e463dbdd29fb36760a67ded1bcd6c57ab29af2d4ecfb9d9b75d0d19d72f57",
+      "bam_files": [
+        "animations/ressources/FPIT1M/runs/fpit1m-seedvr7b-lab-x4-20260921/resources/FPIT1M/00_source/FPIT1M.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/FPIT1M/runs/fpit1m-seedvr7b-lab-x4-20260921/resources/FPIT1M/00_source/FPIT1M.bam",
+          "sha256": "0ec741cb3d4885e3db4563b72cd6c709826ec86d4733f979ad33d3a783d81321",
+          "identical_canonical_sources": [
+            "animations/ressources/FPIT1M/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/FOUNT1/runs/fount1-seedvr2x-nearest2-x4-20260915",
+      "bytes": 3145077,
+      "files": 51,
+      "latest_mtime_ns": 1789508290590602900,
+      "inventory_sha256": "e7adca9e9989eb213bfab56a33741a25f49a065eb9bc579806a0fd4f1bd66b72",
+      "bam_files": [
+        "animations/ressources/FOUNT1/runs/fount1-seedvr2x-nearest2-x4-20260915/resources/FOUNT1/00_source/FOUNT1.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/FOUNT1/runs/fount1-seedvr2x-nearest2-x4-20260915/resources/FOUNT1/00_source/FOUNT1.bam",
+          "sha256": "9b55e650efd7b6dee3f95dafe4082bd0d0bbbe07fac6568ce4a0d2d20adffb71",
+          "identical_canonical_sources": [
+            "animations/ressources/FOUNT1/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/FOUNT1/runs/fount1-xbr2x-nearest2-x4-alpha-xbr2-noblur-20260915",
+      "bytes": 2633747,
+      "files": 56,
+      "latest_mtime_ns": 1789509318524497500,
+      "inventory_sha256": "d08dfc8baf99fe0156e88a577c0aaa0d4d863fa8b9d1705a296dc43a4250c67e",
+      "bam_files": [
+        "animations/ressources/FOUNT1/runs/fount1-xbr2x-nearest2-x4-alpha-xbr2-noblur-20260915/resources/FOUNT1/00_source/FOUNT1.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/FOUNT1/runs/fount1-xbr2x-nearest2-x4-alpha-xbr2-noblur-20260915/resources/FOUNT1/00_source/FOUNT1.bam",
+          "sha256": "9b55e650efd7b6dee3f95dafe4082bd0d0bbbe07fac6568ce4a0d2d20adffb71",
+          "identical_canonical_sources": [
+            "animations/ressources/FOUNT1/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM5508C/runs/am5508c-seedvr7b-lab-x4-20260922",
+      "bytes": 2018294,
+      "files": 139,
+      "latest_mtime_ns": 1790104221455138100,
+      "inventory_sha256": "1703350085c8381b8a6e09b56da347747b9c61d90ef3c5eb89c6dce5403f0ff4",
+      "bam_files": [
+        "animations/ressources/AM5508C/runs/am5508c-seedvr7b-lab-x4-20260922/resources/AM5508C/00_source/AM5508C.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/AM5508C/runs/am5508c-seedvr7b-lab-x4-20260922/resources/AM5508C/00_source/AM5508C.bam",
+          "sha256": "4af1b954808d36a411a8b792d0d042fc9c4711ef73c3c49f5560f9b6b9a890cb",
+          "identical_canonical_sources": [
+            "animations/ressources/AM5508C/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/FIRE/runs/fire-seedvr7b-lab-x4-20260921",
+      "bytes": 1709664,
+      "files": 106,
+      "latest_mtime_ns": 1790020930655012200,
+      "inventory_sha256": "c7df74f3dfc0f934a80d091542777a4fbda6251674c1f178a8d0437111934e07",
+      "bam_files": [
+        "animations/ressources/FIRE/runs/fire-seedvr7b-lab-x4-20260921/resources/FIRE/00_source/FIRE.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/FIRE/runs/fire-seedvr7b-lab-x4-20260921/resources/FIRE/00_source/FIRE.bam",
+          "sha256": "16048c4a96bc5581cfbe8feb9a2cb448950707c1e5899fc0237a48662384edcf",
+          "identical_canonical_sources": [
+            "animations/ressources/FIRE/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/FOUNT1/runs/fount1-seedvr7b-lab-x2-20260915",
+      "bytes": 1291990,
+      "files": 55,
+      "latest_mtime_ns": 1789508223775090800,
+      "inventory_sha256": "d709c6e51df2257dd9b9aa5827bbf35c4669df94cbfac4b4c6a7c3a0b358de5a",
+      "bam_files": [
+        "animations/ressources/FOUNT1/runs/fount1-seedvr7b-lab-x2-20260915/resources/FOUNT1/00_source/FOUNT1.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/FOUNT1/runs/fount1-seedvr7b-lab-x2-20260915/resources/FOUNT1/00_source/FOUNT1.bam",
+          "sha256": "9b55e650efd7b6dee3f95dafe4082bd0d0bbbe07fac6568ce4a0d2d20adffb71",
+          "identical_canonical_sources": [
+            "animations/ressources/FOUNT1/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM5502D/runs/am5502d-seedvr7b-lab-x4-20260922",
+      "bytes": 1277019,
+      "files": 139,
+      "latest_mtime_ns": 1790104137534346100,
+      "inventory_sha256": "df797f96088ca0cfc8a30b6f95d8379522c9f1e0ae1d4edeb9ff4e8c59034d1d",
+      "bam_files": [
+        "animations/ressources/AM5502D/runs/am5502d-seedvr7b-lab-x4-20260922/resources/AM5502D/00_source/AM5502D.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/AM5502D/runs/am5502d-seedvr7b-lab-x4-20260922/resources/AM5502D/00_source/AM5502D.bam",
+          "sha256": "eeba2e34faf16ce9cdb25c12b90f753aaaf498138990b6b25de39a659521a75d",
+          "identical_canonical_sources": [
+            "animations/ressources/AM5502D/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/FPIT1S/runs/fpit1s-xbr2x-xbr2x-x4-20260903",
+      "bytes": 463527,
+      "files": 66,
+      "latest_mtime_ns": 1788387725264974000,
+      "inventory_sha256": "cb1325b870e32e26be340d603a1ed5dbceb7a949defca71cfbab17ba984b80fd",
+      "bam_files": [
+        "animations/ressources/FPIT1S/runs/fpit1s-xbr2x-xbr2x-x4-20260903/resources/FPIT1S/00_source/FPIT1S.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/FPIT1S/runs/fpit1s-xbr2x-xbr2x-x4-20260903/resources/FPIT1S/00_source/FPIT1S.bam",
+          "sha256": "a8f0e62d1776f8282fbddf5a0fb425c665e2e08433452880b5ec6607d6c54af7",
+          "identical_canonical_sources": [
+            "animations/ressources/FPIT1S/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/FPIT1S/runs/fpit1s-xbr2x-nearest2-x4-20260903",
+      "bytes": 446775,
+      "files": 66,
+      "latest_mtime_ns": 1788387008902064100,
+      "inventory_sha256": "336fd1ab54d645d3c76be33e8c759107cb5ac58c99ba0f036f860cbf47d150b4",
+      "bam_files": [
+        "animations/ressources/FPIT1S/runs/fpit1s-xbr2x-nearest2-x4-20260903/resources/FPIT1S/00_source/FPIT1S.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/FPIT1S/runs/fpit1s-xbr2x-nearest2-x4-20260903/resources/FPIT1S/00_source/FPIT1S.bam",
+          "sha256": "a8f0e62d1776f8282fbddf5a0fb425c665e2e08433452880b5ec6607d6c54af7",
+          "identical_canonical_sources": [
+            "animations/ressources/FPIT1S/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/FLMM/runs/flmm-seedvr7b-lab-x4-20260921",
+      "bytes": 318166,
+      "files": 73,
+      "latest_mtime_ns": 1790023379546942500,
+      "inventory_sha256": "42a83d52660f82a1a30463ef42e8ab084c045fed99a31687227480ab8d08cd75",
+      "bam_files": [
+        "animations/ressources/FLMM/runs/flmm-seedvr7b-lab-x4-20260921/resources/FLMM/00_source/FLMM.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/FLMM/runs/flmm-seedvr7b-lab-x4-20260921/resources/FLMM/00_source/FLMM.bam",
+          "sha256": "3394293cf984b7b7bc31691c3b57a7ba3bd67cb7e63e3ce12758ccb76d91a1dd",
+          "identical_canonical_sources": [
+            "animations/ressources/FLMM/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/FLMS/runs/flms-flame2m-x1-reboutcx-x4-20260919",
+      "bytes": 59967,
+      "files": 79,
+      "latest_mtime_ns": 1789777189238539900,
+      "inventory_sha256": "d14478df16c6f5094f9fee37e70bd2128470c132871ab4f112f377d0ac78d373",
+      "bam_files": [
+        "animations/ressources/FLMS/runs/flms-flame2m-x1-reboutcx-x4-20260919/resources/FLMS/00_source/FLMS.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/FLMS/runs/flms-flame2m-x1-reboutcx-x4-20260919/resources/FLMS/00_source/FLMS.bam",
+          "sha256": "da581db75ad19ee29ee1a408bea70a04412efee79cbdef5f166972c030aa4185",
+          "identical_canonical_sources": [
+            "animations/ressources/FLMS/source.bam"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/FLMS/runs/flms-reboutcx-x4-20260919",
+      "bytes": 53088,
+      "files": 60,
+      "latest_mtime_ns": 1789776388040043200,
+      "inventory_sha256": "9435c25eedabab37ca9e4847aa9ba6eedf7795122601eebbe669cb197a71d702",
+      "bam_files": [
+        "animations/ressources/FLMS/runs/flms-reboutcx-x4-20260919/resources/FLMS/00_source/FLMS.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-removable",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/ressources/FLMS/runs/flms-reboutcx-x4-20260919/resources/FLMS/00_source/FLMS.bam",
+          "sha256": "da581db75ad19ee29ee1a408bea70a04412efee79cbdef5f166972c030aa4185",
+          "identical_canonical_sources": [
+            "animations/ressources/FLMS/source.bam"
+          ]
+        }
+      ]
+    }
+  ],
+  "needs_review": [
+    {
+      "path": "animations/batches/am2805bc-joint-rgb-seam32-restore-large-alpha-bilateral8-20260908",
+      "bytes": 71464735,
+      "files": 37,
+      "latest_mtime_ns": 1788888542778696600,
+      "inventory_sha256": "0075b9ea3cbfe2173b43bef7b21b12cc15fec931cdaf9085245c731a0207df2f",
+      "bam_files": [
+        "animations/batches/am2805bc-joint-rgb-seam32-restore-large-alpha-bilateral8-20260908/override-assets/AM2805B.BAM",
+        "animations/batches/am2805bc-joint-rgb-seam32-restore-large-alpha-bilateral8-20260908/override-assets/AM2805C.BAM"
+      ],
+      "hazards": [],
+      "classification": "historical-provenance-only-review",
+      "dependency_roles": [
+        "historical-retention"
+      ],
+      "reasons": [
+        "historical-retention:animations/batches/am2805bc-joint-rgb-seam32-restore-large-alpha-bilateral8-20260908/manifest.json",
+        "historical-retention:animations/packs-par-zone/ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-joint-rgb-seam32-restore-large-alpha-bilateral8-20260908/AR2804/manifest.json",
+        "historical-retention:animations/packs-par-zone/ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-joint-rgb-seam32-restore-large-alpha-bilateral8-20260908/manifest.json"
+      ],
+      "bam_duplicate_verification": []
+    },
+    {
+      "path": "animations/batches/am2805bc-joint-rgb-seam32-restore-large-alpha-overlap2-20260908",
+      "bytes": 68660947,
+      "files": 36,
+      "latest_mtime_ns": 1788887586680285800,
+      "inventory_sha256": "a66f6344c5ab934b21367b3d7a2f7a2b96e8b5c17ca670a34f3ffda9c028e8a5",
+      "bam_files": [
+        "animations/batches/am2805bc-joint-rgb-seam32-restore-large-alpha-overlap2-20260908/override-assets/AM2805C.BAM"
+      ],
+      "hazards": [],
+      "classification": "historical-provenance-only-review",
+      "dependency_roles": [
+        "historical-retention"
+      ],
+      "reasons": [
+        "historical-retention:animations/batches/am2805bc-joint-rgb-seam32-restore-large-alpha-overlap2-20260908/manifest.json",
+        "historical-retention:animations/packs-par-zone/ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-joint-rgb-seam32-restore-large-alpha-overlap2-20260908/AR2804/manifest.json",
+        "historical-retention:animations/packs-par-zone/ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-joint-rgb-seam32-restore-large-alpha-overlap2-20260908/manifest.json"
+      ],
+      "bam_duplicate_verification": []
+    },
+    {
+      "path": "animations/batches/am2805bc-joint-rgb-seam32-restore-large-alpha-20260908",
+      "bytes": 67728762,
+      "files": 34,
+      "latest_mtime_ns": 1788823016054631500,
+      "inventory_sha256": "507d7d0287d3a8292ab3df08bf1e6c2fe28e8071966c393c54a93321ce33b491",
+      "bam_files": [],
+      "hazards": [],
+      "classification": "historical-provenance-only-review",
+      "dependency_roles": [
+        "historical-retention"
+      ],
+      "reasons": [
+        "historical-retention:animations/batches/am2805bc-joint-rgb-seam32-restore-large-alpha-20260908/manifest.json",
+        "historical-retention:animations/packs-par-zone/ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-joint-rgb-seam32-restore-large-alpha-20260908/AR2804/manifest.json",
+        "historical-retention:animations/packs-par-zone/ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-joint-rgb-seam32-restore-large-alpha-20260908/manifest.json"
+      ],
+      "bam_duplicate_verification": []
+    },
+    {
+      "path": "animations/batches/am2805bc-joint-rgb-seam16-alpha128-20260908",
+      "bytes": 67498921,
+      "files": 34,
+      "latest_mtime_ns": 1788822207122306400,
+      "inventory_sha256": "5daf79b8a5036731da5dc59d7ffd4b81590b2fda0a5a25957a375fab2b63fa81",
+      "bam_files": [],
+      "hazards": [],
+      "classification": "historical-provenance-only-review",
+      "dependency_roles": [
+        "historical-retention"
+      ],
+      "reasons": [
+        "historical-retention:animations/batches/am2805bc-joint-rgb-seam16-alpha128-20260908/manifest.json",
+        "historical-retention:animations/packs-par-zone/ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-joint-rgb-seam16-20260908/AR2804/manifest.json",
+        "historical-retention:animations/packs-par-zone/ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-joint-rgb-seam16-20260908/manifest.json"
+      ],
+      "bam_duplicate_verification": []
+    },
+    {
+      "path": "animations/ressources/FALL2/runs/fall2-spatial-seedvr2-3b-lab-x4-20260905-163407-198944",
+      "bytes": 56789859,
+      "files": 73,
+      "latest_mtime_ns": 1788626077224778300,
+      "inventory_sha256": "96eb49f733ab299298315696b639cf4580639fd67f2890b22217d8a02a6733a5",
+      "bam_files": [
+        "animations/ressources/FALL2/runs/fall2-spatial-seedvr2-3b-lab-x4-20260905-163407-198944/resources/FALL2/00_source/FALL2.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active"
+      ],
+      "reasons": [
+        "active:animations/ressources/FALL2/.fall2-spatial-seedvr2-3b-lab-x4-20260905-163407-198944.reservation.json",
+        "active:animations/ressources/FALL2/runs/fall2-spatial-seedvr2-3b-lab-x4-20260905-163407-198944/03_runtime_pack/manifest.json",
+        "active:animations/ressources/FALL2/runs/fall2-spatial-seedvr2-3b-lab-x4-20260905-163407-198944/resources/FALL2/01_frames_x1/manifest.json",
+        "active:animations/ressources/FALL2/runs/fall2-spatial-seedvr2-3b-lab-x4-20260905-163407-198944/resources/FALL2/02_upscale_x4/manifest.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/FALL2/.fall2-spatial-seedvr2-3b-lab-x4-20260905-163407-198944.reservation.json",
+          "sha256": "e22dbf7c2dae34dadf9065707b97792d41f5b1c8f7cdbfafa84cfa4f3eea4f0f",
+          "created_utc": "2026-09-05T16:34:13.002325Z",
+          "status": "reserved",
+          "destination": "animations/ressources/FALL2/runs/fall2-spatial-seedvr2-3b-lab-x4-20260905-163407-198944"
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/FALL2/runs/fall2-bottom-overscan4x1-local-retime20-cleanrgb-v2-20260906-024500",
+      "bytes": 39100016,
+      "files": 31,
+      "latest_mtime_ns": 1788655227169307500,
+      "inventory_sha256": "b2eb651500429d301c608e53e2f536949370ee35bdc69cf5fd6006585a83b3a6",
+      "bam_files": [
+        "animations/ressources/FALL2/runs/fall2-bottom-overscan4x1-local-retime20-cleanrgb-v2-20260906-024500/derived-bam/FALL2.BAM"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active"
+      ],
+      "reasons": [
+        "active:animations/ressources/FALL2/.fall2-bottom-overscan4x1-local-retime20-cleanrgb-v2-20260906-024500.reservation.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/FALL2/.fall2-bottom-overscan4x1-local-retime20-cleanrgb-v2-20260906-024500.reservation.json",
+          "sha256": "76a7fe0b0fac8ec63f0860fc051134c3d91652be82be8401741d96822a38dfbc",
+          "created_utc": "2026-09-06T00:36:37.984833Z",
+          "status": "reserved",
+          "destination": "animations/ressources/FALL2/runs/fall2-bottom-overscan4x1-local-retime20-cleanrgb-v2-20260906-024500"
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/FALL2/runs/fall2-bottom-overscan4x1-local-retime20-v1-20260906-024000",
+      "bytes": 39096734,
+      "files": 30,
+      "latest_mtime_ns": 1788654947031172800,
+      "inventory_sha256": "7a7bd14f27141c8d01c7836e7611483b58b3b90ce0331882435a71fdc8fae2ee",
+      "bam_files": [
+        "animations/ressources/FALL2/runs/fall2-bottom-overscan4x1-local-retime20-v1-20260906-024000/derived-bam/FALL2.BAM"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active"
+      ],
+      "reasons": [
+        "active:animations/ressources/FALL2/.fall2-bottom-overscan4x1-local-retime20-v1-20260906-024000.reservation.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/FALL2/.fall2-bottom-overscan4x1-local-retime20-v1-20260906-024000.reservation.json",
+          "sha256": "76de3a914064c4625c1ab176ee18f63f638656d51d09763b9f915aa8b654bc0c",
+          "created_utc": "2026-09-06T00:34:52.571413Z",
+          "status": "reserved",
+          "destination": "animations/ressources/FALL2/runs/fall2-bottom-overscan4x1-local-retime20-v1-20260906-024000"
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM3011A/runs/am3011a-seedvr2-7b-int8-lab-x4-20260911",
+      "bytes": 26778913,
+      "files": 95,
+      "latest_mtime_ns": 1789160393950794000,
+      "inventory_sha256": "6d9c8e8d2736f55875b0bb0b5e812195ae40877914d0b2aec70e05ce9ae6beac",
+      "bam_files": [
+        "animations/ressources/AM3011A/runs/am3011a-seedvr2-7b-int8-lab-x4-20260911/resources/AM3011A/00_source/AM3011A.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active"
+      ],
+      "reasons": [
+        "active:animations/ressources/AM3011A/.am3011a-seedvr2-7b-int8-lab-x4-20260911.reservation.json",
+        "active:animations/ressources/AM3011A/runs/am3011a-canvas-feather256x4-top-left-right-20260911/manifest.json",
+        "active:animations/ressources/AM3011A/runs/am3011a-canvas-feather256x4-top-left-right-bottom64x4-20260911/03_runtime_pack/manifest.json",
+        "active:animations/ressources/AM3011A/runs/am3011a-canvas-feather256x4-top-left-right-bottom64x4-20260911/manifest.json",
+        "active:animations/ressources/AM3011A/runs/am3011a-inner-feather16x4-20260911/03_runtime_pack/manifest.json",
+        "active:animations/ressources/AM3011A/runs/am3011a-inner-feather16x4-20260911/manifest.json",
+        "active:animations/ressources/AM3011A/runs/am3011a-inner-feather64x4-20260911/03_runtime_pack/manifest.json",
+        "active:animations/ressources/AM3011A/runs/am3011a-inner-feather64x4-20260911/manifest.json",
+        "active:animations/ressources/AM3011A/runs/am3011a-seedvr2-7b-int8-lab-x4-20260911/03_runtime_pack/manifest.json",
+        "active:animations/ressources/AM3011A/runs/am3011a-seedvr2-7b-int8-lab-x4-20260911/resources/AM3011A/01_frames_x1/manifest.json",
+        "active:animations/ressources/AM3011A/runs/am3011a-seedvr2-7b-int8-lab-x4-20260911/resources/AM3011A/02_upscale_x4/manifest.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/AM3011A/.am3011a-seedvr2-7b-int8-lab-x4-20260911.reservation.json",
+          "sha256": "1b4fe4b07eb935359d6a39c8af662ad94708b34968e4ae59b905e882d6b3d0ee",
+          "created_utc": "2026-09-11T20:59:34.084161Z",
+          "status": "reserved",
+          "destination": "animations/ressources/AM3011A/runs/am3011a-seedvr2-7b-int8-lab-x4-20260911"
+        }
+      ]
+    },
+    {
+      "path": "animations/runs/ar0602-bubbles2-seedvr7b-lab-x4",
+      "bytes": 21645687,
+      "files": 1184,
+      "latest_mtime_ns": 1787863605024413800,
+      "inventory_sha256": "31c6c83923e204f4c6554522c8a24f377e6e6ca0f5051b42d6813b9661ceec76",
+      "bam_files": [
+        "animations/runs/ar0602-bubbles2-seedvr7b-lab-x4/resources/BUBBLES2/00_source/BUBBLES2.bam"
+      ],
+      "hazards": [],
+      "classification": "historical-provenance-only-review",
+      "dependency_roles": [],
+      "reasons": [],
+      "bam_duplicate_verification": [
+        {
+          "path": "animations/runs/ar0602-bubbles2-seedvr7b-lab-x4/resources/BUBBLES2/00_source/BUBBLES2.bam",
+          "sha256": "a80b50f92940da7d067c27be6f138e3182986c09a706f4b3553d0e07ff1dfddf",
+          "identical_canonical_sources": [
+            "animations/ressources/BUBBLES2/source.bam"
+          ]
+        }
+      ],
+      "external_historical_references": [
+        "docs/workspace-animation-packs-p3-manifest.json",
+        "archive/legacy/animation-packs-p3-20260831/descriptors/bubbles2-feather1-20260827/manifest.json",
+        "archive/legacy/animation-packs-p3-20260831/descriptors/bubbles2-feather2-20260827/manifest.json",
+        "archive/legacy/animation-packs-p3-20260831/descriptors/bubbles2-feather3-20260827/manifest.json",
+        "archive/legacy/animation-packs-p3-20260831/descriptors/bubbles2-feather5-20260827/manifest.json",
+        "archive/legacy/animation-packs-p3-20260831/descriptors/bubbles2-feather8-20260827/manifest.json",
+        "archive/legacy/animation-packs-p3-20260831/descriptors/bubbles2-rgb-neutral-20260827/manifest.json",
+        "archive/legacy/animation-packs-p3-20260831/descriptors/bubbles2-split-20260827/manifest.json",
+        "archive/workspace-cleanup-20260831/temp-20260827-20260828/bub-f1.log",
+        "archive/workspace-cleanup-20260831/temp-20260827-20260828/bub-f2.log",
+        "archive/workspace-cleanup-20260831/temp-20260827-20260828/bub-f3.log",
+        "archive/workspace-cleanup-20260831/temp-20260827-20260828/bub-f5.log",
+        "archive/workspace-cleanup-20260831/temp-20260827-20260828/bub-f8.log",
+        "archive/workspace-cleanup-20260831/temp-20260827-20260828/bubbles2-mergev2.log",
+        "archive/workspace-cleanup-20260831/temp-20260827-20260828/bubbles2-neutral.log",
+        "archive/workspace-cleanup-20260831/temp-20260827-20260828/bubbles2-split.log",
+        "archive/workspace-cleanup-20260831/temp-20260827-20260828/bubbles2-x4.log"
+      ],
+      "historical_manifest_sha256": "b8118e1bac4ada2b3035d2f693a45cd030a77ef38a2ac1eed757fd40d342f9ff",
+      "review_reason": "Retained source of archived P3 descriptors; exact source manifest still matches their immutable historical receipt"
+    },
+    {
+      "path": "animations/ressources/FALL2/runs/fall2-spatial-spline-fit1-safe-boundary-bottom-tip-sdf-reinforce-v2-20260906-001624-751695",
+      "bytes": 21596224,
+      "files": 20,
+      "latest_mtime_ns": 1788653801829400500,
+      "inventory_sha256": "4abd8ae73eabb42670092bde3312c6f423ed203be70bba379cb50a3ca8f91641",
+      "bam_files": [],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active"
+      ],
+      "reasons": [
+        "active:animations/ressources/FALL2/.fall2-spatial-spline-fit1-safe-boundary-bottom-tip-sdf-reinforce-v2-20260906-001624-751695.reservation.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/FALL2/.fall2-spatial-spline-fit1-safe-boundary-bottom-tip-sdf-reinforce-v2-20260906-001624-751695.reservation.json",
+          "sha256": "d7c3576459813493ab35d86ac9e5befbe02bfb03cd800e480aa16f08692c6654",
+          "created_utc": "2026-09-06T00:16:24.751695Z",
+          "status": "reserved",
+          "destination": "animations/ressources/FALL2/runs/fall2-spatial-spline-fit1-safe-boundary-bottom-tip-sdf-reinforce-v2-20260906-001624-751695"
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/FALL2/runs/fall2-spatial-spline-fit1-safe-boundary-bottom-sdf-reinforce-v1-20260906-001432-834589",
+      "bytes": 21576004,
+      "files": 20,
+      "latest_mtime_ns": 1788653707919772700,
+      "inventory_sha256": "8c57f75bc16df1048d2487333dda470eedc10fc92d3d78df40a19568b4aa0c9c",
+      "bam_files": [],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active"
+      ],
+      "reasons": [
+        "active:animations/ressources/FALL2/.fall2-spatial-spline-fit1-safe-boundary-bottom-sdf-reinforce-v1-20260906-001432-834589.reservation.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/FALL2/.fall2-spatial-spline-fit1-safe-boundary-bottom-sdf-reinforce-v1-20260906-001432-834589.reservation.json",
+          "sha256": "3679f4d72bf2069daf9eafd320ca04e0fa029b35d8fa6bdc5998f129dbf3e00d",
+          "created_utc": "2026-09-06T00:14:32.834589Z",
+          "status": "reserved",
+          "destination": "animations/ressources/FALL2/runs/fall2-spatial-spline-fit1-safe-boundary-bottom-sdf-reinforce-v1-20260906-001432-834589"
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM2805A/runs/am2805a-apo8-x4-30fps-v2-spline-fit1-feather4-final-20260907",
+      "bytes": 18677788,
+      "files": 35,
+      "latest_mtime_ns": 1788817791452299700,
+      "inventory_sha256": "942b3936e7e8e723e6c0c8abe74610f50a692a5258ef3b4802fec20724d3469f",
+      "bam_files": [],
+      "hazards": [],
+      "classification": "historical-provenance-only-review",
+      "dependency_roles": [
+        "historical-retention"
+      ],
+      "reasons": [
+        "historical-retention:animations/packs-par-zone/ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-feather4-ingame-test-20260907/AR2805/manifest.json"
+      ],
+      "bam_duplicate_verification": []
+    },
+    {
+      "path": "animations/ressources/AM2805A/runs/am2805a-apo8-x4-30fps-v2-spline-fit1-feather1-contour-fix-20260908",
+      "bytes": 18660528,
+      "files": 35,
+      "latest_mtime_ns": 1788819517039219600,
+      "inventory_sha256": "368697e6a07df4a55b6edc942f3ca610c5fee58dc3abd77a0c999a48e010d55f",
+      "bam_files": [],
+      "hazards": [],
+      "classification": "historical-provenance-only-review",
+      "dependency_roles": [
+        "historical-retention"
+      ],
+      "reasons": [
+        "historical-retention:animations/packs-par-zone/ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-correctifs-occlusion-wed-20260908/AR2805/manifest.json",
+        "historical-retention:animations/packs-par-zone/ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-correctifs-wed-occlusion-final-20260908/AR2805/manifest.json"
+      ],
+      "bam_duplicate_verification": []
+    },
+    {
+      "path": "animations/ressources/AM3011A/runs/am3011a-inner-feather64x4-20260911",
+      "bytes": 15967031,
+      "files": 36,
+      "latest_mtime_ns": 1789161813032771800,
+      "inventory_sha256": "0bc095566f92a77925555e957af5a96f9957f791600fb37f96bcd094d625702e",
+      "bam_files": [],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active"
+      ],
+      "reasons": [
+        "active:animations/ressources/AM3011A/.am3011a-inner-feather64x4-20260911.reservation.json",
+        "active:animations/ressources/AM3011A/runs/am3011a-inner-feather64x4-20260911/03_runtime_pack/manifest.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/AM3011A/.am3011a-inner-feather64x4-20260911.reservation.json",
+          "sha256": "0e6f72d16c52a214d18ead6050d5e35bf0721ea7096886c49d6ad86f118dd650",
+          "created_utc": "2026-09-11T21:23:00.763234Z",
+          "status": "reserved",
+          "destination": "animations/ressources/AM3011A/runs/am3011a-inner-feather64x4-20260911"
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM3011A/runs/am3011a-canvas-feather256x4-top-left-right-bottom64x4-20260911",
+      "bytes": 15942474,
+      "files": 36,
+      "latest_mtime_ns": 1789162174028701800,
+      "inventory_sha256": "9230114117a9816b108c7d2afd3fd8490cdfeda048873180d8f66efb4d11e9a7",
+      "bam_files": [],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active"
+      ],
+      "reasons": [
+        "active:animations/ressources/AM3011A/.am3011a-canvas-feather256x4-top-left-right-bottom64x4-20260911.reservation.json",
+        "active:animations/ressources/AM3011A/runs/am3011a-canvas-feather256x4-top-left-right-bottom64x4-20260911/03_runtime_pack/manifest.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/AM3011A/.am3011a-canvas-feather256x4-top-left-right-bottom64x4-20260911.reservation.json",
+          "sha256": "487326e604d1a9a5adb29cea53fb732d2b5b96279689129fe4f48661a21f353e",
+          "created_utc": "2026-09-11T21:28:43.984950Z",
+          "status": "reserved",
+          "destination": "animations/ressources/AM3011A/runs/am3011a-canvas-feather256x4-top-left-right-bottom64x4-20260911"
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM3011A/runs/am3011a-inner-feather16x4-20260911",
+      "bytes": 15818760,
+      "files": 36,
+      "latest_mtime_ns": 1789160457319538500,
+      "inventory_sha256": "63219397e2dcc80ac93ada101fdddc8987f6636d930385e62120d0ebd068b8ff",
+      "bam_files": [],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active"
+      ],
+      "reasons": [
+        "active:animations/ressources/AM3011A/.am3011a-inner-feather16x4-20260911.reservation.json",
+        "active:animations/ressources/AM3011A/runs/am3011a-inner-feather16x4-20260911/03_runtime_pack/manifest.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/AM3011A/.am3011a-inner-feather16x4-20260911.reservation.json",
+          "sha256": "e8d4cd33f2f4add47d4b99f38bfb8610e4a6e10bef4354ca897de415eb69a4f2",
+          "created_utc": "2026-09-11T21:00:01.377102Z",
+          "status": "reserved",
+          "destination": "animations/ressources/AM3011A/runs/am3011a-inner-feather16x4-20260911"
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM2300A/runs/am2300a-cascade-seedvr2-7b-lab-x4-safe-spline8-6-gauss1p5-v1-20260906",
+      "bytes": 10109646,
+      "files": 32,
+      "latest_mtime_ns": 1788658178747155900,
+      "inventory_sha256": "122baf4924ed51233663f40c76e5d934d514115b244b268fc84ed42dcea99533",
+      "bam_files": [],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active"
+      ],
+      "reasons": [
+        "active:animations/ressources/AM2300A/.am2300a-cascade-seedvr2-7b-lab-x4-safe-spline8-6-gauss1p5-v1-20260906.reservation.json",
+        "active:animations/ressources/AM2300A/runs/am2300a-cascade-seedvr2-7b-lab-x4-safe-spline8-6-gauss1p5-v1-20260906/03_runtime_pack/manifest.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/AM2300A/.am2300a-cascade-seedvr2-7b-lab-x4-safe-spline8-6-gauss1p5-v1-20260906.reservation.json",
+          "sha256": "2b7976c3ad6557609d77ba6dc2f27793449320183802b4a3a8bf2ab514bd79e1",
+          "created_utc": "2026-09-06T01:27:24.040967Z",
+          "status": "reserved",
+          "destination": "animations/ressources/AM2300A/runs/am2300a-cascade-seedvr2-7b-lab-x4-safe-spline8-6-gauss1p5-v1-20260906"
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM3011A/runs/am3011a-canvas-feather256x4-top-left-right-20260911",
+      "bytes": 9532521,
+      "files": 26,
+      "latest_mtime_ns": 1789162045586573900,
+      "inventory_sha256": "c7432771f5cd4b195feaa4ed745cf53ea23ae1e68ee4443fe41d2c6727e85c35",
+      "bam_files": [],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active"
+      ],
+      "reasons": [
+        "active:animations/ressources/AM3011A/.am3011a-canvas-feather256x4-top-left-right-20260911.reservation.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/AM3011A/.am3011a-canvas-feather256x4-top-left-right-20260911.reservation.json",
+          "sha256": "4b304593433462df11f8a7f93b79d81e52653cde211672fa4753db736e48e709",
+          "created_utc": "2026-09-11T21:27:23.861759Z",
+          "status": "reserved",
+          "destination": "animations/ressources/AM3011A/runs/am3011a-canvas-feather256x4-top-left-right-20260911"
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AMWRPGT1/runs/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906",
+      "bytes": 7144037,
+      "files": 52,
+      "latest_mtime_ns": 1788721041920444200,
+      "inventory_sha256": "5e364d8735bd394ba22d5b0f5c21dea2d6288682681470a8657ddbb3b84c96a5",
+      "bam_files": [],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active",
+        "historical-retention"
+      ],
+      "reasons": [
+        "active:animations/ressources/AMWRPGT1/.amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906.reservation.json",
+        "active:animations/ressources/AMWRPGT1/runs/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906/03_runtime_pack/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906-split/AR3003/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906-split/AR3004/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906-split/AR3005/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906-split/AR3006/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906-split/AR3007/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906-split/AR3008/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906-split/AR3009/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906-split/AR3010/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906-split/AR3011/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906-split/AR3012/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906-split/AR3013/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906-split/AR3014/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906-split/AR3015/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906-split/AR3016/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906-split/AR3017/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906-split/AR3019/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906-split/AR3020/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906-split/manifest.json",
+        "historical-retention:animations/ressources/AMWRPGT1/runs/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906/03_runtime_pack/manifest.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/AMWRPGT1/.amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906.reservation.json",
+          "sha256": "6e7794dd729e4cbb9002078d39695847edc2d6be4e847998c9201fcdab5cf248",
+          "created_utc": "2026-09-06T18:56:55.656697Z",
+          "status": "reserved",
+          "destination": "animations/ressources/AMWRPGT1/runs/amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906"
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AMWRPGT1/runs/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906",
+      "bytes": 7119259,
+      "files": 52,
+      "latest_mtime_ns": 1788720703992419800,
+      "inventory_sha256": "7a07ccef713d72d6e0753c680447a9cd5921262b67378468bc3cdee95cbba53a",
+      "bam_files": [],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active",
+        "historical-retention"
+      ],
+      "reasons": [
+        "active:animations/ressources/AMWRPGT1/.amwrpgt1-spatial-spline-fit1-gauss1p5-20260906.reservation.json",
+        "active:animations/ressources/AMWRPGT1/runs/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906/03_runtime_pack/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906-split/AR3003/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906-split/AR3004/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906-split/AR3005/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906-split/AR3006/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906-split/AR3007/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906-split/AR3008/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906-split/AR3009/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906-split/AR3010/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906-split/AR3011/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906-split/AR3012/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906-split/AR3013/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906-split/AR3014/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906-split/AR3015/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906-split/AR3016/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906-split/AR3017/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906-split/AR3019/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906-split/AR3020/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906-split/manifest.json",
+        "historical-retention:animations/ressources/AMWRPGT1/runs/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906/03_runtime_pack/manifest.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/AMWRPGT1/.amwrpgt1-spatial-spline-fit1-gauss1p5-20260906.reservation.json",
+          "sha256": "a267e2492935a029d2b1d02163d6d9eefc2835b9fe1e789b5b9122abbb8cb67c",
+          "created_utc": "2026-09-06T18:51:24.816064Z",
+          "status": "reserved",
+          "destination": "animations/ressources/AMWRPGT1/runs/amwrpgt1-spatial-spline-fit1-gauss1p5-20260906"
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AMWRPGT1/runs/amwrpgt1-spatial-spline-fit1-20260906",
+      "bytes": 7078969,
+      "files": 52,
+      "latest_mtime_ns": 1788720365041854200,
+      "inventory_sha256": "7d28262e5a8cc0292e301d4ad72521d6adf3557df6ea74621f2adadd1dabb8c6",
+      "bam_files": [],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active",
+        "historical-retention"
+      ],
+      "reasons": [
+        "active:animations/ressources/AMWRPGT1/.amwrpgt1-spatial-spline-fit1-20260906.reservation.json",
+        "active:animations/ressources/AMWRPGT1/runs/amwrpgt1-spatial-spline-fit1-20260906/03_runtime_pack/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-20260906-split/AR3003/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-20260906-split/AR3004/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-20260906-split/AR3005/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-20260906-split/AR3006/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-20260906-split/AR3007/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-20260906-split/AR3008/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-20260906-split/AR3009/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-20260906-split/AR3010/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-20260906-split/AR3011/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-20260906-split/AR3012/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-20260906-split/AR3013/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-20260906-split/AR3014/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-20260906-split/AR3015/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-20260906-split/AR3016/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-20260906-split/AR3017/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-20260906-split/AR3019/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-20260906-split/AR3020/manifest.json",
+        "historical-retention:animations/packs-par-zone/amwrpgt1-spatial-spline-fit1-20260906-split/manifest.json",
+        "historical-retention:animations/ressources/AMWRPGT1/runs/amwrpgt1-spatial-spline-fit1-20260906/03_runtime_pack/manifest.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/AMWRPGT1/.amwrpgt1-spatial-spline-fit1-20260906.reservation.json",
+          "sha256": "bcbddd44c36e11831f31a8907da73d227a2f0dcdf694c3efc436a86b1497ddbb",
+          "created_utc": "2026-09-06T18:45:36.377861Z",
+          "status": "reserved",
+          "destination": "animations/ressources/AMWRPGT1/runs/amwrpgt1-spatial-spline-fit1-20260906"
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM2300A/runs/am2300a-cascade-seedvr2-7b-lab-x4-safe-spline8-6-v1-20260906",
+      "bytes": 5784617,
+      "files": 23,
+      "latest_mtime_ns": 1788657853631954200,
+      "inventory_sha256": "af7625879826c3c4e63348587c60fc257b06e134ec943344b21d4efe0e6d639f",
+      "bam_files": [],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active"
+      ],
+      "reasons": [
+        "active:animations/ressources/AM2300A/.am2300a-cascade-seedvr2-7b-lab-x4-safe-spline8-6-v1-20260906.reservation.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/AM2300A/.am2300a-cascade-seedvr2-7b-lab-x4-safe-spline8-6-v1-20260906.reservation.json",
+          "sha256": "c36cb22831c15ebc080883b3fdf40c0807e2ea22327f1a07120819726f678252",
+          "created_utc": "2026-09-06T01:24:10.757053Z",
+          "status": "reserved",
+          "destination": "animations/ressources/AM2300A/runs/am2300a-cascade-seedvr2-7b-lab-x4-safe-spline8-6-v1-20260906"
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM3011B/runs/am3011b-seedvr2-7b-int8-lab-x4-30fps-v2-opaque-dilate-20260911",
+      "bytes": 5245178,
+      "files": 73,
+      "latest_mtime_ns": 1789161288153422600,
+      "inventory_sha256": "2f8e2bc45988d6808d7ec5ff9d493d1a3a0cf3d2f17442198bdb3178852f1ea1",
+      "bam_files": [],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active"
+      ],
+      "reasons": [
+        "active:animations/ressources/AM3011B/.am3011b-seedvr2-7b-int8-lab-x4-30fps-v2-opaque-dilate-20260911.reservation.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/AM3011B/.am3011b-seedvr2-7b-int8-lab-x4-30fps-v2-opaque-dilate-20260911.reservation.json",
+          "sha256": "70d54a9ba23d1ad7421ad231347f2c55e1cd52092e0b0fc850a774c828c42504",
+          "created_utc": "2026-09-11T21:14:35.765302Z",
+          "status": "reserved",
+          "destination": "animations/ressources/AM3011B/runs/am3011b-seedvr2-7b-int8-lab-x4-30fps-v2-opaque-dilate-20260911"
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM3011B/runs/am3011b-xbr2x-xbr2x-x4-30fps-v2-opaque-dilate-20260911",
+      "bytes": 4340555,
+      "files": 73,
+      "latest_mtime_ns": 1789160836600548300,
+      "inventory_sha256": "2fdd7b66b206ef4ea0cfc6bf5714833aeb6df1caafe9dbc8b68beb8d5256c962",
+      "bam_files": [],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active"
+      ],
+      "reasons": [
+        "active:animations/ressources/AM3011B/.am3011b-xbr2x-xbr2x-x4-30fps-v2-opaque-dilate-20260911.reservation.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/AM3011B/.am3011b-xbr2x-xbr2x-x4-30fps-v2-opaque-dilate-20260911.reservation.json",
+          "sha256": "ba125f515225d468c989708ab5f4a6e452e608f57cad98d4cdfc2597cad64671",
+          "created_utc": "2026-09-11T21:07:09.975265Z",
+          "status": "reserved",
+          "destination": "animations/ressources/AM3011B/runs/am3011b-xbr2x-xbr2x-x4-30fps-v2-opaque-dilate-20260911"
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM3011B/runs/am3011b-seedvr2-7b-int8-lab-x4-compare-20260911",
+      "bytes": 3859136,
+      "files": 95,
+      "latest_mtime_ns": 1789161251972732200,
+      "inventory_sha256": "47168dc8ceeefb47080c1f27567b029deb06d93f2d42d3156c88e114f708ccbd",
+      "bam_files": [
+        "animations/ressources/AM3011B/runs/am3011b-seedvr2-7b-int8-lab-x4-compare-20260911/resources/AM3011B/00_source/AM3011B.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active"
+      ],
+      "reasons": [
+        "active:animations/ressources/AM3011B/.am3011b-seedvr2-7b-int8-lab-x4-compare-20260911.reservation.json",
+        "active:animations/ressources/AM3011B/runs/am3011b-seedvr2-7b-int8-lab-x4-30fps-v2-opaque-dilate-20260911/03_runtime_pack/manifest.json",
+        "active:animations/ressources/AM3011B/runs/am3011b-seedvr2-7b-int8-lab-x4-30fps-v2-opaque-dilate-20260911/manifest.json",
+        "active:animations/ressources/AM3011B/runs/am3011b-seedvr2-7b-int8-lab-x4-30fps-v2-opaque-dilate-20260911/request.json",
+        "active:animations/ressources/AM3011B/runs/am3011b-seedvr2-7b-int8-lab-x4-compare-20260911/03_runtime_pack/manifest.json",
+        "active:animations/ressources/AM3011B/runs/am3011b-seedvr2-7b-int8-lab-x4-compare-20260911/resources/AM3011B/01_frames_x1/manifest.json",
+        "active:animations/ressources/AM3011B/runs/am3011b-seedvr2-7b-int8-lab-x4-compare-20260911/resources/AM3011B/02_upscale_x4/manifest.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/AM3011B/.am3011b-seedvr2-7b-int8-lab-x4-compare-20260911.reservation.json",
+          "sha256": "6a8eb6ec6c663355fed63e23e229f6326bfa61c78115e49061defa81eb1692db",
+          "created_utc": "2026-09-11T21:13:54.251411Z",
+          "status": "reserved",
+          "destination": "animations/ressources/AM3011B/runs/am3011b-seedvr2-7b-int8-lab-x4-compare-20260911"
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM3011B/runs/am3011b-seedvr2-7b-int8-lab-x4-20260911",
+      "bytes": 3858960,
+      "files": 95,
+      "latest_mtime_ns": 1789160421807209600,
+      "inventory_sha256": "444217800e6cef0c25eec34ad79c51263236660e108fb412dbf8c850fb5b0c79",
+      "bam_files": [
+        "animations/ressources/AM3011B/runs/am3011b-seedvr2-7b-int8-lab-x4-20260911/resources/AM3011B/00_source/AM3011B.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active"
+      ],
+      "reasons": [
+        "active:animations/ressources/AM3011B/.am3011b-seedvr2-7b-int8-lab-x4-20260911.reservation.json",
+        "active:animations/ressources/AM3011B/runs/am3011b-seedvr2-7b-int8-lab-x4-20260911/03_runtime_pack/manifest.json",
+        "active:animations/ressources/AM3011B/runs/am3011b-seedvr2-7b-int8-lab-x4-20260911/resources/AM3011B/01_frames_x1/manifest.json",
+        "active:animations/ressources/AM3011B/runs/am3011b-seedvr2-7b-int8-lab-x4-20260911/resources/AM3011B/02_upscale_x4/manifest.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/AM3011B/.am3011b-seedvr2-7b-int8-lab-x4-20260911.reservation.json",
+          "sha256": "223722a1ae4981ffd465dc495995b38c92a5c7cbe13b42259233b1e81ac8626c",
+          "created_utc": "2026-09-11T20:59:34.254077Z",
+          "status": "reserved",
+          "destination": "animations/ressources/AM3011B/runs/am3011b-seedvr2-7b-int8-lab-x4-20260911"
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/AM3011B/runs/am3011b-xbr2x-xbr2x-x4-20260911",
+      "bytes": 2036200,
+      "files": 86,
+      "latest_mtime_ns": 1789160811901285100,
+      "inventory_sha256": "da814d4bd9a2a7c6311b838f3f90af26764a0533bf81585ecf503b18f40aca10",
+      "bam_files": [
+        "animations/ressources/AM3011B/runs/am3011b-xbr2x-xbr2x-x4-20260911/resources/AM3011B/00_source/AM3011B.bam"
+      ],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active"
+      ],
+      "reasons": [
+        "active:animations/ressources/AM3011B/.am3011b-xbr2x-xbr2x-x4-20260911.reservation.json",
+        "active:animations/ressources/AM3011B/runs/am3011b-xbr2x-xbr2x-x4-20260911/03_runtime_pack/manifest.json",
+        "active:animations/ressources/AM3011B/runs/am3011b-xbr2x-xbr2x-x4-20260911/resources/AM3011B/01_frames_x1/manifest.json",
+        "active:animations/ressources/AM3011B/runs/am3011b-xbr2x-xbr2x-x4-20260911/resources/AM3011B/02_upscale_xbr2x_xbr2x_x4/manifest.json",
+        "active:animations/ressources/AM3011B/runs/am3011b-xbr2x-xbr2x-x4-30fps-v2-opaque-dilate-20260911/03_runtime_pack/manifest.json",
+        "active:animations/ressources/AM3011B/runs/am3011b-xbr2x-xbr2x-x4-30fps-v2-opaque-dilate-20260911/manifest.json",
+        "active:animations/ressources/AM3011B/runs/am3011b-xbr2x-xbr2x-x4-30fps-v2-opaque-dilate-20260911/request.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/AM3011B/.am3011b-xbr2x-xbr2x-x4-20260911.reservation.json",
+          "sha256": "19616e27eb4601a6e606f101ba9e420cea826ede7e99b1020fd564da3610d4c2",
+          "created_utc": "2026-09-11T21:06:49.573692Z",
+          "status": "reserved",
+          "destination": "animations/ressources/AM3011B/runs/am3011b-xbr2x-xbr2x-x4-20260911"
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/FALL1A/runs/fall1a-topmask-reviewed-v1-finalization-20260906-001500",
+      "bytes": 913,
+      "files": 1,
+      "latest_mtime_ns": 1788646452430534600,
+      "inventory_sha256": "14177d4f92ec2fe33b7d2c6f6428ec9f27a8104b0892a7e77527948eb5f66b80",
+      "bam_files": [],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active"
+      ],
+      "reasons": [
+        "active:animations/ressources/FALL1A/.fall1a-topmask-reviewed-v1-finalization-20260906-001500.reservation.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/FALL1A/.fall1a-topmask-reviewed-v1-finalization-20260906-001500.reservation.json",
+          "sha256": "dd5a89f28e346dd3a5b7d3f162e3146360063815390d0d63b41fe3a55f2e2cb5",
+          "created_utc": "2026-09-05T22:14:12.359588Z",
+          "status": "reserved",
+          "destination": "animations/ressources/FALL1A/runs/fall1a-topmask-reviewed-v1-finalization-20260906-001500"
+        }
+      ]
+    },
+    {
+      "path": "animations/ressources/FALL1A/runs/fall1a-topmask-reviewed-v1-ar2300-finalization-20260906-001700",
+      "bytes": 875,
+      "files": 1,
+      "latest_mtime_ns": 1788646507870621100,
+      "inventory_sha256": "006b081cf3c10798860a1cf7ae84b4e15f369248f493529c6ed51e03f83ac29a",
+      "bam_files": [],
+      "hazards": [],
+      "classification": "unused-unvalidated-reservation-review",
+      "dependency_roles": [
+        "active"
+      ],
+      "reasons": [
+        "active:animations/ressources/FALL1A/.fall1a-topmask-reviewed-v1-ar2300-finalization-20260906-001700.reservation.json"
+      ],
+      "bam_duplicate_verification": [],
+      "review_reason": "Completed run with old reservation marker(s); marker is a workflow claim, not evidence of a running process. Resolve reservations/dependencies before deletion.",
+      "reservation_markers": [
+        {
+          "path": "animations/ressources/FALL1A/.fall1a-topmask-reviewed-v1-ar2300-finalization-20260906-001700.reservation.json",
+          "sha256": "0810b4bd92256420e118bfa9c7cab19c03be43b199850ebb54628327f5749bb8",
+          "created_utc": "2026-09-05T22:15:07.802728Z",
+          "status": "reserved",
+          "destination": "animations/ressources/FALL1A/runs/fall1a-topmask-reviewed-v1-ar2300-finalization-20260906-001700"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "qa_selection_manifest_contracts": 1265,
+    "qa_selection_manifest_errors": [],
+    "installed_areas": 234,
+    "installation_status": "installed = lock = registry",
+    "candidate_bam_duplicates_checked": 54
+  },
+  "deletion_performed": false,
+  "QA_changed": false,
+  "installation_changed": false,
+  "release_changed": false,
+  "cleanup_requirements": [
+    "Recheck authority hashes and candidate inventory fingerprints immediately before deletion",
+    "Retain immutable diagnostic metadata; canonical source.bam duplicates are verified",
+    "Do not delete reservation markers or historical proof sources as part of the automatic candidate list"
+  ]
+}

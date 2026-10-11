@@ -1,0 +1,155 @@
+{
+  "schema": "bg2-upscale-animation-frames-x1-v1",
+  "created_utc": "2026-09-02T22:06:12.087956+00:00",
+  "source": "G:/AI/BG2_Upscale/animations/ressources/FPIT1S/runs/fpit1s-xbr2x-nearest2-x4-20260903/resources/FPIT1S/00_source/FPIT1S.bam",
+  "source_sha256": "a8f0e62d1776f8282fbddf5a0fb425c665e2e08433452880b5ec6607d6c54af7",
+  "format": "BAM V1",
+  "frame_count": 6,
+  "source_transparent_index": 0,
+  "aligned_canvas_size": [
+    23,
+    20
+  ],
+  "anchor_bounds": {
+    "left": -12,
+    "top": -9,
+    "right": 11,
+    "bottom": 11
+  },
+  "geometry_mode": "per-frame",
+  "frames": [
+    {
+      "frame": 0,
+      "file": "frame_000.png",
+      "source_size": [
+        23,
+        20
+      ],
+      "centre": [
+        12,
+        9
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "edc398b6b4b6b0902a67c803c0df7e78094793cb8ab5283c021fe172d81dca0a",
+      "alpha_sha256": "5f327ea50b0633d8e6d00b4ab098186f184d7b12ade2ed6516c216907d476f8e",
+      "rgba_sha256": "3899dcc1d916bb6c7f1e8fd0a4a75f37a73d87b5ef55419075c9a10b4275d16e"
+    },
+    {
+      "frame": 1,
+      "file": "frame_001.png",
+      "source_size": [
+        23,
+        19
+      ],
+      "centre": [
+        12,
+        8
+      ],
+      "canvas_offset": [
+        0,
+        1
+      ],
+      "rgb_sha256": "ca23e526d8026c724d0ea98ff22285a4434be234abd578d82842720e348f0837",
+      "alpha_sha256": "64a9b702da840beb511df5b810c745f859d842ad9c2278433850d979c202ccec",
+      "rgba_sha256": "8e367cb7dda2c5aabfff300b07c2686aef1d6e2d5d8930d5c3f5588b46ba3b6a"
+    },
+    {
+      "frame": 2,
+      "file": "frame_002.png",
+      "source_size": [
+        23,
+        18
+      ],
+      "centre": [
+        12,
+        7
+      ],
+      "canvas_offset": [
+        0,
+        2
+      ],
+      "rgb_sha256": "39929d20813addf761ec8f04c11e989a505a2c4e30451a826cc921978a5f160f",
+      "alpha_sha256": "6d0829545d332d03ee4536743db1a18d423c84d5cb049dcdd706e492c747afa3",
+      "rgba_sha256": "d9ffd4a46bd9db3327b83053539f04045125ae43612cf62834cf06482b8acb52"
+    },
+    {
+      "frame": 3,
+      "file": "frame_003.png",
+      "source_size": [
+        23,
+        19
+      ],
+      "centre": [
+        12,
+        8
+      ],
+      "canvas_offset": [
+        0,
+        1
+      ],
+      "rgb_sha256": "ee2e40dfc0b0f40b0cba8528380145b94791a1324930d20f587e542abba70c98",
+      "alpha_sha256": "aea746ac380fe287c75b0aee672463ac145ee1ca7a03e336e173084fc62af614",
+      "rgba_sha256": "2024d3b12ec0c92d236a749896fb0c5f69c77746e002fa7640963618acdca8c2"
+    },
+    {
+      "frame": 4,
+      "file": "frame_004.png",
+      "source_size": [
+        23,
+        20
+      ],
+      "centre": [
+        12,
+        9
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "0bbed0e93e8ef04a995827f7a79651d599e8ee9c4924542c5d82b72cb56ca0c8",
+      "alpha_sha256": "bc0783210049c87e70b8b282b2459f2a14610f840912e9348582eb7c6f8db459",
+      "rgba_sha256": "f08560203b17b9f407321c80c5f47f80ce5c934d363fead651b039060f963eff"
+    },
+    {
+      "frame": 5,
+      "file": "frame_005.png",
+      "source_size": [
+        23,
+        19
+      ],
+      "centre": [
+        12,
+        8
+      ],
+      "canvas_offset": [
+        0,
+        1
+      ],
+      "rgb_sha256": "2bb2a9ed2e8d95667e0525b31439d7e30b1981c8d5b2f59e5bac26ab351b839e",
+      "alpha_sha256": "50d7d9fcaf0298983b6de551296fe1f562435d07c66b2c3e66ecb4b13b74fb1a",
+      "rgba_sha256": "936f8dd3e9d727378f2ae9a2427989c470a9dfc98f5c6e24b4e238722188fe02"
+    }
+  ],
+  "cycles": [
+    {
+      "cycle": 0,
+      "lookup_start": 0,
+      "frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    }
+  ],
+  "notes": [
+    "Use rgb/ as input to an image-only interpolation model.",
+    "Keep alpha/ separate; rgba/ is the authoritative source export.",
+    "The BAM format does not store frames-per-second; preserve cycle duration at reconstruction."
+  ]
+}

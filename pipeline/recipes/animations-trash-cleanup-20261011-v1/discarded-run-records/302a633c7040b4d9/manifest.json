@@ -1,0 +1,71 @@
+{
+  "schema": "bg2-upscale-area-animation-run-v1",
+  "status": "completed",
+  "created_utc": "2026-09-21T21:24:51.746625+00:00",
+  "updated_utc": "2026-09-21T21:24:57.370707+00:00",
+  "run": "am1516pt-reboutcx-x4-20260921",
+  "request_signature": "0974b16e5c3a7190d89cb5d8c43d906c247ef6cec25aa98d9862785d032121a8",
+  "request": {
+    "requested_resrefs": [
+      "AM1516PT"
+    ],
+    "requested_areas": [],
+    "resolved_resrefs": [
+      "AM1516PT"
+    ],
+    "sources": {
+      "AM1516PT": "3a4415bd9ee62402ef9741139991ef94a3c01b1be0a1dfbe38a51ef1f80608de"
+    },
+    "scale": 4,
+    "padding_x1": 32,
+    "seed": null,
+    "workflow_sha256": "30dec619a4c1a3ecde076c0926a5ed8ee29d5f2ca8b4eb89a75d3b5f7811b61e"
+  },
+  "occurrences": [
+    {
+      "area_id": "AR1516",
+      "occurrence_index": "12",
+      "instance_name": "AM1516PT",
+      "x": "2026",
+      "y": "1411",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001101",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM1516PT",
+      "resource_kind": "BAM"
+    }
+  ],
+  "resources": [
+    {
+      "resref": "AM1516PT",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/AM1516PT/source.bam",
+      "source_sha256": "3a4415bd9ee62402ef9741139991ef94a3c01b1be0a1dfbe38a51ef1f80608de",
+      "inventory": {
+        "frames": 6,
+        "max_frame_width": 66,
+        "max_frame_height": 100,
+        "occurrences": 1,
+        "areas": [
+          "AR1516"
+        ]
+      },
+      "source_copy": "resources/AM1516PT/00_source/AM1516PT.bam",
+      "frames_x1": "resources/AM1516PT/01_frames_x1",
+      "frame_count": 6,
+      "aligned_canvas_size_x1": [
+        66,
+        100
+      ],
+      "geometry_mode": "uniform",
+      "frame_manifest_sha256": "6812657a6d13a1c4254f9dca04845332c30f4519f00a8628d5229922979c7359",
+      "upscale": "resources/AM1516PT/02_upscale_reboutcx_x4",
+      "upscale_manifest_sha256": "e66dc163d8b3736df5d45430f47a6d52639eb03466021f19c5b268ac84d65c14",
+      "preview": null,
+      "completed_utc": "2026-09-21T21:24:57.370707+00:00"
+    }
+  ],
+  "completed_utc": "2026-09-21T21:24:57.370707+00:00"
+}

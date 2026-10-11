@@ -1,0 +1,155 @@
+{
+  "schema": "bg2-upscale-animation-frames-x1-v1",
+  "created_utc": "2026-09-21T21:24:52.050714+00:00",
+  "source": "G:/AI/BG2_Upscale/animations/ressources/AM1516PT/runs/am1516pt-reboutcx-x4-20260921/resources/AM1516PT/00_source/AM1516PT.bam",
+  "source_sha256": "3a4415bd9ee62402ef9741139991ef94a3c01b1be0a1dfbe38a51ef1f80608de",
+  "format": "BAM V1",
+  "frame_count": 6,
+  "source_transparent_index": 0,
+  "aligned_canvas_size": [
+    66,
+    100
+  ],
+  "anchor_bounds": {
+    "left": -34,
+    "top": -101,
+    "right": 32,
+    "bottom": -1
+  },
+  "geometry_mode": "uniform",
+  "frames": [
+    {
+      "frame": 0,
+      "file": "frame_000.png",
+      "source_size": [
+        66,
+        100
+      ],
+      "centre": [
+        34,
+        101
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "d3d240eec1e4e129a46d9a80cbc93bb585b198e422fd952d48b99b17407e2e19",
+      "alpha_sha256": "63b5823903f144e69a6b02bad40bab19aa7bf2604a64417aba8fa4d85658193a",
+      "rgba_sha256": "39e6c73c1dcaff2db9e0b760eb887c5d20cbb6205f773581ddaef4a9b188e4c0"
+    },
+    {
+      "frame": 1,
+      "file": "frame_001.png",
+      "source_size": [
+        66,
+        100
+      ],
+      "centre": [
+        34,
+        101
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "63b68595db697c30aebcd6aa5abb54fe1ff222174f06a469893fdc163421fcfe",
+      "alpha_sha256": "08bd871c7efbf782d50bf92328c3c10f49649ee07ac028bb333e955ccce3b7a4",
+      "rgba_sha256": "1ec5c81f3bb719962fe543261c10638cc70e6df27426dc4ea104a8fffaf7a0ce"
+    },
+    {
+      "frame": 2,
+      "file": "frame_002.png",
+      "source_size": [
+        66,
+        100
+      ],
+      "centre": [
+        34,
+        101
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "eac2b100d06e82bcf0ef8f46ac025f47631de55590866d402a51f6f9a9ad0832",
+      "alpha_sha256": "63b5823903f144e69a6b02bad40bab19aa7bf2604a64417aba8fa4d85658193a",
+      "rgba_sha256": "28a34c9f51270e0fe20ac263a23a8475457485c09433875bb16016fc3cb70129"
+    },
+    {
+      "frame": 3,
+      "file": "frame_003.png",
+      "source_size": [
+        66,
+        100
+      ],
+      "centre": [
+        34,
+        101
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "133e06f0ba6bd95649588e5395dfcc21fa8f652bbc9191b507c10f7335908c87",
+      "alpha_sha256": "86395c1a53ea3501d08a50aa6c383bddfc0b5005319c6ba38351aaac0d5cbc52",
+      "rgba_sha256": "305ff93fcefb98ee82d1571b95ebab0f35a2890cdccaab063fc8c8141e256125"
+    },
+    {
+      "frame": 4,
+      "file": "frame_004.png",
+      "source_size": [
+        66,
+        100
+      ],
+      "centre": [
+        34,
+        101
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "ee8bc0b9a6271b82f2473454ed9ef5615ae8aa545a786206dc39476d78cfb038",
+      "alpha_sha256": "48847c485376f0363c9a62bdd8ca5e0c593d02094d991afc5aec65b30c13309a",
+      "rgba_sha256": "b29f675bb739249387b3c266ac946237cdca6eb73981bc2e9324d855aa7a8533"
+    },
+    {
+      "frame": 5,
+      "file": "frame_005.png",
+      "source_size": [
+        66,
+        100
+      ],
+      "centre": [
+        34,
+        101
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "c37f51484db438f438d66e85b93856381a9ab559c9b2e83909b1d5e6db674fd8",
+      "alpha_sha256": "08bd871c7efbf782d50bf92328c3c10f49649ee07ac028bb333e955ccce3b7a4",
+      "rgba_sha256": "a81546a2647f2f2aba4783513bf809f68f73c17af4b911a975b19f933c8344ab"
+    }
+  ],
+  "cycles": [
+    {
+      "cycle": 0,
+      "lookup_start": 0,
+      "frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    }
+  ],
+  "notes": [
+    "Use rgb/ as input to an image-only interpolation model.",
+    "Keep alpha/ separate; rgba/ is the authoritative source export.",
+    "The BAM format does not store frames-per-second; preserve cycle duration at reconstruction."
+  ]
+}

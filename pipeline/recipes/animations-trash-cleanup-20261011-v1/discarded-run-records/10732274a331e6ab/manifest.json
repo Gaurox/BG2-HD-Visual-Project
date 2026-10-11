@@ -1,0 +1,189 @@
+{
+  "schema": "bg2-upscale-area-animation-run-v1",
+  "status": "completed",
+  "created_utc": "2026-09-07T21:42:54.684673+00:00",
+  "updated_utc": "2026-09-07T21:43:45.120552+00:00",
+  "run": "ar2804-treelife-spatial-seedvr2-7b-lab-x4-20260907",
+  "request_signature": "fcb982258cc4126250031b171d5aae62ccd0f906c9712020b66ce8381fbbcb2f",
+  "request": {
+    "requested_resrefs": [
+      "AM2805A",
+      "AM2805B",
+      "AM2805C"
+    ],
+    "requested_areas": [],
+    "resolved_resrefs": [
+      "AM2805A",
+      "AM2805B",
+      "AM2805C"
+    ],
+    "sources": {
+      "AM2805A": "2b9825686913b15a81afd560fa3d97abbc3930b421cd9ac8e8d5b83baf19ec65",
+      "AM2805B": "d28c6887e5409cc72249299f6badabb9e6e5133bb1896383e64fc91f02e60e86",
+      "AM2805C": "f1b9ea14d9b3a9c3476aeb64cba1f7ed5950f89fd57035d3245e93977814671b"
+    },
+    "scale": 4,
+    "padding_x1": 32,
+    "workflow_sha256": "30dec619a4c1a3ecde076c0926a5ed8ee29d5f2ca8b4eb89a75d3b5f7811b61e"
+  },
+  "occurrences": [
+    {
+      "area_id": "AR2804",
+      "occurrence_index": "0",
+      "instance_name": "AM2805A",
+      "x": "240",
+      "y": "614",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001141",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM2805A",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "AR2805",
+      "occurrence_index": "0",
+      "instance_name": "AM2805A",
+      "x": "240",
+      "y": "614",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001141",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM2805A",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "AR2804",
+      "occurrence_index": "1",
+      "instance_name": "AM2805B",
+      "x": "483",
+      "y": "368",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001151",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM2805B",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "AR2804",
+      "occurrence_index": "2",
+      "instance_name": "AM2805B",
+      "x": "483",
+      "y": "368",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001000",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM2805B",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "AR2804",
+      "occurrence_index": "3",
+      "instance_name": "AM2805C",
+      "x": "483",
+      "y": "553",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001151",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM2805C",
+      "resource_kind": "BAM"
+    }
+  ],
+  "resources": [
+    {
+      "resref": "AM2805A",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/AM2805A/source.bam",
+      "source_sha256": "2b9825686913b15a81afd560fa3d97abbc3930b421cd9ac8e8d5b83baf19ec65",
+      "inventory": {
+        "frames": 7,
+        "max_frame_width": 93,
+        "max_frame_height": 104,
+        "occurrences": 2,
+        "areas": [
+          "AR2804",
+          "AR2805"
+        ]
+      },
+      "source_copy": "resources/AM2805A/00_source/AM2805A.bam",
+      "frames_x1": "resources/AM2805A/01_frames_x1",
+      "frame_count": 7,
+      "aligned_canvas_size_x1": [
+        93,
+        104
+      ],
+      "geometry_mode": "uniform",
+      "frame_manifest_sha256": "24214377944e375e0c770a568d029c4ea1ef5ae2f1b0b1dd898633fd88551c42",
+      "upscale": "resources/AM2805A/02_upscale_x4",
+      "upscale_manifest_sha256": "44df395046b60ff774d513cb357349d5b7981555b514694888bd699d3ea6726a",
+      "preview": "resources/AM2805A/02_upscale_x4/preview/animation-x4-contact-sheet.png",
+      "completed_utc": "2026-09-07T21:43:10.278001+00:00"
+    },
+    {
+      "resref": "AM2805B",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/AM2805B/source.bam",
+      "source_sha256": "d28c6887e5409cc72249299f6badabb9e6e5133bb1896383e64fc91f02e60e86",
+      "inventory": {
+        "frames": 7,
+        "max_frame_width": 186,
+        "max_frame_height": 184,
+        "occurrences": 2,
+        "areas": [
+          "AR2804"
+        ]
+      },
+      "source_copy": "resources/AM2805B/00_source/AM2805B.bam",
+      "frames_x1": "resources/AM2805B/01_frames_x1",
+      "frame_count": 7,
+      "aligned_canvas_size_x1": [
+        186,
+        184
+      ],
+      "geometry_mode": "uniform",
+      "frame_manifest_sha256": "ef032a3f34929901ac1365dd730c81f99acd150211b21c224b70395fe8f78545",
+      "upscale": "resources/AM2805B/02_upscale_x4",
+      "upscale_manifest_sha256": "c2845b5edc5c2ecfb03e3f34862889c74347b0b9a005e20e075592daef6116b4",
+      "preview": "resources/AM2805B/02_upscale_x4/preview/animation-x4-contact-sheet.png",
+      "completed_utc": "2026-09-07T21:43:27.330510+00:00"
+    },
+    {
+      "resref": "AM2805C",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/AM2805C/source.bam",
+      "source_sha256": "f1b9ea14d9b3a9c3476aeb64cba1f7ed5950f89fd57035d3245e93977814671b",
+      "inventory": {
+        "frames": 7,
+        "max_frame_width": 224,
+        "max_frame_height": 182,
+        "occurrences": 1,
+        "areas": [
+          "AR2804"
+        ]
+      },
+      "source_copy": "resources/AM2805C/00_source/AM2805C.bam",
+      "frames_x1": "resources/AM2805C/01_frames_x1",
+      "frame_count": 7,
+      "aligned_canvas_size_x1": [
+        224,
+        182
+      ],
+      "geometry_mode": "uniform",
+      "frame_manifest_sha256": "6a773eb8c3a9f1cff1cdb7fbaea92d39a1b52e5d57a64b5f1271ca7918c30812",
+      "upscale": "resources/AM2805C/02_upscale_x4",
+      "upscale_manifest_sha256": "1aa1a574d19536d38f8c3d7df820e59e485d88d767d60fe2f0b84edf9eabad4b",
+      "preview": "resources/AM2805C/02_upscale_x4/preview/animation-x4-contact-sheet.png",
+      "completed_utc": "2026-09-07T21:43:45.119553+00:00"
+    }
+  ],
+  "completed_utc": "2026-09-07T21:43:45.120552+00:00"
+}

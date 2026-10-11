@@ -1,0 +1,140 @@
+{
+  "schema": "bg2-upscale-animation-frames-x1-v1",
+  "created_utc": "2026-09-21T22:33:11.657954+00:00",
+  "source": "G:/AI/BG2_Upscale/animations/ressources/AM6200F/runs/am6200f-reboutcx-x4-20260922/resources/AM6200F/00_source/AM6200F.bam",
+  "source_sha256": "5ed2bb00e183aa646b70d4aec052722a76e4ffb9279fdf1405824b818c8751c6",
+  "format": "BAM V1",
+  "frame_count": 5,
+  "source_transparent_index": 0,
+  "aligned_canvas_size": [
+    94,
+    87
+  ],
+  "anchor_bounds": {
+    "left": -44,
+    "top": -45,
+    "right": 50,
+    "bottom": 42
+  },
+  "geometry_mode": "per-frame",
+  "frames": [
+    {
+      "frame": 0,
+      "file": "frame_000.png",
+      "source_size": [
+        94,
+        86
+      ],
+      "centre": [
+        44,
+        45
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "53ba72f776a3aa0a625f63c55c923716054ad4e5baa75bebd6d2dbd6aec6da4d",
+      "alpha_sha256": "5c28534e5b6d55d2e20a976474056347bfda837e3254a7d66f51475c410cc381",
+      "rgba_sha256": "e67ac0b4728b10594b55ce6ffb5efd57b261b3526075c80b57f7873bf7a262c2"
+    },
+    {
+      "frame": 1,
+      "file": "frame_001.png",
+      "source_size": [
+        90,
+        80
+      ],
+      "centre": [
+        44,
+        38
+      ],
+      "canvas_offset": [
+        0,
+        7
+      ],
+      "rgb_sha256": "218b7c05f8570fb21ef019dbbdbb46eb9a624471858e6acc8f34aef66ea7e4f6",
+      "alpha_sha256": "6ed31a9e53c47a825246e8e8e8db4fb5742c8318c8b5ac1d2dfec677833250ae",
+      "rgba_sha256": "979116827b5ac8e922f44b7df9442345c338771c98c24f19bc5785d6a1221044"
+    },
+    {
+      "frame": 2,
+      "file": "frame_002.png",
+      "source_size": [
+        88,
+        81
+      ],
+      "centre": [
+        44,
+        41
+      ],
+      "canvas_offset": [
+        0,
+        4
+      ],
+      "rgb_sha256": "4e951c4b8b6dc0d7a1b5fbdf12bd37826ce97df45845ce1a315b0c04aefe04a4",
+      "alpha_sha256": "0ff85c7b27a4824055ad633229a3fb9a4fac2ca1129c3e6b2c893547fcb3a404",
+      "rgba_sha256": "718a034bba8b73ea3d7e0d9fd94504ff9a4196b79ca6efe6bc5f900ad0d7a7ba"
+    },
+    {
+      "frame": 3,
+      "file": "frame_003.png",
+      "source_size": [
+        87,
+        84
+      ],
+      "centre": [
+        44,
+        43
+      ],
+      "canvas_offset": [
+        0,
+        2
+      ],
+      "rgb_sha256": "a3f75d75aef291a4bfb97e56038adea07d995350bc874d1ee4858b608c1cfca3",
+      "alpha_sha256": "6587caee5616c931265d2bd7155b1894de2f7b8201419558db3932110f976cdc",
+      "rgba_sha256": "e9713f1e6638c537b5caa455faf3eeba9829cbff3969df9acd30ef32f79e2586"
+    },
+    {
+      "frame": 4,
+      "file": "frame_004.png",
+      "source_size": [
+        91,
+        82
+      ],
+      "centre": [
+        44,
+        40
+      ],
+      "canvas_offset": [
+        0,
+        5
+      ],
+      "rgb_sha256": "8aaca9d67ded595cb363f7fd8865919b57fe4f6e5ca16f3c74e7545fc52f36b0",
+      "alpha_sha256": "2509883ea2d748723ca7ca7b3850563616dbca38c4bbb2ea1b10988829dba7c4",
+      "rgba_sha256": "bea5b573384fed84c412f31e01d98d326a56e23ca638436db2d7eb848312c471"
+    }
+  ],
+  "cycles": [
+    {
+      "cycle": 0,
+      "lookup_start": 0,
+      "frame_indices": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        4,
+        4
+      ]
+    }
+  ],
+  "notes": [
+    "Use rgb/ as input to an image-only interpolation model.",
+    "Keep alpha/ separate; rgba/ is the authoritative source export.",
+    "The BAM format does not store frames-per-second; preserve cycle duration at reconstruction."
+  ]
+}

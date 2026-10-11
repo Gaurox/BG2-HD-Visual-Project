@@ -1,0 +1,141 @@
+{
+  "schema": "bg2-upscale-area-animation-run-v1",
+  "status": "completed",
+  "created_utc": "2026-09-22T19:09:24.436305+00:00",
+  "updated_utc": "2026-09-22T19:09:54.877680+00:00",
+  "run": "am5201b-seedvr7b-lab-x4-20260922",
+  "request_signature": "2aa7f8eb006d4fbfdcf5a824bf4bec2a17b9e53931bad8630bb6de7e57264357",
+  "request": {
+    "requested_resrefs": [
+      "AM5201B"
+    ],
+    "requested_areas": [],
+    "resolved_resrefs": [
+      "AM5201B"
+    ],
+    "sources": {
+      "AM5201B": "51d2f1a1cbdc3b2cfc112af6433d57375a10c6042632301e120f125f638f74c6"
+    },
+    "scale": 4,
+    "padding_x1": 32,
+    "seed": null,
+    "workflow_sha256": "30dec619a4c1a3ecde076c0926a5ed8ee29d5f2ca8b4eb89a75d3b5f7811b61e"
+  },
+  "occurrences": [
+    {
+      "area_id": "AR5201",
+      "occurrence_index": "0",
+      "instance_name": "AM5201B",
+      "x": "289",
+      "y": "2174",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001083",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM5201B",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "AR5201",
+      "occurrence_index": "1",
+      "instance_name": "AM5201B",
+      "x": "512",
+      "y": "2584",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001083",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM5201B",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "AR5201",
+      "occurrence_index": "2",
+      "instance_name": "AM5201B",
+      "x": "791",
+      "y": "2315",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001083",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM5201B",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "AR5201",
+      "occurrence_index": "3",
+      "instance_name": "AM5201B",
+      "x": "936",
+      "y": "2796",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001083",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM5201B",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "AR5201",
+      "occurrence_index": "4",
+      "instance_name": "AM5201B",
+      "x": "1204",
+      "y": "2517",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001083",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM5201B",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "AR5201",
+      "occurrence_index": "5",
+      "instance_name": "AM5201B",
+      "x": "1568",
+      "y": "2825",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001083",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "AM5201B",
+      "resource_kind": "BAM"
+    }
+  ],
+  "resources": [
+    {
+      "resref": "AM5201B",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/AM5201B/source.bam",
+      "source_sha256": "51d2f1a1cbdc3b2cfc112af6433d57375a10c6042632301e120f125f638f74c6",
+      "inventory": {
+        "frames": 14,
+        "max_frame_width": 106,
+        "max_frame_height": 122,
+        "occurrences": 6,
+        "areas": [
+          "AR5201"
+        ]
+      },
+      "source_copy": "resources/AM5201B/00_source/AM5201B.bam",
+      "frames_x1": "resources/AM5201B/01_frames_x1",
+      "frame_count": 14,
+      "aligned_canvas_size_x1": [
+        111,
+        123
+      ],
+      "geometry_mode": "per-frame",
+      "frame_manifest_sha256": "89c41dc9035edfc0ab976c37a7e7bc360d2c7ec52cca7349ace3a9b3451eaa4a",
+      "upscale": "resources/AM5201B/02_upscale_x4",
+      "upscale_manifest_sha256": "d6c7118fda2892b9a5968efa8dd35db7ddc9dbc70b374b04f268101e62d5ac21",
+      "preview": "resources/AM5201B/02_upscale_x4/preview/animation-x4-contact-sheet.png",
+      "completed_utc": "2026-09-22T19:09:54.876679+00:00"
+    }
+  ],
+  "completed_utc": "2026-09-22T19:09:54.877680+00:00"
+}

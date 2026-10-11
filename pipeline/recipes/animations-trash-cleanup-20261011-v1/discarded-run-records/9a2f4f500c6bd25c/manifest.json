@@ -1,0 +1,71 @@
+{
+  "schema": "bg2-upscale-area-animation-run-v1",
+  "status": "completed",
+  "created_utc": "2026-09-21T21:03:34.065274+00:00",
+  "updated_utc": "2026-09-21T21:04:03.728781+00:00",
+  "run": "fire-3gr-seedvr7b-lab-x4-20260921",
+  "request_signature": "27bade7acb6dad11f6f789272c95aa6b7d1e7f4304b469b1f5217faa0ca185c2",
+  "request": {
+    "requested_resrefs": [
+      "FIRE_3GR"
+    ],
+    "requested_areas": [],
+    "resolved_resrefs": [
+      "FIRE_3GR"
+    ],
+    "sources": {
+      "FIRE_3GR": "0306d92d985c51712b823acad236ae612ff81fbbd6e00f56d74a0beeb7fa4d16"
+    },
+    "scale": 4,
+    "padding_x1": 32,
+    "seed": null,
+    "workflow_sha256": "30dec619a4c1a3ecde076c0926a5ed8ee29d5f2ca8b4eb89a75d3b5f7811b61e"
+  },
+  "occurrences": [
+    {
+      "area_id": "AR0203",
+      "occurrence_index": "0",
+      "instance_name": "FIRE_3GR",
+      "x": "272",
+      "y": "159",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001043",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "FIRE_3GR",
+      "resource_kind": "BAM"
+    }
+  ],
+  "resources": [
+    {
+      "resref": "FIRE_3GR",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/FIRE_3GR/source.bam",
+      "source_sha256": "0306d92d985c51712b823acad236ae612ff81fbbd6e00f56d74a0beeb7fa4d16",
+      "inventory": {
+        "frames": 14,
+        "max_frame_width": 30,
+        "max_frame_height": 40,
+        "occurrences": 1,
+        "areas": [
+          "AR0203"
+        ]
+      },
+      "source_copy": "resources/FIRE_3GR/00_source/FIRE_3GR.bam",
+      "frames_x1": "resources/FIRE_3GR/01_frames_x1",
+      "frame_count": 14,
+      "aligned_canvas_size_x1": [
+        30,
+        40
+      ],
+      "geometry_mode": "uniform",
+      "frame_manifest_sha256": "6140998072716e8ea18ab3f1655c2f002f1e54971f91ed4e25af86e9b5637da8",
+      "upscale": "resources/FIRE_3GR/02_upscale_x4",
+      "upscale_manifest_sha256": "0195681d796ead30dc9623f6d18f5f12b2798790ff62b4456076cad436f1daa5",
+      "preview": "resources/FIRE_3GR/02_upscale_x4/preview/animation-x4-contact-sheet.png",
+      "completed_utc": "2026-09-21T21:04:03.728281+00:00"
+    }
+  ],
+  "completed_utc": "2026-09-21T21:04:03.728781+00:00"
+}

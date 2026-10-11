@@ -31,13 +31,14 @@ Runs, packs, captures, backups et présence dans le jeu ne prouvent aucun statut
 
 ## Suivi au 2026-10-11 — QA et nettoyage clôturés
 
-- [Rapport courant](../docs/validation/animations-cleanup-status-20261011-v3.json) ; rapports `v1`/`v2` historiques immuables.
+- [Rapport courant](../docs/validation/animations-cleanup-status-20261011-v4.json) ; rapports `v1`/`v2`/`v3` historiques immuables.
 - AR3021 : `AM3021D/E/F` acceptés réinstallés. AR5000 : quatre poissons acceptés ajoutés, ressources voisines identiques.
 - AR0307/AR0411 : verrous réalignés sans toucher au jeu. AR6001/AR6005 : recettes réparées par snapshots complets identiques.
 - 43 anciennes QA formalisées ; 246/246 BAM ont décision et sélection. Aucune nouvelle visite ingame déduite.
 - Cinq écarts fermés par QA ingame explicite du 2026-10-11 : AR0205 `AM0205A–D` installés 54 phases/30 FPS ; AR0604 `AM0604A` installé 14 phases/30 FPS avec masque spline-fit2 alpha.
 - Versions actuelles sélectionnées et packs complets conservés sous `packs-par-zone/animations-five-current-accepted-20261011-v1/` ; jeu inchangé lors de la formalisation. Anciennes décisions QA et leurs octets conservés.
-- 222 runs inutilisés supprimés (13,56 Gio) ; 737 conservés selon dépendances/QA/sources. Recettes de diagnostic archivées ; [reçu](../pipeline/recipes/animations-current-acceptance-cleanup-20261011-v1/purge-receipt.json).
+- Premier nettoyage : 222 runs inutilisés supprimés (13,56 Gio) ; [reçu](../pipeline/recipes/animations-current-acceptance-cleanup-20261011-v1/purge-receipt.json).
+- Audit complémentaire : 43 runs supprimés (~0,98 Gio net), diagnostics archivés ; 29 cas ambigus et 22 anciennes réservations déplacés dans `../corbeille/animations-20261011-v1/` ; 665 runs conservés dans l'arbre actif. [Reçu](../pipeline/recipes/animations-trash-cleanup-20261011-v1/receipt.json), `index/run-quarantine-20261011-v1.json` pour résoudre les anciens chemins. Quarantaine ≠ QA, aucune preuve historique réécrite.
 - Contrôles après purge : 1 265 manifests QA/sélection présents et SHA exacts ; 234 zones installées = verrou = registre. Provenances legacy déjà manquantes consignées dans le plan, sans modifier leurs preuves historiques.
 - AM0602F : note historique 18 phases/30 FPS conservée ; version Native 9 phases confirmée par la QA AR0602 du 2026-09-05.
 - Release : finalisation séparée ; aucun payload, candidat, manifeste release ou paquet modifié.

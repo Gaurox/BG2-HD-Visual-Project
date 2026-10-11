@@ -240,3 +240,9 @@ pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/**
 # Purged-run diagnostic copies and hash-bound receipts keep original bytes.
 pipeline/recipes/animations-current-acceptance-cleanup-20261011-v1/discarded-run-records/** -text -whitespace
 pipeline/recipes/animations-current-acceptance-cleanup-20261011-v1/*.json -text whitespace=cr-at-eol
+
+# Additional cleanup preserves original diagnostic bytes and Windows journals.
+pipeline/recipes/animations-trash-cleanup-20261011-v1/discarded-run-records/** -text -whitespace
+pipeline/recipes/animations-trash-cleanup-20261011-v1/*.json -text whitespace=cr-at-eol
+pipeline/recipes/animations-remaining-runs-audit-20261011-v1/*.json -text whitespace=cr-at-eol
+pipeline/recipes/animations-remaining-runs-audit-20261011-v1/*.csv -text whitespace=cr-at-eol

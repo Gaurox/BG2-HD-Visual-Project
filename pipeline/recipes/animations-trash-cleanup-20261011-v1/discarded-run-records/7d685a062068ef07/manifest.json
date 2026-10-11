@@ -1,0 +1,84 @@
+{
+  "schema": "bg2-upscale-area-animation-run-v1",
+  "status": "completed",
+  "created_utc": "2026-09-15T21:55:17.179501+00:00",
+  "updated_utc": "2026-09-15T21:55:18.164303+00:00",
+  "run": "fount1-xbr2x-nearest2-x4-alpha-xbr2-noblur-20260915",
+  "request_signature": "8f850494da4aeba09061efc2b50eb43adffb2bb5e6c5c3d5f8b337a455d3a3a5",
+  "request": {
+    "requested_resrefs": [
+      "FOUNT1"
+    ],
+    "requested_areas": [],
+    "resolved_resrefs": [
+      "FOUNT1"
+    ],
+    "sources": {
+      "FOUNT1": "9b55e650efd7b6dee3f95dafe4082bd0d0bbbe07fac6568ce4a0d2d20adffb71"
+    },
+    "scale": 4,
+    "padding_x1": 32,
+    "workflow_sha256": "30dec619a4c1a3ecde076c0926a5ed8ee29d5f2ca8b4eb89a75d3b5f7811b61e"
+  },
+  "occurrences": [
+    {
+      "area_id": "AR1000",
+      "occurrence_index": "0",
+      "instance_name": "FOUNT1",
+      "x": "3051",
+      "y": "1253",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001107",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "FOUNT1",
+      "resource_kind": "BAM"
+    },
+    {
+      "area_id": "AR1000",
+      "occurrence_index": "1",
+      "instance_name": "FOUNT1",
+      "x": "2423",
+      "y": "1247",
+      "sequence": "0",
+      "initial_frame": "0",
+      "flags_hex": "0x00001107",
+      "palette_mode": "embedded",
+      "palette_resref": "",
+      "bam_resref": "FOUNT1",
+      "resource_kind": "BAM"
+    }
+  ],
+  "resources": [
+    {
+      "resref": "FOUNT1",
+      "status": "completed",
+      "canonical_source": "G:/AI/BG2_Upscale/animations/ressources/FOUNT1/source.bam",
+      "source_sha256": "9b55e650efd7b6dee3f95dafe4082bd0d0bbbe07fac6568ce4a0d2d20adffb71",
+      "inventory": {
+        "frames": 5,
+        "max_frame_width": 60,
+        "max_frame_height": 71,
+        "occurrences": 2,
+        "areas": [
+          "AR1000"
+        ]
+      },
+      "source_copy": "resources/FOUNT1/00_source/FOUNT1.bam",
+      "frames_x1": "resources/FOUNT1/01_frames_x1",
+      "frame_count": 5,
+      "aligned_canvas_size_x1": [
+        60,
+        72
+      ],
+      "geometry_mode": "per-frame",
+      "frame_manifest_sha256": "db77e3a5891a6933c4b75e1059c5118b382d250aa944e6e1af8deeab1b50dadc",
+      "upscale": "resources/FOUNT1/02_upscale_xbr2x_nearest2_x4_alpha_xbr2x_twice",
+      "upscale_manifest_sha256": "e31b6c4e50991c4c8a68e385103bec5a386e7ac07c3def70ac8f6703f9c1456a",
+      "preview": null,
+      "completed_utc": "2026-09-15T21:55:18.164303+00:00"
+    }
+  ],
+  "completed_utc": "2026-09-15T21:55:18.164303+00:00"
+}
