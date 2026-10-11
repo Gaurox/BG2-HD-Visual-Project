@@ -1,0 +1,84 @@
+{
+  "schema": "bg2-upscale-animation-batch-acceptance-v1",
+  "status": "accepted-ingame",
+  "decision_origin": "explicit-user-ingame-qa",
+  "decision_date": "2026-10-11",
+  "recorded_at_utc": "2026-10-11T16:57:31.313566+00:00",
+  "decision": "c'est tout bon ! valide ces assets en l'etat ! MAJ le suivi et committe !",
+  "resources": [
+    {
+      "resref": "1400T001",
+      "areas": [
+        "AR1400",
+        "AR1404"
+      ],
+      "occurrences": 2,
+      "selected_run": "animations/ressources/1400T001/runs/1400t001-seedvr-native-lighting-accepted-20261011-v1",
+      "qa_decision": "2026-10-11-accepted-1400t001-seedvr-native-lighting-night235-v1",
+      "recipe": "SeedVR2 7B INT8/LAB x4 seed20261011 ; Potrace0.8/opttol0.1/SS8/bande2x4 protégée, AA intérieure min176, support natif exact ; lumière native propriétaire dynamique",
+      "installed_resource_and_registry_match": true,
+      "workspace_check_passed": true
+    },
+    {
+      "resref": "1400T002",
+      "areas": [
+        "AR1400",
+        "AR1404"
+      ],
+      "occurrences": 2,
+      "selected_run": "animations/ressources/1400T002/runs/1400t002-seedvr-native-lighting-accepted-20261011-v1",
+      "qa_decision": "2026-10-11-accepted-1400t002-seedvr-native-lighting-night235-v1",
+      "recipe": "SeedVR2 7B INT8/LAB x4 seed20261011 ; alpha nearest natif strict ; lumière native propriétaire dynamique ; nuit R*0.60/G*0.55/B*0.85 après lumière native",
+      "installed_resource_and_registry_match": true,
+      "workspace_check_passed": true
+    },
+    {
+      "resref": "1400T003",
+      "areas": [
+        "AR1400",
+        "AR1404"
+      ],
+      "occurrences": 2,
+      "selected_run": "animations/ressources/1400T003/runs/1400t003-seedvr-native-lighting-accepted-20261011-v1",
+      "qa_decision": "2026-10-11-accepted-1400t003-seedvr-native-lighting-night235-v1",
+      "recipe": "SeedVR2 7B INT8/LAB x4 seed20261011 ; Potrace0.8/opttol0.1/SS8/bande2x4 protégée, AA intérieure min176, support natif exact ; lumière native propriétaire dynamique ; nuit R*0.60/G*0.55/B*0.85 après lumière native",
+      "installed_resource_and_registry_match": true,
+      "workspace_check_passed": true
+    },
+    {
+      "resref": "1400T004",
+      "areas": [
+        "AR1400",
+        "AR1404"
+      ],
+      "occurrences": 2,
+      "selected_run": "animations/ressources/1400T004/runs/1400t004-seedvr-native-lighting-accepted-20261011-v1",
+      "qa_decision": "2026-10-11-accepted-1400t004-seedvr-native-lighting-night235-v1",
+      "recipe": "SeedVR2 7B INT8/LAB x4 seed20261011 ; alpha nearest natif strict ; lumière native propriétaire dynamique",
+      "installed_resource_and_registry_match": true,
+      "workspace_check_passed": true
+    },
+    {
+      "resref": "1400T005",
+      "areas": [
+        "AR1400",
+        "AR1404"
+      ],
+      "occurrences": 2,
+      "selected_run": "animations/ressources/1400T005/runs/1400t005-seedvr-native-lighting-accepted-20261011-v1",
+      "qa_decision": "2026-10-11-accepted-1400t005-seedvr-native-lighting-night235-v1",
+      "recipe": "SeedVR2 7B INT8/LAB x4 seed20261011 ; Potrace0.8/opttol0.1/SS8/bande2x4 protégée, AA intérieure min176, support natif exact ; lumière native propriétaire dynamique ; nuit R*0.60/G*0.55/B*0.85 après lumière native",
+      "installed_resource_and_registry_match": true,
+      "workspace_check_passed": true
+    }
+  ],
+  "area_count": 2,
+  "occurrence_count": 10,
+  "final_pack": "animations/packs-par-zone/trees-seedvr-native-lighting-accepted-20261011-v1",
+  "renderer_dll_sha256": "5d4ee06d84e0d6c6f6fb81797eab0e9756b3ece335ebf537e57c5597e0b40bcf",
+  "renderer_receipt": "backups/renderer/20261011T165415004898Z-3d179d5f/renderer-install-receipt.json",
+  "renderer_installation": "pipeline/recipes/trees-night-color-20261011-v2/installation.json",
+  "renderer_installation_sha256": "5af43b5890bb4ae5417e2be630c5cc23d3b9166e397e778cb8127ccb2e9a5ecb",
+  "game_files_changed": false,
+  "release_changed": false
+}

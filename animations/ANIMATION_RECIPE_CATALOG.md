@@ -177,3 +177,59 @@ AM3022D : `C:MoveToArea("AR3022")`, puis `C:Eval('JumpToPoint([1550.1760])')` ; 
 - Autorités : `index/selections/{FLIESL,FLIESS}.json`, décisions `index/qa-decisions/{FLIESL,FLIESS}/2026-10-11-accepted-*-rounded-native-cadence-v1.json`, `index/animation_alpha_corrections.csv`.
 - Reprise : `../pipeline/recipes/flies-rounded-native-cadence-20261011-v1/{README.md,build.py,accept.py,acceptance.json,installation-v1.json,CLUA.md}`. Packs complets `packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/<zone-minuscule>/<ZONE>/`.
 - Conservation native antérieure remplacée par cette QA x4 ; autres ressources, DLL/INI/AR3000 préservés ; aucune intégration release.
+
+## 2026-10-11 — remise à zéro des cinq arbres
+
+- `1400T001–1400T005` : `non-traité`, aucune sélection ; BAM/GIF/sheet/alpha natifs conservés.
+- Suppression explicite utilisateur : exports et SeedVR x4 du lot `ar1400-all-bam-seedvr7b-lab-x4/resources/1400T00*`, prototype `1400T005-nightlight-x4`, RGBA arbres des anciens runtime packs/sauvegardes/archive ; 118 fichiers, 214,42 Mio.
+- Fontaines `AM1400A/N`, installation, release et preuves partagées immuables préservées. Les anciens packs mixtes n'ont plus leurs payloads arbres ; ne pas les considérer complets ni les réinstaller.
+- Reçu : `animations/index/resets/1400t001-005-production-reset-20261011-v1.json` ; anciens résultats/contraintes ne constituent plus une sélection ni une condition de reprise.
+
+## 2026-10-11 — reprise arbres : SeedVR imposé
+
+- Décision utilisateur : upscale `1400T001–1400T005` exclusivement SeedVR ; prime sur toute recommandation ReboutCX/xBR pour ce lot. Analyse initiale sans production ni QA ; exécution ci-dessous.
+- Base commune : BAM natif → RGB nearest-opaque-dilate / alpha séparé → SeedVR2 7B INT8, correction LAB, x4, seed explicite commune au lot, padding temporaire32px x1 → crop exact1020×1020 ; 1frame, centre logique(1,1), cycles natifs ; pas d'Apollo8.
+- Référence conservatrice : alpha source nearest×4 ; RGB droit, alpha final nul ⇒ RGB nul ; aucun feather global, aucun fade canvas. Adaptation statique de `MECANIQUE-SEEDVR-ALPHA-NATIVE`.
+- Candidate contour : même RGB SeedVR → Potrace tous contours/trous, turdsize0, alphamax0.8, opttolerance0.1, supersampling8, bande1/2px x4 à comparer ; protéger branches1px x1 et limites canvas. Adaptation à implémenter, non validée pour ces arbres ; le producteur Potrace existant ne comporte pas cette protection fine dédiée.
+- `CONTOUR-NET` : réutiliser l'étage Potrace, sans wrapper temporel ; remplissage RGB du liseré uniquement après diagnostic de la sortie SeedVR. Source : luminance bord1px / cœur>2px T00143.98/55.72, T00248.63/43.68, T00345.98/43.65, T00442.20/43.62, T00544.08/49.16 ; pas de liseré sombre systématique démontré.
+- Priorité alpha : T002/T004 support natif strict ; T001/T003/T005 comparer Potrace protégé à la référence. Même modèle SeedVR pour tous ; aucun paramètre de post-traitement acquis sans PNG.
+- Éclairage : conserver une sortie RGB non éclairée ; dérivé AR1404 depuis AR1404LM à son ancre native, alpha inchangé (`build_area_lightmap_pack.py` ; ancien essai refusé, pas une QA acquise). AR1400 jour/nuit nécessite une modulation runtime dynamique pour une solution correcte aux deux états ; aucune correction DLL autorisée/exécutée par cette analyse.
+
+## 2026-10-11 — cinq arbres SeedVR produits et installés pour premier test
+
+- Production : `batches/trees-seedvr-static-x4-20261011-v1/` ; SeedVR2 7B INT8 / LAB ×4, seed20261011, pad32x1 puis crop1020² ; 1frame/cycles/centre(1,1) natifs, aucun traitement temporel.
+- Alpha T002/T004 : nearest natif strict. T001/T003/T005 : Potrace0.8/opttol0.1/SS8/bande2x4 ; branches fines + bord canevas protégés, AA intérieure min176, aucun nouveau pixel visible ; support identique au natif à seuil127. Variantes bande1/2 conservées dans `04_alpha/`. Pas de remplissage RGB du liseré.
+- Éclairage indépendant par occurrence : AR1400→AR1400LM jour ; AR1404→AR1404LM nuit permanente, alpha inchangé. AR1400 nocturne reste incorrect sans modulation dynamique du renderer ; DLL inchangée.
+- Packs complets : `packs-par-zone/trees-seedvr-static-x4-20261011-v1-{ar1400,ar1404}/{AR1400,AR1404}/` ; fontaines AM1400A/N conservées byte-identical, cinq arbres ajoutés aux deux zones.
+- Installation transactionnelle vérifiée SHA/registries ; DLL/INI/AR3000 inchangés, verrou seulement AR1400/AR1404. Reprise : `../pipeline/recipes/trees-seedvr-static-x4-20261011-v1/{finish.py,install.py,preparation.json,installation.json,CLUA.md}`.
+- Suivi : cinq `à-valider`, QA utilisateur en attente ; aucune sélection QA ni intégration release. PNG : `batches/trees-seedvr-static-x4-20261011-v1/preview-{AR1400,AR1404}.png`.
+
+## 2026-10-11 — correctif éclairage dynamique arbres installé, QA en attente
+
+- Retour utilisateur : rendus globalement satisfaisants de jour ; éclairage de jour conservé la nuit, screenshot `20261011182133_1.jpg`. Pas de QA définitive déduite.
+- Vanilla vérifié dans KEY/BIF : mêmes `1400T001–005` dans AR1400/1404, flags0x1005/non-self illumination, palette intégrée ; pas de BAM nocturne alternatif. AR1400LM jour / AR1400LN nuit ; AR1404LM == AR1400LN.
+- Correctif autorisé utilisateur : capture owner-scoped source/résultat `CVidPalette::Realize` ; transfert RGB LUT natif dynamique ; alpha intact, cache frame+empreinte lumière, fallback vanilla si capture/transfert invalides ; whitelist cinq arbres seulement. Autres animations inchangées.
+- Précalcul AR1400LM/AR1404LM retiré : packs `packs-par-zone/trees-native-lighting-20261011-v1-{ar1400,ar1404}/{AR1400,AR1404}/`, mêmes RGB SeedVR non éclairés et alpha fini ; fontaines conservées.
+- DLL `27b600b3398a121a1369272c11656ef40cb28164e6cddd70ea206d33ab6472ac` installée avec les deux packs ; sources exactes du parent AR3000, registre eau généré identique, INI/assets AR3000 inchangés. Tests hôte ciblés réussis ; activation palette et rendu jour/nuit ingame encore à vérifier.
+- Autorité/reprise : `../pipeline/recipes/trees-native-lighting-20261011-v1/{README.md,runtime.json,preparation.json,installation.json}` ; `à-valider`, aucune QA finale ni release. Les PNG baked du premier essai ne représentent pas ce nouvel éclairage runtime.
+
+## 2026-10-11 — 1400T005, couleur personnalisée de nuit installée
+
+- Retour utilisateur après éclairage dynamique : quatre autres arbres OK ; T005 central du screenshot encore trop clair, ancre3695,611. Défaut vanilla soupçonné, origine exacte non démontrée.
+- T005 seulement : après LUT native, R×0.60/G×0.55/B×0.85. Gate WED vivant AR1400+AR1400N ou AR1404+AR1404 ; jour/zone inconnue/autres resrefs inchangés. Alpha et RGB source SeedVR conservés ; empreinte cache recalculée.
+- Renderer installé depuis les sources exactes du parent dynamique ; trois fichiers modifiés, autres sources/registre eau identiques. Packs AR1400/AR1404/AR3000, INI et verrou des packs vérifiés sans changement.
+- Tests hôte ciblés réussis ; correction nocturne T005 à valider ingame. Autorité/reprise : `../pipeline/recipes/1400t005-night-color-20261011-v1/{README.md,runtime.json,installation.json,CLUA.md}`. Aucune intégration release.
+
+## 2026-10-11 — même correctif nocturne étendu à T002/T003
+
+- Utilisateur : réglage T005 « parfait », validé ; deux autres arbres du screenshot `20261011185043_1.jpg` nécessitent le même traitement. Identification : T002 longues branches suspendues au-dessus de l'escalier ; T003 grand tronc à droite, silhouettes et ancres `index/occurrences.csv` concordantes.
+- Installation v2 : correction R×0.60/G×0.55/B×0.85 après lumière native sur T002/T003/T005 seulement ; gate WED nocturne identique. Réglage T005 validé, jour, T001/T004 et alpha conservés ; packs/INI/AR3000/verrou inchangés vérifiés.
+- Tests ciblés réussis ; T002/T003 nouvelle teinte à vérifier ingame. Autorité/reprise : `../pipeline/recipes/trees-night-color-20261011-v2/{README.md,runtime.json,installation.json,CLUA.md}`. Parent T005 conservé, aucune release.
+
+## Cinq arbres — validation finale ingame le 2026-10-11
+
+- `1400T001–005` : `validé-x4`, décisions QA immuables et sélections `index/{qa-decisions,selections}/` ; utilisateur : « c'est tout bon ! valide ces assets en l'etat ! MAJ le suivi et committe ! ».
+- Recette finale : SeedVR2 7B INT8/LAB ×4 seed20261011, une frame statique, dimensions255²/centre(1,1)/cycles natifs ; T002/T004 alpha nearest, T001/T003/T005 Potrace protégé bande2x4/AA intérieure min176/support exact. Aucun Apollo ni précalcul lumière.
+- Lumière dynamique native propriétaire conservée ; T002/T003/T005 uniquement en nuit AR1400+AR1400N ou AR1404+AR1404 : R×0.60/G×0.55/B×0.85 après LUT native. DLL validée `5d4ee06d84e0d6c6f6fb81797eab0e9756b3ece335ebf537e57c5597e0b40bcf`, contrat/source SHA liés aux manifestes finaux.
+- Packs figés byte-identiques : `packs-par-zone/trees-seedvr-native-lighting-accepted-20261011-v1/{AR1400,AR1404}/` ; 5 assets/2 cartes/10 occurrences, resrefs partagés acceptés sans assertion de visite individuelle. Fontaines AM1400A/N conservées.
+- Autorité/reprise : `../pipeline/recipes/trees-night-color-20261011-v2/{accept.py,acceptance.json,installation.json}` ; wrappers finaux `ressources/<REF>/runs/<ref>-seedvr-native-lighting-accepted-20261011-v1/`. QA/registre/sélections/suivi alpha cohérents, installation vérifiée SHA/registries ; aucune réinstallation, aucune release.

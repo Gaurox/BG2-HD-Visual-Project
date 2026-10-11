@@ -1,0 +1,14 @@
+# Arbres : éclairage natif dynamique — essai installé 2026-10-11
+
+- Périmètre runtime : `1400T001–005` uniquement ; textures SeedVR/alpha finies reprises sans lightmap baked depuis `trees-seedvr-static-x4-20261011-v1/06_split`. AR1400 + AR1404, 10 occurrences ; fontaines byte-identical.
+- DLL parent : `3992155db599fcb106a8cbd71d65c46027dbff329c5066cd0d34483f9c8c8f88`, sources `maps/water-batches/runs/ar3000-water-runtime-fix-20261011-v1/runtime-src` ; patch ciblé + deux fichiers ajoutés ; 254 fichiers source du parent inchangés. Manifestes/offsets du parent conservés ; header eau généré byte-identical.
+- Capture : scope CGameStatic, propriétaire palette = `this + gameStaticResref - vidCellResref + vidCellPalette` ; palette source avant `CVidPalette::Realize`, palette réalisée après. Lectures seules, aucune modification des paramètres/mémoire moteur. Appels imbriqués étrangers masqués.
+- RGB : LUT3×256 déduite des couples source→réalisé, interpolation entre couleurs présentes ; extrapolation aux extrémités sur pente couvrant≥16 niveaux. Ordres BGRA/RGBA vérifiés ; palette fixe256, valeurs opaques indices≥2. Conflit par index, support insuffisant, transformation non monotone ou erreur>1 niveau sur les couples natifs ⇒ refus/fallback vanilla. RGB SeedVR nouveaux interpolés ; pas d'assertion d'équivalence native exacte pour ces couleurs supplémentaires.
+- Alpha/géométrie/cycles préservés ; aucun coefficient jour/nuit fixe, nouvelle ressource nuit ou nouvelle inférence SeedVR.
+- Cache texture : clé frame + empreinte LUT, limite128/LRU existante. Rendu historique des autres resrefs inchangé. Sans capture propriétaire valide, les arbres utilisent le BAM vanilla.
+- Tests hôte : identité, nuit RGB distincts, BGRA/RGBA, alpha, empreintes jour/nuit, conflit par index, whitelist ; tous réussis. DLL compilée ; aucun test visuel ingame acquis.
+- `runtime.json`/`runtime-delta.patch`/`build.log` : candidat ; `preparation.json` : deux packs et état antérieur ; `installation.json` : DLL/areas vérifiées + reçus restauration. Installation coordonnée avec rollback DLL + packs + verrou + pointeur eau.
+- DLL installée : `27b600b3398a121a1369272c11656ef40cb28164e6cddd70ea206d33ab6472ac`. INI, fontaines, assets AR3000 inchangés ; seul hash DLL actualisé dans le pointeur eau, registre identique. Aucune release/QA finale/commit.
+- Reprise : `build_renderer.py`, `prepare_packs.py`, `install.py --run` ; destinations scellées, nouvelle version pour remplacer cet essai.
+- CLUA : [commandes cinq arbres](CLUA.md). Positions inchangées ; **ancienne restriction AR1400 jour seulement remplacée par cet essai dynamique**, vérifier AR1400 de jour puis de nuit et AR1404.
+- Diagnostic runtime : rechercher `AREA_NATIVE_LIGHTING` dans le log moteur ; succès par resref inclut propriétaire/fingerprint/midRGB/flags. Message `owner palette unavailable/incompatible; native BAM retained` ⇒ fallback, ne pas confondre avec réussite du rendu x4.

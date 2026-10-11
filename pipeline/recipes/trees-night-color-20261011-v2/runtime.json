@@ -1,0 +1,38 @@
+{
+  "schema": "bg2-trees-night-color-renderer-v2",
+  "baseline_dll_sha256": "275a3a3518f85d79909b2dc5560f5465525da0bf64af1c9eaf456411ffe86bb4",
+  "baseline_source": "animations/batches/1400t005-night-color-20261011-v1/.work/runtime-src",
+  "dll": "animations/batches/trees-night-color-20261011-v2/candidate/InfinityEngine-Enhancer.dll",
+  "dll_sha256": "5d4ee06d84e0d6c6f6fb81797eab0e9756b3ece335ebf537e57c5597e0b40bcf",
+  "ini_sha256": "5859f49562e89f71cc1a9b9ddbac4f77b9b5ab95e5983d88e51c09e480042aba",
+  "changed_source_files": [
+    "src/iee/hooks.cpp",
+    "src/iee/core/area_animation_lighting.h",
+    "tests/area_animation_lighting_tests.cpp"
+  ],
+  "source_sha256": {
+    "src/iee/hooks.cpp": "72379772975dc65457d6fde044e38d1981b699855a24d682e38b7b3f4a815d41",
+    "src/iee/core/area_animation_lighting.h": "4360dea540c3fc733fe1e9e118c8e34e28026c9257fe46509e98d336454075f9",
+    "tests/area_animation_lighting_tests.cpp": "5a8ac500a5068f584c01b375a4e5dbd2bb01c96b4380fa9453051ea4b500594e"
+  },
+  "other_source_files_identical": 257,
+  "water_generated_header_identical": true,
+  "targeted_tests_passed": true,
+  "resrefs": [
+    "1400T002",
+    "1400T003",
+    "1400T005"
+  ],
+  "rgb_gains": [
+    0.6,
+    0.55,
+    0.85
+  ],
+  "night_gate": {
+    "AR1400": "AR1400N",
+    "AR1404": "AR1404"
+  },
+  "scope": "Attenuate final native RGB only for T002/T003/T005 in live night WED; T005 validated gains retained, day, T001/T004, alpha unchanged",
+  "qa_status": "pending-user-ingame-test",
+  "release": false
+}

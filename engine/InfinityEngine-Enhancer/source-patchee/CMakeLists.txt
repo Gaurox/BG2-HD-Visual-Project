@@ -322,6 +322,11 @@ else()
 endif()
 
 if(BUILD_TESTING)
+    add_executable(iee_area_animation_lighting_tests tests/area_animation_lighting_tests.cpp)
+    target_include_directories(iee_area_animation_lighting_tests PRIVATE "${CMAKE_SOURCE_DIR}/src")
+    iee_configure_target(iee_area_animation_lighting_tests)
+    add_test(NAME iee_area_animation_lighting_tests COMMAND iee_area_animation_lighting_tests)
+
     add_executable(iee_native_occlusion_feather_tests tests/native_occlusion_feather_tests.cpp)
     target_include_directories(iee_native_occlusion_feather_tests PRIVATE "${CMAKE_SOURCE_DIR}/src")
     iee_configure_target(iee_native_occlusion_feather_tests)

@@ -103,6 +103,7 @@ struct Resource {
 
 struct TextureCacheEntry {
   FrameHandle handle{};
+  std::uint64_t lightingFingerprint{};
   int textureId{};
   std::uint64_t lastUse{};
   std::uint64_t baseLevelBytes{};
@@ -553,7 +554,14 @@ void delete_texture_entry_locked(const EngineTextureApi& api, std::size_t entryI
 }
 
 bool upload_frame_locked(const Frame& frame, int textureId, const EngineTextureApi& api,
-                         int previousTextureId) noexcept {
+                         int previousTextureId) {
+  std::vector<std::byte> lit;
+  const void* pixels = frame.replacement.data();
+  if (api.areaLighting) {
+    lit = frame.replacement;
+    core::area_lighting::apply(lit, *api.areaLighting);
+    pixels = lit.data();
+  }
   auto& gl = game::gl::get_gl_functions();
   if ((!gl.valid && !gl.initialize()) || !gl.glGetIntegerv || !gl.glTexImage2D ||
       !gl.glTexParameteri || !gl.glPixelStorei || !gl.glGetTexLevelParameteriv ||
@@ -601,7 +609,7 @@ bool upload_frame_locked(const Frame& frame, int textureId, const EngineTextureA
   }
   gl.glTexImage2D(game::gl::TEXTURE_2D, 0, static_cast<int>(game::gl::RGBA8), physicalWidth,
                   physicalHeight, 0, game::gl::RGBA, game::gl::UNSIGNED_BYTE,
-                  frame.replacement.data());
+                  pixels);
   gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_WRAP_S,
                      static_cast<int>(game::gl::CLAMP_TO_EDGE));
   gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_WRAP_T,
@@ -623,18 +631,21 @@ bool upload_frame_locked(const Frame& frame, int textureId, const EngineTextureA
 
 bool ensure_texture_locked(FrameHandle handle, const EngineTextureApi& api,
                            int previousTextureId, int& textureId,
-                           bool recordTelemetry) noexcept {
+                           bool recordTelemetry) {
   textureId = 0;
   if (recordTelemetry) ++g_textureCacheTelemetry.requests;
   const auto& resource = g_resources[handle.resourceIndex];
   const auto& frame = resource.frames[handle.frameIndex];
+  const auto lightingFingerprint = api.areaLighting ? api.areaLighting->fingerprint : 0;
   if (recordTelemetry) {
     record_cache_budget_simulation_locked(
         handle, static_cast<std::uint64_t>(frame.replacement.size()));
   }
   const auto existing = std::find_if(
       g_textureCache.begin(), g_textureCache.end(),
-      [&](const TextureCacheEntry& entry) { return entry.handle == handle; });
+      [&](const TextureCacheEntry& entry) {
+        return entry.handle == handle && entry.lightingFingerprint == lightingFingerprint;
+      });
   if (existing != g_textureCache.end()) {
     if (recordTelemetry) ++g_textureCacheTelemetry.hits;
     existing->lastUse = ++g_textureUseCounter;
@@ -667,6 +678,7 @@ bool ensure_texture_locked(FrameHandle handle, const EngineTextureApi& api,
   }
 
   auto& entry = g_textureCache[entryIndex];
+  entry.lightingFingerprint = lightingFingerprint;
   if (recordTelemetry) ++g_textureCacheTelemetry.uploadAttempts;
   if (!upload_frame_locked(frame, entry.textureId, api, previousTextureId)) {
     if (recordTelemetry) ++g_textureCacheTelemetry.failedUploads;
@@ -1168,6 +1180,12 @@ bool bind_frame_texture(FrameHandle handle, const EngineTextureApi& api,
         handle.frameIndex >= g_resources[handle.resourceIndex].frames.size()) {
       return false;
     }
+    auto drawApi = api;
+    if (core::area_lighting::enabled(g_resources[handle.resourceIndex].resref)) {
+      if (!api.areaLighting || !api.areaLighting->valid) return false;
+    } else {
+      drawApi.areaLighting = nullptr;
+    }
     if (api.DrawGetRenderer() == 1) {
       if (!g_creationFailureLogged) {
         g_creationFailureLogged = true;
@@ -1189,7 +1207,7 @@ bool bind_frame_texture(FrameHandle handle, const EngineTextureApi& api,
     previousTextureId = logical_texture_id(api);
     if (previousTextureId <= 0) return false;
     int replacementTexture = 0;
-    if (!ensure_texture_locked(handle, api, previousTextureId, replacementTexture,
+    if (!ensure_texture_locked(handle, drawApi, previousTextureId, replacementTexture,
                                enablePerformanceLogging)) {
       if (!g_creationFailureLogged) {
         g_creationFailureLogged = true;

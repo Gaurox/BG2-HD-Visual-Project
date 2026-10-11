@@ -1,0 +1,56 @@
+--- a/src/iee/hooks.cpp
++++ b/src/iee/hooks.cpp
+@@ -3463,11 +3463,11 @@
+           encoding.externalFormat == game::gl::BGRA);
+       if (core::area_lighting::customize_tree_night(areaScope->transfer,
+                                                   areaScope->resref, areaScope->nightScene)) {
+-        thread_local bool loggedNightCorrection = false;
+-        if (!loggedNightCorrection) {
+-          loggedNightCorrection = true;
+-          LOG_INFO("AREA_TREE_NIGHT_COLOR resref=1400T005 gainsRGB=0.60,0.55,0.85 "
++        thread_local std::set<std::array<char, 8>> loggedNightCorrections;
++        if (loggedNightCorrections.insert(areaScope->resref).second) {
++          LOG_INFO("AREA_TREE_NIGHT_COLOR resref={} gainsRGB=0.60,0.55,0.85 "
+                    "fingerprint={:016X}; live night WED, native lighting retained, alpha preserved",
++                   std::string(areaScope->resref.begin(), areaScope->resref.end()),
+                    areaScope->transfer.fingerprint);
+         }
+       }
+--- a/src/iee/core/area_animation_lighting.h
++++ b/src/iee/core/area_animation_lighting.h
+@@ -39,8 +39,8 @@
+ 
+ inline bool customize_tree_night(Transfer& transfer, const std::array<char, 8>& ref,
+                                   bool nightScene) noexcept {
+-  constexpr std::array<char, 8> target{'1','4','0','0','T','0','0','5'};
+-  if (!transfer.valid || !nightScene || ref != target) return false;
++  const bool target = enabled(ref) && (ref[7] == '2' || ref[7] == '3' || ref[7] == '5');
++  if (!transfer.valid || !nightScene || !target) return false;
+   // Preserve the native time/weather transfer; attenuate its final RGB only.
+   constexpr std::array<unsigned, 3> gains{60, 55, 85};
+   for (unsigned c = 0; c < 3; ++c) for (auto& value : transfer.rgb[c]) {
+--- a/tests/area_animation_lighting_tests.cpp
++++ b/tests/area_animation_lighting_tests.cpp
+@@ -49,9 +49,21 @@
+   require(customize_tree_night(night5,tree5,true));
+   require(night5.fingerprint != dark.fingerprint);
+   require(night5.rgb[0][128] == 33 && night5.rgb[1][128] == 28 && night5.rgb[2][128] == 61);
++  for (const char digit : {'2','3','5'}) {
++    const std::array<char,8> ref{'1','4','0','0','T','0','0',digit};
++    auto dayTree = daylight;
++    require(!customize_tree_night(dayTree,ref,false));
++    require(dayTree.rgb == daylight.rgb && dayTree.fingerprint == daylight.fingerprint);
++    auto nightTree = dark;
++    require(customize_tree_night(nightTree,ref,true));
++    require(nightTree.rgb == night5.rgb && nightTree.fingerprint == night5.fingerprint);
++  }
++  auto night1 = dark;
++  require(!customize_tree_night(night1,{'1','4','0','0','T','0','0','1'},true));
++  require(night1.rgb == dark.rgb && night1.fingerprint == dark.fingerprint);
+   auto correctedPixels = pixels;
+   iee::core::area_lighting::apply(correctedPixels,night5);
+   require(correctedPixels[3] == pixels[3] && correctedPixels[7] == pixels[7]);
+   std::cout << "Native day/night palette transfer, encoding, alpha, cache identity and scope passed\n";
+-  std::cout << "T005 night-only RGB correction: day exact, other trees exact, live WED gate and alpha passed\n";
++  std::cout << "T002/T003/T005 same night correction: day exact, T001/T004 exact, T005 preserved, live WED gate and alpha passed\n";
+ }

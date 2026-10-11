@@ -9,6 +9,7 @@
 #include <string_view>
 
 #include "iee/core/cache_budget_simulator.h"
+#include "iee/core/area_animation_lighting.h"
 #include "iee/core/process_resource_telemetry.h"
 
 namespace iee::area_animation_x4 {
@@ -132,6 +133,8 @@ struct EngineTextureApi {
   // Adjacent runtime GL external-format/type globals used by the engine's own
   // texture uploads. Creature composition snapshots both values with its palette.
   const NativePixelEncoding* nativePixelEncoding{};
+  // Synchronous owner-scoped snapshot; only unlit 1400T001-005 consume it.
+  const core::area_lighting::Transfer* areaLighting{};
 };
 
 // Loads AreaAnimations-X4.registry and every referenced raw RGBA frame before

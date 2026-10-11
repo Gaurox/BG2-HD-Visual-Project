@@ -1,0 +1,71 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:1400T004",
+  "correction_id": "trees-seedvr-native-lighting-night235-20261011-v1",
+  "decision": "Utilisateur : c'est tout bon ! valide ces assets en l'etat ! MAJ le suivi et committe ! 1400T004 x4 accepté en l'état installé, jour/nuit. Recette : SeedVR2 7B INT8/LAB x4 seed20261011 ; alpha nearest natif strict ; lumière native propriétaire dynamique. Une frame statique ; géométrie/centres/cycles natifs conservés. Contrat renderer DLL 5d4ee06d84e0d6c6f6fb81797eab0e9756b3ece335ebf537e57c5597e0b40bcf et textures exactes liés au manifeste final. Deux cartes/deux occurrences partagent le même asset ; aucune visite exhaustive déduite. Aucune intégration release.",
+  "decision_date": "2026-10-11",
+  "decision_id": "2026-10-11-accepted-1400t004-seedvr-native-lighting-night235-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/1400T004/runs/1400t004-seedvr-native-lighting-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "12A0988CF8F3B3B62E3484C3E3FA870007E479A349D53AF5E8236AF9C32AC61E",
+    "path": "animations/ressources/1400T004/runs/1400t004-seedvr-native-lighting-accepted-20261011-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/trees-native-lighting-20261011-v1-ar1400/AR1400/manifest.json",
+        "manifest_sha256": "15F83B1C44C261C830DFA8DCCD0E524448BE7F68E410AB3AC233B54C070B819D",
+        "path": "animations/packs-par-zone/trees-native-lighting-20261011-v1-ar1400/AR1400",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/trees-seedvr-static-x4-20261011-v1/manifest.json",
+        "manifest_sha256": "30A576EAB0A99F27DBD98621F753AB2C3FC36835ECAF435039C27168833EEEF5",
+        "path": "animations/batches/trees-seedvr-static-x4-20261011-v1",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "trees-seedvr-static-native-lighting-night235-v1",
+  "recorded_at_utc": "2026-10-11T16:57:30Z",
+  "resref": "1400T004",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR1400",
+        "manifest_path": "animations/packs-par-zone/trees-seedvr-native-lighting-accepted-20261011-v1/AR1400/manifest.json",
+        "manifest_sha256": "15F83B1C44C261C830DFA8DCCD0E524448BE7F68E410AB3AC233B54C070B819D",
+        "path": "animations/packs-par-zone/trees-seedvr-native-lighting-accepted-20261011-v1/AR1400",
+        "registry_sha256": "86728D74B1A4C80D5CC977948201690F8A8C27CB597F7DAC67E1A8D133C57C62",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1404",
+        "manifest_path": "animations/packs-par-zone/trees-seedvr-native-lighting-accepted-20261011-v1/AR1404/manifest.json",
+        "manifest_sha256": "6C005681DE8062BF8AB4D9A4E06DFA212AB71AE0DA63648464F96B83F5368739",
+        "path": "animations/packs-par-zone/trees-seedvr-native-lighting-accepted-20261011-v1/AR1404",
+        "registry_sha256": "D2C6EEB9A854EF69639ABA5434937184279885E1CDB5F526E59307F7C2A3423D",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/trees-seedvr-native-lighting-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "58582EA1BD7A9A2336F27B856E1518FF61827400D34E0271D6B5858AB5ADA4C0",
+    "path": "animations/packs-par-zone/trees-seedvr-native-lighting-accepted-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR1400",
+    "AR1404"
+  ]
+}

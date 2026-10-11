@@ -1,0 +1,135 @@
+--- a/src/iee/hooks.cpp
++++ b/src/iee/hooks.cpp
+@@ -160,6 +160,7 @@
+   void* paletteOwner{};
+   std::array<char, 8> resref{};
+   core::area_lighting::Transfer transfer{};
++  bool nightScene{};
+ };
+ thread_local AreaLightingScope* g_areaLightingScope = nullptr;
+ static bool g_areaLightingHooksEnabled = false;
+@@ -2581,6 +2582,21 @@
+       lightingScope.paletteOwner = static_cast<std::byte*>(thisPtr) +
+           (runtime.gameStaticResref - runtime.vidCellResref) + runtime.vidCellPalette;
+       lightingScope.resref = resolvedAreaFrame.resref;
++      if (gameArea) {
++        const auto* areaBytes = static_cast<const std::byte*>(gameArea);
++        game::CResRef areaRef{};
++        game::CResWED* liveWed = nullptr;
++        game::CRes wedResource{};
++        game::ResrefBuffer areaName{}, wedName{};
++        if (core::safe_read(areaBytes + offsetof(game::CGameArea, m_resref), areaRef) &&
++            game::read_runtime_resref(areaRef.m_resRef.data(), areaName) &&
++            core::safe_read(areaBytes + offsetof(game::CGameArea, m_pResWED), liveWed) &&
++            liveWed && core::safe_read(liveWed, wedResource) &&
++            game::read_runtime_resref(wedResource.resref, wedName)) {
++          lightingScope.nightScene = core::area_lighting::tree_night_scene(
++              game::resref_view(areaName), game::resref_view(wedName));
++        }
++      }
+       g_areaLightingScope = &lightingScope;
+     }
+   }
+@@ -3445,6 +3461,16 @@
+         (encoding.externalFormat == game::gl::BGRA || encoding.externalFormat == game::gl::RGBA)) {
+       areaScope->transfer = core::area_lighting::derive(areaSource, realized,
+           encoding.externalFormat == game::gl::BGRA);
++      if (core::area_lighting::customize_tree_night(areaScope->transfer,
++                                                  areaScope->resref, areaScope->nightScene)) {
++        thread_local bool loggedNightCorrection = false;
++        if (!loggedNightCorrection) {
++          loggedNightCorrection = true;
++          LOG_INFO("AREA_TREE_NIGHT_COLOR resref=1400T005 gainsRGB=0.60,0.55,0.85 "
++                   "fingerprint={:016X}; live night WED, native lighting retained, alpha preserved",
++                   areaScope->transfer.fingerprint);
++        }
++      }
+       if (areaScope->transfer.valid) {
+         thread_local std::set<std::array<char, 8>> logged;
+         if (logged.insert(areaScope->resref).second) {
+--- a/src/iee/core/area_animation_lighting.h
++++ b/src/iee/core/area_animation_lighting.h
+@@ -6,6 +6,7 @@
+ #include <cstddef>
+ #include <cstdint>
+ #include <span>
++#include <string_view>
+ 
+ namespace iee::core::area_lighting {
+ using Palette = std::array<std::uint32_t, 256>;
+@@ -21,6 +22,33 @@
+   std::uint64_t fingerprint{};
+   bool valid{};
+ };
++
++inline std::uint64_t fingerprint(const Transfer& transfer) noexcept {
++  std::uint64_t value = 14695981039346656037ull;
++  for (const auto& channel : transfer.rgb) for (const auto component : channel) {
++    value = (value ^ component) * 1099511628211ull;
++  }
++  return value;
++}
++
++// Use the live render state, not a brightness threshold or the wall clock.
++inline bool tree_night_scene(std::string_view area, std::string_view liveWed) noexcept {
++  return (area == "AR1400" && liveWed == "AR1400N") ||
++         (area == "AR1404" && liveWed == "AR1404");
++}
++
++inline bool customize_tree_night(Transfer& transfer, const std::array<char, 8>& ref,
++                                  bool nightScene) noexcept {
++  constexpr std::array<char, 8> target{'1','4','0','0','T','0','0','5'};
++  if (!transfer.valid || !nightScene || ref != target) return false;
++  // Preserve the native time/weather transfer; attenuate its final RGB only.
++  constexpr std::array<unsigned, 3> gains{60, 55, 85};
++  for (unsigned c = 0; c < 3; ++c) for (auto& value : transfer.rgb[c]) {
++    value = static_cast<std::uint8_t>((static_cast<unsigned>(value) * gains[c] + 50) / 100);
++  }
++  transfer.fingerprint = fingerprint(transfer);
++  return true;
++}
+ 
+ // Read-only transfer from source BGRA palette to this draw's realized palette.
+ // Native tint/add/light operations act channel-wise. Conflicting per-index
+@@ -79,11 +107,7 @@
+       if (std::abs(static_cast<int>(out.rgb[channel][x]) - static_cast<int>(y)) > 1) return {};
+     }
+   }
+-  std::uint64_t fingerprint = 14695981039346656037ull;
+-  for (const auto& channel : out.rgb) for (const auto value : channel) {
+-    fingerprint = (fingerprint ^ value) * 1099511628211ull;
+-  }
+-  out.fingerprint = fingerprint;
++  out.fingerprint = fingerprint(out);
+   out.valid = true;
+   return out;
+ }
+--- a/tests/area_animation_lighting_tests.cpp
++++ b/tests/area_animation_lighting_tests.cpp
+@@ -32,5 +32,26 @@
+   require(enabled({'1','4','0','0','T','0','0','5'}));
+   require(!enabled({'A','M','1','4','0','0','A','\0'}));
+   require(!enabled({'1','4','0','0','T','0','0','6'}));
++  const std::array<char,8> tree5{'1','4','0','0','T','0','0','5'};
++  const std::array<char,8> tree4{'1','4','0','0','T','0','0','4'};
++  require(tree_night_scene("AR1400","AR1400N"));
++  require(tree_night_scene("AR1404","AR1404"));
++  require(!tree_night_scene("AR1400","AR1400"));
++  require(!tree_night_scene("AR1400",""));
++  require(!tree_night_scene("AR1401","AR1400N"));
++  auto day5 = daylight;
++  require(!customize_tree_night(day5,tree5,false));
++  require(day5.rgb == daylight.rgb && day5.fingerprint == daylight.fingerprint);
++  auto night4 = dark;
++  require(!customize_tree_night(night4,tree4,true));
++  require(night4.rgb == dark.rgb && night4.fingerprint == dark.fingerprint);
++  auto night5 = dark;
++  require(customize_tree_night(night5,tree5,true));
++  require(night5.fingerprint != dark.fingerprint);
++  require(night5.rgb[0][128] == 33 && night5.rgb[1][128] == 28 && night5.rgb[2][128] == 61);
++  auto correctedPixels = pixels;
++  iee::core::area_lighting::apply(correctedPixels,night5);
++  require(correctedPixels[3] == pixels[3] && correctedPixels[7] == pixels[7]);
+   std::cout << "Native day/night palette transfer, encoding, alpha, cache identity and scope passed\n";
++  std::cout << "T005 night-only RGB correction: day exact, other trees exact, live WED gate and alpha passed\n";
+ }

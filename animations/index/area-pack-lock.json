@@ -2794,8 +2794,28 @@
    }
   },
   "AR1400": {
-   "recorded_utc": "2026-09-18T22:16:23.448150+00:00",
+   "recorded_utc": "2026-10-11T16:35:12.386700+00:00",
    "resources": {
+    "1400T001": {
+     "sig": "9d10ab1c508c",
+     "frames": 1
+    },
+    "1400T002": {
+     "sig": "4745b678a3b5",
+     "frames": 1
+    },
+    "1400T003": {
+     "sig": "f181e390e7d7",
+     "frames": 1
+    },
+    "1400T004": {
+     "sig": "23e24399e48c",
+     "frames": 1
+    },
+    "1400T005": {
+     "sig": "b5fb59412a36",
+     "frames": 1
+    },
     "AM1400A": {
      "sig": "428daf1765d3",
      "frames": 14
@@ -2806,12 +2826,16 @@
     }
    },
    "fingerprint": {
-    "files": 29,
-    "bytes": 39564312,
-    "max_mtime_ns": 1789769783269784200
+    "files": 34,
+    "bytes": 60372672,
+    "max_mtime_ns": 1791736511326802200
    },
    "build": {
-    "leaf": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR1400"
+    "merged_from": [
+     "G:/AI/BG2_Upscale/animations/packs-par-zone/trees-seedvr-static-x4-20261011-v1-ar1400/AR1400::AM1400N",
+     "G:/AI/BG2_Upscale/animations/packs-par-zone/trees-seedvr-static-x4-20261011-v1-ar1400/AR1400::AM1400A",
+     "G:/AI/BG2_Upscale/animations/batches/trees-seedvr-static-x4-20261011-v1/06_split/AR1400"
+    ]
    }
   },
   "AR1401": {
@@ -2830,6 +2854,41 @@
    "build": {
     "merged_from": [
      "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1401::FIRE_4"
+    ]
+   }
+  },
+  "AR1404": {
+   "recorded_utc": "2026-10-11T16:35:12.416667+00:00",
+   "resources": {
+    "1400T001": {
+     "sig": "9d10ab1c508c",
+     "frames": 1
+    },
+    "1400T002": {
+     "sig": "4745b678a3b5",
+     "frames": 1
+    },
+    "1400T003": {
+     "sig": "f181e390e7d7",
+     "frames": 1
+    },
+    "1400T004": {
+     "sig": "23e24399e48c",
+     "frames": 1
+    },
+    "1400T005": {
+     "sig": "b5fb59412a36",
+     "frames": 1
+    }
+   },
+   "fingerprint": {
+    "files": 6,
+    "bytes": 20808384,
+    "max_mtime_ns": 1791736512022849900
+   },
+   "build": {
+    "merged_from": [
+     "G:/AI/BG2_Upscale/animations/batches/trees-seedvr-static-x4-20261011-v1/06_split/AR1404"
     ]
    }
   },
@@ -5899,5 +5958,5 @@
    }
   }
  },
- "updated_utc": "2026-10-11T15:33:44.963413+00:00"
+ "updated_utc": "2026-10-11T16:35:12.422160+00:00"
 }

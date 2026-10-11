@@ -1,0 +1,129 @@
+{
+  "schema": "bg2-upscale-trees-preparation-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T16:14:36.580601+00:00",
+  "production_run": "animations/batches/trees-seedvr-static-x4-20261011-v1",
+  "leaves": {
+    "AR1400": "animations/packs-par-zone/trees-seedvr-static-x4-20261011-v1-ar1400/AR1400",
+    "AR1404": "animations/packs-par-zone/trees-seedvr-static-x4-20261011-v1-ar1404/AR1404"
+  },
+  "leaf_manifest_sha256": {
+    "AR1400": "82132c7344bf07dd60a265ff2c79faeca28f59c0f1940150d5926358e29f121b",
+    "AR1404": "1242ab6f379404f0130ba931e39325aa3f1f83e9e370dc5b1f1bcb3128efa1c0"
+  },
+  "baseline": {
+    "AR1400": {
+      "signatures": {
+        "AM1400A": {
+          "sig": "428daf1765d3",
+          "frames": 14
+        },
+        "AM1400N": {
+          "sig": "4c1979341aa7",
+          "frames": 14
+        }
+      },
+      "lock_entry": {
+        "recorded_utc": "2026-09-18T22:16:23.448150+00:00",
+        "resources": {
+          "AM1400A": {
+            "sig": "428daf1765d3",
+            "frames": 14
+          },
+          "AM1400N": {
+            "sig": "4c1979341aa7",
+            "frames": 14
+          }
+        },
+        "fingerprint": {
+          "files": 29,
+          "bytes": 39564312,
+          "max_mtime_ns": 1789769783269784200
+        },
+        "build": {
+          "leaf": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR1400"
+        }
+      },
+      "registry_sha256": "e4b6c891ecd9033f9ad766400c800d13c715cd9049fd92d333d4141f24e734dc"
+    },
+    "AR1404": {
+      "signatures": {},
+      "lock_entry": null,
+      "registry_sha256": null
+    }
+  },
+  "alpha": {
+    "1400T001": {
+      "mode": "potrace",
+      "status": "traced",
+      "curves": 143,
+      "alphamax": 0.8,
+      "opttolerance": 0.1,
+      "band_x4": 2,
+      "discarded_far_changes": 2058,
+      "grown_pixels": 25333,
+      "shrunk_pixels": 21152,
+      "support_exact": true,
+      "thin_native_pixels": 3906,
+      "changed_pixels": 5785,
+      "minimum_inside_alpha": 176,
+      "outside_growth_pixels": 0,
+      "effective_coverage_ratio": 0.9933352953880422
+    },
+    "1400T002": {
+      "mode": "native-nearest",
+      "changed_pixels": 0,
+      "support_exact": true
+    },
+    "1400T003": {
+      "mode": "potrace",
+      "status": "traced",
+      "curves": 325,
+      "alphamax": 0.8,
+      "opttolerance": 0.1,
+      "band_x4": 2,
+      "discarded_far_changes": 2944,
+      "grown_pixels": 38923,
+      "shrunk_pixels": 30163,
+      "support_exact": true,
+      "thin_native_pixels": 3949,
+      "changed_pixels": 14704,
+      "minimum_inside_alpha": 176,
+      "outside_growth_pixels": 0,
+      "effective_coverage_ratio": 0.991607178982505
+    },
+    "1400T004": {
+      "mode": "native-nearest",
+      "changed_pixels": 0,
+      "support_exact": true
+    },
+    "1400T005": {
+      "mode": "potrace",
+      "status": "traced",
+      "curves": 225,
+      "alphamax": 0.8,
+      "opttolerance": 0.1,
+      "band_x4": 2,
+      "discarded_far_changes": 2307,
+      "grown_pixels": 32800,
+      "shrunk_pixels": 26631,
+      "support_exact": true,
+      "thin_native_pixels": 4426,
+      "changed_pixels": 9323,
+      "minimum_inside_alpha": 176,
+      "outside_growth_pixels": 0,
+      "effective_coverage_ratio": 0.9920128807321166
+    }
+  },
+  "upscaler": "SeedVR2 7B INT8 LAB x4",
+  "seed": 20261011,
+  "native_geometry_cycles_preserved": true,
+  "rgb_edge_fill": false,
+  "lighting": {
+    "AR1400": "AR1400LM day baked",
+    "AR1404": "AR1404LM permanent night baked"
+  },
+  "limitation": "AR1400 night lighting needs a renderer fix; no dynamic lighting in this test",
+  "qa_status": "pending-user-ingame-test",
+  "release_status": "not-selected"
+}

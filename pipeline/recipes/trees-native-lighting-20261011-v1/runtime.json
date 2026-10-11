@@ -1,0 +1,22 @@
+{
+  "schema": "bg2-trees-native-lighting-renderer-v1",
+  "baseline_dll_sha256": "3992155db599fcb106a8cbd71d65c46027dbff329c5066cd0d34483f9c8c8f88",
+  "baseline_source": "maps/water-batches/runs/ar3000-water-runtime-fix-20261011-v1/runtime-src",
+  "dll": "animations/batches/trees-native-lighting-20261011-v1/candidate/InfinityEngine-Enhancer.dll",
+  "dll_sha256": "27b600b3398a121a1369272c11656ef40cb28164e6cddd70ea206d33ab6472ac",
+  "ini_sha256": "5859f49562e89f71cc1a9b9ddbac4f77b9b5ab95e5983d88e51c09e480042aba",
+  "changed_source_files": [
+    "CMakeLists.txt",
+    "src/iee/hooks.cpp",
+    "src/iee/area_animation_x4_registry.cpp",
+    "src/iee/area_animation_x4_registry.h",
+    "src/iee/core/area_animation_lighting.h",
+    "tests/area_animation_lighting_tests.cpp"
+  ],
+  "other_source_files_identical": 254,
+  "water_generated_header_identical": true,
+  "native_lighting_tests_passed": true,
+  "scope": "Only unlit 1400T001-005; owner-scoped native palette transfer; alpha unchanged",
+  "qa_status": "pending-user-ingame-test",
+  "release": false
+}

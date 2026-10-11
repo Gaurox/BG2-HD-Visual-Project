@@ -156,6 +156,14 @@ thread_local area_animation_x4::FrameResolution g_areaAnimationResolution{};
 thread_local int g_areaAnimationSequence = -1;
 thread_local int g_areaAnimationSlot = -1;
 thread_local int g_areaAnimationTimelinePhase = -1;
+struct AreaLightingScope {
+  void* paletteOwner{};
+  std::array<char, 8> resref{};
+  core::area_lighting::Transfer transfer{};
+  bool nightScene{};
+};
+thread_local AreaLightingScope* g_areaLightingScope = nullptr;
+static bool g_areaLightingHooksEnabled = false;
 thread_local int g_effectAnimationRenderDepth = 0;
 thread_local void* g_effectAnimationInstance = nullptr;
 thread_local void* g_effectAnimationCell = nullptr;
@@ -1602,7 +1610,11 @@ bool prepare_area_animation_composition_hooks(AppContext& ctx) noexcept {
               moduleBase + runtime.drawGetRenderer),
       .glTextureState = reinterpret_cast<const std::uint32_t*>(
           moduleBase + runtime.glTextureState),
+      .realizedPalette = reinterpret_cast<const std::uint32_t*>(moduleBase + runtime.realizedPalette),
+      .nativePixelEncoding = reinterpret_cast<const area_animation_x4::NativePixelEncoding*>(
+          moduleBase + runtime.nativeTextureFormat),
   };
+  g_areaLightingHooksEnabled = validate_creature_sprite_palette_runtime(ctx, *module);
   return true;
 }
 
@@ -2559,6 +2571,35 @@ static void detour_game_static_render_bam(void* thisPtr, void* gameArea, void* v
   const int previousAreaSlot = g_areaAnimationSlot;
   const int previousAreaTimelinePhase = g_areaAnimationTimelinePhase;
   const int previousFrame = g_am0205eFrameIndex;
+  auto* previousLightingScope = g_areaLightingScope;
+  AreaLightingScope lightingScope{};
+  // Mask any outer owner, including unrelated nested CGameStatic calls.
+  g_areaLightingScope = nullptr;
+  if (areaTarget && g_areaLightingHooksEnabled && g_ctx && g_ctx->manifest &&
+      core::area_lighting::enabled(resolvedAreaFrame.resref)) {
+    const auto& runtime = g_ctx->manifest->areaAnimations;
+    if (runtime.gameStaticResref >= runtime.vidCellResref) {
+      lightingScope.paletteOwner = static_cast<std::byte*>(thisPtr) +
+          (runtime.gameStaticResref - runtime.vidCellResref) + runtime.vidCellPalette;
+      lightingScope.resref = resolvedAreaFrame.resref;
+      if (gameArea) {
+        const auto* areaBytes = static_cast<const std::byte*>(gameArea);
+        game::CResRef areaRef{};
+        game::CResWED* liveWed = nullptr;
+        game::CRes wedResource{};
+        game::ResrefBuffer areaName{}, wedName{};
+        if (core::safe_read(areaBytes + offsetof(game::CGameArea, m_resref), areaRef) &&
+            game::read_runtime_resref(areaRef.m_resRef.data(), areaName) &&
+            core::safe_read(areaBytes + offsetof(game::CGameArea, m_pResWED), liveWed) &&
+            liveWed && core::safe_read(liveWed, wedResource) &&
+            game::read_runtime_resref(wedResource.resref, wedName)) {
+          lightingScope.nightScene = core::area_lighting::tree_night_scene(
+              game::resref_view(areaName), game::resref_view(wedName));
+        }
+      }
+      g_areaLightingScope = &lightingScope;
+    }
+  }
   if (areaTarget) {
     const int worldActive = read_world_active();
     area_animation_clock::observe(thisPtr, resolvedAreaFrame.resref, resolvedAreaFrame.sequence,
@@ -2593,6 +2634,14 @@ static void detour_game_static_render_bam(void* thisPtr, void* gameArea, void* v
       g_nativeOcclusionBridgeEnabled && areaTarget ? &nativeOcclusionMask : nullptr);
 
   g_gameStaticRenderBamHook.original()(thisPtr, gameArea, vidMode);
+  if (g_areaLightingScope == &lightingScope && !lightingScope.transfer.valid) {
+    thread_local std::set<std::array<char, 8>> reported;
+    if (reported.insert(lightingScope.resref).second) {
+      LOG_WARN("AREA_NATIVE_LIGHTING resref={} owner palette unavailable/incompatible; native BAM retained",
+          std::string(lightingScope.resref.begin(), lightingScope.resref.end()));
+    }
+  }
+  g_areaLightingScope = previousLightingScope;
 
   if (am0205eTarget) {
     --g_am0205eRenderDepth;
@@ -3277,6 +3326,16 @@ void trace_paperdoll_draw(void* cell, std::uintptr_t caller, int x, int y,
 static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realizedOutput,
                                        std::uint32_t flags, void* rangeEffects,
                                        std::uint32_t transparency, std::uint32_t arg6) {
+  auto* areaScope = g_areaLightingScope;
+  core::area_lighting::Palette areaSource{};
+  game::CVidPalette areaNative{};
+  const bool areaOwner = areaScope && areaScope->paletteOwner == paletteThis;
+  bool areaSourceRead = false;
+  if (areaOwner) {
+    areaScope->transfer = {};
+    areaSourceRead = core::safe_read(paletteThis, areaNative) && areaNative.m_nType == 0 &&
+        areaNative.m_nEntries == 256 && core::safe_read(areaNative.m_pPalette, areaSource);
+  }
   auto* scope = g_creatureSpriteScope;
   const auto generation = scope ? scope->generation : 0;
   const auto caller = reinterpret_cast<std::uintptr_t>(_ReturnAddress());
@@ -3392,6 +3451,39 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
 
   g_vidPaletteRealizeHook.original()(paletteThis, realizedOutput, flags, rangeEffects,
                                       transparency, arg6);
+  if (areaOwner && areaSourceRead && g_areaLightingScope == areaScope &&
+      realizedOutput == g_areaAnimationTextureApi.realizedPalette) {
+    core::area_lighting::Palette realized{};
+    area_animation_x4::NativePixelEncoding encoding{};
+    if (core::safe_read(realizedOutput, realized) &&
+        core::safe_read(g_areaAnimationTextureApi.nativePixelEncoding, encoding) &&
+        encoding.type == game::gl::UNSIGNED_INT_8_8_8_8_REV &&
+        (encoding.externalFormat == game::gl::BGRA || encoding.externalFormat == game::gl::RGBA)) {
+      areaScope->transfer = core::area_lighting::derive(areaSource, realized,
+          encoding.externalFormat == game::gl::BGRA);
+      if (core::area_lighting::customize_tree_night(areaScope->transfer,
+                                                  areaScope->resref, areaScope->nightScene)) {
+        thread_local std::set<std::array<char, 8>> loggedNightCorrections;
+        if (loggedNightCorrections.insert(areaScope->resref).second) {
+          LOG_INFO("AREA_TREE_NIGHT_COLOR resref={} gainsRGB=0.60,0.55,0.85 "
+                   "fingerprint={:016X}; live night WED, native lighting retained, alpha preserved",
+                   std::string(areaScope->resref.begin(), areaScope->resref.end()),
+                   areaScope->transfer.fingerprint);
+        }
+      }
+      if (areaScope->transfer.valid) {
+        thread_local std::set<std::array<char, 8>> logged;
+        if (logged.insert(areaScope->resref).second) {
+          LOG_INFO("AREA_NATIVE_LIGHTING resref={} paletteOwner={:X} fingerprint={:016X} "
+                   "midRGB={},{},{} flags={:X}; owner palette transfer, alpha preserved",
+              std::string(areaScope->resref.begin(), areaScope->resref.end()),
+              reinterpret_cast<std::uintptr_t>(paletteThis), areaScope->transfer.fingerprint,
+              areaScope->transfer.rgb[0][128], areaScope->transfer.rgb[1][128],
+              areaScope->transfer.rgb[2][128], flags);
+        }
+      }
+    }
+  }
   trace_paperdoll_palette(paletteThis, realizedOutput, caller, flags, transparency);
   // Capture only a Realize belonging to the current supported paperdoll Render scope.
   // Foreign palettes cannot replace this snapshot; common draw checks it again.
@@ -3788,8 +3880,10 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
           g_areaAnimationResolution, g_areaAnimationSequence, g_areaAnimationSlot,
           logicalWidth, logicalHeight, areaAnimationDrawFrame);
     }
+    auto areaDrawApi = g_areaAnimationTextureApi;
+    areaDrawApi.areaLighting = g_areaLightingScope ? &g_areaLightingScope->transfer : nullptr;
     if (resolved && area_animation_x4::bind_frame_texture(
-                        areaAnimationDrawFrame, g_areaAnimationTextureApi, previousTextureId,
+                        areaAnimationDrawFrame, areaDrawApi, previousTextureId,
                         g_ctx && g_ctx->cfg.enablePerformanceLogging)) {
       replacement = ReplacementKind::AreaRegistry;
     }
@@ -5265,7 +5359,8 @@ bool install_all(AppContext& ctx) {
               effectRuntime.vvcVidCellRender, effectRuntime.vvcVidCell,
               effectRuntime.infinityFxRender);
         }
-        if (g_creatureSpriteHooksEnabled) {
+        if (g_creatureSpriteHooksEnabled ||
+            (g_areaCompositionMode == AreaCompositionMode::Registry && g_areaLightingHooksEnabled)) {
           g_vidPaletteRealizeHook.create(
               reinterpret_cast<void*>(moduleBase + runtime.vidPaletteRealize),
               reinterpret_cast<void*>(&detour_vid_palette_realize));
