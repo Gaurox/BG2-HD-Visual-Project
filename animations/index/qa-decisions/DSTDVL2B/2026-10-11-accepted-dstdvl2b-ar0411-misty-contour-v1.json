@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:DSTDVL2B",
+  "decision": "Utilisateur : tous valides, maj le suivi et committe. DSTDVL2B accepte en jeu sur AR0411 apres le meme fondu20px x4 / Gaussian sigma4 que DSTDVL1A. Rendu brumeux accepte ; coeur, dimensions/centres et cadence preserves.",
+  "decision_date": "2026-10-11",
+  "decision_id": "2026-10-11-accepted-dstdvl2b-ar0411-misty-contour-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/batches/ar0411-dstdvl-family-misty-contour-20261011-v1/manifest.json",
+    "manifest_sha256": "29F7CA74BF89E6D53FF1AB4C28692C0C5317875CBB9B23337259425C4CDF0925",
+    "path": "animations/batches/ar0411-dstdvl-family-misty-contour-20261011-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/dstdvl1a-misty-contour-native-geometry-20261011-v2/AR0411/manifest.json",
+        "manifest_sha256": "9FE605E65F841FE0C269FC01831D17F934079389236F19B357BB175D18D4B6BF",
+        "path": "animations/packs-par-zone/dstdvl1a-misty-contour-native-geometry-20261011-v2/AR0411",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "recipe_id": "ar0411-dstdvl-family-misty-contour-20261011-v1",
+  "recorded_at_utc": "2026-10-11T08:00:13Z",
+  "resref": "DSTDVL2B",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0411",
+        "manifest_path": "animations/packs-par-zone/ar0411-dstdvl-family-misty-contour-20261011-v1/AR0411/manifest.json",
+        "manifest_sha256": "46B3AFA9451FAF95325AF50F846FC00E34F51FD4B86EAE7A516905E63732DE29",
+        "path": "animations/packs-par-zone/ar0411-dstdvl-family-misty-contour-20261011-v1/AR0411",
+        "registry_sha256": "AD9A8C8D490FD6E043232539CD5A9CD3BA803CC326DD9A7E5504A6A67D263787",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar0411-dstdvl-family-misty-contour-20261011-v1/manifest.json",
+    "manifest_sha256": "91B6D6BE5EB1FB4983B5E825DE88C96F3626A4B41FFECC60A5C9927504A5CDB9",
+    "path": "animations/packs-par-zone/ar0411-dstdvl-family-misty-contour-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0411"
+  ]
+}

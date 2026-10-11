@@ -1,0 +1,25 @@
+{
+  "schema": "bg2-upscale-animation-final-selection-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T07:41:50.634190+00:00",
+  "resrefs": [
+    "DSTDVL1A"
+  ],
+  "source_run": "animations/ressources/DSTDVL1A/runs/dstdvl1a-misty-contour-20261011-v1",
+  "source_run_manifest_sha256": "48646e71dd7f1dd151634efd836843db5e4a9310c1a3d59b79aee7ec8a7136bf",
+  "runtime_pack": "03_runtime_pack",
+  "runtime_pack_manifest_sha256": "6a78f13a1f5d5975aa2031649a3c25554c6daea59e9abca802e33aefc9e30f45",
+  "output_split_root": "animations/packs-par-zone/dstdvl1a-misty-contour-native-geometry-20261011-v2",
+  "output_manifest_sha256": "258c2bba6dba676a8a7ac3898465db6ab7ca670207e7047ea4a88d2b18634efb",
+  "runtime_contract": {
+    "inner_feather_x4": 20,
+    "gaussian_sigma_x4": 4,
+    "frame_count": 139,
+    "timeline_phases": 214,
+    "fps": 30,
+    "geometry": "exact installed dimensions/centres; crop only prototype external padding24x4",
+    "crop_discarded_RGB_energy_fraction": 1.8114627023437976e-05,
+    "preservation": "approved prototype pixels byte-identical inside each native canvas; core and cadence preserved; registry and siblings byte-identical"
+  },
+  "qa_status": "installed candidate pending user ingame QA"
+}

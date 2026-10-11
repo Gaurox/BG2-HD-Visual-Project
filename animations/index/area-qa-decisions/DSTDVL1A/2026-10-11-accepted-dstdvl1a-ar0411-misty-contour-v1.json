@@ -1,0 +1,61 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:DSTDVL1A",
+  "decision": "Utilisateur : tous valides, maj le suivi et committe. DSTDVL1A accepte en jeu sur AR0411 : fondu20px x4 + Gaussian sigma4 en bordure, coeur conserve, dimensions/centres et cadence natives conserves. QA limitee a AR0411 ; autres9zones non modifiees et non validees pour ce correctif. Aucun changement installation ou release dans cette validation.",
+  "decision_date": "2026-10-11",
+  "decision_id": "2026-10-11-accepted-dstdvl1a-ar0411-misty-contour-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/DSTDVL1A/runs/dstdvl1a-misty-contour-native-geometry-20261011-v2/manifest.json",
+    "manifest_sha256": "EF5BE4DBBDF24E9F7D0DB8C39ED22B987B0D87121A897676E5AF21AB995F0DD0",
+    "path": "animations/ressources/DSTDVL1A/runs/dstdvl1a-misty-contour-native-geometry-20261011-v2",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/ar0411-bubbles2-dstdvl1abc-plus-planar-sphere-20260911/AR0411/manifest.json",
+        "manifest_sha256": "F27D166B7A54452B36C4401F0B81AC63E1063F5495D6EFF299021017D95EC43D",
+        "path": "animations/packs-par-zone/ar0411-bubbles2-dstdvl1abc-plus-planar-sphere-20260911/AR0411",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/DSTDVL1A/runs/dstdvl1a-misty-contour-20261011-v1/manifest.json",
+        "manifest_sha256": "48646E71DD7F1DD151634EFD836843DB5E4A9310C1A3D59B79AEE7EC8A7136BF",
+        "path": "animations/ressources/DSTDVL1A/runs/dstdvl1a-misty-contour-20261011-v1",
+        "schema": "bg2-upscale-animation-visual-treatment-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "ar0411-dstdvl-family-misty-contour-20261011-v1",
+  "recorded_at_utc": "2026-10-11T08:00:07Z",
+  "resref": "DSTDVL1A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0411",
+        "manifest_path": "animations/packs-par-zone/dstdvl1a-misty-contour-native-geometry-20261011-v2/AR0411/manifest.json",
+        "manifest_sha256": "9FE605E65F841FE0C269FC01831D17F934079389236F19B357BB175D18D4B6BF",
+        "path": "animations/packs-par-zone/dstdvl1a-misty-contour-native-geometry-20261011-v2/AR0411",
+        "registry_sha256": "AD9A8C8D490FD6E043232539CD5A9CD3BA803CC326DD9A7E5504A6A67D263787",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/dstdvl1a-misty-contour-native-geometry-20261011-v2/manifest.json",
+    "manifest_sha256": "258C2BBA6DBA676A8A7AC3898465DB6AB7CA670207E7047EA4A88D2B18634EFB",
+    "path": "animations/packs-par-zone/dstdvl1a-misty-contour-native-geometry-20261011-v2",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0411"
+  ]
+}

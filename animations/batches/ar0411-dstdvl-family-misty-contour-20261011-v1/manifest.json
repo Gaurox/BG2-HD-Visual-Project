@@ -1,0 +1,65 @@
+{
+  "schema": "bg2-upscale-animation-final-selection-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T07:49:27.807103+00:00",
+  "resrefs": [
+    "DSTDVL1B",
+    "DSTDVL1C",
+    "DSTDVL2B",
+    "DSTDVL2C"
+  ],
+  "source_pack": "animations/packs-par-zone/dstdvl1a-misty-contour-native-geometry-20261011-v2/AR0411",
+  "source_pack_manifest_sha256": "9fe605e65f841fe0c269fc01831d17f934079389236f19b357bb175d18d4b6bf",
+  "runtime_pack": "03_runtime_pack",
+  "runtime_pack_manifest_sha256": "144d88b540cd9c9bc963927c7400d29e675c8a36701c46c8308a390884b43840",
+  "output_split_root": "animations/packs-par-zone/ar0411-dstdvl-family-misty-contour-20261011-v1",
+  "output_manifest_sha256": "91b6d6be5eb1fb4983b5e825de88c96f3626a4b41ffecc60a5c9927504a5cdb9",
+  "visual_treatment": {
+    "recipe": "DSTDVL1A approved third column",
+    "inner_feather_x4": 20,
+    "gaussian_sigma_x4": 4,
+    "formula": "identical approved edge-only premultiplied RGBA feather/Gaussian; native-canvas crop; core distance>=36 unchanged",
+    "reference_recipe": "pipeline/recipes/dstdvl1a-misty-contour-20261011-v1/build.py",
+    "timing": "current installed cycles and rates unchanged; transparent holds retained",
+    "scope": "AR0411 only"
+  },
+  "metrics": {
+    "DSTDVL1B": {
+      "frame_count": 139,
+      "changed_frames": 46,
+      "core_pixels_byte_identical": 1082497,
+      "timeline_phases": [
+        214
+      ],
+      "geometry_and_timeline_verbatim": true
+    },
+    "DSTDVL1C": {
+      "frame_count": 139,
+      "changed_frames": 46,
+      "core_pixels_byte_identical": 1082497,
+      "timeline_phases": [
+        214
+      ],
+      "geometry_and_timeline_verbatim": true
+    },
+    "DSTDVL2B": {
+      "frame_count": 140,
+      "changed_frames": 46,
+      "core_pixels_byte_identical": 1213789,
+      "timeline_phases": [
+        216
+      ],
+      "geometry_and_timeline_verbatim": true
+    },
+    "DSTDVL2C": {
+      "frame_count": 139,
+      "changed_frames": 46,
+      "core_pixels_byte_identical": 1213773,
+      "timeline_phases": [
+        214
+      ],
+      "geometry_and_timeline_verbatim": true
+    }
+  },
+  "qa_status": "pending-user-ingame-QA"
+}

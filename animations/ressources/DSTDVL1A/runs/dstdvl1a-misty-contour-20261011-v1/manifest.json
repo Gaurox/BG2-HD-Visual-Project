@@ -1,0 +1,22 @@
+{
+  "schema": "bg2-upscale-animation-visual-treatment-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T07:37:22.497864+00:00",
+  "resrefs": [
+    "DSTDVL1A"
+  ],
+  "source_pack": "animations/packs-par-zone/ar0411-bubbles2-dstdvl1abc-plus-planar-sphere-20260911/AR0411",
+  "source_pack_manifest_sha256": "f27d166b7a54452b36c4401f0b81ac63e1063f5495d6eff299021017d95ec43d",
+  "runtime_pack": "03_runtime_pack",
+  "runtime_pack_manifest_sha256": "e864aa3c60173f45781e8b130f6a7eb2132c29e57c0498a8f850094f6ee19663",
+  "visual_treatment": {
+    "kind": "edge-only-premultiplied-feather-gaussian",
+    "inner_feather_x4": 20,
+    "sigma_x4": 4,
+    "padding_x4": 24,
+    "formula": "smoothstep((distance(alpha>0)-1)/20) multiplies premultiplied RGBA; Gaussian sigma4 blended only in edge band; core distance>=36 unchanged",
+    "world_alignment": "24px x4 padding -> centre+6 x1 and dimensions+12 x1; zero displacement",
+    "timing": "installed 139frames / 214phases / 30fps copied verbatim; September16 segmented-hold candidate not substituted"
+  },
+  "qa_status": "preview-only; not installed; pending-user-review"
+}
