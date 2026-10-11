@@ -1,0 +1,85 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM0307BH",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/runs/ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831/03_runtime_pack/manifest.json",
+        "manifest_sha256": "7D8497D19915395A08B0BC6D944CAFB4895E3D7430C8F89A59DCA5FBEB5C6B8B",
+        "path": "animations/runs/ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/runs/ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831/05_merged_runtime/AR0307/manifest.json",
+        "manifest_sha256": "A482873626BA5BB659B31C806F86EB792BC357E90597FBE59B5E574FFDB6F918",
+        "path": "animations/runs/ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831/05_merged_runtime/AR0307",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/runs/ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831/manifest.json",
+        "manifest_sha256": "5B4893D44E3108105AFB417A498A512369CDF34765FF3CA4520CD6D444B2446F",
+        "path": "animations/runs/ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/runs/ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831/manifest.json",
+        "manifest_sha256": "E746B3FE39E13326B3BCF1FDD56EFEA69138F56372315194B6AF12B9E2AB21F4",
+        "path": "animations/runs/ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-11",
+    "path": "animations/index/qa-decisions/AM0307BH/2026-10-11-accepted-am0307bh-water-only-feather-v1.json",
+    "sha256": "9EC6BCCB1DE6315645A85935AA18AB844C87262B3D079D4D359F75AA90321565",
+    "status": "accepted"
+  },
+  "recipe_id": "am0307bh-water-only-feather-20261011-v1",
+  "resref": "AM0307BH",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM0307BH/runs/am0307bh-water-only-feather-20261011-v1/manifest.json",
+    "manifest_sha256": "08D7009D7879283C6FFB26E710356AFF2CCF49A47F019355BB6849462D6559D7",
+    "path": "animations/ressources/AM0307BH/runs/am0307bh-water-only-feather-20261011-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0307",
+        "manifest_path": "animations/packs-par-zone/am0307bh-water-only-feather-20261011-v1/AR0307/manifest.json",
+        "manifest_sha256": "E0EF98555FC86EDEF17F47C1FA12D82D6DDBF0E531D8CDB12FAB8199BCAA960E",
+        "path": "animations/packs-par-zone/am0307bh-water-only-feather-20261011-v1/AR0307",
+        "registry_sha256": "92E17A900FDE425077FE0CF9A62F1D7A01A0EEB5F1544FA15E1FCCF1207C0CD8",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0329",
+        "manifest_path": "animations/packs-par-zone/am0307bh-water-only-feather-20261011-v1/AR0329/manifest.json",
+        "manifest_sha256": "A8E426DDA70901E5D06C751A62887BA1A7DF592708F25AF9E358D955F6338C28",
+        "path": "animations/packs-par-zone/am0307bh-water-only-feather-20261011-v1/AR0329",
+        "registry_sha256": "92E17A900FDE425077FE0CF9A62F1D7A01A0EEB5F1544FA15E1FCCF1207C0CD8",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am0307bh-water-only-feather-20261011-v1/manifest.json",
+    "manifest_sha256": "05A9F47A02BB1F1B1A6BF724183728CAA09B3760C1D62DDD4870FD0C06F95FC7",
+    "path": "animations/packs-par-zone/am0307bh-water-only-feather-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0307",
+    "AR0329"
+  ],
+  "updated_at_utc": "2026-10-11T07:23:52Z"
+}

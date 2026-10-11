@@ -1,0 +1,24 @@
+{
+  "schema": "bg2-upscale-animation-final-selection-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T07:27:54.992811+00:00",
+  "resrefs": [
+    "AM307RED"
+  ],
+  "source_run": "animations/batches/ar0307-ar0329-am0307bh-am307red-apo8-x4-30fps-collapse-holds-20260916",
+  "source_run_manifest_sha256": "d32ca703606ae28925c139d3681d61f528d99852937cc1e27cb4587bba8037c0",
+  "output_split_root": "animations/packs-par-zone/am307red-collapse-preserve-look-20261011-v1",
+  "output_manifest_sha256": "4cc0a909e4afae4f8909a982ad0352ea1c100f6014dcdf0cb5285fcea4e81768",
+  "runtime_pack": "03_runtime_pack",
+  "runtime_pack_manifest_sha256": "90a539706df6a51fd439dc3a27374a265d62ecd2f38617c0aefb8b035d284c17",
+  "runtime_contract": {
+    "scale": 4,
+    "fps": 30,
+    "frame_count": 28,
+    "timeline_phases": 28,
+    "duration_seconds": 0.9333333333333333,
+    "timing": "collapse uniform doubled holds; input7.5fps to30fps; 3 interpolants between native references",
+    "preserved": "7 native references byte-identical; geometry, spatial upscale, alpha and duration unchanged; AM0307BH and all siblings unchanged"
+  },
+  "qa_status": "pending-explicit-user-ingame-approval"
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "bg2-upscale-animation-final-selection-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T07:17:37.089766+00:00",
+  "resrefs": [
+    "AM0307BH"
+  ],
+  "source_run": "animations/runs/ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831",
+  "source_run_manifest_sha256": "5b4893d44e3108105afb417a498a512369cdf34765ff3ca4520cd6d444b2446f",
+  "output_split_root": "animations/packs-par-zone/am0307bh-water-only-feather-20261011-v1",
+  "output_manifest_sha256": "05a9f47a02bb1f1b1a6bf724183728caa09b3760c1d62ddd4870fd0c06f95fc7",
+  "runtime_pack": "03_runtime_pack",
+  "runtime_pack_manifest_sha256": "0f05618c530b5cdc0aad6e3e042a19012ba7153fd07cc520d5cbd75698cbdbde",
+  "water_mask": "animations/batches/am0307bh-water-only-feather-20261011-v1/water-mask-fit1-inner8-x4.png",
+  "water_mask_sha256": "68eb7fd61e91e66db2b112a00b43138e34e93b95dca4f92bd9fc49b9a4f2d818",
+  "runtime_contract": {
+    "scale": 4,
+    "fps": 30,
+    "frame_count": 21,
+    "timeline_phases": 28,
+    "native_lookup": [
+      0,
+      0,
+      1,
+      1,
+      2,
+      2,
+      3,
+      3,
+      4,
+      4,
+      5,
+      5,
+      6,
+      6
+    ],
+    "timing": "unchanged installed native-slots-x2; cancelled collapse correction not used",
+    "duration_seconds": 0.9333333333333333,
+    "RGB": "byte-identical all pixels",
+    "geometry": "unchanged canvas170x130 centre85,130",
+    "alpha": "fixed water-only Fit1 spline; SS4 BOX; smoothstep inside8px x4"
+  },
+  "qa_status": "pending-explicit-user-ingame-approval"
+}

@@ -1,0 +1,85 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM307RED",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/ar0307-ar0329-am0307bh-am307red-apo8-x4-30fps-collapse-holds-20260916/03_runtime_pack/manifest.json",
+        "manifest_sha256": "7AF4D813C0606D36821F8EE8D6716AC6F2850E613BD9B3AF4279FEC3D0CF3297",
+        "path": "animations/batches/ar0307-ar0329-am0307bh-am307red-apo8-x4-30fps-collapse-holds-20260916/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/runs/ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831/05_merged_runtime/AR0307/manifest.json",
+        "manifest_sha256": "A482873626BA5BB659B31C806F86EB792BC357E90597FBE59B5E574FFDB6F918",
+        "path": "animations/runs/ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831/05_merged_runtime/AR0307",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/ar0307-ar0329-am0307bh-am307red-apo8-x4-30fps-collapse-holds-20260916/manifest.json",
+        "manifest_sha256": "D32CA703606AE28925C139D3681D61F528D99852937CC1E27CB4587BBA8037C0",
+        "path": "animations/batches/ar0307-ar0329-am0307bh-am307red-apo8-x4-30fps-collapse-holds-20260916",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/runs/ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831/manifest.json",
+        "manifest_sha256": "E746B3FE39E13326B3BCF1FDD56EFEA69138F56372315194B6AF12B9E2AB21F4",
+        "path": "animations/runs/ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-11",
+    "path": "animations/index/qa-decisions/AM307RED/2026-10-11-accepted-am307red-collapse-preserve-look-v1.json",
+    "sha256": "0B9403949BEFEA410DA60AE4F96599D9C5BB95C510FD25004F3E59C195055DCF",
+    "status": "accepted"
+  },
+  "recipe_id": "am307red-collapse-preserve-look-20261011-v1",
+  "resref": "AM307RED",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM307RED/runs/am307red-collapse-preserve-look-20261011-v1/manifest.json",
+    "manifest_sha256": "9E640DEDA0774B20C67F8A81F59E14DD19061B8BECA82BCB6DDAF2D3FA579A1A",
+    "path": "animations/ressources/AM307RED/runs/am307red-collapse-preserve-look-20261011-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0307",
+        "manifest_path": "animations/packs-par-zone/am307red-collapse-preserve-look-20261011-v1/AR0307/manifest.json",
+        "manifest_sha256": "8796CE0C2DEABC6267EF09BCCC8463640D79A71AD18AC917B43DE6B9FD46C882",
+        "path": "animations/packs-par-zone/am307red-collapse-preserve-look-20261011-v1/AR0307",
+        "registry_sha256": "D5FAA4A59192CA844D072136CA63151EC2015A3EF331F77DBAE581189010CC8E",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0329",
+        "manifest_path": "animations/packs-par-zone/am307red-collapse-preserve-look-20261011-v1/AR0329/manifest.json",
+        "manifest_sha256": "3B6C35603F4799F55DE0DBA6AC03236EA49C508012B5B0CC58E6BA875C56961C",
+        "path": "animations/packs-par-zone/am307red-collapse-preserve-look-20261011-v1/AR0329",
+        "registry_sha256": "D5FAA4A59192CA844D072136CA63151EC2015A3EF331F77DBAE581189010CC8E",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am307red-collapse-preserve-look-20261011-v1/manifest.json",
+    "manifest_sha256": "4CC0A909E4AFAE4F8909A982AD0352EA1C100F6014DCDF0CB5285FCEA4E81768",
+    "path": "animations/packs-par-zone/am307red-collapse-preserve-look-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0307",
+    "AR0329"
+  ],
+  "updated_at_utc": "2026-10-11T07:29:59Z"
+}
