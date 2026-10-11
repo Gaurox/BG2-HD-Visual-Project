@@ -1,0 +1,198 @@
+{
+  "schema": "bg2-upscale-animation-targeted-acceptance-v1",
+  "status": "accepted-ingame",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "user_statement": "validé ! du coup on peut valider toute cette liste d’assets proprement ?",
+  "resources": [
+    {
+      "resref": "FIRE_3",
+      "new_qa_areas": [
+        "AR0202"
+      ],
+      "occurrences": 4,
+      "fps": 30,
+      "distinct_phases": 28,
+      "inner_fade_x4": 4,
+      "sigma_x4": 0,
+      "area_qa_decision": "animations/index/area-qa-decisions/FIRE_3/2026-10-11-accepted-fire3-ar0202-fade4-30fps-v1.json",
+      "selection": "animations/index/selections/FIRE_3.json",
+      "historical_qa_retained_areas": [
+        "AR0331",
+        "AR0500",
+        "AR0526",
+        "AR0906",
+        "AR3001",
+        "AR5000",
+        "OH4200",
+        "OH4210",
+        "OH4220"
+      ]
+    },
+    {
+      "resref": "AM1400A",
+      "new_qa_areas": [
+        "AR1400"
+      ],
+      "fps": 30,
+      "phases": 14,
+      "selection": "animations/index/selections/AM1400A.json",
+      "current_contour_accepted": true
+    },
+    {
+      "resref": "FPIT1S",
+      "confirmation": "asset accepted as currently observed",
+      "acquired_global_qa": {
+        "decision_date": "2026-09-04",
+        "path": "animations/index/qa-decisions/FPIT1S/2026-09-04-accepted-fpit1s-contour-fondu-j-masques-20260904.json",
+        "sha256": "DEDE54A262D47539DEE19D2F08EBE8CC27FA512A592E32290F807DD9CB8F02B3",
+        "status": "accepted"
+      },
+      "immutable_selection_preserved": true,
+      "no_exhaustive_new_visits_inferred": true
+    },
+    {
+      "resref": "AM1400N",
+      "status": "historical validation retained; no new user confirmation"
+    }
+  ],
+  "installed_checks": [
+    {
+      "resref": "FIRE_3",
+      "area": "AR0202",
+      "source_leaf": "animations/packs-par-zone/fire3-aura-fade4-30fps-20261011-v1/AR0202",
+      "installed_assets_and_runtime_match": true,
+      "registry_sha256": "ecccc13a128d4ab0eaae349246ef3a813aaf9fe8a638c432cb503a5c0ed1a689",
+      "resource_entries": 1,
+      "frame_counts": [
+        28
+      ]
+    },
+    {
+      "resref": "AM1400A",
+      "area": "AR1400",
+      "source_leaf": "animations/packs-par-zone/trees-seedvr-static-x4-20261011-v1-ar1400/AR1400",
+      "installed_assets_and_runtime_match": true,
+      "registry_sha256": "86728d74b1a4c80d5cc977948201690f8a8c27cb597f7dac67e1a8d133c57c62",
+      "resource_entries": 1,
+      "frame_counts": [
+        14
+      ]
+    },
+    {
+      "resref": "FPIT1S",
+      "area": "AR0509",
+      "source_leaf": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0509",
+      "installed_assets_and_runtime_match": true,
+      "registry_sha256": "851e50e66862eafeacf1305a594cfb4dda4f20fb69712ca40c3ea99e4e476409",
+      "resource_entries": 2,
+      "frame_counts": [
+        12,
+        12
+      ]
+    },
+    {
+      "resref": "FPIT1S",
+      "area": "AR0522",
+      "source_leaf": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0522",
+      "installed_assets_and_runtime_match": true,
+      "registry_sha256": "e4e84d5690fefc63ea98a68bea5552facfcb4a6fe5b6a5541211182c45470ffd",
+      "resource_entries": 2,
+      "frame_counts": [
+        12,
+        12
+      ]
+    },
+    {
+      "resref": "FPIT1S",
+      "area": "AR0601",
+      "source_leaf": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0601",
+      "installed_assets_and_runtime_match": true,
+      "registry_sha256": "1903754ffd37c0a5e7d14576f28b0762a571e12c5558f7796ecf81ed038db651",
+      "resource_entries": 1,
+      "frame_counts": [
+        12
+      ]
+    },
+    {
+      "resref": "FPIT1S",
+      "area": "AR5202",
+      "source_leaf": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR5202",
+      "installed_assets_and_runtime_match": true,
+      "registry_sha256": "589e349c3d27e8e370ec8e75c7b4ee1a1d0103f09d1710e2889695325371dfd3",
+      "resource_entries": 1,
+      "frame_counts": [
+        12
+      ]
+    }
+  ],
+  "authority_checks": {
+    "FIRE_3": {
+      "command": "check",
+      "resref": "FIRE_3",
+      "ok": true,
+      "checked_files": [
+        "animations/index/qa-decisions/FIRE_3/2026-09-16-accepted-fire3-x4-reserve-animation.json",
+        "animations/index/qa-decisions/FIRE_3/2026-10-11-accepted-fire3-ar0202-fade4-composite-v1.json",
+        "animations/index/selections/FIRE_3.json"
+      ],
+      "errors": [],
+      "release_mutation": false
+    },
+    "AM1400A": {
+      "command": "check",
+      "resref": "AM1400A",
+      "ok": true,
+      "checked_files": [
+        "animations/index/qa-decisions/AM1400A/2026-10-11-accepted-am1400a-current-contour-v1.json",
+        "animations/index/selections/AM1400A.json"
+      ],
+      "errors": [],
+      "release_mutation": false
+    },
+    "FPIT1S": {
+      "command": "check",
+      "resref": "FPIT1S",
+      "ok": true,
+      "checked_files": [
+        "animations/index/qa-decisions/FPIT1S/2026-09-04-accepted-fpit1s-contour-fondu-j-masques-20260904.json",
+        "animations/index/selections/FPIT1S.json"
+      ],
+      "errors": [],
+      "release_mutation": false
+    },
+    "AM1400N": {
+      "command": "check",
+      "resref": "AM1400N",
+      "ok": true,
+      "checked_files": [],
+      "errors": [],
+      "release_mutation": false
+    }
+  },
+  "prior_qa_hashes_preserved": {
+    "animations/index/qa-decisions/FIRE_3/2026-09-16-accepted-fire3-x4-reserve-animation.json": "f27620e816cbe8a35f97053c1264d191f87f336aa24136b4b07c0097b477f21b",
+    "animations/index/qa-decisions/FPIT1S/2026-09-04-accepted-fpit1s-contour-fondu-j-masques-20260904.json": "dede54a262d47539dee19d2f08ebe8cc27fa512a592e32290f807dd9cb8f02b3",
+    "animations/index/selections/FPIT1S.json": "07136a6ae32ba842631b8506d6f452003987b1a6512cc258b2c8f1a9b250ed89"
+  },
+  "remaining_actions": [
+    {
+      "resref": "FIRE_3",
+      "areas": [
+        "AR0331",
+        "AR0500",
+        "AR0526",
+        "AR0906",
+        "AR3001",
+        "AR5000",
+        "OH4200",
+        "OH4210",
+        "OH4220"
+      ],
+      "action": "If global 30FPS treatment is requested: prepare/install/verify on these maps; prior native temporal reserve remains."
+    }
+  ],
+  "game_payload_changed": false,
+  "installation_lock_changed": false,
+  "release_status": "not-selected"
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "bg2-upscale-animation-cleanup-status-v1",
+  "date": "2026-10-11",
+  "scope": "Read-only follow-up after final FIRE_3 acceptance; no global repair/release compilation performed",
+  "sources": ["animations/index/animation_upscale_registry.csv", "animations/index/selections", "animations/index/area-pack-lock.json", "animations/index/occurrences.csv", "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json"],
+  "commands": ["python pipeline/scripts/area_pack_state.py status -v", "animation_workflow.check_workspace(ROOT, 'FIRE_3')", "Per-resource installed signatures compared with each current accepted selection on AR0307/AR0411/AR3021"],
+  "BAM": {"resources": 246, "validé-x4": 246, "occurrences": 3422, "areas": 234, "qa_decision_and_selection_missing": 43, "interpretation": "Historical accepted rows lack structured QA/run bindings; this does not invalidate or erase their acquired user approvals"},
+  "FIRE_3": {"areas": 10, "occurrences": 34, "fps": 30, "distinct_phases": 28, "fade_x4": 4, "sigma_x4": 0, "status": "accepted-ingame-all-maps", "temporal_reserve": "closed", "report": "pipeline/recipes/fire3-final-acceptance-20261011-v1/acceptance.json"},
+  "installation": {
+    "installed_areas": 234,
+    "locked_areas": 234,
+    "stale_locks_with_installed_accepted_bytes": {"AR0307": ["AM0307BH", "AM307RED"], "AR0411": ["DSTDVL1A", "DSTDVL1B", "DSTDVL1C", "DSTDVL2B", "DSTDVL2C"]},
+    "installed_different_from_accepted_selection": {"AR3021": ["AM3021D", "AM3021E", "AM3021F"]},
+    "accepted_but_not_installed": {"AR5000": ["FISH1L", "FISH2L", "FISH2S", "FISH3S"]},
+    "malformed_reconstruction_recipes": {
+      "areas": ["AR6001", "AR6005"],
+      "cause": "build.merged_from contains stringified source_split_root metadata objects instead of leaf paths",
+      "actual_source_roots_exist": ["animations/packs-par-zone/am6004a-fumee-final-20261009-v1", "animations/packs-par-zone/ar6005-fumee-effetvert-complete-20261009-v1"]
+    }
+  },
+  "historical_bindings_to_formalize": ["AM0033AB", "AM0205A", "AM0205B", "AM0205C", "AM0205D", "AM0205E", "AM0602AA", "AM0602AB", "AM0602AC", "AM0602B", "AM0602C", "AM0602D", "AM0602E", "AM0602F", "AM0602G", "AM0602J", "AM0602K1", "AM0602K2", "AM0602L1", "AM0602L2", "AM0602M", "AM0604A", "AM0700A", "AM0700B", "AM0700C", "AM0700D", "AM0900DM", "AM1400N", "AM2100PA", "AM2100PB", "AM2100PC", "AM2201A", "AM2201B", "AM307TT1", "AM307UR1", "AM307UR2", "AM307UR3", "BUTRFLY", "CHIMSMK", "FIRE_1", "PORTL1A", "PORTL1B", "PORTL2A"],
+  "release": {
+    "candidate_areas": 156,
+    "approved_for_release": 142,
+    "validated_awaiting_manifest_approval": 14,
+    "pending_areas": ["AR0516", "AR0603", "AR0307", "AR0329", "AR1100", "AR1200", "AR1700", "AR5500", "OH6400", "AR0411", "AR1600", "AR6300", "AR2201", "AR5200"],
+    "next_action": "Refresh candidates to exact latest accepted packs, resolve remaining area manifest approvals, then compile/test package during explicit release finalization",
+    "mutated": false
+  },
+  "optional_accepted_visual_reserves": {"AM0033AB": "thin dark edge", "AM2201B": "thin dark edge; heavier feather/Gaussian alternatives rejected", "AM2805B_AM2805C": "horizontal seam, optional", "AM1400N": "native stepped contour, historical QA retained", "FPIT1S": "accepted as-is; further halo refinement optional"},
+  "separate_WBM_scope": {"resources": 20, "occurrences": 20, "status": "Outside BAM registry; no production/QA/install status inferred from this inventory count"},
+  "recommended_order": ["Restore accepted AM3021D/E/F and install accepted AR5000 fish in complete area packs", "Refresh AR0307/AR0411 locks and repair AR6001/AR6005 reconstruction references", "Bind 43 acquired historical approvals to exact runs/packs without inventing new ingame visits", "Refresh animation release candidates and complete distribution finalization only when requested"],
+  "global_graphical_reprocessing_required": "No unprocessed BAM resource in canonical registry; remaining graphics reserves are explicitly minor/optional"
+}

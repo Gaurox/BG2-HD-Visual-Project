@@ -1,0 +1,44 @@
+{
+  "source_pack": "animations/packs-par-zone/fire3-apo8-30fps-ar0202-zero-20261011-v1/AR0202",
+  "resref": "FIRE_3",
+  "area": "AR0202",
+  "user_temporal_feedback": "animation pas terrible mais acceptable",
+  "requested_visual_issue": "aura pixelisee derriere la flamme",
+  "protected_core": "loop-wide mean RGB >=140, dilation2 x4; soft outer band4 x4",
+  "policy": "multiply existing premultiplied RGBA by new fade only; no second premultiplication",
+  "variants": {
+    "Actuel": {
+      "distinct_aligned_frames": 28,
+      "core_byte_identical": true,
+      "rgb_energy_ratio_min": 1.0,
+      "rgb_energy_ratio_max": 1.0,
+      "geometry_unchanged": true,
+      "temporal_contract_unchanged": true
+    },
+    "Fondu seul 4 px": {
+      "distinct_aligned_frames": 28,
+      "core_byte_identical": true,
+      "rgb_energy_ratio_min": 0.978429808425455,
+      "rgb_energy_ratio_max": 0.99345679081584,
+      "geometry_unchanged": true,
+      "temporal_contract_unchanged": true
+    },
+    "Fondu 4 + flou 1,5": {
+      "distinct_aligned_frames": 28,
+      "core_byte_identical": true,
+      "rgb_energy_ratio_min": 0.9814339026299036,
+      "rgb_energy_ratio_max": 0.9953165046801303,
+      "geometry_unchanged": true,
+      "temporal_contract_unchanged": true
+    },
+    "Fondu 6 + flou 2,5": {
+      "distinct_aligned_frames": 28,
+      "core_byte_identical": true,
+      "rgb_energy_ratio_min": 0.9779516898973555,
+      "rgb_energy_ratio_max": 0.9958577060911799,
+      "geometry_unchanged": true,
+      "temporal_contract_unchanged": true
+    }
+  },
+  "status": "preview-only; not installed; no QA or release mutation"
+}

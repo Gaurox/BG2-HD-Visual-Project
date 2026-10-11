@@ -1,0 +1,127 @@
+{
+  "schema": "bg2-upscale-animation-propagation-install-v1",
+  "status": "installed-verified",
+  "created_utc": "2026-10-11T18:07:13.743443+00:00",
+  "resref": "FIRE_3",
+  "areas_updated": [
+    "AR0331",
+    "AR0500",
+    "AR0526",
+    "AR0906",
+    "AR3001",
+    "AR5000",
+    "OH4200",
+    "OH4210",
+    "OH4220"
+  ],
+  "reference_area": "AR0202",
+  "total_areas": 10,
+  "total_occurrences": 34,
+  "fps": 30,
+  "distinct_phases": 28,
+  "duration_seconds": 0.9333333333333333,
+  "inner_fade_x4": 4,
+  "gaussian_sigma_x4": 0,
+  "run": "animations/ressources/FIRE_3/runs/fire3-aura-fade4-all-areas-20261011-v1",
+  "pack": "animations/packs-par-zone/fire3-aura-fade4-all-areas-20261011-v1",
+  "game_root": "config://bg2ee_game_root",
+  "receipts": [
+    {
+      "area": "AR0331",
+      "status": "installed",
+      "receipt": "backups/animations/area-tests/AR0331-20261011T180653568621Z-cad93648/install-backup.json",
+      "receipt_sha256": "3a63c36a4898bbed49384f11dc44183be8e1c547040c131580975ef1b1338383",
+      "installed_payload_matches": true,
+      "sibling_assets_and_runtime_unchanged": true
+    },
+    {
+      "area": "AR0500",
+      "status": "installed",
+      "receipt": "backups/animations/area-tests/AR0500-20261011T180655304088Z-989c40d5/install-backup.json",
+      "receipt_sha256": "6c362c40c44bddb1400bc968750c89bb907c7f37a6dee1c919a3b9d7c9d1ec6b",
+      "installed_payload_matches": true,
+      "sibling_assets_and_runtime_unchanged": true
+    },
+    {
+      "area": "AR0526",
+      "status": "installed",
+      "receipt": "backups/animations/area-tests/AR0526-20261011T180657325186Z-1ff6e2bd/install-backup.json",
+      "receipt_sha256": "4d233ea5de1a58679fbd446ce9a287905ce0ee0f12f85f677f1d81c5303a6081",
+      "installed_payload_matches": true,
+      "sibling_assets_and_runtime_unchanged": true
+    },
+    {
+      "area": "AR0906",
+      "status": "installed",
+      "receipt": "backups/animations/area-tests/AR0906-20261011T180659072979Z-363ac35f/install-backup.json",
+      "receipt_sha256": "cef726331c543e77082a522ea5e82a4eff618c271432db7fdce548dd0fa5f517",
+      "installed_payload_matches": true,
+      "sibling_assets_and_runtime_unchanged": true
+    },
+    {
+      "area": "AR3001",
+      "status": "installed",
+      "receipt": "backups/animations/area-tests/AR3001-20261011T180700630369Z-a293fb56/install-backup.json",
+      "receipt_sha256": "784c50bc5b304c454c4c37b7c04e828a0b5081e3819dc69e3dd8a996f67cb815",
+      "installed_payload_matches": true,
+      "sibling_assets_and_runtime_unchanged": true
+    },
+    {
+      "area": "AR5000",
+      "status": "installed",
+      "receipt": "backups/animations/area-tests/AR5000-20261011T180702937719Z-40729d7c/install-backup.json",
+      "receipt_sha256": "2eb65753ded2f11b0eeb4ab1d322419f6d8330d54e2891345306100b6ef318b9",
+      "installed_payload_matches": true,
+      "sibling_assets_and_runtime_unchanged": true
+    },
+    {
+      "area": "OH4200",
+      "status": "installed",
+      "receipt": "backups/animations/area-tests/OH4200-20261011T180705984318Z-e18fb780/install-backup.json",
+      "receipt_sha256": "d1f6acddfe3cb5f620132d39c1f377664ffaad3d4945a463559757bf7e7f2cae",
+      "installed_payload_matches": true,
+      "sibling_assets_and_runtime_unchanged": true
+    },
+    {
+      "area": "OH4210",
+      "status": "installed",
+      "receipt": "backups/animations/area-tests/OH4210-20261011T180707668179Z-bcb814db/install-backup.json",
+      "receipt_sha256": "df7b40f1ce6c2da791a777e9a37b1828dc40c307e42fa7761bb2fff6d2a14a3b",
+      "installed_payload_matches": true,
+      "sibling_assets_and_runtime_unchanged": true
+    },
+    {
+      "area": "OH4220",
+      "status": "installed",
+      "receipt": "backups/animations/area-tests/OH4220-20261011T180711435503Z-3b6edf93/install-backup.json",
+      "receipt_sha256": "6ee6438e4d1acf420c276019724b51e6218aee135247d233ff14e739fd6b89e5",
+      "installed_payload_matches": true,
+      "sibling_assets_and_runtime_unchanged": true
+    }
+  ],
+  "source_asset_byte_identical": true,
+  "siblings_assets_and_runtime_preserved": true,
+  "reference_ar0202_unchanged": true,
+  "qa_reference": "animations/index/area-qa-decisions/FIRE_3/2026-10-11-accepted-fire3-ar0202-fade4-30fps-v1.json",
+  "qa_hashes_preserved": {
+    "animations/index/selections/FIRE_3.json": "2cd50cec3babf54e492490cf88253cf5fa5bd4ee53d8f7c041a87359165fe430",
+    "animations/index/qa-decisions/FIRE_3/2026-10-11-accepted-fire3-ar0202-fade4-composite-v1.json": "2b14f6b4df100a7e7bc8c8d4c9653ff7ac29ae451861815e86cc58c849613c67",
+    "animations/index/area-qa-decisions/FIRE_3/2026-10-11-accepted-fire3-ar0202-fade4-30fps-v1.json": "08138abefa4bd65df531514035553948c909b8c62755e5b272fa44e96a95dd1f"
+  },
+  "new_ingame_visits_inferred": false,
+  "current_installed_version_uniform": true,
+  "qa_selection_retains_historical_versions": true,
+  "authority_check": {
+    "command": "check",
+    "resref": "FIRE_3",
+    "ok": true,
+    "checked_files": [
+      "animations/index/qa-decisions/FIRE_3/2026-09-16-accepted-fire3-x4-reserve-animation.json",
+      "animations/index/qa-decisions/FIRE_3/2026-10-11-accepted-fire3-ar0202-fade4-composite-v1.json",
+      "animations/index/selections/FIRE_3.json"
+    ],
+    "errors": [],
+    "release_mutation": false
+  },
+  "release_status": "not-selected"
+}

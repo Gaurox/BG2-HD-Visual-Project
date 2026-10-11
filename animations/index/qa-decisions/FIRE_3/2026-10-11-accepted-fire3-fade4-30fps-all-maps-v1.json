@@ -1,0 +1,150 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:FIRE_3",
+  "correction_id": "fire3-aura-fade4-all-areas-20261011-v1",
+  "decision": "Utilisateur : oui c’est bon je valide tout. QA FIRE_3 acceptée sur les neuf cartes propagées ; QA AR0202 antérieure conservée. Dix cartes/34 occurrences : Apollo8 30 FPS, 28 phases distinctes, durée 14/15 s, aura fondu seul4px x4 sans flou. Réserve temporelle clôturée sur toutes les zones. Fichiers et contrats installés vérifiés ; autres assets préservés. Aucune intégration release.",
+  "decision_date": "2026-10-11",
+  "decision_id": "2026-10-11-accepted-fire3-fade4-30fps-all-maps-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/FIRE_3/runs/fire3-fade4-30fps-all-maps-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "332AB436DF4F6EB152D2BA362C1CC9226020A8F53EA8A9FE4C59A54A98CD6D21",
+    "path": "animations/ressources/FIRE_3/runs/fire3-fade4-30fps-all-maps-accepted-20261011-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/fire3-apo8-30fps-ar0202-zero-20261011-v1/AR0202/manifest.json",
+        "manifest_sha256": "74F52A918A3EEDCFB1E03D886C5AD81758B7A6FF70ECFD0FEF2D38263592058D",
+        "path": "animations/packs-par-zone/fire3-apo8-30fps-ar0202-zero-20261011-v1/AR0202",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/FIRE_3/runs/fire3-aura-fade4-30fps-20261011-v1/manifest.json",
+        "manifest_sha256": "01F4E87CC200BC3345590F8C378FAC814C80B51D3C3E6C904C7B495782961758",
+        "path": "animations/ressources/FIRE_3/runs/fire3-aura-fade4-30fps-20261011-v1",
+        "schema": "bg2-upscale-animation-visual-treatment-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/FIRE_3/runs/fire3-aura-fade4-all-areas-20261011-v1/manifest.json",
+        "manifest_sha256": "3E8D044A25D1A0F3E91D5EB377D8782F316A38A4B01538CBBB39D8BDE4E88DAB",
+        "path": "animations/ressources/FIRE_3/runs/fire3-aura-fade4-all-areas-20261011-v1",
+        "schema": "bg2-upscale-animation-propagation-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "fire3-fade4-30fps-all-maps-accepted-20261011-v1",
+  "recorded_at_utc": "2026-10-11T18:14:43Z",
+  "resref": "FIRE_3",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0202",
+        "manifest_path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1/AR0202/manifest.json",
+        "manifest_sha256": "D8A8A1913E48F22BFC73F9A37F671177FFFE980105775BBFDE40DCC10511F183",
+        "path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1/AR0202",
+        "registry_sha256": "ECCCC13A128D4AB0EAAE349246EF3A813AAF9FE8A638C432CB503A5C0ED1A689",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0331",
+        "manifest_path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1/AR0331/manifest.json",
+        "manifest_sha256": "D0438461536A4ED74838AE9EB80C15F399457C9089630F47AF04AAC4B66E9F1C",
+        "path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1/AR0331",
+        "registry_sha256": "AFF74C8E851AC73B46799CBE1D53F743FE8F89662531927D091D9701682C7D04",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0500",
+        "manifest_path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1/AR0500/manifest.json",
+        "manifest_sha256": "FCD26C8F4E4754E674D1D1305B4B7302624C81FB0508ABA27D573810895A4809",
+        "path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1/AR0500",
+        "registry_sha256": "FC68D488147F2D81157B04D93991A4004C8D466C195F329E353A0C3A929B377F",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0526",
+        "manifest_path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1/AR0526/manifest.json",
+        "manifest_sha256": "FAECB51054A0F4CBC50FC980F0038EC09DC5C52E138779680AE774B100A79904",
+        "path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1/AR0526",
+        "registry_sha256": "AFF74C8E851AC73B46799CBE1D53F743FE8F89662531927D091D9701682C7D04",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0906",
+        "manifest_path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1/AR0906/manifest.json",
+        "manifest_sha256": "6AFCD4CC00DF327D6B5720A0C1B06168F360FBBEB6AE5C150E4F3AF21BDA8DD0",
+        "path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1/AR0906",
+        "registry_sha256": "574349732EAF3C97749AD18D5C60DC6D558A58ED601F87ECFFEB55DF93331610",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR3001",
+        "manifest_path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1/AR3001/manifest.json",
+        "manifest_sha256": "C63EEED46EDA381C8FF76114F04D47E3C3E65487F9AAAB1037E5090BED439DE2",
+        "path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1/AR3001",
+        "registry_sha256": "DB9837755CAB6B0104852E7B39661D5CE7B5D1BDE54F7EA9A88AEA6746739EF1",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5000",
+        "manifest_path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1/AR5000/manifest.json",
+        "manifest_sha256": "E5606680CC66C269FE8482E5F1E0E83666B5B59DFF75614F3EAF495AAC950686",
+        "path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1/AR5000",
+        "registry_sha256": "CFFDEECFAA0188DA6015D51D4603D7C67364318FAA7A74DE18B9971ED1F96AB1",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH4200",
+        "manifest_path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1/OH4200/manifest.json",
+        "manifest_sha256": "874B6ACE01E7A993F2E4CD4C41CD443EF4E6F995BC17111FAEEF5C7B1CA48BF8",
+        "path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1/OH4200",
+        "registry_sha256": "84AA0C211B0EB6CE78DC55A86C357D441375B7E897ED72D485E4199F929E071E",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH4210",
+        "manifest_path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1/OH4210/manifest.json",
+        "manifest_sha256": "4F7891F99141E1C10DB899D75F22B4ACDE3593249DA30F583A0BBE62EF274158",
+        "path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1/OH4210",
+        "registry_sha256": "FC858AA9CF176C444944B311B9CF6BF19FD8DB9FA249D78BA03BD94D09D27A6A",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH4220",
+        "manifest_path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1/OH4220/manifest.json",
+        "manifest_sha256": "036D349874F0A2BE08E2338B48E62DF39EE1830E2190956179A0F2E3001339A8",
+        "path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1/OH4220",
+        "registry_sha256": "62BAD63CC32697B856D541B85D61FA479E11EEB0CB644D0852CB56B8D506E061",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "9993AAD926690D633D0578A9DB89BA14EBD46DFD2E51C41854B0E15D33D4717F",
+    "path": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0202",
+    "AR0331",
+    "AR0500",
+    "AR0526",
+    "AR0906",
+    "AR3001",
+    "AR5000",
+    "OH4200",
+    "OH4210",
+    "OH4220"
+  ]
+}

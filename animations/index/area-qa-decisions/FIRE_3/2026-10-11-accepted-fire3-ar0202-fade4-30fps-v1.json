@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "schema_version": 1,
+  "decision_id": "2026-10-11-accepted-fire3-ar0202-fade4-30fps-v1",
+  "asset_id": "animations:bam:FIRE_3",
+  "resref": "FIRE_3",
+  "status": "accepted",
+  "result_kind": "x4",
+  "decision_origin": "explicit-user-ingame-qa",
+  "decision_date": "2026-10-11",
+  "recorded_at_utc": "2026-10-11T17:57:12.261340+00:00",
+  "decision": "Utilisateur : validé ! FIRE_3 accepté ingame sur les quatre flammes AR0202 : Apollo8 30 FPS, 28 phases distinctes, durée 14/15 s, fondu seul 4 px x4, sans flou. Réserve AR0202 clôturée.",
+  "tested_areas": [
+    "AR0202"
+  ],
+  "final_run": {
+    "path": "animations/ressources/FIRE_3/runs/fire3-aura-fade4-30fps-20261011-v1",
+    "manifest_path": "animations/ressources/FIRE_3/runs/fire3-aura-fade4-30fps-20261011-v1/manifest.json",
+    "manifest_sha256": "01F4E87CC200BC3345590F8C378FAC814C80B51D3C3E6C904C7B495782961758",
+    "schema": "bg2-upscale-animation-visual-treatment-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "path": "animations/packs-par-zone/fire3-aura-fade4-30fps-20261011-v1",
+    "manifest_path": "animations/packs-par-zone/fire3-aura-fade4-30fps-20261011-v1/manifest.json",
+    "manifest_sha256": "0072A719122152CA9048D4F73EBEF138E2F23A8BAEB7511EFA83A1CF28327A01",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed",
+    "areas": [
+      {
+        "area": "AR0202",
+        "path": "animations/packs-par-zone/fire3-aura-fade4-30fps-20261011-v1/AR0202",
+        "manifest_path": "animations/packs-par-zone/fire3-aura-fade4-30fps-20261011-v1/AR0202/manifest.json",
+        "manifest_sha256": "D8A8A1913E48F22BFC73F9A37F671177FFFE980105775BBFDE40DCC10511F183",
+        "registry_sha256": "ECCCC13A128D4AB0EAAE349246EF3A813AAF9FE8A638C432CB503A5C0ED1A689",
+        "resource_entries": 1
+      }
+    ]
+  },
+  "lineage": {
+    "source_runs": [],
+    "source_packs": [
+      {
+        "path": "animations/packs-par-zone/fire3-apo8-30fps-ar0202-zero-20261011-v1/AR0202",
+        "manifest_path": "animations/packs-par-zone/fire3-apo8-30fps-ar0202-zero-20261011-v1/AR0202/manifest.json",
+        "manifest_sha256": "74F52A918A3EEDCFB1E03D886C5AD81758B7A6FF70ECFD0FEF2D38263592058D",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "fire3-aura-fade4-30fps-20261011-v1",
+  "correction_id": "fire3-aura-fade4-30fps-20261011-v1"
+}

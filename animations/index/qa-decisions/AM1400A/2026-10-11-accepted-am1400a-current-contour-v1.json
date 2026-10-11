@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM1400A",
+  "decision": "Utilisateur : AM1400A validé. Fontaine de jour AR1400 acceptée en l’état, x4/30 FPS/14 phases ; contour actuel accepté. Confirmation de la liste le 2026-10-11. Aucune nouvelle QA AM1400N.",
+  "decision_date": "2026-10-11",
+  "decision_id": "2026-10-11-accepted-am1400a-current-contour-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM1400A/runs/am1400a-animations-targeted-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "431FAA5BC5688BE390BA045B5F272144102C321E9D8A15B9B1746A10D16DB54C",
+    "path": "animations/ressources/AM1400A/runs/am1400a-animations-targeted-accepted-20261011-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/trees-seedvr-static-x4-20261011-v1-ar1400/AR1400/manifest.json",
+        "manifest_sha256": "82132C7344BF07DD60A265FF2C79FAECA28F59C0F1940150D5926358E29F121B",
+        "path": "animations/packs-par-zone/trees-seedvr-static-x4-20261011-v1-ar1400/AR1400",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "recipe_id": "animations-targeted-accepted-20261011-v1",
+  "recorded_at_utc": "2026-10-11T17:57:12Z",
+  "resref": "AM1400A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR1400",
+        "manifest_path": "animations/packs-par-zone/am1400a-animations-targeted-accepted-20261011-v1/AR1400/manifest.json",
+        "manifest_sha256": "C6F5D6FDE18B35B71346031917821646C11FA2D3EFF384B8B3DE45B881252CF9",
+        "path": "animations/packs-par-zone/am1400a-animations-targeted-accepted-20261011-v1/AR1400",
+        "registry_sha256": "3766D2A1C87BB9D4EEC7BD3B2BB8ECB59FF51B79F91A9A4A1D342CB11A49518F",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am1400a-animations-targeted-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "276461C1C9C1DBFB0F6A66474E834DE14D38E20486690524D7C4CAF5E02CF842",
+    "path": "animations/packs-par-zone/am1400a-animations-targeted-accepted-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR1400"
+  ]
+}

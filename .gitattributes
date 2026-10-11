@@ -226,3 +226,10 @@ animations/packs-par-zone/flies-rounded-native-cadence-20261011-v1-complete-v1/*
 animations/ressources/FLIESL/runs/fliesl-rounded-native-cadence-accepted-20261011-v1/manifest.json -text whitespace=cr-at-eol
 animations/ressources/FLIESS/runs/fliess-rounded-native-cadence-accepted-20261011-v1/manifest.json -text whitespace=cr-at-eol
 pipeline/recipes/flies-rounded-native-cadence-20261011-v1/*.json -text whitespace=cr-at-eol
+
+# FIRE_3 final QA pins exact JSON evidence bytes, including Windows line endings.
+pipeline/recipes/fire3-*-20261011-v1/**/*.json -text whitespace=cr-at-eol
+pipeline/recipes/fire3-apo8-30fps-20261011-v1/occurrences-ar0202.csv -text whitespace=cr-at-eol
+pipeline/recipes/animations-targeted-acceptance-20261011-v1/*.json -text whitespace=cr-at-eol
+animations/index/area-qa-decisions/FIRE_3/2026-10-11-accepted-fire3-ar0202-fade4-30fps-v1.json -text whitespace=cr-at-eol
+docs/validation/animations-qa-cadence-20261011-v1.json -text whitespace=cr-at-eol

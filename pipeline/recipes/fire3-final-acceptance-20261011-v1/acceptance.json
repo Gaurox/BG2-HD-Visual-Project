@@ -1,0 +1,101 @@
+{
+  "schema": "bg2-upscale-animation-final-acceptance-v1",
+  "status": "accepted-ingame",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "user_statement": "oui c'est bon je valide tout. MAJ le suivi si necessaire et committe.",
+  "resref": "FIRE_3",
+  "areas": [
+    "AR0202",
+    "AR0331",
+    "AR0500",
+    "AR0526",
+    "AR0906",
+    "AR3001",
+    "AR5000",
+    "OH4200",
+    "OH4210",
+    "OH4220"
+  ],
+  "occurrences": 34,
+  "fps": 30,
+  "distinct_phases": 28,
+  "inner_fade_x4": 4,
+  "gaussian_sigma_x4": 0,
+  "temporal_reserve_closed_all_areas": true,
+  "final_run": "animations/ressources/FIRE_3/runs/fire3-fade4-30fps-all-maps-accepted-20261011-v1",
+  "qa_pack": "animations/packs-par-zone/fire3-fade4-30fps-all-maps-accepted-20261011-v1",
+  "qa_decision": "animations/index/qa-decisions/FIRE_3/2026-10-11-accepted-fire3-fade4-30fps-all-maps-v1.json",
+  "installed_checks": [
+    {
+      "area": "AR0202",
+      "installed_payload_identical": true,
+      "qa_treatment_uniform": true
+    },
+    {
+      "area": "AR0331",
+      "installed_payload_identical": true,
+      "qa_treatment_uniform": true
+    },
+    {
+      "area": "AR0500",
+      "installed_payload_identical": true,
+      "qa_treatment_uniform": true
+    },
+    {
+      "area": "AR0526",
+      "installed_payload_identical": true,
+      "qa_treatment_uniform": true
+    },
+    {
+      "area": "AR0906",
+      "installed_payload_identical": true,
+      "qa_treatment_uniform": true
+    },
+    {
+      "area": "AR3001",
+      "installed_payload_identical": true,
+      "qa_treatment_uniform": true
+    },
+    {
+      "area": "AR5000",
+      "installed_payload_identical": true,
+      "qa_treatment_uniform": true
+    },
+    {
+      "area": "OH4200",
+      "installed_payload_identical": true,
+      "qa_treatment_uniform": true
+    },
+    {
+      "area": "OH4210",
+      "installed_payload_identical": true,
+      "qa_treatment_uniform": true
+    },
+    {
+      "area": "OH4220",
+      "installed_payload_identical": true,
+      "qa_treatment_uniform": true
+    }
+  ],
+  "old_qa_hashes_preserved": {
+    "animations/index/qa-decisions/FIRE_3/2026-09-16-accepted-fire3-x4-reserve-animation.json": "f27620e816cbe8a35f97053c1264d191f87f336aa24136b4b07c0097b477f21b",
+    "animations/index/qa-decisions/FIRE_3/2026-10-11-accepted-fire3-ar0202-fade4-composite-v1.json": "2b14f6b4df100a7e7bc8c8d4c9653ff7ac29ae451861815e86cc58c849613c67",
+    "animations/index/area-qa-decisions/FIRE_3/2026-10-11-accepted-fire3-ar0202-fade4-30fps-v1.json": "08138abefa4bd65df531514035553948c909b8c62755e5b272fa44e96a95dd1f"
+  },
+  "authority_check": {
+    "command": "check",
+    "resref": "FIRE_3",
+    "ok": true,
+    "checked_files": [
+      "animations/index/qa-decisions/FIRE_3/2026-09-16-accepted-fire3-x4-reserve-animation.json",
+      "animations/index/qa-decisions/FIRE_3/2026-10-11-accepted-fire3-ar0202-fade4-composite-v1.json",
+      "animations/index/qa-decisions/FIRE_3/2026-10-11-accepted-fire3-fade4-30fps-all-maps-v1.json",
+      "animations/index/selections/FIRE_3.json"
+    ],
+    "errors": [],
+    "release_mutation": false
+  },
+  "game_payload_changed": false,
+  "release_status": "not-selected"
+}
