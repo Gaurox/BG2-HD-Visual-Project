@@ -1,0 +1,47 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM0602F",
+  "correction_id": "am0602f-lantern-apo8-x4-30fps-v2-active-rebase",
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-05",
+    "path": "animations/index/qa-decisions/AM0602F/2026-10-11-preserved-historical-am0602f-v1.json",
+    "sha256": "C907CDF0705B87E1B06213CCDF7093F210D84FCDC8D1C1317ECEA5E54A70F2D7",
+    "status": "accepted"
+  },
+  "recipe_id": "animations-cleanup-points1-3-20261011-v1",
+  "resref": "AM0602F",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM0602F/runs/am0602f-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "E49B1C29D5E9E42EDE7CFA5490CD4B97655EECE1EDCC2C5326362B2B12A39030",
+    "path": "animations/ressources/AM0602F/runs/am0602f-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0602",
+        "manifest_path": "animations/packs-par-zone/am0602f-historical-qa-bound-20261011-v1/AR0602/manifest.json",
+        "manifest_sha256": "B5F0936C6ACACAAC7123B5B05EE9A5391171C5CFE9B4CD2401564156B5931B33",
+        "path": "animations/packs-par-zone/am0602f-historical-qa-bound-20261011-v1/AR0602",
+        "registry_sha256": "E32A140B32188FEC71B0D9E0EF84DF408D816A8326689B42E3A4FEE28585C9A0",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am0602f-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "713EB774D580A9B55A84A46A9F515C8AD0F120F5A3FEA6BE63B4830EFC8129E1",
+    "path": "animations/packs-par-zone/am0602f-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0602"
+  ],
+  "updated_at_utc": "2026-10-11T19:44:16Z"
+}

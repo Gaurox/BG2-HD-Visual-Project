@@ -1,0 +1,47 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM0602L1",
+  "correction_id": "ar0601-all-bam-apo8-x4-30fps-v2",
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-08-23",
+    "path": "animations/index/qa-decisions/AM0602L1/2026-10-11-preserved-historical-am0602l1-v1.json",
+    "sha256": "FF07FAE8EC6FD13A9398F7E149E3AEC19A9F3DE5CB68BF4D9C2B77ACC1D60F8D",
+    "status": "accepted"
+  },
+  "recipe_id": "animations-cleanup-points1-3-20261011-v1",
+  "resref": "AM0602L1",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM0602L1/runs/am0602l1-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "340444073EB179E57CCCDE819E41DF0DADAED8749EB698FEFAC2633161C8789C",
+    "path": "animations/ressources/AM0602L1/runs/am0602l1-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0601",
+        "manifest_path": "animations/packs-par-zone/am0602l1-historical-qa-bound-20261011-v1/AR0601/manifest.json",
+        "manifest_sha256": "D02ECE1B3DF210E2CBE02443C803BC102B0C3CF7A2E16EF04A21D8BA68B7B80E",
+        "path": "animations/packs-par-zone/am0602l1-historical-qa-bound-20261011-v1/AR0601",
+        "registry_sha256": "8A3A78033ECA6EFFD497197897DF15893934D3B85B02DAB57ADC1CF8DE284C0A",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am0602l1-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "70F8707CA00144CAC1897291AFBFFD8BEA33C4876DEB44F1091021EB81DFFA00",
+    "path": "animations/packs-par-zone/am0602l1-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0601"
+  ],
+  "updated_at_utc": "2026-10-11T19:44:18Z"
+}

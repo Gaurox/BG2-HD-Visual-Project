@@ -81,6 +81,31 @@ class AreaPackStateTests(unittest.TestCase):
         self.assertTrue(state.is_exception(exceptions, "X", "AR1"))
         self.assertFalse(state.is_exception(exceptions, "X", "AR2"))
 
+    def test_provenance_objects_cannot_become_broken_reconstruction_paths(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            root = Path(raw)
+            zone, leaf = self.make_zone(root)
+            original = state.ROOT
+            try:
+                state.ROOT = root
+                index = leaf.parent / "manifest.json"
+                index.write_text(json.dumps({"merged_from": [
+                    {"source_split_root": "other-pack", "area_id": "AR0001"},
+                    {"source_split_root": "another-pack", "area_id": "AR0002"},
+                ]}), encoding="utf-8")
+                build = state.build_from_leaf(leaf)
+                self.assertEqual(state.recipe_sources({"build": build}), ["packs/AR0001"])
+                expected = {key: info["sig"] for key, info in state.zone_signatures(zone).items()}
+                self.assertEqual(state.recipe_signatures({"build": build}), expected)
+                # Genuine CLI selectors still reconstruct the same installed resources.
+                args = ["packs/AR0001::AAA", "packs/AR0001::BBB::4,5"]
+                index.write_text(json.dumps({"merged_from": args}), encoding="utf-8")
+                build = state.build_from_leaf(leaf)
+                self.assertEqual(build, {"merged_from": args})
+                self.assertEqual(state.recipe_signatures({"build": build}), expected)
+            finally:
+                state.ROOT = original
+
 
 if __name__ == "__main__":
     unittest.main()

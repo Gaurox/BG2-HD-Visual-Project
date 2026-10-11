@@ -1,0 +1,233 @@
+{
+  "schema": "bg2-upscale-historical-qa-binding-run-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T19:44:08.999100+00:00",
+  "resrefs": [
+    "AM0033AB"
+  ],
+  "operation": "formalize existing user ingame approvals without graphical reprocessing",
+  "output_split_root": "animations/packs-par-zone/am0033ab-historical-qa-bound-20261011-v1",
+  "output_manifest_sha256": "c8596403a3124e95a3d973f49821a85dc130aa5dc89e4f292e84901ed93dd5d5",
+  "registry_evidence": {
+    "path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json",
+    "sha256": "a8d657abae5ab8292ab47ee11b985cbd5e625ac2140095559d280cfcbb16c213",
+    "resref": "AM0033AB",
+    "notes": "Bassin d'eau sombre partagé AR0315/AR0527/AR0710/AR3026/AR6012 ; x4 SeedVR2 7B/LAB (run am0033ab-seedvr7b-lab-x4) ; V2 TimedTimeline 30 FPS apo-8 (run am0033ab-apo8-x4-30fps-v2) ; 7 frames natives -> 14 frames (14 phases) ; masque alpha = spline périodique fit-error 1.0 (padding 32 px x4 pour fermer le contour touchant le bord du canvas) puis fondu intérieur de silhouette 6 px x4 ; répété sur les 14 phases, alpha_final = alpha_source * masque / 255, RGB inchangé ; run dérivé am0033ab-spline-fit1-feather6-30fps-v2 ; livré par pack de zone ; QA en jeu validée par l'utilisateur le 2026-08-27 sur zones SoA + AR6012 (ToB) ; réserve mineure reportée en fin de projet : fin liseré sombre sur la facette gauche, présent depuis le x4 RGB (non causé par la correction alpha), jugé acceptable ; installation réversible."
+  },
+  "historical_evidence": [
+    {
+      "path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0315/manifest.json",
+      "sha256": "26b93e705be78f97985d400dcb45b574636d553806a4aaabd8a36b96802d50ec",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/26b93e705be78f97985d400dcb45b574636d553806a4aaabd8a36b96802d50ec.json"
+    },
+    {
+      "path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0527/manifest.json",
+      "sha256": "fba8c1b226c1203d77f42137f47604e0256bdb4c59bd88f6a8da89d44ad3fd7e",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/fba8c1b226c1203d77f42137f47604e0256bdb4c59bd88f6a8da89d44ad3fd7e.json"
+    },
+    {
+      "path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0710/manifest.json",
+      "sha256": "232bff4bc2f9856933efad140cfc60edfdd2b41189abc55ace9a2369a94a3db7",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/232bff4bc2f9856933efad140cfc60edfdd2b41189abc55ace9a2369a94a3db7.json"
+    },
+    {
+      "path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR3026/manifest.json",
+      "sha256": "9a92a9976230da552d81e5cc35166cec74a78187d0b70297e1ac670e11d8c866",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/9a92a9976230da552d81e5cc35166cec74a78187d0b70297e1ac670e11d8c866.json"
+    },
+    {
+      "path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR6012/manifest.json",
+      "sha256": "e717fd6a2a6a6eb4b8a9371071083a750afdee4266bf92cc5afc287e03f83ca9",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/e717fd6a2a6a6eb4b8a9371071083a750afdee4266bf92cc5afc287e03f83ca9.json"
+    }
+  ],
+  "acquired_qa_date": "2026-08-27",
+  "new_ingame_qa": false,
+  "installation_matches_accepted_areas": [
+    "AR0315",
+    "AR0527",
+    "AR0710",
+    "AR3026",
+    "AR6012"
+  ],
+  "installation_discrepancy_areas": [],
+  "clarification": "",
+  "runtime_contracts": [
+    {
+      "area": "AR0315",
+      "resources": [
+        {
+          "frame_count": 14,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "b348b7551fb686f5a274815558eaec137b203480538ae34bf993e1c81a623d94",
+            "72125e746d8ffaf6d882a95a503d7bd642e20247f0a71e3ded6c5fd7b751483f",
+            "f66cc208288d72233c84d6073587bf06164b2b1262915108f204730296d97ec2",
+            "cad67237e230fd6a38ddb01f352f256d72ed5f775fa2de9b71a060c92ea01b75",
+            "350b777c92c24c969a89337433a88ef7e425141b455d80650c11bc2528dbe5c2",
+            "ec0b91fcfb809fc15b6a73db0b9a3f8879c30568600d2105ba0718019e0a785b",
+            "1c8bae37924402fc1e908a072df9fad4003c7c8b9200977c7002febbe99b38c4",
+            "55eb50f5087ef4e640ebcab295e66b03251afeaa4948a53960cc2c91b8204741",
+            "dded5b598a62359a49504a7c6bedc46384ec1bc425932018ff9c75e3cd2940c6",
+            "8fc60834cd6a72dc0f39c381c92901bfea996e70b857280fe95724e6d7024b69",
+            "4ab73b54b3ca099107bd8d598d8cc49d655c3275e9ab8cae302e729dd9ac8ae8",
+            "cfddd8ca1f9804ed5630c85938bcb13faac67746fbaa58e077988429a8b634bd",
+            "ffc2a8aca4c1714b8eb25db4a729b7ee43efe2e28a95f4aa74f8e52b2f8ea4b8",
+            "fe0f4878dcec62f210bc5c11af2fefff7ef4ccff22253b3f79af14708ca08f7f"
+          ]
+        }
+      ]
+    },
+    {
+      "area": "AR0527",
+      "resources": [
+        {
+          "frame_count": 14,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "b348b7551fb686f5a274815558eaec137b203480538ae34bf993e1c81a623d94",
+            "72125e746d8ffaf6d882a95a503d7bd642e20247f0a71e3ded6c5fd7b751483f",
+            "f66cc208288d72233c84d6073587bf06164b2b1262915108f204730296d97ec2",
+            "cad67237e230fd6a38ddb01f352f256d72ed5f775fa2de9b71a060c92ea01b75",
+            "350b777c92c24c969a89337433a88ef7e425141b455d80650c11bc2528dbe5c2",
+            "ec0b91fcfb809fc15b6a73db0b9a3f8879c30568600d2105ba0718019e0a785b",
+            "1c8bae37924402fc1e908a072df9fad4003c7c8b9200977c7002febbe99b38c4",
+            "55eb50f5087ef4e640ebcab295e66b03251afeaa4948a53960cc2c91b8204741",
+            "dded5b598a62359a49504a7c6bedc46384ec1bc425932018ff9c75e3cd2940c6",
+            "8fc60834cd6a72dc0f39c381c92901bfea996e70b857280fe95724e6d7024b69",
+            "4ab73b54b3ca099107bd8d598d8cc49d655c3275e9ab8cae302e729dd9ac8ae8",
+            "cfddd8ca1f9804ed5630c85938bcb13faac67746fbaa58e077988429a8b634bd",
+            "ffc2a8aca4c1714b8eb25db4a729b7ee43efe2e28a95f4aa74f8e52b2f8ea4b8",
+            "fe0f4878dcec62f210bc5c11af2fefff7ef4ccff22253b3f79af14708ca08f7f"
+          ]
+        }
+      ]
+    },
+    {
+      "area": "AR0710",
+      "resources": [
+        {
+          "frame_count": 14,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "b348b7551fb686f5a274815558eaec137b203480538ae34bf993e1c81a623d94",
+            "72125e746d8ffaf6d882a95a503d7bd642e20247f0a71e3ded6c5fd7b751483f",
+            "f66cc208288d72233c84d6073587bf06164b2b1262915108f204730296d97ec2",
+            "cad67237e230fd6a38ddb01f352f256d72ed5f775fa2de9b71a060c92ea01b75",
+            "350b777c92c24c969a89337433a88ef7e425141b455d80650c11bc2528dbe5c2",
+            "ec0b91fcfb809fc15b6a73db0b9a3f8879c30568600d2105ba0718019e0a785b",
+            "1c8bae37924402fc1e908a072df9fad4003c7c8b9200977c7002febbe99b38c4",
+            "55eb50f5087ef4e640ebcab295e66b03251afeaa4948a53960cc2c91b8204741",
+            "dded5b598a62359a49504a7c6bedc46384ec1bc425932018ff9c75e3cd2940c6",
+            "8fc60834cd6a72dc0f39c381c92901bfea996e70b857280fe95724e6d7024b69",
+            "4ab73b54b3ca099107bd8d598d8cc49d655c3275e9ab8cae302e729dd9ac8ae8",
+            "cfddd8ca1f9804ed5630c85938bcb13faac67746fbaa58e077988429a8b634bd",
+            "ffc2a8aca4c1714b8eb25db4a729b7ee43efe2e28a95f4aa74f8e52b2f8ea4b8",
+            "fe0f4878dcec62f210bc5c11af2fefff7ef4ccff22253b3f79af14708ca08f7f"
+          ]
+        }
+      ]
+    },
+    {
+      "area": "AR3026",
+      "resources": [
+        {
+          "frame_count": 14,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "b348b7551fb686f5a274815558eaec137b203480538ae34bf993e1c81a623d94",
+            "72125e746d8ffaf6d882a95a503d7bd642e20247f0a71e3ded6c5fd7b751483f",
+            "f66cc208288d72233c84d6073587bf06164b2b1262915108f204730296d97ec2",
+            "cad67237e230fd6a38ddb01f352f256d72ed5f775fa2de9b71a060c92ea01b75",
+            "350b777c92c24c969a89337433a88ef7e425141b455d80650c11bc2528dbe5c2",
+            "ec0b91fcfb809fc15b6a73db0b9a3f8879c30568600d2105ba0718019e0a785b",
+            "1c8bae37924402fc1e908a072df9fad4003c7c8b9200977c7002febbe99b38c4",
+            "55eb50f5087ef4e640ebcab295e66b03251afeaa4948a53960cc2c91b8204741",
+            "dded5b598a62359a49504a7c6bedc46384ec1bc425932018ff9c75e3cd2940c6",
+            "8fc60834cd6a72dc0f39c381c92901bfea996e70b857280fe95724e6d7024b69",
+            "4ab73b54b3ca099107bd8d598d8cc49d655c3275e9ab8cae302e729dd9ac8ae8",
+            "cfddd8ca1f9804ed5630c85938bcb13faac67746fbaa58e077988429a8b634bd",
+            "ffc2a8aca4c1714b8eb25db4a729b7ee43efe2e28a95f4aa74f8e52b2f8ea4b8",
+            "fe0f4878dcec62f210bc5c11af2fefff7ef4ccff22253b3f79af14708ca08f7f"
+          ]
+        }
+      ]
+    },
+    {
+      "area": "AR6012",
+      "resources": [
+        {
+          "frame_count": 14,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "b348b7551fb686f5a274815558eaec137b203480538ae34bf993e1c81a623d94",
+            "72125e746d8ffaf6d882a95a503d7bd642e20247f0a71e3ded6c5fd7b751483f",
+            "f66cc208288d72233c84d6073587bf06164b2b1262915108f204730296d97ec2",
+            "cad67237e230fd6a38ddb01f352f256d72ed5f775fa2de9b71a060c92ea01b75",
+            "350b777c92c24c969a89337433a88ef7e425141b455d80650c11bc2528dbe5c2",
+            "ec0b91fcfb809fc15b6a73db0b9a3f8879c30568600d2105ba0718019e0a785b",
+            "1c8bae37924402fc1e908a072df9fad4003c7c8b9200977c7002febbe99b38c4",
+            "55eb50f5087ef4e640ebcab295e66b03251afeaa4948a53960cc2c91b8204741",
+            "dded5b598a62359a49504a7c6bedc46384ec1bc425932018ff9c75e3cd2940c6",
+            "8fc60834cd6a72dc0f39c381c92901bfea996e70b857280fe95724e6d7024b69",
+            "4ab73b54b3ca099107bd8d598d8cc49d655c3275e9ab8cae302e729dd9ac8ae8",
+            "cfddd8ca1f9804ed5630c85938bcb13faac67746fbaa58e077988429a8b634bd",
+            "ffc2a8aca4c1714b8eb25db4a729b7ee43efe2e28a95f4aa74f8e52b2f8ea4b8",
+            "fe0f4878dcec62f210bc5c11af2fefff7ef4ccff22253b3f79af14708ca08f7f"
+          ]
+        }
+      ]
+    }
+  ],
+  "release_mutation": false
+}

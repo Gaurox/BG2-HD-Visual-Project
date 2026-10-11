@@ -1,0 +1,82 @@
+{
+  "schema": "bg2-upscale-historical-qa-binding-run-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T19:44:12.372435+00:00",
+  "resrefs": [
+    "AM0205E"
+  ],
+  "operation": "formalize existing user ingame approvals without graphical reprocessing",
+  "output_split_root": "animations/packs-par-zone/am0205e-historical-qa-bound-20261011-v1",
+  "output_manifest_sha256": "66e1a03fe980b346305c9435b0dd7979944c123d2a51ed399ccd841c64e1e650",
+  "registry_evidence": {
+    "path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json",
+    "sha256": "a8d657abae5ab8292ab47ee11b985cbd5e625ac2140095559d280cfcbb16c213",
+    "resref": "AM0205E",
+    "notes": "Version interpolée x4 de 27 frames adressée sur les 27 positions du cycle BAM; cadence native d'environ 15 FPS et boucle de 1.8 s; validée en jeu le 2026-08-21; patch réversible."
+  },
+  "historical_evidence": [
+    {
+      "path": "animations/runs/ar0602-eau-seedvr3b-lab-x4/04_ingame_test/03_am0205_recovered_pack/manifest.json",
+      "sha256": "d9058369bf3a0c7bb9b3133f75476655cdcc0e1c6763219e5e4fcc6c33227c59",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/d9058369bf3a0c7bb9b3133f75476655cdcc0e1c6763219e5e4fcc6c33227c59.json"
+    }
+  ],
+  "acquired_qa_date": "2026-08-21",
+  "new_ingame_qa": false,
+  "installation_matches_accepted_areas": [
+    "AR0205"
+  ],
+  "installation_discrepancy_areas": [],
+  "clarification": "",
+  "runtime_contracts": [
+    {
+      "area": "AR0205",
+      "resources": [
+        {
+          "frame_count": 27,
+          "playback_mode": "Native",
+          "native_fps": {
+            "numerator": 0,
+            "denominator": 0
+          },
+          "target_fps": {
+            "numerator": 0,
+            "denominator": 0
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "1e8ff452f0ef0d5903678c2275ffaaa13520fa08111996b39601348be960b698",
+            "4edfde589e3aeec16a999ebfd5a70ee56f45be4eca35ffa9a929ebb08a19168f",
+            "90fecc180345dacce0f7634ba66537cdeb8c622047036f8be4d269ced980e29a",
+            "f299dbf2bbee6d314671fea813df2594e51ef5576f7b5c82e4dc67adf3223c85",
+            "d64168c40ab91bf1a87eb05b1361743bd6de4e4bf19a3ff4ab7c6c947c4840f5",
+            "534625be051f9ee20d6bc530f4da5b44a32e3b9dea179f1afdceec4895720c7f",
+            "6fb08e12083a31cf10153057bf8cb7735aa6bfc8d3050aab95aa8f8fa0785b1e",
+            "79fb3cfc964e9ca98337bb9ff1047c32115d0ec64c98fb5a45a08588c306750a",
+            "99b06c723d81bea1f01da43d0e23f5eb202a386313589cf74d74759df3fc147c",
+            "0abca3db7508e23ff03407cfab736fb7ab97e84ba884680f759dacc33fde81c1",
+            "25be372f413359b79431151de0d632535f834e382c92270cf3476c99e5313037",
+            "9f6e9f0e3f665fed1c7f16e10b97dd1b06c0d6d8fe1b2d300fd38c261c2531d6",
+            "15550079e917fc85ef8d444d628bc615969a946375587f43a9fd5091167c3ec2",
+            "8f98fca46dee287db9131415e707c1352c1629b25c92eb64cc40a228c4463fac",
+            "b825d6dc7bee5ccb988813fa446e428e496ba14a6ec0c5e4b3494e0e51b11953",
+            "0537cd3e39b10395518cb407ca02d0a15e8cf8246d1d6395cb7ead820b78a0a7",
+            "df2134dcc408fdf6a2d33492f45ef7f72032854cf7d8653281b6ed459506c4af",
+            "44706e9583b1f194c945179ca557c6bc2f4982839fbe3b543019682040fba360",
+            "d6dc43cad910057392c850e3db2697f4d9328eea3e0add1a1cf86a54676a4142",
+            "b7c1c7534f3b5bea06a46939056fcd1642b9fc851dca86949c3c00dcbf04eb46",
+            "56d80d433d17c3ec6b44044ebbcbd50c7061167a82b41cb978a85ae1fd63284b",
+            "3540548c3a1694d76ca36e70f6d0529f3d056f0813e67ae7880d7907783980f5",
+            "be1e2e13d73ed903b44d7126e8d035ecf95ae2ba35d19f461902ab0cd2741292",
+            "030a821f018d5f5b492fd17ab7917e59cc8e7f392eb315df55150c63a850dfc3",
+            "d5255446b37f117696c257db8dca062858a11995f708f74b45b513104aaa25b1",
+            "d72df53388e2cfd451a7e13a2e17b26b6169e8468256b2b16cb3022e2418374e",
+            "b1e5091e02d19acdc09b140b73284e58061ebe54d82b0dac179188a11c0c1385"
+          ]
+        }
+      ]
+    }
+  ],
+  "release_mutation": false
+}

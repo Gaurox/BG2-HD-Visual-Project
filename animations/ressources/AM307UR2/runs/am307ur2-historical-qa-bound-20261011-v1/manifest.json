@@ -1,0 +1,98 @@
+{
+  "schema": "bg2-upscale-historical-qa-binding-run-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T19:44:29.540491+00:00",
+  "resrefs": [
+    "AM307UR2"
+  ],
+  "operation": "formalize existing user ingame approvals without graphical reprocessing",
+  "output_split_root": "animations/packs-par-zone/am307ur2-historical-qa-bound-20261011-v1",
+  "output_manifest_sha256": "b2d363d6628d81b783cace8d049e9d0e4adee898538ba0fb0e9a830f447bc4f4",
+  "registry_evidence": {
+    "path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json",
+    "sha256": "a8d657abae5ab8292ab47ee11b985cbd5e625ac2140095559d280cfcbb16c213",
+    "resref": "AM307UR2",
+    "notes": "Coffre ; x4 SeedVR2 7B/LAB, neutralisation RGB sous alpha nul, puis V2 TimedTimeline 30 FPS apo-8 (run ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831 ; 4 frames natives -> 8 frames, 8 phases ; neutralisation réappliquée après interpolation) ; livré par pack de zone combined-20260831-ar0307-ar0329-six-bam-30fps-v2 ; QA ingame utilisateur validée le 2026-08-31."
+  },
+  "historical_evidence": [
+    {
+      "path": "animations/packs-par-zone/combined-20260831-ar0307-ar0329-six-bam-30fps-v2/AR0307/manifest.json",
+      "sha256": "9522050d6761c17823a0b2c4d8006547fe3930f61fd733818a037e318c04a7a1",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/9522050d6761c17823a0b2c4d8006547fe3930f61fd733818a037e318c04a7a1.json"
+    },
+    {
+      "path": "animations/packs-par-zone/combined-20260831-ar0307-ar0329-six-bam-30fps-v2/AR0329/manifest.json",
+      "sha256": "067eaa1fcf0760ebc6c14b7df9b6e04f88da312acd4a9a5dc734dd77c9ebaaa4",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/067eaa1fcf0760ebc6c14b7df9b6e04f88da312acd4a9a5dc734dd77c9ebaaa4.json"
+    }
+  ],
+  "acquired_qa_date": "2026-08-31",
+  "new_ingame_qa": false,
+  "installation_matches_accepted_areas": [
+    "AR0307",
+    "AR0329"
+  ],
+  "installation_discrepancy_areas": [],
+  "clarification": "",
+  "runtime_contracts": [
+    {
+      "area": "AR0307",
+      "resources": [
+        {
+          "frame_count": 8,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "564b5f87850602eff6941bb80a23812bb0d7038afe6a167355ce9e25648bc0d7",
+            "a7d72bfa9aab8a8707b7c361d351418a26f785e8c4fafd814b07ff046ce0a244",
+            "c7182e7bdcd57f1b9d1da6f71acca7fe40be6f35ac01601175ae1e1bfbacc761",
+            "f11cd17a834e4604adf3338c24ebfeef1fad8bbcec9ec570283edc57b87eb3c5",
+            "18e8d8ed095c2627c79bc0da56b17bced09b5d92ea977b0b42a13d8969f4b175",
+            "f90935b3d6d19cb12582deb32340a2b1ac90860f65d921eada4f1ac83fca892a",
+            "472440f4872142312d1cd97e337e825c2cea3724d4979a92b9132b3f4378029e",
+            "e3c0ce548ea95ef3fc45465267695851d666868b4269cc3d860513ed87573c46"
+          ]
+        }
+      ]
+    },
+    {
+      "area": "AR0329",
+      "resources": [
+        {
+          "frame_count": 8,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "564b5f87850602eff6941bb80a23812bb0d7038afe6a167355ce9e25648bc0d7",
+            "a7d72bfa9aab8a8707b7c361d351418a26f785e8c4fafd814b07ff046ce0a244",
+            "c7182e7bdcd57f1b9d1da6f71acca7fe40be6f35ac01601175ae1e1bfbacc761",
+            "f11cd17a834e4604adf3338c24ebfeef1fad8bbcec9ec570283edc57b87eb3c5",
+            "18e8d8ed095c2627c79bc0da56b17bced09b5d92ea977b0b42a13d8969f4b175",
+            "f90935b3d6d19cb12582deb32340a2b1ac90860f65d921eada4f1ac83fca892a",
+            "472440f4872142312d1cd97e337e825c2cea3724d4979a92b9132b3f4378029e",
+            "e3c0ce548ea95ef3fc45465267695851d666868b4269cc3d860513ed87573c46"
+          ]
+        }
+      ]
+    }
+  ],
+  "release_mutation": false
+}

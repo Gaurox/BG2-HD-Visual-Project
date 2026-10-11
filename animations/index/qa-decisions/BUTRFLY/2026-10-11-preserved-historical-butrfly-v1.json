@@ -1,0 +1,163 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:BUTRFLY",
+  "correction_id": "small-subject-xbr2-nearest2-apollo30-rgb-safe",
+  "decision": "Formalisation le 2026-10-11 de la validation utilisateur historique déjà acquise ; aucune nouvelle visite ingame. Octets, géométrie, cycles, cadence et variantes conservés dans le snapshot QA ; propagation de la même ressource aux zones inventoriées par identité, sans déduire de visites exhaustives. Source : pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json. Notes acquises : Petit sujet partagé sur 14 zones, 74 occurrences ; xBR 2x sans blend ni anti-aliasing puis nearest 2x vers x4 (run butrfly-xbr2x-nearest2-x4) ; V2 TimedTimeline Apollo 8, 15→30 FPS, 18→36 phases, entrée Topaz nearest-opaque-dilate (run butrfly-xbr2x-nearest2-x4-30fps-v3-opaque-rgb-dilate) ; RGB=0 sous alpha nul dans le pack blended final ; QA ingame utilisateur validée le 2026-09-01 ; livré par pack de zone, installation réversible.",
+  "decision_date": "2026-09-01",
+  "decision_id": "2026-10-11-preserved-historical-butrfly-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/BUTRFLY/runs/butrfly-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "F89689942231FB02E5D5417C320991A22161CE8A7F785448B4482125CBFEB2E3",
+    "path": "animations/ressources/BUTRFLY/runs/butrfly-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "recipe_id": "animations-cleanup-points1-3-20261011-v1",
+  "recorded_at_utc": "2026-10-11T19:44:35Z",
+  "resref": "BUTRFLY",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0309",
+        "manifest_path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/AR0309/manifest.json",
+        "manifest_sha256": "AC98544F0B80497092F74B8D912285B47C3550908D0A05883318620D51353411",
+        "path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/AR0309",
+        "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0800",
+        "manifest_path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/AR0800/manifest.json",
+        "manifest_sha256": "4CAF9EDE626595AF2C5328F99C4BF92E73414A72881AC0933C8F92CEB46F234E",
+        "path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/AR0800",
+        "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1100",
+        "manifest_path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/AR1100/manifest.json",
+        "manifest_sha256": "1B39D7F3F606B2527CA93F1D0FD0ECE422BD81CC5104584A950B0C06BC1247E5",
+        "path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/AR1100",
+        "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1200",
+        "manifest_path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/AR1200/manifest.json",
+        "manifest_sha256": "20F0849D7D68449FC4F224ACF773D84529CA659026A11A8FD746AE4BE1883419",
+        "path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/AR1200",
+        "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1700",
+        "manifest_path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/AR1700/manifest.json",
+        "manifest_sha256": "15BB48E2F4F469344932D598F22B71B4CC542766BAC9B33EB0F4A766D430608C",
+        "path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/AR1700",
+        "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1800",
+        "manifest_path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/AR1800/manifest.json",
+        "manifest_sha256": "A962455553BF97B027214A5D83310878EBF6E008776BE233FCAA1D75A218F5D7",
+        "path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/AR1800",
+        "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2000",
+        "manifest_path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/AR2000/manifest.json",
+        "manifest_sha256": "4773A4E405FDF22C7EFEF40EDBBE8E2FEF6193715D5286D7A3B3552883B7E57A",
+        "path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/AR2000",
+        "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR3000",
+        "manifest_path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/AR3000/manifest.json",
+        "manifest_sha256": "62248266E266EB814FB70E11BD7FF9B7C188CAF7D3949BE1E831A22D3DD7A92A",
+        "path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/AR3000",
+        "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5500",
+        "manifest_path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/AR5500/manifest.json",
+        "manifest_sha256": "778D428D940D5A7A6DD4FDBFCDECE8E7587570CEA2D6F050595E85C9C2309931",
+        "path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/AR5500",
+        "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR6400",
+        "manifest_path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/AR6400/manifest.json",
+        "manifest_sha256": "2FC0D64C21A411D50E7B5085177F01FE8CD5E7F6F2738E053EF850977E66B54A",
+        "path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/AR6400",
+        "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH4000",
+        "manifest_path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/OH4000/manifest.json",
+        "manifest_sha256": "6C339E131BD889D7B548639037FC20F052C208EE4588E4023E5A6BF2D2A6A840",
+        "path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/OH4000",
+        "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH6000",
+        "manifest_path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/OH6000/manifest.json",
+        "manifest_sha256": "A291698C9005C090755FB6D9450D50965509CB289715C3BCB12A4CF63F558D86",
+        "path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/OH6000",
+        "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH6100",
+        "manifest_path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/OH6100/manifest.json",
+        "manifest_sha256": "705E8F7736E8D17F2646A3998323FB493899D88BC469AEBFEBD2B736A9E8F70C",
+        "path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/OH6100",
+        "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH6400",
+        "manifest_path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/OH6400/manifest.json",
+        "manifest_sha256": "04F90AC05885AA3DBFB4D5AE1C0360B4817C5208731E18F8E74F6C6D8E507601",
+        "path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/OH6400",
+        "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "FB3DD950F78C8B78DB49EB440A1AC3E5DD8F381A577C62D5B40814F7DECD3064",
+    "path": "animations/packs-par-zone/butrfly-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0309",
+    "AR0800",
+    "AR1100",
+    "AR1200",
+    "AR1700",
+    "AR1800",
+    "AR2000",
+    "AR3000",
+    "AR5500",
+    "AR6400",
+    "OH4000",
+    "OH6000",
+    "OH6100",
+    "OH6400"
+  ]
+}

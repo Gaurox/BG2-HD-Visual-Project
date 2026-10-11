@@ -1,0 +1,47 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM0602B",
+  "correction_id": "am0602b-deheld-manual-floor-mask-30fps-v2",
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-05",
+    "path": "animations/index/qa-decisions/AM0602B/2026-10-11-preserved-historical-am0602b-v1.json",
+    "sha256": "2D143F3CDCDB5472A15481A79D90EFD93349EC2AA292DD34F6166C74E6C3B71B",
+    "status": "accepted"
+  },
+  "recipe_id": "animations-cleanup-points1-3-20261011-v1",
+  "resref": "AM0602B",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM0602B/runs/am0602b-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "770FBAF19E4CA67055C8F6D835F3ADAC2238C4417604F9BFE4AF85017D8289F0",
+    "path": "animations/ressources/AM0602B/runs/am0602b-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0602",
+        "manifest_path": "animations/packs-par-zone/am0602b-historical-qa-bound-20261011-v1/AR0602/manifest.json",
+        "manifest_sha256": "24394AFDF826A396E22065F690D662C90C30629E9A1707C51D67BC5EFF95F42D",
+        "path": "animations/packs-par-zone/am0602b-historical-qa-bound-20261011-v1/AR0602",
+        "registry_sha256": "D8ED37526BF7E6EDB377733445E922C086FA9ACD7F1D3C25FACC49697A6D133E",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am0602b-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "9D03E8DBBE91664E70C10EF9ED6EAAE7954BF7E3D49892BC4C9918D07E745426",
+    "path": "animations/packs-par-zone/am0602b-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0602"
+  ],
+  "updated_at_utc": "2026-10-11T19:44:14Z"
+}

@@ -1,0 +1,288 @@
+{
+  "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+  "status": "completed",
+  "created_utc": "2026-10-11T19:44:29.350055+00:00",
+  "scale": 4,
+  "registry_version": 3,
+  "runtime_contract": {
+    "feature": "TimedTimeline",
+    "clock": "QPC-pause-aware",
+    "registry_version": 3
+  },
+  "registry": "AreaAnimations-X4.registry",
+  "registry_sha256": "3bc4b6a300838ee0968691de928617a66829b7042a80b93bdd246256eee0129a",
+  "registry_bytes": 196,
+  "area_id": "AR0307",
+  "resource_count": 1,
+  "frame_count": 8,
+  "raw_bytes": 16745472,
+  "runtime_budget_enforced": true,
+  "base_assets": [],
+  "new_assets": [],
+  "resources": [
+    {
+      "resref": "AM307UR2",
+      "frame_count": 8,
+      "cycle_count": 1,
+      "geometry_mode": "uniform",
+      "frames": [
+        {
+          "frame": 0,
+          "logical_size_x1": [
+            207,
+            158
+          ],
+          "physical_size_x4": [
+            828,
+            632
+          ],
+          "centre_x1": [
+            100,
+            158
+          ],
+          "asset": "AAX4-AM307UR2-frame000.rgba",
+          "sha256": "564b5f87850602eff6941bb80a23812bb0d7038afe6a167355ce9e25648bc0d7",
+          "bytes": 2093184
+        },
+        {
+          "frame": 1,
+          "logical_size_x1": [
+            207,
+            158
+          ],
+          "physical_size_x4": [
+            828,
+            632
+          ],
+          "centre_x1": [
+            100,
+            158
+          ],
+          "asset": "AAX4-AM307UR2-frame001.rgba",
+          "sha256": "a7d72bfa9aab8a8707b7c361d351418a26f785e8c4fafd814b07ff046ce0a244",
+          "bytes": 2093184
+        },
+        {
+          "frame": 2,
+          "logical_size_x1": [
+            207,
+            158
+          ],
+          "physical_size_x4": [
+            828,
+            632
+          ],
+          "centre_x1": [
+            100,
+            158
+          ],
+          "asset": "AAX4-AM307UR2-frame002.rgba",
+          "sha256": "c7182e7bdcd57f1b9d1da6f71acca7fe40be6f35ac01601175ae1e1bfbacc761",
+          "bytes": 2093184
+        },
+        {
+          "frame": 3,
+          "logical_size_x1": [
+            207,
+            158
+          ],
+          "physical_size_x4": [
+            828,
+            632
+          ],
+          "centre_x1": [
+            100,
+            158
+          ],
+          "asset": "AAX4-AM307UR2-frame003.rgba",
+          "sha256": "f11cd17a834e4604adf3338c24ebfeef1fad8bbcec9ec570283edc57b87eb3c5",
+          "bytes": 2093184
+        },
+        {
+          "frame": 4,
+          "logical_size_x1": [
+            207,
+            158
+          ],
+          "physical_size_x4": [
+            828,
+            632
+          ],
+          "centre_x1": [
+            100,
+            158
+          ],
+          "asset": "AAX4-AM307UR2-frame004.rgba",
+          "sha256": "18e8d8ed095c2627c79bc0da56b17bced09b5d92ea977b0b42a13d8969f4b175",
+          "bytes": 2093184,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 0,
+            "left_native_frame": 0,
+            "right_native_frame": 1
+          }
+        },
+        {
+          "frame": 5,
+          "logical_size_x1": [
+            207,
+            158
+          ],
+          "physical_size_x4": [
+            828,
+            632
+          ],
+          "centre_x1": [
+            100,
+            158
+          ],
+          "asset": "AAX4-AM307UR2-frame005.rgba",
+          "sha256": "f90935b3d6d19cb12582deb32340a2b1ac90860f65d921eada4f1ac83fca892a",
+          "bytes": 2093184,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 1,
+            "left_native_frame": 1,
+            "right_native_frame": 2
+          }
+        },
+        {
+          "frame": 6,
+          "logical_size_x1": [
+            207,
+            158
+          ],
+          "physical_size_x4": [
+            828,
+            632
+          ],
+          "centre_x1": [
+            100,
+            158
+          ],
+          "asset": "AAX4-AM307UR2-frame006.rgba",
+          "sha256": "472440f4872142312d1cd97e337e825c2cea3724d4979a92b9132b3f4378029e",
+          "bytes": 2093184,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 2,
+            "left_native_frame": 2,
+            "right_native_frame": 3
+          }
+        },
+        {
+          "frame": 7,
+          "logical_size_x1": [
+            207,
+            158
+          ],
+          "physical_size_x4": [
+            828,
+            632
+          ],
+          "centre_x1": [
+            100,
+            158
+          ],
+          "asset": "AAX4-AM307UR2-frame007.rgba",
+          "sha256": "e3c0ce548ea95ef3fc45465267695851d666868b4269cc3d860513ed87573c46",
+          "bytes": 2093184,
+          "generated_by": {
+            "mode": "TimedTimeline",
+            "cycle": 0,
+            "slot": 3,
+            "left_native_frame": 3,
+            "right_native_frame": 0
+          }
+        }
+      ],
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "timeline_frame_indices": [
+            0,
+            4,
+            1,
+            5,
+            2,
+            6,
+            3,
+            7
+          ]
+        }
+      ],
+      "assets": [
+        {
+          "name": "AAX4-AM307UR2-frame000.rgba",
+          "sha256": "564b5f87850602eff6941bb80a23812bb0d7038afe6a167355ce9e25648bc0d7",
+          "bytes": 2093184
+        },
+        {
+          "name": "AAX4-AM307UR2-frame001.rgba",
+          "sha256": "a7d72bfa9aab8a8707b7c361d351418a26f785e8c4fafd814b07ff046ce0a244",
+          "bytes": 2093184
+        },
+        {
+          "name": "AAX4-AM307UR2-frame002.rgba",
+          "sha256": "c7182e7bdcd57f1b9d1da6f71acca7fe40be6f35ac01601175ae1e1bfbacc761",
+          "bytes": 2093184
+        },
+        {
+          "name": "AAX4-AM307UR2-frame003.rgba",
+          "sha256": "f11cd17a834e4604adf3338c24ebfeef1fad8bbcec9ec570283edc57b87eb3c5",
+          "bytes": 2093184
+        },
+        {
+          "name": "AAX4-AM307UR2-frame004.rgba",
+          "sha256": "18e8d8ed095c2627c79bc0da56b17bced09b5d92ea977b0b42a13d8969f4b175",
+          "bytes": 2093184
+        },
+        {
+          "name": "AAX4-AM307UR2-frame005.rgba",
+          "sha256": "f90935b3d6d19cb12582deb32340a2b1ac90860f65d921eada4f1ac83fca892a",
+          "bytes": 2093184
+        },
+        {
+          "name": "AAX4-AM307UR2-frame006.rgba",
+          "sha256": "472440f4872142312d1cd97e337e825c2cea3724d4979a92b9132b3f4378029e",
+          "bytes": 2093184
+        },
+        {
+          "name": "AAX4-AM307UR2-frame007.rgba",
+          "sha256": "e3c0ce548ea95ef3fc45465267695851d666868b4269cc3d860513ed87573c46",
+          "bytes": 2093184
+        }
+      ],
+      "playback_mode": "TimedTimeline",
+      "native_fps": {
+        "numerator": 15,
+        "denominator": 1
+      },
+      "target_fps": {
+        "numerator": 30,
+        "denominator": 1
+      }
+    }
+  ],
+  "timed_resources": [
+    "AM307UR2"
+  ],
+  "provenance": {
+    "kind": "exact historical acquired QA snapshot",
+    "source_manifest": "animations/packs-par-zone/combined-20260831-ar0307-ar0329-six-bam-30fps-v2/AR0307/manifest.json",
+    "source_manifest_sha256": "9522050d6761c17823a0b2c4d8006547fe3930f61fd733818a037e318c04a7a1",
+    "texture_change": false,
+    "timing_change": false,
+    "legacy_v1_encoding_only": false,
+    "installation_forbidden": "QA snapshot is scoped to one resref; compose a complete area before installing"
+  }
+}

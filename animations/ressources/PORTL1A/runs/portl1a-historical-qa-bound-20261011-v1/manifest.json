@@ -1,0 +1,74 @@
+{
+  "schema": "bg2-upscale-historical-qa-binding-run-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T19:44:41.007817+00:00",
+  "resrefs": [
+    "PORTL1A"
+  ],
+  "operation": "formalize existing user ingame approvals without graphical reprocessing",
+  "output_split_root": "animations/packs-par-zone/portl1a-historical-qa-bound-20261011-v1",
+  "output_manifest_sha256": "37d64d567fef75c15cd40fa7925da9c4b8a47ccd5fa4a1b4dd7ae15fa5a36a49",
+  "registry_evidence": {
+    "path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json",
+    "sha256": "a8d657abae5ab8292ab47ee11b985cbd5e625ac2140095559d280cfcbb16c213",
+    "resref": "PORTL1A",
+    "notes": "Portail elliptique; x4 SeedVR2 7B/LAB (run ar0602-all-bam-seedvr7b-lab-x4); V2 TimedTimeline 30 FPS apo-8, 6 frames natives -> 12 phases (timeline 0,6,1,7,2,8,3,9,4,10,5,11; 0,4 s). Contour alpha 1 bit (0/255) agrandi au plus proche voisin en escaliers de 4 px, corrigé le 2026-08-28: masque = spline périodique fit-error 1.0 (sample-spacing 1.5, supersample 4, seuil 127) sur l'alpha x4 256x376 avec padding transparent 32 px puis recrop, PUIS fondu intérieur de silhouette 8 px x4 (smoothstep depuis le bord de la silhouette spline); alpha_final = alpha_source * masque_spline/255 * feather, même masque répété sur les 12 phases (~6900 px d'alpha intermédiaire/frame; spline seule ~590, bord resté net, rejeté en jeu). RGB inchangé octet pour octet; registre v3 inchangé; 10 ressources soeurs d'AR0602 (9x AM0602* + FLAME2S) SHA-256 identiques. Prototype animations/runs/PORTL1A-spline-fit1-feather8-x4 (script animations/runs/portals-spline-fit1-feather8-workshop/portals-spline-fit1-feather8.py); livré par pack de zone combined-20260828-ar0602-portals-30fps-spline-feather8; installation PerArea réversible (backup per-area-backup-20260828-184246); QA en jeu validée par l'utilisateur le 2026-08-28."
+  },
+  "historical_evidence": [
+    {
+      "path": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905/AR0602/manifest.json",
+      "sha256": "fe30dc02c42364347f8375b2225de7aeaa570a8d03ad94303b06c802937de172",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/fe30dc02c42364347f8375b2225de7aeaa570a8d03ad94303b06c802937de172.json"
+    },
+    {
+      "path": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0602/qa-v3-ef4ac04675374e8a.json",
+      "sha256": "e17e18ab5d60034cd46936f97a0a3a40171894110790dd4e58fc6ed18f36dfe6",
+      "decision_date": "2026-09-05",
+      "kind": "explicit-user-ingame-qa-with-byte-identical-carry-forward",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/e17e18ab5d60034cd46936f97a0a3a40171894110790dd4e58fc6ed18f36dfe6.json"
+    }
+  ],
+  "acquired_qa_date": "2026-09-05",
+  "new_ingame_qa": false,
+  "installation_matches_accepted_areas": [
+    "AR0602"
+  ],
+  "installation_discrepancy_areas": [],
+  "clarification": "",
+  "runtime_contracts": [
+    {
+      "area": "AR0602",
+      "resources": [
+        {
+          "frame_count": 12,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "a4ac6ccb3ac9078827bd750d2e24d1b788c70e41fc45e7db970a1ff77d439394",
+            "a0658009ab2373977627bb93d8b3327db602e76789200b250e8a33cdb23f72bb",
+            "51d39a6fd060d46344f165c3ce4487eb9f753205da15bc64f454ed5cf4c7b8ab",
+            "8148e9f4859148b09fead10729509abb3d9134cfce60fdec5db421811c06c191",
+            "a6930e3ab625487850a441eb6db280c2744b63027f46f34cc2bc4a593fa6515a",
+            "1f193d2bbacc2288b731913f4378a8ea3979d6e1bcb60d211957f396f319c21d",
+            "7c527aaaa917a83b1d8f464dc393c624ae18f13f5bdd4a093a10219841424d78",
+            "84615dc3f7433fba4fa2cd04553c5d3e5c5fc6f06f81c6af3709d5031598b544",
+            "12e2bacc2ae3bb2b77c16f9385ca957d532a3c9a2947a3e2d27d448673316642",
+            "bc71ab84788e2814b2451b4b7382c5264a3c66aa52dd24a2f96529d8b836aa40",
+            "0744cad07e75fdbb86d338ac56daa89ff0d4d36c1a9db69b1d4ad4ee1378eff4",
+            "3c235b8d78d9ed487ccbd1db3205ccec797fb4904ba69d64b9eefdc19673920c"
+          ]
+        }
+      ]
+    }
+  ],
+  "release_mutation": false
+}

@@ -1,0 +1,67 @@
+{
+  "schema": "bg2-upscale-historical-qa-binding-run-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T19:44:41.930644+00:00",
+  "resrefs": [
+    "PORTL2A"
+  ],
+  "operation": "formalize existing user ingame approvals without graphical reprocessing",
+  "output_split_root": "animations/packs-par-zone/portl2a-historical-qa-bound-20261011-v1",
+  "output_manifest_sha256": "2185ba1566a761721611629cfcbe06392a73922b1e56f08c57e75d865ab0882e",
+  "registry_evidence": {
+    "path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json",
+    "sha256": "a8d657abae5ab8292ab47ee11b985cbd5e625ac2140095559d280cfcbb16c213",
+    "resref": "PORTL2A",
+    "notes": "Portail elliptique; x4 SeedVR2 7B/LAB (run ar0603-all-bam-seedvr7b-lab-x4, RGB installé identique bit à bit à sa sortie 02_upscale_x4); V2 TimedTimeline 30 FPS apo-8 depuis le 2026-08-23 (run ar0603-all-bam-apo8-x4-30fps-v2; 6 -> 12 phases). Contour alpha 1 bit (0/255) en escaliers x4 (588 h / 536 v) corrigé le 2026-08-28, même recette que PORTL1A/PORTL1B d'AR0602 (correction_id ar0602-portals-spline-fit1-feather8): masque = spline périodique fit-error 1.0 (sample-spacing 1.5, supersample 4, seuil 127) sur l'alpha x4 316x352 avec padding transparent 32 px puis recrop, PUIS fondu intérieur de silhouette 8 px x4 (smoothstep); alpha_final = alpha_source * masque_spline/255 * feather, même masque répété sur les 12 phases (~7050 px d'alpha intermédiaire/frame). RGB inchangé octet pour octet; registre v2 (c399b0e0) inchangé; 9 ressources soeurs AM0603* SHA-256 identiques. Prototype animations/runs/PORTL2A-spline-fit1-feather8-x4 (script animations/runs/portals-spline-fit1-feather8-workshop/portals-spline-fit1-feather8.py); livré par pack de zone combined-20260828-ar0603-portal-spline-feather8; installation PerArea réversible (backup per-area-backup-20260828-185613); QA en jeu validée par l'utilisateur le 2026-08-28."
+  },
+  "historical_evidence": [
+    {
+      "path": "animations/packs-par-zone/combined-20260828-ar0603-portal-spline-feather8/AR0603/manifest.json",
+      "sha256": "e26dcf806e599f8f806c5feccca54c745d854708f55a0da56e3b8879ec6b85bc",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/e26dcf806e599f8f806c5feccca54c745d854708f55a0da56e3b8879ec6b85bc.json"
+    }
+  ],
+  "acquired_qa_date": "2026-08-28",
+  "new_ingame_qa": false,
+  "installation_matches_accepted_areas": [
+    "AR0603"
+  ],
+  "installation_discrepancy_areas": [],
+  "clarification": "",
+  "runtime_contracts": [
+    {
+      "area": "AR0603",
+      "resources": [
+        {
+          "frame_count": 12,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "71ae1b468c6ca01a98531230416fcf679a5d2fa65c2daa8f214f3eedee629266",
+            "9590d4b29f83e99efa80ba789637fa301179e85de361bf2a5456faac103799af",
+            "0a121bec4b80a70d913c3f539c9c4b01352f4b09fec794bfec8d89406b73bcaf",
+            "f29a1b168f74f95ef400b3f12fc9c5842cbd402213fdcfda1925811425097935",
+            "dfd94f4c3e2d63e7222c4cf9d0fb4db7be9ced19e1ec217ac41cfdbb2ad321f8",
+            "d5cde991ad9cc5cec1800007651032e448af4095636a36e7f7a2eb8e78115490",
+            "9e6e3c41daa8ca7238fabf088dac4163aa71d372a1ce908ed0ed4922b3b9aff2",
+            "3ffa906310a781e23ce49abdb8cfa63f614f128149e88547261ece14437d8e82",
+            "ce17ebe4d21b03c2b313dbfbff02578af863b7c2a8eaa532e0b59ca06323338b",
+            "844f2a666f8c68adb0aa1417ccb04daa9574eaeef7ec52115bec831d10617832",
+            "d9c0bfe1c8679a6551a4ed7ae511d5c405fc0d8d8141e34ffcfdfc2b88ff793b",
+            "6f661204e6f9ebc04332a41c316b3a834895c6b7695864259333000de916cc1e"
+          ]
+        }
+      ]
+    }
+  ],
+  "release_mutation": false
+}

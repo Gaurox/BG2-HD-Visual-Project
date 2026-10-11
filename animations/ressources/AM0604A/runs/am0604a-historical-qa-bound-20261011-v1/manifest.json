@@ -1,0 +1,69 @@
+{
+  "schema": "bg2-upscale-historical-qa-binding-run-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T19:44:20.385942+00:00",
+  "resrefs": [
+    "AM0604A"
+  ],
+  "operation": "formalize existing user ingame approvals without graphical reprocessing",
+  "output_split_root": "animations/packs-par-zone/am0604a-historical-qa-bound-20261011-v1",
+  "output_manifest_sha256": "45b794d813fcb38a9744c053f61fb916bd7baa622835ebd9cc6898032d109c6b",
+  "registry_evidence": {
+    "path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json",
+    "sha256": "a8d657abae5ab8292ab47ee11b985cbd5e625ac2140095559d280cfcbb16c213",
+    "resref": "AM0604A",
+    "notes": "Cirque, 1er etage (AR0604); seule ressource de la zone (fontaine); x4 SeedVR2 7B/LAB (run ar0604-all-bam-seedvr7b-lab-x4); V2 TimedTimeline 30 FPS apo-8 (run ar0604-apo8-x4-30fps-v2); 7 frames natives -> 14 frames (14 phases); livre par pack de zone; QA en jeu validee par l'utilisateur le 2026-08-23. Fondu alpha de contour tente a deux reprises (feather par distance 6px puis 2px x4, puis masque manuel sur le pack valide) : les trois essais reproduisent le meme symptome en jeu (rendu pixelise/basse frequence, comme le BAM natif) malgre RGB, cycles, dimensions et registre verifies identiques a la version validee a chaque fois ; cause non identifiee, hypothese principale : le chemin de rendu ne gere pas les valeurs alpha intermediaires (ni 0 ni 255) sur cette ressource. Abandonne, ressource laissee sans fondu ; ne plus retenter de correction alpha ici, cf. FLAME2S."
+  },
+  "historical_evidence": [
+    {
+      "path": "animations/runs/ar0604-apo8-x4-30fps-v2/03_runtime_pack/manifest.json",
+      "sha256": "acabec43d7e22d70a80e0b8e5d182468a6a94d296318fed74676bab7a6da76a0",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/acabec43d7e22d70a80e0b8e5d182468a6a94d296318fed74676bab7a6da76a0.json"
+    }
+  ],
+  "acquired_qa_date": "2026-08-23",
+  "new_ingame_qa": false,
+  "installation_matches_accepted_areas": [],
+  "installation_discrepancy_areas": [
+    "AR0604"
+  ],
+  "clarification": " QA acquise conservée uniquement sur ar0604-apo8-x4-30fps-v2 sans correction alpha. Installation actuelle issue de ar0604-spline-fit2-alpha-30fps-v2 ; notes historiques rejettent les essais alpha, aucune approbation exacte retrouvée ; choix de version/QA ciblée requis.",
+  "runtime_contracts": [
+    {
+      "area": "AR0604",
+      "resources": [
+        {
+          "frame_count": 14,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "447f28a2d4ba726136ec05f063080a72edc49893b5cd5766e9c67f411365b03a",
+            "b830179777303d7e95795c318c8c357b0dbb7b5ae0eb39fd7aa5f9ba89e1e050",
+            "579b5f37bbc552fc5eb5fa1d9b22f1029daeb1bfa28b270ead6f2b1c3615fd69",
+            "512d2852e5dc8c96e36430cf42c35f6bfb3ceb9a2cfda49171a30262a2538287",
+            "058ff8ff951ad3f5f5d3473f6731588cabfbe384e2e44a401c6bd2a21786b4ef",
+            "505f1fa55d21c2639402bb0831b5b219281479c7850ed6c7e7612c0506669b70",
+            "01dab3fdca968a9a2c9cbb72610d05b148b60277e0b0380809f554e1ebce4969",
+            "0169b61b18bfdf6ac33c53f852dd549500f5daf5f913ed06c80c90fc705dc57a",
+            "34dd6321e1feb3ceb59713d666ca2a0a6cdb25f11ae5e80afea5890b8ad17f4b",
+            "f55e400a7f18a05e311139f37c4db77cf53cabcd2e6909d4ae8df4f0542e34e3",
+            "b5530f24beefe38989f3a40b67ec7a3e68d6d4e8e19a7194d5d8bda98a2d3480",
+            "92c94d9cd924c0b618dd1d3cf0fd4c8a1c11834cbac2de74bbc8cdb755d0e812",
+            "c8e9ffc43b6bfae93c5bb0d9d420852195a40ef69a2f4741d497b02ebb32127e",
+            "b7b5930f4c55c5ecd5082657a1cc2d8f4ee06444cc9dbee9e3b8ed817c2f28e6"
+          ]
+        }
+      ]
+    }
+  ],
+  "release_mutation": false
+}

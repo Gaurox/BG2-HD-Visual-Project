@@ -1,0 +1,98 @@
+{
+  "schema": "bg2-upscale-historical-qa-binding-run-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T19:44:30.275174+00:00",
+  "resrefs": [
+    "AM307UR3"
+  ],
+  "operation": "formalize existing user ingame approvals without graphical reprocessing",
+  "output_split_root": "animations/packs-par-zone/am307ur3-historical-qa-bound-20261011-v1",
+  "output_manifest_sha256": "550f8e355ad3af789c05fb024a5a2aaa9652f01d769d913bcdddba12bb6d4645",
+  "registry_evidence": {
+    "path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json",
+    "sha256": "a8d657abae5ab8292ab47ee11b985cbd5e625ac2140095559d280cfcbb16c213",
+    "resref": "AM307UR3",
+    "notes": "Coffre ; x4 SeedVR2 7B/LAB, neutralisation RGB sous alpha nul, puis V2 TimedTimeline 30 FPS apo-8 (run ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831 ; 4 frames natives -> 8 frames, 8 phases ; neutralisation réappliquée après interpolation) ; livré par pack de zone combined-20260831-ar0307-ar0329-six-bam-30fps-v2 ; QA ingame utilisateur validée le 2026-08-31."
+  },
+  "historical_evidence": [
+    {
+      "path": "animations/packs-par-zone/combined-20260831-ar0307-ar0329-six-bam-30fps-v2/AR0307/manifest.json",
+      "sha256": "9522050d6761c17823a0b2c4d8006547fe3930f61fd733818a037e318c04a7a1",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/9522050d6761c17823a0b2c4d8006547fe3930f61fd733818a037e318c04a7a1.json"
+    },
+    {
+      "path": "animations/packs-par-zone/combined-20260831-ar0307-ar0329-six-bam-30fps-v2/AR0329/manifest.json",
+      "sha256": "067eaa1fcf0760ebc6c14b7df9b6e04f88da312acd4a9a5dc734dd77c9ebaaa4",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/067eaa1fcf0760ebc6c14b7df9b6e04f88da312acd4a9a5dc734dd77c9ebaaa4.json"
+    }
+  ],
+  "acquired_qa_date": "2026-08-31",
+  "new_ingame_qa": false,
+  "installation_matches_accepted_areas": [
+    "AR0307",
+    "AR0329"
+  ],
+  "installation_discrepancy_areas": [],
+  "clarification": "",
+  "runtime_contracts": [
+    {
+      "area": "AR0307",
+      "resources": [
+        {
+          "frame_count": 8,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "9f8e83d4091a709a4ea477d0c1c65a98f08ed0c2a0e6b0dc939ddad6ee3ade9d",
+            "18a460923e40bf5b2082e6fa804581f784ce0af2beaec9ef1d5027c09c956392",
+            "f24187d18695611021288b97385c5d9ce0f278a80888c45ea3a97ce11360ceb1",
+            "7c0bb4028f1356f627054f9d64788b24539a76ad8ea5bed960fcc358df226f9d",
+            "f77000f1363a523d41ec00d405d994efd48a58335e5aeb2ec733cab8a10ea971",
+            "023cd4779bc13fc400b2b4adc7dec2b6bff7f23364494a2040636469e8c812aa",
+            "d31d9cab81e4ef8d3dd17e8352b75595ea6d784ff8ac96a7a5fbac092e8cfc0f",
+            "ef6902540abb7e748088ea0b987760ee0f950988720b12d2ae32d4381c8e7de8"
+          ]
+        }
+      ]
+    },
+    {
+      "area": "AR0329",
+      "resources": [
+        {
+          "frame_count": 8,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "9f8e83d4091a709a4ea477d0c1c65a98f08ed0c2a0e6b0dc939ddad6ee3ade9d",
+            "18a460923e40bf5b2082e6fa804581f784ce0af2beaec9ef1d5027c09c956392",
+            "f24187d18695611021288b97385c5d9ce0f278a80888c45ea3a97ce11360ceb1",
+            "7c0bb4028f1356f627054f9d64788b24539a76ad8ea5bed960fcc358df226f9d",
+            "f77000f1363a523d41ec00d405d994efd48a58335e5aeb2ec733cab8a10ea971",
+            "023cd4779bc13fc400b2b4adc7dec2b6bff7f23364494a2040636469e8c812aa",
+            "d31d9cab81e4ef8d3dd17e8352b75595ea6d784ff8ac96a7a5fbac092e8cfc0f",
+            "ef6902540abb7e748088ea0b987760ee0f950988720b12d2ae32d4381c8e7de8"
+          ]
+        }
+      ]
+    }
+  ],
+  "release_mutation": false
+}

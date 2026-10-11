@@ -1,0 +1,98 @@
+{
+  "schema": "bg2-upscale-historical-qa-binding-run-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T19:44:14.554420+00:00",
+  "resrefs": [
+    "AM0602B"
+  ],
+  "operation": "formalize existing user ingame approvals without graphical reprocessing",
+  "output_split_root": "animations/packs-par-zone/am0602b-historical-qa-bound-20261011-v1",
+  "output_manifest_sha256": "9d03e8dbbe91664e70c10ef9ed6eaae7954bf7e3d49892bc4c9918d07e745426",
+  "registry_evidence": {
+    "path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json",
+    "sha256": "a8d657abae5ab8292ab47ee11b985cbd5e625ac2140095559d280cfcbb16c213",
+    "resref": "AM0602B",
+    "notes": "Cheminée x4; V2 TimedTimeline 30 FPS deheld (9 poses source + 27 intermédiaires); masque manuel sol répété sur les 36 phases; RGB inchangé; alpha seul; validé en jeu le 2026-08-23; installation réversible; livré par pack de zone AR0602 depuis le 2026-08-23, assets inchangés, QA rejouée OK."
+  },
+  "historical_evidence": [
+    {
+      "path": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905/AR0602/manifest.json",
+      "sha256": "fe30dc02c42364347f8375b2225de7aeaa570a8d03ad94303b06c802937de172",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/fe30dc02c42364347f8375b2225de7aeaa570a8d03ad94303b06c802937de172.json"
+    },
+    {
+      "path": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0602/qa-v3-ef4ac04675374e8a.json",
+      "sha256": "e17e18ab5d60034cd46936f97a0a3a40171894110790dd4e58fc6ed18f36dfe6",
+      "decision_date": "2026-09-05",
+      "kind": "explicit-user-ingame-qa-with-byte-identical-carry-forward",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/e17e18ab5d60034cd46936f97a0a3a40171894110790dd4e58fc6ed18f36dfe6.json"
+    }
+  ],
+  "acquired_qa_date": "2026-09-05",
+  "new_ingame_qa": false,
+  "installation_matches_accepted_areas": [
+    "AR0602"
+  ],
+  "installation_discrepancy_areas": [],
+  "clarification": "",
+  "runtime_contracts": [
+    {
+      "area": "AR0602",
+      "resources": [
+        {
+          "frame_count": 36,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "ea58b8c138e85a4477edce99b66c3d7712682099aae5f7c8fa0eb1ecf4988873",
+            "6dcb184688e4f481680a01d051c833aa034bdf846af9a0e691bc37f7716e6da7",
+            "4edfa433218105e593cd1f30cc35b8c6d20746e7053a16e773405fdb69c39a18",
+            "81c3b33a9662350c23c0daf06c74a60d8aac3f8ad13721594f6c52434532a0d4",
+            "8aee3d767edb2e219ff7f79392bd1df75fff60cba488b5f118857d1364d2ec4f",
+            "48304e2333357547fd0d6fd755f278bbdb3bbccf7f7d206fbbba56a10340b7bf",
+            "eff7c982467abbfa8e968e4ebc205bb244d3d4d0a5ab7bdd177b3d1bc4dea474",
+            "496d88ccc69fdaaf54294b0d5107fece4f0196feba7c9cd21c43e9dd4eea0419",
+            "58040d4a6493b9c92821068ae2896db634d5326dafe9401e306d864cd1323cc6",
+            "ac4ebf902881aa5113038089edcf422cddbf1dd18ed85b606a93e191820c76cb",
+            "44dcd21bb520c443165ec9afb30f6d13bd1d594be1a4b61746d903aaf3b71652",
+            "b00881694b116f528722cf28473efdba4eb6304362cb3eb9e8e53572e2583740",
+            "325a44bc4b3ac6427737ca96f3a5da67f23cc77e6a95ef58afea561b26da83dd",
+            "f1d653e18ee4191842897a98311438d2e1d71ff40b11ba85b82b9ba7301ad017",
+            "d59505801015c3022b4438e5d986528d3de2247b609f4a281db0d343bc0c894a",
+            "4d32969c29e20bd6326f332a44cf3c5293050aaefb83df922cfa010e42a47d53",
+            "dc911bd169e9e813f83720cd83e47d3f70c2e8b85b0effe17d1f4717fe4518f7",
+            "e16ba18bd2990f3f16d6bc21e7f6497a377c1073c7b6879e4d29e594fce5f88d",
+            "0f5c966ac7d52c591ec173fe07ad997fa11cce24b26fba6f137ccbc9c41c803e",
+            "4a5145a976df394a96d6875ae12308cda7e8458550073a26725080b94788128f",
+            "54a607c469982a9465190833ca97677ca2ccf9e0890ef4481f670a4b4c02e8f4",
+            "416e99de318df6275b0fcdfb7a2f4c01c2d4f82bdb9278099aef30e5bbdac669",
+            "e29cc9ca3e71f0d89c3c94109c9f525013cd109e99b39845d3b5ea2de5678d2b",
+            "155042627d215b599dcb3d760ff39d07c8eaaef389b132633a2a4e3ff655ea08",
+            "1af6224f5887a38dd9a04eedce166f56db98cb6a416bc0d8b60e414d599b7f56",
+            "e64e5de7a5b2b9ba2b84d26427a4d332af75d6a6f3194a4b67610069cb0b52e7",
+            "015efb32cfadba4a103b9941620e9bedcd7733a71f1e5ee63732e4067d41d88b",
+            "41894fbed778faf4dfaff8daa549ee5b232fe90b3b748eafa8ade4492c641b7b",
+            "44bd273be6a963ae30c29916a2e93f1b260cc0bb40b587f132108b6b97e547ef",
+            "36bcac0cdfc1f25bcaa65726a3479a9e0a84a1f1230804dec902bc72a79737fe",
+            "022abdc8848c529056418934847856547d3ed136b54c0a7a0c83c546ae766605",
+            "37ed21e70daa5c1303948c985c10b30af6a32661d8e67cd7296d1549ffa5fee6",
+            "44168dc90af2afec9c148674f9fa3531bbc4747ea6285fba0929169584a79fc9",
+            "bdece9f18931937eb521b2af0825a7d9e80b77fde65a6e38017464f3b6c7dc6a",
+            "ccc5b7836bfc81f7fe9926f00624430f18ad0bf6d46e09b7869382fc7296deef",
+            "10240d03887aa46bb5cbb6e97871b884149688baa81f1d224ca81ece0a50d56f"
+          ]
+        }
+      ]
+    }
+  ],
+  "release_mutation": false
+}

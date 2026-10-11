@@ -1,0 +1,47 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM0205C",
+  "correction_id": "am0205c-interpolation-27f-15fps-canvas32",
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-08-21",
+    "path": "animations/index/qa-decisions/AM0205C/2026-10-11-preserved-historical-am0205c-v1.json",
+    "sha256": "C3E1B14493CF08B8950278A0979208088700AE18EE69A7BF46A368C6747342C4",
+    "status": "accepted"
+  },
+  "recipe_id": "animations-cleanup-points1-3-20261011-v1",
+  "resref": "AM0205C",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM0205C/runs/am0205c-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "C745E8207AABDE24230DB79D0656B8E0919F24B3221A1AD813180E5F0CA0D142",
+    "path": "animations/ressources/AM0205C/runs/am0205c-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0205",
+        "manifest_path": "animations/packs-par-zone/am0205c-historical-qa-bound-20261011-v1/AR0205/manifest.json",
+        "manifest_sha256": "6264EBAC67847FA54EA1E7BE3618656DA2A88CFC59061A7427D48A5BD009B0B4",
+        "path": "animations/packs-par-zone/am0205c-historical-qa-bound-20261011-v1/AR0205",
+        "registry_sha256": "E0888681E8FBCF8AA3290B4C042CA24E4BE258650CB9E17D4764DD1AF91D0A63",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am0205c-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "4BBEA4C44CB4253931BFA20055F64B49E7FF5A5AC89E40E199F1199CF59719BB",
+    "path": "animations/packs-par-zone/am0205c-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0205"
+  ],
+  "updated_at_utc": "2026-10-11T19:44:11Z"
+}

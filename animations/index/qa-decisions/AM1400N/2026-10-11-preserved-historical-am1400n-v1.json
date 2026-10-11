@@ -1,0 +1,45 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM1400N",
+  "decision": "Formalisation le 2026-10-11 de la validation utilisateur historique déjà acquise ; aucune nouvelle visite ingame. Octets, géométrie, cycles, cadence et variantes conservés dans le snapshot QA ; propagation de la même ressource aux zones inventoriées par identité, sans déduire de visites exhaustives. Source : pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json. Notes acquises : Fontaine de nuit des Ruines du temple (AR1400), meme position que AM1400A, planning ARE 0xFFE0003F = 21h-5h59. Alpha strictement identique sur les 7 frames natives. Meme chaine et meme run que AM1400A (x4 ar1400-all-bam-seedvr7b-lab-x4 ; 30 FPS ar1400-fountains-apo8-x4-30fps-v2, plan a73e0afc, 7 -> 14 frames, 0,4667 s). QA en jeu validee par l'utilisateur le 2026-08-28. Meme pack de zone combined-20260828-plus-ar1400-fountains-only. Contour alpha 1 bit non encore corrige, comme AM1400A.",
+  "decision_date": "2026-08-28",
+  "decision_id": "2026-10-11-preserved-historical-am1400n-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM1400N/runs/am1400n-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "D49F381468FC7287B50BEFFC58BEEAFC7DDB45AB9790728C72F1F8074DEA7A2E",
+    "path": "animations/ressources/AM1400N/runs/am1400n-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "recipe_id": "animations-cleanup-points1-3-20261011-v1",
+  "recorded_at_utc": "2026-10-11T19:44:25Z",
+  "resref": "AM1400N",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR1400",
+        "manifest_path": "animations/packs-par-zone/am1400n-historical-qa-bound-20261011-v1/AR1400/manifest.json",
+        "manifest_sha256": "B882F09B78FFA508BE3D57A72B1A3BC9F53E95BCCCD642CACDBF359C87FD493C",
+        "path": "animations/packs-par-zone/am1400n-historical-qa-bound-20261011-v1/AR1400",
+        "registry_sha256": "8408AEB5BE876BEF7B5EB02A476FF3D5F20922B718430EECBEADA9556F7CD287",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am1400n-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "9A9E94ED993C03807DFE60C2FB3C67E296CC1CA266A7D3F0BA226F9DA288C8A2",
+    "path": "animations/packs-par-zone/am1400n-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR1400"
+  ]
+}

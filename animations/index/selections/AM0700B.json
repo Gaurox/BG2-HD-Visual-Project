@@ -1,0 +1,47 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM0700B",
+  "correction_id": "ar0700-fountains-apo8-x4-30fps-v2",
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-08-27",
+    "path": "animations/index/qa-decisions/AM0700B/2026-10-11-preserved-historical-am0700b-v1.json",
+    "sha256": "D0B88977D23BE11CB4069EE8AAA5621FB1B3179DFC7999072246FA9781B7F22C",
+    "status": "accepted"
+  },
+  "recipe_id": "animations-cleanup-points1-3-20261011-v1",
+  "resref": "AM0700B",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM0700B/runs/am0700b-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "62F399D5C6FAB1C19D880DE3EBE8B9B60EF2392B00186C38CBA035C26D21A8D5",
+    "path": "animations/ressources/AM0700B/runs/am0700b-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0700",
+        "manifest_path": "animations/packs-par-zone/am0700b-historical-qa-bound-20261011-v1/AR0700/manifest.json",
+        "manifest_sha256": "CECA3881389F864BD19505E4F95333D7741D481E27B88BAF88173BF01141850F",
+        "path": "animations/packs-par-zone/am0700b-historical-qa-bound-20261011-v1/AR0700",
+        "registry_sha256": "78766B1E4A8FB58E78D78760D3FE2CC4E08BF157123B246F9956935E4F69FBDB",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am0700b-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "6CC7284200A927C119E8009A05205D2A278805218CB0C8DE330E7E62E446ADF3",
+    "path": "animations/packs-par-zone/am0700b-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0700"
+  ],
+  "updated_at_utc": "2026-10-11T19:44:21Z"
+}

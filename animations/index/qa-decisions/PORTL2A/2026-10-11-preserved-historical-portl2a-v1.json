@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:PORTL2A",
+  "correction_id": "ar0602-portals-spline-fit1-feather8",
+  "decision": "Formalisation le 2026-10-11 de la validation utilisateur historique déjà acquise ; aucune nouvelle visite ingame. Octets, géométrie, cycles, cadence et variantes conservés dans le snapshot QA ; propagation de la même ressource aux zones inventoriées par identité, sans déduire de visites exhaustives. Source : pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json. Notes acquises : Portail elliptique; x4 SeedVR2 7B/LAB (run ar0603-all-bam-seedvr7b-lab-x4, RGB installé identique bit à bit à sa sortie 02_upscale_x4); V2 TimedTimeline 30 FPS apo-8 depuis le 2026-08-23 (run ar0603-all-bam-apo8-x4-30fps-v2; 6 -> 12 phases). Contour alpha 1 bit (0/255) en escaliers x4 (588 h / 536 v) corrigé le 2026-08-28, même recette que PORTL1A/PORTL1B d'AR0602 (correction_id ar0602-portals-spline-fit1-feather8): masque = spline périodique fit-error 1.0 (sample-spacing 1.5, supersample 4, seuil 127) sur l'alpha x4 316x352 avec padding transparent 32 px puis recrop, PUIS fondu intérieur de silhouette 8 px x4 (smoothstep); alpha_final = alpha_source * masque_spline/255 * feather, même masque répété sur les 12 phases (~7050 px d'alpha intermédiaire/frame). RGB inchangé octet pour octet; registre v2 (c399b0e0) inchangé; 9 ressources soeurs AM0603* SHA-256 identiques. Prototype animations/runs/PORTL2A-spline-fit1-feather8-x4 (script animations/runs/portals-spline-fit1-feather8-workshop/portals-spline-fit1-feather8.py); livré par pack de zone combined-20260828-ar0603-portal-spline-feather8; installation PerArea réversible (backup per-area-backup-20260828-185613); QA en jeu validée par l'utilisateur le 2026-08-28.",
+  "decision_date": "2026-08-28",
+  "decision_id": "2026-10-11-preserved-historical-portl2a-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/PORTL2A/runs/portl2a-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "D888D38C80F96D6C66E82F26248AAF6C3EF7862BA3B9A55753B8B9F615F5F010",
+    "path": "animations/ressources/PORTL2A/runs/portl2a-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "recipe_id": "animations-cleanup-points1-3-20261011-v1",
+  "recorded_at_utc": "2026-10-11T19:44:42Z",
+  "resref": "PORTL2A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0603",
+        "manifest_path": "animations/packs-par-zone/portl2a-historical-qa-bound-20261011-v1/AR0603/manifest.json",
+        "manifest_sha256": "72DA98F94FD1AA1FC2DD1256F32B01C4F78D523242C6576A8094C2AE679E6D4D",
+        "path": "animations/packs-par-zone/portl2a-historical-qa-bound-20261011-v1/AR0603",
+        "registry_sha256": "1922712EC2F6618FEBD88CAA45FAA3194DC66932DE768CD1425499DE92DA1EEF",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/portl2a-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "2185BA1566A761721611629CFCBE06392A73922B1E56F08C57E75D865AB0882E",
+    "path": "animations/packs-par-zone/portl2a-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0603"
+  ]
+}

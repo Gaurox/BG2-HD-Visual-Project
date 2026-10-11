@@ -1,0 +1,98 @@
+{
+  "schema": "bg2-upscale-historical-qa-binding-run-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T19:44:28.312241+00:00",
+  "resrefs": [
+    "AM307TT1"
+  ],
+  "operation": "formalize existing user ingame approvals without graphical reprocessing",
+  "output_split_root": "animations/packs-par-zone/am307tt1-historical-qa-bound-20261011-v1",
+  "output_manifest_sha256": "16432ef13b15c5bb00fcf03ee06cca14413555e998c523bc0c8e061e1be5383a",
+  "registry_evidence": {
+    "path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json",
+    "sha256": "a8d657abae5ab8292ab47ee11b985cbd5e625ac2140095559d280cfcbb16c213",
+    "resref": "AM307TT1",
+    "notes": "Roue ; x4 SeedVR2 7B/LAB (run ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831), puis V2 TimedTimeline 30 FPS apo-8 (run ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831 ; 4 frames natives -> 8 frames, 8 phases) ; livré par pack de zone combined-20260831-ar0307-ar0329-six-bam-30fps-v2 ; QA ingame utilisateur validée le 2026-08-31."
+  },
+  "historical_evidence": [
+    {
+      "path": "animations/packs-par-zone/combined-20260831-ar0307-ar0329-six-bam-30fps-v2/AR0307/manifest.json",
+      "sha256": "9522050d6761c17823a0b2c4d8006547fe3930f61fd733818a037e318c04a7a1",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/9522050d6761c17823a0b2c4d8006547fe3930f61fd733818a037e318c04a7a1.json"
+    },
+    {
+      "path": "animations/packs-par-zone/combined-20260831-ar0307-ar0329-six-bam-30fps-v2/AR0329/manifest.json",
+      "sha256": "067eaa1fcf0760ebc6c14b7df9b6e04f88da312acd4a9a5dc734dd77c9ebaaa4",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/067eaa1fcf0760ebc6c14b7df9b6e04f88da312acd4a9a5dc734dd77c9ebaaa4.json"
+    }
+  ],
+  "acquired_qa_date": "2026-08-31",
+  "new_ingame_qa": false,
+  "installation_matches_accepted_areas": [
+    "AR0307",
+    "AR0329"
+  ],
+  "installation_discrepancy_areas": [],
+  "clarification": "",
+  "runtime_contracts": [
+    {
+      "area": "AR0307",
+      "resources": [
+        {
+          "frame_count": 8,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "6d9d2696e5528fd137ba88c51e46c06104a39b766a9422a4fe844fbdfed4ad8b",
+            "2012db99bbe4a9c0a9f60f18f00636fcafd7f03c0fb4252ff55e34120ec7066b",
+            "24b4fe9b76dcfc6d5292603df21c9c84c0c78fc880ef3cd34a693ff4fafcf26e",
+            "fa7970aa3045ce0955d0731cbc22b22b53b71cff5318116f6bcd4eea404b86df",
+            "1b0ce3ba632f354e61fb0605c8fd1fe6578d9a200ac655f565f5da137f8c469c",
+            "4ec65f9a09ddd1e070834fdc8c40e985edaf9544e40edd2235ca0bd3ed5be67a",
+            "6481644f9d8be45a9c159a3d3252e639c6c0804f10ee1e1d6115e52f843443bb",
+            "baaeacc52bbb5cbf8ef454c9c8d51317da4a7a9453ad2de11781f13c0bfca696"
+          ]
+        }
+      ]
+    },
+    {
+      "area": "AR0329",
+      "resources": [
+        {
+          "frame_count": 8,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "6d9d2696e5528fd137ba88c51e46c06104a39b766a9422a4fe844fbdfed4ad8b",
+            "2012db99bbe4a9c0a9f60f18f00636fcafd7f03c0fb4252ff55e34120ec7066b",
+            "24b4fe9b76dcfc6d5292603df21c9c84c0c78fc880ef3cd34a693ff4fafcf26e",
+            "fa7970aa3045ce0955d0731cbc22b22b53b71cff5318116f6bcd4eea404b86df",
+            "1b0ce3ba632f354e61fb0605c8fd1fe6578d9a200ac655f565f5da137f8c469c",
+            "4ec65f9a09ddd1e070834fdc8c40e985edaf9544e40edd2235ca0bd3ed5be67a",
+            "6481644f9d8be45a9c159a3d3252e639c6c0804f10ee1e1d6115e52f843443bb",
+            "baaeacc52bbb5cbf8ef454c9c8d51317da4a7a9453ad2de11781f13c0bfca696"
+          ]
+        }
+      ]
+    }
+  ],
+  "release_mutation": false
+}

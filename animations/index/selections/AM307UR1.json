@@ -1,0 +1,56 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM307UR1",
+  "correction_id": "ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831",
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-08-31",
+    "path": "animations/index/qa-decisions/AM307UR1/2026-10-11-preserved-historical-am307ur1-v1.json",
+    "sha256": "072E110866981265F8A44B822A45BFE8D466998C3ECF0259D21BC35B3C983B7B",
+    "status": "accepted"
+  },
+  "recipe_id": "animations-cleanup-points1-3-20261011-v1",
+  "resref": "AM307UR1",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM307UR1/runs/am307ur1-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "2F09F44F19FC303B3AE0605AB61ECB26B7751DF65D241721591A1BD7D9531794",
+    "path": "animations/ressources/AM307UR1/runs/am307ur1-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0307",
+        "manifest_path": "animations/packs-par-zone/am307ur1-historical-qa-bound-20261011-v1/AR0307/manifest.json",
+        "manifest_sha256": "E21F1C1630193A3E762BC7BF50922BCD4982C534CB40C64AE2503817D59F9D65",
+        "path": "animations/packs-par-zone/am307ur1-historical-qa-bound-20261011-v1/AR0307",
+        "registry_sha256": "354DBA507FE10FDB611217FEFCB50E69F054AAAB48E121A9425D1951C1841F38",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0329",
+        "manifest_path": "animations/packs-par-zone/am307ur1-historical-qa-bound-20261011-v1/AR0329/manifest.json",
+        "manifest_sha256": "37210318ED669B529F6280DD6240AAC8A6D455EEA6F4066BEB9701A1F1CA79E2",
+        "path": "animations/packs-par-zone/am307ur1-historical-qa-bound-20261011-v1/AR0329",
+        "registry_sha256": "354DBA507FE10FDB611217FEFCB50E69F054AAAB48E121A9425D1951C1841F38",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am307ur1-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "AA05F9951D185BDE585F512C7A5DF894534D77A84466C8FD92490E269A215CEC",
+    "path": "animations/packs-par-zone/am307ur1-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0307",
+    "AR0329"
+  ],
+  "updated_at_utc": "2026-10-11T19:44:29Z"
+}

@@ -1,0 +1,92 @@
+{
+  "schema": "bg2-upscale-historical-qa-binding-run-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T19:44:10.344370+00:00",
+  "resrefs": [
+    "AM0205B"
+  ],
+  "operation": "formalize existing user ingame approvals without graphical reprocessing",
+  "output_split_root": "animations/packs-par-zone/am0205b-historical-qa-bound-20261011-v1",
+  "output_manifest_sha256": "673d91d0fc4378f38e0e00f9c54a3101bb238601556901e6859cb6fea62855af",
+  "registry_evidence": {
+    "path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json",
+    "sha256": "a8d657abae5ab8292ab47ee11b985cbd5e625ac2140095559d280cfcbb16c213",
+    "resref": "AM0205B",
+    "notes": "Pod ; interpolation x4 de 27 frames adressée sur les 27 positions du cycle BAM à 15 FPS et boucle de 1.8 s ; fade canvas 32 px x4 sur quatre bords ; validé en jeu le 2026-08-21 ; patchs réversibles."
+  },
+  "historical_evidence": [
+    {
+      "path": "animations/runs/ar0602-eau-seedvr3b-lab-x4/04_ingame_test/03_am0205_recovered_pack/manifest.json",
+      "sha256": "d9058369bf3a0c7bb9b3133f75476655cdcc0e1c6763219e5e4fcc6c33227c59",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/d9058369bf3a0c7bb9b3133f75476655cdcc0e1c6763219e5e4fcc6c33227c59.json"
+    },
+    {
+      "path": "animations/runs/AM0205B-pod-canvas-feather-x4/manifest.json",
+      "sha256": "bc5130e9cedccc1d8add36a01dcbf84cdabb8cc40ca901bb381d5ca3ba1062cf",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/bc5130e9cedccc1d8add36a01dcbf84cdabb8cc40ca901bb381d5ca3ba1062cf.json"
+    },
+    {
+      "path": "animations/runs/ar0602-eau-seedvr3b-lab-x4/04_ingame_test/03_am0205_recovered_pack/AreaAnimations-X4.registry",
+      "sha256": "7963a5ffd853fe589408388c8eb16c7aa4316a3a9b47632f752237079414575e",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/7963a5ffd853fe589408388c8eb16c7aa4316a3a9b47632f752237079414575e.registry"
+    }
+  ],
+  "acquired_qa_date": "2026-08-21",
+  "new_ingame_qa": false,
+  "installation_matches_accepted_areas": [],
+  "installation_discrepancy_areas": [
+    "AR0205"
+  ],
+  "clarification": " QA acquise conservée uniquement sur Native 27 phases à 15 FPS (2026-08-21). Installation actuelle : TimedTimeline 54 phases à 30 FPS, approbation ingame exacte non retrouvée ; choix de version/QA ciblée requis.",
+  "runtime_contracts": [
+    {
+      "area": "AR0205",
+      "resources": [
+        {
+          "frame_count": 27,
+          "playback_mode": "Native",
+          "native_fps": {
+            "numerator": 0,
+            "denominator": 0
+          },
+          "target_fps": {
+            "numerator": 0,
+            "denominator": 0
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "2c07ac49225b34bc41cb88b934b5c3d705b2f7b51b5c98a42307c92975d0452b",
+            "2d016952ffc771da1903882521b8370e01cde9795a052f0422e3385c1c2d85f6",
+            "c58a9d500cd41620d4c6ad500add7cc0b3f6d507ca94f90c8ad201862700ef71",
+            "ea7ea0f259b0c9d08c4a46416bbfab69fa4bdb218ebb3195af511e2962194f19",
+            "87a52b8b0ef4d34f7676b39527b822ce9c0216ca0ee349257937e15c4d829025",
+            "53efc87d97f0b7f9597274a29b5b4c07933fc6c95d3a51542461a431a525cff7",
+            "6b659fb000a3656bc0ff773673569fbeffd400625851ed26d0c5c69dbaa789bf",
+            "a60d804eb4b95ee97edd434f3f3d0e679e919f21fd66ded6204087e599ffb5bf",
+            "a09bf95ec9e7fb2f4bffbda30b3a99d0aed29a12de0dd1642347bdf58809910c",
+            "ffd7ad560f4e23480a0d678151923ab677abe79e960438321196abc550ffa5e4",
+            "66eb04d3b4a5b642dbdaeac6936d281314448fbc8b742ce43ce370d2b1572ea4",
+            "38194b2d586f2f304b9876a5ef58911f26073d0ffe5787fe6efb3a59927236c1",
+            "fd7d3ae7a2819adf5d8c6d203408897f7096a95db9b7393b0d934aa15955f420",
+            "ee5a756416ffd6a23038030e31b39fbcedb81158b3398267c42f131823c915d6",
+            "bc9cd6ec4198e786d56c2b447209de8f8eee7044c4af747dae1e18cb050dd127",
+            "a4969244d05f71c254588c44013d41d3608b7df29ff76d159e27059d351db89a",
+            "43c9d8e47903cf98c2cad4a53c59b13d6e503631b6fb1e6fc905baab5a6fe7d5",
+            "e4793ab7a25151dd1fdca920c0761a4a1db8d28998fe5781d29f6f747a77ef44",
+            "80cb951287efc3dd27c1c43f75272845dfcc994b3ccabd13cf36c259c82a62db",
+            "5ac44317658f7181f154de9cafe16baf1f8fbd723dcf8f60757447a64c64987f",
+            "2665c6960068259d6439c21b0565aef1017c34746a2de3167c46f2c82c8a5190",
+            "c3fcd59d3dedbda7c901c91c00bce5ea19af5d549f3b583ebb4f5d0dbf69bc10",
+            "93bf7eb018d7e2ba87902224ec3885e5b1d804457fdb9758d404a2f570b88da8",
+            "23a48713391c47d929c833fdd5e76907fd4c2be544639e1b8df2591b5e090fcc",
+            "3e40ee59a346b89790a2318225561587674f3b7bd352e64c07294f5ac386559f",
+            "d0428eb08a4df315a73a679857bdd86f38ec44c7bcce186b23c88d26e9b8b43c",
+            "b17e986759b6cbfa859f7afe6efda6c10366667a1830ef7d67f7e084509c5cc9"
+          ]
+        }
+      ]
+    }
+  ],
+  "release_mutation": false
+}

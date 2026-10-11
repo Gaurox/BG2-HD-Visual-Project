@@ -1,0 +1,83 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:CHIMSMK",
+  "correction_id": "chimsmk-apo8-x4-30fps-v2-spline-fit1-multicontour-feather4-oval-edgefade20x6",
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-01",
+    "path": "animations/index/qa-decisions/CHIMSMK/2026-10-11-preserved-historical-chimsmk-v1.json",
+    "sha256": "7867039FB4DCD3C57EFADAE227B65851C25CD4A42AE5782947F4D5A2044EE748",
+    "status": "accepted"
+  },
+  "recipe_id": "animations-cleanup-points1-3-20261011-v1",
+  "resref": "CHIMSMK",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/CHIMSMK/runs/chimsmk-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "BA61CBBD8292D787C65984D8958F0AA653C10F3B5B28CCCA7FD2DD80F3D413D1",
+    "path": "animations/ressources/CHIMSMK/runs/chimsmk-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0300",
+        "manifest_path": "animations/packs-par-zone/chimsmk-historical-qa-bound-20261011-v1/AR0300/manifest.json",
+        "manifest_sha256": "C3B930AFC0C302E7E15FCECD73FA2CCCB968A5AB27ADB1D0502C5A1A98FF213F",
+        "path": "animations/packs-par-zone/chimsmk-historical-qa-bound-20261011-v1/AR0300",
+        "registry_sha256": "66FEB12DDD72F9BCA82637CF4FC847C991C80D793D68DC47580082C44D8EC4E4",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0400",
+        "manifest_path": "animations/packs-par-zone/chimsmk-historical-qa-bound-20261011-v1/AR0400/manifest.json",
+        "manifest_sha256": "490DA55C83BA0D1068A9F61E670AC882B30768F79F03740837D4EA99283734EE",
+        "path": "animations/packs-par-zone/chimsmk-historical-qa-bound-20261011-v1/AR0400",
+        "registry_sha256": "66FEB12DDD72F9BCA82637CF4FC847C991C80D793D68DC47580082C44D8EC4E4",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0500",
+        "manifest_path": "animations/packs-par-zone/chimsmk-historical-qa-bound-20261011-v1/AR0500/manifest.json",
+        "manifest_sha256": "D6CCECE2DC84B8FB19C6E08A9F5DC8C56503A26508B76D6928BFD452ABCB0E3D",
+        "path": "animations/packs-par-zone/chimsmk-historical-qa-bound-20261011-v1/AR0500",
+        "registry_sha256": "66FEB12DDD72F9BCA82637CF4FC847C991C80D793D68DC47580082C44D8EC4E4",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1100",
+        "manifest_path": "animations/packs-par-zone/chimsmk-historical-qa-bound-20261011-v1/AR1100/manifest.json",
+        "manifest_sha256": "06F99596AF22AB610A60575C361700F417C400798C1F5C778C3D9A998F52C2C8",
+        "path": "animations/packs-par-zone/chimsmk-historical-qa-bound-20261011-v1/AR1100",
+        "registry_sha256": "66FEB12DDD72F9BCA82637CF4FC847C991C80D793D68DC47580082C44D8EC4E4",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2000",
+        "manifest_path": "animations/packs-par-zone/chimsmk-historical-qa-bound-20261011-v1/AR2000/manifest.json",
+        "manifest_sha256": "FCF4C1DE27444B3CE07C26743B49A3F75AA317476A7FD41434283DADAD8EBDBD",
+        "path": "animations/packs-par-zone/chimsmk-historical-qa-bound-20261011-v1/AR2000",
+        "registry_sha256": "66FEB12DDD72F9BCA82637CF4FC847C991C80D793D68DC47580082C44D8EC4E4",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/chimsmk-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "ED79C1F87ED258BCEAC0C2AFB532A545C778C2A9D3BC19F9F4A8743CB7BBB79F",
+    "path": "animations/packs-par-zone/chimsmk-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0300",
+    "AR0400",
+    "AR0500",
+    "AR1100",
+    "AR2000"
+  ],
+  "updated_at_utc": "2026-10-11T19:44:38Z"
+}

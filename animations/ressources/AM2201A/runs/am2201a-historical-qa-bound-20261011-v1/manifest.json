@@ -1,0 +1,69 @@
+{
+  "schema": "bg2-upscale-historical-qa-binding-run-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T19:44:27.314032+00:00",
+  "resrefs": [
+    "AM2201A"
+  ],
+  "operation": "formalize existing user ingame approvals without graphical reprocessing",
+  "output_split_root": "animations/packs-par-zone/am2201a-historical-qa-bound-20261011-v1",
+  "output_manifest_sha256": "d77f86a8f4d6561e18d25d79519a1bd8a0948425875579a905848260380aa9f8",
+  "registry_evidence": {
+    "path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json",
+    "sha256": "a8d657abae5ab8292ab47ee11b985cbd5e625ac2140095559d280cfcbb16c213",
+    "resref": "AM2201A",
+    "notes": "AR2201 ; x4 SeedVR2 7B/LAB (run am2201a-seedvr7b-lab-x4-20260901), puis V2 TimedTimeline Apollo 8 15->30 FPS (7->14 phases ; run am2201a-apo8-x4-30fps-v2-20260901). QA vidéo et ingame utilisateur validées le 2026-09-01 ; livré avec AM2201B par le pack AR2201 feather1, installation per-area réversible."
+  },
+  "historical_evidence": [
+    {
+      "path": "animations/packs-par-zone/combined-20260901-active-plus-am2201ab-spline-fit1-feather1-30fps-v2/AR2201/manifest.json",
+      "sha256": "490ea2ef89ecaf857d1fcb00397a1f3132b4a33ecd722cc7cee4f267724bfd41",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/490ea2ef89ecaf857d1fcb00397a1f3132b4a33ecd722cc7cee4f267724bfd41.json"
+    }
+  ],
+  "acquired_qa_date": "2026-09-01",
+  "new_ingame_qa": false,
+  "installation_matches_accepted_areas": [
+    "AR2201"
+  ],
+  "installation_discrepancy_areas": [],
+  "clarification": "",
+  "runtime_contracts": [
+    {
+      "area": "AR2201",
+      "resources": [
+        {
+          "frame_count": 14,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "143e49ddcd68e6216512d598d8cb6c2f106a95df1df3a3fd4d0e2e8d9becf671",
+            "eaf1fd0c5aa7f06987136fa82498763c47b2fe16163ec3203a2e21637bbacc46",
+            "89a79c6298c79d65a14703cbe3b0bec38576042679ffcfe271e7142063cd387a",
+            "eeafc8fa9c3f901ebeb070ae544a13dc22fd1f0d8467c41e63ed696c8b8de3bb",
+            "228a64647eb48ff903f8efd14d440a80ad6a0c0dc1bee2f31f15616ac90f94ab",
+            "9c02498aabc39d6a017f9964f36adc2b2001a121ee10ffb5b81054c98015e124",
+            "7aff6ac0da2d130d573cb0f32ec578dd2211bc30f2cafe106bc753ab88b253a8",
+            "41ce747ecfdb9d17817d953d79dad1954ce62646123e9798ece193988f93368b",
+            "e87e99351009b0972e8e87dda412946148e9fcc4efa9bc9e25caf4ffb30fad4f",
+            "cc10b9b2eef6724e68bead13a2468adb71d5a10363470117c25dcbdad3ce805c",
+            "c90406fdcbdfe1fdc38690b37a68f4a3d0cae355ed054fee6303e2b4ff33c56a",
+            "a5754b925c9849cd8912340a00646214d826f86183a3c52d046e8a9f80254b02",
+            "3f5157158984216daf589c6d861f8b0efa7cbd44b0dfcefdaa64561c1ab07329",
+            "9aeaf13cdef4d7a107ba5916d44d184ba59204e30ecc42ec446e6871370b1721"
+          ]
+        }
+      ]
+    }
+  ],
+  "release_mutation": false
+}

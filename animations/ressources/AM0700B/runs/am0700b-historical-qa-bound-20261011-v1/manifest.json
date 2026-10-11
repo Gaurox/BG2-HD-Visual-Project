@@ -1,0 +1,69 @@
+{
+  "schema": "bg2-upscale-historical-qa-binding-run-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T19:44:21.391717+00:00",
+  "resrefs": [
+    "AM0700B"
+  ],
+  "operation": "formalize existing user ingame approvals without graphical reprocessing",
+  "output_split_root": "animations/packs-par-zone/am0700b-historical-qa-bound-20261011-v1",
+  "output_manifest_sha256": "6cc7284200a927c119e8009a05205d2a278805218cb0c8de330e7e62e446adf3",
+  "registry_evidence": {
+    "path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json",
+    "sha256": "a8d657abae5ab8292ab47ee11b985cbd5e625ac2140095559d280cfcbb16c213",
+    "resref": "AM0700B",
+    "notes": "Fontaine, couche teintee superposee a AM0700A. Fontaine d'AR0700 (deux fontaines physiques, chacune en deux couches BAM superposees : A+B a la position monde 981,1026 et C+D a 313,3766). x4 SeedVR2 7B/LAB (run ar0700-fountains-seedvr7b-lab-x4) puis V2 TimedTimeline 30 FPS apo-8 (run ar0700-fountains-apo8-x4-30fps-v2 ; 7 frames natives -> 14 frames, timeline [0,7,1,8,2,9,3,10,4,11,5,12,6,13], 14 phases, 0,467 s, duree de boucle inchangee). Geometrie uniforme ; flag ARE 0x1145 (bit 1 absent) donc chemin alpha strict, aucune correction RGB necessaire. Livre par pack de zone ; QA en jeu validee par l'utilisateur le 2026-08-27."
+  },
+  "historical_evidence": [
+    {
+      "path": "animations/packs-par-zone/combined-20260827-plus-flame2s-ar0602-radialA/AR0700/manifest.json",
+      "sha256": "30d8b5c9461b9e7e2136f34788d254f85544629f5473fca89d795926859baa9a",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/30d8b5c9461b9e7e2136f34788d254f85544629f5473fca89d795926859baa9a.json"
+    }
+  ],
+  "acquired_qa_date": "2026-08-27",
+  "new_ingame_qa": false,
+  "installation_matches_accepted_areas": [
+    "AR0700"
+  ],
+  "installation_discrepancy_areas": [],
+  "clarification": "",
+  "runtime_contracts": [
+    {
+      "area": "AR0700",
+      "resources": [
+        {
+          "frame_count": 14,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "c6808be3ad75ac6f0dc28f9ec28492d3dff7a52e134f0ab3680286504570ee4c",
+            "efecc8877bc646d17f59ffac16d4d5611fbfdfcfe86935b9cbdc99a1baab0be1",
+            "671d0a05bbf93c66a0db7fddc6048e17b61bf1c2ae5a53f7bb03027e162b0155",
+            "420ca2c415acd184df546ddfe06abaeec7e8b9a90d4686a4e741cb794fc497ee",
+            "ad179e9502eaf7fbe2e9a237d703f22e1c0658411d466b5b1895c973980ead65",
+            "f250f9cf51a4ebdc473e4cf2a8995aa28ece266009491284c3b6522deee1e093",
+            "5df101fe074a5b6681a5bda15fe3703d01f2d2b1391125fcfc38170ca8284ebe",
+            "aab54cc92b4b0174ffde629faf69305949a76790bc7ec0af6a18c6c46b3ad175",
+            "9191f886674d4c6fdc446a91705d1311df89791c26fbed8e6c4d8ffea4c3f282",
+            "ce8f841508a1e1d59efcb3f74625b0a546908be297bc1cbda7494bc3b016beae",
+            "03d144c68d609344fea7ee65bd119f359b730c53f9c526f09efcf5faece619b4",
+            "ee144fba022cd037585957eb4a75574cd5263f65d00c3c1e31df216bd3b2f7f7",
+            "f918e1d349a4522c4f5073d9e90870401bf2c425a64fa9a08b8e02abbaea75f2",
+            "b6e90dfe5b0180574fe921c806ec1acd7caa2ba8e44be7ad86e6aff680c05637"
+          ]
+        }
+      ]
+    }
+  ],
+  "release_mutation": false
+}

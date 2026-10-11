@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM0602K1",
+  "correction_id": "ar0601-all-bam-apo8-x4-30fps-v2",
+  "decision": "Formalisation le 2026-10-11 de la validation utilisateur historique déjà acquise ; aucune nouvelle visite ingame. Octets, géométrie, cycles, cadence et variantes conservés dans le snapshot QA ; propagation de la même ressource aux zones inventoriées par identité, sans déduire de visites exhaustives. Source : pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json. Notes acquises : Air Plane (AR0601, antichambre du donjon d'Irenicus); x4 SeedVR2 7B/LAB (run ar0601-all-bam-seedvr7b-lab-x4); V2 TimedTimeline 30 FPS apo-8 (run ar0601-all-bam-apo8-x4-30fps-v2); 8 frames natives -> 16 frames (16 phases); livré par pack de zone; QA en jeu validée par l'utilisateur le 2026-08-23.",
+  "decision_date": "2026-08-23",
+  "decision_id": "2026-10-11-preserved-historical-am0602k1-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM0602K1/runs/am0602k1-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "56372ABD4A2A0A3297454C4550903397078B8CABD58ADD491555A308FC277096",
+    "path": "animations/ressources/AM0602K1/runs/am0602k1-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "recipe_id": "animations-cleanup-points1-3-20261011-v1",
+  "recorded_at_utc": "2026-10-11T19:44:17Z",
+  "resref": "AM0602K1",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0601",
+        "manifest_path": "animations/packs-par-zone/am0602k1-historical-qa-bound-20261011-v1/AR0601/manifest.json",
+        "manifest_sha256": "2E3F3C85F7A7AF9A6F8ACD5F60024B26D92B9D18CBD6A82A1B3A1188CDABCCD0",
+        "path": "animations/packs-par-zone/am0602k1-historical-qa-bound-20261011-v1/AR0601",
+        "registry_sha256": "232FCCAC62727D19E3CEF07CC12A2853DD96A6B9F6BFD4DAD225EE6BC9DD1BA0",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am0602k1-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "0A351445480590B74B30DD7560CEB8067328D05A7FCF7E2E693FB54201C2C01E",
+    "path": "animations/packs-par-zone/am0602k1-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0601"
+  ]
+}

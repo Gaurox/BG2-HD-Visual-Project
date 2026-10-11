@@ -1,0 +1,71 @@
+{
+  "schema": "bg2-upscale-historical-qa-binding-run-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T19:44:19.859820+00:00",
+  "resrefs": [
+    "AM0602M"
+  ],
+  "operation": "formalize existing user ingame approvals without graphical reprocessing",
+  "output_split_root": "animations/packs-par-zone/am0602m-historical-qa-bound-20261011-v1",
+  "output_manifest_sha256": "288485ce3f8c31778a4c74cb8fa1c3929db294a42b3b648a6bcf3163e50ff7c1",
+  "registry_evidence": {
+    "path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json",
+    "sha256": "a8d657abae5ab8292ab47ee11b985cbd5e625ac2140095559d280cfcbb16c213",
+    "resref": "AM0602M",
+    "notes": "Air Plane (AR0601, antichambre du donjon d'Irenicus); x4 SeedVR2 7B/LAB (run ar0601-all-bam-seedvr7b-lab-x4); V2 TimedTimeline 30 FPS apo-8 (run ar0601-all-bam-apo8-x4-30fps-v2); 8 frames natives -> 16 frames (16 phases); livré par pack de zone; QA en jeu validée par l'utilisateur le 2026-08-23."
+  },
+  "historical_evidence": [
+    {
+      "path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0601/manifest.json",
+      "sha256": "2a333ad324116fbda8d4cf5521f48d14633a67b184159e33fde0476304d7d65c",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/2a333ad324116fbda8d4cf5521f48d14633a67b184159e33fde0476304d7d65c.json"
+    }
+  ],
+  "acquired_qa_date": "2026-08-23",
+  "new_ingame_qa": false,
+  "installation_matches_accepted_areas": [
+    "AR0601"
+  ],
+  "installation_discrepancy_areas": [],
+  "clarification": "",
+  "runtime_contracts": [
+    {
+      "area": "AR0601",
+      "resources": [
+        {
+          "frame_count": 16,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "f3f72b1ff745a84d69e1310b47d3d32ecf729bbe5672a238157dfeb1e5cec878",
+            "4ab6b348c442321c9252b93e851c4fb2e778938123eb8331537e1890cb12b96e",
+            "d28034d9b34221edcf58e4d25395b192a8241589e2063fb1eb22a091ae4eab66",
+            "96b574055617e95931564affad37ee55fd20bc960a7ee0721a150e6294804512",
+            "ac2214ca1b231507f02b66883740a86c7d34cc0e4bd02751bfb44c8492f32815",
+            "44fb6ec05aafe3926e550f952494966c95523fd58bf480e44b0077cb86681ee1",
+            "ba1c4ba2ada1e3ee2d64549b812919efb3e0ab8a69319e7b81a44730772ea5cb",
+            "6d92c15f70393ada3eee9a934d1a834fa0dd93cb8d163cad22d264a2c1055a6c",
+            "adae2e5805f3f6a1bb9232cc3d551462af1d8d2b45e22211adc1c274a022634f",
+            "d8be77ce198c1a0fcbc7b27f77b2282331afcb4b3b40f4055f35b25fc186cf3e",
+            "b0bb765a72001936cd47e4b469465f31b1965407697cf59d15efa3d5873f7dbf",
+            "d22e76bd3014521f8a9c565d0550b4e31dc1f8df489aafdfb288cad3570ab5ed",
+            "77ccfbd248bcfc71d17215c79336712efa5a72b88fb6ed28ef147eebe896f3b0",
+            "57121fac6813a97468908f2598bd9ab62d3c7aafb8d3b1f87919da91518458f8",
+            "71c99e636e9e651cea26523a8cffa8d91c22472aee48a622a0f9dd59ebb0a3a1",
+            "020b4e2c30f1521851a7e4d333d45a7934dc87a3f5197e69078517b4e5922db4"
+          ]
+        }
+      ]
+    }
+  ],
+  "release_mutation": false
+}

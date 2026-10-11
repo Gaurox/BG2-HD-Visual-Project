@@ -1,0 +1,69 @@
+{
+  "schema": "bg2-upscale-historical-qa-binding-run-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T19:44:27.761371+00:00",
+  "resrefs": [
+    "AM2201B"
+  ],
+  "operation": "formalize existing user ingame approvals without graphical reprocessing",
+  "output_split_root": "animations/packs-par-zone/am2201b-historical-qa-bound-20261011-v1",
+  "output_manifest_sha256": "92d6bc983083d0fbc3e0977160f056dae67b467003ef0b9d99f75fdf1360baa8",
+  "registry_evidence": {
+    "path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json",
+    "sha256": "a8d657abae5ab8292ab47ee11b985cbd5e625ac2140095559d280cfcbb16c213",
+    "resref": "AM2201B",
+    "notes": "AR2201 ; x4 SeedVR2 7B/LAB, puis V2 TimedTimeline Apollo 8 15->30 FPS (7->14 phases). Ressource Blended : spline Fit 1 multi-contour par frame + feather intérieur 1 px x4 ; RGB prémultiplié par l'alpha final. QA vidéo et ingame utilisateur validées le 2026-09-01 ; livré avec AM2201A par le pack AR2201 feather1, installation per-area réversible. Réserve mineure : un liseré sombre très fin peut subsister ; essais feather3 et Gaussian rejetés, ne réouvrir qu'avec une correction de contour plus localisée."
+  },
+  "historical_evidence": [
+    {
+      "path": "animations/packs-par-zone/combined-20260901-active-plus-am2201ab-spline-fit1-feather1-30fps-v2/AR2201/manifest.json",
+      "sha256": "490ea2ef89ecaf857d1fcb00397a1f3132b4a33ecd722cc7cee4f267724bfd41",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/490ea2ef89ecaf857d1fcb00397a1f3132b4a33ecd722cc7cee4f267724bfd41.json"
+    }
+  ],
+  "acquired_qa_date": "2026-09-01",
+  "new_ingame_qa": false,
+  "installation_matches_accepted_areas": [
+    "AR2201"
+  ],
+  "installation_discrepancy_areas": [],
+  "clarification": "",
+  "runtime_contracts": [
+    {
+      "area": "AR2201",
+      "resources": [
+        {
+          "frame_count": 14,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "ccbbc8f8a9055c44859cff86876ffcceb1990d9365b33c9d43e2d9eadf1e1b8e",
+            "ea92ac4bd6f9db35abe3427e7d1ee3fdc580a0c89e22d9ef832a5b8ec21c3026",
+            "79a6824c1f0162fc7bc26f22db2034f9d1ffbb81b0c096aebf46eff753f9ce54",
+            "27c61c19f42e5fc6adaf0c0b45c7f7c52048b266b14a109860cd81afea15ddf0",
+            "047393309aefdbccc398c22aea2b47a6b6fa7c4f50c6a11fa4e29afcaccc9e5d",
+            "fc1c15028b1eff8465a98618690e9a09a411967efa30a320dfa0250e8b8cddd3",
+            "275e4ed1fd52cf6cc376d1a16edb3e1d0220e6c7d2cfe84c5542039cd913cdae",
+            "7c69e8bb26d987931d09d016b9ff738ea7f76331197ca63607e65c2a4e4797e4",
+            "70cb44644bb46e95b65312d07d019203f70c397973d35d1720f83e2dfa03d581",
+            "2c0d5c6951e1023c4d09ce19fc18325b4431dfdf1356f1eaa5df32457fc895d7",
+            "7f3125b30c95843058830788d59b1438a763a2004b015d74445aefec85ac57bd",
+            "c529f3f6013119c961de88e2ca41be692f5387c86753cf30eefb82b5b4e0d05d",
+            "12b124e96b6e9677c8f7a2ee4bb9a2782a6176d5ff167a1efccc42af782718b0",
+            "8bc0dbf10008120730f283d49f35152738b842cbffce72f2b0f227da07779fc5"
+          ]
+        }
+      ]
+    }
+  ],
+  "release_mutation": false
+}

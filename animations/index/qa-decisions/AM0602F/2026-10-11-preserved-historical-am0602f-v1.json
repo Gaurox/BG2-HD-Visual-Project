@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM0602F",
+  "correction_id": "am0602f-lantern-apo8-x4-30fps-v2-active-rebase",
+  "decision": "Formalisation le 2026-10-11 de la validation utilisateur historique déjà acquise ; aucune nouvelle visite ingame. Octets, géométrie, cycles, cadence et variantes conservés dans le snapshot QA ; propagation de la même ressource aux zones inventoriées par identité, sans déduire de visites exhaustives. Source : pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json. Note 18 phases/30 FPS antérieure conservée comme historique ; sélection 9 phases Native confirmée par la QA AR0602 du 2026-09-05, octets et contrat identiques, aucun nouveau test déduit. Notes acquises : Lanterne; fondu objet 8 px x4 et canvas 32 px x4 validés; V2 TimedTimeline 15 -> 30 FPS (9 poses natives + 9 intermédiaires, 18 phases); pack installé avec sauvegarde réversible; QA en jeu validée par l'utilisateur le 2026-08-23.",
+  "decision_date": "2026-09-05",
+  "decision_id": "2026-10-11-preserved-historical-am0602f-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM0602F/runs/am0602f-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "E49B1C29D5E9E42EDE7CFA5490CD4B97655EECE1EDCC2C5326362B2B12A39030",
+    "path": "animations/ressources/AM0602F/runs/am0602f-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "recipe_id": "animations-cleanup-points1-3-20261011-v1",
+  "recorded_at_utc": "2026-10-11T19:44:16Z",
+  "resref": "AM0602F",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0602",
+        "manifest_path": "animations/packs-par-zone/am0602f-historical-qa-bound-20261011-v1/AR0602/manifest.json",
+        "manifest_sha256": "B5F0936C6ACACAAC7123B5B05EE9A5391171C5CFE9B4CD2401564156B5931B33",
+        "path": "animations/packs-par-zone/am0602f-historical-qa-bound-20261011-v1/AR0602",
+        "registry_sha256": "E32A140B32188FEC71B0D9E0EF84DF408D816A8326689B42E3A4FEE28585C9A0",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am0602f-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "713EB774D580A9B55A84A46A9F515C8AD0F120F5A3FEA6BE63B4830EFC8129E1",
+    "path": "animations/packs-par-zone/am0602f-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0602"
+  ]
+}

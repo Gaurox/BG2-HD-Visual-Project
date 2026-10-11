@@ -1,0 +1,229 @@
+{
+  "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+  "status": "completed",
+  "created_utc": "2026-10-11T19:44:15.348190+00:00",
+  "scale": 4,
+  "registry_version": 3,
+  "runtime_contract": {
+    "feature": "TimedTimeline",
+    "clock": "QPC-pause-aware",
+    "registry_version": 3
+  },
+  "registry": "AreaAnimations-X4.registry",
+  "registry_sha256": "a33f95dd48f0f942c1162859f2f1f909faae88e49b2f03d33da45e8d5cf67cbc",
+  "registry_bytes": 168,
+  "area_id": "AR0602",
+  "resource_count": 1,
+  "frame_count": 7,
+  "raw_bytes": 12230400,
+  "runtime_budget_enforced": true,
+  "base_assets": [],
+  "new_assets": [],
+  "resources": [
+    {
+      "resref": "AM0602D",
+      "frame_count": 7,
+      "cycle_count": 1,
+      "geometry_mode": "uniform",
+      "frames": [
+        {
+          "frame": 0,
+          "logical_size_x1": [
+            195,
+            140
+          ],
+          "physical_size_x4": [
+            780,
+            560
+          ],
+          "centre_x1": [
+            98,
+            140
+          ],
+          "asset": "AAX4-AM0602D-frame000.rgba",
+          "sha256": "83b90a9c7db80a66212889a550116bfe4942e547319b5b263eea3f17c98ef744",
+          "bytes": 1747200
+        },
+        {
+          "frame": 1,
+          "logical_size_x1": [
+            195,
+            140
+          ],
+          "physical_size_x4": [
+            780,
+            560
+          ],
+          "centre_x1": [
+            98,
+            140
+          ],
+          "asset": "AAX4-AM0602D-frame001.rgba",
+          "sha256": "3aaf094a812d26a468f9f530d76d79bdd475f144da2748ffb8f45c0e7ca02c24",
+          "bytes": 1747200
+        },
+        {
+          "frame": 2,
+          "logical_size_x1": [
+            195,
+            140
+          ],
+          "physical_size_x4": [
+            780,
+            560
+          ],
+          "centre_x1": [
+            98,
+            140
+          ],
+          "asset": "AAX4-AM0602D-frame002.rgba",
+          "sha256": "85b8bb88a617983579c8bd4b3f4bb567198e5e78a1c713e4809de76908408dbc",
+          "bytes": 1747200
+        },
+        {
+          "frame": 3,
+          "logical_size_x1": [
+            195,
+            140
+          ],
+          "physical_size_x4": [
+            780,
+            560
+          ],
+          "centre_x1": [
+            98,
+            140
+          ],
+          "asset": "AAX4-AM0602D-frame003.rgba",
+          "sha256": "6eb8e95c03e8d66e76d2a9a2fa277329d2882103f235a66a0712db8138a240b8",
+          "bytes": 1747200
+        },
+        {
+          "frame": 4,
+          "logical_size_x1": [
+            195,
+            140
+          ],
+          "physical_size_x4": [
+            780,
+            560
+          ],
+          "centre_x1": [
+            98,
+            140
+          ],
+          "asset": "AAX4-AM0602D-frame004.rgba",
+          "sha256": "a7c46bb79d76fbeab42c5b1c14d4daa2168f9a1e2934224868160bfbc10a73ba",
+          "bytes": 1747200
+        },
+        {
+          "frame": 5,
+          "logical_size_x1": [
+            195,
+            140
+          ],
+          "physical_size_x4": [
+            780,
+            560
+          ],
+          "centre_x1": [
+            98,
+            140
+          ],
+          "asset": "AAX4-AM0602D-frame005.rgba",
+          "sha256": "58bb5b49d194f1cc042be9c2fed162753301b966abf49b60ff1003184af30f81",
+          "bytes": 1747200
+        },
+        {
+          "frame": 6,
+          "logical_size_x1": [
+            195,
+            140
+          ],
+          "physical_size_x4": [
+            780,
+            560
+          ],
+          "centre_x1": [
+            98,
+            140
+          ],
+          "asset": "AAX4-AM0602D-frame006.rgba",
+          "sha256": "baec0d6bc6076399dc796d663e1d540b550ab4ac7ca1df69dad822e6727fd27a",
+          "bytes": 1747200
+        }
+      ],
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "timeline_frame_indices": []
+        }
+      ],
+      "assets": [
+        {
+          "name": "AAX4-AM0602D-frame000.rgba",
+          "sha256": "83b90a9c7db80a66212889a550116bfe4942e547319b5b263eea3f17c98ef744",
+          "bytes": 1747200
+        },
+        {
+          "name": "AAX4-AM0602D-frame001.rgba",
+          "sha256": "3aaf094a812d26a468f9f530d76d79bdd475f144da2748ffb8f45c0e7ca02c24",
+          "bytes": 1747200
+        },
+        {
+          "name": "AAX4-AM0602D-frame002.rgba",
+          "sha256": "85b8bb88a617983579c8bd4b3f4bb567198e5e78a1c713e4809de76908408dbc",
+          "bytes": 1747200
+        },
+        {
+          "name": "AAX4-AM0602D-frame003.rgba",
+          "sha256": "6eb8e95c03e8d66e76d2a9a2fa277329d2882103f235a66a0712db8138a240b8",
+          "bytes": 1747200
+        },
+        {
+          "name": "AAX4-AM0602D-frame004.rgba",
+          "sha256": "a7c46bb79d76fbeab42c5b1c14d4daa2168f9a1e2934224868160bfbc10a73ba",
+          "bytes": 1747200
+        },
+        {
+          "name": "AAX4-AM0602D-frame005.rgba",
+          "sha256": "58bb5b49d194f1cc042be9c2fed162753301b966abf49b60ff1003184af30f81",
+          "bytes": 1747200
+        },
+        {
+          "name": "AAX4-AM0602D-frame006.rgba",
+          "sha256": "baec0d6bc6076399dc796d663e1d540b550ab4ac7ca1df69dad822e6727fd27a",
+          "bytes": 1747200
+        }
+      ],
+      "playback_mode": "Native",
+      "native_fps": {
+        "numerator": 0,
+        "denominator": 0
+      },
+      "target_fps": {
+        "numerator": 0,
+        "denominator": 0
+      }
+    }
+  ],
+  "timed_resources": [],
+  "provenance": {
+    "kind": "exact historical acquired QA snapshot",
+    "source_manifest": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905/AR0602/manifest.json",
+    "source_manifest_sha256": "fe30dc02c42364347f8375b2225de7aeaa570a8d03ad94303b06c802937de172",
+    "texture_change": false,
+    "timing_change": false,
+    "legacy_v1_encoding_only": false,
+    "installation_forbidden": "QA snapshot is scoped to one resref; compose a complete area before installing"
+  }
+}

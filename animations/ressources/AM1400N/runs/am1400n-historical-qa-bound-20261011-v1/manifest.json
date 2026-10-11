@@ -1,0 +1,69 @@
+{
+  "schema": "bg2-upscale-historical-qa-binding-run-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T19:44:25.118945+00:00",
+  "resrefs": [
+    "AM1400N"
+  ],
+  "operation": "formalize existing user ingame approvals without graphical reprocessing",
+  "output_split_root": "animations/packs-par-zone/am1400n-historical-qa-bound-20261011-v1",
+  "output_manifest_sha256": "9a9e94ed993c03807dfe60c2fb3c67e296cc1ca266a7d3f0ba226f9da288c8a2",
+  "registry_evidence": {
+    "path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json",
+    "sha256": "a8d657abae5ab8292ab47ee11b985cbd5e625ac2140095559d280cfcbb16c213",
+    "resref": "AM1400N",
+    "notes": "Fontaine de nuit des Ruines du temple (AR1400), meme position que AM1400A, planning ARE 0xFFE0003F = 21h-5h59. Alpha strictement identique sur les 7 frames natives. Meme chaine et meme run que AM1400A (x4 ar1400-all-bam-seedvr7b-lab-x4 ; 30 FPS ar1400-fountains-apo8-x4-30fps-v2, plan a73e0afc, 7 -> 14 frames, 0,4667 s). QA en jeu validee par l'utilisateur le 2026-08-28. Meme pack de zone combined-20260828-plus-ar1400-fountains-only. Contour alpha 1 bit non encore corrige, comme AM1400A."
+  },
+  "historical_evidence": [
+    {
+      "path": "animations/packs-par-zone/combined-20260828-plus-ar1400-fountains-only/AR1400/manifest.json",
+      "sha256": "1b54a8d3d8fb62946d559991b94752c129367a5e6739c32e23e5f2480f4a108e",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/1b54a8d3d8fb62946d559991b94752c129367a5e6739c32e23e5f2480f4a108e.json"
+    }
+  ],
+  "acquired_qa_date": "2026-08-28",
+  "new_ingame_qa": false,
+  "installation_matches_accepted_areas": [
+    "AR1400"
+  ],
+  "installation_discrepancy_areas": [],
+  "clarification": "",
+  "runtime_contracts": [
+    {
+      "area": "AR1400",
+      "resources": [
+        {
+          "frame_count": 14,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "4c3db0331068433b44af84f5ec305301ed47d563ddbd28c5732113ada6cee6d5",
+            "f5e08d69d516a057f64c3036bc713a01653fff04a24603ddcbfa1afcb2ec7e4e",
+            "e53b03387993333db517021aa3312756c1c5d973e7566043030dca7e79d88934",
+            "5246ffb4d94c4352e8dd6de38653addd2294907fa9c2881c02f4714d09a01a2b",
+            "f773ed6691a75db60483e2f537e0f888bacf093b6dcc77f67f948a407a65df0f",
+            "77218ed0d80902b09b254167bee3124ed5f5006d7db843a24ad0e0f238cd2c5b",
+            "56ebac830b4d239ca56d8e927167f25328cbefbd3c4f2f4210f7c68fc484a8cf",
+            "97a1e3113d6eb7c1e356f95e013a451377dcc16c1e0b16f1315c6a139fc5a682",
+            "bc4748b42aafb5fbbde62f3d509fce85712d8545835689f08d4c1ca448895982",
+            "82dc45ec16f16e5c148eb8f5f6be2e97f1a8d6840efffda991935589fedbed3f",
+            "09e8fa46281016d4ddd2662aeea8f1c23f762c57a9c26d57611e730387c3e31c",
+            "33bb42952df26432a6cd52b56088501bc43b8533d60562bdce9e68a30bfe1c98",
+            "9f11c9e2488b09f336ffae34a70c01a3f73e696f04082281882a0e8d429db2b9",
+            "477dcfd91c6daba79725d6357a339de7289725f665e78512c3fe1d3f131cd541"
+          ]
+        }
+      ]
+    }
+  ],
+  "release_mutation": false
+}

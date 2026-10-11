@@ -305,8 +305,11 @@ def build_from_leaf(leaf: Path) -> dict[str, Any]:
             merged = json.loads(index_manifest.read_text(encoding="utf-8")).get("merged_from")
         except (OSError, ValueError):
             merged = None
-        if merged:
-            return {"merged_from": [str(item).replace("\\", "/") for item in merged]}
+        # Some split producers record per-area provenance objects here. They are
+        # not merge CLI arguments; keep the exact stored leaf instead of stringifying them.
+        if isinstance(merged, list) and merged and all(
+                isinstance(item, str) and item.strip() for item in merged):
+            return {"merged_from": [item.replace("\\", "/") for item in merged]}
     return {"leaf": rel(leaf)}
 
 

@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM0604A",
+  "correction_id": "ar0604-apo8-x4-30fps-v2",
+  "decision": "Formalisation le 2026-10-11 de la validation utilisateur historique déjà acquise ; aucune nouvelle visite ingame. Octets, géométrie, cycles, cadence et variantes conservés dans le snapshot QA ; propagation de la même ressource aux zones inventoriées par identité, sans déduire de visites exhaustives. Source : pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json. QA acquise conservée uniquement sur ar0604-apo8-x4-30fps-v2 sans correction alpha. Installation actuelle issue de ar0604-spline-fit2-alpha-30fps-v2 ; notes historiques rejettent les essais alpha, aucune approbation exacte retrouvée ; choix de version/QA ciblée requis. Notes acquises : Cirque, 1er etage (AR0604); seule ressource de la zone (fontaine); x4 SeedVR2 7B/LAB (run ar0604-all-bam-seedvr7b-lab-x4); V2 TimedTimeline 30 FPS apo-8 (run ar0604-apo8-x4-30fps-v2); 7 frames natives -> 14 frames (14 phases); livre par pack de zone; QA en jeu validee par l'utilisateur le 2026-08-23. Fondu alpha de contour tente a deux reprises (feather par distance 6px puis 2px x4, puis masque manuel sur le pack valide) : les trois essais reproduisent le meme symptome en jeu (rendu pixelise/basse frequence, comme le BAM natif) malgre RGB, cycles, dimensions et registre verifies identiques a la version validee a chaque fois ; cause non identifiee, hypothese principale : le chemin de rendu ne gere pas les valeurs alpha intermediaires (ni 0 ni 255) sur cette ressource. Abandonne, ressource laissee sans fondu ; ne plus retenter de correction alpha ici, cf. FLAME2S.",
+  "decision_date": "2026-08-23",
+  "decision_id": "2026-10-11-preserved-historical-am0604a-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM0604A/runs/am0604a-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "6947D236AA4C2CB53B5AF9B0E731EFC31B3200531DFD0A2D11D212487D25B693",
+    "path": "animations/ressources/AM0604A/runs/am0604a-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "recipe_id": "animations-cleanup-points1-3-20261011-v1",
+  "recorded_at_utc": "2026-10-11T19:44:20Z",
+  "resref": "AM0604A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0604",
+        "manifest_path": "animations/packs-par-zone/am0604a-historical-qa-bound-20261011-v1/AR0604/manifest.json",
+        "manifest_sha256": "05B129410838342373735BE1B3A0EAD7A6A48E8616E13435145EEDE24F606C3D",
+        "path": "animations/packs-par-zone/am0604a-historical-qa-bound-20261011-v1/AR0604",
+        "registry_sha256": "F0F653F2FEA86C7801721F9A2FDFA99C74321319BDB9BFC3F29F1137A28D67CB",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am0604a-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "45B794D813FCB38A9744C053F61FB916BD7BAA622835EBD9CC6898032D109C6B",
+    "path": "animations/packs-par-zone/am0604a-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0604"
+  ]
+}

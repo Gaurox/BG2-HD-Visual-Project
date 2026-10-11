@@ -233,3 +233,6 @@ pipeline/recipes/fire3-apo8-30fps-20261011-v1/occurrences-ar0202.csv -text white
 pipeline/recipes/animations-targeted-acceptance-20261011-v1/*.json -text whitespace=cr-at-eol
 animations/index/area-qa-decisions/FIRE_3/2026-10-11-accepted-fire3-ar0202-fade4-30fps-v1.json -text whitespace=cr-at-eol
 docs/validation/animations-qa-cadence-20261011-v1.json -text whitespace=cr-at-eol
+
+# Preserved historical manifests and receipts retain their original bytes.
+pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/** -text whitespace=cr-at-eol

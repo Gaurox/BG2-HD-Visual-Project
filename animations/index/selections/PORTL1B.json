@@ -1,0 +1,47 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:PORTL1B",
+  "correction_id": "ar0602-portals-spline-fit1-feather8",
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-05",
+    "path": "animations/index/qa-decisions/PORTL1B/2026-10-11-preserved-historical-portl1b-v1.json",
+    "sha256": "77465C2401E466A9469DD47753C254B731335A06E4AABDF2B5BF95A71FBC82AD",
+    "status": "accepted"
+  },
+  "recipe_id": "animations-cleanup-points1-3-20261011-v1",
+  "resref": "PORTL1B",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/PORTL1B/runs/portl1b-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "80BA12109E7C5ACC291A4168397DD94FC5259BBE43E4C28AAEB2970A0BCBF985",
+    "path": "animations/ressources/PORTL1B/runs/portl1b-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0602",
+        "manifest_path": "animations/packs-par-zone/portl1b-historical-qa-bound-20261011-v1/AR0602/manifest.json",
+        "manifest_sha256": "31D1CF57549EF95B388C50582F4A3E93C43A32728B071BF0D1829C54E4F032E5",
+        "path": "animations/packs-par-zone/portl1b-historical-qa-bound-20261011-v1/AR0602",
+        "registry_sha256": "D642390A62832EAC8604A36C8DC544F41E32383DD6854D1AAD9415A6FE3A7FFF",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/portl1b-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "6AC7B3FD6B195342C2218EFD9AFA08EAF98D3835CCF903DC79E7D747A2865738",
+    "path": "animations/packs-par-zone/portl1b-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0602"
+  ],
+  "updated_at_utc": "2026-10-11T19:44:41Z"
+}

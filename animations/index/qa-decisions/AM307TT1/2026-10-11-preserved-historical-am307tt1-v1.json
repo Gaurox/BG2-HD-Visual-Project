@@ -1,0 +1,55 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM307TT1",
+  "correction_id": "ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831",
+  "decision": "Formalisation le 2026-10-11 de la validation utilisateur historique déjà acquise ; aucune nouvelle visite ingame. Octets, géométrie, cycles, cadence et variantes conservés dans le snapshot QA ; propagation de la même ressource aux zones inventoriées par identité, sans déduire de visites exhaustives. Source : pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json. Notes acquises : Roue ; x4 SeedVR2 7B/LAB (run ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831), puis V2 TimedTimeline 30 FPS apo-8 (run ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831 ; 4 frames natives -> 8 frames, 8 phases) ; livré par pack de zone combined-20260831-ar0307-ar0329-six-bam-30fps-v2 ; QA ingame utilisateur validée le 2026-08-31.",
+  "decision_date": "2026-08-31",
+  "decision_id": "2026-10-11-preserved-historical-am307tt1-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM307TT1/runs/am307tt1-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "BC87C91F84123A6B6F0E959206BB3ECC57A0B7C63E8D2F5B573751CB8A16A01E",
+    "path": "animations/ressources/AM307TT1/runs/am307tt1-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "recipe_id": "animations-cleanup-points1-3-20261011-v1",
+  "recorded_at_utc": "2026-10-11T19:44:28Z",
+  "resref": "AM307TT1",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0307",
+        "manifest_path": "animations/packs-par-zone/am307tt1-historical-qa-bound-20261011-v1/AR0307/manifest.json",
+        "manifest_sha256": "618EA98125F278B3360AFE935FD5A13EE12AF4BAEAE364467C8378AA0BC4EFC8",
+        "path": "animations/packs-par-zone/am307tt1-historical-qa-bound-20261011-v1/AR0307",
+        "registry_sha256": "35740AC969970EED411BD4C4552D4477B3AB664FE25E3F15BDE152B83C07BCC8",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0329",
+        "manifest_path": "animations/packs-par-zone/am307tt1-historical-qa-bound-20261011-v1/AR0329/manifest.json",
+        "manifest_sha256": "9A60BBD91968F7F05ADB5C3173AC41743386CBA9DA7FD8096ACC630D67F0DE03",
+        "path": "animations/packs-par-zone/am307tt1-historical-qa-bound-20261011-v1/AR0329",
+        "registry_sha256": "35740AC969970EED411BD4C4552D4477B3AB664FE25E3F15BDE152B83C07BCC8",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am307tt1-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "16432EF13B15C5BB00FCF03EE06CCA14413555E998C523BC0C8E061E1BE5383A",
+    "path": "animations/packs-par-zone/am307tt1-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0307",
+    "AR0329"
+  ]
+}

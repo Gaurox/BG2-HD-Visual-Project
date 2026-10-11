@@ -1,0 +1,69 @@
+{
+  "schema": "bg2-upscale-historical-qa-binding-run-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T19:44:26.224326+00:00",
+  "resrefs": [
+    "AM2100PB"
+  ],
+  "operation": "formalize existing user ingame approvals without graphical reprocessing",
+  "output_split_root": "animations/packs-par-zone/am2100pb-historical-qa-bound-20261011-v1",
+  "output_manifest_sha256": "befbf27bfec77e18fbb3c4253fb09452652f45702a6d99570b34565dda7c5fc9",
+  "registry_evidence": {
+    "path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json",
+    "sha256": "a8d657abae5ab8292ab47ee11b985cbd5e625ac2140095559d280cfcbb16c213",
+    "resref": "AM2100PB",
+    "notes": "Portail AR2100 ; x4 SeedVR2 7B/LAB (run ar2100-portals-seedvr7b-lab-x4) ; V2 TimedTimeline Apollo 8, 15->30 FPS (run ar2100-portals-apo8-x4-30fps-v2 ; 7->14 phases) ; QA vidéo et ingame utilisateur validées le 2026-09-01 ; livré par pack de zone, installation réversible."
+  },
+  "historical_evidence": [
+    {
+      "path": "animations/packs-par-zone/combined-20260901-ar2100-portals-30fps-v2/AR2100/manifest.json",
+      "sha256": "71bfcee93a27a8bada2d2f1769cfd7e83a59757f140b2e51c111b5fc803c460b",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/71bfcee93a27a8bada2d2f1769cfd7e83a59757f140b2e51c111b5fc803c460b.json"
+    }
+  ],
+  "acquired_qa_date": "2026-09-01",
+  "new_ingame_qa": false,
+  "installation_matches_accepted_areas": [
+    "AR2100"
+  ],
+  "installation_discrepancy_areas": [],
+  "clarification": "",
+  "runtime_contracts": [
+    {
+      "area": "AR2100",
+      "resources": [
+        {
+          "frame_count": 14,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "4c6c7f35563ba4ed1fb8cfa17bfc8d5240529e9a62fa747fc0820d009093fc6f",
+            "b0c04c4954145d8f558f4c9950fbf9f5c41a8f8b13cf47001945fe787dbd6ddc",
+            "851d244109be059c75a58fff2e66da452788c8efdcd121555f89bc1c7a5ba3b6",
+            "55d8b70683544e3e9bb51d51ea42c588769fa73b05591cf3f3071eff0b1e2c84",
+            "ea7809d701bbeca937b826d236a4418df634a35ac57be069fe22a28c88605416",
+            "de60c2b11845a14cf2e0b7adecb5af0d698487c4c5f3438c8379a738a6236ae7",
+            "8061851485a9597296fc8a5ca54e7521d4ec31e92e665d07a657b185a1911c2c",
+            "e50dd0a64f8900cb53827f3907833cae17c6d78c7ab9741ae91fcd404b31f74c",
+            "780c702e6e5aaee32f84844831b899fda4fb8e4dcd9aab993b4b1e00bc94399e",
+            "b75e376c19ef4e8e7998833d868a780de89f501bc6af0c64a94c8d16cf7475b8",
+            "9dfc39533003462c3703c3a0e23f0a5fca5e191ccbd7130539c8883eb5234019",
+            "c9cc22dd01b8e3938a16c994c9df470c2b58af3eca276084ad9b7fd507764a0e",
+            "cdf9af1e1cad1013d6f0d30593bccd681e7e8619a14f9b1c112914a4562fd6fc",
+            "7d572f5c2b1f1462c33a6e1030c5a32c62c462cac5852c136dcdedc22f4ae2b9"
+          ]
+        }
+      ]
+    }
+  ],
+  "release_mutation": false
+}

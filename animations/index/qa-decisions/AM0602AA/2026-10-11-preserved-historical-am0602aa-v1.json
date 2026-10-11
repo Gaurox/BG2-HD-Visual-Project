@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM0602AA",
+  "correction_id": "ar0602-pack-x4",
+  "decision": "Formalisation le 2026-10-11 de la validation utilisateur historique déjà acquise ; aucune nouvelle visite ingame. Octets, géométrie, cycles, cadence et variantes conservés dans le snapshot QA ; propagation de la même ressource aux zones inventoriées par identité, sans déduire de visites exhaustives. Source : pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json. Notes acquises : Pack x4 AR0602; validation utilisateur; V2 am0602aa-ab-ac-apo8-x4-30fps-v2; TimedTimeline 15->30; QA ingame validée le 2026-08-23; livré par pack de zone AR0602 depuis le 2026-08-23, assets inchangés, QA rejouée OK.",
+  "decision_date": "2026-09-05",
+  "decision_id": "2026-10-11-preserved-historical-am0602aa-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM0602AA/runs/am0602aa-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "625D53DA90D1DA274C1B4166BC121904931406E435836E6DE824E902504324FC",
+    "path": "animations/ressources/AM0602AA/runs/am0602aa-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "recipe_id": "animations-cleanup-points1-3-20261011-v1",
+  "recorded_at_utc": "2026-10-11T19:44:13Z",
+  "resref": "AM0602AA",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0602",
+        "manifest_path": "animations/packs-par-zone/am0602aa-historical-qa-bound-20261011-v1/AR0602/manifest.json",
+        "manifest_sha256": "7EECC20C47507B5A19B5D8153C1D708BCB18DA832E079F3F692544446299BD5D",
+        "path": "animations/packs-par-zone/am0602aa-historical-qa-bound-20261011-v1/AR0602",
+        "registry_sha256": "FCE89020BB39D2C1B8621DA7D1988E5B0445F9180A36DFF4B7532B6945E791E1",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am0602aa-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "A2BA30F1CCCC6F5484897D22099395E389FDD6D7456A230CB7F3AC325505A4CF",
+    "path": "animations/packs-par-zone/am0602aa-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0602"
+  ]
+}

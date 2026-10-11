@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM2100PC",
+  "correction_id": "ar2100-portals-apo8-x4-30fps-v2",
+  "decision": "Formalisation le 2026-10-11 de la validation utilisateur historique déjà acquise ; aucune nouvelle visite ingame. Octets, géométrie, cycles, cadence et variantes conservés dans le snapshot QA ; propagation de la même ressource aux zones inventoriées par identité, sans déduire de visites exhaustives. Source : pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json. Notes acquises : Portail AR2100 ; x4 SeedVR2 7B/LAB (run ar2100-portals-seedvr7b-lab-x4) ; V2 TimedTimeline Apollo 8, 15->30 FPS (run ar2100-portals-apo8-x4-30fps-v2 ; 7->14 phases) ; QA vidéo et ingame utilisateur validées le 2026-09-01 ; livré par pack de zone, installation réversible.",
+  "decision_date": "2026-09-01",
+  "decision_id": "2026-10-11-preserved-historical-am2100pc-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM2100PC/runs/am2100pc-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "A165E45F5B00CB93E5872CE122F0C5F27C79A40584F7957BBA2AF04DD694F65B",
+    "path": "animations/ressources/AM2100PC/runs/am2100pc-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "recipe_id": "animations-cleanup-points1-3-20261011-v1",
+  "recorded_at_utc": "2026-10-11T19:44:26Z",
+  "resref": "AM2100PC",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR2100",
+        "manifest_path": "animations/packs-par-zone/am2100pc-historical-qa-bound-20261011-v1/AR2100/manifest.json",
+        "manifest_sha256": "BC1E67D363C392938685FC7DA370CE6257ADFE537A6B31AA33E0D58DAB878ECC",
+        "path": "animations/packs-par-zone/am2100pc-historical-qa-bound-20261011-v1/AR2100",
+        "registry_sha256": "60E8BB4C9E2E8228EC0BC98BCC2F07E38EC73DF179A4DCC187A3E45FE39A2D2D",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am2100pc-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "F6ED6C7DD1E654C852F4EBC3600DFE39FE0174D7C516BA517295ABD4D303946C",
+    "path": "animations/packs-par-zone/am2100pc-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR2100"
+  ]
+}

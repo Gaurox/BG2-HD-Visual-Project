@@ -1,0 +1,47 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM2100PC",
+  "correction_id": "ar2100-portals-apo8-x4-30fps-v2",
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-01",
+    "path": "animations/index/qa-decisions/AM2100PC/2026-10-11-preserved-historical-am2100pc-v1.json",
+    "sha256": "43E2FBF17DDC0DBED345BB84DA8E63EE61E051712FB7A8CF5B3D5B32F2645E33",
+    "status": "accepted"
+  },
+  "recipe_id": "animations-cleanup-points1-3-20261011-v1",
+  "resref": "AM2100PC",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM2100PC/runs/am2100pc-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "A165E45F5B00CB93E5872CE122F0C5F27C79A40584F7957BBA2AF04DD694F65B",
+    "path": "animations/ressources/AM2100PC/runs/am2100pc-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR2100",
+        "manifest_path": "animations/packs-par-zone/am2100pc-historical-qa-bound-20261011-v1/AR2100/manifest.json",
+        "manifest_sha256": "BC1E67D363C392938685FC7DA370CE6257ADFE537A6B31AA33E0D58DAB878ECC",
+        "path": "animations/packs-par-zone/am2100pc-historical-qa-bound-20261011-v1/AR2100",
+        "registry_sha256": "60E8BB4C9E2E8228EC0BC98BCC2F07E38EC73DF179A4DCC187A3E45FE39A2D2D",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am2100pc-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "F6ED6C7DD1E654C852F4EBC3600DFE39FE0174D7C516BA517295ABD4D303946C",
+    "path": "animations/packs-par-zone/am2100pc-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR2100"
+  ],
+  "updated_at_utc": "2026-10-11T19:44:26Z"
+}

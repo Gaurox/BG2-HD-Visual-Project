@@ -1,0 +1,72 @@
+{
+  "schema": "bg2-upscale-animation-cleanup-verification-v1",
+  "status": "passed",
+  "created_utc": "2026-10-11T19:48:45.379387+00:00",
+  "repaired_areas": [
+    {
+      "area": "AR3021",
+      "installed_exact_expected": true,
+      "recipe_reconstructs": true,
+      "operation": "install",
+      "prior_game_payload_preserved": false
+    },
+    {
+      "area": "AR5000",
+      "installed_exact_expected": true,
+      "recipe_reconstructs": true,
+      "operation": "install",
+      "prior_game_payload_preserved": false
+    },
+    {
+      "area": "AR0307",
+      "installed_exact_expected": true,
+      "recipe_reconstructs": true,
+      "operation": "lock-only",
+      "prior_game_payload_preserved": true
+    },
+    {
+      "area": "AR0411",
+      "installed_exact_expected": true,
+      "recipe_reconstructs": true,
+      "operation": "lock-only",
+      "prior_game_payload_preserved": true
+    },
+    {
+      "area": "AR6001",
+      "installed_exact_expected": true,
+      "recipe_reconstructs": true,
+      "operation": "lock-only",
+      "prior_game_payload_preserved": true
+    },
+    {
+      "area": "AR6005",
+      "installed_exact_expected": true,
+      "recipe_reconstructs": true,
+      "operation": "lock-only",
+      "prior_game_payload_preserved": true
+    }
+  ],
+  "all_prior_qa_hashes_preserved": true,
+  "canonical_registry_resources": 246,
+  "historical_qa_checks_passed": 43,
+  "historical_installed_identical": 38,
+  "historical_installed_ambiguous": 5,
+  "area_state_status": "Zones installées : 234 | verrou : 234\nOK : installé = verrou = registre.",
+  "installed_accepted_resources_checked": 7,
+  "receipt_archives": [
+    {
+      "path": "backups/animations/area-tests/AR3021-20261011T193722801846Z-13c2c434/install-backup.json",
+      "sha256": "093bfd7706673c7de0e99776e05c046c5660ac19926277839167c0ae79c95353",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/093bfd7706673c7de0e99776e05c046c5660ac19926277839167c0ae79c95353.json"
+    },
+    {
+      "path": "backups/animations/area-tests/AR5000-20261011T193724832166Z-16b5dcea/install-backup.json",
+      "sha256": "c804a992179b65fa515633b673b4f6ca395eaf5d870c510845fc5c789a33fb65",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/c804a992179b65fa515633b673b4f6ca395eaf5d870c510845fc5c789a33fb65.json"
+    }
+  ],
+  "regression_command": "python -m unittest discover -s pipeline/tests -p test_area_pack_state.py",
+  "regression_tests": 5,
+  "regression_result": "passed",
+  "release_mutation": false
+}

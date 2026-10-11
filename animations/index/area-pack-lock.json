@@ -232,15 +232,15 @@
    }
   },
   "AR0307": {
-   "recorded_utc": "2026-09-18T23:34:10.920515+00:00",
+   "recorded_utc": "2026-10-11T19:37:29.396092+00:00",
    "resources": {
     "AM0307BH": {
-     "sig": "3f5a77ef5a16",
+     "sig": "e0c5936d3a7e",
      "frames": 21
     },
     "AM307RED": {
-     "sig": "cf0d8735910e",
-     "frames": 21
+     "sig": "7341eed6c7de",
+     "frames": 28
     },
     "AM307TT1": {
      "sig": "544cc0290aba",
@@ -268,21 +268,12 @@
     }
    },
    "fingerprint": {
-    "files": 116,
-    "bytes": 77683452,
-    "max_mtime_ns": 1789774450291813800
+    "files": 123,
+    "bytes": 79088436,
+    "max_mtime_ns": 1791703672980904800
    },
    "build": {
-    "merged_from": [
-     "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0307::AM0307BH",
-     "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0307::AM307RED",
-     "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0307::AM307TT1",
-     "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0307::AM307UR1",
-     "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0307::AM307UR2",
-     "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0307::AM307UR3",
-     "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0307::FIRE_4",
-     "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0307"
-    ]
+    "leaf": "animations/packs-par-zone/animations-cleanup-points1-3-20261011-v1/AR0307"
    }
   },
   "AR0308": {
@@ -698,7 +689,7 @@
    }
   },
   "AR0411": {
-   "recorded_utc": "2026-09-18T23:16:37.659494+00:00",
+   "recorded_utc": "2026-10-11T19:37:30.934874+00:00",
    "resources": {
     "AM0411RN": {
      "sig": "e2f350a7ef51",
@@ -713,36 +704,33 @@
      "frames": 214
     },
     "DSTDVL1A": {
-     "sig": "0c5f8584e041",
+     "sig": "452568ad94f3",
      "frames": 139
     },
     "DSTDVL1B": {
-     "sig": "7e025cc2e7de",
+     "sig": "f2f1c0463d43",
      "frames": 139
     },
     "DSTDVL1C": {
-     "sig": "6a76d19e09ba",
+     "sig": "b5787201aa74",
      "frames": 139
     },
     "DSTDVL2B": {
-     "sig": "72fc417f5a99",
+     "sig": "3b09827eee44",
      "frames": 140
     },
     "DSTDVL2C": {
-     "sig": "841e82fe3d20",
+     "sig": "54b11ecba8e2",
      "frames": 139
     }
    },
    "fingerprint": {
     "files": 989,
     "bytes": 174249936,
-    "max_mtime_ns": 1789773394430334600
+    "max_mtime_ns": 1791704961301795300
    },
    "build": {
-    "merged_from": [
-     "animations/packs-par-zone/ar0411-bubbles2-dstdvl1abc-plus-planar-sphere-20260911/AR0411",
-     "animations/packs-par-zone/am0411rn-magic-sphere-apo8-x4-30fps-spline-fit1-feather4-20260911/AR0411"
-    ]
+    "leaf": "animations/packs-par-zone/animations-cleanup-points1-3-20261011-v1/AR0411"
    }
   },
   "AR0414": {
@@ -4397,7 +4385,7 @@
    }
   },
   "AR3021": {
-   "recorded_utc": "2026-09-18T22:16:34.766193+00:00",
+   "recorded_utc": "2026-10-11T19:37:23.636201+00:00",
    "resources": {
     "AM3021D": {
      "sig": "2268085258c9",
@@ -4415,10 +4403,10 @@
    "fingerprint": {
     "files": 61,
     "bytes": 17780244,
-    "max_mtime_ns": 1789769794591119200
+    "max_mtime_ns": 1791747443397980800
    },
    "build": {
-    "leaf": "animations/packs-par-zone/ar3021-illithids-apo8-x4-30fps-v2-spline-fit1-feather4-20260911/AR3021"
+    "leaf": "animations/packs-par-zone/animations-cleanup-points1-3-20261011-v1/AR3021"
    }
   },
   "AR3022": {
@@ -4536,7 +4524,7 @@
    }
   },
   "AR5000": {
-   "recorded_utc": "2026-10-11T18:07:05.434835+00:00",
+   "recorded_utc": "2026-10-11T19:37:28.893881+00:00",
    "resources": {
     "AM5000A": {
      "sig": "9c2b7661729d",
@@ -4558,8 +4546,24 @@
      "sig": "414b3adf5fa8",
      "frames": 14
     },
+    "FISH1L": {
+     "sig": "89fe272b81ee",
+     "frames": 43
+    },
+    "FISH2L": {
+     "sig": "3601dc1c1ec3",
+     "frames": 36
+    },
+    "FISH2S": {
+     "sig": "f99594499a07",
+     "frames": 36
+    },
     "FISH3L": {
      "sig": "0f462700251d",
+     "frames": 36
+    },
+    "FISH3S": {
+     "sig": "509718b13de0",
      "frames": 36
     },
     "FLIESL": {
@@ -4572,12 +4576,12 @@
     }
    },
    "fingerprint": {
-    "files": 150,
-    "bytes": 43846364,
-    "max_mtime_ns": 1791742024876370300
+    "files": 301,
+    "bytes": 57062308,
+    "max_mtime_ns": 1791747447859862500
    },
    "build": {
-    "leaf": "animations/packs-par-zone/fire3-aura-fade4-all-areas-20261011-v1/AR5000"
+    "leaf": "animations/packs-par-zone/animations-cleanup-points1-3-20261011-v1/AR5000"
    }
   },
   "AR5006": {
@@ -5097,7 +5101,7 @@
    }
   },
   "AR6001": {
-   "recorded_utc": "2026-10-09T21:02:41.429490+00:00",
+   "recorded_utc": "2026-10-11T19:37:31.699752+00:00",
    "resources": {
     "AM6004A": {
      "sig": "509a379ea660",
@@ -5110,10 +5114,7 @@
     "max_mtime_ns": 1791579761233051900
    },
    "build": {
-    "merged_from": [
-     "{'source_split_root': 'G:/AI/BG2_Upscale/animations/packs-par-zone/am6004a-fumee-final-20261009-v1', 'manifest_sha256': 'a0c90188aa28dc70a02881ab21d18fa49d24f4b8106091bbdada3b1df7c9e810', 'area_id': 'AR6001'}",
-     "{'source_split_root': 'G:/AI/BG2_Upscale/animations/packs-par-zone/ar6005-fumee-effetvert-complete-20261009-v1', 'manifest_sha256': '17c15177f8758361c3150fcd4c2a7ec17eeb3e937fc2617c112bcafedc79d233', 'area_id': 'AR6005'}"
-    ]
+    "leaf": "animations/packs-par-zone/animations-cleanup-points1-3-20261011-v1/AR6001"
    }
   },
   "AR6003": {
@@ -5151,7 +5152,7 @@
    }
   },
   "AR6005": {
-   "recorded_utc": "2026-10-09T21:02:45.540109+00:00",
+   "recorded_utc": "2026-10-11T19:37:31.909075+00:00",
    "resources": {
     "AM6004A": {
      "sig": "509a379ea660",
@@ -5168,10 +5169,7 @@
     "max_mtime_ns": 1791579765209940300
    },
    "build": {
-    "merged_from": [
-     "{'source_split_root': 'G:/AI/BG2_Upscale/animations/packs-par-zone/am6004a-fumee-final-20261009-v1', 'manifest_sha256': 'a0c90188aa28dc70a02881ab21d18fa49d24f4b8106091bbdada3b1df7c9e810', 'area_id': 'AR6001'}",
-     "{'source_split_root': 'G:/AI/BG2_Upscale/animations/packs-par-zone/ar6005-fumee-effetvert-complete-20261009-v1', 'manifest_sha256': '17c15177f8758361c3150fcd4c2a7ec17eeb3e937fc2617c112bcafedc79d233', 'area_id': 'AR6005'}"
-    ]
+    "leaf": "animations/packs-par-zone/animations-cleanup-points1-3-20261011-v1/AR6005"
    }
   },
   "AR6012": {
@@ -5935,5 +5933,5 @@
    }
   }
  },
- "updated_utc": "2026-10-11T18:07:13.042318+00:00"
+ "updated_utc": "2026-10-11T19:37:31.911590+00:00"
 }

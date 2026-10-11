@@ -1,0 +1,47 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM2201B",
+  "correction_id": "am2201b-apo8-x4-30fps-v2-spline-fit1-feather1-20260901",
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-01",
+    "path": "animations/index/qa-decisions/AM2201B/2026-10-11-preserved-historical-am2201b-v1.json",
+    "sha256": "15A0E5C9B97FF9E72DE4C3692769B9EBDC0A8A304D65D5A1349FBEC43A58C768",
+    "status": "accepted"
+  },
+  "recipe_id": "animations-cleanup-points1-3-20261011-v1",
+  "resref": "AM2201B",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM2201B/runs/am2201b-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "1E5E1456CA9E97D45BB4C6B70B472FA146F36D32A1FAFA2D396B310C00B2EA6E",
+    "path": "animations/ressources/AM2201B/runs/am2201b-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR2201",
+        "manifest_path": "animations/packs-par-zone/am2201b-historical-qa-bound-20261011-v1/AR2201/manifest.json",
+        "manifest_sha256": "DD2E1B24779CB9B9CCF257DF3512401B10306664C61FA1659333C5DCFA44094E",
+        "path": "animations/packs-par-zone/am2201b-historical-qa-bound-20261011-v1/AR2201",
+        "registry_sha256": "BB5FD1FA9FB6E92FF3B12D9B1E5D05427DADE60836181A2E80E198B24D9B7C8F",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am2201b-historical-qa-bound-20261011-v1/manifest.json",
+    "manifest_sha256": "92D6BC983083D0FBC3E0977160F056DAE67B467003EF0B9D99F75FDF1360BAA8",
+    "path": "animations/packs-par-zone/am2201b-historical-qa-bound-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR2201"
+  ],
+  "updated_at_utc": "2026-10-11T19:44:27Z"
+}

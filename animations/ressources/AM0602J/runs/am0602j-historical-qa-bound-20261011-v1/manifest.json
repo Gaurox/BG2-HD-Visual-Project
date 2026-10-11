@@ -1,0 +1,71 @@
+{
+  "schema": "bg2-upscale-historical-qa-binding-run-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T19:44:17.220653+00:00",
+  "resrefs": [
+    "AM0602J"
+  ],
+  "operation": "formalize existing user ingame approvals without graphical reprocessing",
+  "output_split_root": "animations/packs-par-zone/am0602j-historical-qa-bound-20261011-v1",
+  "output_manifest_sha256": "c77ccb924ad8dee8ac570d41e095c0c12540e3ae79e4eaeb61d9ff454ab6d709",
+  "registry_evidence": {
+    "path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-registry-rows.json",
+    "sha256": "a8d657abae5ab8292ab47ee11b985cbd5e625ac2140095559d280cfcbb16c213",
+    "resref": "AM0602J",
+    "notes": "Air Plane (AR0601); x4 SeedVR2 7B/LAB (run ar0601-all-bam-seedvr7b-lab-x4); V2 TimedTimeline 30 FPS apo-8 (run ar0601-all-bam-apo8-x4-30fps-v2); 8 frames natives -> 16 frames (16 phases). Historique : réserve sur la boucle roue/mécanisme le 2026-08-23. QA ingame utilisateur confirmée le 2026-09-02 : rendu accepté ; ressource validée x4."
+  },
+  "historical_evidence": [
+    {
+      "path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0601/manifest.json",
+      "sha256": "2a333ad324116fbda8d4cf5521f48d14633a67b184159e33fde0476304d7d65c",
+      "archived_path": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/2a333ad324116fbda8d4cf5521f48d14633a67b184159e33fde0476304d7d65c.json"
+    }
+  ],
+  "acquired_qa_date": "2026-09-02",
+  "new_ingame_qa": false,
+  "installation_matches_accepted_areas": [
+    "AR0601"
+  ],
+  "installation_discrepancy_areas": [],
+  "clarification": "",
+  "runtime_contracts": [
+    {
+      "area": "AR0601",
+      "resources": [
+        {
+          "frame_count": 16,
+          "playback_mode": "TimedTimeline",
+          "native_fps": {
+            "numerator": 15,
+            "denominator": 1
+          },
+          "target_fps": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "variant_index": 0,
+          "position": null,
+          "texture_hashes": [
+            "794638dc27c2183324df90d7d281a61bbefadce3682c6521001e84fc69228898",
+            "de68f7e0a510879e0e3078fc738288826a6ee6a6b10794f6413f65186547ab27",
+            "bc7f0f3663a442391afed3a1abca4bd27ebc62fa31b797448e805506b2c2115e",
+            "aa924b774dd0632fc00801496aa66dbc80f9db83d8da8b789415bec9818e583c",
+            "748e8bce040d94f4bbc5016e48365435cdec524b179959839197487c4d60626f",
+            "42d2fb8e37d9151e01fd9340b7096520a9ba1382a4054ef4f221a50dabad54b0",
+            "ff095741f1c9e45ef508edc3e46eda6b4cd9cae0779fbe7634d87dea132132e8",
+            "2c8752c6ee3e59ce89579f39e1b1cd158bbf5c282cb9c68ad1433fc98d307f66",
+            "16d1f1b331b0a8dc99e2df5d030f04927ad70dc49c67332cc39a42afbf26adda",
+            "7e515041dc43c6f92705ec69eb8a0c83118646c62db8b4090d03c4d6294e88cf",
+            "532998aa8778316ca59a25ba5e189ca4efe9038a19274920c7796b2a13be0924",
+            "00659bd288e0d91c4a557d4d4ae9a47512a263775180eb4201abee984491db09",
+            "b2880b5533704e6139011507e1564041204a24b86cea2ad81999069d363dcb77",
+            "f9da18475c3afbad5a9176e1fa5896265536da78a2a88901c570f49429ef50c6",
+            "f3cf0ffdba5e021eb8cb44c9c562c3cd12d0c0372b9269ce36da3a7feb429d31",
+            "3f081f77a46b719d5673928854bd0e2923bc5b566ddf1b900bcb5da9b7c95003"
+          ]
+        }
+      ]
+    }
+  ],
+  "release_mutation": false
+}

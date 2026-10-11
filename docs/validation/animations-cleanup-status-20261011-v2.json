@@ -1,0 +1,150 @@
+{
+  "schema": "bg2-upscale-animation-cleanup-status-v2",
+  "date": "2026-10-11",
+  "scope": "User-requested points 1 to 3; historical user QA preserved, current-version discrepancies explicit",
+  "historical_report": "docs/validation/animations-cleanup-status-20261011-v1.json",
+  "BAM": {
+    "resources": 246,
+    "validé-x4": 246,
+    "occurrences": 3422,
+    "areas": 234,
+    "qa_decision_and_selection_missing": 0,
+    "interpretation": "Accepted exact versions, not an assertion that every installed version is accepted"
+  },
+  "completed": {
+    "restored_accepted_AR3021": [
+      "AM3021D",
+      "AM3021E",
+      "AM3021F"
+    ],
+    "added_accepted_AR5000": [
+      "FISH1L",
+      "FISH2L",
+      "FISH2S",
+      "FISH3S"
+    ],
+    "lock_only_areas": [
+      "AR0307",
+      "AR0411",
+      "AR6001",
+      "AR6005"
+    ],
+    "historical_qa_bound": 43,
+    "historical_live_identical": 38,
+    "reconstruction_bug_fixed": "area_pack_state.build_from_leaf preserves a leaf for structured merged_from provenance instead of stringifying metadata objects"
+  },
+  "ambiguous_current_versions": [
+    {
+      "resref": "AM0205A",
+      "areas": [
+        "AR0205"
+      ],
+      "acquired_validation_preserved": true,
+      "accepted_selection": "animations/ressources/AM0205A/runs/am0205a-historical-qa-bound-20261011-v1",
+      "reason": "QA acquise conservée uniquement sur Native 27 phases à 15 FPS (2026-08-21). Installation actuelle : TimedTimeline 54 phases à 30 FPS, approbation ingame exacte non retrouvée ; choix de version/QA ciblée requis.",
+      "required_action": "Choose accepted-version restoration or explicitly accept/recheck the exact currently installed version",
+      "game_changed_in_this_cleanup": false
+    },
+    {
+      "resref": "AM0205B",
+      "areas": [
+        "AR0205"
+      ],
+      "acquired_validation_preserved": true,
+      "accepted_selection": "animations/ressources/AM0205B/runs/am0205b-historical-qa-bound-20261011-v1",
+      "reason": "QA acquise conservée uniquement sur Native 27 phases à 15 FPS (2026-08-21). Installation actuelle : TimedTimeline 54 phases à 30 FPS, approbation ingame exacte non retrouvée ; choix de version/QA ciblée requis.",
+      "required_action": "Choose accepted-version restoration or explicitly accept/recheck the exact currently installed version",
+      "game_changed_in_this_cleanup": false
+    },
+    {
+      "resref": "AM0205C",
+      "areas": [
+        "AR0205"
+      ],
+      "acquired_validation_preserved": true,
+      "accepted_selection": "animations/ressources/AM0205C/runs/am0205c-historical-qa-bound-20261011-v1",
+      "reason": "QA acquise conservée uniquement sur Native 27 phases à 15 FPS (2026-08-21). Installation actuelle : TimedTimeline 54 phases à 30 FPS, approbation ingame exacte non retrouvée ; choix de version/QA ciblée requis.",
+      "required_action": "Choose accepted-version restoration or explicitly accept/recheck the exact currently installed version",
+      "game_changed_in_this_cleanup": false
+    },
+    {
+      "resref": "AM0205D",
+      "areas": [
+        "AR0205"
+      ],
+      "acquired_validation_preserved": true,
+      "accepted_selection": "animations/ressources/AM0205D/runs/am0205d-historical-qa-bound-20261011-v1",
+      "reason": "QA acquise conservée uniquement sur Native 27 phases à 15 FPS (2026-08-21). Installation actuelle : TimedTimeline 54 phases à 30 FPS, approbation ingame exacte non retrouvée ; choix de version/QA ciblée requis.",
+      "required_action": "Choose accepted-version restoration or explicitly accept/recheck the exact currently installed version",
+      "game_changed_in_this_cleanup": false
+    },
+    {
+      "resref": "AM0604A",
+      "areas": [
+        "AR0604"
+      ],
+      "acquired_validation_preserved": true,
+      "accepted_selection": "animations/ressources/AM0604A/runs/am0604a-historical-qa-bound-20261011-v1",
+      "reason": "QA acquise conservée uniquement sur ar0604-apo8-x4-30fps-v2 sans correction alpha. Installation actuelle issue de ar0604-spline-fit2-alpha-30fps-v2 ; notes historiques rejettent les essais alpha, aucune approbation exacte retrouvée ; choix de version/QA ciblée requis.",
+      "required_action": "Choose accepted-version restoration or explicitly accept/recheck the exact currently installed version",
+      "game_changed_in_this_cleanup": false
+    }
+  ],
+  "resolved_historical_note": {
+    "AM0602F": "Native 9 phases installed = exact AR0602 accepted QA 2026-09-05; older 18-phase/30-FPS note retained as history"
+  },
+  "validation_policy": "No existing QA decision changed; no new ingame visit, approval or release integration inferred",
+  "verification": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/verification.json",
+  "installation_receipt": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/repair-installation.json",
+  "migration": "pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-qa-migration.json",
+  "FIRE_3": {
+    "areas": 10,
+    "occurrences": 34,
+    "fps": 30,
+    "distinct_phases": 28,
+    "fade_x4": 4,
+    "sigma_x4": 0,
+    "status": "accepted-ingame-all-maps",
+    "temporal_reserve": "closed",
+    "report": "pipeline/recipes/fire3-final-acceptance-20261011-v1/acceptance.json"
+  },
+  "release": {
+    "candidate_areas": 156,
+    "approved_for_release": 142,
+    "validated_awaiting_manifest_approval": 14,
+    "pending_areas": [
+      "AR0516",
+      "AR0603",
+      "AR0307",
+      "AR0329",
+      "AR1100",
+      "AR1200",
+      "AR1700",
+      "AR5500",
+      "OH6400",
+      "AR0411",
+      "AR1600",
+      "AR6300",
+      "AR2201",
+      "AR5200"
+    ],
+    "next_action": "Refresh candidates to exact latest accepted packs, resolve remaining area manifest approvals, then compile/test package during explicit release finalization",
+    "mutated": false
+  },
+  "optional_accepted_visual_reserves": {
+    "AM0033AB": "thin dark edge",
+    "AM2201B": "thin dark edge; heavier feather/Gaussian alternatives rejected",
+    "AM2805B_AM2805C": "horizontal seam, optional",
+    "AM1400N": "native stepped contour, historical QA retained",
+    "FPIT1S": "accepted as-is; further halo refinement optional"
+  },
+  "separate_WBM_scope": {
+    "resources": 20,
+    "occurrences": 20,
+    "status": "Outside BAM registry; no production/QA/install status inferred from this inventory count"
+  },
+  "next_actions": [
+    "Resolve the five installed-version discrepancies; no blanket recheck of the other 38 legacy assets",
+    "Refresh release candidates and final distribution only upon explicit release finalization request"
+  ]
+}
