@@ -1,0 +1,686 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-plan-v2",
+  "status": "proposed",
+  "input_mode": "spatial-v1",
+  "source_run": "G:/AI/BG2_Upscale/animations/runs/ar0516-all-bam-seedvr7b-lab-x4",
+  "source_run_manifest_sha256": "bf84a4b858eaae193add2f9725a9bd1ee65368d260149abdb7f696ddd38b9c6b",
+  "base_pack": "G:/AI/BG2_Upscale/animations/runs/ar0516-all-bam-seedvr7b-lab-x4/03_runtime_pack",
+  "base_pack_schema": "bg2-upscale-area-animation-runtime-pack-v1",
+  "base_pack_manifest_sha256": "ba88584f2a808f0544d4d86bbe5c54b0d44eaf2bff268d659f558b40e2ac42d7",
+  "base_registry_sha256": "6009354da2a1f929565377f8d9ab673ea0dbd541a1a7444e5355694819c0bc3c",
+  "scale": 4,
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "topaz": {
+    "model": "apo-8",
+    "replace_duplicate_threshold": -0.01,
+    "transparent_rgb_mode": "preserve-hidden-rgb",
+    "loop_strategy": "append first source slot once; no cyclic-context extrapolation"
+  },
+  "alpha_policy": "hold exact alpha of the current native (left) slot",
+  "geometry_policy": "crop the aligned interpolation with the current native slot geometry",
+  "targets": [
+    {
+      "resref": "AM0516LD",
+      "variant_index": 0,
+      "position": null,
+      "resource_key": "AM0516LD-v0",
+      "geometry_mode": "uniform",
+      "input_mode": "spatial-v1",
+      "aligned_size_x4": [
+        1012,
+        1004
+      ],
+      "base_frame_count": 5,
+      "output_frame_count": 25,
+      "cycle_count": 1,
+      "added_intermediate_frames": 20,
+      "added_raw_bytes": 81283840,
+      "source": {
+        "run_manifest_sha256": "bf84a4b858eaae193add2f9725a9bd1ee65368d260149abdb7f696ddd38b9c6b",
+        "frame_manifest_sha256": "104efb41c01ac24265612966983c0fd345077325e2c2f6e97fa73c7bb4c43128",
+        "upscale_manifest_sha256": "d1a84b6fa812c156344a5a2e3789a2b747cb0c241e8caedaf01c71eaf4a2b480",
+        "aligned_rgba_sha256": [
+          "9ccc22b7152f3e8379cf38969883e221f934cda314b9bf1893e5229da38c0751",
+          "d416aa562358add7e7e9baf64592461d8421f56fd4a8ac74a05d05693895fe40",
+          "f4df202b185fd668acc85debf78b151d7f3f372179380dac280b7c7b7a3d3a5f",
+          "95b3efdd687d5baf319f81e08660b68150951ec02a971e316a361b44e986a343",
+          "ecb8024d562c9df481cc43aa4979a7b967f629dd7f8c0e016329f47309b3a11a"
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "timing_strategy": "preserve-segmented-holds",
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 7
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 6
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 0,
+                "slot_count": 7
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 6
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 6
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 6
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 6
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 4
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 5
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 3
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 6
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 5
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 5
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 6
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 3
+              },
+              {
+                "frame_index": 0,
+                "slot_count": 5
+              }
+            ],
+            "has_consecutive_duplicates": true,
+            "uniform_run_lengths": false,
+            "hold_slots": null,
+            "crosses_cycle_seam": true,
+            "reuses_frame_in_multiple_runs": true,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            3,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            4,
+            4,
+            4,
+            4,
+            1,
+            1,
+            4,
+            4,
+            4,
+            4,
+            4,
+            1,
+            4,
+            4,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2,
+            4,
+            4,
+            2,
+            2,
+            2,
+            2,
+            2,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            3,
+            3,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "interpolation_input_frame_indices": [
+            0,
+            1,
+            3,
+            0,
+            2,
+            1,
+            3,
+            2,
+            4,
+            1,
+            4,
+            1,
+            4,
+            3,
+            1,
+            2,
+            4,
+            2,
+            1,
+            3,
+            0
+          ],
+          "interpolation_path_mode": "linear-repeated-endpoint",
+          "phases_per_transition": 2,
+          "intermediate_frame_indices": [
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24
+          ],
+          "interpolation_segments": [
+            {
+              "segment": 0,
+              "slot": 6,
+              "left_native_frame": 0,
+              "right_native_frame": 1,
+              "intermediate_frame_indices": [
+                5
+              ]
+            },
+            {
+              "segment": 1,
+              "slot": 12,
+              "left_native_frame": 1,
+              "right_native_frame": 3,
+              "intermediate_frame_indices": [
+                6
+              ]
+            },
+            {
+              "segment": 2,
+              "slot": 14,
+              "left_native_frame": 3,
+              "right_native_frame": 0,
+              "intermediate_frame_indices": [
+                7
+              ]
+            },
+            {
+              "segment": 3,
+              "slot": 21,
+              "left_native_frame": 0,
+              "right_native_frame": 2,
+              "intermediate_frame_indices": [
+                8
+              ]
+            },
+            {
+              "segment": 4,
+              "slot": 27,
+              "left_native_frame": 2,
+              "right_native_frame": 1,
+              "intermediate_frame_indices": [
+                9
+              ]
+            },
+            {
+              "segment": 5,
+              "slot": 33,
+              "left_native_frame": 1,
+              "right_native_frame": 3,
+              "intermediate_frame_indices": [
+                10
+              ]
+            },
+            {
+              "segment": 6,
+              "slot": 39,
+              "left_native_frame": 3,
+              "right_native_frame": 2,
+              "intermediate_frame_indices": [
+                11
+              ]
+            },
+            {
+              "segment": 7,
+              "slot": 45,
+              "left_native_frame": 2,
+              "right_native_frame": 4,
+              "intermediate_frame_indices": [
+                12
+              ]
+            },
+            {
+              "segment": 8,
+              "slot": 49,
+              "left_native_frame": 4,
+              "right_native_frame": 1,
+              "intermediate_frame_indices": [
+                13
+              ]
+            },
+            {
+              "segment": 9,
+              "slot": 51,
+              "left_native_frame": 1,
+              "right_native_frame": 4,
+              "intermediate_frame_indices": [
+                14
+              ]
+            },
+            {
+              "segment": 10,
+              "slot": 56,
+              "left_native_frame": 4,
+              "right_native_frame": 1,
+              "intermediate_frame_indices": [
+                15
+              ]
+            },
+            {
+              "segment": 11,
+              "slot": 57,
+              "left_native_frame": 1,
+              "right_native_frame": 4,
+              "intermediate_frame_indices": [
+                16
+              ]
+            },
+            {
+              "segment": 12,
+              "slot": 60,
+              "left_native_frame": 4,
+              "right_native_frame": 3,
+              "intermediate_frame_indices": [
+                17
+              ]
+            },
+            {
+              "segment": 13,
+              "slot": 66,
+              "left_native_frame": 3,
+              "right_native_frame": 1,
+              "intermediate_frame_indices": [
+                18
+              ]
+            },
+            {
+              "segment": 14,
+              "slot": 71,
+              "left_native_frame": 1,
+              "right_native_frame": 2,
+              "intermediate_frame_indices": [
+                19
+              ]
+            },
+            {
+              "segment": 15,
+              "slot": 72,
+              "left_native_frame": 2,
+              "right_native_frame": 4,
+              "intermediate_frame_indices": [
+                20
+              ]
+            },
+            {
+              "segment": 16,
+              "slot": 74,
+              "left_native_frame": 4,
+              "right_native_frame": 2,
+              "intermediate_frame_indices": [
+                21
+              ]
+            },
+            {
+              "segment": 17,
+              "slot": 79,
+              "left_native_frame": 2,
+              "right_native_frame": 1,
+              "intermediate_frame_indices": [
+                22
+              ]
+            },
+            {
+              "segment": 18,
+              "slot": 85,
+              "left_native_frame": 1,
+              "right_native_frame": 3,
+              "intermediate_frame_indices": [
+                23
+              ]
+            },
+            {
+              "segment": 19,
+              "slot": 88,
+              "left_native_frame": 3,
+              "right_native_frame": 0,
+              "intermediate_frame_indices": [
+                24
+              ]
+            }
+          ],
+          "exact_hold_boundary_count": 74,
+          "timeline_frame_indices": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            5,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            6,
+            3,
+            3,
+            3,
+            7,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            8,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            9,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            10,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            11,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            12,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            13,
+            1,
+            1,
+            1,
+            14,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            15,
+            1,
+            16,
+            4,
+            4,
+            4,
+            4,
+            4,
+            17,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            18,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            19,
+            2,
+            20,
+            4,
+            4,
+            4,
+            21,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            22,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            23,
+            3,
+            3,
+            3,
+            3,
+            3,
+            24,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "native_slots": 94,
+          "timeline_phases": 188,
+          "duration_seconds": 6.266666666666667
+        }
+      ]
+    }
+  ],
+  "gates": [
+    "the declared input mode and active base pack are hash-validated before build",
+    "even phases reuse byte-exact runtime anchors",
+    "Topaz must return 2*N+1 or 2*N frames for every closed cycle",
+    "visual review and explicit approval file required before install"
+  ],
+  "duplicate_hold_strategy": "interpolate only unequal-index boundaries; preserve every native slot and duration; reuse exact anchors for duplicate holds",
+  "plan_sha256": "13cdb3873a38eec8f5f0a09b201d395ddb569332cde541a7c3b354f8a7db780b"
+}

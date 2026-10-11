@@ -1,0 +1,1393 @@
+{
+  "schema": "bg2-upscale-animation-alpha-feather-test-v1",
+  "status": "completed",
+  "created_utc": "2026-09-05T18:04:45.666131+00:00",
+  "resref": "FALL1A",
+  "scale": 4,
+  "frame_count": 6,
+  "physical_size_x4": [
+    852,
+    804
+  ],
+  "source_run": "G:/AI/BG2_Upscale/animations/ressources/FALL1A/runs/fall1a-spatial-seedvr2-7b-lab-x4-20260905-193635-555955/resources/FALL1A/02_upscale_x4",
+  "source_run_manifest_sha256": "96450693f3055713fbf6b0228e20a7379caf6e00b6b943b548292693be5610f4",
+  "alpha_operation": {
+    "type": "per-frame-spline-fit1-plus-top-reconstructed-gaussian",
+    "spline": {
+      "fit_error": 1.0,
+      "sample_spacing_x4": 1.5,
+      "supersample": 4,
+      "padding_x4": 32,
+      "threshold": 127,
+      "core_guard_x4": 0
+    },
+    "top_reconstructed_gaussian": {
+      "sigma_x4": 8.0,
+      "height_x4_exclusive": 340,
+      "left_x4_inclusive": 225,
+      "minimum_alpha": 12,
+      "may_expand_alpha_inside_reconstructed_region": true
+    },
+    "rgb_policy": "unchanged",
+    "geometry_policy": "unchanged",
+    "timeline_policy": "unchanged"
+  },
+  "frames": [
+    {
+      "frame": 0,
+      "source_runtime_asset": "raw_rgba/frame_000.rgba",
+      "source_runtime_sha256": "44fa48abb44a46f8552dd0bd369fbc35005b58ca995b4453797e9fa11f4e2f3a",
+      "source_runtime_bytes": 2740032,
+      "runtime_asset": "raw_rgba/AAX4-FALL1A-frame000.rgba",
+      "runtime_sha256": "4fcd9077a082ff6438bb8f6422d0bed04dd09319f9515e0491c9bbdd4709de1b",
+      "runtime_bytes": 2740032,
+      "rgba": "rgba/frame_000.png",
+      "rgba_sha256": "3e52263b9053bd29cf9dd0dd231c287ff09c05823ff862e3a1de97639273543a",
+      "alpha": "alpha/frame_000.png",
+      "alpha_sha256": "09cb0c2fbcb26db751f0309088e5986278d9a337fdf0e5d6e7d260ec70b4f2a5",
+      "source_alpha_nonzero_pixels": 364928,
+      "spline_changed_alpha_pixels": 24872,
+      "spline": {
+        "source_nonzero": 364928,
+        "components": 32,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 18291,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 9339,
+            "fit_samples": 11480,
+            "curve_points": 34440
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 164,
+            "fit_samples": 141,
+            "curve_points": 423
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 90,
+            "fit_samples": 78,
+            "curve_points": 234
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 72,
+            "fit_samples": 46,
+            "curve_points": 138
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 56,
+            "fit_samples": 36,
+            "curve_points": 108
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 88,
+            "fit_samples": 56,
+            "curve_points": 168
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 56,
+            "fit_samples": 36,
+            "curve_points": 108
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 123,
+            "fit_samples": 106,
+            "curve_points": 318
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 83,
+            "fit_samples": 67,
+            "curve_points": 201
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 80,
+            "fit_samples": 51,
+            "curve_points": 153
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 106,
+            "fit_samples": 93,
+            "curve_points": 279
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 34,
+            "fit_samples": 28,
+            "curve_points": 84
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          }
+        ]
+      },
+      "top_reconstruction": {
+        "region_pixels": 213180,
+        "changed_alpha_pixels": 78879,
+        "raised_alpha_pixels": 40542,
+        "cleared_alpha_pixels": 50
+      },
+      "final_raised_over_source_alpha_pixels": 28950,
+      "final_cleared_source_alpha_pixels": 332
+    },
+    {
+      "frame": 1,
+      "source_runtime_asset": "raw_rgba/frame_001.rgba",
+      "source_runtime_sha256": "d17752d8db515de5286e3375658e18b76db116abcd5f506e5c8d22df35ecf73f",
+      "source_runtime_bytes": 2740032,
+      "runtime_asset": "raw_rgba/AAX4-FALL1A-frame001.rgba",
+      "runtime_sha256": "a4d6c1f093aa3f3a770f54c2c731e2c5223ca0822d812fa4ac74064e8e42e990",
+      "runtime_bytes": 2740032,
+      "rgba": "rgba/frame_001.png",
+      "rgba_sha256": "de41ada8a3e4cfbe547afec913c9e1e44a5d70eec48593f8a0f2e9c38068b4e6",
+      "alpha": "alpha/frame_001.png",
+      "alpha_sha256": "09cb0c2fbcb26db751f0309088e5986278d9a337fdf0e5d6e7d260ec70b4f2a5",
+      "source_alpha_nonzero_pixels": 364928,
+      "spline_changed_alpha_pixels": 24872,
+      "spline": {
+        "source_nonzero": 364928,
+        "components": 32,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 18291,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 9339,
+            "fit_samples": 11480,
+            "curve_points": 34440
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 164,
+            "fit_samples": 141,
+            "curve_points": 423
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 90,
+            "fit_samples": 78,
+            "curve_points": 234
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 72,
+            "fit_samples": 46,
+            "curve_points": 138
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 56,
+            "fit_samples": 36,
+            "curve_points": 108
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 88,
+            "fit_samples": 56,
+            "curve_points": 168
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 56,
+            "fit_samples": 36,
+            "curve_points": 108
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 123,
+            "fit_samples": 106,
+            "curve_points": 318
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 83,
+            "fit_samples": 67,
+            "curve_points": 201
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 80,
+            "fit_samples": 51,
+            "curve_points": 153
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 106,
+            "fit_samples": 93,
+            "curve_points": 279
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 34,
+            "fit_samples": 28,
+            "curve_points": 84
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          }
+        ]
+      },
+      "top_reconstruction": {
+        "region_pixels": 213180,
+        "changed_alpha_pixels": 78879,
+        "raised_alpha_pixels": 40542,
+        "cleared_alpha_pixels": 50
+      },
+      "final_raised_over_source_alpha_pixels": 28950,
+      "final_cleared_source_alpha_pixels": 332
+    },
+    {
+      "frame": 2,
+      "source_runtime_asset": "raw_rgba/frame_002.rgba",
+      "source_runtime_sha256": "9248a54ed6708a3ef163198ec82e370e186bf338a60e922c9f592185aabb4921",
+      "source_runtime_bytes": 2740032,
+      "runtime_asset": "raw_rgba/AAX4-FALL1A-frame002.rgba",
+      "runtime_sha256": "b21b0c84d8ffd4761b19e07b12291b69e926fd27b6a0dba4e5e55f8ab5c9ed84",
+      "runtime_bytes": 2740032,
+      "rgba": "rgba/frame_002.png",
+      "rgba_sha256": "c4e4c06c2e4de00ad3d1d2284d7c7bae86f88237a8928e2a057bec3f303c4a35",
+      "alpha": "alpha/frame_002.png",
+      "alpha_sha256": "09cb0c2fbcb26db751f0309088e5986278d9a337fdf0e5d6e7d260ec70b4f2a5",
+      "source_alpha_nonzero_pixels": 364928,
+      "spline_changed_alpha_pixels": 24872,
+      "spline": {
+        "source_nonzero": 364928,
+        "components": 32,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 18291,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 9339,
+            "fit_samples": 11480,
+            "curve_points": 34440
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 164,
+            "fit_samples": 141,
+            "curve_points": 423
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 90,
+            "fit_samples": 78,
+            "curve_points": 234
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 72,
+            "fit_samples": 46,
+            "curve_points": 138
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 56,
+            "fit_samples": 36,
+            "curve_points": 108
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 88,
+            "fit_samples": 56,
+            "curve_points": 168
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 56,
+            "fit_samples": 36,
+            "curve_points": 108
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 123,
+            "fit_samples": 106,
+            "curve_points": 318
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 83,
+            "fit_samples": 67,
+            "curve_points": 201
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 80,
+            "fit_samples": 51,
+            "curve_points": 153
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 106,
+            "fit_samples": 93,
+            "curve_points": 279
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 34,
+            "fit_samples": 28,
+            "curve_points": 84
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          }
+        ]
+      },
+      "top_reconstruction": {
+        "region_pixels": 213180,
+        "changed_alpha_pixels": 78879,
+        "raised_alpha_pixels": 40542,
+        "cleared_alpha_pixels": 50
+      },
+      "final_raised_over_source_alpha_pixels": 28950,
+      "final_cleared_source_alpha_pixels": 332
+    },
+    {
+      "frame": 3,
+      "source_runtime_asset": "raw_rgba/frame_003.rgba",
+      "source_runtime_sha256": "60334cef31bae125ab53b51fffbffd500d8e4441c341eb7c849a7b513ecad0b3",
+      "source_runtime_bytes": 2740032,
+      "runtime_asset": "raw_rgba/AAX4-FALL1A-frame003.rgba",
+      "runtime_sha256": "74a2e9778a6a3419e3745cb4394de5f1381f40ccbd9c9bb6a83ba6ac2c7b6601",
+      "runtime_bytes": 2740032,
+      "rgba": "rgba/frame_003.png",
+      "rgba_sha256": "5b29c5ad94a940d6409d459ecaba4351a285493e5f6e68f34c97e04948573728",
+      "alpha": "alpha/frame_003.png",
+      "alpha_sha256": "09cb0c2fbcb26db751f0309088e5986278d9a337fdf0e5d6e7d260ec70b4f2a5",
+      "source_alpha_nonzero_pixels": 364928,
+      "spline_changed_alpha_pixels": 24872,
+      "spline": {
+        "source_nonzero": 364928,
+        "components": 32,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 18291,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 9339,
+            "fit_samples": 11480,
+            "curve_points": 34440
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 164,
+            "fit_samples": 141,
+            "curve_points": 423
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 90,
+            "fit_samples": 78,
+            "curve_points": 234
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 72,
+            "fit_samples": 46,
+            "curve_points": 138
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 56,
+            "fit_samples": 36,
+            "curve_points": 108
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 88,
+            "fit_samples": 56,
+            "curve_points": 168
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 56,
+            "fit_samples": 36,
+            "curve_points": 108
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 123,
+            "fit_samples": 106,
+            "curve_points": 318
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 83,
+            "fit_samples": 67,
+            "curve_points": 201
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 80,
+            "fit_samples": 51,
+            "curve_points": 153
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 106,
+            "fit_samples": 93,
+            "curve_points": 279
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 34,
+            "fit_samples": 28,
+            "curve_points": 84
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          }
+        ]
+      },
+      "top_reconstruction": {
+        "region_pixels": 213180,
+        "changed_alpha_pixels": 78879,
+        "raised_alpha_pixels": 40542,
+        "cleared_alpha_pixels": 50
+      },
+      "final_raised_over_source_alpha_pixels": 28950,
+      "final_cleared_source_alpha_pixels": 332
+    },
+    {
+      "frame": 4,
+      "source_runtime_asset": "raw_rgba/frame_004.rgba",
+      "source_runtime_sha256": "f4e016613a20bf4ad79c97558e6dedb9b4efa28b283605d5b2af8407ae49be8f",
+      "source_runtime_bytes": 2740032,
+      "runtime_asset": "raw_rgba/AAX4-FALL1A-frame004.rgba",
+      "runtime_sha256": "b0bc003eeed6a6f3bb15604dcd3bb9177744dc7f024e6bb8cfd53dfceb0e11fc",
+      "runtime_bytes": 2740032,
+      "rgba": "rgba/frame_004.png",
+      "rgba_sha256": "ca0ebb65ca34f6c3d7ecfde4556064192da5fe450f3b16e4b630c85c35c59001",
+      "alpha": "alpha/frame_004.png",
+      "alpha_sha256": "09cb0c2fbcb26db751f0309088e5986278d9a337fdf0e5d6e7d260ec70b4f2a5",
+      "source_alpha_nonzero_pixels": 364928,
+      "spline_changed_alpha_pixels": 24872,
+      "spline": {
+        "source_nonzero": 364928,
+        "components": 32,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 18291,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 9339,
+            "fit_samples": 11480,
+            "curve_points": 34440
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 164,
+            "fit_samples": 141,
+            "curve_points": 423
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 90,
+            "fit_samples": 78,
+            "curve_points": 234
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 72,
+            "fit_samples": 46,
+            "curve_points": 138
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 56,
+            "fit_samples": 36,
+            "curve_points": 108
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 88,
+            "fit_samples": 56,
+            "curve_points": 168
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 56,
+            "fit_samples": 36,
+            "curve_points": 108
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 123,
+            "fit_samples": 106,
+            "curve_points": 318
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 83,
+            "fit_samples": 67,
+            "curve_points": 201
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 80,
+            "fit_samples": 51,
+            "curve_points": 153
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 106,
+            "fit_samples": 93,
+            "curve_points": 279
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 34,
+            "fit_samples": 28,
+            "curve_points": 84
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          }
+        ]
+      },
+      "top_reconstruction": {
+        "region_pixels": 213180,
+        "changed_alpha_pixels": 78879,
+        "raised_alpha_pixels": 40542,
+        "cleared_alpha_pixels": 50
+      },
+      "final_raised_over_source_alpha_pixels": 28950,
+      "final_cleared_source_alpha_pixels": 332
+    },
+    {
+      "frame": 5,
+      "source_runtime_asset": "raw_rgba/frame_005.rgba",
+      "source_runtime_sha256": "1851b42c464249fe4f74fa40a3df687b7585a5712574de179abaec74696ef9fb",
+      "source_runtime_bytes": 2740032,
+      "runtime_asset": "raw_rgba/AAX4-FALL1A-frame005.rgba",
+      "runtime_sha256": "1dc635851aac60b67f6de0e4dd6170e64367a8040eef5dab43656098209d17e1",
+      "runtime_bytes": 2740032,
+      "rgba": "rgba/frame_005.png",
+      "rgba_sha256": "f6b39f5091aae8d6b1114a7e0fddf0d08a8cfb5a1167db05a6e9b568217aacc7",
+      "alpha": "alpha/frame_005.png",
+      "alpha_sha256": "09cb0c2fbcb26db751f0309088e5986278d9a337fdf0e5d6e7d260ec70b4f2a5",
+      "source_alpha_nonzero_pixels": 364928,
+      "spline_changed_alpha_pixels": 24872,
+      "spline": {
+        "source_nonzero": 364928,
+        "components": 32,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 18291,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 9339,
+            "fit_samples": 11480,
+            "curve_points": 34440
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 164,
+            "fit_samples": 141,
+            "curve_points": 423
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 90,
+            "fit_samples": 78,
+            "curve_points": 234
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 72,
+            "fit_samples": 46,
+            "curve_points": 138
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 56,
+            "fit_samples": 36,
+            "curve_points": 108
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 88,
+            "fit_samples": 56,
+            "curve_points": 168
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 56,
+            "fit_samples": 36,
+            "curve_points": 108
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 123,
+            "fit_samples": 106,
+            "curve_points": 318
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 24,
+            "fit_samples": 16,
+            "curve_points": 48
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 83,
+            "fit_samples": 67,
+            "curve_points": 201
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 80,
+            "fit_samples": 51,
+            "curve_points": 153
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 106,
+            "fit_samples": 93,
+            "curve_points": 279
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 34,
+            "fit_samples": 28,
+            "curve_points": 84
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 40,
+            "fit_samples": 26,
+            "curve_points": 78
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          }
+        ]
+      },
+      "top_reconstruction": {
+        "region_pixels": 213180,
+        "changed_alpha_pixels": 78879,
+        "raised_alpha_pixels": 40542,
+        "cleared_alpha_pixels": 50
+      },
+      "final_raised_over_source_alpha_pixels": 28950,
+      "final_cleared_source_alpha_pixels": 332
+    }
+  ]
+}

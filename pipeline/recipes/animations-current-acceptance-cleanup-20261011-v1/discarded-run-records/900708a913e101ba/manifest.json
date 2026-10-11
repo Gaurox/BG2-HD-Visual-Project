@@ -1,0 +1,61 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-15T20:42:05.464272+00:00",
+  "plan_sha256": "fdac64bcade9ff555ede222e779799ba767b8db8a0a331cddc8c9d3010b339fb",
+  "input_mode": "spatial-v1",
+  "source_run": "G:/AI/BG2_Upscale/animations/ressources/AM0308A/runs/am0308a-xbr2x-nearest2-x4-20260915",
+  "source_run_manifest_sha256": "68711409f381faef0610a6719c2f8578e23a39f2e649654479f32c0aae0ba49d",
+  "base_pack": "G:/AI/BG2_Upscale/animations/ressources/AM0308A/runs/am0308a-xbr2x-nearest2-x4-20260915/03_runtime_pack",
+  "base_pack_manifest_sha256": "a3b0382e748ac631861cadeea832d1b63ba46997d5abfa124135320e2bad851e",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM0308A"
+  ],
+  "timed_resource_variants": [
+    {
+      "resref": "AM0308A",
+      "variant_index": 0,
+      "position": null
+    }
+  ],
+  "topaz": {
+    "ffmpeg": "C:/Program Files/Topaz Labs LLC/Topaz Video AI/ffmpeg.exe",
+    "model_dir": "C:/ProgramData/Topaz Labs LLC/Topaz Video AI/models",
+    "model": "apo-8",
+    "device": "-2",
+    "replace_duplicate_threshold": -0.01,
+    "transparent_rgb_mode": "preserve-hidden-rgb"
+  },
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "7bff51040097bc8c1ebd193971a87129129d884f1c376af2ed9bdf97703a1257",
+  "registry_sha256": "ab9e72364e672a7e3561ae2b1ccc474e648a6b95ef65cdaed1878c7434f0c228",
+  "reviews": [
+    {
+      "resref": "AM0308A",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "exact",
+      "file": "work/AM0308A-v0/cycle_000/review-30fps-exact.mp4",
+      "sha256": "31bc86bf9c3ed686503fdf77aa5fae82089c1a8aac04217ec973620acdb26f5b"
+    },
+    {
+      "resref": "AM0308A",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "loop-4s",
+      "file": "work/AM0308A-v0/cycle_000/review-30fps-loop-4s.mp4",
+      "sha256": "074edf3e6d182f7e2e6f4e6c2c431b9753b704eee97ee93313a7223869960b69"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval"
+}

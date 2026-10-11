@@ -1,0 +1,53 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-07T21:45:32.215470+00:00",
+  "input_mode": "per-frame-multi-contour-spline-alpha-on-timed-run",
+  "source_run": "G:/AI/BG2_Upscale/animations/batches/ar2804-treelife-apo8-x4-30fps-v2-20260907",
+  "source_run_manifest_sha256": "9ffbbee3c34486fc3a7555e65687a6b35291fe072e89637d2b7c414869669143",
+  "base_pack": "G:/AI/BG2_Upscale/animations/batches/ar2804-treelife-spatial-seedvr2-7b-lab-x4-20260907/03_runtime_pack",
+  "base_pack_manifest_sha256": "2c488da3a2b356207a0c38c92365de54a0e4196e877de131e78089b6920445b8",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM2805A",
+    "AM2805B",
+    "AM2805C"
+  ],
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "08224e754272625e39a096097e8361061e3a84380d60ece54bbea5699668cbd9",
+  "registry_sha256": "6fa093c5360116aa1a3051fb0ebb855420b675577618b180d93d8f27663446de",
+  "reviews": [
+    {
+      "kind": "comparison-contact-sheet",
+      "file": "review/review-comparison-contact-sheet.png",
+      "sha256": "da712d18894ba24289bb10ebc3f5e3b82a5813e8267b936a08214f7bc087c290"
+    },
+    {
+      "kind": "comparison-exact",
+      "file": "review/review-comparison-30fps-exact.mp4",
+      "sha256": "4f083f745660cb8a46b4d125c7c45f5140e2d78c053c4659994e9ce60b27bb1e"
+    },
+    {
+      "kind": "comparison-loop-4s",
+      "file": "review/review-comparison-30fps-loop-4s.mp4",
+      "sha256": "7291f9bd2ef20090410c9ffbbb5584483b15bedfdd06be796e89e1bb4e08fc12"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval",
+  "per_frame_spline_alpha": {
+    "pipeline_name": "spline-fit1-multicontour-per-frame-feather4",
+    "pipeline_effects": [
+      "spline-fit1-multicontour-per-frame-feather4"
+    ],
+    "report": "spline-alpha-report.json",
+    "report_sha256": "7a7d9a3e61e0506a9c6d82d060b74fa78c95e20090fe1e9927dc3554ddb5efad",
+    "installation": "not performed"
+  }
+}

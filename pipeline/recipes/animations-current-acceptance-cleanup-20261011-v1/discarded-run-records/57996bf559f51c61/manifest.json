@@ -1,0 +1,63 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-07T22:24:50.668774+00:00",
+  "input_mode": "manual-alpha-mask-on-timed-run",
+  "source_run": "G:/AI/BG2_Upscale/animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-20260907",
+  "source_run_manifest_sha256": "aabcbd9994cfa11466337b4b2859fb50194e4ead408db57ca5f197a6fcf9ede4",
+  "base_pack": "G:/AI/BG2_Upscale/animations/ressources/AM2805B/runs/am2805b-seedvr2-7b-lab-x4-20260907/03_runtime_pack",
+  "base_pack_manifest_sha256": "80bd05d1bfbdf2480fd356bb64ab3e79b1f94b2374a8e1087aee4b1010f3e5a0",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM2805B"
+  ],
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "467d45440626cfa2734e7c8d8e15d9e9f8ced79c1a24bb002293990f4de855b7",
+  "registry_sha256": "90e86d9bf5e2b9f4566f692b6684d441aa3975aeddfcee4cd68d4cdac1495c09",
+  "reviews": [
+    {
+      "resref": "AM2805B",
+      "cycle": 0,
+      "kind": "exact",
+      "file": "work/AM2805B/cycle_000/review-30fps-exact.mp4",
+      "sha256": "cddcee77319b1f0d1c9e51ee1835067cdb83c6cc9b8d46b8ee6eec7b98318f5b"
+    },
+    {
+      "resref": "AM2805B",
+      "cycle": 0,
+      "kind": "loop-4s",
+      "file": "work/AM2805B/cycle_000/review-30fps-loop-4s.mp4",
+      "sha256": "3c10e1629ecbc44c575f24046ffd04b9f086530a865f547572f2cf524f99ced2"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval",
+  "manual_alpha_patch": {
+    "schema": "bg2-upscale-area-animation-manual-alpha-mask-v2",
+    "status": "completed",
+    "mask_storage": "run-relative-v1",
+    "targets": [
+      {
+        "resref": "AM2805B",
+        "mask_source": "manual-mask/AM2805B/source.png",
+        "mask_sha256": "4356a7c54ce7d3e23cfed9c8516199ebcc8f7e3063043da376b38176b6a3cc91",
+        "mask_size_x4": [
+          744,
+          736
+        ],
+        "anchor_count": 7,
+        "masked_frame_count": 14
+      }
+    ],
+    "source_temporal_run": "G:/AI/BG2_Upscale/animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-20260907",
+    "source_temporal_run_manifest_sha256": "aabcbd9994cfa11466337b4b2859fb50194e4ead408db57ca5f197a6fcf9ede4",
+    "alpha_formula": "alpha_final = alpha_source * grayscale_mask / 255",
+    "rgb_policy": "byte-identical"
+  }
+}

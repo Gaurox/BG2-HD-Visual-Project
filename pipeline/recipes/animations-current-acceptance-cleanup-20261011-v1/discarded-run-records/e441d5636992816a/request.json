@@ -1,0 +1,223 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-plan-v2",
+  "status": "proposed",
+  "input_mode": "spatial-v1",
+  "source_run": "G:/AI/BG2_Upscale/animations/batches/ar5000-am5000ab-seedvr7b-lab-x4-20260922",
+  "source_run_manifest_sha256": "107f08e736ae24bd26259774a3dd714511146bbdfe1e41f4ba7b308640063091",
+  "base_pack": "G:/AI/BG2_Upscale/animations/batches/ar5000-am5000ab-seedvr7b-lab-x4-20260922/03_runtime_pack_contourgauss2",
+  "base_pack_schema": "bg2-upscale-area-animation-runtime-pack-v1",
+  "base_pack_manifest_sha256": "87ef2cada6487d4c26a027ea6697342b76d6470c95d2f6340e5fd67b5ea925eb",
+  "base_registry_sha256": "326b652c2bcbeee411cb790a535edbb626700b599e2f3818d2220af76ad75bfc",
+  "scale": 4,
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "topaz": {
+    "model": "apo-8",
+    "replace_duplicate_threshold": -0.01,
+    "transparent_rgb_mode": "nearest-opaque-dilate",
+    "loop_strategy": "append first source slot once; no cyclic-context extrapolation"
+  },
+  "alpha_policy": "hold exact alpha of the current native (left) slot",
+  "geometry_policy": "crop the aligned interpolation with the current native slot geometry",
+  "targets": [
+    {
+      "resref": "AM5000A",
+      "variant_index": 0,
+      "position": null,
+      "resource_key": "AM5000A-v0",
+      "geometry_mode": "uniform",
+      "input_mode": "spatial-v1",
+      "aligned_size_x4": [
+        728,
+        592
+      ],
+      "base_frame_count": 5,
+      "output_frame_count": 10,
+      "cycle_count": 1,
+      "added_intermediate_frames": 5,
+      "added_raw_bytes": 8619520,
+      "source": {
+        "run_manifest_sha256": "107f08e736ae24bd26259774a3dd714511146bbdfe1e41f4ba7b308640063091",
+        "frame_manifest_sha256": "70bd331df50638bbcf965cec6967f1e275d2346067c9060bea24ba1d4dab9dcc",
+        "upscale_manifest_sha256": "7ee837bd9c23bdd2d167a3132d4d2f04d3dbe03c9c5fe3bfc547c7d682796fc0",
+        "aligned_rgba_sha256": [
+          "2a6930d0a4609cf73af77abd0b281631a9b5e8def5051439f66041c7a5b548a0",
+          "2f546f1f5b4a1ac8654e1afacef634b5d8e62364b79be5e63096e581c1f78254",
+          "4529f60eb62f82288598c5fba6dc093031009d8a65bf30cefdcca71664ea31b4",
+          "ffcef246bff6f9c38aae6566ed19894080fcc0bcf6a07ab3a7db9a53bfbebf57",
+          "29c2db65fa9f7002d8f3e95a584b86a1151a52c501aaadfc24d447a90d372e53"
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": false,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "intermediate_frame_indices": [
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "timeline_frame_indices": [
+            0,
+            5,
+            1,
+            6,
+            2,
+            7,
+            3,
+            8,
+            4,
+            9
+          ],
+          "native_slots": 5,
+          "timeline_phases": 10,
+          "duration_seconds": 0.3333333333333333
+        }
+      ]
+    },
+    {
+      "resref": "AM5000B",
+      "variant_index": 0,
+      "position": null,
+      "resource_key": "AM5000B-v0",
+      "geometry_mode": "uniform",
+      "input_mode": "spatial-v1",
+      "aligned_size_x4": [
+        724,
+        588
+      ],
+      "base_frame_count": 5,
+      "output_frame_count": 10,
+      "cycle_count": 1,
+      "added_intermediate_frames": 5,
+      "added_raw_bytes": 8514240,
+      "source": {
+        "run_manifest_sha256": "107f08e736ae24bd26259774a3dd714511146bbdfe1e41f4ba7b308640063091",
+        "frame_manifest_sha256": "549658dd836c1c7863607638395a1ec338edb2cd52ec5f6beb4539511890e2f5",
+        "upscale_manifest_sha256": "be1e6c68dfa4f54a35c3fc490f8f9225ab7d7da76d9e5e205f11384358fffc6a",
+        "aligned_rgba_sha256": [
+          "cd3c931a55ee5c33a001934efa257da6c3833a3fdf9dc23d99da3152e994afbc",
+          "1da9af1e0ff995402835bb46348063fa5e344ed523180504d72422ce7d54b903",
+          "d8d40b59bcd57d71eef35ed3b39c9579ae21efbf94ffb7eed89cd60e5bbe8271",
+          "c95a6398eb45ac4ed8f8403872e02f5321083440cc1e41d399423185b4d67996",
+          "dae720851d748a545e2d025a187c896f33036d6face59f0f6668c6c2d5e3440c"
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": false,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "intermediate_frame_indices": [
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "timeline_frame_indices": [
+            0,
+            5,
+            1,
+            6,
+            2,
+            7,
+            3,
+            8,
+            4,
+            9
+          ],
+          "native_slots": 5,
+          "timeline_phases": 10,
+          "duration_seconds": 0.3333333333333333
+        }
+      ]
+    }
+  ],
+  "gates": [
+    "the declared input mode and active base pack are hash-validated before build",
+    "even phases reuse byte-exact runtime anchors",
+    "Topaz must return 2*N+1 or 2*N frames for every closed cycle",
+    "visual review and explicit approval file required before install"
+  ],
+  "plan_sha256": "e9d0e6cd812d3975e8a2f61344ab7a575c198d8318ceef9334aeb12325cf73ce"
+}

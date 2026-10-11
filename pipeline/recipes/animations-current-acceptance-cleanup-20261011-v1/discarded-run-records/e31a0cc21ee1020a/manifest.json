@@ -1,0 +1,83 @@
+{
+  "schema": "bg2-upscale-animation-visual-treatment-v1",
+  "status": "completed",
+  "created_utc": "2026-09-19T14:33:15.972396+00:00",
+  "source_pack": "G:\\AI\\BG2_Upscale\\animations\\batches\\am0322ab-apo8-x4-30fps-v2-innerfade8-20260919\\03_runtime_pack",
+  "source_pack_manifest_sha256": "6037d738504198215d86737d7d4d751dcd1864778ffe29a2b7171ba3d35c5b24",
+  "runtime_pack": "03_runtime_pack",
+  "runtime_pack_manifest_sha256": "5e5fb725b589f4c52d8a09e17559e9253cd5d57e20c96375bc8952cee38153ed",
+  "resrefs": [
+    "AM0322A",
+    "AM0322B"
+  ],
+  "visual_treatment": {
+    "kind": "bright-core-masked-gaussian",
+    "sigma_x4": 1.5,
+    "seed_luma": 110.0,
+    "margin_x4": 12,
+    "feather_x4": 8.0,
+    "mask": "union over the loop of opaque pixels above seed_luma, largest component, filled, dilated, feathered",
+    "rgba_policy": "blur-straight-rgb-inside-mask-alpha-and-geometry-verbatim"
+  },
+  "metrics": {
+    "AM0322A": {
+      "frame_count": 36,
+      "changed_frame_count": 36,
+      "alpha_sum_before": 2186161908,
+      "alpha_sum_after": 2186161908,
+      "fade_width_x4_min": null,
+      "fade_width_x4_max": null,
+      "inner_contour_radius_x4": null,
+      "rgb_policy": null,
+      "rgb_dilated_pixels": 0,
+      "gaussian_padding_x4": 0,
+      "geometry_preserved": false,
+      "alpha_mask": null,
+      "bright_core_seed_px": 9075,
+      "bright_core_mask_px": 16715
+    },
+    "AM0322B": {
+      "frame_count": 36,
+      "changed_frame_count": 36,
+      "alpha_sum_before": 2042920980,
+      "alpha_sum_after": 2042920980,
+      "fade_width_x4_min": null,
+      "fade_width_x4_max": null,
+      "inner_contour_radius_x4": null,
+      "rgb_policy": null,
+      "rgb_dilated_pixels": 0,
+      "gaussian_padding_x4": 0,
+      "geometry_preserved": false,
+      "alpha_mask": null,
+      "bright_core_seed_px": 11195,
+      "bright_core_mask_px": 18926
+    }
+  },
+  "reviews": [
+    {
+      "resref": "AM0322A",
+      "kind": "comparison-exact",
+      "file": "review/AM0322A/comparison-30fps-exact.mp4",
+      "sha256": "79e6c30387fbd935e600ad2160e744f17e1286e3a6a2fa584bbbaf5f82ffc134"
+    },
+    {
+      "resref": "AM0322A",
+      "kind": "comparison-loop-4s",
+      "file": "review/AM0322A/comparison-30fps-loop-4s.mp4",
+      "sha256": "db8a8c219b50398dc47dccecd44f151424897852f561a1a46198d5ada32e57f2"
+    },
+    {
+      "resref": "AM0322B",
+      "kind": "comparison-exact",
+      "file": "review/AM0322B/comparison-30fps-exact.mp4",
+      "sha256": "6bb546731c4ba92d635f955f4baf86d51ca7cb1f04d9a9524602995e9c415863"
+    },
+    {
+      "resref": "AM0322B",
+      "kind": "comparison-loop-4s",
+      "file": "review/AM0322B/comparison-30fps-loop-4s.mp4",
+      "sha256": "a9975ebc47d8d3668897b80f28f4f350d8b988e4b49bc95e27ccd0be9845519a"
+    }
+  ],
+  "qa": "explicit visual approval required before installation"
+}

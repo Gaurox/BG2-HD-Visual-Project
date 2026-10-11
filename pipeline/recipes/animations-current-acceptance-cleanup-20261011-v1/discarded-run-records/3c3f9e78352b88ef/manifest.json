@@ -1,0 +1,51 @@
+{
+  "schema": "bg2-upscale-blended-rgb-neutral-run-v1",
+  "status": "completed",
+  "asset": "FPIT1S",
+  "request": "request.json",
+  "source_split_root": "animations/packs-par-zone/combined-20260902-active-plus-am2201ab-spline-fit1-feather0-30fps-v2",
+  "source_manifest_sha256": "0e39effbc0d5d4020d203b9212e56fc3e005013f506921e7ff091fa0c72c65f9",
+  "output_split_root": "animations/packs-par-zone/combined-20260902-active-plus-am2201ab-spline-fit1-feather0-30fps-v2-fpit1s-rgb-neutral",
+  "output_manifest_sha256": "19cf1460e07d3e368bf995d1373c49b42d927c7047cb82ba28e04f8a7394db10",
+  "recipe": {
+    "tool": "pipeline/scripts/build_blended_rgb_neutral_pack.py",
+    "arguments": [
+      "--resref",
+      "FPIT1S",
+      "--mode",
+      "zero"
+    ],
+    "rule": "rgb=0 where alpha==0"
+  },
+  "coverage": {
+    "areas": [
+      "AR0334",
+      "AR0406",
+      "AR0509",
+      "AR0522",
+      "AR0601",
+      "AR0706",
+      "AR1603",
+      "AR2001",
+      "AR2014",
+      "AR2016",
+      "AR2017",
+      "AR2018",
+      "AR5202",
+      "OH7300",
+      "OH8100"
+    ],
+    "frames": 180,
+    "pixels_changed": 556320
+  },
+  "verification": {
+    "alpha_byte_exact": true,
+    "visible_rgb_byte_exact": true,
+    "zero_alpha_rgb_is_black": true,
+    "unchanged_non_target_frames_byte_exact": 7605,
+    "timeline_byte_exact": true,
+    "asset_hashes_recomputed": true
+  },
+  "qa_status": "pending-explicit-user-approval",
+  "release_status": "not-selected"
+}

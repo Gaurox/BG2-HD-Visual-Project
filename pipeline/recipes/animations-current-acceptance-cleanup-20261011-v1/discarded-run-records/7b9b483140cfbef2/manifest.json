@@ -1,0 +1,62 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-16T18:27:29.756060+00:00",
+  "input_mode": "per-frame-multi-contour-spline-alpha-on-timed-run",
+  "source_run": "G:/AI/BG2_Upscale/animations/batches/ar3016-seedvr7b-lab-apo8-30fps-20260916",
+  "source_run_manifest_sha256": "6b64d4c2cec9536e6512045be78ffe7ccc8b3c47741edcecd4501e7c66455ddc",
+  "base_pack": "G:/AI/BG2_Upscale/animations/batches/ar3016-seedvr7b-lab-x4-20260916/03_runtime_pack",
+  "base_pack_manifest_sha256": "0758168fffb7055073940456c019025cb26083c82614b66fd3a2ad6ece5899c2",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM3016E",
+    "AM3016G",
+    "AM3016I",
+    "AM3016J",
+    "AM3016K",
+    "AM3016L",
+    "AM3016N",
+    "AM3016P",
+    "AM3016Q",
+    "AM3016R",
+    "AM3016T"
+  ],
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "37bb920d9a4b5f03db647689c2010e6212ba0783f5b36cf56f3244d433f840b2",
+  "registry_sha256": "350e1fc5c96d86405312f8dbeb8d02dead1b713f5e321bc8ca0203a4183a002a",
+  "reviews": [
+    {
+      "kind": "comparison-contact-sheet",
+      "file": "review/review-comparison-contact-sheet.png",
+      "sha256": "480f23ee790f2cf1d8af6b29ff4d14ed60fe7ed7351900492b1b4d790c32d545"
+    },
+    {
+      "kind": "comparison-exact",
+      "file": "review/review-comparison-30fps-exact.mp4",
+      "sha256": "e179fee6cde716f7ca8d8b40db38a7fc72a3f11a71e21aa1c3a2172e15c34259"
+    },
+    {
+      "kind": "comparison-loop-4s",
+      "file": "review/review-comparison-30fps-loop-4s.mp4",
+      "sha256": "836dbb0a220031b852f780d7ede8b11131be42871d5d1c5287378a828292f8c4"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval",
+  "per_frame_spline_alpha": {
+    "pipeline_name": "spline-fit1-multicontour-per-frame-feather4",
+    "pipeline_effects": [
+      "spline-fit1-multicontour-per-frame-feather4",
+      "oval-edge-fade20x6"
+    ],
+    "report": "spline-alpha-report.json",
+    "report_sha256": "01469bb8d5639159bda0e3341d7a4657129f46a950c80402cc6d66212b06263a",
+    "installation": "not performed"
+  }
+}

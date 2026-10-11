@@ -1,0 +1,22 @@
+{
+  "schema": "bg2-upscale-blended-rgb-neutral-plan-v1",
+  "status": "proposed",
+  "asset": "FPIT1S",
+  "targets": [
+    "FPIT1S"
+  ],
+  "source_split_root": "animations/packs-par-zone/combined-20260902-active-plus-am2201ab-spline-fit1-feather0-30fps-v2",
+  "source_manifest_sha256": "0e39effbc0d5d4020d203b9212e56fc3e005013f506921e7ff091fa0c72c65f9",
+  "output_split_root": "animations/packs-par-zone/combined-20260902-active-plus-am2201ab-spline-fit1-feather0-30fps-v2-fpit1s-rgb-neutral",
+  "recipe": {
+    "tool": "pipeline/scripts/build_blended_rgb_neutral_pack.py",
+    "mode": "zero",
+    "rule": "rgb=0 where alpha==0",
+    "alpha_policy": "unchanged",
+    "visible_rgb_policy": "unchanged",
+    "temporal_policy": "unchanged"
+  },
+  "reason": "FPIT1S is rendered through the Blended path; hidden RGB contributes to the scene when alpha is zero.",
+  "qa_status": "pending-explicit-user-approval",
+  "release_status": "not-selected"
+}

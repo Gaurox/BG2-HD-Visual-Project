@@ -1,0 +1,248 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-plan-v2",
+  "status": "proposed",
+  "input_mode": "spatial-v1",
+  "source_run": "G:/AI/BG2_Upscale/animations/runs/ar0603-all-bam-seedvr7b-lab-x4",
+  "source_run_manifest_sha256": "110cd85d78f1db02946ba44213785990bb1aec79b441926d6a8844fc06b93866",
+  "base_pack": "G:/AI/BG2_Upscale/animations/runs/ar0603-all-bam-seedvr7b-lab-x4/04_v2_base_merged/03_runtime_pack",
+  "base_pack_schema": "bg2-upscale-area-animation-runtime-pack-v2",
+  "base_pack_manifest_sha256": "ebba356b824739198c9c4a4e569174f6f39bbed1d3b7b9f2659b0f2fc319304c",
+  "base_registry_sha256": "63681605b76f8fa9a778793ea5df4a6b77de8c8ee623f24a7a766f7bd217112e",
+  "scale": 4,
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "topaz": {
+    "model": "apo-8",
+    "replace_duplicate_threshold": -0.01,
+    "transparent_rgb_mode": "preserve-hidden-rgb",
+    "loop_strategy": "append first source slot once; no cyclic-context extrapolation"
+  },
+  "alpha_policy": "hold exact alpha of the current native (left) slot",
+  "geometry_policy": "crop the aligned interpolation with the current native slot geometry",
+  "targets": [
+    {
+      "resref": "AM0603D3",
+      "variant_index": 0,
+      "position": null,
+      "resource_key": "AM0603D3-v0",
+      "geometry_mode": "uniform",
+      "input_mode": "spatial-v1",
+      "aligned_size_x4": [
+        472,
+        372
+      ],
+      "base_frame_count": 6,
+      "output_frame_count": 12,
+      "cycle_count": 1,
+      "added_intermediate_frames": 6,
+      "added_raw_bytes": 4214016,
+      "source": {
+        "run_manifest_sha256": "110cd85d78f1db02946ba44213785990bb1aec79b441926d6a8844fc06b93866",
+        "frame_manifest_sha256": "bc89884906ec7dd8c67fd38e205d2c10eacc72a7e80e2dc78b68d84b0205e7fe",
+        "upscale_manifest_sha256": "463abc1ef963debc1c1dbcc26557072d07287be611ae242852e6dce6b7dd14e7",
+        "aligned_rgba_sha256": [
+          "d8b5509c8e2cc5c65e56be0a75f11a35e0bdcde86b535fe1ceb7dd60682e6e8a",
+          "e1d4128f9a4e9ce8b5f1f30b88708b56573c3bcdef3419a1d2bb5b1094e6a61f",
+          "4d7f2ae2a32d53b5cf1e65ed6627865495c5e9d14b0997f78878009413fcab57",
+          "1109c087d6510bccf8f6c4198f80e3ec1ba6da0761b54aebe7950c986035230f",
+          "2354d43ca7a75f7372a69aa3019ef1a0154acce962320c33dfcabe86a04ffc09",
+          "d4e14bc75cfe38ea46f6922f7ce286231d9c88978fbf7a0cf333703c18e45e44"
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "timing_strategy": "preserve-segmented-holds",
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 7
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 3
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 3
+              }
+            ],
+            "has_consecutive_duplicates": true,
+            "uniform_run_lengths": false,
+            "hold_slots": null,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": false,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            2,
+            2,
+            3,
+            3,
+            4,
+            4,
+            5,
+            5,
+            5
+          ],
+          "interpolation_input_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            0
+          ],
+          "interpolation_path_mode": "cyclic-append-first",
+          "phases_per_transition": 2,
+          "intermediate_frame_indices": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "interpolation_segments": [
+            {
+              "segment": 0,
+              "slot": 6,
+              "left_native_frame": 0,
+              "right_native_frame": 1,
+              "intermediate_frame_indices": [
+                6
+              ]
+            },
+            {
+              "segment": 1,
+              "slot": 9,
+              "left_native_frame": 1,
+              "right_native_frame": 2,
+              "intermediate_frame_indices": [
+                7
+              ]
+            },
+            {
+              "segment": 2,
+              "slot": 11,
+              "left_native_frame": 2,
+              "right_native_frame": 3,
+              "intermediate_frame_indices": [
+                8
+              ]
+            },
+            {
+              "segment": 3,
+              "slot": 13,
+              "left_native_frame": 3,
+              "right_native_frame": 4,
+              "intermediate_frame_indices": [
+                9
+              ]
+            },
+            {
+              "segment": 4,
+              "slot": 15,
+              "left_native_frame": 4,
+              "right_native_frame": 5,
+              "intermediate_frame_indices": [
+                10
+              ]
+            },
+            {
+              "segment": 5,
+              "slot": 18,
+              "left_native_frame": 5,
+              "right_native_frame": 0,
+              "intermediate_frame_indices": [
+                11
+              ]
+            }
+          ],
+          "exact_hold_boundary_count": 13,
+          "timeline_frame_indices": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            6,
+            1,
+            1,
+            1,
+            1,
+            1,
+            7,
+            2,
+            2,
+            2,
+            8,
+            3,
+            3,
+            3,
+            9,
+            4,
+            4,
+            4,
+            10,
+            5,
+            5,
+            5,
+            5,
+            5,
+            11
+          ],
+          "native_slots": 19,
+          "timeline_phases": 38,
+          "duration_seconds": 1.2666666666666666
+        }
+      ]
+    }
+  ],
+  "gates": [
+    "the declared input mode and active base pack are hash-validated before build",
+    "even phases reuse byte-exact runtime anchors",
+    "Topaz must return 2*N+1 or 2*N frames for every closed cycle",
+    "visual review and explicit approval file required before install"
+  ],
+  "duplicate_hold_strategy": "interpolate only unequal-index boundaries; preserve every native slot and duration; reuse exact anchors for duplicate holds",
+  "plan_sha256": "c01a06947c47c41f406227ec1a2a133c14ccb4bbaa18b09b40418cf83ddf23a3"
+}

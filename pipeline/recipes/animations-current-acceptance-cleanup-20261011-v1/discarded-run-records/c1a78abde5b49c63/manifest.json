@@ -1,0 +1,53 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-11T18:59:45.929169+00:00",
+  "input_mode": "per-frame-multi-contour-spline-alpha-on-timed-run",
+  "source_run": "G:/AI/BG2_Upscale/animations/batches/ar3021-illithids-apo8-x4-30fps-v2-20260911",
+  "source_run_manifest_sha256": "19d4912857add4ee6442cfe1fee9fad954566e32e45c0017bcb5064a8fe9d48f",
+  "base_pack": "G:/AI/BG2_Upscale/animations/batches/ar3021-illithids-seedvr7b-lab-x4-20260911/03_runtime_pack",
+  "base_pack_manifest_sha256": "3e05dd5b1404e71dbab771df7fd06a27fb754fbe00261c13b13572aa9f2dc3fb",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM3021D",
+    "AM3021E",
+    "AM3021F"
+  ],
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "1c7087f5fc212478375a311f2e052b4019b4f5ceb70707782ef80bbaeb165d2f",
+  "registry_sha256": "be36e103ca5c6caf37125a6180b229d7ec7730ed1591e19b72cdcbb1be8db722",
+  "reviews": [
+    {
+      "kind": "comparison-contact-sheet",
+      "file": "review/review-comparison-contact-sheet.png",
+      "sha256": "7d007a6ccb89f4dfb2a12e7a9101ad24f9efc55ac54b1d424761e8e56043ca3e"
+    },
+    {
+      "kind": "comparison-exact",
+      "file": "review/review-comparison-30fps-exact.mp4",
+      "sha256": "74ddc2a0a2bf3f5b810db31e657d8dfcd88eb581b91a95495c7e3189ed4feb8a"
+    },
+    {
+      "kind": "comparison-loop-4s",
+      "file": "review/review-comparison-30fps-loop-4s.mp4",
+      "sha256": "1ef37d7b8fab12deca925522062ce35acadade5380edb5bee4c3356a100a59c1"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval",
+  "per_frame_spline_alpha": {
+    "pipeline_name": "spline-fit1-multicontour-per-frame-feather4",
+    "pipeline_effects": [
+      "spline-fit1-multicontour-per-frame-feather4"
+    ],
+    "report": "spline-alpha-report.json",
+    "report_sha256": "7d8f5fe7015a1aedbc257c3226c334c9ac5d10e80a34922ab8880845b1ed4803",
+    "installation": "not performed"
+  }
+}

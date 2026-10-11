@@ -1,0 +1,258 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-plan-v2",
+  "status": "proposed",
+  "input_mode": "spatial-v1",
+  "source_run": "G:/AI/BG2_Upscale/animations/batches/ar2804-treelife-spatial-seedvr2-7b-lab-x4-20260907",
+  "source_run_manifest_sha256": "231a44f2e04f61aea1dbbdf227fa25c43bb40c073a7b5b34b6ff33be5b6b85a9",
+  "base_pack": "G:/AI/BG2_Upscale/animations/batches/ar2804-treelife-spatial-seedvr2-7b-lab-x4-20260907/03_runtime_pack",
+  "base_pack_schema": "bg2-upscale-area-animation-runtime-pack-v1",
+  "base_pack_manifest_sha256": "2c488da3a2b356207a0c38c92365de54a0e4196e877de131e78089b6920445b8",
+  "base_registry_sha256": "ed927580a8279a3c2fd78bcedf59fff5681c8f74fe485886cd0450b9ccd420f3",
+  "scale": 4,
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "topaz": {
+    "model": "apo-8",
+    "replace_duplicate_threshold": -0.01,
+    "transparent_rgb_mode": "nearest-opaque-dilate",
+    "loop_strategy": "append first source slot once; no cyclic-context extrapolation"
+  },
+  "alpha_policy": "hold exact alpha of the current native (left) slot",
+  "geometry_policy": "crop the aligned interpolation with the current native slot geometry",
+  "targets": [
+    {
+      "resref": "AM2805A",
+      "variant_index": 0,
+      "position": null,
+      "resource_key": "AM2805A-v0",
+      "geometry_mode": "uniform",
+      "input_mode": "spatial-v1",
+      "aligned_size_x4": [
+        372,
+        416
+      ],
+      "base_frame_count": 7,
+      "output_frame_count": 14,
+      "cycle_count": 1,
+      "added_intermediate_frames": 7,
+      "added_raw_bytes": 4333056,
+      "source": {
+        "run_manifest_sha256": "231a44f2e04f61aea1dbbdf227fa25c43bb40c073a7b5b34b6ff33be5b6b85a9",
+        "frame_manifest_sha256": "24214377944e375e0c770a568d029c4ea1ef5ae2f1b0b1dd898633fd88551c42",
+        "upscale_manifest_sha256": "44df395046b60ff774d513cb357349d5b7981555b514694888bd699d3ea6726a",
+        "aligned_rgba_sha256": [
+          "cdd325eeb7af17ec153844947e971d711e3e6bf21784596c74c9c44527da0ba3",
+          "acdb0c26c74dbff574e11b056509cf97c45624561a39c468cc2d5190483e0a26",
+          "43d77e1aafa368d42d24916e9b4c96fe7792f4589cc2cabd921f92137cccf2d1",
+          "57ef0df1ad452ccd0f2ddd1c06f6a32e6cf5b0f7b50d0d845c32f65189582dfd",
+          "17a77c4dc024011e8fe7306fbc30a4fd390cf33a3d344ecb28bba6bf37d3f989",
+          "2934fc4e0aa058acb6ffc11dc9eb8f7bba2123ccbd0a9486019b720b0a699f36",
+          "3c28b959ac3c56e143ae2651aaced9f9f33eac35e24d1e975c838eb1977db58c"
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "intermediate_frame_indices": [
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          "timeline_frame_indices": [
+            0,
+            7,
+            1,
+            8,
+            2,
+            9,
+            3,
+            10,
+            4,
+            11,
+            5,
+            12,
+            6,
+            13
+          ],
+          "native_slots": 7,
+          "timeline_phases": 14,
+          "duration_seconds": 0.4666666666666667
+        }
+      ]
+    },
+    {
+      "resref": "AM2805B",
+      "variant_index": 0,
+      "position": null,
+      "resource_key": "AM2805B-v0",
+      "geometry_mode": "uniform",
+      "input_mode": "spatial-v1",
+      "aligned_size_x4": [
+        744,
+        736
+      ],
+      "base_frame_count": 7,
+      "output_frame_count": 14,
+      "cycle_count": 1,
+      "added_intermediate_frames": 7,
+      "added_raw_bytes": 15332352,
+      "source": {
+        "run_manifest_sha256": "231a44f2e04f61aea1dbbdf227fa25c43bb40c073a7b5b34b6ff33be5b6b85a9",
+        "frame_manifest_sha256": "ef032a3f34929901ac1365dd730c81f99acd150211b21c224b70395fe8f78545",
+        "upscale_manifest_sha256": "c2845b5edc5c2ecfb03e3f34862889c74347b0b9a005e20e075592daef6116b4",
+        "aligned_rgba_sha256": [
+          "987e8ee3fc72f6c5f13707de9a0528dbcf720990b67e62c8fbf819b3bd8ebba1",
+          "9c9035e2fd47740c9d4fe879ed76bf5f839dec089d9ac64b66bf13a47e8c593e",
+          "0e6ecdbc75d7b116208c576af24d53f7c74eecdc5e07c0d5ac3ec6718f57d6a2",
+          "3df02caed54bbb335dba78339de61e64bf970675147e1c4b31955959001fc781",
+          "e2b8a349eb094c69ea09ea6c2d94989433b750e898341d6ffd74fea6b2675ae5",
+          "290a4e98b7f6849b59fe1602596b76565b9fab0cfe75f26001d2b541c003c3c9",
+          "0169bbc3877436ff4a1ca9f39359f8c0b5513c73fb2845859d369c0513b90720"
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "intermediate_frame_indices": [
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          "timeline_frame_indices": [
+            0,
+            7,
+            1,
+            8,
+            2,
+            9,
+            3,
+            10,
+            4,
+            11,
+            5,
+            12,
+            6,
+            13
+          ],
+          "native_slots": 7,
+          "timeline_phases": 14,
+          "duration_seconds": 0.4666666666666667
+        }
+      ]
+    },
+    {
+      "resref": "AM2805C",
+      "variant_index": 0,
+      "position": null,
+      "resource_key": "AM2805C-v0",
+      "geometry_mode": "uniform",
+      "input_mode": "spatial-v1",
+      "aligned_size_x4": [
+        896,
+        728
+      ],
+      "base_frame_count": 7,
+      "output_frame_count": 14,
+      "cycle_count": 1,
+      "added_intermediate_frames": 7,
+      "added_raw_bytes": 18264064,
+      "source": {
+        "run_manifest_sha256": "231a44f2e04f61aea1dbbdf227fa25c43bb40c073a7b5b34b6ff33be5b6b85a9",
+        "frame_manifest_sha256": "6a773eb8c3a9f1cff1cdb7fbaea92d39a1b52e5d57a64b5f1271ca7918c30812",
+        "upscale_manifest_sha256": "1aa1a574d19536d38f8c3d7df820e59e485d88d767d60fe2f0b84edf9eabad4b",
+        "aligned_rgba_sha256": [
+          "e0cc0b741935d51165e602dd2c5fd8b1f3acddbf51249ada1c94306962b9dcc4",
+          "046c95d09437cf7c110938b89c4c1d7b79b2ba3d45b13ab428c481ee1f522244",
+          "73d053fece830bc0aad5ab1b17f8c76b0704d01f3f78868f7aa1600bba60fb7e",
+          "1d164b51ac1870bfb770fe3b6b300a8110e200f2b195a2ee42f0a7f03b124658",
+          "4f27dbed4213b2b684dca14bda8eb7ad13c960ed8acd909b045983b65b1a477a",
+          "96ec51af07f6680bca05f3dc8ff8fb61f65c7f46d8ec25b72b65d949a7d5ec2e",
+          "02691e435cce02a805704c05d91268845d6f0ac6510036d5fdeeb1e1b3a1cae4"
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "intermediate_frame_indices": [
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          "timeline_frame_indices": [
+            0,
+            7,
+            1,
+            8,
+            2,
+            9,
+            3,
+            10,
+            4,
+            11,
+            5,
+            12,
+            6,
+            13
+          ],
+          "native_slots": 7,
+          "timeline_phases": 14,
+          "duration_seconds": 0.4666666666666667
+        }
+      ]
+    }
+  ],
+  "gates": [
+    "the declared input mode and active base pack are hash-validated before build",
+    "even phases reuse byte-exact runtime anchors",
+    "Topaz must return 2*N+1 or 2*N frames for every closed cycle",
+    "visual review and explicit approval file required before install"
+  ],
+  "authoring_pack_for_area_split": true,
+  "runtime_budget_note": "output is an authoring pack exempt from the runtime budget; it must be split with split_animation_pack_by_area.py before any installation",
+  "plan_sha256": "6a744912aaffd88a597276cc2ea716f5ad295349c16c2c8e12db5a472e2c6eeb"
+}

@@ -1,0 +1,141 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-plan-v2",
+  "status": "proposed",
+  "input_mode": "spatial-v1",
+  "source_run": "G:/AI/BG2_Upscale/animations/ressources/FLMM/runs/flmm-reboutcx-x4-20260921",
+  "source_run_manifest_sha256": "24a43059c9696038ab5a9daff5aa202b0a5f966ef127c3d6afd6a0deaab31833",
+  "base_pack": "G:/AI/BG2_Upscale/animations/ressources/FLMM/runs/flmm-reboutcx-x4-20260921/03_runtime_pack",
+  "base_pack_schema": "bg2-upscale-area-animation-runtime-pack-v1",
+  "base_pack_manifest_sha256": "e728775ea2431e51e7888cf66c8fb5b56ff8e598470729bc4fcbd9a0ef4c2d77",
+  "base_registry_sha256": "60e612303b46ce4fa4aa51ec84f01ce8ba4c9e8d0e0befd0af9f6cec080a6173",
+  "scale": 4,
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "topaz": {
+    "model": "apo-8",
+    "replace_duplicate_threshold": -0.01,
+    "transparent_rgb_mode": "nearest-opaque-dilate",
+    "loop_strategy": "append first source slot once; no cyclic-context extrapolation"
+  },
+  "alpha_policy": "hold exact alpha of the current native (left) slot",
+  "geometry_policy": "crop the aligned interpolation with the current native slot geometry",
+  "targets": [
+    {
+      "resref": "FLMM",
+      "variant_index": 0,
+      "position": null,
+      "resource_key": "FLMM-v0",
+      "geometry_mode": "per-frame",
+      "input_mode": "spatial-v1",
+      "aligned_size_x4": [
+        32,
+        60
+      ],
+      "base_frame_count": 6,
+      "output_frame_count": 12,
+      "cycle_count": 1,
+      "added_intermediate_frames": 6,
+      "added_raw_bytes": 36864,
+      "source": {
+        "run_manifest_sha256": "24a43059c9696038ab5a9daff5aa202b0a5f966ef127c3d6afd6a0deaab31833",
+        "frame_manifest_sha256": "70d39c6cbdc4dba75daddcc33a6036a22b03fcaee8cba3063f54df2a907ef296",
+        "upscale_manifest_sha256": "e9dd807ba76709309d7280b12be115a665a545ce46521930a3f3d056d93e4750",
+        "aligned_rgba_sha256": [
+          "fa3b733d40ed5bd6151af55c7b04bb758a57d63d3bab19850c330d2b0c7ea7dd",
+          "99aae85e1fb4de61bbdf5b681eb514c2e8eaf01b148cb20a4fff53df5af6592b",
+          "2386b53156e298a9cbd73b1e4e09311da873f6f2e6886f30656a255ca27757d5",
+          "e799739a0061ee3b539ba845eb3788cf38a8c40ec8eb7404b55b231ad4c7d759",
+          "56ba1165d5518b02eac9f73b211a1d8b23a67bad0f40321b0cb41c2d709e5721",
+          "c9c25746e586ce90ba3226b7c1d5a1824b6eff1e0f39297c0b108bd368449196"
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": false,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "intermediate_frame_indices": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "timeline_frame_indices": [
+            0,
+            6,
+            1,
+            7,
+            2,
+            8,
+            3,
+            9,
+            4,
+            10,
+            5,
+            11
+          ],
+          "native_slots": 6,
+          "timeline_phases": 12,
+          "duration_seconds": 0.4
+        }
+      ]
+    }
+  ],
+  "gates": [
+    "the declared input mode and active base pack are hash-validated before build",
+    "even phases reuse byte-exact runtime anchors",
+    "Topaz must return 2*N+1 or 2*N frames for every closed cycle",
+    "visual review and explicit approval file required before install"
+  ],
+  "authoring_pack_for_area_split": true,
+  "runtime_budget_note": "output is an authoring pack exempt from the runtime budget; it must be split with split_animation_pack_by_area.py before any installation",
+  "plan_sha256": "cfe7e879d76d823428a46b660580814f138d9d6240551dc6118b55a4b555e08f"
+}

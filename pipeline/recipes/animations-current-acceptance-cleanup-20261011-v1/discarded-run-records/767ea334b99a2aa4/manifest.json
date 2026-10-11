@@ -1,0 +1,51 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-07T22:25:16.139308+00:00",
+  "input_mode": "per-frame-multi-contour-spline-alpha-on-timed-run",
+  "source_run": "G:/AI/BG2_Upscale/animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-wed-occlusion-alpha-mask-20260908",
+  "source_run_manifest_sha256": "f63bb379dd0540c9241677d29553848188b25b1020ef32ddece19ab8d171f6f3",
+  "base_pack": "G:/AI/BG2_Upscale/animations/ressources/AM2805C/runs/am2805c-seedvr2-7b-lab-x4-20260907/03_runtime_pack",
+  "base_pack_manifest_sha256": "3378b9da6efb35072ee8bcbb8603dcc35ec492d0dde550dae8cf156334e73e06",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM2805C"
+  ],
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "1675f32672cd7f83cae2a0cf1f3d8c58706276d54e130a5421d1cc5bf19856fa",
+  "registry_sha256": "9017d7c45faa5998aa6e7508ad4ef1314ca3f208002b1f8ada4662b97ef06dff",
+  "reviews": [
+    {
+      "kind": "comparison-contact-sheet",
+      "file": "review/review-comparison-contact-sheet.png",
+      "sha256": "5aafd6391a9286ef6482f08b76a168f70b99c7142ac3293e3f421f0a4931c782"
+    },
+    {
+      "kind": "comparison-exact",
+      "file": "review/review-comparison-30fps-exact.mp4",
+      "sha256": "6cef5c72539c275a8aebd7790da2eb7b70826abdc0cb97261839044e44d1c25d"
+    },
+    {
+      "kind": "comparison-loop-4s",
+      "file": "review/review-comparison-30fps-loop-4s.mp4",
+      "sha256": "7b4b2428786fd631755fc01462512cf7f917fea6ab4b2268c98e7af9d988c3eb"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval",
+  "per_frame_spline_alpha": {
+    "pipeline_name": "spline-fit1-multicontour-per-frame-feather4",
+    "pipeline_effects": [
+      "spline-fit1-multicontour-per-frame-feather4"
+    ],
+    "report": "spline-alpha-report.json",
+    "report_sha256": "9fc0e1ab83c23f6905c97f1234226e028e6f24ea285284856d02c6c1de4001a4",
+    "installation": "not performed"
+  }
+}

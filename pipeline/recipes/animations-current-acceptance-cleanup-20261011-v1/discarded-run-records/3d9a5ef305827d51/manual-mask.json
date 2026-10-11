@@ -1,0 +1,17 @@
+{
+  "schema": "bg2-upscale-area-animation-manual-alpha-mask-v2",
+  "status": "completed",
+  "resref": "AM0604A",
+  "source_temporal_run": "G:/AI/BG2_Upscale/animations/runs/ar0604-apo8-x4-30fps-v2",
+  "source_temporal_run_manifest_sha256": "8975fe6a3934f9ddcb321b598a6fe3297385ae6e5c4c03444e5e4c618d831201",
+  "mask_source": "C:/Users/Adrien/Desktop/AM0604A-alpha-mask-spline-fit1.0.png",
+  "mask_sha256": "1abe1c0626fbc37e17426ae21f72294e14abf4a60d32d4f69339a49c906090c8",
+  "mask_size_x4": [
+    484,
+    408
+  ],
+  "anchor_count": 7,
+  "masked_frame_count": 14,
+  "alpha_formula": "alpha_final = alpha_source * grayscale_mask / 255",
+  "rgb_policy": "byte-identical"
+}

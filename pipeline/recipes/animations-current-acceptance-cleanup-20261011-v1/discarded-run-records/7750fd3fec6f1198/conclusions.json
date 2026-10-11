@@ -1,0 +1,34 @@
+{
+  "scope": ["BDFORCEW/OH8100", "OHHPORT/AR0811"],
+  "installed_files_modified": false,
+  "BDFORCEW": {
+    "asset_edge": "native alpha contour enlarged x4; existing inner16 fade retains pixel-grid support",
+    "world_edge": "floor/void boundary geometrically aligned with WED polygon 180 edge (2129,1011)-(2560,708)",
+    "runtime_evidence": "2026-10-10 15:58:07.315/.316: subject 0x574543524F464442, native_clip=present at (2286,820) and (2350,866), dither=0",
+    "bridge_sampling": "native_occlusion_bridge.cpp: highCoord / uScale; texelFetch(uVisibility, maskCoord, 0), discrete x1 coverage",
+    "proposed": [
+      "Per-frame Spline Fit1 on source alpha; preserve ReboutCX/Apollo RGB core, geometry, centres, cycles, durations",
+      "Smooth occlusion coverage at x4 for this asset's two placements, preserve native clipping; soft band on visible side",
+      "Asset-alpha correction alone cannot eliminate the subsequent native WED step; render support is needed for position-specific coverage without duplicating the full 340-frame pack"
+    ]
+  },
+  "OHHPORT": {
+    "native_frame": 2,
+    "opaque_black_background_pixels": 15007,
+    "background_rgb": [0, 0, 0],
+    "native_alpha_nonzero_pct": 99.9939,
+    "normal_native_alpha_nonzero_pct_approx": 8.4,
+    "bad_runtime_frame": 8,
+    "timeline_phase_zero_based": 5,
+    "transition": [2, 3],
+    "bad_corner_mean_rgb": [16.4796875, 16.5375, 30.726875],
+    "cause": "Apollo colour spreading survives the almost-full-frame alpha inherited from left native frame 2",
+    "proposed": [
+      "New local authoring version: change exact black background support on frame2 to transparent, also retain native transparent index",
+      "Rebuild frame2 xBR2 blend + nearest2 and its adjacent interpolations; preserve other native frames and timeline contract",
+      "Premultiply once, explicitly verify zero alpha/RGB outside foreground on all 12 runtime phases"
+    ],
+    "preview": "OHHPORT-frame8-background-diagnosis.png",
+    "preview_kind": "mask-only diagnosis, not final regenerated Apollo"
+  }
+}

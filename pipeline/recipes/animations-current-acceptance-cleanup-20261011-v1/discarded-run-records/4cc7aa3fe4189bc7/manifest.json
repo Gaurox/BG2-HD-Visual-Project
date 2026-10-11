@@ -1,0 +1,48 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-01T18:43:19.309444+00:00",
+  "input_mode": "per-frame-multi-contour-spline-alpha-on-timed-run",
+  "source_run": "G:/AI/BG2_Upscale/animations/runs/dstdvl1c-apo8-x4-30fps-v2",
+  "source_run_manifest_sha256": "ab166f4fbcf0d43b7db613e3ada089d28c06c3cabfef645d0518306e202a4eec",
+  "base_pack": "G:/AI/BG2_Upscale/animations/runs/dstdvl1c-seedvr7b-lab-x4/03_runtime_pack",
+  "base_pack_manifest_sha256": "67dc0b6ee56ce7d4376419658633a601319a53cbf61c84eaf250a6107b31097f",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "DSTDVL1C"
+  ],
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "e8c63793f065343ab6c6535495e5f05683a3cba1f8418c586dc6b9c1bcb8a8fa",
+  "registry_sha256": "147b8a2a2c00cf305c735ef8517ededde2797c99d30d3418b0a020b1ca2870f8",
+  "reviews": [
+    {
+      "kind": "comparison-contact-sheet",
+      "file": "review/review-comparison-contact-sheet.png",
+      "sha256": "f76ca9080dcb0573158da9fe9c82c00d0388cfe9fe96a4fe06109be8b4a492b7"
+    },
+    {
+      "kind": "comparison-exact",
+      "file": "review/review-comparison-30fps-exact.mp4",
+      "sha256": "ba3baf54f65ef1e2efbb5d40e1c91387e22c706af5fa74dc2e7e623484fd3aa7"
+    },
+    {
+      "kind": "comparison-loop-4s",
+      "file": "review/review-comparison-30fps-loop-4s.mp4",
+      "sha256": "72110dc1fb1440360deb28ff29b921bf112e00906c7ce3ac15674f3cdc206a52"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval",
+  "per_frame_spline_alpha": {
+    "pipeline_name": "spline-fit1-multicontour-per-frame-feather4",
+    "report": "spline-alpha-report.json",
+    "report_sha256": "7a055dffbeaeceeb88639169c0c77b0c41db42cf0af57eb101fb4a6c52b87ec9",
+    "installation": "not performed"
+  }
+}

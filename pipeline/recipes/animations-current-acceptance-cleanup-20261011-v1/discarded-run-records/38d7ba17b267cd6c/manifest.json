@@ -1,0 +1,91 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-08-27T09:58:30.638586+00:00",
+  "input_mode": "manual-alpha-mask-on-timed-run",
+  "source_run": "G:/AI/BG2_Upscale/animations/runs/ar0516-5of6-apo8-x4-30fps-v2",
+  "source_run_manifest_sha256": "b827f05314d2330208fa55f846243329abf8178b2f2f690e87decfecad939a58",
+  "base_pack": "G:/AI/BG2_Upscale/animations/runs/ar0516-all-bam-seedvr7b-lab-x4/03_runtime_pack",
+  "base_pack_manifest_sha256": "ba88584f2a808f0544d4d86bbe5c54b0d44eaf2bff268d659f558b40e2ac42d7",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM0516LA",
+    "AM0516LB",
+    "AM0516LC",
+    "SPHINCT",
+    "SPHINCT2"
+  ],
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "5fe2b473ed73698ffb9d6dcacd0978f3258c5a7d1c50d79d48ce619ea270919c",
+  "registry_sha256": "801a3902c7a0a6437a893a79f4ddd5fd05e1810e0f2a1a9f0a319a8cbf01023e",
+  "reviews": [
+    {
+      "resref": "SPHINCT",
+      "cycle": 0,
+      "kind": "exact",
+      "file": "work/SPHINCT/cycle_000/review-30fps-exact.mp4",
+      "sha256": "e9fa7bc01894c138f2109d6e31820332a0341808495182f4b6381f75748303b6"
+    },
+    {
+      "resref": "SPHINCT",
+      "cycle": 0,
+      "kind": "loop-4s",
+      "file": "work/SPHINCT/cycle_000/review-30fps-loop-4s.mp4",
+      "sha256": "31b1dcd108f53ba0f2d10f5277dfa25f4926c6761250996e9d7a5aef65034e59"
+    },
+    {
+      "resref": "SPHINCT2",
+      "cycle": 0,
+      "kind": "exact",
+      "file": "work/SPHINCT2/cycle_000/review-30fps-exact.mp4",
+      "sha256": "c4e4b0cf219238fa1518109e92803b2e5bd04c3b6f7b230f1fc526b2f60e554e"
+    },
+    {
+      "resref": "SPHINCT2",
+      "cycle": 0,
+      "kind": "loop-4s",
+      "file": "work/SPHINCT2/cycle_000/review-30fps-loop-4s.mp4",
+      "sha256": "b5e69103dd34292b4543177625dc44153d9a6841ecb06cf1c8fde81c9c78981d"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval",
+  "manual_alpha_patch": {
+    "schema": "bg2-upscale-area-animation-manual-alpha-mask-v2",
+    "status": "completed",
+    "targets": [
+      {
+        "resref": "SPHINCT",
+        "mask_source": "G:/AI/BG2_Upscale/proto/SPHINCT-SPHINCT2-spline-fit1-inner8-20260827/masks/SPHINCT-frame000-spline-fit1-inner8.png",
+        "mask_sha256": "9342ff53b441847971d9d064614891be572951aa386f770fbb662bd43cbd2f8f",
+        "mask_size_x4": [
+          640,
+          480
+        ],
+        "anchor_count": 17,
+        "masked_frame_count": 51
+      },
+      {
+        "resref": "SPHINCT2",
+        "mask_source": "G:/AI/BG2_Upscale/proto/SPHINCT-SPHINCT2-spline-fit1-inner8-20260827/masks/SPHINCT2-frame000-spline-fit1.png",
+        "mask_sha256": "136dec8c6aa2fe0a4d44b6bea921031e966fa7aed55ea25b184771212577dedf",
+        "mask_size_x4": [
+          640,
+          480
+        ],
+        "anchor_count": 17,
+        "masked_frame_count": 51
+      }
+    ],
+    "source_temporal_run": "G:/AI/BG2_Upscale/animations/runs/ar0516-5of6-apo8-x4-30fps-v2",
+    "source_temporal_run_manifest_sha256": "b827f05314d2330208fa55f846243329abf8178b2f2f690e87decfecad939a58",
+    "alpha_formula": "alpha_final = alpha_source * grayscale_mask / 255",
+    "rgb_policy": "byte-identical"
+  }
+}

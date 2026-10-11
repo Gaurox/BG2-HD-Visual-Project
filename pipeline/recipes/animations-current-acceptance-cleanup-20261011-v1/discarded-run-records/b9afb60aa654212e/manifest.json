@@ -1,0 +1,57 @@
+{
+  "schema": "bg2-upscale-animation-visual-treatment-v1",
+  "status": "completed",
+  "created_utc": "2026-09-21T11:11:20.234324+00:00",
+  "source_pack": "G:\\AI\\BG2_Upscale\\animations\\ressources\\AM1003A\\runs\\ar1003-am1003a-spline-fit1-feather6-20260921\\03_runtime_pack",
+  "source_pack_manifest_sha256": "ce42abf9db8c402c4d77233d5c4ffda1bbe70497c6fcc6b0b1153a7ee61b42eb",
+  "runtime_pack": "03_runtime_pack",
+  "runtime_pack_manifest_sha256": "f155fad9fbce8c96066c0c4a8af60b308911f88e16926c3dd0a979d9f2694f3a",
+  "resrefs": [
+    "AM1003A"
+  ],
+  "visual_treatment": {
+    "kind": "lower-edge-cover",
+    "rows_x4": 5,
+    "rgb_depth_x4": 5,
+    "zone_x4": 10,
+    "geometry": "native-bam-dimensions-preserved-ring-clipped-at-canvas",
+    "alpha_reference_pack": "G:\\AI\\BG2_Upscale\\animations\\batches\\ar1003-am1003a-steam2-apo8-x4-30fps-v2-20260921\\03_runtime_pack",
+    "alpha_reference_pack_manifest_sha256": "09173c2de1c824ac626228064c44343511c9a1d2a33954b7b65c3515de6226f7",
+    "rgba_policy": "preserve-straight-rgb-repushed-from-inside-in-the-cover-zone",
+    "alpha_constraint": "final>=input alpha inside the zone, unchanged elsewhere"
+  },
+  "metrics": {
+    "AM1003A": {
+      "frame_count": 14,
+      "changed_frame_count": 14,
+      "alpha_sum_before": 297443544,
+      "alpha_sum_after": 316414490,
+      "fade_width_x4_min": null,
+      "fade_width_x4_max": null,
+      "inner_contour_radius_x4": null,
+      "rgb_policy": null,
+      "rgb_dilated_pixels": 0,
+      "gaussian_padding_x4": 0,
+      "geometry_preserved": false,
+      "alpha_mask": null,
+      "bright_core_seed_px": null,
+      "bright_core_mask_px": null,
+      "lower_edge_cover_ring_px": 37256
+    }
+  },
+  "reviews": [
+    {
+      "resref": "AM1003A",
+      "kind": "comparison-exact",
+      "file": "review/AM1003A/comparison-30fps-exact.mp4",
+      "sha256": "f7ea7aed72170acafeeffd8c961fb62b3d8850482a9e936b2e96c8a3433bb0f9"
+    },
+    {
+      "resref": "AM1003A",
+      "kind": "comparison-loop-4s",
+      "file": "review/AM1003A/comparison-30fps-loop-4s.mp4",
+      "sha256": "6242fac68afb80b538c07bfc979f4412f69043a094157241d151c170edc8fccb"
+    }
+  ],
+  "qa": "explicit visual approval required before installation"
+}

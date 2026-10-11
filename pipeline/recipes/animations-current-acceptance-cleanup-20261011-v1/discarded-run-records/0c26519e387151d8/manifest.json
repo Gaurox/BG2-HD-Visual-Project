@@ -1,0 +1,914 @@
+{
+  "schema": "bg2-upscale-animation-alpha-feather-test-v1",
+  "status": "completed",
+  "created_utc": "2026-09-05T23:27:05.986685+00:00",
+  "resref": "FALLA1",
+  "asset_ids": [
+    "animations:bam:FALLA1"
+  ],
+  "scale": 4,
+  "frame_count": 6,
+  "physical_size_x4": [
+    360,
+    484
+  ],
+  "source_run": "G:/AI/BG2_Upscale/animations/batches/ar2300-waterfalls-spatial-seedvr2-7b-lab-x4-20260906/resources/FALLA1/02_upscale_x4",
+  "source_run_manifest_sha256": "1e186c8b8df5ddc816e1a3e0cec387adcbadc237a0b6b6dced974a47366a1cf7",
+  "alpha_operation": {
+    "type": "per-frame-multi-component-spline-fit1-safe-boundary-plus-bounded-gaussian-reconstruction",
+    "fit_error": 1.0,
+    "sample_spacing_x4": 1.5,
+    "supersample": 4,
+    "padding_x4": 32,
+    "threshold": 127,
+    "components": "all 8-connected components preserved and fitted independently",
+    "safe_boundary": {
+      "inner_band_x4": 8.0,
+      "outer_band_x4": 6.0,
+      "opaque_core_preserved": true,
+      "outset_limited_to_outer_band": true
+    },
+    "left_edge_blur": null,
+    "local_reconstruction": {
+      "region_x4": [
+        260,
+        340,
+        360,
+        484
+      ],
+      "sigma_x4": 8.0,
+      "minimum_alpha": 12,
+      "transition_x4": 32,
+      "may_raise_alpha_only_inside_region": true
+    },
+    "rgb_policy": "unchanged",
+    "geometry_policy": "unchanged",
+    "timeline_policy": "unchanged"
+  },
+  "frames": [
+    {
+      "frame": 0,
+      "source_runtime_asset": "raw_rgba/frame_000.rgba",
+      "source_runtime_sha256": "d6da819ece0812811784a89fb04172bda46106fef9e91af76c801590cdcb90b6",
+      "source_runtime_bytes": 696960,
+      "runtime_asset": "raw_rgba/AAX4-FALLA1-frame000.rgba",
+      "runtime_sha256": "cddfd12df9fbe64964108a19ea42fb206fe1cb0ba3a04a8fdecc1fc8cf8e9eed",
+      "runtime_bytes": 696960,
+      "rgba": "rgba/frame_000.png",
+      "rgba_sha256": "3c0de088bddc4e18ce519d712f8d1f15084ac43b0c491b8406c83b436a477f27",
+      "alpha": "alpha/frame_000.png",
+      "alpha_sha256": "df352ee94dd8d1e097696240fb1e86708c6659192e87f8ec69c6e87c00611d69",
+      "spline": {
+        "source_nonzero": 73664,
+        "components": 17,
+        "status": "fitted",
+        "mode": "safe-boundary",
+        "inner_band_x4": 8.0,
+        "outer_band_x4": 6.0,
+        "expanded_alpha_pixels": 3473,
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2601,
+            "fit_samples": 2653,
+            "curve_points": 7959
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 42,
+            "fit_samples": 33,
+            "curve_points": 99
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 32,
+            "fit_samples": 21,
+            "curve_points": 63
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 50,
+            "fit_samples": 46,
+            "curve_points": 138
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 32,
+            "fit_samples": 21,
+            "curve_points": 63
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          }
+        ]
+      },
+      "left_edge_blur": null,
+      "local_reconstruction": {
+        "region_x4": [
+          260,
+          340,
+          360,
+          484
+        ],
+        "sigma_x4": 8.0,
+        "minimum_alpha": 12,
+        "transition_x4": 32,
+        "region_pixels": 14157,
+        "raised_over_spline_pixels": 4560,
+        "raised_over_source_pixels": 5863
+      },
+      "changed_alpha_pixels": 13707,
+      "raised_over_source_alpha_pixels": 5863,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 1,
+      "source_runtime_asset": "raw_rgba/frame_001.rgba",
+      "source_runtime_sha256": "3d2c90dbe6a7c5529df75c2093a98cdd407d980f510797eadfa2c6ef76d8d32b",
+      "source_runtime_bytes": 696960,
+      "runtime_asset": "raw_rgba/AAX4-FALLA1-frame001.rgba",
+      "runtime_sha256": "44f4ba341412646bd55e41c3fb42e42b6bb6ff9d9faeab01aae235c0f50afbbf",
+      "runtime_bytes": 696960,
+      "rgba": "rgba/frame_001.png",
+      "rgba_sha256": "a02cd0b6ea87c27ef7ce4bf19caae21388a20b757036e8196f05d1b2537b7b1b",
+      "alpha": "alpha/frame_001.png",
+      "alpha_sha256": "df352ee94dd8d1e097696240fb1e86708c6659192e87f8ec69c6e87c00611d69",
+      "spline": {
+        "source_nonzero": 73664,
+        "components": 17,
+        "status": "fitted",
+        "mode": "safe-boundary",
+        "inner_band_x4": 8.0,
+        "outer_band_x4": 6.0,
+        "expanded_alpha_pixels": 3473,
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2601,
+            "fit_samples": 2653,
+            "curve_points": 7959
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 42,
+            "fit_samples": 33,
+            "curve_points": 99
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 32,
+            "fit_samples": 21,
+            "curve_points": 63
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 50,
+            "fit_samples": 46,
+            "curve_points": 138
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 32,
+            "fit_samples": 21,
+            "curve_points": 63
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          }
+        ]
+      },
+      "left_edge_blur": null,
+      "local_reconstruction": {
+        "region_x4": [
+          260,
+          340,
+          360,
+          484
+        ],
+        "sigma_x4": 8.0,
+        "minimum_alpha": 12,
+        "transition_x4": 32,
+        "region_pixels": 14157,
+        "raised_over_spline_pixels": 4560,
+        "raised_over_source_pixels": 5863
+      },
+      "changed_alpha_pixels": 13707,
+      "raised_over_source_alpha_pixels": 5863,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 2,
+      "source_runtime_asset": "raw_rgba/frame_002.rgba",
+      "source_runtime_sha256": "077211630429c02ca5e9710bfcefd69a4ab11a918c1398e715bb690b207a07ad",
+      "source_runtime_bytes": 696960,
+      "runtime_asset": "raw_rgba/AAX4-FALLA1-frame002.rgba",
+      "runtime_sha256": "260a180af0ae49bfc63f0cb5fa4a651006182e44650faeda77057b5b82f2d3af",
+      "runtime_bytes": 696960,
+      "rgba": "rgba/frame_002.png",
+      "rgba_sha256": "543f3bd41b7ae8f327aae7d29a9c2401b8ee7acde9eb043f9e0fb8996124eb44",
+      "alpha": "alpha/frame_002.png",
+      "alpha_sha256": "df352ee94dd8d1e097696240fb1e86708c6659192e87f8ec69c6e87c00611d69",
+      "spline": {
+        "source_nonzero": 73664,
+        "components": 17,
+        "status": "fitted",
+        "mode": "safe-boundary",
+        "inner_band_x4": 8.0,
+        "outer_band_x4": 6.0,
+        "expanded_alpha_pixels": 3473,
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2601,
+            "fit_samples": 2653,
+            "curve_points": 7959
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 42,
+            "fit_samples": 33,
+            "curve_points": 99
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 32,
+            "fit_samples": 21,
+            "curve_points": 63
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 50,
+            "fit_samples": 46,
+            "curve_points": 138
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 32,
+            "fit_samples": 21,
+            "curve_points": 63
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          }
+        ]
+      },
+      "left_edge_blur": null,
+      "local_reconstruction": {
+        "region_x4": [
+          260,
+          340,
+          360,
+          484
+        ],
+        "sigma_x4": 8.0,
+        "minimum_alpha": 12,
+        "transition_x4": 32,
+        "region_pixels": 14157,
+        "raised_over_spline_pixels": 4560,
+        "raised_over_source_pixels": 5863
+      },
+      "changed_alpha_pixels": 13707,
+      "raised_over_source_alpha_pixels": 5863,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 3,
+      "source_runtime_asset": "raw_rgba/frame_003.rgba",
+      "source_runtime_sha256": "1dc8e601216300091df3a8bb36571965f8af8a6d2ba4903ab4bc24b33e783b9d",
+      "source_runtime_bytes": 696960,
+      "runtime_asset": "raw_rgba/AAX4-FALLA1-frame003.rgba",
+      "runtime_sha256": "009be9569240827ce1243b6b59d8aaad84fe9ebfb696bbb6f44e57e150aad66f",
+      "runtime_bytes": 696960,
+      "rgba": "rgba/frame_003.png",
+      "rgba_sha256": "83308e7bae174b9472dbbb1378e982b9ec9514c9ef5be525dc6ccdd0fd526a12",
+      "alpha": "alpha/frame_003.png",
+      "alpha_sha256": "df352ee94dd8d1e097696240fb1e86708c6659192e87f8ec69c6e87c00611d69",
+      "spline": {
+        "source_nonzero": 73664,
+        "components": 17,
+        "status": "fitted",
+        "mode": "safe-boundary",
+        "inner_band_x4": 8.0,
+        "outer_band_x4": 6.0,
+        "expanded_alpha_pixels": 3473,
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2601,
+            "fit_samples": 2653,
+            "curve_points": 7959
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 42,
+            "fit_samples": 33,
+            "curve_points": 99
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 32,
+            "fit_samples": 21,
+            "curve_points": 63
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 50,
+            "fit_samples": 46,
+            "curve_points": 138
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 32,
+            "fit_samples": 21,
+            "curve_points": 63
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          }
+        ]
+      },
+      "left_edge_blur": null,
+      "local_reconstruction": {
+        "region_x4": [
+          260,
+          340,
+          360,
+          484
+        ],
+        "sigma_x4": 8.0,
+        "minimum_alpha": 12,
+        "transition_x4": 32,
+        "region_pixels": 14157,
+        "raised_over_spline_pixels": 4560,
+        "raised_over_source_pixels": 5863
+      },
+      "changed_alpha_pixels": 13707,
+      "raised_over_source_alpha_pixels": 5863,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 4,
+      "source_runtime_asset": "raw_rgba/frame_004.rgba",
+      "source_runtime_sha256": "b5967cd1e758361fac5141e0fa227c11dcef9a72da6f95193338e062e907a548",
+      "source_runtime_bytes": 696960,
+      "runtime_asset": "raw_rgba/AAX4-FALLA1-frame004.rgba",
+      "runtime_sha256": "24e4fc479bb84d6e1eb7bbbd31fe01dcc2908e76d7b3ff1ac7fe1456b98d790e",
+      "runtime_bytes": 696960,
+      "rgba": "rgba/frame_004.png",
+      "rgba_sha256": "142fcb3210eca5be7688b8b5a6a5e402a8ae17b39e84220cc7c7a67dcf9b9233",
+      "alpha": "alpha/frame_004.png",
+      "alpha_sha256": "df352ee94dd8d1e097696240fb1e86708c6659192e87f8ec69c6e87c00611d69",
+      "spline": {
+        "source_nonzero": 73664,
+        "components": 17,
+        "status": "fitted",
+        "mode": "safe-boundary",
+        "inner_band_x4": 8.0,
+        "outer_band_x4": 6.0,
+        "expanded_alpha_pixels": 3473,
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2601,
+            "fit_samples": 2653,
+            "curve_points": 7959
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 42,
+            "fit_samples": 33,
+            "curve_points": 99
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 32,
+            "fit_samples": 21,
+            "curve_points": 63
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 50,
+            "fit_samples": 46,
+            "curve_points": 138
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 32,
+            "fit_samples": 21,
+            "curve_points": 63
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          }
+        ]
+      },
+      "left_edge_blur": null,
+      "local_reconstruction": {
+        "region_x4": [
+          260,
+          340,
+          360,
+          484
+        ],
+        "sigma_x4": 8.0,
+        "minimum_alpha": 12,
+        "transition_x4": 32,
+        "region_pixels": 14157,
+        "raised_over_spline_pixels": 4560,
+        "raised_over_source_pixels": 5863
+      },
+      "changed_alpha_pixels": 13707,
+      "raised_over_source_alpha_pixels": 5863,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 5,
+      "source_runtime_asset": "raw_rgba/frame_005.rgba",
+      "source_runtime_sha256": "284edd8941a57da07ea25fa13b74b2c8f2ac30f4360beedec38f0cd0043314c7",
+      "source_runtime_bytes": 696960,
+      "runtime_asset": "raw_rgba/AAX4-FALLA1-frame005.rgba",
+      "runtime_sha256": "ceac6330ebd88afaac5c9f1f8cccca8f2f8fc08db830a2a422e3a152520b1b18",
+      "runtime_bytes": 696960,
+      "rgba": "rgba/frame_005.png",
+      "rgba_sha256": "3617624565d97164384a9c4c80915824d6927543a5ea8cd25035fae062690e66",
+      "alpha": "alpha/frame_005.png",
+      "alpha_sha256": "df352ee94dd8d1e097696240fb1e86708c6659192e87f8ec69c6e87c00611d69",
+      "spline": {
+        "source_nonzero": 73664,
+        "components": 17,
+        "status": "fitted",
+        "mode": "safe-boundary",
+        "inner_band_x4": 8.0,
+        "outer_band_x4": 6.0,
+        "expanded_alpha_pixels": 3473,
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2601,
+            "fit_samples": 2653,
+            "curve_points": 7959
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 42,
+            "fit_samples": 33,
+            "curve_points": 99
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 32,
+            "fit_samples": 21,
+            "curve_points": 63
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 48,
+            "fit_samples": 31,
+            "curve_points": 93
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 50,
+            "fit_samples": 46,
+            "curve_points": 138
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 32,
+            "fit_samples": 21,
+            "curve_points": 63
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 16,
+            "fit_samples": 10,
+            "curve_points": 30
+          }
+        ]
+      },
+      "left_edge_blur": null,
+      "local_reconstruction": {
+        "region_x4": [
+          260,
+          340,
+          360,
+          484
+        ],
+        "sigma_x4": 8.0,
+        "minimum_alpha": 12,
+        "transition_x4": 32,
+        "region_pixels": 14157,
+        "raised_over_spline_pixels": 4560,
+        "raised_over_source_pixels": 5863
+      },
+      "changed_alpha_pixels": 13707,
+      "raised_over_source_alpha_pixels": 5863,
+      "rgb_byte_identical": true
+    }
+  ]
+}

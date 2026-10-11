@@ -1,0 +1,1021 @@
+{
+  "schema": "bg2-upscale-area-animation-per-frame-spline-alpha-v1",
+  "pipeline_name": "spline-fit1-multicontour-per-frame-feather4",
+  "pipeline_effects": [
+    "spline-fit1-multicontour-per-frame-feather4",
+    "oval-edge-fade20x6"
+  ],
+  "status": "completed-pending-qa",
+  "resref": "AM3016N",
+  "source_temporal_run": "G:/AI/BG2_Upscale/animations/batches/ar3016-seedvr7b-lab-apo8-30fps-20260916",
+  "source_temporal_run_manifest_sha256": "6b64d4c2cec9536e6512045be78ffe7ccc8b3c47741edcecd4501e7c66455ddc",
+  "parameters": {
+    "fit_error_x4": 1.0,
+    "sample_spacing_x4": 1.5,
+    "raster_supersample": 4,
+    "padding_x4": 32,
+    "inner_feather_x4": 4,
+    "threshold": 127,
+    "protected_source_core_x4": 0,
+    "oval_top_bottom_fade_x4": 20,
+    "oval_side_fade_x4": 6,
+    "global_fade_hold_ratio": 1.0,
+    "active_fade_in_phases": 0,
+    "active_fade_full_phases": 0,
+    "active_fade_out_phases": 0,
+    "rgb_policy": "premultiplied",
+    "bottom_seam_protected_depth_x4": 0,
+    "bottom_seam_transition_x4": 0,
+    "top_seam_protected_depth_x4": 0,
+    "top_seam_transition_x4": 0
+  },
+  "frames": [
+    {
+      "frame": 0,
+      "asset": "AAX4-AM3016N-frame000.rgba",
+      "source_nonzero": 67008,
+      "components": 4,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 4609,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 104,
+          "fit_samples": 67,
+          "curve_points": 201
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 16,
+          "fit_samples": 10,
+          "curve_points": 30
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 1688,
+          "fit_samples": 1080,
+          "curve_points": 3240
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 32,
+          "fit_samples": 21,
+          "curve_points": 63
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 4954
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 1,
+      "asset": "AAX4-AM3016N-frame001.rgba",
+      "source_nonzero": 70048,
+      "components": 2,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 4834,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 16,
+          "fit_samples": 10,
+          "curve_points": 30
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 1794,
+          "fit_samples": 1292,
+          "curve_points": 3876
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 5056
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 2,
+      "asset": "AAX4-AM3016N-frame002.rgba",
+      "source_nonzero": 72816,
+      "components": 2,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 5039,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 1616,
+          "fit_samples": 1034,
+          "curve_points": 3102
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 368,
+          "fit_samples": 235,
+          "curve_points": 705
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 8230
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 3,
+      "asset": "AAX4-AM3016N-frame003.rgba",
+      "source_nonzero": 74464,
+      "components": 2,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 5342,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 1760,
+          "fit_samples": 1123,
+          "curve_points": 3369
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 298,
+          "fit_samples": 237,
+          "curve_points": 711
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 7957
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 4,
+      "asset": "AAX4-AM3016N-frame004.rgba",
+      "source_nonzero": 73328,
+      "components": 2,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 5077,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 1928,
+          "fit_samples": 1228,
+          "curve_points": 3684
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 120,
+          "fit_samples": 77,
+          "curve_points": 231
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 5073
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 5,
+      "asset": "AAX4-AM3016N-frame005.rgba",
+      "source_nonzero": 72336,
+      "components": 1,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 4304,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 1704,
+          "fit_samples": 1085,
+          "curve_points": 3255
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 9368
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 6,
+      "asset": "AAX4-AM3016N-frame006.rgba",
+      "source_nonzero": 75856,
+      "components": 1,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 4996,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 1842,
+          "fit_samples": 1290,
+          "curve_points": 3870
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 9129
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 7,
+      "asset": "AAX4-AM3016N-frame007.rgba",
+      "source_nonzero": 77552,
+      "components": 1,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 5388,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 2067,
+          "fit_samples": 1426,
+          "curve_points": 4278
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 8367
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 8,
+      "asset": "AAX4-AM3016N-frame008.rgba",
+      "source_nonzero": 76272,
+      "components": 3,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 5250,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 2040,
+          "fit_samples": 1303,
+          "curve_points": 3909
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 32,
+          "fit_samples": 21,
+          "curve_points": 63
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 16,
+          "fit_samples": 10,
+          "curve_points": 30
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 8114
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 9,
+      "asset": "AAX4-AM3016N-frame009.rgba",
+      "source_nonzero": 75584,
+      "components": 2,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 5375,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 288,
+          "fit_samples": 184,
+          "curve_points": 552
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 1840,
+          "fit_samples": 1175,
+          "curve_points": 3525
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 6825
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 10,
+      "asset": "AAX4-AM3016N-frame010.rgba",
+      "source_nonzero": 74640,
+      "components": 3,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 5251,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 208,
+          "fit_samples": 133,
+          "curve_points": 399
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 192,
+          "fit_samples": 123,
+          "curve_points": 369
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 1696,
+          "fit_samples": 1083,
+          "curve_points": 3249
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 5250
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 11,
+      "asset": "AAX4-AM3016N-frame011.rgba",
+      "source_nonzero": 73584,
+      "components": 3,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 4815,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 48,
+          "fit_samples": 31,
+          "curve_points": 93
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 112,
+          "fit_samples": 72,
+          "curve_points": 216
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 1800,
+          "fit_samples": 1148,
+          "curve_points": 3444
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 3531
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 12,
+      "asset": "AAX4-AM3016N-frame012.rgba",
+      "source_nonzero": 73360,
+      "components": 1,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 4759,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 1888,
+          "fit_samples": 1204,
+          "curve_points": 3612
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 7675
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 13,
+      "asset": "AAX4-AM3016N-frame013.rgba",
+      "source_nonzero": 70416,
+      "components": 1,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 5046,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 1954,
+          "fit_samples": 1324,
+          "curve_points": 3972
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 4410
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 14,
+      "asset": "AAX4-AM3016N-frame014.rgba",
+      "source_nonzero": 66448,
+      "components": 1,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 4648,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 1848,
+          "fit_samples": 1183,
+          "curve_points": 3549
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 4658
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 15,
+      "asset": "AAX4-AM3016N-frame015.rgba",
+      "source_nonzero": 67008,
+      "components": 4,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 4609,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 104,
+          "fit_samples": 67,
+          "curve_points": 201
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 16,
+          "fit_samples": 10,
+          "curve_points": 30
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 1688,
+          "fit_samples": 1080,
+          "curve_points": 3240
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 32,
+          "fit_samples": 21,
+          "curve_points": 63
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 4954
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 16,
+      "asset": "AAX4-AM3016N-frame016.rgba",
+      "source_nonzero": 70048,
+      "components": 2,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 4834,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 16,
+          "fit_samples": 10,
+          "curve_points": 30
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 1794,
+          "fit_samples": 1292,
+          "curve_points": 3876
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 5056
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 17,
+      "asset": "AAX4-AM3016N-frame017.rgba",
+      "source_nonzero": 72816,
+      "components": 2,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 5039,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 1616,
+          "fit_samples": 1034,
+          "curve_points": 3102
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 368,
+          "fit_samples": 235,
+          "curve_points": 705
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 8230
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 18,
+      "asset": "AAX4-AM3016N-frame018.rgba",
+      "source_nonzero": 74464,
+      "components": 2,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 5342,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 1760,
+          "fit_samples": 1123,
+          "curve_points": 3369
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 298,
+          "fit_samples": 237,
+          "curve_points": 711
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 7957
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 19,
+      "asset": "AAX4-AM3016N-frame019.rgba",
+      "source_nonzero": 73328,
+      "components": 2,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 5077,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 1928,
+          "fit_samples": 1228,
+          "curve_points": 3684
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 120,
+          "fit_samples": 77,
+          "curve_points": 231
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 5073
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 20,
+      "asset": "AAX4-AM3016N-frame020.rgba",
+      "source_nonzero": 72336,
+      "components": 1,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 4304,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 1704,
+          "fit_samples": 1085,
+          "curve_points": 3255
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 9368
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 21,
+      "asset": "AAX4-AM3016N-frame021.rgba",
+      "source_nonzero": 75856,
+      "components": 1,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 4996,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 1842,
+          "fit_samples": 1290,
+          "curve_points": 3870
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 9129
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 22,
+      "asset": "AAX4-AM3016N-frame022.rgba",
+      "source_nonzero": 77552,
+      "components": 1,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 5388,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 2067,
+          "fit_samples": 1426,
+          "curve_points": 4278
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 8367
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 23,
+      "asset": "AAX4-AM3016N-frame023.rgba",
+      "source_nonzero": 76272,
+      "components": 3,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 5250,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 2040,
+          "fit_samples": 1303,
+          "curve_points": 3909
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 32,
+          "fit_samples": 21,
+          "curve_points": 63
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 16,
+          "fit_samples": 10,
+          "curve_points": 30
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 8114
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 24,
+      "asset": "AAX4-AM3016N-frame024.rgba",
+      "source_nonzero": 75584,
+      "components": 2,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 5375,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 288,
+          "fit_samples": 184,
+          "curve_points": 552
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 1840,
+          "fit_samples": 1175,
+          "curve_points": 3525
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 6825
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 25,
+      "asset": "AAX4-AM3016N-frame025.rgba",
+      "source_nonzero": 74640,
+      "components": 3,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 5251,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 208,
+          "fit_samples": 133,
+          "curve_points": 399
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 192,
+          "fit_samples": 123,
+          "curve_points": 369
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 1696,
+          "fit_samples": 1083,
+          "curve_points": 3249
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 5250
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 26,
+      "asset": "AAX4-AM3016N-frame026.rgba",
+      "source_nonzero": 73584,
+      "components": 3,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 4815,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 48,
+          "fit_samples": 31,
+          "curve_points": 93
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 112,
+          "fit_samples": 72,
+          "curve_points": 216
+        },
+        {
+          "status": "fitted",
+          "input_vertices": 1800,
+          "fit_samples": 1148,
+          "curve_points": 3444
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 3531
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 27,
+      "asset": "AAX4-AM3016N-frame027.rgba",
+      "source_nonzero": 73360,
+      "components": 1,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 4759,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 1888,
+          "fit_samples": 1204,
+          "curve_points": 3612
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 7675
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 28,
+      "asset": "AAX4-AM3016N-frame028.rgba",
+      "source_nonzero": 70416,
+      "components": 1,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 5046,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 1954,
+          "fit_samples": 1324,
+          "curve_points": 3972
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 4410
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    },
+    {
+      "frame": 29,
+      "asset": "AAX4-AM3016N-frame029.rgba",
+      "source_nonzero": 66448,
+      "components": 1,
+      "touches_canvas_edge": true,
+      "intermediate_alpha_pixels": 4648,
+      "protected_source_core_x4": 0,
+      "protected_source_core_pixels": 0,
+      "status": "fitted",
+      "component_reports": [
+        {
+          "status": "fitted",
+          "input_vertices": 1848,
+          "fit_samples": 1183,
+          "curve_points": 3549
+        }
+      ],
+      "oval_edge_fade": {
+        "status": "applied",
+        "top_bottom_fade_x4": 20,
+        "side_fade_x4": 6,
+        "attenuated_pixels": 4658
+      },
+      "top_seam_protection": null,
+      "bottom_seam_protection": null
+    }
+  ],
+  "timeline_fade": {
+    "status": "disabled",
+    "hold_ratio": 1.0
+  },
+  "alpha_invariant": "alpha_final <= alpha_source",
+  "rgb_policy": "premultiplied-by-final-alpha",
+  "bottom_seam_protection": null,
+  "top_seam_protection": null,
+  "installation": "not performed"
+}

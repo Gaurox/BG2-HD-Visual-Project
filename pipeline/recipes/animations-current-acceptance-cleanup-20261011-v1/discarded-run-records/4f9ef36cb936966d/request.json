@@ -1,0 +1,256 @@
+{
+  "schema": "bg2-upscale-animation-interpolation-rebuild-runset-v1",
+  "status": "prepared-no-interpolation",
+  "created_date": "2026-09-16",
+  "scope": {
+    "asset_count": 20,
+    "run_count": 9,
+    "native_slot_fps": 15,
+    "target_fps": 30,
+    "model": "apo-8",
+    "replace_duplicate_threshold": -0.01,
+    "alpha_policy": "hold exact alpha of current native left frame",
+    "geometry_policy": "crop aligned RGB interpolation with current native left-frame geometry",
+    "forbidden_actions": [
+      "interpolate",
+      "build-runtime-pack",
+      "install",
+      "update-index",
+      "update-selection",
+      "update-release"
+    ]
+  },
+  "execution_contracts": {
+    "collapse-uniform-duplicate-holds": {
+      "input": "one copy of each uniformly repeated native lookup pose",
+      "input_fps": 7.5,
+      "phases_per_transition": 4,
+      "generated_subphases": [0.25, 0.5, 0.75],
+      "cycle_closure": "last native pose to first native pose",
+      "source_lookup": "unchanged"
+    },
+    "preserve-segmented-holds": {
+      "input_fps": 15,
+      "phases_per_native_slot": 2,
+      "different_index_boundary": "generate one RGB midpoint at 0.5",
+      "same_index_boundary": "reuse the exact native anchor; do not send the duplicate pair to the interpolator",
+      "cycle_closure": "apply the same boundary rule at the seam",
+      "source_lookup": "unchanged"
+    }
+  },
+  "runs": [
+    {
+      "run_id": "ar0307-ar0329-am0307bh-am307red-apo8-x4-30fps-collapse-holds-20260916",
+      "destination": "animations/batches/ar0307-ar0329-am0307bh-am307red-apo8-x4-30fps-collapse-holds-20260916",
+      "support": "pipeline-native-plan-hash-locked",
+      "strategy": "collapse-uniform-duplicate-holds",
+      "source_run": "animations/runs/ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831",
+      "source_run_manifest_sha256": "e746b3fe39e13326b3bcf1fdd56efea69138f56372315194b6af12b9e2ab21f4",
+      "base_pack": "animations/runs/ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831/05_merged_runtime/AR0307",
+      "base_pack_manifest_sha256": "a482873626ba5bb659b31c806f86eb792bc357e90597fbe59b5e574ffdb6f918",
+      "base_registry_sha256": "7b62d21399f540b841b509d1ad946054fe437f304f025dd06d4daf97077012db",
+      "plan_sha256": "06aaea397f889a6d3eb255b8c02fad675bae7a22b84377ddbf7a6b295d51af93",
+      "build_flags": [
+        "--collapse-uniform-duplicate-holds",
+        "--authoring-pack-for-area-split"
+      ],
+      "targets": [
+        {"resref": "AM0307BH", "lookup": "0x2 1x2 2x2 3x2 4x2 5x2 6x2", "anchors": 7, "output_textures": 28, "timeline_phases": 28, "duration_seconds": 0.9333333333333333},
+        {"resref": "AM307RED", "lookup": "0x2 1x2 2x2 3x2 4x2 5x2 6x2", "anchors": 7, "output_textures": 28, "timeline_phases": 28, "duration_seconds": 0.9333333333333333}
+      ],
+      "downstream": "none"
+    },
+    {
+      "run_id": "am0308a-xbr2x-nearest2-x4-30fps-apo8-collapse-holds-rgb-dilate-20260916",
+      "destination": "animations/ressources/AM0308A/runs/am0308a-xbr2x-nearest2-x4-30fps-apo8-collapse-holds-rgb-dilate-20260916",
+      "support": "pipeline-native-plan-hash-locked",
+      "strategy": "collapse-uniform-duplicate-holds",
+      "source_run": "animations/ressources/AM0308A/runs/am0308a-xbr2x-nearest2-x4-20260915",
+      "source_run_manifest_sha256": "68711409f381faef0610a6719c2f8578e23a39f2e649654479f32c0aae0ba49d",
+      "base_pack": "animations/ressources/AM0308A/runs/am0308a-xbr2x-nearest2-x4-20260915/03_runtime_pack",
+      "base_pack_manifest_sha256": "a3b0382e748ac631861cadeea832d1b63ba46997d5abfa124135320e2bad851e",
+      "base_registry_sha256": "8655645d5c41daebb19d1311ef00da774a460d6765058dddbe93a30b4b67bd53",
+      "plan_sha256": "7f9e8356bcc7a44d28da72fa4363db42c34e674b6f1095b02a87c22c81e1e6e2",
+      "build_flags": ["--collapse-uniform-duplicate-holds", "--transparent-rgb-mode", "nearest-opaque-dilate"],
+      "targets": [
+        {"resref": "AM0308A", "lookup": "0x2 1x2 2x2 3x2 4x2 5x2 6x2 7x2", "anchors": 8, "output_textures": 32, "timeline_phases": 32, "duration_seconds": 1.0666666666666667}
+      ],
+      "downstream": {
+        "policy": "replay unchanged after temporal reconstruction",
+        "manifest": "animations/ressources/AM0308A/runs/am0308a-xbr2x-nearest2-x4-30fps-spline-fit1-rgb-dilate-20260915/03_runtime_pack/manifest.json",
+        "manifest_sha256": "a0398426c80b6b9ca7e07aef64330c8d3267171140d80aceb682af2ec9c5ac39",
+        "effects": ["spline-fit1-multicontour-per-frame-feather4", "rgb-dilate", "premultiplied-by-final-alpha"]
+      }
+    },
+    {
+      "run_id": "ar0603-six-bam-apo8-x4-30fps-collapse-holds-20260916",
+      "destination": "animations/batches/ar0603-six-bam-apo8-x4-30fps-collapse-holds-20260916",
+      "support": "pipeline-native-plan-hash-locked",
+      "strategy": "collapse-uniform-duplicate-holds",
+      "source_run": "animations/runs/ar0603-all-bam-seedvr7b-lab-x4",
+      "source_run_manifest_sha256": "110cd85d78f1db02946ba44213785990bb1aec79b441926d6a8844fc06b93866",
+      "base_pack": "animations/runs/ar0603-all-bam-seedvr7b-lab-x4/04_v2_base_merged/03_runtime_pack",
+      "base_pack_manifest_sha256": "ebba356b824739198c9c4a4e569174f6f39bbed1d3b7b9f2659b0f2fc319304c",
+      "base_registry_sha256": "63681605b76f8fa9a778793ea5df4a6b77de8c8ee623f24a7a766f7bd217112e",
+      "plan_sha256": "926fbee1a5ff6679519a2911cdbbe73ae7d95b7878a9f8ef9730a2a4985fb07d",
+      "build_flags": [
+        "--collapse-uniform-duplicate-holds",
+        "--authoring-pack-for-area-split"
+      ],
+      "targets": [
+        {"resref": "AM0603A", "lookup": "0x2 1x2 2x2 3x2 4x2 5x2 6x2 7x2 8x2", "anchors": 9, "output_textures": 36, "timeline_phases": 36, "duration_seconds": 1.2},
+        {"resref": "AM0603B", "lookup": "0x2 1x2 2x2 3x2 4x2 5x2 6x2 7x2 8x2", "anchors": 9, "output_textures": 36, "timeline_phases": 36, "duration_seconds": 1.2},
+        {"resref": "AM0603D1", "lookup": "0x2 1x2 2x2 3x2 4x2 5x2", "anchors": 6, "output_textures": 24, "timeline_phases": 24, "duration_seconds": 0.8},
+        {"resref": "AM0603D2", "lookup": "0x2 1x2 2x2 3x2 4x2 5x2", "anchors": 6, "output_textures": 24, "timeline_phases": 24, "duration_seconds": 0.8},
+        {"resref": "AM0603H", "lookup": "0x2 1x2 2x2 3x2 4x2 5x2 6x2 7x2 8x2", "anchors": 9, "output_textures": 36, "timeline_phases": 36, "duration_seconds": 1.2},
+        {"resref": "AM0603I", "lookup": "0x2 1x2 2x2 3x2 4x2 5x2 6x2 7x2 8x2", "anchors": 9, "output_textures": 36, "timeline_phases": 36, "duration_seconds": 1.2}
+      ],
+      "downstream": "none"
+    },
+    {
+      "run_id": "am0603d3-apo8-x4-30fps-segmented-holds-20260916",
+      "destination": "animations/ressources/AM0603D3/runs/am0603d3-apo8-x4-30fps-segmented-holds-20260916",
+      "support": "pipeline-native-plan-hash-locked",
+      "strategy": "preserve-segmented-holds",
+      "source_run": "animations/runs/ar0603-all-bam-seedvr7b-lab-x4",
+      "source_run_manifest_sha256": "110cd85d78f1db02946ba44213785990bb1aec79b441926d6a8844fc06b93866",
+      "base_pack": "animations/runs/ar0603-all-bam-seedvr7b-lab-x4/04_v2_base_merged/03_runtime_pack",
+      "base_pack_manifest_sha256": "ebba356b824739198c9c4a4e569174f6f39bbed1d3b7b9f2659b0f2fc319304c",
+      "plan_sha256": "c01a06947c47c41f406227ec1a2a133c14ccb4bbaa18b09b40418cf83ddf23a3",
+      "build_flags": ["--preserve-segmented-holds"],
+      "targets": [
+        {"resref": "AM0603D3", "lookup": "0x7 1x3 2x2 3x2 4x2 5x3", "interpolate": ["0>1", "1>2", "2>3", "3>4", "4>5", "5>0"], "exact_hold_boundaries": 13, "anchors": 6, "output_textures": 12, "timeline_phases": 38, "duration_seconds": 1.2666666666666666}
+      ],
+      "downstream": "none"
+    },
+    {
+      "run_id": "ar0516-five-bam-apo8-x4-30fps-segmented-holds-20260916",
+      "destination": "animations/batches/ar0516-five-bam-apo8-x4-30fps-segmented-holds-20260916",
+      "support": "pipeline-native-plan-hash-locked",
+      "strategy": "preserve-segmented-holds",
+      "source_run": "animations/runs/ar0516-all-bam-seedvr7b-lab-x4",
+      "source_run_manifest_sha256": "bf84a4b858eaae193add2f9725a9bd1ee65368d260149abdb7f696ddd38b9c6b",
+      "base_pack": "animations/runs/ar0516-all-bam-seedvr7b-lab-x4/03_runtime_pack",
+      "base_pack_manifest_sha256": "ba88584f2a808f0544d4d86bbe5c54b0d44eaf2bff268d659f558b40e2ac42d7",
+      "base_registry_sha256": "6009354da2a1f929565377f8d9ab673ea0dbd541a1a7444e5355694819c0bc3c",
+      "plan_sha256": "7268a992a50d30837823999838a3a3a680aff445bb5c67715f9815f2d02505bf",
+      "build_flags": ["--preserve-segmented-holds"],
+      "targets": [
+        {"resref": "AM0516LA", "lookup": "0x10 1x2 2x2 3x2 2x2 1x2 0x2", "interpolate": ["0>1", "1>2", "2>3", "3>2", "2>1", "1>0"], "exact_hold_boundaries": 16, "anchors": 4, "output_textures": 10, "timeline_phases": 44, "duration_seconds": 1.4666666666666666},
+        {"resref": "AM0516LB", "lookup": "0x4 1x1 2x2 1x1 0x4 1x2 2x2 3x2 4x2 3x2 2x2 1x2 0x2", "interpolate": ["0>1", "1>2", "2>1", "1>0", "0>1", "1>2", "2>3", "3>4", "4>3", "3>2", "2>1", "1>0"], "exact_hold_boundaries": 16, "anchors": 5, "output_textures": 17, "timeline_phases": 56, "duration_seconds": 1.8666666666666667},
+        {"resref": "AM0516LC", "lookup": "0x1 2x12 0x1 2x6 3x2 4x15 3x2 2x2", "interpolate": ["0>2", "2>0", "0>2", "2>3", "3>4", "4>3", "3>2", "2>0"], "exact_hold_boundaries": 33, "unused_anchor_indices": [1], "anchors": 5, "output_textures": 13, "timeline_phases": 82, "duration_seconds": 2.7333333333333334},
+        {"resref": "SPHINCT", "lookup": "0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16x2 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0", "interpolate": "all 32 directed unequal-index boundaries", "exact_hold_boundaries": 2, "anchors": 17, "output_textures": 49, "timeline_phases": 68, "duration_seconds": 2.2666666666666666},
+        {"resref": "SPHINCT2", "lookup": "0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16x2 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0", "interpolate": "all 32 directed unequal-index boundaries", "exact_hold_boundaries": 2, "anchors": 17, "output_textures": 49, "timeline_phases": 68, "duration_seconds": 2.2666666666666666}
+      ],
+      "downstream": {
+        "targets": ["SPHINCT", "SPHINCT2"],
+        "policy": "replay unchanged after temporal reconstruction",
+        "manifest": "animations/runs/ar0516-sphinct-sphinct2-geometric-sigma3-erode2-alpha-30fps-v2/03_runtime_pack/manifest.json",
+        "manifest_sha256": "f97663880d74c912435b2879580c3dc3234f621603c2341d6a205b1fa9fa23d6",
+        "effects": ["geometric-sigma3-threshold127-erode2", "same resref mask replicated to every corrected texture", "RGB byte-identical during alpha patch"]
+      }
+    },
+    {
+      "run_id": "dstdvl1a-apo8-x4-30fps-segmented-holds-20260916",
+      "destination": "animations/ressources/DSTDVL1A/runs/dstdvl1a-apo8-x4-30fps-segmented-holds-20260916",
+      "support": "pipeline-native-plan-hash-locked",
+      "strategy": "preserve-segmented-holds",
+      "source_run": "animations/runs/dstdvl1a-seedvr7b-lab-x4",
+      "source_run_manifest_sha256": "93fc893833920b243581b0c59607a8979c50f6d40a200abedc3d4d03dbc6833c",
+      "base_pack": "animations/runs/dstdvl1a-seedvr7b-lab-x4/03_runtime_pack",
+      "base_pack_manifest_sha256": "91eba175bf08420d3370fdb14a72b7e35926185080ed351a527783c4026ab462",
+      "base_registry_sha256": "5acdb5f29c38e84611bd7e8ef2c7d786f59985c93e8cf6888c67b8ed12b7d1f0",
+      "plan_sha256": "c665c21148cbed3e32d1e73f3cdad2d606a2e82ce0c817037001f92cab0dc7cd",
+      "build_flags": ["--preserve-segmented-holds"],
+      "targets": [
+        {"resref": "DSTDVL1A", "lookup": "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 0x90", "interpolate": "1>2>...>17>0 and seam 0>1", "exact_hold_boundaries": 89, "anchors": 18, "temporal_output_textures": 36, "postprocess_output_textures": 50, "timeline_phases": 214, "duration_seconds": 7.133333333333334}
+      ],
+      "downstream": {
+        "policy": "replay unchanged after temporal reconstruction",
+        "manifest": "animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate/03_runtime_pack/manifest.json",
+        "manifest_sha256": "82927444d1313f49aea4c1a282816ee237d8ed49aed769348d246fc3e2b802c6",
+        "effects": ["spline-fit1-multicontour-per-frame-feather4", "core-guard16", "active-fade7-20-7", "premultiplied-by-final-alpha"],
+        "active_phase_window": [0, 33],
+        "clone_textures": 14
+      }
+    },
+    {
+      "run_id": "dstdvl1b-apo8-x4-30fps-segmented-holds-20260916",
+      "destination": "animations/ressources/DSTDVL1B/runs/dstdvl1b-apo8-x4-30fps-segmented-holds-20260916",
+      "support": "pipeline-native-plan-hash-locked",
+      "strategy": "preserve-segmented-holds",
+      "source_run": "animations/runs/dstdvl1b-seedvr7b-lab-x4",
+      "source_run_manifest_sha256": "7b2bccd93292d2dfec5352cb198c4467437492fc4826247834dee7a444d9e615",
+      "base_pack": "animations/runs/dstdvl1b-seedvr7b-lab-x4/03_runtime_pack",
+      "base_pack_manifest_sha256": "0a091c36788b74a158bebd7b22de5da9d1d8730de185489f3ca50b6346bd462e",
+      "base_registry_sha256": "c36b1a6eb1047ab5d955abba5cddb8637c2b716e36427c2ab917ff9c7afb575f",
+      "plan_sha256": "90b76754890fcca56af639283107f117c6ad7217b5d84e74742bc67898a11d78",
+      "build_flags": ["--preserve-segmented-holds"],
+      "targets": [
+        {"resref": "DSTDVL1B", "lookup": "0x5 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 0x85", "interpolate": "0>1>2>...>17>0", "exact_hold_boundaries": 89, "anchors": 18, "temporal_output_textures": 36, "postprocess_output_textures": 50, "timeline_phases": 214, "duration_seconds": 7.133333333333334}
+      ],
+      "downstream": {
+        "policy": "replay unchanged after temporal reconstruction",
+        "manifest": "animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate/03_runtime_pack/manifest.json",
+        "manifest_sha256": "d164655ecf4196f1af768681bab3c7335ef224e4a9130ef8e0ddf53a10739f95",
+        "effects": ["spline-fit1-multicontour-per-frame-feather4", "core-guard16", "active-fade7-20-7", "premultiplied-by-final-alpha"],
+        "active_phase_window": [10, 43],
+        "clone_textures": 14
+      }
+    },
+    {
+      "run_id": "dstdvl1c-apo8-x4-30fps-segmented-holds-20260916",
+      "destination": "animations/ressources/DSTDVL1C/runs/dstdvl1c-apo8-x4-30fps-segmented-holds-20260916",
+      "support": "pipeline-native-plan-hash-locked",
+      "strategy": "preserve-segmented-holds",
+      "source_run": "animations/runs/dstdvl1c-seedvr7b-lab-x4",
+      "source_run_manifest_sha256": "324e8a568cbcc217eccc27cb1f090ce0136f559163061f041b3bfda3a38bc7be",
+      "base_pack": "animations/runs/dstdvl1c-seedvr7b-lab-x4/03_runtime_pack",
+      "base_pack_manifest_sha256": "67dc0b6ee56ce7d4376419658633a601319a53cbf61c84eaf250a6107b31097f",
+      "base_registry_sha256": "d83212649acd2c6f6f67d64b32790957d2f13ba953d6d623abeb99a53a8db7e3",
+      "plan_sha256": "2fa17c34bc5a1c87b8e204a1b56aca71baead1378a5ea222992058277d58ff25",
+      "build_flags": ["--preserve-segmented-holds"],
+      "targets": [
+        {"resref": "DSTDVL1C", "lookup": "0x10 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 0x80", "interpolate": "0>1>2>...>17>0", "exact_hold_boundaries": 89, "anchors": 18, "temporal_output_textures": 36, "postprocess_output_textures": 50, "timeline_phases": 214, "duration_seconds": 7.133333333333334}
+      ],
+      "downstream": {
+        "policy": "replay unchanged after temporal reconstruction",
+        "manifest": "animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate/03_runtime_pack/manifest.json",
+        "manifest_sha256": "6ff1e410a3187441ca9813a83b2dd58b3db64e38603261ff819898e1f14d2a97",
+        "effects": ["spline-fit1-multicontour-per-frame-feather4", "core-guard16", "active-fade7-20-7", "premultiplied-by-final-alpha"],
+        "active_phase_window": [20, 53],
+        "clone_textures": 14
+      }
+    },
+    {
+      "run_id": "ar0411-dstdvl2bc-apo8-x4-30fps-segmented-holds-20260916",
+      "destination": "animations/batches/ar0411-dstdvl2bc-apo8-x4-30fps-segmented-holds-20260916",
+      "support": "pipeline-native-plan-hash-locked",
+      "strategy": "preserve-segmented-holds",
+      "source_run": "animations/batches/ar0411-planar-sphere-seedvr7b-lab-x4-20260911",
+      "source_run_manifest_sha256": "9bafbfa85b840923cdefe0cdd2027ffbd08cb345ead0e8c7cc609dc10357462d",
+      "base_pack": "animations/batches/ar0411-planar-sphere-seedvr7b-lab-x4-20260911/03_runtime_pack",
+      "base_pack_manifest_sha256": "555df27f5e3400704aa9c9c6c1f193ba9bd0f9d0416c83befcbfcaa3630ccbcb",
+      "base_registry_sha256": "5660c1d495a43ac7d0b7b06b8165ab0a3c8d767f5b950bdc59424c0bbf86debd",
+      "plan_sha256": "3045917554e967c45e593bb59ad9360f3d7a651e56bc7afdea80248ec3e0838e",
+      "build_flags": ["--preserve-segmented-holds", "--authoring-pack-for-area-split"],
+      "shared_rgb_anchors": true,
+      "targets": [
+        {"resref": "DSTDVL2B", "lookup": "0x50 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 0x41", "interpolate": "0>1>2>...>17>0", "exact_hold_boundaries": 90, "anchors": 18, "temporal_output_textures": 36, "postprocess_output_textures": 50, "timeline_phases": 216, "duration_seconds": 7.2, "active_phase_window": [100, 133]},
+        {"resref": "DSTDVL2C", "lookup": "0x55 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 0x35", "interpolate": "0>1>2>...>17>0", "exact_hold_boundaries": 89, "anchors": 18, "temporal_output_textures": 36, "postprocess_output_textures": 50, "timeline_phases": 214, "duration_seconds": 7.133333333333334, "active_phase_window": [110, 143]}
+      ],
+      "downstream": {
+        "policy": "replay unchanged after temporal reconstruction",
+        "manifest": "animations/batches/ar0411-planar-sphere-apo8-x4-30fps-spline-fit1-dstdvl2-coreguard16-activefade-20260911/03_runtime_pack/manifest.json",
+        "manifest_sha256": "4c47ea1b0b68a78953bbc221ad569d1612556ef3dc84c1988d548db898dc24c6",
+        "effects": ["spline-fit1-multicontour-per-frame-feather4", "core-guard16", "active-fade7-20-7", "premultiplied-by-final-alpha"],
+        "clone_textures_per_resref": 14
+      }
+    }
+  ],
+  "pause_gate": {
+    "status": "paused-before-interpolation",
+    "next_authorized_action": "none",
+    "resume_requirement": "explicit user request to reconstruct"
+  }
+}

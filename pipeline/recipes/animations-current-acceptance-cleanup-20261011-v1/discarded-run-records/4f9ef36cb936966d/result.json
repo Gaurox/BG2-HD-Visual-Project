@@ -1,0 +1,81 @@
+{
+  "schema": "bg2-upscale-animation-interpolation-hold-rebuild-result-v1",
+  "status": "completed-pending-visual-qa",
+  "completed_date": "2026-09-16",
+  "asset_count": 20,
+  "temporal_cycle_count": 20,
+  "adjacent_duplicate_pairs_sent_to_interpolator": 0,
+  "installation": "not-performed",
+  "index_updates": "not-performed",
+  "selection_updates": "not-performed",
+  "release_updates": "not-performed",
+  "pipeline_change": {
+    "file": "pipeline/scripts/run_animation_upscale_30fps_v2.py",
+    "strategy": "preserve-segmented-holds",
+    "contract": "interpolate unequal-index boundaries only; exact-anchor references for duplicate holds",
+    "tests": {
+      "command": "python -m unittest pipeline.tests.test_animation_upscale_30fps_v2",
+      "result": "14 passed"
+    }
+  },
+  "final_candidates": [
+    {
+      "assets": ["AM0307BH", "AM307RED"],
+      "run": "animations/batches/ar0307-ar0329-am0307bh-am307red-apo8-x4-30fps-collapse-holds-20260916",
+      "run_manifest_sha256": "d32ca703606ae28925c139d3681d61f528d99852937cc1e27cb4587bba8037c0",
+      "pack_manifest_sha256": "7af4d813c0606d36821f8ee8d6716ac6f2850e613bd9b3af4279fec3d0cf3297"
+    },
+    {
+      "assets": ["AM0308A"],
+      "run": "animations/ressources/AM0308A/runs/am0308a-xbr2x-nearest2-x4-30fps-collapse-holds-spline-fit1-rgb-dilate-20260916",
+      "run_manifest_sha256": "8596d43675430ec25d302d5e053715918cc4d2951f3b2172d5903a59063df81c",
+      "pack_manifest_sha256": "b0478dcfee3de92df204f938d39433b422f6f2b37021c8c935e22244f83ec2e6"
+    },
+    {
+      "assets": ["AM0603A", "AM0603B", "AM0603D1", "AM0603D2", "AM0603H", "AM0603I"],
+      "run": "animations/batches/ar0603-six-bam-apo8-x4-30fps-collapse-holds-20260916",
+      "run_manifest_sha256": "65847e51b1cf534e7021a873e58c2e918bbd57f5e29e24c78a80d6b4b9f2deac",
+      "pack_manifest_sha256": "b37309b466718a6780aa6090190a4dc7438a38a89929b505f19abff2cee9a27f"
+    },
+    {
+      "assets": ["AM0603D3"],
+      "run": "animations/ressources/AM0603D3/runs/am0603d3-apo8-x4-30fps-segmented-holds-20260916",
+      "run_manifest_sha256": "36e4c28a839a884c712aca17d3ffca98c4ba4a27b21506debc973da3664bc6b0",
+      "pack_manifest_sha256": "973e69d5b566c89db574d28b17a98df1eb771dd8d74bea2b0cf22642a811d6c8"
+    },
+    {
+      "assets": ["AM0516LA", "AM0516LB", "AM0516LC", "SPHINCT", "SPHINCT2"],
+      "run": "animations/batches/ar0516-five-bam-segmented-holds-geometric-sigma3-erode2-alpha-30fps-20260916",
+      "run_manifest_sha256": "9de083f498efbcb3e77461df3f72dfeb3c2cbbb775cf93f516ec649f8c13e805",
+      "pack_manifest_sha256": "dffd33cae5dd130b694477c0bb5a4e79a134471b26a75451a9af8110a540c31e"
+    },
+    {
+      "assets": ["DSTDVL1A"],
+      "run": "animations/ressources/DSTDVL1A/runs/dstdvl1a-segmented-holds-spline-fit1-coreguard16-activefade7-20-7-20260916",
+      "run_manifest_sha256": "781ccfba4d6d09faf752a57d6ac5cfde4d9fc5b755eb88b034aa61e3ba871ea2",
+      "pack_manifest_sha256": "65801992d8d1521422641bfbe9f8a3f45b68b29879c17d01dade302daf9aef09"
+    },
+    {
+      "assets": ["DSTDVL1B"],
+      "run": "animations/ressources/DSTDVL1B/runs/dstdvl1b-segmented-holds-spline-fit1-coreguard16-activefade7-20-7-20260916",
+      "run_manifest_sha256": "059c66c66e15cb7d7723660e35bd639653e91debbbf288f421ac0584aaeedf10",
+      "pack_manifest_sha256": "801198174474e7b2f4b3ee1c82f8de109c7e2284a5e2930d293edf8ab58deff5"
+    },
+    {
+      "assets": ["DSTDVL1C"],
+      "run": "animations/ressources/DSTDVL1C/runs/dstdvl1c-segmented-holds-spline-fit1-coreguard16-activefade7-20-7-20260916",
+      "run_manifest_sha256": "963947eff5c62a1194f5f67fa4518c6d3cd7cab2f94084bc3431f25cd9520c0d",
+      "pack_manifest_sha256": "9a97c80b09ca4a1db399f4f8e79d279804b0a5857b695ade6cc9ff6f432b8dce"
+    },
+    {
+      "assets": ["DSTDVL2B", "DSTDVL2C"],
+      "run": "animations/batches/ar0411-dstdvl2bc-segmented-holds-spline-fit1-coreguard16-activefade-20260916",
+      "run_manifest_sha256": "511d493524f95cc81459f8f44363d90e99c9febee33e03ed2d18893bf1403488",
+      "pack_manifest_sha256": "ad63f715be6b97f943aade862a3267e6f2f3f64e3b9b07a70731832b1bc1b54e"
+    }
+  ],
+  "superseded_unselected_attempts": [
+    "animations/ressources/AM0308A/runs/am0308a-xbr2x-nearest2-x4-30fps-apo8-collapse-holds-20260916"
+  ],
+  "next_gate": "visual review before approval, area-pack composition or installation"
+}

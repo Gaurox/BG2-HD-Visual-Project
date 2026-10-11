@@ -1,0 +1,308 @@
+{
+  "schema": "bg2-upscale-animation-alpha-feather-test-v1",
+  "status": "completed",
+  "created_utc": "2026-09-22T22:17:51.431307+00:00",
+  "resref": "AM5000A",
+  "asset_ids": [
+    "animations:bam:AM5000A"
+  ],
+  "scale": 4,
+  "frame_count": 5,
+  "physical_size_x4": [
+    728,
+    592
+  ],
+  "source_run": "G:/AI/BG2_Upscale/animations/batches/ar5000-am5000ab-seedvr7b-lab-x4-20260922/resources/AM5000A/02_upscale_x4",
+  "source_run_manifest_sha256": "7ee837bd9c23bdd2d167a3132d4d2f04d3dbe03c9c5fe3bfc547c7d682796fc0",
+  "alpha_operation": {
+    "type": "per-frame-multi-component-spline-fit1-safe-boundary-plus-contour-gaussian-plus-edge-rgb-repush",
+    "fit_error": 1.0,
+    "sample_spacing_x4": 1.5,
+    "supersample": 4,
+    "padding_x4": 32,
+    "threshold": 127,
+    "components": "all 8-connected components preserved and fitted independently",
+    "safe_boundary": {
+      "inner_band_x4": 4.0,
+      "outer_band_x4": 2.0,
+      "opaque_core_preserved": true,
+      "outset_limited_to_outer_band": true
+    },
+    "contour_gaussian": {
+      "sigma_x4": 0.75,
+      "coverage_policy": "alpha_final<=alpha_pre_gaussian"
+    },
+    "all_contour_fade": null,
+    "bottom_seam_protection": null,
+    "painted_fade_protection": null,
+    "painted_foreground_occlusion": null,
+    "rgb_gaussian": null,
+    "edge_rgb_repush": {
+      "depth_x4": 5.0,
+      "policy": "visible pixels within depth of the source edge, and grown pixels, take the nearest deeper RGB; alpha unchanged"
+    },
+    "left_edge_blur": null,
+    "local_reconstruction": null,
+    "local_reinforcement": null,
+    "rgb_policy": "unchanged",
+    "geometry_policy": "unchanged",
+    "timeline_policy": "unchanged"
+  },
+  "frames": [
+    {
+      "frame": 0,
+      "source_runtime_asset": "raw_rgba/frame_000.rgba",
+      "source_runtime_sha256": "c5c1e82745ef83a6afe48f96de91b7861ce570cd95538e6585e84bdefb34c40f",
+      "source_runtime_bytes": 1723904,
+      "runtime_asset": "raw_rgba/AAX4-AM5000A-frame000.rgba",
+      "runtime_sha256": "d8dd7f38d1308b8b8a4d523966d6f05ec6cb9012006d902fe1f3556d74a2a4c2",
+      "runtime_bytes": 1723904,
+      "rgba": "rgba/frame_000.png",
+      "rgba_sha256": "fcc7e5112a8da32dd6b1ce889c681fac4c1a8586b2bafd79e6a275576513ed3a",
+      "alpha": "alpha/frame_000.png",
+      "alpha_sha256": "0d63a8c9a2a6a8768dc344ffaa225a70c6598618cefd38cea06c7a7d1948f8f8",
+      "spline": {
+        "source_nonzero": 287728,
+        "components": 1,
+        "status": "fitted",
+        "mode": "safe-boundary",
+        "inner_band_x4": 4.0,
+        "outer_band_x4": 2.0,
+        "expanded_alpha_pixels": 3172,
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2800,
+            "fit_samples": 1783,
+            "curve_points": 5349
+          }
+        ]
+      },
+      "contour_gaussian": {
+        "sigma_x4": 0.75,
+        "changed_alpha_pixels": 5489,
+        "outside_alpha_pixels": 0
+      },
+      "all_contour_fade": null,
+      "bottom_seam_protection": null,
+      "painted_fade_protection": null,
+      "painted_foreground_occlusion": null,
+      "rgb_gaussian": null,
+      "edge_rgb_repush": {
+        "depth_x4": 5.0,
+        "repushed_pixels": 15111,
+        "grown_pixels_recoloured": 3172
+      },
+      "left_edge_blur": null,
+      "local_reconstruction": null,
+      "local_reinforcement": null,
+      "changed_alpha_pixels": 8888,
+      "raised_over_source_alpha_pixels": 3172,
+      "rgb_byte_identical": false
+    },
+    {
+      "frame": 1,
+      "source_runtime_asset": "raw_rgba/frame_001.rgba",
+      "source_runtime_sha256": "e78d2d2bb5f26166a228e15a0d0878bec7e5fb6c4385b09f26c2ab2d8354d9c4",
+      "source_runtime_bytes": 1723904,
+      "runtime_asset": "raw_rgba/AAX4-AM5000A-frame001.rgba",
+      "runtime_sha256": "802711ecd43f52bc6dbc49ee63a47bfca82b469e73e48e41d38c2d99a5bd0627",
+      "runtime_bytes": 1723904,
+      "rgba": "rgba/frame_001.png",
+      "rgba_sha256": "d3cb56dc4b5ccde6e8d1ca0e1cf6a8903bbdd83fc9105cbaef9a8d82f2e4c496",
+      "alpha": "alpha/frame_001.png",
+      "alpha_sha256": "0d63a8c9a2a6a8768dc344ffaa225a70c6598618cefd38cea06c7a7d1948f8f8",
+      "spline": {
+        "source_nonzero": 287728,
+        "components": 1,
+        "status": "fitted",
+        "mode": "safe-boundary",
+        "inner_band_x4": 4.0,
+        "outer_band_x4": 2.0,
+        "expanded_alpha_pixels": 3172,
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2800,
+            "fit_samples": 1783,
+            "curve_points": 5349
+          }
+        ]
+      },
+      "contour_gaussian": {
+        "sigma_x4": 0.75,
+        "changed_alpha_pixels": 5489,
+        "outside_alpha_pixels": 0
+      },
+      "all_contour_fade": null,
+      "bottom_seam_protection": null,
+      "painted_fade_protection": null,
+      "painted_foreground_occlusion": null,
+      "rgb_gaussian": null,
+      "edge_rgb_repush": {
+        "depth_x4": 5.0,
+        "repushed_pixels": 15111,
+        "grown_pixels_recoloured": 3172
+      },
+      "left_edge_blur": null,
+      "local_reconstruction": null,
+      "local_reinforcement": null,
+      "changed_alpha_pixels": 8888,
+      "raised_over_source_alpha_pixels": 3172,
+      "rgb_byte_identical": false
+    },
+    {
+      "frame": 2,
+      "source_runtime_asset": "raw_rgba/frame_002.rgba",
+      "source_runtime_sha256": "dd3a431ddb77921a14c0e03cadc2c9962df8024a97eb6008fa5b1b58c3ff793b",
+      "source_runtime_bytes": 1723904,
+      "runtime_asset": "raw_rgba/AAX4-AM5000A-frame002.rgba",
+      "runtime_sha256": "b0fecb20f73aa4b95f972abf0ea97910a49fe820b91a4661c95a25d5fa503a7a",
+      "runtime_bytes": 1723904,
+      "rgba": "rgba/frame_002.png",
+      "rgba_sha256": "3b48c966bca28f16a3160c1519a3bb405cc083ab9571bdb811294c0ad400ec5d",
+      "alpha": "alpha/frame_002.png",
+      "alpha_sha256": "0d63a8c9a2a6a8768dc344ffaa225a70c6598618cefd38cea06c7a7d1948f8f8",
+      "spline": {
+        "source_nonzero": 287728,
+        "components": 1,
+        "status": "fitted",
+        "mode": "safe-boundary",
+        "inner_band_x4": 4.0,
+        "outer_band_x4": 2.0,
+        "expanded_alpha_pixels": 3172,
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2800,
+            "fit_samples": 1783,
+            "curve_points": 5349
+          }
+        ]
+      },
+      "contour_gaussian": {
+        "sigma_x4": 0.75,
+        "changed_alpha_pixels": 5489,
+        "outside_alpha_pixels": 0
+      },
+      "all_contour_fade": null,
+      "bottom_seam_protection": null,
+      "painted_fade_protection": null,
+      "painted_foreground_occlusion": null,
+      "rgb_gaussian": null,
+      "edge_rgb_repush": {
+        "depth_x4": 5.0,
+        "repushed_pixels": 15111,
+        "grown_pixels_recoloured": 3172
+      },
+      "left_edge_blur": null,
+      "local_reconstruction": null,
+      "local_reinforcement": null,
+      "changed_alpha_pixels": 8888,
+      "raised_over_source_alpha_pixels": 3172,
+      "rgb_byte_identical": false
+    },
+    {
+      "frame": 3,
+      "source_runtime_asset": "raw_rgba/frame_003.rgba",
+      "source_runtime_sha256": "dfd6f15edc9973a46ba44519ca33904fa97be0e8dfb15f5adda1b780a8fdc480",
+      "source_runtime_bytes": 1723904,
+      "runtime_asset": "raw_rgba/AAX4-AM5000A-frame003.rgba",
+      "runtime_sha256": "5d5fa2f2e6103bd9a7ff10519bfc49a2f902d3daac4a3896ef45c47208d742be",
+      "runtime_bytes": 1723904,
+      "rgba": "rgba/frame_003.png",
+      "rgba_sha256": "a951ef942beed15934f55e96e70744cb9afe95df4752885d004000023491b8d0",
+      "alpha": "alpha/frame_003.png",
+      "alpha_sha256": "0d63a8c9a2a6a8768dc344ffaa225a70c6598618cefd38cea06c7a7d1948f8f8",
+      "spline": {
+        "source_nonzero": 287728,
+        "components": 1,
+        "status": "fitted",
+        "mode": "safe-boundary",
+        "inner_band_x4": 4.0,
+        "outer_band_x4": 2.0,
+        "expanded_alpha_pixels": 3172,
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2800,
+            "fit_samples": 1783,
+            "curve_points": 5349
+          }
+        ]
+      },
+      "contour_gaussian": {
+        "sigma_x4": 0.75,
+        "changed_alpha_pixels": 5489,
+        "outside_alpha_pixels": 0
+      },
+      "all_contour_fade": null,
+      "bottom_seam_protection": null,
+      "painted_fade_protection": null,
+      "painted_foreground_occlusion": null,
+      "rgb_gaussian": null,
+      "edge_rgb_repush": {
+        "depth_x4": 5.0,
+        "repushed_pixels": 15111,
+        "grown_pixels_recoloured": 3172
+      },
+      "left_edge_blur": null,
+      "local_reconstruction": null,
+      "local_reinforcement": null,
+      "changed_alpha_pixels": 8888,
+      "raised_over_source_alpha_pixels": 3172,
+      "rgb_byte_identical": false
+    },
+    {
+      "frame": 4,
+      "source_runtime_asset": "raw_rgba/frame_004.rgba",
+      "source_runtime_sha256": "6ec438b62833e47ae2ae7fcbc70259a81c7a749f4813744bace82df20548e907",
+      "source_runtime_bytes": 1723904,
+      "runtime_asset": "raw_rgba/AAX4-AM5000A-frame004.rgba",
+      "runtime_sha256": "94461482f53ed26173e5a5298679c6d30d3f7387e9eacc93ecabd4b0154ae7bd",
+      "runtime_bytes": 1723904,
+      "rgba": "rgba/frame_004.png",
+      "rgba_sha256": "060e7ba838d748513de84ca9da2675285e384f99c466e69814958ce97b98db38",
+      "alpha": "alpha/frame_004.png",
+      "alpha_sha256": "0d63a8c9a2a6a8768dc344ffaa225a70c6598618cefd38cea06c7a7d1948f8f8",
+      "spline": {
+        "source_nonzero": 287728,
+        "components": 1,
+        "status": "fitted",
+        "mode": "safe-boundary",
+        "inner_band_x4": 4.0,
+        "outer_band_x4": 2.0,
+        "expanded_alpha_pixels": 3172,
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2800,
+            "fit_samples": 1783,
+            "curve_points": 5349
+          }
+        ]
+      },
+      "contour_gaussian": {
+        "sigma_x4": 0.75,
+        "changed_alpha_pixels": 5489,
+        "outside_alpha_pixels": 0
+      },
+      "all_contour_fade": null,
+      "bottom_seam_protection": null,
+      "painted_fade_protection": null,
+      "painted_foreground_occlusion": null,
+      "rgb_gaussian": null,
+      "edge_rgb_repush": {
+        "depth_x4": 5.0,
+        "repushed_pixels": 15111,
+        "grown_pixels_recoloured": 3172
+      },
+      "left_edge_blur": null,
+      "local_reconstruction": null,
+      "local_reinforcement": null,
+      "changed_alpha_pixels": 8888,
+      "raised_over_source_alpha_pixels": 3172,
+      "rgb_byte_identical": false
+    }
+  ]
+}

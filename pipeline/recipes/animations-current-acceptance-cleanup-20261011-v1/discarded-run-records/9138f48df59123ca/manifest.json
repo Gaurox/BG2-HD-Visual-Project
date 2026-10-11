@@ -1,0 +1,42 @@
+{
+  "schema": "bg2-upscale-animation-visual-treatment-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T14:02:28.718115+00:00",
+  "resref": "FLM2PUR",
+  "resrefs": [
+    "FLM2PUR"
+  ],
+  "source_run": "animations/batches/lot45-final-20261011-v1/spatial-FLM2PUR-embedded",
+  "source_run_manifest_sha256": "10d3562650c019cbf66f9bc0e0e0222dc178f1910e61f84788171fff619d1265",
+  "source_pack": "animations/packs-par-zone/lot5-current-20261011-v1/AR1008",
+  "source_pack_manifest_sha256": "0d611d1ef2df74044f27f317b1b38fb4724ac51a405ce946de66f177f030d3f4",
+  "output_split_root": "animations/packs-par-zone/lot5-current-20261011-v1",
+  "output_manifest_sha256": "8ed5202f80036dcf0bc8f1fe25c3c8f758b2d20a14b33bb9a41bc571dc9313b2",
+  "area_sources": {
+    "AR1008": {
+      "resref": "FLM2PUR",
+      "source_pack": "animations/batches/lot45-final-20261011-v1/final-FLM2PUR-embedded",
+      "source_pack_manifest_sha256": "8c7b77eb81b2174b9401371cd470df368e7c49622917b26f612e5d825cce4382",
+      "existing_bytes_preserved": false,
+      "palette": "embedded"
+    },
+    "OH4210": {
+      "resref": "FLM2PUR",
+      "source_pack": "animations/batches/lot45-final-20261011-v1/final-FLM2PUR-PLT_PURP",
+      "source_pack_manifest_sha256": "d53e4d2915891238f545d2a8758756bc2411c80d455773cf15fce17a2666faa9",
+      "existing_bytes_preserved": false,
+      "palette": "PLT_PURP"
+    }
+  },
+  "recipe": {
+    "spatial": "ReboutCX x4 fp16 on realized palette",
+    "temporal": "Apollo8",
+    "target_fps": 30,
+    "contour": "swept inner feather; premultiply once",
+    "palette": "BMP realized before inference, dedicated area leaves",
+    "occlusion": "native bridge retained, no static WED clipping"
+  },
+  "qa_status": "pending-ingame",
+  "release_status": "not-selected",
+  "relocation_reason": "Separate unchanged lot5 from explicitly discarded AM0510A version; no runtime or QA change"
+}

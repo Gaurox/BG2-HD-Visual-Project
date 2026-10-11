@@ -1,0 +1,53 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-11T18:59:45.182489+00:00",
+  "input_mode": "per-frame-multi-contour-spline-alpha-on-timed-run",
+  "source_run": "G:/AI/BG2_Upscale/animations/batches/ar3021-illithids-apo8-x4-30fps-v2-20260911",
+  "source_run_manifest_sha256": "19d4912857add4ee6442cfe1fee9fad954566e32e45c0017bcb5064a8fe9d48f",
+  "base_pack": "G:/AI/BG2_Upscale/animations/batches/ar3021-illithids-seedvr7b-lab-x4-20260911/03_runtime_pack",
+  "base_pack_manifest_sha256": "3e05dd5b1404e71dbab771df7fd06a27fb754fbe00261c13b13572aa9f2dc3fb",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM3021D",
+    "AM3021E",
+    "AM3021F"
+  ],
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "0a7ec6cf2695acad2fdd5817ed1989d736cf0bb7234f0eba700caaa92f941479",
+  "registry_sha256": "be36e103ca5c6caf37125a6180b229d7ec7730ed1591e19b72cdcbb1be8db722",
+  "reviews": [
+    {
+      "kind": "comparison-contact-sheet",
+      "file": "review/review-comparison-contact-sheet.png",
+      "sha256": "e4722a712be4bb9d5d177f4e00b0dececd4326eccbd642458eb2e199d98e114c"
+    },
+    {
+      "kind": "comparison-exact",
+      "file": "review/review-comparison-30fps-exact.mp4",
+      "sha256": "f7fcad680f409f12ae0194b3e2b3c0b16d1d2f9a6241304c70647cf9dcf1f722"
+    },
+    {
+      "kind": "comparison-loop-4s",
+      "file": "review/review-comparison-30fps-loop-4s.mp4",
+      "sha256": "01943eaa93ed2104186f97b5068f3c5ba3d7720582d750b715b870b8d4a80b1a"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval",
+  "per_frame_spline_alpha": {
+    "pipeline_name": "spline-fit1-multicontour-per-frame-feather4",
+    "pipeline_effects": [
+      "spline-fit1-multicontour-per-frame-feather4"
+    ],
+    "report": "spline-alpha-report.json",
+    "report_sha256": "fef4e2c4f276612edeacb2640eb146074563c2b3e5524e47a0df7dbd3a90bb54",
+    "installation": "not performed"
+  }
+}

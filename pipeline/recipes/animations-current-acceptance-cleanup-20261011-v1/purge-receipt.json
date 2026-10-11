@@ -1,0 +1,1127 @@
+{
+  "schema": "bg2-upscale-unused-animation-runs-cleanup-receipt-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T20:26:59.124068+00:00",
+  "plan": "pipeline/recipes/animations-current-acceptance-cleanup-20261011-v1/purge-plan.json",
+  "plan_sha256": "227c87ff402be4b8e6967f9842622415ce30e9434ba4d56abba2c24b7fc03dbf",
+  "deleted_runs": 222,
+  "deleted_files": 27860,
+  "freed_bytes": 14557029249,
+  "preserved_runs": 737,
+  "all_authority_sha256_preserved": true,
+  "diagnostic_recipes_preserved": true,
+  "game_mutation": false,
+  "release_mutation": false,
+  "records": [
+    {
+      "path": "animations/batches/1400t005-night-color-20261011-v1",
+      "bytes": 176670758,
+      "file_count": 623
+    },
+    {
+      "path": "animations/batches/am0322ab-apo8-x4-30fps-v2-innerfade8-flameblur1p5-20260919",
+      "bytes": 156159285,
+      "file_count": 151
+    },
+    {
+      "path": "animations/batches/am0322ab-apo8-x4-30fps-v2-innerfade8-flameblur3p5-20260919",
+      "bytes": 155543562,
+      "file_count": 151
+    },
+    {
+      "path": "animations/batches/am3016e-site-comparison-20260917",
+      "bytes": 4654115,
+      "file_count": 5
+    },
+    {
+      "path": "animations/batches/am307red-qa-preview-20261011",
+      "bytes": 101048,
+      "file_count": 1
+    },
+    {
+      "path": "animations/batches/ar0406-ab-mosaic-x1-20260918",
+      "bytes": 65751311,
+      "file_count": 93
+    },
+    {
+      "path": "animations/batches/ar0406-complete-map-inventory-20260918",
+      "bytes": 3249914,
+      "file_count": 9
+    },
+    {
+      "path": "animations/batches/ar0411-planar-sphere-apo8-x4-30fps-20260911.partial",
+      "bytes": 77054913,
+      "file_count": 60
+    },
+    {
+      "path": "animations/batches/ar0411-repair-am411mac-mono-spline-fit1-feather4-20260911",
+      "bytes": 127539940,
+      "file_count": 294
+    },
+    {
+      "path": "animations/batches/ar0411-repair-bubbles2-mono-split-20260911",
+      "bytes": 10936958,
+      "file_count": 328
+    },
+    {
+      "path": "animations/batches/ar0411-repair-dstdvl2b-mono-spline-fit1-coreguard16-activefade-20260911",
+      "bytes": 89403259,
+      "file_count": 506
+    },
+    {
+      "path": "animations/batches/ar0411-repair-dstdvl2c-mono-spline-fit1-coreguard16-activefade-20260911",
+      "bytes": 94194319,
+      "file_count": 518
+    },
+    {
+      "path": "animations/batches/ar0414-dstdvl-qa-preview-20261011",
+      "bytes": 76784,
+      "file_count": 1
+    },
+    {
+      "path": "animations/batches/ar0500-complete-map-inventory-20260921",
+      "bytes": 38785,
+      "file_count": 7
+    },
+    {
+      "path": "animations/batches/ar0516-labc-apo8-x4-30fps-hybrid-custom-blink-lc-20260917",
+      "bytes": 984850202,
+      "file_count": 708
+    },
+    {
+      "path": "animations/batches/ar0516-labc-apo8-x4-30fps-hybrid-segments-20260917",
+      "bytes": 701929618,
+      "file_count": 524
+    },
+    {
+      "path": "animations/batches/ar0517-sphinct-wed-crisp-20261010-v5",
+      "bytes": 106015,
+      "file_count": 3
+    },
+    {
+      "path": "animations/batches/ar0517-sphinct-wed-methods-20261010-v2",
+      "bytes": 1779573,
+      "file_count": 8
+    },
+    {
+      "path": "animations/batches/ar0517-sphinct-wed-splinefit1-20261010-v3",
+      "bytes": 105951,
+      "file_count": 3
+    },
+    {
+      "path": "animations/batches/ar0801-b1b2-mosaic-x1-20260918",
+      "bytes": 36096730,
+      "file_count": 73
+    },
+    {
+      "path": "animations/batches/ar0801-complete-map-inventory-20260918",
+      "bytes": 2536708,
+      "file_count": 9
+    },
+    {
+      "path": "animations/batches/ar0904-taloscircle-ellipsefade-maskfade24-30fps-v2-20260906",
+      "bytes": 44458549,
+      "file_count": 288
+    },
+    {
+      "path": "animations/batches/ar1516-complete-map-inventory-20260921",
+      "bytes": 690045,
+      "file_count": 6
+    },
+    {
+      "path": "animations/batches/ar2000-complete-map-inventory-20260918",
+      "bytes": 3949917,
+      "file_count": 7
+    },
+    {
+      "path": "animations/batches/ar2000-quad-mosaic-x1-20260918",
+      "bytes": 258775291,
+      "file_count": 146
+    },
+    {
+      "path": "animations/batches/ar2804-treelife-apo8-x4-30fps-v2-20260907",
+      "bytes": 177967454,
+      "file_count": 187
+    },
+    {
+      "path": "animations/batches/ar3000-complete-map-inventory-20260918",
+      "bytes": 3505092,
+      "file_count": 14
+    },
+    {
+      "path": "animations/batches/ar3016-complete-15-assets-review-frames-20260916",
+      "bytes": 3986532,
+      "file_count": 17
+    },
+    {
+      "path": "animations/batches/ar3016-complete-map-inventory-20260916",
+      "bytes": 787664,
+      "file_count": 20
+    },
+    {
+      "path": "animations/batches/ar3016-energy-xbr2x2-apo8-30fps-20260916.partial",
+      "bytes": 53353,
+      "file_count": 4
+    },
+    {
+      "path": "animations/batches/ar3016-liquids-30fps-audit-20260916",
+      "bytes": 55567135,
+      "file_count": 6
+    },
+    {
+      "path": "animations/batches/ar3016d-seedvr-comparison-20260916",
+      "bytes": 1569005,
+      "file_count": 4
+    },
+    {
+      "path": "animations/batches/ar3017-complete-map-inventory-20260917",
+      "bytes": 1447142,
+      "file_count": 18
+    },
+    {
+      "path": "animations/batches/ar3017-complete-straightrgb-fade-v5-20260917",
+      "bytes": 463683548,
+      "file_count": 606
+    },
+    {
+      "path": "animations/batches/ar3017-complete-treated-20260917",
+      "bytes": 464205610,
+      "file_count": 606
+    },
+    {
+      "path": "animations/batches/ar3017-complete-treated-ad-fade12-v3-20260917",
+      "bytes": 463692291,
+      "file_count": 606
+    },
+    {
+      "path": "animations/batches/ar3017-complete-treated-ad-fade36-v4-20260917",
+      "bytes": 463678009,
+      "file_count": 606
+    },
+    {
+      "path": "animations/batches/ar3017-complete-treated-innerfade4-v2-20260917",
+      "bytes": 464195470,
+      "file_count": 606
+    },
+    {
+      "path": "animations/batches/ar3017-decor-a-d-innerfade12-20260917",
+      "bytes": 381466373,
+      "file_count": 243
+    },
+    {
+      "path": "animations/batches/ar3017-decor-a-d-innerfade36-20260917",
+      "bytes": 381791872,
+      "file_count": 243
+    },
+    {
+      "path": "animations/batches/ar3017-decor-a-h-innerfade4-20260917",
+      "bytes": 403308724,
+      "file_count": 379
+    },
+    {
+      "path": "animations/batches/ar3017-main-apo8-x4-30fps-v2-20260917.partial-abandoned-static-fix",
+      "bytes": 849109,
+      "file_count": 3
+    },
+    {
+      "path": "animations/batches/ar5000-am5000ab-apo8-x4-30fps-v2-20260922",
+      "bytes": 95842191,
+      "file_count": 94
+    },
+    {
+      "path": "animations/batches/ar5000-am5000ab-contourgauss1p5safe4x0p75-apo8-x4-30fps-v2-20260923",
+      "bytes": 95831948,
+      "file_count": 94
+    },
+    {
+      "path": "animations/batches/ar5000-am5000ab-contourgauss2-apo8-x4-30fps-v2-20260922",
+      "bytes": 96001692,
+      "file_count": 94
+    },
+    {
+      "path": "animations/batches/ar5000-am5000ab-fe1p5out1p0-apo8-x4-30fps-v2-20260923",
+      "bytes": 95962295,
+      "file_count": 94
+    },
+    {
+      "path": "animations/batches/ar5000-saradush-inventory-20260922",
+      "bytes": 158256,
+      "file_count": 4
+    },
+    {
+      "path": "animations/batches/ar6200-complete-map-inventory-20260918",
+      "bytes": 251841,
+      "file_count": 10
+    },
+    {
+      "path": "animations/batches/dstdvl1a-misty-contour-20261011-v1",
+      "bytes": 976092,
+      "file_count": 2
+    },
+    {
+      "path": "animations/batches/dstdvl1a-qa-preview-20261011",
+      "bytes": 104422,
+      "file_count": 1
+    },
+    {
+      "path": "animations/batches/fire2b-oh8100-qa-preview-20261011",
+      "bytes": 623706,
+      "file_count": 1
+    },
+    {
+      "path": "animations/batches/lot14-ar5502-oh4210-ar5201-ar5503-inventory-20260922",
+      "bytes": 5514618,
+      "file_count": 25
+    },
+    {
+      "path": "animations/batches/lot15-ar6200-ar4500-ar5202-inventory-20260922",
+      "bytes": 449318,
+      "file_count": 17
+    },
+    {
+      "path": "animations/batches/lot5-current-20261011-v1",
+      "bytes": 309280,
+      "file_count": 3
+    },
+    {
+      "path": "animations/batches/oh4000-complete-map-inventory-20260921",
+      "bytes": 445845,
+      "file_count": 7
+    },
+    {
+      "path": "animations/batches/oh4101-complete-map-inventory-20260921",
+      "bytes": 500815,
+      "file_count": 5
+    },
+    {
+      "path": "animations/batches/oh7200-complete-map-inventory-20260921",
+      "bytes": 10071,
+      "file_count": 3
+    },
+    {
+      "path": "animations/batches/planar-sphinct-wed-crisp-20261010-v6",
+      "bytes": 6494875,
+      "file_count": 10
+    },
+    {
+      "path": "animations/batches/portails-deux-diagnostic-20261010-v1",
+      "bytes": 1592500,
+      "file_count": 8
+    },
+    {
+      "path": "animations/batches/trees-native-lighting-20261011-v1",
+      "bytes": 176021844,
+      "file_count": 623
+    },
+    {
+      "path": "animations/batches/trees-night-color-20261011-v2",
+      "bytes": 176693424,
+      "file_count": 623
+    },
+    {
+      "path": "animations/ressources/AM0308A/runs/am0308a-xbr2x-nearest2-x4-30fps-apo8-20260915",
+      "bytes": 19062568,
+      "file_count": 129
+    },
+    {
+      "path": "animations/ressources/AM0308A/runs/am0308a-xbr2x-nearest2-x4-30fps-apo8-collapse-holds-20260916",
+      "bytes": 25112536,
+      "file_count": 137
+    },
+    {
+      "path": "animations/ressources/AM0308A/runs/am0308a-xbr2x-nearest2-x4-30fps-apo8-rgb-dilate-20260915",
+      "bytes": 18414914,
+      "file_count": 129
+    },
+    {
+      "path": "animations/ressources/AM0308A/runs/am0308a-xbr2x-nearest2-x4-30fps-spline-fit1-20260915",
+      "bytes": 28092346,
+      "file_count": 124
+    },
+    {
+      "path": "animations/ressources/AM0308A/runs/am0308a-xbr2x-nearest2-x4-30fps-spline-fit1-rgb-dilate-20260915",
+      "bytes": 26988038,
+      "file_count": 117
+    },
+    {
+      "path": "animations/ressources/AM0504SB/runs/am0504sb-lot2-seedvr-selected-20261011-v1",
+      "bytes": 932,
+      "file_count": 1
+    },
+    {
+      "path": "animations/ressources/AM0516LD/runs/am0516ld-apo8-x4-30fps-segmented-holds-20260917",
+      "bytes": 595380445,
+      "file_count": 350
+    },
+    {
+      "path": "animations/ressources/AM0603D3/runs/am0603d3-apo8-x4-30fps-segmented-holds-20260916",
+      "bytes": 501261219,
+      "file_count": 533
+    },
+    {
+      "path": "animations/ressources/AM0803B/runs/am0803b-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "bytes": 10652905,
+      "file_count": 35
+    },
+    {
+      "path": "animations/ressources/AM0803C/runs/am0803c-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "bytes": 11289108,
+      "file_count": 35
+    },
+    {
+      "path": "animations/ressources/AM0803E/runs/am0803e-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "bytes": 9610485,
+      "file_count": 35
+    },
+    {
+      "path": "animations/ressources/AM1003A/runs/ar1003-am1003a-spline-fit1-feather6-lowercover5-20260921",
+      "bytes": 18588872,
+      "file_count": 33
+    },
+    {
+      "path": "animations/ressources/AM1101A/runs/am1101a-spline-fit1-feather4-30fps-20261009-v2",
+      "bytes": 100713884,
+      "file_count": 79
+    },
+    {
+      "path": "animations/ressources/AM2000A/runs/ar2000-am2000ab-apo8-x4-30fps-spline-fit1-feather4-20260911.partial",
+      "bytes": 186501948,
+      "file_count": 115
+    },
+    {
+      "path": "animations/ressources/AM2000A/runs/ar2000-am2000ab-apo8-x4-30fps-spline-fit1-feather4-20260912",
+      "bytes": 221576124,
+      "file_count": 175
+    },
+    {
+      "path": "animations/ressources/AM2000B/runs/ar2000-am2000ab-apo8-x4-30fps-spline-fit1-feather4-20260912",
+      "bytes": 218182813,
+      "file_count": 175
+    },
+    {
+      "path": "animations/ressources/AM2300A/runs/am2300a-cascade-seedvr2-7b-lab-x4-fog-fade28-alpha4-rgb3-bottom72-trans80-v2-20260906",
+      "bytes": 9869815,
+      "file_count": 32
+    },
+    {
+      "path": "animations/ressources/AM2300A/runs/am2300a-cascade-seedvr2-7b-lab-x4-safe-spline8-6-fog-fade28-alpha4-rgb3-v1-20260906",
+      "bytes": 9852188,
+      "file_count": 32
+    },
+    {
+      "path": "animations/ressources/AM2300A/runs/am2300a-cascade-x4-fog-native-angle-contact-x3939-y1819-v5-20260906",
+      "bytes": 9876612,
+      "file_count": 32
+    },
+    {
+      "path": "animations/ressources/AM2300A/runs/am2300a-cascade-x4-fog-painted-occlusion-x3590-y2171-v4-20260906",
+      "bytes": 9924852,
+      "file_count": 32
+    },
+    {
+      "path": "animations/ressources/AM2300A/runs/am2300a-cascade-x4-fog-painted-occlusion-x3939-y1819-v4-20260906",
+      "bytes": 9878104,
+      "file_count": 32
+    },
+    {
+      "path": "animations/ressources/AM2300A/runs/am2300a-cascade-x4-fog-painted-occlusion-x4116-y1641-v4-20260906",
+      "bytes": 9922173,
+      "file_count": 32
+    },
+    {
+      "path": "animations/ressources/AM2300A/runs/am2300a-cascade-x4-fog-painted-protection-x3590-y2171-feather12-v3-20260906",
+      "bytes": 9879028,
+      "file_count": 32
+    },
+    {
+      "path": "animations/ressources/AM2300A/runs/am2300a-cascade-x4-fog-painted-protection-x3939-y1819-feather12-v3-20260906",
+      "bytes": 9877604,
+      "file_count": 32
+    },
+    {
+      "path": "animations/ressources/AM2300A/runs/am2300a-cascade-x4-fog-painted-protection-x4116-y1641-feather12-v3-20260906",
+      "bytes": 9883726,
+      "file_count": 32
+    },
+    {
+      "path": "animations/ressources/AM2805A/runs/am2805a-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "bytes": 85898708,
+      "file_count": 63
+    },
+    {
+      "path": "animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-spline-fit1-feather1-bottom-seam-fix-20260908",
+      "bytes": 45021523,
+      "file_count": 35
+    },
+    {
+      "path": "animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-spline-fit1-feather1-bottomseam-wed-occlusion-20260908",
+      "bytes": 33148193,
+      "file_count": 35
+    },
+    {
+      "path": "animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "bytes": 90369146,
+      "file_count": 63
+    },
+    {
+      "path": "animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-spline-fit1-feather4-final-20260907",
+      "bytes": 45146889,
+      "file_count": 35
+    },
+    {
+      "path": "animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-wed-occlusion-alpha-mask-20260908",
+      "bytes": 32187920,
+      "file_count": 42
+    },
+    {
+      "path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "bytes": 105748801,
+      "file_count": 63
+    },
+    {
+      "path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-spline-fit1-feather4-final-20260907",
+      "bytes": 66389968,
+      "file_count": 35
+    },
+    {
+      "path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-spline-fit1-feather4-wed-occlusion-20260908",
+      "bytes": 49749363,
+      "file_count": 35
+    },
+    {
+      "path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-wed-occlusion-alpha-mask-20260908",
+      "bytes": 44030500,
+      "file_count": 42
+    },
+    {
+      "path": "animations/ressources/AM3000E/runs/am3000e-lot45-final-20261011-v1",
+      "bytes": 1507,
+      "file_count": 1
+    },
+    {
+      "path": "animations/ressources/AM3000E/runs/am3000e-lot5-current-20261011-v1",
+      "bytes": 1609,
+      "file_count": 1
+    },
+    {
+      "path": "animations/ressources/AM3016E/runs/am3016e-seedvr-apo8-spline-fit1-feather4-20260916",
+      "bytes": 210374711,
+      "file_count": 361
+    },
+    {
+      "path": "animations/ressources/AM3016G/runs/am3016g-seedvr-apo8-spline-fit1-feather4-20260916",
+      "bytes": 204052017,
+      "file_count": 337
+    },
+    {
+      "path": "animations/ressources/AM3016N/runs/am3016n-seedvr-apo8-spline-fit1-feather4-oval20x6-20260916",
+      "bytes": 177766772,
+      "file_count": 343
+    },
+    {
+      "path": "animations/ressources/AM3021D/runs/am3021d-apo8-x4-30fps-v2-spline-fit1-feather4-20260911",
+      "bytes": 22176716,
+      "file_count": 87
+    },
+    {
+      "path": "animations/ressources/AM3021E/runs/am3021e-apo8-x4-30fps-v2-spline-fit1-feather4-20260911",
+      "bytes": 22805494,
+      "file_count": 87
+    },
+    {
+      "path": "animations/ressources/AM3021F/runs/am3021f-apo8-x4-30fps-v2-spline-fit1-feather4-20260911",
+      "bytes": 22460173,
+      "file_count": 87
+    },
+    {
+      "path": "animations/ressources/AM307RED/runs/am307red-apo8-x4-30fps-collapse-holds-inner-contour-fade8-20260917",
+      "bytes": 11479050,
+      "file_count": 61
+    },
+    {
+      "path": "animations/ressources/AM4000Z/runs/am4000z-lot2-selection-accepted-20261011-v1",
+      "bytes": 1087,
+      "file_count": 1
+    },
+    {
+      "path": "animations/ressources/AM5000A/runs/ar5000-am5000a-try-in4out2-fe1-g0p75-rp5-20260923",
+      "bytes": 12980875,
+      "file_count": 17
+    },
+    {
+      "path": "animations/ressources/AM5000A/runs/ar5000-am5000a-try-sharp-in6out2-fe1p5-rp5-20260923",
+      "bytes": 12957293,
+      "file_count": 17
+    },
+    {
+      "path": "animations/ressources/AM5000A/runs/ar5000-am5000ab-contour-gauss1p5-safe4x1-x4-20260923",
+      "bytes": 13028091,
+      "file_count": 17
+    },
+    {
+      "path": "animations/ressources/AM5000A/runs/ar5000-am5000ab-test-fe1p5-out1p0-x4-20260923",
+      "bytes": 13027202,
+      "file_count": 17
+    },
+    {
+      "path": "animations/ressources/AM5000A/runs/ar5000-am5000ab-test-fiterror1p5-x4-20260923",
+      "bytes": 13028128,
+      "file_count": 17
+    },
+    {
+      "path": "animations/ressources/AM5000B/runs/ar5000-am5000ab-contour-gauss1p5-safe4x1-x4-20260923",
+      "bytes": 12903224,
+      "file_count": 17
+    },
+    {
+      "path": "animations/ressources/AM6200H/runs/am6200h-reboutcx-apo8-innerfade4-20260922",
+      "bytes": 30427862,
+      "file_count": 41
+    },
+    {
+      "path": "animations/ressources/AM6200H/runs/am6200h-reboutcx-apo8-spline-fit1-nofeather-20260922",
+      "bytes": 30190832,
+      "file_count": 43
+    },
+    {
+      "path": "animations/ressources/AM6200I/runs/am6200i-reboutcx-apo8-innerfade4-20260922",
+      "bytes": 27147061,
+      "file_count": 41
+    },
+    {
+      "path": "animations/ressources/AM6200I/runs/am6200i-reboutcx-apo8-spline-fit1-nofeather-20260922",
+      "bytes": 26241959,
+      "file_count": 43
+    },
+    {
+      "path": "animations/ressources/AM6200J/runs/am6200j-reboutcx-apo8-innerfade4-20260922",
+      "bytes": 24316665,
+      "file_count": 41
+    },
+    {
+      "path": "animations/ressources/AM6200J/runs/am6200j-reboutcx-apo8-spline-fit1-nofeather-20260922",
+      "bytes": 23790825,
+      "file_count": 43
+    },
+    {
+      "path": "animations/ressources/AM904TL1/runs/ar0904-tl1-canvas48-alpha-20260906",
+      "bytes": 3298649,
+      "file_count": 29
+    },
+    {
+      "path": "animations/ressources/AM904TL2/runs/ar0904-tl2-canvas48-alpha-20260906",
+      "bytes": 3203584,
+      "file_count": 29
+    },
+    {
+      "path": "animations/ressources/AM904TL3/runs/ar0904-tl3-canvas48-alpha-20260906",
+      "bytes": 4288971,
+      "file_count": 29
+    },
+    {
+      "path": "animations/ressources/AM904TL4/runs/ar0904-tl4-canvas48-alpha-20260906",
+      "bytes": 4420627,
+      "file_count": 20
+    },
+    {
+      "path": "animations/ressources/AMWRPGT1/runs/amwrpgt1-lot45-final-20261011-v1",
+      "bytes": 7105,
+      "file_count": 1
+    },
+    {
+      "path": "animations/ressources/BUBBLES2/runs/bubbles2-in-ar0411-30fps-v2",
+      "bytes": 67871195,
+      "file_count": 1282
+    },
+    {
+      "path": "animations/ressources/BUBBLES2/runs/bubbles2-in-ar0602-30fps-v2",
+      "bytes": 129716473,
+      "file_count": 1043
+    },
+    {
+      "path": "animations/ressources/BUBBLES2/runs/bubbles2-in-ar0603-30fps-v2",
+      "bytes": 166627326,
+      "file_count": 1062
+    },
+    {
+      "path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-nearest2-x4-30fps-v2",
+      "bytes": 20184494,
+      "file_count": 865
+    },
+    {
+      "path": "animations/ressources/FALL1A/runs/fall1a-spatial-seedvr2-7b-lab-x4-main-splinefit1-source-topgauss2d-s8-y340-x225-a12-20260905-212315",
+      "bytes": 37904664,
+      "file_count": 28
+    },
+    {
+      "path": "animations/ressources/FALL1A/runs/fall1a-spatial-seedvr2-7b-lab-x4-splinefit1-topgauss2d-s8-y340-x225-a12-20260905-211045",
+      "bytes": 37904666,
+      "file_count": 28
+    },
+    {
+      "path": "animations/ressources/FALL1A/runs/fall1a-spatial-seedvr2-7b-lab-x4-top-gaussian-s5-h340-t32-20260905-203255",
+      "bytes": 37761671,
+      "file_count": 28
+    },
+    {
+      "path": "animations/ressources/FALL1B/runs/fall1b-spatial-seedvr2-7b-lab-x4-splinefit1-20260906-010800",
+      "bytes": 30802309,
+      "file_count": 74
+    },
+    {
+      "path": "animations/ressources/FALL2/runs/fall2-spatial-seedvr2-7b-lab-x4-safe-spline8-6-top-left-gauss8-v2-20260906-014700",
+      "bytes": 21538834,
+      "file_count": 20
+    },
+    {
+      "path": "animations/ressources/FALL2/runs/fall2-spatial-seedvr2-7b-lab-x4-splinefit1-top-left-gauss8-20260906-011300",
+      "bytes": 21451108,
+      "file_count": 20
+    },
+    {
+      "path": "animations/ressources/FALL2/runs/fall2-spatial-spline-fit1-safe-boundary-bottom-sdf-reinforce-v1-20260906-001358-665987",
+      "bytes": 21576004,
+      "file_count": 20
+    },
+    {
+      "path": "animations/ressources/FALL3/runs/fall3-spatial-seedvr2-7b-lab-x4-splinefit1-multicomponent-20260906-010900",
+      "bytes": 38498712,
+      "file_count": 110
+    },
+    {
+      "path": "animations/ressources/FALL4/runs/fall4-spatial-seedvr2-7b-lab-x4-splinefit1-20260906-011100",
+      "bytes": 29227339,
+      "file_count": 38
+    },
+    {
+      "path": "animations/ressources/FALL5A/runs/fall5a-spatial-seedvr2-7b-lab-x4-splinefit1-20260906-011100",
+      "bytes": 20147333,
+      "file_count": 38
+    },
+    {
+      "path": "animations/ressources/FALL5B/runs/fall5b-spatial-seedvr2-7b-lab-x4-splinefit1-20260906-011200",
+      "bytes": 19407862,
+      "file_count": 38
+    },
+    {
+      "path": "animations/ressources/FALL5C/runs/fall5c-spatial-seedvr2-7b-lab-x4-splinefit1-20260906-012000",
+      "bytes": 10753928,
+      "file_count": 38
+    },
+    {
+      "path": "animations/ressources/FALL6/runs/fall6-spatial-seedvr2-7b-lab-x4-splinefit1-multicomponent-20260906-012000",
+      "bytes": 22777547,
+      "file_count": 56
+    },
+    {
+      "path": "animations/ressources/FALL6/runs/fall6-x4-painted-statue-occlusion-v3-20260906-043500",
+      "bytes": 22921469,
+      "file_count": 56
+    },
+    {
+      "path": "animations/ressources/FALLA1/runs/falla1-spatial-seedvr2-7b-lab-x4-safe-spline8-6-bottom-gauss12-v3-20260906-015300",
+      "bytes": 5583253,
+      "file_count": 20
+    },
+    {
+      "path": "animations/ressources/FALLA1/runs/falla1-spatial-seedvr2-7b-lab-x4-safe-spline8-6-gauss8-v2-20260906-014100",
+      "bytes": 5584736,
+      "file_count": 20
+    },
+    {
+      "path": "animations/ressources/FALLA1/runs/falla1-spatial-seedvr2-7b-lab-x4-splinefit1-bottom-right-gauss8-20260906-012000",
+      "bytes": 5597010,
+      "file_count": 20
+    },
+    {
+      "path": "animations/ressources/FALLA2/runs/falla2-spatial-seedvr2-7b-lab-x4-splinefit1-20260906-012100",
+      "bytes": 2060746,
+      "file_count": 20
+    },
+    {
+      "path": "animations/ressources/FLM2PUR/runs/flm2pur-lot45-final-20261011-v1",
+      "bytes": 1828,
+      "file_count": 1
+    },
+    {
+      "path": "animations/ressources/FLM2PUR/runs/flm2pur-lot5-current-20261011-v1",
+      "bytes": 1930,
+      "file_count": 1
+    },
+    {
+      "path": "animations/ressources/FLMM/runs/flmm-reboutcx-apo8-x4-30fps-v2-20260921.partial",
+      "bytes": 23833,
+      "file_count": 8
+    },
+    {
+      "path": "animations/ressources/FOUNT1/runs/fount1-xbr2x-noblur-x4-30fps-20260915",
+      "bytes": 6196111,
+      "file_count": 49
+    },
+    {
+      "path": "animations/ressources/FPIT1S/runs/fpit1s-xbr2x-nearest2-x4-30fps-v2-opaque-dilate-20260903",
+      "bytes": 1051513,
+      "file_count": 57
+    },
+    {
+      "path": "animations/ressources/FPIT1S/runs/fpit1s-xbr2x-xbr2x-x4-30fps-v2-opaque-dilate-20260903",
+      "bytes": 1076845,
+      "file_count": 57
+    },
+    {
+      "path": "animations/ressources/SPHINCT/runs/planar-sphinct-wed-crisp-20261010-v6",
+      "bytes": 180644009,
+      "file_count": 150
+    },
+    {
+      "path": "animations/runs/AM0205A-pod-interpolation-x4",
+      "bytes": 86292078,
+      "file_count": 95
+    },
+    {
+      "path": "animations/runs/AM0602C-eau-seedvr3b-x4-test",
+      "bytes": 16752646,
+      "file_count": 29
+    },
+    {
+      "path": "animations/runs/AM0602F-lanterne-alpha-feather-x4",
+      "bytes": 45253484,
+      "file_count": 44
+    },
+    {
+      "path": "animations/runs/AM0604A-contour-workshop",
+      "bytes": 25431,
+      "file_count": 6
+    },
+    {
+      "path": "animations/runs/AM0604A-manual-mask-r2",
+      "bytes": 3098,
+      "file_count": 1
+    },
+    {
+      "path": "animations/runs/AM0604A-silhouette-feather-x4",
+      "bytes": 8628950,
+      "file_count": 23
+    },
+    {
+      "path": "animations/runs/AM0604A-silhouette-feather-x4-r2",
+      "bytes": 8589824,
+      "file_count": 23
+    },
+    {
+      "path": "animations/runs/am0803-warmpatch-blur-workshop",
+      "bytes": 7234,
+      "file_count": 3
+    },
+    {
+      "path": "animations/runs/AM0900DM-inner-feather-4-x4",
+      "bytes": 77838885,
+      "file_count": 62
+    },
+    {
+      "path": "animations/runs/AM0900DM-inner-feather-8-x4",
+      "bytes": 78906124,
+      "file_count": 65
+    },
+    {
+      "path": "animations/runs/AM0900DM-occlusion-mask",
+      "bytes": 6557068,
+      "file_count": 7
+    },
+    {
+      "path": "animations/runs/am2201b-apo8-x4-30fps-v2-spline-fit1-feather0-20260902",
+      "bytes": 24930247,
+      "file_count": 35
+    },
+    {
+      "path": "animations/runs/am2201b-apo8-x4-30fps-v2-spline-fit1-feather3-20260902",
+      "bytes": 24898083,
+      "file_count": 35
+    },
+    {
+      "path": "animations/runs/am2201b-apo8-x4-30fps-v2-spline-fit1-feather4-20260901",
+      "bytes": 24908210,
+      "file_count": 35
+    },
+    {
+      "path": "animations/runs/am2201b-apo8-x4-30fps-v2-spline-fit1-gaussian0.5-20260902",
+      "bytes": 24955905,
+      "file_count": 35
+    },
+    {
+      "path": "animations/runs/AR0516-SPHINCT-lower-native-occlusion-reference-20260827",
+      "bytes": 2143325,
+      "file_count": 4
+    },
+    {
+      "path": "animations/runs/ar0516-sphinct-sphinct2-spline-fit1-inner8-alpha-30fps-v2",
+      "bytes": 432696920,
+      "file_count": 390
+    },
+    {
+      "path": "animations/runs/ar0516-sphinct-spline-fit1-inner8-alpha-30fps-v2",
+      "bytes": 433078030,
+      "file_count": 390
+    },
+    {
+      "path": "animations/runs/ar0602-with-bubbles2-merged",
+      "bytes": 110472273,
+      "file_count": 281
+    },
+    {
+      "path": "animations/runs/ar0604-spline-fit1-alpha-30fps-v2",
+      "bytes": 19277100,
+      "file_count": 42
+    },
+    {
+      "path": "animations/runs/ar0700-merge-lcut90-a",
+      "bytes": 102335734,
+      "file_count": 72
+    },
+    {
+      "path": "animations/runs/ar0700-merge-lcut90-b",
+      "bytes": 103978227,
+      "file_count": 87
+    },
+    {
+      "path": "animations/runs/ar0700-merge-lf40-a",
+      "bytes": 102335732,
+      "file_count": 72
+    },
+    {
+      "path": "animations/runs/ar0700-merge-lf40-b",
+      "bytes": 103978223,
+      "file_count": 87
+    },
+    {
+      "path": "animations/runs/ar0700-merge-lf64-a",
+      "bytes": 102335732,
+      "file_count": 72
+    },
+    {
+      "path": "animations/runs/ar0700-merge-lf64-b",
+      "bytes": 103978223,
+      "file_count": 87
+    },
+    {
+      "path": "animations/runs/AR1300-pont-levis-transition",
+      "bytes": 86089204,
+      "file_count": 12
+    },
+    {
+      "path": "animations/runs/butrfly-xbr2x-nearest2-x4-30fps-v2",
+      "bytes": 14887343,
+      "file_count": 153
+    },
+    {
+      "path": "animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-coreguard16-globalfade70-candidate",
+      "bytes": 30993605,
+      "file_count": 560
+    },
+    {
+      "path": "animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-feather4-candidate",
+      "bytes": 17778537,
+      "file_count": 346
+    },
+    {
+      "path": "animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-feather4-coreguard16-candidate",
+      "bytes": 17788807,
+      "file_count": 346
+    },
+    {
+      "path": "animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-coreguard16-globalfade70-candidate",
+      "bytes": 31200344,
+      "file_count": 560
+    },
+    {
+      "path": "animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-feather4-candidate",
+      "bytes": 17783634,
+      "file_count": 346
+    },
+    {
+      "path": "animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-feather4-coreguard16-candidate",
+      "bytes": 17783996,
+      "file_count": 346
+    },
+    {
+      "path": "animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-coreguard16-globalfade70-candidate",
+      "bytes": 30919818,
+      "file_count": 560
+    },
+    {
+      "path": "animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-feather4-candidate",
+      "bytes": 17837033,
+      "file_count": 346
+    },
+    {
+      "path": "animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-feather4-coreguard16-candidate",
+      "bytes": 17847071,
+      "file_count": 346
+    },
+    {
+      "path": "animations/runs/FIRE_1-lum64-144-radial",
+      "bytes": 2514887,
+      "file_count": 47
+    },
+    {
+      "path": "animations/runs/FIRE_1-lum90-radialtight",
+      "bytes": 2460638,
+      "file_count": 47
+    },
+    {
+      "path": "animations/runs/FIRE_1-lumcut-100",
+      "bytes": 2390018,
+      "file_count": 47
+    },
+    {
+      "path": "animations/runs/FIRE_1-lumcut-120",
+      "bytes": 2388022,
+      "file_count": 47
+    },
+    {
+      "path": "animations/runs/FIRE_1-lumcut-80",
+      "bytes": 2390460,
+      "file_count": 47
+    },
+    {
+      "path": "animations/runs/FIRE_1-lumcut-90",
+      "bytes": 2390931,
+      "file_count": 47
+    },
+    {
+      "path": "animations/runs/FIRE_1-luminance-feather-112-200",
+      "bytes": 2501105,
+      "file_count": 47
+    },
+    {
+      "path": "animations/runs/FIRE_1-luminance-feather-24-64",
+      "bytes": 2542131,
+      "file_count": 47
+    },
+    {
+      "path": "animations/runs/FIRE_1-luminance-feather-32-88",
+      "bytes": 2530761,
+      "file_count": 47
+    },
+    {
+      "path": "animations/runs/FIRE_1-luminance-feather-40-104",
+      "bytes": 2522232,
+      "file_count": 47
+    },
+    {
+      "path": "animations/runs/FIRE_1-luminance-feather-64-144",
+      "bytes": 2514623,
+      "file_count": 47
+    },
+    {
+      "path": "animations/runs/FIRE_1-luminance-feather-88-176",
+      "bytes": 2518093,
+      "file_count": 47
+    },
+    {
+      "path": "animations/runs/FIRE_1-radialonly",
+      "bytes": 2478592,
+      "file_count": 47
+    },
+    {
+      "path": "animations/runs/FIRE_4-lum64-144-radial",
+      "bytes": 538978,
+      "file_count": 44
+    },
+    {
+      "path": "animations/runs/FIRE_4-lum90-radialtight",
+      "bytes": 531352,
+      "file_count": 44
+    },
+    {
+      "path": "animations/runs/FIRE_4-lumcut-100",
+      "bytes": 514176,
+      "file_count": 44
+    },
+    {
+      "path": "animations/runs/FIRE_4-lumcut-120",
+      "bytes": 514020,
+      "file_count": 44
+    },
+    {
+      "path": "animations/runs/FIRE_4-lumcut-80",
+      "bytes": 514497,
+      "file_count": 44
+    },
+    {
+      "path": "animations/runs/FIRE_4-lumcut-90",
+      "bytes": 514473,
+      "file_count": 44
+    },
+    {
+      "path": "animations/runs/FIRE_4-luminance-feather-112-200",
+      "bytes": 537624,
+      "file_count": 44
+    },
+    {
+      "path": "animations/runs/FIRE_4-luminance-feather-24-64",
+      "bytes": 542607,
+      "file_count": 44
+    },
+    {
+      "path": "animations/runs/FIRE_4-luminance-feather-32-88",
+      "bytes": 541745,
+      "file_count": 44
+    },
+    {
+      "path": "animations/runs/FIRE_4-luminance-feather-40-104",
+      "bytes": 539735,
+      "file_count": 44
+    },
+    {
+      "path": "animations/runs/FIRE_4-luminance-feather-64-144",
+      "bytes": 537311,
+      "file_count": 44
+    },
+    {
+      "path": "animations/runs/FIRE_4-luminance-feather-88-176",
+      "bytes": 538853,
+      "file_count": 44
+    },
+    {
+      "path": "animations/runs/FIRE_4-radialonly",
+      "bytes": 544698,
+      "file_count": 44
+    },
+    {
+      "path": "animations/runs/FLAME2S-radial-B",
+      "bytes": 424844,
+      "file_count": 83
+    },
+    {
+      "path": "animations/runs/FLAME2S-radial-C",
+      "bytes": 428217,
+      "file_count": 83
+    },
+    {
+      "path": "animations/runs/fpit1s-rgb-neutral-zero-20260902",
+      "bytes": 2400,
+      "file_count": 2
+    },
+    {
+      "path": "animations/runs/interpolation-hold-rebuild-preparation-20260916",
+      "bytes": 22625,
+      "file_count": 2
+    },
+    {
+      "path": "animations/runs/MiniMax_H3_00161__frames",
+      "bytes": 119448733,
+      "file_count": 76
+    },
+    {
+      "path": "animations/runs/SPHINCT-SPHINCT2-spline-fit1-20260827",
+      "bytes": 14610,
+      "file_count": 2
+    },
+    {
+      "path": "animations/runs/SPHINCT-SPHINCT2-spline-fit1-inner8-20260827",
+      "bytes": 19027,
+      "file_count": 5
+    }
+  ]
+}

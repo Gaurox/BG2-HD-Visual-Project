@@ -1,0 +1,51 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-01T22:26:20.693902+00:00",
+  "input_mode": "per-frame-multi-contour-spline-alpha-on-timed-run",
+  "source_run": "G:/AI/BG2_Upscale/animations/runs/am2201b-apo8-x4-30fps-v2-20260901",
+  "source_run_manifest_sha256": "61a0cd0bcbcd357eba845691776d006917db88747ce3510e7b897d06c2ef2913",
+  "base_pack": "G:/AI/BG2_Upscale/animations/runs/am2201b-seedvr7b-lab-x4-20260901/03_runtime_pack",
+  "base_pack_manifest_sha256": "3532e665e71ce2d92969f864a6c53c2a1d19976ff18c2a5525dc42427827624b",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM2201B"
+  ],
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "778ae4c0b0223c8578903f9bff384d73f4c3adc4ceb9c1f60a21834c45ccea40",
+  "registry_sha256": "bb5fd1fa9fb6e92ff3b12d9b1e5d05427dade60836181a2e80e198b24d9b7c8f",
+  "reviews": [
+    {
+      "kind": "comparison-contact-sheet",
+      "file": "review/review-comparison-contact-sheet.png",
+      "sha256": "e5c1f984461f148c852b22a7b4f421b3b04cb74d3b4192677b568b5c52e1ba39"
+    },
+    {
+      "kind": "comparison-exact",
+      "file": "review/review-comparison-30fps-exact.mp4",
+      "sha256": "dc4b3c1953a3374651c70a70814ab423ffd237c8fc4b322bda93194b0d8cde2f"
+    },
+    {
+      "kind": "comparison-loop-4s",
+      "file": "review/review-comparison-30fps-loop-4s.mp4",
+      "sha256": "c9dfc5e9f8c57c4133669b410df8bf9c36316a1697d60fd0300d5a3ea0dec2b7"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval",
+  "per_frame_spline_alpha": {
+    "pipeline_name": "spline-fit1-multicontour-per-frame-feather4",
+    "pipeline_effects": [
+      "spline-fit1-multicontour-per-frame-feather4"
+    ],
+    "report": "spline-alpha-report.json",
+    "report_sha256": "722529e4198d23c47b0ce7829baf257ac37d0d9c7071b239ad41c05f1eef807b",
+    "installation": "not performed"
+  }
+}

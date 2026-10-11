@@ -1,0 +1,61 @@
+{
+  "status": "preview-only",
+  "installed": false,
+  "source": "WED polygon3 fixture, not actual native captured mask",
+  "frame": 8,
+  "frames": 49,
+  "methods": [
+    {
+      "id": "current",
+      "label": "Actuel : garde4 / fondu16",
+      "alpha_sum": 34117554.0,
+      "vs_current_alpha_loss_pct": 0.0,
+      "no_occluded_pixel_revealed": true
+    },
+    {
+      "id": "erode8",
+      "label": "Retrait renforcé : garde8 / fondu16",
+      "alpha_sum": 33805771.0,
+      "vs_current_alpha_loss_pct": 0.9138492167404477,
+      "no_occluded_pixel_revealed": true
+    },
+    {
+      "id": "spline1-g4-f4",
+      "label": "Spline Fit1 : garde4 / fondu4",
+      "alpha_sum": 34479321.0,
+      "vs_current_alpha_loss_pct": -1.0603544439322876,
+      "no_occluded_pixel_revealed": true,
+      "fit_error_x4": 1.0,
+      "spacing_x4": 1.5,
+      "supersampling": 4,
+      "guard_x4": 4,
+      "feather_x4": 4,
+      "positive_pixels_blocked_by_native": 229,
+      "blocked_max_coverage": 255,
+      "blocked_on_any_active_frame": 1,
+      "curve_samples": 9951,
+      "coordinate_space": "world x4; static across all frames"
+    },
+    {
+      "id": "spline1-g8-f8",
+      "label": "Spline Fit1 : garde8 / fondu8",
+      "alpha_sum": 34013986.0,
+      "vs_current_alpha_loss_pct": 0.30356220730243244,
+      "no_occluded_pixel_revealed": true,
+      "fit_error_x4": 1.0,
+      "spacing_x4": 1.5,
+      "supersampling": 4,
+      "guard_x4": 8,
+      "feather_x4": 8,
+      "positive_pixels_blocked_by_native": 2,
+      "blocked_max_coverage": 4,
+      "blocked_on_any_active_frame": 0,
+      "curve_samples": 9951,
+      "coordinate_space": "world x4; static across all frames"
+    }
+  ],
+  "note": "Fit1 = RMS spline smoothing parameter, not a certified max deviation bound; clamp to native mask prevents reveal.",
+  "recommendation": "spline1-g8-f8",
+  "recommendation_reason": "Smoother narrow transition; native hard gate clips no active pixel across49 frames; frame8 total alpha loss0.304pct vs current, vs0.914pct for erosion alone.",
+  "gpu": "NVIDIA GeForce RTX 5090/PCIe/SSE2"
+}

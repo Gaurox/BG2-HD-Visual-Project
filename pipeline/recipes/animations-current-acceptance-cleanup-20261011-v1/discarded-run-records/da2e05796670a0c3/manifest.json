@@ -1,0 +1,50 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-04T21:57:00.674481+00:00",
+  "plan_sha256": "453eee82a504cd4df4a8a24b1a968f3225ba82eee69e28c3f1d3c820290c7a41",
+  "input_mode": "spatial-v1",
+  "source_run": "G:/AI/BG2_Upscale/animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-nearest2-x4",
+  "source_run_manifest_sha256": "1fc01cf5129933086327a82ac86c39f85d18cba61d96a92fd1d1c46c41a48d4e",
+  "base_pack": "C:/Users/Adrien/AppData/Local/Temp/claude/G--AI-BG2-Upscale/15913c3c-9948-45a9-bc77-5d829d81a9e4/scratchpad/bubbles2-merge/merged-native-AR0602",
+  "base_pack_manifest_sha256": "aa81628aab20634faacfdcca9421a68ca600c6bc486ce53fa52cc69993d260ed",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "BUBBLES2"
+  ],
+  "topaz": {
+    "ffmpeg": "C:/Program Files/Topaz Labs LLC/Topaz Video AI/ffmpeg.exe",
+    "model_dir": "C:/ProgramData/Topaz Labs LLC/Topaz Video AI/models",
+    "model": "apo-8",
+    "device": "-2",
+    "replace_duplicate_threshold": -0.01,
+    "transparent_rgb_mode": "nearest-opaque-dilate"
+  },
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "d19127f95d2890d41aefafbb40d7a78e75710ec18788e903a847b7f1b5cf12d5",
+  "registry_sha256": "a43483c5bc55e2b865aad7d296b9c3b29c7dda8067aa27ec5ecbef9137848c44",
+  "reviews": [
+    {
+      "resref": "BUBBLES2",
+      "cycle": 0,
+      "kind": "exact",
+      "file": "work/BUBBLES2/cycle_000/review-30fps-exact.mp4",
+      "sha256": "b6b8c38d89509fedc48b61e99735a4868237f1ec33d31bac521a72a442bf3725"
+    },
+    {
+      "resref": "BUBBLES2",
+      "cycle": 0,
+      "kind": "loop-4s",
+      "file": "work/BUBBLES2/cycle_000/review-30fps-loop-4s.mp4",
+      "sha256": "554f91521040fd18184d9ff522202ceb2d85b2a103b6bec22146b3ccd863b32d"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval"
+}

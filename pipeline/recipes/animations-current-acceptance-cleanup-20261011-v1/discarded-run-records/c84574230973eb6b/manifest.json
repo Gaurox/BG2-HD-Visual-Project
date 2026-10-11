@@ -1,0 +1,23 @@
+{
+  "schema": "bg2-upscale-animation-visual-treatment-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T09:43:19.757336+00:00",
+  "resref": "AM0504SB",
+  "resrefs": [
+    "AM0504SB"
+  ],
+  "source_run": "animations/batches/lot2-seedvr7b-lab-x4-20261011-v1",
+  "output_split_root": "animations/packs-par-zone/lot2-seedvr-selected-20261011-v1-complete",
+  "source_pack": "animations/packs-par-zone/lot2-seedvr-selected-20261011-v1-complete/AR0504",
+  "source_pack_manifest_sha256": "dc836b511397debf216af57cb622beec2ac397c7c7987cba5d01a7bbc6232350",
+  "recipe": {
+    "spatial": "SeedVR2 7B INT8/LAB x4",
+    "seed": 20261011,
+    "inner_feather_x4": 12,
+    "playback": "Apollo8 30 FPS",
+    "rgb": "premultiply once"
+  },
+  "installation": "animations/batches/lot2-seedvr-selected-20261011-v1/installation.json",
+  "qa_status": "preview-selected-pending-ingame",
+  "release_status": "not-selected"
+}

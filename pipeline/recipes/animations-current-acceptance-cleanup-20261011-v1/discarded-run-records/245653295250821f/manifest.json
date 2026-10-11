@@ -1,0 +1,55 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-11T20:38:02.427487+00:00",
+  "input_mode": "per-frame-multi-contour-spline-alpha-on-timed-run",
+  "source_run": "G:/AI/BG2_Upscale/animations/batches/ar0411-planar-sphere-apo8-x4-30fps-spline-mac-feather4-20260911",
+  "source_run_manifest_sha256": "0c9e2885323dea6049e75b18c37da2295c1323ba83c84ff572ab7f4866042906",
+  "base_pack": "G:/AI/BG2_Upscale/animations/batches/ar0411-planar-sphere-seedvr7b-lab-x4-20260911/03_runtime_pack",
+  "base_pack_manifest_sha256": "555df27f5e3400704aa9c9c6c1f193ba9bd0f9d0416c83befcbfcaa3630ccbcb",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM411MAC",
+    "DSTDVL2B",
+    "DSTDVL2C"
+  ],
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "3ba389a8f9c267c4eec71b2c0800483b10a207fe375a354eb15e31d24560cb15",
+  "registry_sha256": "803557b9b67b1c34e0545c46c864a47b9400f5e56fa3cdcda54b624e932ce12f",
+  "reviews": [
+    {
+      "kind": "comparison-contact-sheet",
+      "file": "review/review-comparison-contact-sheet.png",
+      "sha256": "46993ff01309afa22881e7b407f217045cc186de04a2188ebcd366005ede1149"
+    },
+    {
+      "kind": "comparison-exact",
+      "file": "review/review-comparison-30fps-exact.mp4",
+      "sha256": "9a13b96cbcc44c8eaf10eff51a2f25e4f942afc5bd3373fcf4c2ee551a200697"
+    },
+    {
+      "kind": "comparison-loop-4s",
+      "file": "review/review-comparison-30fps-loop-4s.mp4",
+      "sha256": "e78d75140a237b880003c6e5298b8e00179b48455441b803545e4af67018e896"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval",
+  "per_frame_spline_alpha": {
+    "pipeline_name": "spline-fit1-multicontour-core-guard16",
+    "pipeline_effects": [
+      "spline-fit1-multicontour-per-frame-feather4",
+      "spline-fit1-multicontour-core-guard16",
+      "timeline-active-fade7-20-7"
+    ],
+    "report": "spline-alpha-report.json",
+    "report_sha256": "8eb12ffb3b35707a0a84a85fcb950730da78f381aac5fa9a7d214a1631787f8b",
+    "installation": "not performed"
+  }
+}

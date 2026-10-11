@@ -1,0 +1,109 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-07T21:45:08.563754+00:00",
+  "plan_sha256": "6a744912aaffd88a597276cc2ea716f5ad295349c16c2c8e12db5a472e2c6eeb",
+  "input_mode": "spatial-v1",
+  "source_run": "G:/AI/BG2_Upscale/animations/batches/ar2804-treelife-spatial-seedvr2-7b-lab-x4-20260907",
+  "source_run_manifest_sha256": "231a44f2e04f61aea1dbbdf227fa25c43bb40c073a7b5b34b6ff33be5b6b85a9",
+  "base_pack": "G:/AI/BG2_Upscale/animations/batches/ar2804-treelife-spatial-seedvr2-7b-lab-x4-20260907/03_runtime_pack",
+  "base_pack_manifest_sha256": "2c488da3a2b356207a0c38c92365de54a0e4196e877de131e78089b6920445b8",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM2805A",
+    "AM2805B",
+    "AM2805C"
+  ],
+  "timed_resource_variants": [
+    {
+      "resref": "AM2805A",
+      "variant_index": 0,
+      "position": null
+    },
+    {
+      "resref": "AM2805B",
+      "variant_index": 0,
+      "position": null
+    },
+    {
+      "resref": "AM2805C",
+      "variant_index": 0,
+      "position": null
+    }
+  ],
+  "topaz": {
+    "ffmpeg": "C:/Program Files/Topaz Labs LLC/Topaz Video AI/ffmpeg.exe",
+    "model_dir": "C:/ProgramData/Topaz Labs LLC/Topaz Video AI/models",
+    "model": "apo-8",
+    "device": "-2",
+    "replace_duplicate_threshold": -0.01,
+    "transparent_rgb_mode": "nearest-opaque-dilate"
+  },
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "5987c38d58190f9948fa9e988b2184670511fb9afd46df2487a5d37f842aee24",
+  "registry_sha256": "6fa093c5360116aa1a3051fb0ebb855420b675577618b180d93d8f27663446de",
+  "reviews": [
+    {
+      "resref": "AM2805A",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "exact",
+      "file": "work/AM2805A-v0/cycle_000/review-30fps-exact.mp4",
+      "sha256": "f7f4157c15b8bd2c8f2178727d80ff0300c6d26245e1d82482fa5b09d62dfdaf"
+    },
+    {
+      "resref": "AM2805A",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "loop-4s",
+      "file": "work/AM2805A-v0/cycle_000/review-30fps-loop-4s.mp4",
+      "sha256": "58ad238958c10510de1f6486aac3510517398c3d6db1266b92faa71b3e81e492"
+    },
+    {
+      "resref": "AM2805B",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "exact",
+      "file": "work/AM2805B-v0/cycle_000/review-30fps-exact.mp4",
+      "sha256": "c2e0c0297dec79d20818b6b52a3327e912b8d78f36f85c950ba01ed2ff5d2328"
+    },
+    {
+      "resref": "AM2805B",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "loop-4s",
+      "file": "work/AM2805B-v0/cycle_000/review-30fps-loop-4s.mp4",
+      "sha256": "3c3a0bb33233314c5fd58b0f00098445bca868f3ff5f3fb2566b0960da9f5453"
+    },
+    {
+      "resref": "AM2805C",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "exact",
+      "file": "work/AM2805C-v0/cycle_000/review-30fps-exact.mp4",
+      "sha256": "03fdc813502689731e8b06a6abea3efe8dac343dbfb2a9d74be185fbc4ed6683"
+    },
+    {
+      "resref": "AM2805C",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "loop-4s",
+      "file": "work/AM2805C-v0/cycle_000/review-30fps-loop-4s.mp4",
+      "sha256": "ffedec13b192158603f9fa81006b4a8cafbb398fa0f3ba352f05ae1520bde856"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval"
+}

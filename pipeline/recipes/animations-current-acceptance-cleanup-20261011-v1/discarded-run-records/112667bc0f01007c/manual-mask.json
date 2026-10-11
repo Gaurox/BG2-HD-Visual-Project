@@ -1,0 +1,22 @@
+{
+  "schema": "bg2-upscale-area-animation-manual-alpha-mask-v2",
+  "status": "completed",
+  "mask_storage": "run-relative-v1",
+  "targets": [
+    {
+      "resref": "AM2805C",
+      "mask_source": "manual-mask/AM2805C/source.png",
+      "mask_sha256": "12d25597f9cfa2b5a6d80f15c977d1c950eb56492d385783793cd1347a021225",
+      "mask_size_x4": [
+        896,
+        728
+      ],
+      "anchor_count": 7,
+      "masked_frame_count": 14
+    }
+  ],
+  "source_temporal_run": "G:/AI/BG2_Upscale/animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-20260907",
+  "source_temporal_run_manifest_sha256": "4274da5b68aed3703ffcf31ace280b1d06ac2c22651eb7e63e81648344b52118",
+  "alpha_formula": "alpha_final = alpha_source * grayscale_mask / 255",
+  "rgb_policy": "byte-identical"
+}

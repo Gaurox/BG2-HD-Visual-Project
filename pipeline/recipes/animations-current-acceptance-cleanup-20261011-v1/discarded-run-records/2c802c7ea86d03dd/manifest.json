@@ -1,0 +1,215 @@
+{
+  "schema": "bg2-upscale-animation-visual-treatment-v1",
+  "status": "completed",
+  "created_utc": "2026-09-17T18:08:32.117659+00:00",
+  "source_pack": "G:\\AI\\BG2_Upscale\\animations\\batches\\ar3017-main-apo8-x4-30fps-v2-20260917\\03_runtime_pack",
+  "source_pack_manifest_sha256": "930a9f18f21fa955a8c528f634dc4b3da90d5b8041220eb2694416eec52fadb7",
+  "runtime_pack": "03_runtime_pack",
+  "runtime_pack_manifest_sha256": "8a05efe5d2b1818228f58ad93cec3df30f01b6cda198e1de4d99c21a5b2f5382",
+  "resrefs": [
+    "AM3017A",
+    "AM3017B",
+    "AM3017C",
+    "AM3017D",
+    "AM3017E",
+    "AM3017F",
+    "AM3017G",
+    "AM3017H"
+  ],
+  "visual_treatment": {
+    "kind": "inner-contour-fade",
+    "curve": "smoothstep-distance-transform",
+    "radius_x4": 4.0,
+    "rgba_policy": "multiply-premultiplied-rgba",
+    "alpha_constraint": "final<=source"
+  },
+  "metrics": {
+    "AM3017A": {
+      "frame_count": 56,
+      "changed_frame_count": 56,
+      "alpha_sum_before": 3640600320,
+      "alpha_sum_after": 3556407344,
+      "fade_width_x4_min": null,
+      "fade_width_x4_max": null,
+      "inner_contour_radius_x4": 4.0,
+      "gaussian_padding_x4": 0,
+      "geometry_preserved": false
+    },
+    "AM3017B": {
+      "frame_count": 56,
+      "changed_frame_count": 56,
+      "alpha_sum_before": 3250356480,
+      "alpha_sum_after": 3162408704,
+      "fade_width_x4_min": null,
+      "fade_width_x4_max": null,
+      "inner_contour_radius_x4": 4.0,
+      "gaussian_padding_x4": 0,
+      "geometry_preserved": false
+    },
+    "AM3017C": {
+      "frame_count": 56,
+      "changed_frame_count": 56,
+      "alpha_sum_before": 4529844480,
+      "alpha_sum_after": 4437777568,
+      "fade_width_x4_min": null,
+      "fade_width_x4_max": null,
+      "inner_contour_radius_x4": 4.0,
+      "gaussian_padding_x4": 0,
+      "geometry_preserved": false
+    },
+    "AM3017D": {
+      "frame_count": 56,
+      "changed_frame_count": 56,
+      "alpha_sum_before": 5663562240,
+      "alpha_sum_after": 5557964496,
+      "fade_width_x4_min": null,
+      "fade_width_x4_max": null,
+      "inner_contour_radius_x4": 4.0,
+      "gaussian_padding_x4": 0,
+      "geometry_preserved": false
+    },
+    "AM3017E": {
+      "frame_count": 16,
+      "changed_frame_count": 16,
+      "alpha_sum_before": 95439360,
+      "alpha_sum_after": 88525920,
+      "fade_width_x4_min": null,
+      "fade_width_x4_max": null,
+      "inner_contour_radius_x4": 4.0,
+      "gaussian_padding_x4": 0,
+      "geometry_preserved": false
+    },
+    "AM3017F": {
+      "frame_count": 16,
+      "changed_frame_count": 16,
+      "alpha_sum_before": 178475520,
+      "alpha_sum_after": 169002752,
+      "fade_width_x4_min": null,
+      "fade_width_x4_max": null,
+      "inner_contour_radius_x4": 4.0,
+      "gaussian_padding_x4": 0,
+      "geometry_preserved": false
+    },
+    "AM3017G": {
+      "frame_count": 16,
+      "changed_frame_count": 16,
+      "alpha_sum_before": 125207040,
+      "alpha_sum_after": 117674848,
+      "fade_width_x4_min": null,
+      "fade_width_x4_max": null,
+      "inner_contour_radius_x4": 4.0,
+      "gaussian_padding_x4": 0,
+      "geometry_preserved": false
+    },
+    "AM3017H": {
+      "frame_count": 16,
+      "changed_frame_count": 16,
+      "alpha_sum_before": 123966720,
+      "alpha_sum_after": 116491232,
+      "fade_width_x4_min": null,
+      "fade_width_x4_max": null,
+      "inner_contour_radius_x4": 4.0,
+      "gaussian_padding_x4": 0,
+      "geometry_preserved": false
+    }
+  },
+  "reviews": [
+    {
+      "resref": "AM3017A",
+      "kind": "comparison-exact",
+      "file": "review/AM3017A/comparison-30fps-exact.mp4",
+      "sha256": "7d936ae8770c4a418a314645f838bc994d8a22ebc39047fdb137b0299483f0e2"
+    },
+    {
+      "resref": "AM3017A",
+      "kind": "comparison-loop-4s",
+      "file": "review/AM3017A/comparison-30fps-loop-4s.mp4",
+      "sha256": "e715db917041816912556163b603c324974f030cce66e26ea0b72d4181a5c45b"
+    },
+    {
+      "resref": "AM3017B",
+      "kind": "comparison-exact",
+      "file": "review/AM3017B/comparison-30fps-exact.mp4",
+      "sha256": "99ce9fe501153fe40b0dcdd43a765c46dd5e3ec7afdefdb62aca8bb4a121a3cd"
+    },
+    {
+      "resref": "AM3017B",
+      "kind": "comparison-loop-4s",
+      "file": "review/AM3017B/comparison-30fps-loop-4s.mp4",
+      "sha256": "1277c51b25950dd773e2d0fbe7b548aaa510893fcc5230ab07b78994a163fcf9"
+    },
+    {
+      "resref": "AM3017C",
+      "kind": "comparison-exact",
+      "file": "review/AM3017C/comparison-30fps-exact.mp4",
+      "sha256": "aa17dd134840d1e0e0446597e0daf5bb457eff8ef24ac2348d395de76d0439b8"
+    },
+    {
+      "resref": "AM3017C",
+      "kind": "comparison-loop-4s",
+      "file": "review/AM3017C/comparison-30fps-loop-4s.mp4",
+      "sha256": "3b501d100428c04dc745153c3c7b458c891ca2385ac879a5d1c63de6620d5371"
+    },
+    {
+      "resref": "AM3017D",
+      "kind": "comparison-exact",
+      "file": "review/AM3017D/comparison-30fps-exact.mp4",
+      "sha256": "554e1fed75e09f8bb48da60ef596cd61c30d399f7c9a9724885db0c3a54c54b3"
+    },
+    {
+      "resref": "AM3017D",
+      "kind": "comparison-loop-4s",
+      "file": "review/AM3017D/comparison-30fps-loop-4s.mp4",
+      "sha256": "7ee2be7c226cbf6c8342490fd35dfe1129387d6b1f3f5965e4fe3b5e72faacaf"
+    },
+    {
+      "resref": "AM3017E",
+      "kind": "comparison-exact",
+      "file": "review/AM3017E/comparison-30fps-exact.mp4",
+      "sha256": "e765f0f84cc78a405cb9fec5b5b16eef5e25eac310fe933716bce9a4b635a0c1"
+    },
+    {
+      "resref": "AM3017E",
+      "kind": "comparison-loop-4s",
+      "file": "review/AM3017E/comparison-30fps-loop-4s.mp4",
+      "sha256": "2f1b184c83f86d7898526326a4ca928d4f3577b76b0436ef87239fb75c92cacc"
+    },
+    {
+      "resref": "AM3017F",
+      "kind": "comparison-exact",
+      "file": "review/AM3017F/comparison-30fps-exact.mp4",
+      "sha256": "93e4e813c27e5dfa253313ec7b310a3796d0ff69a22d730e2dee1762fd578935"
+    },
+    {
+      "resref": "AM3017F",
+      "kind": "comparison-loop-4s",
+      "file": "review/AM3017F/comparison-30fps-loop-4s.mp4",
+      "sha256": "e0c7b76e154cd180621a8299d53e325d57fce7b13683d5377658ad841fab2ab9"
+    },
+    {
+      "resref": "AM3017G",
+      "kind": "comparison-exact",
+      "file": "review/AM3017G/comparison-30fps-exact.mp4",
+      "sha256": "0caa623298dff97e619279028552891bfff3427014cbf04f0c58e0dad422b040"
+    },
+    {
+      "resref": "AM3017G",
+      "kind": "comparison-loop-4s",
+      "file": "review/AM3017G/comparison-30fps-loop-4s.mp4",
+      "sha256": "a99dac01278efd57d60ffc68a011477681be5bd0636d1be5ae0b756668ab066f"
+    },
+    {
+      "resref": "AM3017H",
+      "kind": "comparison-exact",
+      "file": "review/AM3017H/comparison-30fps-exact.mp4",
+      "sha256": "826ace4157b23c82f6aff698e8b2ea86bd17197e14a9fa4260da76afd6b4ab8c"
+    },
+    {
+      "resref": "AM3017H",
+      "kind": "comparison-loop-4s",
+      "file": "review/AM3017H/comparison-30fps-loop-4s.mp4",
+      "sha256": "af369cb99b951bab97d75e2cfa5a170aeaa2d4016652a371d57b6e53da99452b"
+    }
+  ],
+  "qa": "explicit visual approval required before installation"
+}

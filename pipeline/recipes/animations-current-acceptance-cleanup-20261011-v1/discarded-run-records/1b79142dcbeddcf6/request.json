@@ -1,0 +1,4235 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-plan-v2",
+  "status": "proposed",
+  "input_mode": "spatial-v1",
+  "source_run": "G:/AI/BG2_Upscale/animations/batches/ar3017-complete-seedvr7b-lab-x4-20260917",
+  "source_run_manifest_sha256": "92786908e40fef76799649565defe9337af26b598db173db4b44ccf31054cd5f",
+  "base_pack": "G:/AI/BG2_Upscale/animations/batches/ar3017-complete-seedvr7b-lab-x4-20260917/03_runtime_pack",
+  "base_pack_schema": "bg2-upscale-area-animation-runtime-pack-v1",
+  "base_pack_manifest_sha256": "005df6060b3bb7aec2c6066609de5c258be8a684e0eb3226b9237c05d671692b",
+  "base_registry_sha256": "8fedfe39c3bcaf55aa1f67a75d794eaf1f93271d1218dc24ae90221e5438d8ea",
+  "scale": 4,
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "topaz": {
+    "model": "apo-8",
+    "replace_duplicate_threshold": -0.01,
+    "transparent_rgb_mode": "nearest-opaque-dilate",
+    "loop_strategy": "append first source slot once; no cyclic-context extrapolation"
+  },
+  "alpha_policy": "hold exact alpha of the current native (left) slot",
+  "geometry_policy": "crop the aligned interpolation with the current native slot geometry",
+  "targets": [
+    {
+      "resref": "AM3017A",
+      "variant_index": 0,
+      "position": null,
+      "resource_key": "AM3017A-v0",
+      "geometry_mode": "uniform",
+      "input_mode": "spatial-v1",
+      "aligned_size_x4": [
+        532,
+        700
+      ],
+      "base_frame_count": 8,
+      "output_frame_count": 57,
+      "cycle_count": 4,
+      "added_intermediate_frames": 49,
+      "added_raw_bytes": 72990400,
+      "source": {
+        "run_manifest_sha256": "92786908e40fef76799649565defe9337af26b598db173db4b44ccf31054cd5f",
+        "frame_manifest_sha256": "e4de84082845a6d96fad4f3483cceb2733f7e4f403e48bcfe913d28ce1f3b441",
+        "upscale_manifest_sha256": "d1b4121a573f9a9b3f2cfd5b208d29db6e8411ca8a22343d329cc7f9e79a4451",
+        "aligned_rgba_sha256": [
+          "9c565dc1913346c5243167caa6f650e43675b580debdabb21aa2e31942319b05",
+          "cf6514c9046405012a6388dd86525f77636e9bb0774df6cc32e2ca1538dab844",
+          "b779412cbc239dfef3675d6b3f5ee7afd3d0446dfa1fcd59fef95bc6b7aba87a",
+          "bb2ddaea576219309efb557fefa65d5ef95f63fec206476d439bdc27701fde6e",
+          "3420c8a81b0a0037fcc1ca2de1bd4bc988335ea692d673b179a00b9bddcbd80d",
+          "8b77545ffff72dab73009bcf382d94514c4cd4f7555d9248252b86193a20fe2d",
+          "1aaaa4779e0c54d403c02d11273976f06153dc1c51ae197fd96fa61ad45df288",
+          "6d520f6a5442727aac6cbecf6ebd20135319d53e9bfd36c23d11c2d786780ebe"
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": true,
+            "reuses_frame_in_multiple_runs": false,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0
+          ],
+          "intermediate_frame_indices": [
+            8
+          ],
+          "timeline_frame_indices": [
+            0,
+            8
+          ],
+          "native_slots": 1,
+          "timeline_phases": 2,
+          "duration_seconds": 0.06666666666666667
+        },
+        {
+          "cycle": 1,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": true,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            6,
+            5,
+            4,
+            3,
+            2,
+            1
+          ],
+          "intermediate_frame_indices": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22
+          ],
+          "timeline_frame_indices": [
+            0,
+            9,
+            1,
+            10,
+            2,
+            11,
+            3,
+            12,
+            4,
+            13,
+            5,
+            14,
+            6,
+            15,
+            7,
+            16,
+            6,
+            17,
+            5,
+            18,
+            4,
+            19,
+            3,
+            20,
+            2,
+            21,
+            1,
+            22
+          ],
+          "native_slots": 14,
+          "timeline_phases": 28,
+          "duration_seconds": 0.9333333333333333
+        },
+        {
+          "cycle": 2,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": true,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            2,
+            4,
+            6,
+            4,
+            2
+          ],
+          "intermediate_frame_indices": [
+            23,
+            24,
+            25,
+            26,
+            27,
+            28
+          ],
+          "timeline_frame_indices": [
+            0,
+            23,
+            2,
+            24,
+            4,
+            25,
+            6,
+            26,
+            4,
+            27,
+            2,
+            28
+          ],
+          "native_slots": 6,
+          "timeline_phases": 12,
+          "duration_seconds": 0.4
+        },
+        {
+          "cycle": 3,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 2
+              }
+            ],
+            "has_consecutive_duplicates": true,
+            "uniform_run_lengths": true,
+            "hold_slots": 2,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": true,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            0,
+            1,
+            1,
+            2,
+            2,
+            3,
+            3,
+            4,
+            4,
+            5,
+            5,
+            6,
+            6,
+            7,
+            7,
+            6,
+            6,
+            5,
+            5,
+            4,
+            4,
+            3,
+            3,
+            2,
+            2,
+            1,
+            1
+          ],
+          "intermediate_frame_indices": [
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56
+          ],
+          "timeline_frame_indices": [
+            0,
+            29,
+            0,
+            30,
+            1,
+            31,
+            1,
+            32,
+            2,
+            33,
+            2,
+            34,
+            3,
+            35,
+            3,
+            36,
+            4,
+            37,
+            4,
+            38,
+            5,
+            39,
+            5,
+            40,
+            6,
+            41,
+            6,
+            42,
+            7,
+            43,
+            7,
+            44,
+            6,
+            45,
+            6,
+            46,
+            5,
+            47,
+            5,
+            48,
+            4,
+            49,
+            4,
+            50,
+            3,
+            51,
+            3,
+            52,
+            2,
+            53,
+            2,
+            54,
+            1,
+            55,
+            1,
+            56
+          ],
+          "native_slots": 28,
+          "timeline_phases": 56,
+          "duration_seconds": 1.8666666666666667
+        }
+      ]
+    },
+    {
+      "resref": "AM3017B",
+      "variant_index": 0,
+      "position": null,
+      "resource_key": "AM3017B-v0",
+      "geometry_mode": "uniform",
+      "input_mode": "spatial-v1",
+      "aligned_size_x4": [
+        480,
+        688
+      ],
+      "base_frame_count": 8,
+      "output_frame_count": 57,
+      "cycle_count": 4,
+      "added_intermediate_frames": 49,
+      "added_raw_bytes": 64727040,
+      "source": {
+        "run_manifest_sha256": "92786908e40fef76799649565defe9337af26b598db173db4b44ccf31054cd5f",
+        "frame_manifest_sha256": "8d593c091af7090b9b6059cbd1319e88566e440d5ca75f423c79e90fe3a575e0",
+        "upscale_manifest_sha256": "d3b8860bca0df28af9968a5b8beabfbb83a054e6fab9e5618e4e1a6240336e42",
+        "aligned_rgba_sha256": [
+          "37ab94dcab5822a6a4347848c3f0a5ba65fe169b3d5dae5e3e4ce55fbc0904a8",
+          "0b78af5f6b02a7bc5084801119838bad934111a472722d35c618f3360de9d74d",
+          "a92d2068fe917ebb86a9f5279d8054bddf6f68e4b1b62959f2a92c348d071e49",
+          "31d263ac3e2a5641abebd3eed13cd8af825a82b3f5422919fa196f644528251c",
+          "65fb1e9b8b358427211f7d1d474a7d4719a87c9f594b44ac0317493e0a92a28e",
+          "347daf2dad3a9b0a447bb28bce46f9dc646bef2b2dd97d900952790e3b3ee409",
+          "d6c50c275a02a4b96bd2bd377404da2b2a341f386dc46b9b6047bd7d1eb4a57d",
+          "f5215abc650257de00b4865e7b31212fe1c67e0627f288aea8b17d4680a68e35"
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": true,
+            "reuses_frame_in_multiple_runs": false,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0
+          ],
+          "intermediate_frame_indices": [
+            8
+          ],
+          "timeline_frame_indices": [
+            0,
+            8
+          ],
+          "native_slots": 1,
+          "timeline_phases": 2,
+          "duration_seconds": 0.06666666666666667
+        },
+        {
+          "cycle": 1,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": true,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            6,
+            5,
+            4,
+            3,
+            2,
+            1
+          ],
+          "intermediate_frame_indices": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22
+          ],
+          "timeline_frame_indices": [
+            0,
+            9,
+            1,
+            10,
+            2,
+            11,
+            3,
+            12,
+            4,
+            13,
+            5,
+            14,
+            6,
+            15,
+            7,
+            16,
+            6,
+            17,
+            5,
+            18,
+            4,
+            19,
+            3,
+            20,
+            2,
+            21,
+            1,
+            22
+          ],
+          "native_slots": 14,
+          "timeline_phases": 28,
+          "duration_seconds": 0.9333333333333333
+        },
+        {
+          "cycle": 2,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": true,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            2,
+            4,
+            6,
+            4,
+            2
+          ],
+          "intermediate_frame_indices": [
+            23,
+            24,
+            25,
+            26,
+            27,
+            28
+          ],
+          "timeline_frame_indices": [
+            0,
+            23,
+            2,
+            24,
+            4,
+            25,
+            6,
+            26,
+            4,
+            27,
+            2,
+            28
+          ],
+          "native_slots": 6,
+          "timeline_phases": 12,
+          "duration_seconds": 0.4
+        },
+        {
+          "cycle": 3,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 2
+              }
+            ],
+            "has_consecutive_duplicates": true,
+            "uniform_run_lengths": true,
+            "hold_slots": 2,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": true,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            0,
+            1,
+            1,
+            2,
+            2,
+            3,
+            3,
+            4,
+            4,
+            5,
+            5,
+            6,
+            6,
+            7,
+            7,
+            6,
+            6,
+            5,
+            5,
+            4,
+            4,
+            3,
+            3,
+            2,
+            2,
+            1,
+            1
+          ],
+          "intermediate_frame_indices": [
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56
+          ],
+          "timeline_frame_indices": [
+            0,
+            29,
+            0,
+            30,
+            1,
+            31,
+            1,
+            32,
+            2,
+            33,
+            2,
+            34,
+            3,
+            35,
+            3,
+            36,
+            4,
+            37,
+            4,
+            38,
+            5,
+            39,
+            5,
+            40,
+            6,
+            41,
+            6,
+            42,
+            7,
+            43,
+            7,
+            44,
+            6,
+            45,
+            6,
+            46,
+            5,
+            47,
+            5,
+            48,
+            4,
+            49,
+            4,
+            50,
+            3,
+            51,
+            3,
+            52,
+            2,
+            53,
+            2,
+            54,
+            1,
+            55,
+            1,
+            56
+          ],
+          "native_slots": 28,
+          "timeline_phases": 56,
+          "duration_seconds": 1.8666666666666667
+        }
+      ]
+    },
+    {
+      "resref": "AM3017C",
+      "variant_index": 0,
+      "position": null,
+      "resource_key": "AM3017C-v0",
+      "geometry_mode": "uniform",
+      "input_mode": "spatial-v1",
+      "aligned_size_x4": [
+        668,
+        696
+      ],
+      "base_frame_count": 8,
+      "output_frame_count": 57,
+      "cycle_count": 4,
+      "added_intermediate_frames": 49,
+      "added_raw_bytes": 91125888,
+      "source": {
+        "run_manifest_sha256": "92786908e40fef76799649565defe9337af26b598db173db4b44ccf31054cd5f",
+        "frame_manifest_sha256": "cafa4830c42fb24541497dac76ce9e78024c15f4cac8b1d4199623d4b9ceed2f",
+        "upscale_manifest_sha256": "b281f0c6c5d7ff22d89cfeef9bca73e619f8d9f58384c57ef6604f62f9b913d7",
+        "aligned_rgba_sha256": [
+          "87135866b28e735b8449e1cad9dd856f12e25ff4dc393131f5c24cd965c30119",
+          "5cc5d704a7f2c704a639088af7fa24e89ad82e4060a6ba738c7a521b7461f8f0",
+          "30c6aefc7ee95cfb898d7317700a7b87ac1a0ab2c13002cc02fa01ea0bdee3cc",
+          "3abc140f5b4e2042f6861facb09e9bc420e2537a80effc62c4da150b5163ef4b",
+          "401d75cc4b20d22745683c284353c1336e88e31a0d729eb1f25714107bdb4ec1",
+          "871ba2bc7bb72912ddae06b259606ff5ce076ebb5da3ad0bccb6b2048118a8ec",
+          "e0df76bd8fd8f26aa64379285d6a300a8bbb347fc20482448eed0e9957b54bca",
+          "bc9a35225a483caf0ece03e8e6368b5682bdb6eeb7b9179301ca2bb7baa9dd45"
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": true,
+            "reuses_frame_in_multiple_runs": false,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0
+          ],
+          "intermediate_frame_indices": [
+            8
+          ],
+          "timeline_frame_indices": [
+            0,
+            8
+          ],
+          "native_slots": 1,
+          "timeline_phases": 2,
+          "duration_seconds": 0.06666666666666667
+        },
+        {
+          "cycle": 1,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": true,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            6,
+            5,
+            4,
+            3,
+            2,
+            1
+          ],
+          "intermediate_frame_indices": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22
+          ],
+          "timeline_frame_indices": [
+            0,
+            9,
+            1,
+            10,
+            2,
+            11,
+            3,
+            12,
+            4,
+            13,
+            5,
+            14,
+            6,
+            15,
+            7,
+            16,
+            6,
+            17,
+            5,
+            18,
+            4,
+            19,
+            3,
+            20,
+            2,
+            21,
+            1,
+            22
+          ],
+          "native_slots": 14,
+          "timeline_phases": 28,
+          "duration_seconds": 0.9333333333333333
+        },
+        {
+          "cycle": 2,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": true,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            2,
+            4,
+            6,
+            4,
+            2
+          ],
+          "intermediate_frame_indices": [
+            23,
+            24,
+            25,
+            26,
+            27,
+            28
+          ],
+          "timeline_frame_indices": [
+            0,
+            23,
+            2,
+            24,
+            4,
+            25,
+            6,
+            26,
+            4,
+            27,
+            2,
+            28
+          ],
+          "native_slots": 6,
+          "timeline_phases": 12,
+          "duration_seconds": 0.4
+        },
+        {
+          "cycle": 3,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 2
+              }
+            ],
+            "has_consecutive_duplicates": true,
+            "uniform_run_lengths": true,
+            "hold_slots": 2,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": true,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            0,
+            1,
+            1,
+            2,
+            2,
+            3,
+            3,
+            4,
+            4,
+            5,
+            5,
+            6,
+            6,
+            7,
+            7,
+            6,
+            6,
+            5,
+            5,
+            4,
+            4,
+            3,
+            3,
+            2,
+            2,
+            1,
+            1
+          ],
+          "intermediate_frame_indices": [
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56
+          ],
+          "timeline_frame_indices": [
+            0,
+            29,
+            0,
+            30,
+            1,
+            31,
+            1,
+            32,
+            2,
+            33,
+            2,
+            34,
+            3,
+            35,
+            3,
+            36,
+            4,
+            37,
+            4,
+            38,
+            5,
+            39,
+            5,
+            40,
+            6,
+            41,
+            6,
+            42,
+            7,
+            43,
+            7,
+            44,
+            6,
+            45,
+            6,
+            46,
+            5,
+            47,
+            5,
+            48,
+            4,
+            49,
+            4,
+            50,
+            3,
+            51,
+            3,
+            52,
+            2,
+            53,
+            2,
+            54,
+            1,
+            55,
+            1,
+            56
+          ],
+          "native_slots": 28,
+          "timeline_phases": 56,
+          "duration_seconds": 1.8666666666666667
+        }
+      ]
+    },
+    {
+      "resref": "AM3017D",
+      "variant_index": 0,
+      "position": null,
+      "resource_key": "AM3017D-v0",
+      "geometry_mode": "uniform",
+      "input_mode": "spatial-v1",
+      "aligned_size_x4": [
+        540,
+        936
+      ],
+      "base_frame_count": 8,
+      "output_frame_count": 57,
+      "cycle_count": 4,
+      "added_intermediate_frames": 49,
+      "added_raw_bytes": 99066240,
+      "source": {
+        "run_manifest_sha256": "92786908e40fef76799649565defe9337af26b598db173db4b44ccf31054cd5f",
+        "frame_manifest_sha256": "dbd1c18c282f5141f9234e02385f4145b4cfa3123ba767ee140dc1207c03d92d",
+        "upscale_manifest_sha256": "cf52f63ef4ee0d369d7624eea58c0de6578f1c253141d4a35fb4b743aa437bea",
+        "aligned_rgba_sha256": [
+          "28642450a6f6fc0d7c8f4aa633be70f5c07d57e3dbc7c4df7bec2582dfcc4920",
+          "825d3a74709b2e7da36d61284a3e42384c1e9058e7c6aa96b9680279c8631d52",
+          "2d292157e6fee8b2e17fb194a1fb221999a3da704d86002574f77af068037ee4",
+          "961f7c876882bcbda7c8541b57b75483382fea87bd5545ffcfd4cba4430f76ed",
+          "a505bc830f816839e37982ee0c8fb3945b90be7181eee13842d88df23dd9c8f1",
+          "d4257b84400f98a1239a5e135bcca59417c7b3b1fd06f0cff4582a400f8472b0",
+          "8836f2cdb752a7cfb9d228a4827d6b4c79f6a44be45b3790850488b1242ce0b1",
+          "a094dba6342f64cdbfeebf1ae52a5664ec06833b37b37d354390bab7212b380f"
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": true,
+            "reuses_frame_in_multiple_runs": false,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0
+          ],
+          "intermediate_frame_indices": [
+            8
+          ],
+          "timeline_frame_indices": [
+            0,
+            8
+          ],
+          "native_slots": 1,
+          "timeline_phases": 2,
+          "duration_seconds": 0.06666666666666667
+        },
+        {
+          "cycle": 1,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": true,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            6,
+            5,
+            4,
+            3,
+            2,
+            1
+          ],
+          "intermediate_frame_indices": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22
+          ],
+          "timeline_frame_indices": [
+            0,
+            9,
+            1,
+            10,
+            2,
+            11,
+            3,
+            12,
+            4,
+            13,
+            5,
+            14,
+            6,
+            15,
+            7,
+            16,
+            6,
+            17,
+            5,
+            18,
+            4,
+            19,
+            3,
+            20,
+            2,
+            21,
+            1,
+            22
+          ],
+          "native_slots": 14,
+          "timeline_phases": 28,
+          "duration_seconds": 0.9333333333333333
+        },
+        {
+          "cycle": 2,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": true,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            2,
+            4,
+            6,
+            4,
+            2
+          ],
+          "intermediate_frame_indices": [
+            23,
+            24,
+            25,
+            26,
+            27,
+            28
+          ],
+          "timeline_frame_indices": [
+            0,
+            23,
+            2,
+            24,
+            4,
+            25,
+            6,
+            26,
+            4,
+            27,
+            2,
+            28
+          ],
+          "native_slots": 6,
+          "timeline_phases": 12,
+          "duration_seconds": 0.4
+        },
+        {
+          "cycle": 3,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 2
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 2
+              }
+            ],
+            "has_consecutive_duplicates": true,
+            "uniform_run_lengths": true,
+            "hold_slots": 2,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": true,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            0,
+            1,
+            1,
+            2,
+            2,
+            3,
+            3,
+            4,
+            4,
+            5,
+            5,
+            6,
+            6,
+            7,
+            7,
+            6,
+            6,
+            5,
+            5,
+            4,
+            4,
+            3,
+            3,
+            2,
+            2,
+            1,
+            1
+          ],
+          "intermediate_frame_indices": [
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56
+          ],
+          "timeline_frame_indices": [
+            0,
+            29,
+            0,
+            30,
+            1,
+            31,
+            1,
+            32,
+            2,
+            33,
+            2,
+            34,
+            3,
+            35,
+            3,
+            36,
+            4,
+            37,
+            4,
+            38,
+            5,
+            39,
+            5,
+            40,
+            6,
+            41,
+            6,
+            42,
+            7,
+            43,
+            7,
+            44,
+            6,
+            45,
+            6,
+            46,
+            5,
+            47,
+            5,
+            48,
+            4,
+            49,
+            4,
+            50,
+            3,
+            51,
+            3,
+            52,
+            2,
+            53,
+            2,
+            54,
+            1,
+            55,
+            1,
+            56
+          ],
+          "native_slots": 28,
+          "timeline_phases": 56,
+          "duration_seconds": 1.8666666666666667
+        }
+      ]
+    },
+    {
+      "resref": "AM3017E",
+      "variant_index": 0,
+      "position": null,
+      "resource_key": "AM3017E-v0",
+      "geometry_mode": "uniform",
+      "input_mode": "spatial-v1",
+      "aligned_size_x4": [
+        220,
+        148
+      ],
+      "base_frame_count": 8,
+      "output_frame_count": 16,
+      "cycle_count": 1,
+      "added_intermediate_frames": 8,
+      "added_raw_bytes": 1041920,
+      "source": {
+        "run_manifest_sha256": "92786908e40fef76799649565defe9337af26b598db173db4b44ccf31054cd5f",
+        "frame_manifest_sha256": "000b1383cb8114b45ae403721fbe433e2dd75cb2a05edba30b92b252e30b8106",
+        "upscale_manifest_sha256": "10a3f70e8fb62332c9c5762c11d332362aaeb133a1cba844458feace6a6781e1",
+        "aligned_rgba_sha256": [
+          "fa0ad57453e8d308bc1df3c86298f036699b8eb9e57b3c0f69af1a28eb12b1a4",
+          "6444d7b6a9d3c79286729603f22f1ddcb96567e064d9f9d0d8900e1070216703",
+          "1d2686fa0431eaf8dd3af7411bb67686aaa3098f34eeb95798b18e1038e273ea",
+          "7d51c1a060c447c7727ea171bee4ef88a2fa0126c5412887366d08c36cd43683",
+          "00ff3d547175260b186507e9d68d93d500e492c7c1a3b369157e2836ba6a373a",
+          "07515638ec83dae616d87f55d207929287f2bf6dbaf655d6026ecd402936e7d2",
+          "0ccfef6e1a17d6388f871a25b4f14afe69f4ce42cf5331f1a4552bd69d379c34",
+          "f3b2c702d1123238a1a6e812086b6047054b518b508f8bbea56800560c32f8f3"
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": false,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "intermediate_frame_indices": [
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "timeline_frame_indices": [
+            0,
+            8,
+            1,
+            9,
+            2,
+            10,
+            3,
+            11,
+            4,
+            12,
+            5,
+            13,
+            6,
+            14,
+            7,
+            15
+          ],
+          "native_slots": 8,
+          "timeline_phases": 16,
+          "duration_seconds": 0.5333333333333333
+        }
+      ]
+    },
+    {
+      "resref": "AM3017F",
+      "variant_index": 0,
+      "position": null,
+      "resource_key": "AM3017F-v0",
+      "geometry_mode": "uniform",
+      "input_mode": "spatial-v1",
+      "aligned_size_x4": [
+        288,
+        212
+      ],
+      "base_frame_count": 8,
+      "output_frame_count": 16,
+      "cycle_count": 1,
+      "added_intermediate_frames": 8,
+      "added_raw_bytes": 1953792,
+      "source": {
+        "run_manifest_sha256": "92786908e40fef76799649565defe9337af26b598db173db4b44ccf31054cd5f",
+        "frame_manifest_sha256": "1bd761d9a581a341295b1067ab4857c5c82e0f0edbac2c5ee8a40872b1c00e29",
+        "upscale_manifest_sha256": "6d3f259e178e2c05c88d82069bf127c1f72a7b0a03f048b8af2877886d05c750",
+        "aligned_rgba_sha256": [
+          "7b4b4caddc07b9aa5518dae67b2e28e2ae7e7dcf96677ba7ef83d8abaf595d0a",
+          "ed9706add85a6fcee4892fcfe15407983ca0c3e8756a9be730d62300897e9d2a",
+          "bb741bea6941d9b5d1150ce441c64deab403f19bda3e08f24aaecff1f8fcc590",
+          "cf0af773bbf00b56b8234253ffd818da281e94142e7ec1cdb89dd93dd06fec5b",
+          "8c5ca9dc55ae1aa3b5843cd01a7182c108b9127dad51f60521c86f5f00953c28",
+          "a794cba7e3727d230c1bba9877d02d10d77ce420d6a9a68d6a03118889963641",
+          "03c06cfb70b7219c576a5ee5469c37b54b40991299cbbe51978f082030abde7a",
+          "bdea3ca3bdc753a362ec05e78a1d0c84e09b04a5a7b03a6e7176012413b8ebdf"
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": false,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "intermediate_frame_indices": [
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "timeline_frame_indices": [
+            0,
+            8,
+            1,
+            9,
+            2,
+            10,
+            3,
+            11,
+            4,
+            12,
+            5,
+            13,
+            6,
+            14,
+            7,
+            15
+          ],
+          "native_slots": 8,
+          "timeline_phases": 16,
+          "duration_seconds": 0.5333333333333333
+        }
+      ]
+    },
+    {
+      "resref": "AM3017G",
+      "variant_index": 0,
+      "position": null,
+      "resource_key": "AM3017G-v0",
+      "geometry_mode": "uniform",
+      "input_mode": "spatial-v1",
+      "aligned_size_x4": [
+        200,
+        200
+      ],
+      "base_frame_count": 8,
+      "output_frame_count": 16,
+      "cycle_count": 1,
+      "added_intermediate_frames": 8,
+      "added_raw_bytes": 1280000,
+      "source": {
+        "run_manifest_sha256": "92786908e40fef76799649565defe9337af26b598db173db4b44ccf31054cd5f",
+        "frame_manifest_sha256": "c2410c82c07578a97808d1c8ede50dd0f24074050b44fd744bbc42a77a4e17d3",
+        "upscale_manifest_sha256": "474f26c6f22f7ef530a2f66842e09b8ebad663117f2adbbeb43730a968f4e8a7",
+        "aligned_rgba_sha256": [
+          "956fdebbec10039b26a42ded0d796dce87384d864fd2be98b5547166f0d76023",
+          "89439811a1e8dc24d8611f4d3fea541aa35ab11e7456fa976e8372cce52804d6",
+          "0770872684dd3e44d506acfeedbeeff2c19d71b873e3ca21791e308bdb1d9844",
+          "797f8592c190fd517e8761bf8ebfbd6e1426678f7da0bba97603b7dfc1bc2a55",
+          "b2db9ee59ce74ffeb02c8dc95d1b86dd633e4290ff403e3944f74861b072da11",
+          "fddeabb686b15c1734f3e4470cbe7a679576e8c0e72436be2594b4a548721c63",
+          "1ba5b136720dacbbaa56bd011730799fecc364cc829fedc0ac49e9f66ba725e1",
+          "ff31621cfb017679f9f5b04c7dfd51ce260bc2c89083f113d47868e854300169"
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": false,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "intermediate_frame_indices": [
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "timeline_frame_indices": [
+            0,
+            8,
+            1,
+            9,
+            2,
+            10,
+            3,
+            11,
+            4,
+            12,
+            5,
+            13,
+            6,
+            14,
+            7,
+            15
+          ],
+          "native_slots": 8,
+          "timeline_phases": 16,
+          "duration_seconds": 0.5333333333333333
+        }
+      ]
+    },
+    {
+      "resref": "AM3017H",
+      "variant_index": 0,
+      "position": null,
+      "resource_key": "AM3017H-v0",
+      "geometry_mode": "uniform",
+      "input_mode": "spatial-v1",
+      "aligned_size_x4": [
+        232,
+        160
+      ],
+      "base_frame_count": 8,
+      "output_frame_count": 16,
+      "cycle_count": 1,
+      "added_intermediate_frames": 8,
+      "added_raw_bytes": 1187840,
+      "source": {
+        "run_manifest_sha256": "92786908e40fef76799649565defe9337af26b598db173db4b44ccf31054cd5f",
+        "frame_manifest_sha256": "aeccd8352b8f907ee3d7ecc0fc6f5d03ecf16a50a37598d1f178cfa584d143a3",
+        "upscale_manifest_sha256": "de578690b1a65144f4b41bedc7e7b5ef8057c709740e63f392cfb6b1bdad712e",
+        "aligned_rgba_sha256": [
+          "74118322aa72f5abafa87907e92e976ffb9b6c1ca70ea3bc7d6cd2c531cd00a0",
+          "775a8fbd2cff79e8e79c76f985418206d8e451b5714cd20c42b39056404d1dab",
+          "5eb5bd5231dbd3e120519d29d02a5566f6a7221f26899c76846f655c91216d67",
+          "5a00ee6837713b8ee9c4efeb01c6a39366f02d2616f49b7a5250652a9147e992",
+          "e28a6f6d5bdbf8c2ca29ebc94de755dd2b14ee5aca40961aaa17874c4f374f89",
+          "5b7efaceed571fbc8679adf831e3d86daef5403015867420d9c6681d03be09cc",
+          "82fb53f230e3a6bc663fec92024c5151302be5c3dbbde5faa0165a934e993bae",
+          "c5ab760867b1eef1218523f91b75ecb39f38388f75efbff8fd49b05d9304ef17"
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": false,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "intermediate_frame_indices": [
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "timeline_frame_indices": [
+            0,
+            8,
+            1,
+            9,
+            2,
+            10,
+            3,
+            11,
+            4,
+            12,
+            5,
+            13,
+            6,
+            14,
+            7,
+            15
+          ],
+          "native_slots": 8,
+          "timeline_phases": 16,
+          "duration_seconds": 0.5333333333333333
+        }
+      ]
+    },
+    {
+      "resref": "AM3017Z",
+      "variant_index": 0,
+      "position": null,
+      "resource_key": "AM3017Z-v0",
+      "geometry_mode": "uniform",
+      "input_mode": "spatial-v1",
+      "aligned_size_x4": [
+        656,
+        408
+      ],
+      "base_frame_count": 10,
+      "output_frame_count": 20,
+      "cycle_count": 1,
+      "added_intermediate_frames": 10,
+      "added_raw_bytes": 10705920,
+      "source": {
+        "run_manifest_sha256": "92786908e40fef76799649565defe9337af26b598db173db4b44ccf31054cd5f",
+        "frame_manifest_sha256": "9722f393c891b3e0409e9b7a8fd3b8b9dd6a706bbcf00b4145d914c8ba0d9a3b",
+        "upscale_manifest_sha256": "961981e9dcfebc5f2854f8fc068ef40c1c3e61231ea0db436ba2734ee2d1ff1e",
+        "aligned_rgba_sha256": [
+          "1c7dd91236b328cc23b24bf2078866ded2e1751bad1d236a1f37039ca9d309b0",
+          "2990a9d96d334544db39b94e25833cbfc31d4c3d51a831a7e527abfa683513ca",
+          "51c1ff5d8538006ecb0cb268cfd0f8178629127b2eefdad806e124caea18658e",
+          "6eb4faea7c056b9a9d3bcc57c8406b9d895228c15795141f093a07f9ce5453dc",
+          "223571a2ab483b3678cb1d21ab6d91a90e7839f50d5bf6517cdabfcf4b108fd8",
+          "61f0b5428cbfda3cba506d07aeacbc5ca7a3cf9c3890974a6beaa981ed58edc0",
+          "0ca06fb7671f56174b7f6ceb6602a3bb7e2a58c7103bc520caa5b7c100e720d5",
+          "5901e912732b2633132e8727772243533c79f4c054a62f21906b37ade82d6ac0",
+          "3ae5cf7333faf692b50af48871967a7dc54499c1dbe3837fb2d089fbbd9d16e4",
+          "fc5583afd55b41cfdcff60c2c8c00af81edf0a1dfc3052e5b2688b2ca1838903"
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 8,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 9,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": false,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "intermediate_frame_indices": [
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "timeline_frame_indices": [
+            0,
+            10,
+            1,
+            11,
+            2,
+            12,
+            3,
+            13,
+            4,
+            14,
+            5,
+            15,
+            6,
+            16,
+            7,
+            17,
+            8,
+            18,
+            9,
+            19
+          ],
+          "native_slots": 10,
+          "timeline_phases": 20,
+          "duration_seconds": 0.6666666666666666
+        }
+      ]
+    },
+    {
+      "resref": "AMSTEAM1",
+      "variant_index": 0,
+      "position": null,
+      "resource_key": "AMSTEAM1-v0",
+      "geometry_mode": "per-frame",
+      "input_mode": "spatial-v1",
+      "aligned_size_x4": [
+        392,
+        400
+      ],
+      "base_frame_count": 24,
+      "output_frame_count": 48,
+      "cycle_count": 1,
+      "added_intermediate_frames": 24,
+      "added_raw_bytes": 3010816,
+      "source": {
+        "run_manifest_sha256": "92786908e40fef76799649565defe9337af26b598db173db4b44ccf31054cd5f",
+        "frame_manifest_sha256": "25f465902155b30750994da7475be0719101596c939ab160d621551fc7bed354",
+        "upscale_manifest_sha256": "0ea88f23b492cdedf5186776f443f1727e85067752102651a1c03058e502b147",
+        "aligned_rgba_sha256": [
+          "edf72518d8dbf50383e3f99910176e95998175aa9f9c9e323d7130c7e9e8ff80",
+          "4c5b9f8967ff30aa5ae95a79e25db139b371e09104873944e3475273c947130c",
+          "be956881acc2e0a11f6d82a3e7ddd96028c2e036800498b3e958a8e01493c596",
+          "f49a8ba3407e7a6c90384da1e6c893950eb9725f4ef32b4326a8b68266547cd0",
+          "821d905f4927e191b4b6648e502306a00fb77b24a1ad3b6560e81faab7ac140f",
+          "080d121c123e1b848f735e0ad5f23e578ce14de7c5d2d8abccf7d7c91dbcfa84",
+          "5c00f9e42500ae2264855510827f1925910974e0e9089f475950b763377698af",
+          "abddec000fb7ca46619c610c90a2beacd841c1ac74597cc03b6e4bdbd709cd74",
+          "22f8794754dfaf7cca3c223fd7ffff9dccd85290c33f6ec3955281ed9c1e46dd",
+          "70b042141804055dc0050120c46b0e328e845461969883a1a737cba0828e6f23",
+          "86ef6afacde1f1c94bb4257fe6aa5465dd48446ff0a95da0a3f53e57164333f9",
+          "efea7b9b90a44798ed778abb92d7c648af4757751ec1515b4f35a0b7d7ecf877",
+          "8ce060b7fe04debda874c4ce545fb64f12e7615b51c61c9da17bd9c4507797d5",
+          "c7bc80e103a993af7d5f05376fd279d35377c1477d29a831074f6bfd1b8b454f",
+          "5b777df11226aa4e0ec8873d26905a9f43cb3c676b7951a4558243822b568a2a",
+          "16d24361f66bcbe69fb9bdb029f0342fbb81caabab3c87afa16b77e09f5754fb",
+          "5e2cc171a03be12ac056b7abcaca43125a9755fa7deae1e5a35615873221d3a1",
+          "b833cae7ddd63513ca6df7f8858ce38e6442ddb2c20b47572234c201b9ec3b57",
+          "42f6c729905c7217c20695525ef93e4d543305b61d5cfbfea241f98b6fa1b0a2",
+          "16b8033ab8447c1f4bb6db281bf073e38eca91696476855e26028ff873a18fa4",
+          "0ec00c5ff96568acd6c8157f51ca187f8ba7c67be60cd8acba8686166b94ee35",
+          "86d1477a115ad0b50a7a78edb0c6d28101d81e04f91f417284b3144c15b68647",
+          "2893a6026553364584770b1929a62332d07aba371a23481ecab16efe4e745beb",
+          "81ce3e2cf587c0aaccbf95774b84e402e5d34640ca5097d817e76a35760d2948"
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 8,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 9,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 10,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 11,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 12,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 13,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 14,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 15,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 16,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 17,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 18,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 19,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 20,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 21,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 22,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 23,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": false,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23
+          ],
+          "intermediate_frame_indices": [
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47
+          ],
+          "timeline_frame_indices": [
+            0,
+            24,
+            1,
+            25,
+            2,
+            26,
+            3,
+            27,
+            4,
+            28,
+            5,
+            29,
+            6,
+            30,
+            7,
+            31,
+            8,
+            32,
+            9,
+            33,
+            10,
+            34,
+            11,
+            35,
+            12,
+            36,
+            13,
+            37,
+            14,
+            38,
+            15,
+            39,
+            16,
+            40,
+            17,
+            41,
+            18,
+            42,
+            19,
+            43,
+            20,
+            44,
+            21,
+            45,
+            22,
+            46,
+            23,
+            47
+          ],
+          "native_slots": 24,
+          "timeline_phases": 48,
+          "duration_seconds": 1.6
+        }
+      ]
+    },
+    {
+      "resref": "AMSTEAM2",
+      "variant_index": 0,
+      "position": null,
+      "resource_key": "AMSTEAM2-v0",
+      "geometry_mode": "per-frame",
+      "input_mode": "spatial-v1",
+      "aligned_size_x4": [
+        380,
+        184
+      ],
+      "base_frame_count": 24,
+      "output_frame_count": 192,
+      "cycle_count": 4,
+      "added_intermediate_frames": 168,
+      "added_raw_bytes": 30531072,
+      "source": {
+        "run_manifest_sha256": "92786908e40fef76799649565defe9337af26b598db173db4b44ccf31054cd5f",
+        "frame_manifest_sha256": "c4ebd07f3a4ab3bf8f1ccbfa9474731984ae5aa085b752cbcdedb681684d4886",
+        "upscale_manifest_sha256": "7c0f3ea33460e27ee7b3481b0f71999fab99745a476c65c154c06138842bf365",
+        "aligned_rgba_sha256": [
+          "7cfbd625c1541235c0974775b2be45641f3f9a080b1556020e48459483750e1a",
+          "5fd04083611a73a1a868572377c4eec95ed60e4d5427cb573a6a9d845e46f548",
+          "3cbdeb3ec0b4980df859a4c7fcc795c92db5d9d5fad51985d5605032ac9b29aa",
+          "b03f7914e7343f03722867bc95890a45c58f97bba39f7b18ec6888b1b26bbacd",
+          "ff53e7c29e3188e09d99ad586b9a0104f481bcbe340b6fbd9b788d559b446379",
+          "be0bcc9da4061b45758e68a3e6b0d5d43cea12af4ce992088e5be14b0b008967",
+          "f29b32deb7e7cc267787b7037378b5d5d9679b6a327ceaf3f7936e267890ad00",
+          "77ff4e10376fb27229d7f271eba57965f6916179d72a9c78f645cd0683e65e0b",
+          "9b4408d1a10f0e3fc000b5623f0166aa608119f08c21e9b671ff9b1b1be1a56d",
+          "de881d794eafef173f575902040ea0c93c1de6a7142eedf9c4957eb70c6238d7",
+          "e5c581fa7d6daf88604200a0ef7ef28c72cf8c5ccaf113a716cb7ac2962aac6e",
+          "6c015416989ff672158af41fa4c2fc0a961760bce8a02200c5404820a1da7e2d",
+          "58b4bb05c52161835e1c2900b2c8db5b1cbf204cb4bca5efa8a60b7b8d4e1244",
+          "47fec94bc1e9dc228f78c63de5d177c59ffc0bf605a298a88fe61dbc88f10a78",
+          "76f4911a68ce9189cc41e3317d6ea65d8d318a3095239538a4b5290f90f88eb9",
+          "cf0a5e68a313062dda1f246d60eb5734e4024971289993489648442425e336a1",
+          "b9329bd92777238fe51c03357be4a02dbe92e8bc8716dd5af087ce7f64d44561",
+          "624c9599c220ed5ad7b691b7e1cb5eebcbde781bb3dcf183a09e318744d9d18e",
+          "9ca83c19393b85b245bb9f0b525f46c217fa20e1cb1dce562f861287ea5fdca0",
+          "e88995169f8b6f2d113c3b64eb925ad9fb72e7e3580c8572e23676debb406c3a",
+          "8aa80bc64f93215cc5d590d6fd8cdf339ba585f83cbfc64621fd6a76429a5b45",
+          "e70f0e846cc69fbb45ae78ac7599ba86e40a3ff2fbbc45860910b7b51e9b93c3",
+          "8a1075d8fd8e612bf098c5a72be9c469bff42e0919ba2059690f7967bf420c02",
+          "b06a8e6d79d6412f8c7717001267234f83a50d1f38985cc4a0f78662eec67281"
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 8,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 9,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 10,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 11,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 12,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 13,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 14,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 15,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 16,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 17,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 18,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 19,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 20,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 21,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 22,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 23,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": false,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23
+          ],
+          "intermediate_frame_indices": [
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47
+          ],
+          "timeline_frame_indices": [
+            0,
+            24,
+            1,
+            25,
+            2,
+            26,
+            3,
+            27,
+            4,
+            28,
+            5,
+            29,
+            6,
+            30,
+            7,
+            31,
+            8,
+            32,
+            9,
+            33,
+            10,
+            34,
+            11,
+            35,
+            12,
+            36,
+            13,
+            37,
+            14,
+            38,
+            15,
+            39,
+            16,
+            40,
+            17,
+            41,
+            18,
+            42,
+            19,
+            43,
+            20,
+            44,
+            21,
+            45,
+            22,
+            46,
+            23,
+            47
+          ],
+          "native_slots": 24,
+          "timeline_phases": 48,
+          "duration_seconds": 1.6
+        },
+        {
+          "cycle": 1,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 8,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 9,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 10,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 11,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 12,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 13,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 14,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 15,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 8,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 9,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 10,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 11,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 12,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 13,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 14,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 15,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 16,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 17,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 18,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 19,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 20,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 21,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 22,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 23,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": true,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23
+          ],
+          "intermediate_frame_indices": [
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80
+          ],
+          "timeline_frame_indices": [
+            0,
+            48,
+            1,
+            49,
+            2,
+            50,
+            3,
+            51,
+            4,
+            52,
+            5,
+            53,
+            6,
+            54,
+            7,
+            55,
+            8,
+            56,
+            9,
+            57,
+            10,
+            58,
+            11,
+            59,
+            12,
+            60,
+            13,
+            61,
+            14,
+            62,
+            15,
+            63,
+            7,
+            64,
+            8,
+            65,
+            9,
+            66,
+            10,
+            67,
+            11,
+            68,
+            12,
+            69,
+            13,
+            70,
+            14,
+            71,
+            15,
+            72,
+            16,
+            73,
+            17,
+            74,
+            18,
+            75,
+            19,
+            76,
+            20,
+            77,
+            21,
+            78,
+            22,
+            79,
+            23,
+            80
+          ],
+          "native_slots": 33,
+          "timeline_phases": 66,
+          "duration_seconds": 2.2
+        },
+        {
+          "cycle": 2,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 8,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 9,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 10,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 11,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 12,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 13,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 14,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 15,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 8,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 9,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 10,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 11,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 12,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 13,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 14,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 15,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 8,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 9,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 10,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 11,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 12,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 13,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 14,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 15,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 8,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 9,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 10,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 11,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 12,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 13,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 14,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 15,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 16,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 17,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 18,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 19,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 20,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 21,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 22,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 23,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": true,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23
+          ],
+          "intermediate_frame_indices": [
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102,
+            103,
+            104,
+            105,
+            106,
+            107,
+            108,
+            109,
+            110,
+            111,
+            112,
+            113,
+            114,
+            115,
+            116,
+            117,
+            118,
+            119,
+            120,
+            121,
+            122,
+            123,
+            124,
+            125,
+            126,
+            127,
+            128,
+            129,
+            130,
+            131
+          ],
+          "timeline_frame_indices": [
+            0,
+            81,
+            1,
+            82,
+            2,
+            83,
+            3,
+            84,
+            4,
+            85,
+            5,
+            86,
+            6,
+            87,
+            7,
+            88,
+            8,
+            89,
+            9,
+            90,
+            10,
+            91,
+            11,
+            92,
+            12,
+            93,
+            13,
+            94,
+            14,
+            95,
+            15,
+            96,
+            7,
+            97,
+            8,
+            98,
+            9,
+            99,
+            10,
+            100,
+            11,
+            101,
+            12,
+            102,
+            13,
+            103,
+            14,
+            104,
+            15,
+            105,
+            7,
+            106,
+            8,
+            107,
+            9,
+            108,
+            10,
+            109,
+            11,
+            110,
+            12,
+            111,
+            13,
+            112,
+            14,
+            113,
+            15,
+            114,
+            7,
+            115,
+            8,
+            116,
+            9,
+            117,
+            10,
+            118,
+            11,
+            119,
+            12,
+            120,
+            13,
+            121,
+            14,
+            122,
+            15,
+            123,
+            16,
+            124,
+            17,
+            125,
+            18,
+            126,
+            19,
+            127,
+            20,
+            128,
+            21,
+            129,
+            22,
+            130,
+            23,
+            131
+          ],
+          "native_slots": 51,
+          "timeline_phases": 102,
+          "duration_seconds": 3.4
+        },
+        {
+          "cycle": 3,
+          "duplicate_hold_analysis": {
+            "runs": [
+              {
+                "frame_index": 0,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 1,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 2,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 3,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 4,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 5,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 6,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 8,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 9,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 10,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 11,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 12,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 13,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 14,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 15,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 8,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 9,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 10,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 11,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 12,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 13,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 14,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 15,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 8,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 9,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 10,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 11,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 12,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 13,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 14,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 15,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 8,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 9,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 10,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 11,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 12,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 13,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 14,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 15,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 7,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 8,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 9,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 10,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 11,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 12,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 13,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 14,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 15,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 16,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 17,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 18,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 19,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 20,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 21,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 22,
+                "slot_count": 1
+              },
+              {
+                "frame_index": 23,
+                "slot_count": 1
+              }
+            ],
+            "has_consecutive_duplicates": false,
+            "uniform_run_lengths": true,
+            "hold_slots": 1,
+            "crosses_cycle_seam": false,
+            "reuses_frame_in_multiple_runs": true,
+            "collapse_eligible": false
+          },
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23
+          ],
+          "intermediate_frame_indices": [
+            132,
+            133,
+            134,
+            135,
+            136,
+            137,
+            138,
+            139,
+            140,
+            141,
+            142,
+            143,
+            144,
+            145,
+            146,
+            147,
+            148,
+            149,
+            150,
+            151,
+            152,
+            153,
+            154,
+            155,
+            156,
+            157,
+            158,
+            159,
+            160,
+            161,
+            162,
+            163,
+            164,
+            165,
+            166,
+            167,
+            168,
+            169,
+            170,
+            171,
+            172,
+            173,
+            174,
+            175,
+            176,
+            177,
+            178,
+            179,
+            180,
+            181,
+            182,
+            183,
+            184,
+            185,
+            186,
+            187,
+            188,
+            189,
+            190,
+            191
+          ],
+          "timeline_frame_indices": [
+            0,
+            132,
+            1,
+            133,
+            2,
+            134,
+            3,
+            135,
+            4,
+            136,
+            5,
+            137,
+            6,
+            138,
+            7,
+            139,
+            8,
+            140,
+            9,
+            141,
+            10,
+            142,
+            11,
+            143,
+            12,
+            144,
+            13,
+            145,
+            14,
+            146,
+            15,
+            147,
+            7,
+            148,
+            8,
+            149,
+            9,
+            150,
+            10,
+            151,
+            11,
+            152,
+            12,
+            153,
+            13,
+            154,
+            14,
+            155,
+            15,
+            156,
+            7,
+            157,
+            8,
+            158,
+            9,
+            159,
+            10,
+            160,
+            11,
+            161,
+            12,
+            162,
+            13,
+            163,
+            14,
+            164,
+            15,
+            165,
+            7,
+            166,
+            8,
+            167,
+            9,
+            168,
+            10,
+            169,
+            11,
+            170,
+            12,
+            171,
+            13,
+            172,
+            14,
+            173,
+            15,
+            174,
+            7,
+            175,
+            8,
+            176,
+            9,
+            177,
+            10,
+            178,
+            11,
+            179,
+            12,
+            180,
+            13,
+            181,
+            14,
+            182,
+            15,
+            183,
+            16,
+            184,
+            17,
+            185,
+            18,
+            186,
+            19,
+            187,
+            20,
+            188,
+            21,
+            189,
+            22,
+            190,
+            23,
+            191
+          ],
+          "native_slots": 60,
+          "timeline_phases": 120,
+          "duration_seconds": 4.0
+        }
+      ]
+    }
+  ],
+  "gates": [
+    "the declared input mode and active base pack are hash-validated before build",
+    "even phases reuse byte-exact runtime anchors",
+    "Topaz must return 2*N+1 or 2*N frames for every closed cycle",
+    "visual review and explicit approval file required before install"
+  ],
+  "authoring_pack_for_area_split": true,
+  "runtime_budget_note": "output is an authoring pack exempt from the runtime budget; it must be split with split_animation_pack_by_area.py before any installation",
+  "plan_sha256": "f18e2f73ad0add3761b1ecdaf91c0085e88bfee3aa086613b687d72776290cf1"
+}

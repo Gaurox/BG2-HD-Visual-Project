@@ -1,0 +1,53 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-10-09T19:10:36.509049+00:00",
+  "input_mode": "per-frame-multi-contour-spline-alpha-on-timed-run",
+  "source_run": "G:/AI/BG2_Upscale/animations/batches/umar-foyers-seedvr7b-apo8-x4-30fps-20261009-v1",
+  "source_run_manifest_sha256": "4234c5c340fbc85411a9ba717c688bb0c5eb08a07f07203f43f7c44a163263d0",
+  "base_pack": "G:/AI/BG2_Upscale/animations/batches/umar-foyers-seedvr7b-lab-x4-20261009-v1/03_runtime_pack",
+  "base_pack_manifest_sha256": "017e307e0f6ead136ab638d2b2e270a0c2bbcb2c06706ef8adb5e9a05f0ced4d",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM1101A",
+    "AM1104A",
+    "AM1104B"
+  ],
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "fe215ed5f1732a3245125875d9eeb53ed6c05aacefa1c5e8e9248ff141e23761",
+  "registry_sha256": "7d6d67d438b29ddc1492702cd6d579c6447617b084fed61b0173bb4366e4babf",
+  "reviews": [
+    {
+      "kind": "comparison-contact-sheet",
+      "file": "review/review-comparison-contact-sheet.png",
+      "sha256": "7946ecf6a143b1786892ab1f11c63d864f6390c80d96b9ffa45258be7e167e3a"
+    },
+    {
+      "kind": "comparison-exact",
+      "file": "review/review-comparison-30fps-exact.mp4",
+      "sha256": "8ce0a9c78bf383d9312d6cc3bb13540ed56cef939c81ab7f67f30cfaaf151765"
+    },
+    {
+      "kind": "comparison-loop-4s",
+      "file": "review/review-comparison-30fps-loop-4s.mp4",
+      "sha256": "74555741cbc90cf6273ac79d6b34e591f8bbf62a18ac1159bae54d45bf2c518b"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval",
+  "per_frame_spline_alpha": {
+    "pipeline_name": "spline-fit1-multicontour-per-frame-feather4",
+    "pipeline_effects": [
+      "spline-fit1-multicontour-per-frame-feather4"
+    ],
+    "report": "spline-alpha-report.json",
+    "report_sha256": "26a2f29088a1e2d5d0ef95a28ba20124918cad1eede172430b6e1262cec14b81",
+    "installation": "not performed"
+  }
+}

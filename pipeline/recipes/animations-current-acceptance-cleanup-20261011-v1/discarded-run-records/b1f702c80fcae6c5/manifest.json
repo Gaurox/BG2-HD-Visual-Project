@@ -1,0 +1,53 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-11T20:37:53.329786+00:00",
+  "input_mode": "per-frame-multi-contour-spline-alpha-on-timed-run",
+  "source_run": "G:/AI/BG2_Upscale/animations/batches/ar0411-planar-sphere-apo8-x4-30fps-preserve-rgb-20260911",
+  "source_run_manifest_sha256": "e8dbbb2a0fac91e8cf68bbc5fcefe453a1553f5885a092d2cf4838658e819881",
+  "base_pack": "G:/AI/BG2_Upscale/animations/batches/ar0411-planar-sphere-seedvr7b-lab-x4-20260911/03_runtime_pack",
+  "base_pack_manifest_sha256": "555df27f5e3400704aa9c9c6c1f193ba9bd0f9d0416c83befcbfcaa3630ccbcb",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM411MAC",
+    "DSTDVL2B",
+    "DSTDVL2C"
+  ],
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "70923113501f36340da2f3a428a6f6dfbacb4221617f89edf14ffc1fa515ae1e",
+  "registry_sha256": "fabfd09d6c3024c8d94f0a9390108a56a1131e948893212fd20d654787095ae8",
+  "reviews": [
+    {
+      "kind": "comparison-contact-sheet",
+      "file": "review/review-comparison-contact-sheet.png",
+      "sha256": "5c0dbbaac68e27588480633c698fe38e4248d2a1f3d185ccf5bbee6fcf2dd54e"
+    },
+    {
+      "kind": "comparison-exact",
+      "file": "review/review-comparison-30fps-exact.mp4",
+      "sha256": "773b60cad73ba5b5ce8fcf8fdf9a03006e9418e546f310c8dc85c90c982ad0a7"
+    },
+    {
+      "kind": "comparison-loop-4s",
+      "file": "review/review-comparison-30fps-loop-4s.mp4",
+      "sha256": "88962029e53dca5777ef9ac7092ab26774bb6ca52bf73b70c537d5bd8c759764"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval",
+  "per_frame_spline_alpha": {
+    "pipeline_name": "spline-fit1-multicontour-per-frame-feather4",
+    "pipeline_effects": [
+      "spline-fit1-multicontour-per-frame-feather4"
+    ],
+    "report": "spline-alpha-report.json",
+    "report_sha256": "fd1742c57d2dc74b89102ed0d2c21aafa29a792c71d00ed64376c90781db4ecd",
+    "installation": "not performed"
+  }
+}

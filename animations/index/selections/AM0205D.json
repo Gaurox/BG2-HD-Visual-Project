@@ -1,47 +1,47 @@
 {
   "$schema": "../../schemas/animation-selection.schema.json",
   "asset_id": "animations:bam:AM0205D",
-  "correction_id": "am0205d-interpolation-27f-15fps-canvas32",
+  "correction_id": "am0205d-canvas32-apo8-30fps-accepted-20261011-v1",
   "lineage": {
     "source_packs": [],
     "source_runs": []
   },
   "qa_decision": {
-    "decision_date": "2026-08-21",
-    "path": "animations/index/qa-decisions/AM0205D/2026-10-11-preserved-historical-am0205d-v1.json",
-    "sha256": "2F77087C5BFB85082FCF99C80300E66ABE5BA93178D0939A535BF34C6C6D6C15",
+    "decision_date": "2026-10-11",
+    "path": "animations/index/qa-decisions/AM0205D/2026-10-11-accepted-current-am0205d-v1.json",
+    "sha256": "0B81B22E4079ECCB36F7E3CA7B03C3792DFAF55E2BAE5FFAC014FE803B37F0CA",
     "status": "accepted"
   },
-  "recipe_id": "animations-cleanup-points1-3-20261011-v1",
+  "recipe_id": "animations-current-acceptance-cleanup-20261011-v1",
   "resref": "AM0205D",
   "result_kind": "x4",
   "schema_version": 1,
   "selected_run": {
-    "manifest_path": "animations/ressources/AM0205D/runs/am0205d-historical-qa-bound-20261011-v1/manifest.json",
-    "manifest_sha256": "FBA373C8594D126F7B998CFB15C665B398B441CCB63F1062213D9D0F9F11E8D6",
-    "path": "animations/ressources/AM0205D/runs/am0205d-historical-qa-bound-20261011-v1",
-    "schema": "bg2-upscale-historical-qa-binding-run-v1",
+    "manifest_path": "animations/ressources/AM0205D/runs/am0205d-current-ingame-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "7C6313F0908667AAFB7B26F40F43C42522A497CA4E6FFD648AF4BAF73E2B9C63",
+    "path": "animations/ressources/AM0205D/runs/am0205d-current-ingame-accepted-20261011-v1",
+    "schema": "bg2-upscale-installed-animation-acceptance-run-v1",
     "status": "completed"
   },
   "source_pack": {
     "areas": [
       {
         "area": "AR0205",
-        "manifest_path": "animations/packs-par-zone/am0205d-historical-qa-bound-20261011-v1/AR0205/manifest.json",
-        "manifest_sha256": "B206A47E45891202589A45E462C8FA18F3DE656DB7DAB6530CCD1C20B87B51C6",
-        "path": "animations/packs-par-zone/am0205d-historical-qa-bound-20261011-v1/AR0205",
-        "registry_sha256": "AA1AE010BCDECDEAF4677E89FC6011753F21A83AAF5A3254EA57D065EDE47D7A",
+        "manifest_path": "animations/packs-par-zone/animations-five-current-accepted-20261011-v1/AR0205/manifest.json",
+        "manifest_sha256": "18EF36C1A06B7034AB48D7B90F9887A61E46FAF2313C33D204FFEFB397C8915A",
+        "path": "animations/packs-par-zone/animations-five-current-accepted-20261011-v1/AR0205",
+        "registry_sha256": "0D876FE78ABCA67C34B9FBABFC93DAC35D81CE8627493285EF8907685873F549",
         "resource_entries": 1
       }
     ],
-    "manifest_path": "animations/packs-par-zone/am0205d-historical-qa-bound-20261011-v1/manifest.json",
-    "manifest_sha256": "C7CFD1B207CF909C67E662E8F350FF88BE5EC020B8BB2EA2448C33A05299C2FF",
-    "path": "animations/packs-par-zone/am0205d-historical-qa-bound-20261011-v1",
+    "manifest_path": "animations/packs-par-zone/animations-five-current-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "A1F4B198D549A9554C1C00D63A996844B3A6397C8E927F237D88CE473E798526",
+    "path": "animations/packs-par-zone/animations-five-current-accepted-20261011-v1",
     "schema": "bg2-upscale-area-animation-pack-index-v1",
     "status": "completed"
   },
   "tested_areas": [
     "AR0205"
   ],
-  "updated_at_utc": "2026-10-11T19:44:11Z"
+  "updated_at_utc": "2026-10-11T20:16:00Z"
 }

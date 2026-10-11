@@ -1,0 +1,32 @@
+{
+  "schema": "bg2-upscale-area-animation-manual-alpha-mask-v2",
+  "status": "completed",
+  "targets": [
+    {
+      "resref": "SPHINCT",
+      "mask_source": "G:/AI/BG2_Upscale/proto/SPHINCT-SPHINCT2-spline-fit1-inner8-20260827/masks/SPHINCT-frame000-spline-fit1-inner8.png",
+      "mask_sha256": "9342ff53b441847971d9d064614891be572951aa386f770fbb662bd43cbd2f8f",
+      "mask_size_x4": [
+        640,
+        480
+      ],
+      "anchor_count": 17,
+      "masked_frame_count": 51
+    },
+    {
+      "resref": "SPHINCT2",
+      "mask_source": "G:/AI/BG2_Upscale/proto/SPHINCT-SPHINCT2-spline-fit1-inner8-20260827/masks/SPHINCT2-frame000-spline-fit1-inner8.png",
+      "mask_sha256": "141ad63229872b8e53dca2541624408e0b819f9e5513814529e271a918237529",
+      "mask_size_x4": [
+        640,
+        480
+      ],
+      "anchor_count": 17,
+      "masked_frame_count": 51
+    }
+  ],
+  "source_temporal_run": "G:/AI/BG2_Upscale/animations/runs/ar0516-5of6-apo8-x4-30fps-v2",
+  "source_temporal_run_manifest_sha256": "b827f05314d2330208fa55f846243329abf8178b2f2f690e87decfecad939a58",
+  "alpha_formula": "alpha_final = alpha_source * grayscale_mask / 255",
+  "rgb_policy": "byte-identical"
+}

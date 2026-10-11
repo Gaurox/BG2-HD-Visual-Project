@@ -1,0 +1,453 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-plan-v2",
+  "status": "proposed",
+  "input_mode": "runtime-uniform-base",
+  "source_run": null,
+  "source_run_manifest_sha256": null,
+  "base_pack": "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0904-taloscircle-ellipsefade-tl1tl2-maskfade24-tl3tl4-x4-20260906/AR0904",
+  "base_pack_schema": "bg2-upscale-area-animation-runtime-pack-v2",
+  "base_pack_manifest_sha256": "c598149a681fbc136c5606e540d23f94c0a2af6f75aaea8bef1852b45de2a857",
+  "base_registry_sha256": "748a9c3ceb605e41eee2818a23e5b19bf7448b6a34fed4a33ee39ba7319749db",
+  "scale": 4,
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "topaz": {
+    "model": "apo-8",
+    "replace_duplicate_threshold": -0.01,
+    "transparent_rgb_mode": "preserve-hidden-rgb",
+    "loop_strategy": "append first source slot once; no cyclic-context extrapolation"
+  },
+  "alpha_policy": "hold exact alpha of the current native (left) slot",
+  "geometry_policy": "crop the aligned interpolation with the current native slot geometry",
+  "targets": [
+    {
+      "resref": "AM904TL1",
+      "variant_index": 0,
+      "position": [
+        836,
+        651
+      ],
+      "resource_key": "AM904TL1-v0",
+      "geometry_mode": "runtime-uniform-base",
+      "input_mode": "runtime-uniform-base",
+      "aligned_size_x4": [
+        240,
+        240
+      ],
+      "base_frame_count": 9,
+      "output_frame_count": 18,
+      "cycle_count": 1,
+      "added_intermediate_frames": 9,
+      "added_raw_bytes": 2073600,
+      "source": {
+        "base_runtime_assets": [
+          {
+            "asset": "AAX4-AM904TL1-frame000.rgba",
+            "sha256": "608bbd73df68a1f750eca5e4bd96fffc0c258bf196ff7a53ac20a88e1fb3b085"
+          },
+          {
+            "asset": "AAX4-AM904TL1-frame001.rgba",
+            "sha256": "e1762e55df380596445e05e08a4c90040a9da3eb6134f1ab1e5b388b13d3503b"
+          },
+          {
+            "asset": "AAX4-AM904TL1-frame002.rgba",
+            "sha256": "87dd05fadb895d450f1fe0a1c938d5b07085dfb7118162fee49a8b25d070ee33"
+          },
+          {
+            "asset": "AAX4-AM904TL1-frame003.rgba",
+            "sha256": "1e053063dbb93dc4c305d12485273333dcb42c7ccee1aea146e9c152d6f5b4ab"
+          },
+          {
+            "asset": "AAX4-AM904TL1-frame004.rgba",
+            "sha256": "0c779163e61dd21b7a56f7c1096088a8d14ab35260fb85355727555152cb2b70"
+          },
+          {
+            "asset": "AAX4-AM904TL1-frame005.rgba",
+            "sha256": "34e1e7453ed7d7244bd4cacaf779ba8e7030e089babfb5a71e422442d7a2a723"
+          },
+          {
+            "asset": "AAX4-AM904TL1-frame006.rgba",
+            "sha256": "3095ca7ac8c57fb1bfdac2cf6b2ddcdba63893af88bf16d20dce8371dcea2477"
+          },
+          {
+            "asset": "AAX4-AM904TL1-frame007.rgba",
+            "sha256": "e4919d509b4f2ebbc8a0faf74bb4bab7f33ac32052afdf2c65992237cc9bb07c"
+          },
+          {
+            "asset": "AAX4-AM904TL1-frame008.rgba",
+            "sha256": "ae8c92097243a1d178bdf7397022f9128851e00069aee64853ae174930e0e9ff"
+          }
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "intermediate_frame_indices": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ],
+          "timeline_frame_indices": [
+            0,
+            9,
+            1,
+            10,
+            2,
+            11,
+            3,
+            12,
+            4,
+            13,
+            5,
+            14,
+            6,
+            15,
+            7,
+            16,
+            8,
+            17
+          ],
+          "native_slots": 9,
+          "timeline_phases": 18,
+          "duration_seconds": 0.6
+        }
+      ]
+    },
+    {
+      "resref": "AM904TL2",
+      "variant_index": 0,
+      "position": [
+        984,
+        613
+      ],
+      "resource_key": "AM904TL2-v0",
+      "geometry_mode": "runtime-uniform-base",
+      "input_mode": "runtime-uniform-base",
+      "aligned_size_x4": [
+        240,
+        240
+      ],
+      "base_frame_count": 9,
+      "output_frame_count": 18,
+      "cycle_count": 1,
+      "added_intermediate_frames": 9,
+      "added_raw_bytes": 2073600,
+      "source": {
+        "base_runtime_assets": [
+          {
+            "asset": "AAX4-AM904TL2-frame000.rgba",
+            "sha256": "76c1508b32254d13cf3b5020ba8cded215e6d456cefa184f1c524b6946fb1675"
+          },
+          {
+            "asset": "AAX4-AM904TL2-frame001.rgba",
+            "sha256": "abe75d22be1d76ba546ccb5436a35da0d0371bb8e961011268c4de0b357fb354"
+          },
+          {
+            "asset": "AAX4-AM904TL2-frame002.rgba",
+            "sha256": "c78d3e0072ea45ca85e4d76cc71e7938f7face816666356a18e95a84b0f9cba8"
+          },
+          {
+            "asset": "AAX4-AM904TL2-frame003.rgba",
+            "sha256": "b4a2fdc0a7e8d7e4d14ef36e31d5e68bae03ea176491def094019cc45458d67b"
+          },
+          {
+            "asset": "AAX4-AM904TL2-frame004.rgba",
+            "sha256": "dcec81dab2abe974f57667df78f94eb40f5f9dacb5744412679a1ecd09722715"
+          },
+          {
+            "asset": "AAX4-AM904TL2-frame005.rgba",
+            "sha256": "006ea63f26435c737b70a2064c8ab28872918b2cd7a71de94198a4dacc602414"
+          },
+          {
+            "asset": "AAX4-AM904TL2-frame006.rgba",
+            "sha256": "be4e82e27f0d41be4fd3686e86c256f3f926da37222ec2bcd8013e001ddf257a"
+          },
+          {
+            "asset": "AAX4-AM904TL2-frame007.rgba",
+            "sha256": "d0c3d83109ca472ef722f88d174f74540556c9458b653facc3c0e5619f19bc3a"
+          },
+          {
+            "asset": "AAX4-AM904TL2-frame008.rgba",
+            "sha256": "e3e3478bb4a4d4a729bb2ce98d2dd4992062f617ac7f5b305fa6bd2e6f94cbf0"
+          }
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "intermediate_frame_indices": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ],
+          "timeline_frame_indices": [
+            0,
+            9,
+            1,
+            10,
+            2,
+            11,
+            3,
+            12,
+            4,
+            13,
+            5,
+            14,
+            6,
+            15,
+            7,
+            16,
+            8,
+            17
+          ],
+          "native_slots": 9,
+          "timeline_phases": 18,
+          "duration_seconds": 0.6
+        }
+      ]
+    },
+    {
+      "resref": "AM904TL3",
+      "variant_index": 0,
+      "position": [
+        917,
+        527
+      ],
+      "resource_key": "AM904TL3-v0",
+      "geometry_mode": "runtime-uniform-base",
+      "input_mode": "runtime-uniform-base",
+      "aligned_size_x4": [
+        280,
+        280
+      ],
+      "base_frame_count": 9,
+      "output_frame_count": 18,
+      "cycle_count": 1,
+      "added_intermediate_frames": 9,
+      "added_raw_bytes": 2822400,
+      "source": {
+        "base_runtime_assets": [
+          {
+            "asset": "AAX4-AM904TL3-frame000.rgba",
+            "sha256": "5236c31a6703516cc7e2790aa000f6332b581ad41b1e60e4fd25775bfad355b1"
+          },
+          {
+            "asset": "AAX4-AM904TL3-frame001.rgba",
+            "sha256": "1019f0c6c7f4eb1e2710ca484054c074d3e0b967ff052fbde4682b19e7c20359"
+          },
+          {
+            "asset": "AAX4-AM904TL3-frame002.rgba",
+            "sha256": "23d75dbf0d0d09f4ab97f9825577ba254e0a68fb395f309d0e6f50cada81dcf2"
+          },
+          {
+            "asset": "AAX4-AM904TL3-frame003.rgba",
+            "sha256": "21660981ab00fda27ce45bdb865f8516fd3958c5ef6f7de609391848165285d3"
+          },
+          {
+            "asset": "AAX4-AM904TL3-frame004.rgba",
+            "sha256": "7bf9ff3dfa3c6da4e06c27dcd04ad8cdd633d28208ad7cf2558470d71518e0c9"
+          },
+          {
+            "asset": "AAX4-AM904TL3-frame005.rgba",
+            "sha256": "5440963f74cb00722414419de628fce8a4044d8115038eda9dec2eb80a34061c"
+          },
+          {
+            "asset": "AAX4-AM904TL3-frame006.rgba",
+            "sha256": "eaf182b32adae4904a9fcea5b901ff16eefdef1a55f9d768fe36d4504ab8b6f7"
+          },
+          {
+            "asset": "AAX4-AM904TL3-frame007.rgba",
+            "sha256": "a5a59b2a9a69077aa989150b321c99d0624a0a39b93ee23bb29dfcf9b0df2e7d"
+          },
+          {
+            "asset": "AAX4-AM904TL3-frame008.rgba",
+            "sha256": "d197c6d5272a3fc87843bf915e3eb536828accaae6ca331ca065d3e659be37d3"
+          }
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "intermediate_frame_indices": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ],
+          "timeline_frame_indices": [
+            0,
+            9,
+            1,
+            10,
+            2,
+            11,
+            3,
+            12,
+            4,
+            13,
+            5,
+            14,
+            6,
+            15,
+            7,
+            16,
+            8,
+            17
+          ],
+          "native_slots": 9,
+          "timeline_phases": 18,
+          "duration_seconds": 0.6
+        }
+      ]
+    },
+    {
+      "resref": "AM904TL4",
+      "variant_index": 0,
+      "position": [
+        820,
+        464
+      ],
+      "resource_key": "AM904TL4-v0",
+      "geometry_mode": "runtime-uniform-base",
+      "input_mode": "runtime-uniform-base",
+      "aligned_size_x4": [
+        408,
+        296
+      ],
+      "base_frame_count": 6,
+      "output_frame_count": 12,
+      "cycle_count": 1,
+      "added_intermediate_frames": 6,
+      "added_raw_bytes": 2898432,
+      "source": {
+        "base_runtime_assets": [
+          {
+            "asset": "AAX4-AM904TL4-frame000.rgba",
+            "sha256": "210ac96f6a0c07d27ce3673b0b3531c26633a6ac1f09a804c7588474fe313335"
+          },
+          {
+            "asset": "AAX4-AM904TL4-frame001.rgba",
+            "sha256": "2d5b6eec8c98151eafdd76890a2dd90d23f3e35aaa48efd0ea6722681e51bb82"
+          },
+          {
+            "asset": "AAX4-AM904TL4-frame002.rgba",
+            "sha256": "2d1a0f756c7aa80ccc625c4c516ba0cc4d825c9634e04c0e524bd4e039a47d4d"
+          },
+          {
+            "asset": "AAX4-AM904TL4-frame003.rgba",
+            "sha256": "bc26915e97a3ec42860549ed42daa31fad148b9f65fcad555251c0483d5183e1"
+          },
+          {
+            "asset": "AAX4-AM904TL4-frame004.rgba",
+            "sha256": "86f441e8cfb1ca7334bce8a8f633e6f363be4433e8a5380fa80c23587629c386"
+          },
+          {
+            "asset": "AAX4-AM904TL4-frame005.rgba",
+            "sha256": "ad6d712c46b6554ba0852aef50d00b1e4c00b963835846774339c264e9bb8b89"
+          }
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "intermediate_frame_indices": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "timeline_frame_indices": [
+            0,
+            6,
+            1,
+            7,
+            2,
+            8,
+            3,
+            9,
+            4,
+            10,
+            5,
+            11
+          ],
+          "native_slots": 6,
+          "timeline_phases": 12,
+          "duration_seconds": 0.4
+        }
+      ]
+    }
+  ],
+  "gates": [
+    "the declared input mode and active base pack are hash-validated before build",
+    "even phases reuse byte-exact runtime anchors",
+    "Topaz must return 2*N+1 or 2*N frames for every closed cycle",
+    "visual review and explicit approval file required before install"
+  ],
+  "plan_sha256": "ae08ca2cdb9c1b7493eb145730f30be1b0bcb6e9202f5b198bd6928a4be39c1b"
+}

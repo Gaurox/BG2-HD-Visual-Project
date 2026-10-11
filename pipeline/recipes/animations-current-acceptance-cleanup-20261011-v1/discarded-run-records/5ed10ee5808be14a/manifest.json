@@ -1,0 +1,169 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-06T16:46:03.235090+00:00",
+  "plan_sha256": "ae08ca2cdb9c1b7493eb145730f30be1b0bcb6e9202f5b198bd6928a4be39c1b",
+  "input_mode": "runtime-uniform-base",
+  "source_run": null,
+  "source_run_manifest_sha256": null,
+  "base_pack": "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0904-taloscircle-ellipsefade-tl1tl2-maskfade24-tl3tl4-x4-20260906/AR0904",
+  "base_pack_manifest_sha256": "c598149a681fbc136c5606e540d23f94c0a2af6f75aaea8bef1852b45de2a857",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM904TL1",
+    "AM904TL2",
+    "AM904TL3",
+    "AM904TL4"
+  ],
+  "timed_resource_variants": [
+    {
+      "resref": "AM904TL1",
+      "variant_index": 0,
+      "position": [
+        836,
+        651
+      ]
+    },
+    {
+      "resref": "AM904TL2",
+      "variant_index": 0,
+      "position": [
+        984,
+        613
+      ]
+    },
+    {
+      "resref": "AM904TL3",
+      "variant_index": 0,
+      "position": [
+        917,
+        527
+      ]
+    },
+    {
+      "resref": "AM904TL4",
+      "variant_index": 0,
+      "position": [
+        820,
+        464
+      ]
+    }
+  ],
+  "topaz": {
+    "ffmpeg": "C:/Program Files/Topaz Labs LLC/Topaz Video AI/ffmpeg.exe",
+    "model_dir": "C:/ProgramData/Topaz Labs LLC/Topaz Video AI/models",
+    "model": "apo-8",
+    "device": "-2",
+    "replace_duplicate_threshold": -0.01,
+    "transparent_rgb_mode": "preserve-hidden-rgb"
+  },
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "b29739a434cf557a62776732edab23b9e103c27afba6604260002a7a9d40fd8c",
+  "registry_sha256": "df75aadec7941c57ea2db03f1f61872fa189f9f06856e20f5cd3a29661426e93",
+  "reviews": [
+    {
+      "resref": "AM904TL1",
+      "variant_index": 0,
+      "position": [
+        836,
+        651
+      ],
+      "cycle": 0,
+      "kind": "exact",
+      "file": "work/AM904TL1-v0/cycle_000/review-30fps-exact.mp4",
+      "sha256": "aacbf0523311dca3f5a609b2521947f35fd18992d5fcce8b09e1c5ece555c8ad"
+    },
+    {
+      "resref": "AM904TL1",
+      "variant_index": 0,
+      "position": [
+        836,
+        651
+      ],
+      "cycle": 0,
+      "kind": "loop-4s",
+      "file": "work/AM904TL1-v0/cycle_000/review-30fps-loop-4s.mp4",
+      "sha256": "d830c2aa0e4fc6a8675b155c9ea1bd9832848109905ee7b6af4702572600888a"
+    },
+    {
+      "resref": "AM904TL2",
+      "variant_index": 0,
+      "position": [
+        984,
+        613
+      ],
+      "cycle": 0,
+      "kind": "exact",
+      "file": "work/AM904TL2-v0/cycle_000/review-30fps-exact.mp4",
+      "sha256": "ffbd54d076433a8bdcbdbfee99b00403b0ce75a8b7015ddbe89970c29a215363"
+    },
+    {
+      "resref": "AM904TL2",
+      "variant_index": 0,
+      "position": [
+        984,
+        613
+      ],
+      "cycle": 0,
+      "kind": "loop-4s",
+      "file": "work/AM904TL2-v0/cycle_000/review-30fps-loop-4s.mp4",
+      "sha256": "2402b46138fd6c577d7e02fa3889d9467cd8bb25d069afdcbfddd1111f865df1"
+    },
+    {
+      "resref": "AM904TL3",
+      "variant_index": 0,
+      "position": [
+        917,
+        527
+      ],
+      "cycle": 0,
+      "kind": "exact",
+      "file": "work/AM904TL3-v0/cycle_000/review-30fps-exact.mp4",
+      "sha256": "e40808f5a05c10ba800f455bc0195120cd5764450d6371048f40978e29d36755"
+    },
+    {
+      "resref": "AM904TL3",
+      "variant_index": 0,
+      "position": [
+        917,
+        527
+      ],
+      "cycle": 0,
+      "kind": "loop-4s",
+      "file": "work/AM904TL3-v0/cycle_000/review-30fps-loop-4s.mp4",
+      "sha256": "a01802e27d52968f67c50ee979388bc7e05a8a1cd79f97f7e30dac17d4d3ef51"
+    },
+    {
+      "resref": "AM904TL4",
+      "variant_index": 0,
+      "position": [
+        820,
+        464
+      ],
+      "cycle": 0,
+      "kind": "exact",
+      "file": "work/AM904TL4-v0/cycle_000/review-30fps-exact.mp4",
+      "sha256": "802946959449b7133aab5f805e06aecbfb1f7364af041a90dba7c5585b2ff077"
+    },
+    {
+      "resref": "AM904TL4",
+      "variant_index": 0,
+      "position": [
+        820,
+        464
+      ],
+      "cycle": 0,
+      "kind": "loop-4s",
+      "file": "work/AM904TL4-v0/cycle_000/review-30fps-loop-4s.mp4",
+      "sha256": "2d69d00876d4e7643e5484fbc71b767a3f7f1f4e5b47619db82e309a6e7fc3be"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval"
+}

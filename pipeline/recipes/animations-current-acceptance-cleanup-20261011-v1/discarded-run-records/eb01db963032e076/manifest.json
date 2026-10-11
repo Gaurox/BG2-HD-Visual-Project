@@ -1,0 +1,61 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-15T21:55:39.760406+00:00",
+  "plan_sha256": "cce003088e98afb3b283b605c27144a41ff56a57d564010c5a4d5e77fc885c18",
+  "input_mode": "spatial-v1",
+  "source_run": "G:/AI/BG2_Upscale/animations/ressources/FOUNT1/runs/fount1-xbr2x-nearest2-x4-alpha-xbr2-noblur-20260915",
+  "source_run_manifest_sha256": "ec808227babe6f7622cdb2f495b63c72397a83dcc05c3231c0c752a3d3179fe2",
+  "base_pack": "G:/AI/BG2_Upscale/animations/ressources/FOUNT1/runs/fount1-xbr2x-nearest2-x4-alpha-xbr2-noblur-20260915/03_runtime_pack",
+  "base_pack_manifest_sha256": "eada112bb750987d580a4c85aa346d1c7d0fa16756ff544e86e421b4980e8ab8",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "FOUNT1"
+  ],
+  "timed_resource_variants": [
+    {
+      "resref": "FOUNT1",
+      "variant_index": 0,
+      "position": null
+    }
+  ],
+  "topaz": {
+    "ffmpeg": "C:/Program Files/Topaz Labs LLC/Topaz Video AI/ffmpeg.exe",
+    "model_dir": "C:/ProgramData/Topaz Labs LLC/Topaz Video AI/models",
+    "model": "apo-8",
+    "device": "-2",
+    "replace_duplicate_threshold": -0.01,
+    "transparent_rgb_mode": "nearest-opaque-dilate"
+  },
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "137f13ef514763555e995bf0807090c2887b32222cba6cfb1a14385dc8bd3b2c",
+  "registry_sha256": "a89f3fc237429ee56f0412576996ddf499c63c7f9fdfde13a3e2012642672daa",
+  "reviews": [
+    {
+      "resref": "FOUNT1",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "exact",
+      "file": "work/FOUNT1-v0/cycle_000/review-30fps-exact.mp4",
+      "sha256": "665628c218b7422320ff7e8d7c0a99309f1f6008e1626219b90cc5740caa9f26"
+    },
+    {
+      "resref": "FOUNT1",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "loop-4s",
+      "file": "work/FOUNT1-v0/cycle_000/review-30fps-loop-4s.mp4",
+      "sha256": "68d146114abd8e58060c671ab7ef83d066a43ca53097eb774c89b32fa6e783df"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval"
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "bg2-upscale-area-animation-pack-index-v1",
+  "status": "completed",
+  "created_utc": "2026-10-11T20:15:57.349160+00:00",
+  "purpose": "complete area snapshots of the explicitly accepted installed versions; game unchanged",
+  "areas": [
+    {
+      "area_id": "AR0205",
+      "directory": "AR0205",
+      "resrefs": [
+        "AM0205A",
+        "AM0205B",
+        "AM0205C",
+        "AM0205D",
+        "AM0205E"
+      ],
+      "resource_count": 5,
+      "frame_count": 243,
+      "raw_bytes": 321840000,
+      "registry_sha256": "0d876fe78abca67c34b9fbabfc93dac35d81ce8627493285ef8907685873f549",
+      "manifest_sha256": "18ef36c1a06b7034ab48d7b90f9887a61e46faf2313c33d204ffefb397c8915a",
+      "over_runtime_budget": false
+    },
+    {
+      "area_id": "AR0604",
+      "directory": "AR0604",
+      "resrefs": [
+        "AM0604A"
+      ],
+      "resource_count": 1,
+      "frame_count": 14,
+      "raw_bytes": 11058432,
+      "registry_sha256": "37796af7e05c84cc694ab28db7f0c93bcc99049fdddeb1fcbceec106c5fc8711",
+      "manifest_sha256": "f426ebde4e71037931fde52eb8c40aa9e48c2822b817653148f9362934bcac31",
+      "over_runtime_budget": false
+    }
+  ],
+  "area_count": 2,
+  "runtime_budget_bytes": 536870912,
+  "largest_area_raw_bytes": 321840000,
+  "total_raw_bytes": 332898432,
+  "areas_over_budget": [],
+  "resrefs_without_area": []
+}

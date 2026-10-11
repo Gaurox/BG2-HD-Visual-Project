@@ -1,0 +1,53 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-01T19:16:34.704684+00:00",
+  "input_mode": "per-frame-multi-contour-spline-alpha-on-timed-run",
+  "source_run": "G:/AI/BG2_Upscale/animations/runs/dstdvl1b-apo8-x4-30fps-v2",
+  "source_run_manifest_sha256": "b43e85a2af4b9f54c960c29aa5d9c722a21da500f0cdf2c79c649b8ca62b1866",
+  "base_pack": "G:/AI/BG2_Upscale/animations/runs/dstdvl1b-seedvr7b-lab-x4/03_runtime_pack",
+  "base_pack_manifest_sha256": "0a091c36788b74a158bebd7b22de5da9d1d8730de185489f3ca50b6346bd462e",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "DSTDVL1B"
+  ],
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "5a4435dd82a797862291ea2ec78eac02bd296e3ed88f14adfd35ace5666f2f1f",
+  "registry_sha256": "7146086fea85cfe75efb9fd5c7973b753f41535a9a0fb0162bfb424fe77b89b8",
+  "reviews": [
+    {
+      "kind": "comparison-contact-sheet",
+      "file": "review/review-comparison-contact-sheet.png",
+      "sha256": "2eea67a162f133b9173bd01cbfc5cfbb97ca070bb57134de6b07190b7d9c37a7"
+    },
+    {
+      "kind": "comparison-exact",
+      "file": "review/review-comparison-30fps-exact.mp4",
+      "sha256": "b96b9861de6f1f7207004c50da671fb5e2819bc14f0a825d0aa4cfa0489f5d93"
+    },
+    {
+      "kind": "comparison-loop-4s",
+      "file": "review/review-comparison-30fps-loop-4s.mp4",
+      "sha256": "85f6e1062b42f8695e266879306b4c7938cc84e8688a59e17be25afcce4d420e"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval",
+  "per_frame_spline_alpha": {
+    "pipeline_name": "spline-fit1-multicontour-core-guard16",
+    "pipeline_effects": [
+      "spline-fit1-multicontour-per-frame-feather4",
+      "spline-fit1-multicontour-core-guard16",
+      "timeline-global-fade70"
+    ],
+    "report": "spline-alpha-report.json",
+    "report_sha256": "86ac725c2b9a329c17f16b5d9b4746ac18132913ec18dd67d5188c430d1f544a",
+    "installation": "not performed"
+  }
+}

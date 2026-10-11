@@ -29,14 +29,16 @@ uniquement si le format ou le défaut rencontré l'exige.
 
 Runs, packs, captures, backups et présence dans le jeu ne prouvent aucun statut.
 
-## Suivi au 2026-10-11 — clôture des points 1 à 3
+## Suivi au 2026-10-11 — QA et nettoyage clôturés
 
-- [Rapport courant](../docs/validation/animations-cleanup-status-20261011-v2.json) ; le rapport `v1` reste un état historique.
+- [Rapport courant](../docs/validation/animations-cleanup-status-20261011-v3.json) ; rapports `v1`/`v2` historiques immuables.
 - AR3021 : `AM3021D/E/F` acceptés réinstallés. AR5000 : quatre poissons acceptés ajoutés, ressources voisines identiques.
 - AR0307/AR0411 : verrous réalignés sans toucher au jeu. AR6001/AR6005 : recettes réparées par snapshots complets identiques.
 - 43 anciennes QA formalisées ; 246/246 BAM ont décision et sélection. Aucune nouvelle visite ingame déduite.
-- Écarts ouverts : AR0205 `AM0205A–D` (QA 27 phases Native/15 FPS, installé 54 phases/30 FPS) ; AR0604 `AM0604A` (QA sans masque alpha, installé masque spline).
-- QA acquises maintenues sur leurs versions exactes ; choisir restauration ou QA ciblée des versions installées pour ces cinq ressources.
+- Cinq écarts fermés par QA ingame explicite du 2026-10-11 : AR0205 `AM0205A–D` installés 54 phases/30 FPS ; AR0604 `AM0604A` installé 14 phases/30 FPS avec masque spline-fit2 alpha.
+- Versions actuelles sélectionnées et packs complets conservés sous `packs-par-zone/animations-five-current-accepted-20261011-v1/` ; jeu inchangé lors de la formalisation. Anciennes décisions QA et leurs octets conservés.
+- 222 runs inutilisés supprimés (13,56 Gio) ; 737 conservés selon dépendances/QA/sources. Recettes de diagnostic archivées ; [reçu](../pipeline/recipes/animations-current-acceptance-cleanup-20261011-v1/purge-receipt.json).
+- Contrôles après purge : 1 265 manifests QA/sélection présents et SHA exacts ; 234 zones installées = verrou = registre. Provenances legacy déjà manquantes consignées dans le plan, sans modifier leurs preuves historiques.
 - AM0602F : note historique 18 phases/30 FPS conservée ; version Native 9 phases confirmée par la QA AR0602 du 2026-09-05.
 - Release : finalisation séparée ; aucun payload, candidat, manifeste release ou paquet modifié.
 

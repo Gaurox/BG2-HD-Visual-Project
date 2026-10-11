@@ -1,0 +1,53 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-07T21:45:39.453469+00:00",
+  "input_mode": "per-frame-multi-contour-spline-alpha-on-timed-run",
+  "source_run": "G:/AI/BG2_Upscale/animations/batches/ar2804-treelife-apo8-x4-30fps-v2-20260907",
+  "source_run_manifest_sha256": "9ffbbee3c34486fc3a7555e65687a6b35291fe072e89637d2b7c414869669143",
+  "base_pack": "G:/AI/BG2_Upscale/animations/batches/ar2804-treelife-spatial-seedvr2-7b-lab-x4-20260907/03_runtime_pack",
+  "base_pack_manifest_sha256": "2c488da3a2b356207a0c38c92365de54a0e4196e877de131e78089b6920445b8",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM2805A",
+    "AM2805B",
+    "AM2805C"
+  ],
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "cc5e569d77fa28cbc5715768399b186e8a1f61ecf7a6424077e7ac607b2f7c94",
+  "registry_sha256": "6fa093c5360116aa1a3051fb0ebb855420b675577618b180d93d8f27663446de",
+  "reviews": [
+    {
+      "kind": "comparison-contact-sheet",
+      "file": "review/review-comparison-contact-sheet.png",
+      "sha256": "3226a7834b0a3b05084a57d58464ad72d7da9eb2d089d39edbf46cb5183f093d"
+    },
+    {
+      "kind": "comparison-exact",
+      "file": "review/review-comparison-30fps-exact.mp4",
+      "sha256": "7cdc3c57f228d8f7db5d4e96a90c38ebf16dae5038efdd02200be10156dac41b"
+    },
+    {
+      "kind": "comparison-loop-4s",
+      "file": "review/review-comparison-30fps-loop-4s.mp4",
+      "sha256": "5d1283e9d62a49e27d1c5b9ffe0a742a6aae46fbe6771e07b1ca5358e1953bc2"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval",
+  "per_frame_spline_alpha": {
+    "pipeline_name": "spline-fit1-multicontour-per-frame-feather4",
+    "pipeline_effects": [
+      "spline-fit1-multicontour-per-frame-feather4"
+    ],
+    "report": "spline-alpha-report.json",
+    "report_sha256": "2f7689c9327a5527844741c89115fe6c31a5093b16b44ab215fa2437c468c6d1",
+    "installation": "not performed"
+  }
+}

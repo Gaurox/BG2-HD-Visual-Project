@@ -1,0 +1,51 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-07T18:00:24.507646+00:00",
+  "input_mode": "per-frame-multi-contour-spline-alpha-on-timed-run",
+  "source_run": "G:/AI/BG2_Upscale/animations/ressources/AM0803C/runs/am0803c-apo8-x4-30fps-v2-20260907",
+  "source_run_manifest_sha256": "4c3701dfe9b670daf631a20f1b62eabcb6e5f95fc5d63451946e231e7d46b386",
+  "base_pack": "G:/AI/BG2_Upscale/animations/ressources/AM0803C/runs/am0803c-seedvr7b-lab-x4-20260907/03_runtime_pack",
+  "base_pack_manifest_sha256": "72b01d71a50cb12cea5c5d3ed3ebfd8dc35924c6e054fe0081980fc8752cca37",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM0803C"
+  ],
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "42219b9943bde5594f1ae5ca77da332970e4eb2c87f7fef1f90748a79f1817a2",
+  "registry_sha256": "acf8dd6f812295c035b86cb3cd37b0a8ddf4487aca147e63a37df9f53e70f2d5",
+  "reviews": [
+    {
+      "kind": "comparison-contact-sheet",
+      "file": "review/review-comparison-contact-sheet.png",
+      "sha256": "53be6e368ef259fdec631784dee840315aa188f7e738152da4bc112dd0af2f3b"
+    },
+    {
+      "kind": "comparison-exact",
+      "file": "review/review-comparison-30fps-exact.mp4",
+      "sha256": "87cbcb19566b045b18b7b237686b4f59c445f4b211134a7da13ed90b5546b14d"
+    },
+    {
+      "kind": "comparison-loop-4s",
+      "file": "review/review-comparison-30fps-loop-4s.mp4",
+      "sha256": "6263192e0a8d2855b759e97b20658aee07e1a975dd916fe54a89923c1f0432ce"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval",
+  "per_frame_spline_alpha": {
+    "pipeline_name": "spline-fit1-multicontour-per-frame-feather4",
+    "pipeline_effects": [
+      "spline-fit1-multicontour-per-frame-feather4"
+    ],
+    "report": "spline-alpha-report.json",
+    "report_sha256": "282cc3d9ae0c7f79df4465bb4919161b8b0f782dbf2aaf953dd74896fc37764c",
+    "installation": "not performed"
+  }
+}

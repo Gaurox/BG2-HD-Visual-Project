@@ -236,3 +236,7 @@ docs/validation/animations-qa-cadence-20261011-v1.json -text whitespace=cr-at-eo
 
 # Preserved historical manifests and receipts retain their original bytes.
 pipeline/recipes/animations-cleanup-points1-3-20261011-v1/historical-evidence/** -text whitespace=cr-at-eol
+
+# Purged-run diagnostic copies and hash-bound receipts keep original bytes.
+pipeline/recipes/animations-current-acceptance-cleanup-20261011-v1/discarded-run-records/** -text -whitespace
+pipeline/recipes/animations-current-acceptance-cleanup-20261011-v1/*.json -text whitespace=cr-at-eol

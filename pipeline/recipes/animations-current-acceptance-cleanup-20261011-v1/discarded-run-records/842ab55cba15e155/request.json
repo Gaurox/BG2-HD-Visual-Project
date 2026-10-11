@@ -1,0 +1,102 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-plan-v2",
+  "status": "proposed",
+  "input_mode": "spatial-v1",
+  "source_run": "G:/AI/BG2_Upscale/animations/ressources/FPIT1S/runs/fpit1s-xbr2x-nearest2-x4-20260903",
+  "source_run_manifest_sha256": "966ae6aa3c6ce592f6b9bb3630398b43cfd553697bf299cfb7868fe295988aef",
+  "base_pack": "G:/AI/BG2_Upscale/animations/ressources/FPIT1S/runs/fpit1s-xbr2x-nearest2-x4-20260903/03_runtime_pack",
+  "base_pack_schema": "bg2-upscale-area-animation-runtime-pack-v1",
+  "base_pack_manifest_sha256": "226f2205c4087dc4ab603e04e9fbd7dea9017e9cd50a4ae438729603491da4af",
+  "base_registry_sha256": "7e89a0b9eef54d265bc791cd06c6bde935aa5f646ba7ca51d5ea77896d213ec0",
+  "scale": 4,
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "topaz": {
+    "model": "apo-8",
+    "replace_duplicate_threshold": -0.01,
+    "transparent_rgb_mode": "nearest-opaque-dilate",
+    "loop_strategy": "append first source slot once; no cyclic-context extrapolation"
+  },
+  "alpha_policy": "hold exact alpha of the current native (left) slot",
+  "geometry_policy": "crop the aligned interpolation with the current native slot geometry",
+  "targets": [
+    {
+      "resref": "FPIT1S",
+      "geometry_mode": "per-frame",
+      "input_mode": "spatial-v1",
+      "aligned_size_x4": [
+        92,
+        80
+      ],
+      "base_frame_count": 6,
+      "output_frame_count": 12,
+      "cycle_count": 1,
+      "added_intermediate_frames": 6,
+      "added_raw_bytes": 169280,
+      "source": {
+        "run_manifest_sha256": "966ae6aa3c6ce592f6b9bb3630398b43cfd553697bf299cfb7868fe295988aef",
+        "frame_manifest_sha256": "d670be06699653ffc6d8c37bc3d238873213d09df7f42b16aba07be5395f503d",
+        "upscale_manifest_sha256": "32add9eb4c31de2efd283a4be525729985bd91f88b1d0dbf2454449faf279ff6",
+        "aligned_rgba_sha256": [
+          "73dcf57f9a1538fbe768866dd2eca58fdafc4eee43dddab868fa8c0fc560cd7d",
+          "ed31b69746887e45e5e90c9c8cf3383a36d1dc28e16aa03910995a9a6c641e88",
+          "5ca50c33e87ebd0a4ae43e63efa9eaff7b3235deb8ea5b80660b23c0b021d2ff",
+          "7d41c04e733c1784ce1a9ed1801a236de6bff015942de2cc9610a48c71ada438",
+          "88d1a45b804e98e8c492ea310f7f06e54f9337a6729e514fa814062d06da7073",
+          "61ebdd49d7d995abd72c5ce09448e31830049996ca6e868d62c7bef1dbea9998"
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "intermediate_frame_indices": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "timeline_frame_indices": [
+            0,
+            6,
+            1,
+            7,
+            2,
+            8,
+            3,
+            9,
+            4,
+            10,
+            5,
+            11
+          ],
+          "native_slots": 6,
+          "timeline_phases": 12,
+          "duration_seconds": 0.4
+        }
+      ]
+    }
+  ],
+  "gates": [
+    "the declared input mode and active base pack are hash-validated before build",
+    "even phases reuse byte-exact runtime anchors",
+    "Topaz must return 2*N+1 or 2*N frames for every closed cycle",
+    "visual review and explicit approval file required before install"
+  ],
+  "plan_sha256": "a44447b138c9370c82ae2b7c428a03b483656388e6550c1aa1d95feec003fa4d"
+}

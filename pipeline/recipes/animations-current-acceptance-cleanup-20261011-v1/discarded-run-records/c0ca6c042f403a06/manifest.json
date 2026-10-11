@@ -1,0 +1,279 @@
+{
+  "schema": "bg2-upscale-animation-alpha-feather-test-v1",
+  "status": "completed",
+  "created_utc": "2026-09-22T22:11:29.308956+00:00",
+  "resref": "AM5000A",
+  "asset_ids": [
+    "animations:bam:AM5000A"
+  ],
+  "scale": 4,
+  "frame_count": 5,
+  "physical_size_x4": [
+    728,
+    592
+  ],
+  "source_run": "G:/AI/BG2_Upscale/animations/batches/ar5000-am5000ab-seedvr7b-lab-x4-20260922/resources/AM5000A/02_upscale_x4",
+  "source_run_manifest_sha256": "7ee837bd9c23bdd2d167a3132d4d2f04d3dbe03c9c5fe3bfc547c7d682796fc0",
+  "alpha_operation": {
+    "type": "per-frame-multi-component-spline-fit1-safe-boundary-plus-contour-gaussian",
+    "fit_error": 1.5,
+    "sample_spacing_x4": 1.5,
+    "supersample": 4,
+    "padding_x4": 32,
+    "threshold": 127,
+    "components": "all 8-connected components preserved and fitted independently",
+    "safe_boundary": {
+      "inner_band_x4": 4.0,
+      "outer_band_x4": 1.0,
+      "opaque_core_preserved": true,
+      "outset_limited_to_outer_band": true
+    },
+    "contour_gaussian": {
+      "sigma_x4": 1.5,
+      "coverage_policy": "alpha_final<=alpha_pre_gaussian"
+    },
+    "all_contour_fade": null,
+    "bottom_seam_protection": null,
+    "painted_fade_protection": null,
+    "painted_foreground_occlusion": null,
+    "rgb_gaussian": null,
+    "left_edge_blur": null,
+    "local_reconstruction": null,
+    "local_reinforcement": null,
+    "rgb_policy": "unchanged",
+    "geometry_policy": "unchanged",
+    "timeline_policy": "unchanged"
+  },
+  "frames": [
+    {
+      "frame": 0,
+      "source_runtime_asset": "raw_rgba/frame_000.rgba",
+      "source_runtime_sha256": "c5c1e82745ef83a6afe48f96de91b7861ce570cd95538e6585e84bdefb34c40f",
+      "source_runtime_bytes": 1723904,
+      "runtime_asset": "raw_rgba/AAX4-AM5000A-frame000.rgba",
+      "runtime_sha256": "07edb3f603b1130e425f21492e3bdb3fc54faa02d09738f912f8b1de3d607b50",
+      "runtime_bytes": 1723904,
+      "rgba": "rgba/frame_000.png",
+      "rgba_sha256": "43354a795312f90eda85a16133107339e1750c6e69ff53ef03c2d2bd36f382f3",
+      "alpha": "alpha/frame_000.png",
+      "alpha_sha256": "ff2dc071f571437f5b90cc777986c11ccbfe44d0de15119986eb1994e08d7170",
+      "spline": {
+        "source_nonzero": 287728,
+        "components": 1,
+        "status": "fitted",
+        "mode": "safe-boundary",
+        "inner_band_x4": 4.0,
+        "outer_band_x4": 1.0,
+        "expanded_alpha_pixels": 1913,
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2800,
+            "fit_samples": 1783,
+            "curve_points": 5349
+          }
+        ]
+      },
+      "contour_gaussian": {
+        "sigma_x4": 1.5,
+        "changed_alpha_pixels": 9615,
+        "outside_alpha_pixels": 0
+      },
+      "all_contour_fade": null,
+      "bottom_seam_protection": null,
+      "painted_fade_protection": null,
+      "painted_foreground_occlusion": null,
+      "rgb_gaussian": null,
+      "left_edge_blur": null,
+      "local_reconstruction": null,
+      "local_reinforcement": null,
+      "changed_alpha_pixels": 11515,
+      "raised_over_source_alpha_pixels": 1913,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 1,
+      "source_runtime_asset": "raw_rgba/frame_001.rgba",
+      "source_runtime_sha256": "e78d2d2bb5f26166a228e15a0d0878bec7e5fb6c4385b09f26c2ab2d8354d9c4",
+      "source_runtime_bytes": 1723904,
+      "runtime_asset": "raw_rgba/AAX4-AM5000A-frame001.rgba",
+      "runtime_sha256": "bfc328d8e7897446611fca2826217e319600e88f0a67fb80c5b6c5e2dda6a120",
+      "runtime_bytes": 1723904,
+      "rgba": "rgba/frame_001.png",
+      "rgba_sha256": "f3c784a7fc9b20b1d16f4df79edd1435599d28a32ae8cfbfd22da1a24a2aae78",
+      "alpha": "alpha/frame_001.png",
+      "alpha_sha256": "ff2dc071f571437f5b90cc777986c11ccbfe44d0de15119986eb1994e08d7170",
+      "spline": {
+        "source_nonzero": 287728,
+        "components": 1,
+        "status": "fitted",
+        "mode": "safe-boundary",
+        "inner_band_x4": 4.0,
+        "outer_band_x4": 1.0,
+        "expanded_alpha_pixels": 1913,
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2800,
+            "fit_samples": 1783,
+            "curve_points": 5349
+          }
+        ]
+      },
+      "contour_gaussian": {
+        "sigma_x4": 1.5,
+        "changed_alpha_pixels": 9615,
+        "outside_alpha_pixels": 0
+      },
+      "all_contour_fade": null,
+      "bottom_seam_protection": null,
+      "painted_fade_protection": null,
+      "painted_foreground_occlusion": null,
+      "rgb_gaussian": null,
+      "left_edge_blur": null,
+      "local_reconstruction": null,
+      "local_reinforcement": null,
+      "changed_alpha_pixels": 11515,
+      "raised_over_source_alpha_pixels": 1913,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 2,
+      "source_runtime_asset": "raw_rgba/frame_002.rgba",
+      "source_runtime_sha256": "dd3a431ddb77921a14c0e03cadc2c9962df8024a97eb6008fa5b1b58c3ff793b",
+      "source_runtime_bytes": 1723904,
+      "runtime_asset": "raw_rgba/AAX4-AM5000A-frame002.rgba",
+      "runtime_sha256": "6f05788cde8aaa6a00beefcff95d5dd33950136d884e0cde6a1449ec8200f0a1",
+      "runtime_bytes": 1723904,
+      "rgba": "rgba/frame_002.png",
+      "rgba_sha256": "23d36c1658438a9daf22756e26724b4b3f0455bed410022bafa0e6a52bfb7442",
+      "alpha": "alpha/frame_002.png",
+      "alpha_sha256": "ff2dc071f571437f5b90cc777986c11ccbfe44d0de15119986eb1994e08d7170",
+      "spline": {
+        "source_nonzero": 287728,
+        "components": 1,
+        "status": "fitted",
+        "mode": "safe-boundary",
+        "inner_band_x4": 4.0,
+        "outer_band_x4": 1.0,
+        "expanded_alpha_pixels": 1913,
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2800,
+            "fit_samples": 1783,
+            "curve_points": 5349
+          }
+        ]
+      },
+      "contour_gaussian": {
+        "sigma_x4": 1.5,
+        "changed_alpha_pixels": 9615,
+        "outside_alpha_pixels": 0
+      },
+      "all_contour_fade": null,
+      "bottom_seam_protection": null,
+      "painted_fade_protection": null,
+      "painted_foreground_occlusion": null,
+      "rgb_gaussian": null,
+      "left_edge_blur": null,
+      "local_reconstruction": null,
+      "local_reinforcement": null,
+      "changed_alpha_pixels": 11515,
+      "raised_over_source_alpha_pixels": 1913,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 3,
+      "source_runtime_asset": "raw_rgba/frame_003.rgba",
+      "source_runtime_sha256": "dfd6f15edc9973a46ba44519ca33904fa97be0e8dfb15f5adda1b780a8fdc480",
+      "source_runtime_bytes": 1723904,
+      "runtime_asset": "raw_rgba/AAX4-AM5000A-frame003.rgba",
+      "runtime_sha256": "d613460c12ea134c55b8262f0af96d0cd226d967c032c492f8ea995e2055855d",
+      "runtime_bytes": 1723904,
+      "rgba": "rgba/frame_003.png",
+      "rgba_sha256": "6878661e9ef60a3b1eabee8a43f87d1137a9fb583f688e5e3ffa1daad7db7e6c",
+      "alpha": "alpha/frame_003.png",
+      "alpha_sha256": "ff2dc071f571437f5b90cc777986c11ccbfe44d0de15119986eb1994e08d7170",
+      "spline": {
+        "source_nonzero": 287728,
+        "components": 1,
+        "status": "fitted",
+        "mode": "safe-boundary",
+        "inner_band_x4": 4.0,
+        "outer_band_x4": 1.0,
+        "expanded_alpha_pixels": 1913,
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2800,
+            "fit_samples": 1783,
+            "curve_points": 5349
+          }
+        ]
+      },
+      "contour_gaussian": {
+        "sigma_x4": 1.5,
+        "changed_alpha_pixels": 9615,
+        "outside_alpha_pixels": 0
+      },
+      "all_contour_fade": null,
+      "bottom_seam_protection": null,
+      "painted_fade_protection": null,
+      "painted_foreground_occlusion": null,
+      "rgb_gaussian": null,
+      "left_edge_blur": null,
+      "local_reconstruction": null,
+      "local_reinforcement": null,
+      "changed_alpha_pixels": 11515,
+      "raised_over_source_alpha_pixels": 1913,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 4,
+      "source_runtime_asset": "raw_rgba/frame_004.rgba",
+      "source_runtime_sha256": "6ec438b62833e47ae2ae7fcbc70259a81c7a749f4813744bace82df20548e907",
+      "source_runtime_bytes": 1723904,
+      "runtime_asset": "raw_rgba/AAX4-AM5000A-frame004.rgba",
+      "runtime_sha256": "383adef081a10ed4a90c06df944d6f94dcbd3f8fee570c14b0f343b55a3e07ce",
+      "runtime_bytes": 1723904,
+      "rgba": "rgba/frame_004.png",
+      "rgba_sha256": "b5368fed9f41b391ea444b344dafac2a6c1ea9a42e09805d61401987b842a96e",
+      "alpha": "alpha/frame_004.png",
+      "alpha_sha256": "ff2dc071f571437f5b90cc777986c11ccbfe44d0de15119986eb1994e08d7170",
+      "spline": {
+        "source_nonzero": 287728,
+        "components": 1,
+        "status": "fitted",
+        "mode": "safe-boundary",
+        "inner_band_x4": 4.0,
+        "outer_band_x4": 1.0,
+        "expanded_alpha_pixels": 1913,
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2800,
+            "fit_samples": 1783,
+            "curve_points": 5349
+          }
+        ]
+      },
+      "contour_gaussian": {
+        "sigma_x4": 1.5,
+        "changed_alpha_pixels": 9615,
+        "outside_alpha_pixels": 0
+      },
+      "all_contour_fade": null,
+      "bottom_seam_protection": null,
+      "painted_fade_protection": null,
+      "painted_foreground_occlusion": null,
+      "rgb_gaussian": null,
+      "left_edge_blur": null,
+      "local_reconstruction": null,
+      "local_reinforcement": null,
+      "changed_alpha_pixels": 11515,
+      "raised_over_source_alpha_pixels": 1913,
+      "rgb_byte_identical": true
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-07T22:18:45.237435+00:00",
+  "input_mode": "per-frame-multi-contour-spline-alpha-on-timed-run",
+  "source_run": "G:/AI/BG2_Upscale/animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-20260907",
+  "source_run_manifest_sha256": "aabcbd9994cfa11466337b4b2859fb50194e4ead408db57ca5f197a6fcf9ede4",
+  "base_pack": "G:/AI/BG2_Upscale/animations/ressources/AM2805B/runs/am2805b-seedvr2-7b-lab-x4-20260907/03_runtime_pack",
+  "base_pack_manifest_sha256": "80bd05d1bfbdf2480fd356bb64ab3e79b1f94b2374a8e1087aee4b1010f3e5a0",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM2805B"
+  ],
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "efb6e5e2b9d495e7d004225d26c6993365ab33c60aad1f283cf78cf03f92c06a",
+  "registry_sha256": "90e86d9bf5e2b9f4566f692b6684d441aa3975aeddfcee4cd68d4cdac1495c09",
+  "reviews": [
+    {
+      "kind": "comparison-contact-sheet",
+      "file": "review/review-comparison-contact-sheet.png",
+      "sha256": "9562cf2d12aacce88a3f69e87adeb4f2f4ebea1c922cc5d1d59e04ed5b58350a"
+    },
+    {
+      "kind": "comparison-exact",
+      "file": "review/review-comparison-30fps-exact.mp4",
+      "sha256": "72ea1527bd8a4b19957aaa6a03e475a70c618aaa9ece23e9fc7bd73964bf77d7"
+    },
+    {
+      "kind": "comparison-loop-4s",
+      "file": "review/review-comparison-30fps-loop-4s.mp4",
+      "sha256": "143d71e35d3940fe1043136cace88395c9e0b8c5090174c22c803d43c30000ab"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval",
+  "per_frame_spline_alpha": {
+    "pipeline_name": "spline-fit1-multicontour-per-frame-feather4",
+    "pipeline_effects": [
+      "spline-fit1-multicontour-per-frame-feather4"
+    ],
+    "report": "spline-alpha-report.json",
+    "report_sha256": "f0d89b7b856aba01a851446a3b978cd7a81a081d875a698937a5d13beaa79b1f",
+    "installation": "not performed"
+  }
+}

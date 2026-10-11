@@ -1,0 +1,109 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-16T22:05:24.215221+00:00",
+  "plan_sha256": "994b7092bb1dabfb70666304a87376b8cd39060574e93c9bec8c2da74f5a7188",
+  "input_mode": "spatial-v1",
+  "source_run": "G:/AI/BG2_Upscale/animations/runs/ar0516-all-bam-seedvr7b-lab-x4",
+  "source_run_manifest_sha256": "bf84a4b858eaae193add2f9725a9bd1ee65368d260149abdb7f696ddd38b9c6b",
+  "base_pack": "G:/AI/BG2_Upscale/animations/runs/ar0516-all-bam-seedvr7b-lab-x4/03_runtime_pack",
+  "base_pack_manifest_sha256": "ba88584f2a808f0544d4d86bbe5c54b0d44eaf2bff268d659f558b40e2ac42d7",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM0516LA",
+    "AM0516LB",
+    "AM0516LC"
+  ],
+  "timed_resource_variants": [
+    {
+      "resref": "AM0516LA",
+      "variant_index": 0,
+      "position": null
+    },
+    {
+      "resref": "AM0516LB",
+      "variant_index": 0,
+      "position": null
+    },
+    {
+      "resref": "AM0516LC",
+      "variant_index": 0,
+      "position": null
+    }
+  ],
+  "topaz": {
+    "ffmpeg": "C:/Program Files/Topaz Labs LLC/Topaz Video AI/ffmpeg.exe",
+    "model_dir": "C:/ProgramData/Topaz Labs LLC/Topaz Video AI/models",
+    "model": "apo-8",
+    "device": "-2",
+    "replace_duplicate_threshold": -0.01,
+    "transparent_rgb_mode": "preserve-hidden-rgb"
+  },
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "fd691a6cfae3a6aa5b6332f8491bb5d7ac3e16b0767a0bf7f4a3898de8abe015",
+  "registry_sha256": "372ad89d5a7ad642aaeb8be447ca0a04b61a532e16a32f62a69063b6c7036a13",
+  "reviews": [
+    {
+      "resref": "AM0516LA",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "exact",
+      "file": "work/AM0516LA-v0/cycle_000/review-30fps-exact.mp4",
+      "sha256": "2f7af28f437a36ad3c823a10acd241a2e7f4e13b1cca7fc831f5f66f2dae7ae6"
+    },
+    {
+      "resref": "AM0516LA",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "loop-4s",
+      "file": "work/AM0516LA-v0/cycle_000/review-30fps-loop-4s.mp4",
+      "sha256": "b8ffde6bb49c62e9d25ff5ba8c54118e33c3626aa335a39d7a29c31400b6a8ee"
+    },
+    {
+      "resref": "AM0516LB",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "exact",
+      "file": "work/AM0516LB-v0/cycle_000/review-30fps-exact.mp4",
+      "sha256": "86b07b40ecd8484c88e9f02d4708d20c2563dc1c45603a6339cfbc206777ea3a"
+    },
+    {
+      "resref": "AM0516LB",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "loop-4s",
+      "file": "work/AM0516LB-v0/cycle_000/review-30fps-loop-4s.mp4",
+      "sha256": "851362eacce04ee0e20b6291fe43da81b7a4b80cd89db62f3329da8931545d10"
+    },
+    {
+      "resref": "AM0516LC",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "exact",
+      "file": "work/AM0516LC-v0/cycle_000/review-30fps-exact.mp4",
+      "sha256": "c55a48cc2c7cc7c338c05f4168153cbc851394fc8b65286346e4cd7107ed5764"
+    },
+    {
+      "resref": "AM0516LC",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "loop-4s",
+      "file": "work/AM0516LC-v0/cycle_000/review-30fps-loop-4s.mp4",
+      "sha256": "26728d7265426801cbf9a35daf21df3174ccc29451e23be651c94e9ef7c224df"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval"
+}

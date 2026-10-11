@@ -1,0 +1,51 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-22T05:19:19.147456+00:00",
+  "input_mode": "per-frame-multi-contour-spline-alpha-on-timed-run",
+  "source_run": "G:/AI/BG2_Upscale/animations/ressources/AM6200I/runs/am6200i-reboutcx-apo8-x4-30fps-v2-20260922",
+  "source_run_manifest_sha256": "a20e5eeb480df96194ce81a72ef90888a44e641144c6a983ac4fa96bff40af1c",
+  "base_pack": "G:/AI/BG2_Upscale/animations/ressources/AM6200I/runs/am6200i-reboutcx-x4-20260922/03_runtime_pack",
+  "base_pack_manifest_sha256": "025ec719e369ba0be60cc1ba36fff3c3cdf216e01d3520724e81773ca9374577",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM6200I"
+  ],
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "6613cf941c91110be567e1ca13339844904fe0288d4449e56efd4fe6eacfbfae",
+  "registry_sha256": "254a5421e7906f46b63498a3c4f6c492ca0c1d78f03df267d674e7fd7b180039",
+  "reviews": [
+    {
+      "kind": "comparison-contact-sheet",
+      "file": "review/review-comparison-contact-sheet.png",
+      "sha256": "6f936ef1b71284bb3e0b86b29463d7b954022145297924060ce82380b211c689"
+    },
+    {
+      "kind": "comparison-exact",
+      "file": "review/review-comparison-30fps-exact.mp4",
+      "sha256": "09707a637f7ce0b6ddf8ef329af4c7df66a9c86c392ee594662434c5b07d3c61"
+    },
+    {
+      "kind": "comparison-loop-4s",
+      "file": "review/review-comparison-30fps-loop-4s.mp4",
+      "sha256": "5b3d7a6ac91dfe291e29ded2705d6add19eb230e5e5a80e0e2be0e72412cb1a5"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval",
+  "per_frame_spline_alpha": {
+    "pipeline_name": "spline-fit1-multicontour-per-frame-feather4",
+    "pipeline_effects": [
+      "spline-fit1-multicontour-per-frame-feather4"
+    ],
+    "report": "spline-alpha-report.json",
+    "report_sha256": "53d4ca22fe3c51974e53a94b641cd59282aaed809e77d8d1e46370c5d26331e6",
+    "installation": "not performed"
+  }
+}

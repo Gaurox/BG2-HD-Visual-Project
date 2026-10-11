@@ -1,0 +1,161 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-plan-v2",
+  "status": "proposed",
+  "input_mode": "spatial-v1",
+  "source_run": "G:/AI/BG2_Upscale/animations/runs/butrfly-xbr2x-nearest2-x4",
+  "source_run_manifest_sha256": "5deb1f3d023402b741bf1fe3b1fb830aac4f5adcbe6d0237347fba8cb53ddf86",
+  "base_pack": "G:/AI/BG2_Upscale/animations/runs/butrfly-xbr2x-nearest2-x4/03_runtime_pack",
+  "base_pack_schema": "bg2-upscale-area-animation-runtime-pack-v1",
+  "base_pack_manifest_sha256": "ef9c48fdd99d8b0c2e7c230535b82042cc4e66be465740b963ee93e498392a7d",
+  "base_registry_sha256": "cc6b0289bb7ff8f7c2f6d888c26f3da08ef0ed3bcfea332946966c5e91441d77",
+  "scale": 4,
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "topaz": {
+    "model": "apo-8",
+    "replace_duplicate_threshold": -0.01,
+    "loop_strategy": "append first source slot once; no cyclic-context extrapolation"
+  },
+  "alpha_policy": "hold exact alpha of the current native (left) slot",
+  "geometry_policy": "crop the aligned interpolation with the current native slot geometry",
+  "targets": [
+    {
+      "resref": "BUTRFLY",
+      "geometry_mode": "uniform",
+      "input_mode": "spatial-v1",
+      "aligned_size_x4": [
+        256,
+        256
+      ],
+      "base_frame_count": 18,
+      "output_frame_count": 36,
+      "cycle_count": 1,
+      "added_intermediate_frames": 18,
+      "added_raw_bytes": 4718592,
+      "source": {
+        "run_manifest_sha256": "5deb1f3d023402b741bf1fe3b1fb830aac4f5adcbe6d0237347fba8cb53ddf86",
+        "frame_manifest_sha256": "edaff2d3185e9d76062bc2f4737c16eeafa8e5b813878fc6c88e28b60c387d3a",
+        "upscale_manifest_sha256": "273f6999567d97b4703be90d8d6352b5a5d88ae673ba5ffc8589ec33aa77e4e8",
+        "aligned_rgba_sha256": [
+          "32537b0d87effe1636a408599b145ad091c44fa49b5b79b01991cf2a670100d3",
+          "c89c38e32568691d25759ac2e997989ba5a2be6160e0d26242d7260545446bf5",
+          "f7cdead35d16517daa8b00e1250c007c9bbca7ea88a271b4d9137e9a8af55577",
+          "0aaab8dcbbb1eea20ca9254cdec22bee4bd2fbbf9798ece345a3283d0b081f8f",
+          "5e5f8f03c57587175dc2a1fc55e12abbd06b25e150cf41c5b766a39f8ff7811e",
+          "6048c6207ca2be519500e61594334727508c35ce5812085b3e23bd3e8063279b",
+          "900b7d0cc0f45f24806a1ffb1803e2cb9addbbddc89e9536d3bec8d2a21ea532",
+          "026f8639cb344a0dce34d2b34fd7c9f5819e2036b04fd2dc73a9c4c13306707c",
+          "26912353ba069feb7211ad15cb5569d334fc4a16d036edd816501e0b9319cb29",
+          "d8ee5aec6e86247b9e0c390b40580a83b8611ad09681006762b927bc897cd9cb",
+          "1c6ce15e5a0bb09808052ef95c928b57383f649de9f2321c6cef4232a16303f9",
+          "19fce309a761e19cee63f3fff952ec6de9fedc3fc7fac038df79dc83f6bd1e74",
+          "ee52eca4ac419e0288595e16da2213ac502e76c13d4d9607c01b27a93c55a8a8",
+          "eb968c414ad5a7851ff487b6ebe4fbac10d9ba35ebd104c782c32b730cdb0350",
+          "ac91cf5194c92519a3f675f2475bd9546971eec6c0395ea203c6ef66b798283d",
+          "96a23aba92b00ed0593355771531c43c901c62fe4ddb2dc10b9a6837a5bf18ec",
+          "c794fccdf01378c09b9ebe26f4a5324db489892b253cd85372ba26c9adb6064b",
+          "d3e9bb460235c057d0709e9ca4d79b8647746f2257110a0ca410700bc3ef9652"
+        ]
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ],
+          "intermediate_frame_indices": [
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35
+          ],
+          "timeline_frame_indices": [
+            0,
+            18,
+            1,
+            19,
+            2,
+            20,
+            3,
+            21,
+            4,
+            22,
+            5,
+            23,
+            6,
+            24,
+            7,
+            25,
+            8,
+            26,
+            9,
+            27,
+            10,
+            28,
+            11,
+            29,
+            12,
+            30,
+            13,
+            31,
+            14,
+            32,
+            15,
+            33,
+            16,
+            34,
+            17,
+            35
+          ],
+          "native_slots": 18,
+          "timeline_phases": 36,
+          "duration_seconds": 1.2
+        }
+      ]
+    }
+  ],
+  "gates": [
+    "the declared input mode and active base pack are hash-validated before build",
+    "even phases reuse byte-exact runtime anchors",
+    "Topaz must return 2*N+1 or 2*N frames for every closed cycle",
+    "visual review and explicit approval file required before install"
+  ],
+  "plan_sha256": "2b9c6fa73bc82e46259490ea059b1e3f695e37722c46c29f59c5ad047e7ddafd"
+}

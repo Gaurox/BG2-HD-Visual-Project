@@ -1,0 +1,119 @@
+{
+  "schema": "bg2-upscale-animation-visual-treatment-v1",
+  "status": "completed",
+  "created_utc": "2026-09-17T18:51:02.383258+00:00",
+  "source_pack": "G:\\AI\\BG2_Upscale\\animations\\batches\\ar3017-main-apo8-x4-30fps-v2-20260917\\03_runtime_pack",
+  "source_pack_manifest_sha256": "930a9f18f21fa955a8c528f634dc4b3da90d5b8041220eb2694416eec52fadb7",
+  "runtime_pack": "03_runtime_pack",
+  "runtime_pack_manifest_sha256": "244ae9131418dcf87127aa12c07db11ca87356d4b4a8f604a346faf1c9cd4631",
+  "resrefs": [
+    "AM3017A",
+    "AM3017B",
+    "AM3017C",
+    "AM3017D"
+  ],
+  "visual_treatment": {
+    "kind": "inner-contour-fade",
+    "curve": "smoothstep-distance-transform",
+    "radius_x4": 12.0,
+    "rgba_policy": "multiply-premultiplied-rgba",
+    "alpha_constraint": "final<=source"
+  },
+  "metrics": {
+    "AM3017A": {
+      "frame_count": 56,
+      "changed_frame_count": 56,
+      "alpha_sum_before": 3640600320,
+      "alpha_sum_after": 3431575056,
+      "fade_width_x4_min": null,
+      "fade_width_x4_max": null,
+      "inner_contour_radius_x4": 12.0,
+      "gaussian_padding_x4": 0,
+      "geometry_preserved": false
+    },
+    "AM3017B": {
+      "frame_count": 56,
+      "changed_frame_count": 56,
+      "alpha_sum_before": 3250356480,
+      "alpha_sum_after": 3031097160,
+      "fade_width_x4_min": null,
+      "fade_width_x4_max": null,
+      "inner_contour_radius_x4": 12.0,
+      "gaussian_padding_x4": 0,
+      "geometry_preserved": false
+    },
+    "AM3017C": {
+      "frame_count": 56,
+      "changed_frame_count": 56,
+      "alpha_sum_before": 4529844480,
+      "alpha_sum_after": 4302597992,
+      "fade_width_x4_min": null,
+      "fade_width_x4_max": null,
+      "inner_contour_radius_x4": 12.0,
+      "gaussian_padding_x4": 0,
+      "geometry_preserved": false
+    },
+    "AM3017D": {
+      "frame_count": 56,
+      "changed_frame_count": 56,
+      "alpha_sum_before": 5663562240,
+      "alpha_sum_after": 5396973904,
+      "fade_width_x4_min": null,
+      "fade_width_x4_max": null,
+      "inner_contour_radius_x4": 12.0,
+      "gaussian_padding_x4": 0,
+      "geometry_preserved": false
+    }
+  },
+  "reviews": [
+    {
+      "resref": "AM3017A",
+      "kind": "comparison-exact",
+      "file": "review/AM3017A/comparison-30fps-exact.mp4",
+      "sha256": "a6a1c35db0397212ecf2742c6ff3dab4db0d31769c60432e2d12b2c83aa19059"
+    },
+    {
+      "resref": "AM3017A",
+      "kind": "comparison-loop-4s",
+      "file": "review/AM3017A/comparison-30fps-loop-4s.mp4",
+      "sha256": "7bce88bb2ece833c52f860703c564fe05e2ac6105c9c686729c36cfacf386d32"
+    },
+    {
+      "resref": "AM3017B",
+      "kind": "comparison-exact",
+      "file": "review/AM3017B/comparison-30fps-exact.mp4",
+      "sha256": "5766786a61ebc4dbb6ef8d58e802563ce8747d62795872714fc65934276fb7b9"
+    },
+    {
+      "resref": "AM3017B",
+      "kind": "comparison-loop-4s",
+      "file": "review/AM3017B/comparison-30fps-loop-4s.mp4",
+      "sha256": "6685b84cb43eef6fbbc2d3d6532a0e6a5226bf542f7052bb8a78a3a26eaf3ab5"
+    },
+    {
+      "resref": "AM3017C",
+      "kind": "comparison-exact",
+      "file": "review/AM3017C/comparison-30fps-exact.mp4",
+      "sha256": "0b724ea51aed3cff1eb40a2cc7c76d2bac054db1b44076eddb88245332234b1a"
+    },
+    {
+      "resref": "AM3017C",
+      "kind": "comparison-loop-4s",
+      "file": "review/AM3017C/comparison-30fps-loop-4s.mp4",
+      "sha256": "939c0bbabaa717a1ade55133a467786a266a547a2df93863e0979e74c4253df4"
+    },
+    {
+      "resref": "AM3017D",
+      "kind": "comparison-exact",
+      "file": "review/AM3017D/comparison-30fps-exact.mp4",
+      "sha256": "cfafdf14bdc284033b2a66615854e5209b09bdf7f34a266eb3830ba141ff3726"
+    },
+    {
+      "resref": "AM3017D",
+      "kind": "comparison-loop-4s",
+      "file": "review/AM3017D/comparison-30fps-loop-4s.mp4",
+      "sha256": "114cf14e15fbb1e131fb4ffcf0da85bcfd81c18eefce6bf7590ed6b9786107e2"
+    }
+  ],
+  "qa": "explicit visual approval required before installation"
+}

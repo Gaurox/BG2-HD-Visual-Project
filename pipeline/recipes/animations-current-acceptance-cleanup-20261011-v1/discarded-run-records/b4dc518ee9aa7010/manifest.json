@@ -1,0 +1,55 @@
+{
+  "schema": "bg2-upscale-animation-visual-treatment-v1",
+  "status": "completed",
+  "created_utc": "2026-09-21T22:44:22.032334+00:00",
+  "source_pack": "G:\\AI\\BG2_Upscale\\animations\\ressources\\AM6200I\\runs\\am6200i-reboutcx-apo8-x4-30fps-v2-20260922\\03_runtime_pack",
+  "source_pack_manifest_sha256": "ad69b29b262ccb9af05e4dc3b962764b3cb7664aeb97ec61b971b28ed336031b",
+  "runtime_pack": "03_runtime_pack",
+  "runtime_pack_manifest_sha256": "d24d524c2697f441f4330d7aad3f57b21c3402cb91e61c9eea5ef65c8b677bd5",
+  "resrefs": [
+    "AM6200I"
+  ],
+  "visual_treatment": {
+    "kind": "inner-contour-fade",
+    "curve": "smoothstep-distance-transform",
+    "radius_x4": 4.0,
+    "open_canvas_edges": false,
+    "rgba_policy": "preserve-straight-rgb-dilate-under-zero-alpha",
+    "alpha_constraint": "final<=source"
+  },
+  "metrics": {
+    "AM6200I": {
+      "frame_count": 18,
+      "changed_frame_count": 18,
+      "alpha_sum_before": 921476160,
+      "alpha_sum_after": 889853848,
+      "fade_width_x4_min": null,
+      "fade_width_x4_max": null,
+      "inner_contour_radius_x4": 4.0,
+      "rgb_policy": "preserve",
+      "rgb_dilated_pixels": 1302335,
+      "gaussian_padding_x4": 0,
+      "geometry_preserved": false,
+      "alpha_mask": null,
+      "bright_core_seed_px": null,
+      "bright_core_mask_px": null,
+      "lower_edge_cover_ring_px": null,
+      "alpha_holes_filled_px": null
+    }
+  },
+  "reviews": [
+    {
+      "resref": "AM6200I",
+      "kind": "comparison-exact",
+      "file": "review/AM6200I/comparison-30fps-exact.mp4",
+      "sha256": "8bcae8010c206dad6581e584186c46c6ee1c0325564799733171ab929f00b6a3"
+    },
+    {
+      "resref": "AM6200I",
+      "kind": "comparison-loop-4s",
+      "file": "review/AM6200I/comparison-30fps-loop-4s.mp4",
+      "sha256": "5d8e9368ad6d287ec82306302da76e07003912451441823841275549405b7085"
+    }
+  ],
+  "qa": "explicit visual approval required before installation"
+}

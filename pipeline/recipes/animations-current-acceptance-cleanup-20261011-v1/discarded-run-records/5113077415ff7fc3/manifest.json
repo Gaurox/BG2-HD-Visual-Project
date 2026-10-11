@@ -1,0 +1,677 @@
+{
+  "schema": "bg2-upscale-animation-alpha-feather-test-v1",
+  "status": "completed",
+  "created_utc": "2026-09-05T23:11:06.072607+00:00",
+  "resref": "FALL6",
+  "asset_ids": [
+    "animations:bam:FALL6"
+  ],
+  "scale": 4,
+  "frame_count": 18,
+  "physical_size_x4": null,
+  "source_run": "G:/AI/BG2_Upscale/animations/batches/ar2300-waterfalls-spatial-seedvr2-7b-lab-x4-20260906/resources/FALL6/02_upscale_x4",
+  "source_run_manifest_sha256": "587e06321eb1c473d849b9f888479ee246591cfa92617d1a8a9ca0b480082f86",
+  "alpha_operation": {
+    "type": "per-frame-multi-component-spline-fit1",
+    "fit_error": 1.0,
+    "sample_spacing_x4": 1.5,
+    "supersample": 4,
+    "padding_x4": 32,
+    "threshold": 127,
+    "components": "all 8-connected components preserved and fitted independently",
+    "local_reconstruction": null,
+    "rgb_policy": "unchanged",
+    "geometry_policy": "unchanged",
+    "timeline_policy": "unchanged"
+  },
+  "frames": [
+    {
+      "frame": 0,
+      "source_runtime_asset": "raw_rgba/frame_000.rgba",
+      "source_runtime_sha256": "5d7695b6db65bfed9d6bf9f7a8fd596db9adbdfa05addeac25f7aa9ee1e04ba4",
+      "source_runtime_bytes": 1072512,
+      "runtime_asset": "raw_rgba/AAX4-FALL6-frame000.rgba",
+      "runtime_sha256": "fa2ed163008bb77bff20c94944826af658913a7e72d6612b91eaea50c8c99394",
+      "runtime_bytes": 1072512,
+      "rgba": "rgba/frame_000.png",
+      "rgba_sha256": "8777b8bc090e5c22c4b440d6e7f4ccb28307c0da12674ad2136c4e7fd235d18a",
+      "alpha": "alpha/frame_000.png",
+      "alpha_sha256": "169aad068be5e891270cc8ef9184dff813941b0d85565ad4a06305cf376a2e9a",
+      "spline": {
+        "source_nonzero": 168560,
+        "components": 1,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 2978,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2224,
+            "fit_samples": 1430,
+            "curve_points": 4290
+          }
+        ]
+      },
+      "local_reconstruction": null,
+      "changed_alpha_pixels": 3128,
+      "raised_over_source_alpha_pixels": 0,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 1,
+      "source_runtime_asset": "raw_rgba/frame_001.rgba",
+      "source_runtime_sha256": "13c11037b70a36b99da952bedd2fe66174b008313f96741b29d1332702d8f5f8",
+      "source_runtime_bytes": 1072512,
+      "runtime_asset": "raw_rgba/AAX4-FALL6-frame001.rgba",
+      "runtime_sha256": "3d8ea52da43b9e5f625039d6ebea11c91b7b2bc220f1f213587edfdbc88fe060",
+      "runtime_bytes": 1072512,
+      "rgba": "rgba/frame_001.png",
+      "rgba_sha256": "c20bda956be4195faa4100f1293f4726c4eb7f30ef24a92027d2f2e16a51080d",
+      "alpha": "alpha/frame_001.png",
+      "alpha_sha256": "169aad068be5e891270cc8ef9184dff813941b0d85565ad4a06305cf376a2e9a",
+      "spline": {
+        "source_nonzero": 168560,
+        "components": 1,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 2978,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2224,
+            "fit_samples": 1430,
+            "curve_points": 4290
+          }
+        ]
+      },
+      "local_reconstruction": null,
+      "changed_alpha_pixels": 3128,
+      "raised_over_source_alpha_pixels": 0,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 2,
+      "source_runtime_asset": "raw_rgba/frame_002.rgba",
+      "source_runtime_sha256": "f0e68f1ee52b9dc1cf0a45ceac27ba6c50a3bedf290f2dffa628db9be61c9f3e",
+      "source_runtime_bytes": 1072512,
+      "runtime_asset": "raw_rgba/AAX4-FALL6-frame002.rgba",
+      "runtime_sha256": "c57e46e15ecaa41a701b4995e49250456492d1e5076fbeddb842bf7ec6d3c78f",
+      "runtime_bytes": 1072512,
+      "rgba": "rgba/frame_002.png",
+      "rgba_sha256": "c3a231cd5de5fc687918d6ec66ad6f68c5bd717932b437dca80d2dbd8b220513",
+      "alpha": "alpha/frame_002.png",
+      "alpha_sha256": "169aad068be5e891270cc8ef9184dff813941b0d85565ad4a06305cf376a2e9a",
+      "spline": {
+        "source_nonzero": 168560,
+        "components": 1,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 2978,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2224,
+            "fit_samples": 1430,
+            "curve_points": 4290
+          }
+        ]
+      },
+      "local_reconstruction": null,
+      "changed_alpha_pixels": 3128,
+      "raised_over_source_alpha_pixels": 0,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 3,
+      "source_runtime_asset": "raw_rgba/frame_003.rgba",
+      "source_runtime_sha256": "6185afcbd551bf3602148cb3d4c0cf85bbda3dab443a171224a334f09d4aed6f",
+      "source_runtime_bytes": 806400,
+      "runtime_asset": "raw_rgba/AAX4-FALL6-frame003.rgba",
+      "runtime_sha256": "b7e5f1bd0ff6faa256178b134603476df1151e3e194a0d9cb90a6d2fb226e216",
+      "runtime_bytes": 806400,
+      "rgba": "rgba/frame_003.png",
+      "rgba_sha256": "7c803491eed5f27bb50da05ca5c96b9d2f4297db5046badcdf0f92109c755a57",
+      "alpha": "alpha/frame_003.png",
+      "alpha_sha256": "ab7eb299b7ab28fa8539cc420886c35d5220a181e38fa0bcfdc3ced347be6701",
+      "spline": {
+        "source_nonzero": 118688,
+        "components": 2,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 3370,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 640,
+            "fit_samples": 417,
+            "curve_points": 1251
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 1848,
+            "fit_samples": 1198,
+            "curve_points": 3594
+          }
+        ]
+      },
+      "local_reconstruction": null,
+      "changed_alpha_pixels": 3581,
+      "raised_over_source_alpha_pixels": 0,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 4,
+      "source_runtime_asset": "raw_rgba/frame_004.rgba",
+      "source_runtime_sha256": "bb29b0a849eaa1759e059b2f2dd40ca91a7df915be47b783aa4d9c327a7f1b5d",
+      "source_runtime_bytes": 806400,
+      "runtime_asset": "raw_rgba/AAX4-FALL6-frame004.rgba",
+      "runtime_sha256": "5b7fdff39b2318552b80b992e5068bf864452d05cc49dc52156797025564f882",
+      "runtime_bytes": 806400,
+      "rgba": "rgba/frame_004.png",
+      "rgba_sha256": "39c4fbbd5c1d85197f6cd1c964f36b69e619f77d87fd6d92d660e8a3401e2f07",
+      "alpha": "alpha/frame_004.png",
+      "alpha_sha256": "ab7eb299b7ab28fa8539cc420886c35d5220a181e38fa0bcfdc3ced347be6701",
+      "spline": {
+        "source_nonzero": 118688,
+        "components": 2,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 3370,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 640,
+            "fit_samples": 417,
+            "curve_points": 1251
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 1848,
+            "fit_samples": 1198,
+            "curve_points": 3594
+          }
+        ]
+      },
+      "local_reconstruction": null,
+      "changed_alpha_pixels": 3581,
+      "raised_over_source_alpha_pixels": 0,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 5,
+      "source_runtime_asset": "raw_rgba/frame_005.rgba",
+      "source_runtime_sha256": "f16eb4fa060d55c61b09cca4f121ed61785f3d210f329b5e7debb9e96b45f042",
+      "source_runtime_bytes": 806400,
+      "runtime_asset": "raw_rgba/AAX4-FALL6-frame005.rgba",
+      "runtime_sha256": "591ac0b74dae44bf570a2dbe75e9fe304cf8c8f3faa145a06c1cee6ded418a6a",
+      "runtime_bytes": 806400,
+      "rgba": "rgba/frame_005.png",
+      "rgba_sha256": "9fbac3b92e9d8f1f27766485cc0805db385070014135d3dd647fb5e476b61e3f",
+      "alpha": "alpha/frame_005.png",
+      "alpha_sha256": "ab7eb299b7ab28fa8539cc420886c35d5220a181e38fa0bcfdc3ced347be6701",
+      "spline": {
+        "source_nonzero": 118688,
+        "components": 2,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 3370,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 640,
+            "fit_samples": 417,
+            "curve_points": 1251
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 1848,
+            "fit_samples": 1198,
+            "curve_points": 3594
+          }
+        ]
+      },
+      "local_reconstruction": null,
+      "changed_alpha_pixels": 3581,
+      "raised_over_source_alpha_pixels": 0,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 6,
+      "source_runtime_asset": "raw_rgba/frame_006.rgba",
+      "source_runtime_sha256": "8c99edb7b7331ae11b7a88601924d8644f01aede1c0ef3b1385466e18aa18bf7",
+      "source_runtime_bytes": 1138176,
+      "runtime_asset": "raw_rgba/AAX4-FALL6-frame006.rgba",
+      "runtime_sha256": "f52dc1857d6d46b2f38e100b28d88d499b99f1fdc9b37086f0d11b2484829484",
+      "runtime_bytes": 1138176,
+      "rgba": "rgba/frame_006.png",
+      "rgba_sha256": "4aabe92fbe53e94b41d662054467187cc254dcecb08d9a0fee2e0aa99e482c54",
+      "alpha": "alpha/frame_006.png",
+      "alpha_sha256": "728af3d5d4b98978ddd1075a3fc110365c1e95cca683c8d6a6a38a0a97e08a18",
+      "spline": {
+        "source_nonzero": 194752,
+        "components": 1,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 2950,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2224,
+            "fit_samples": 1439,
+            "curve_points": 4317
+          }
+        ]
+      },
+      "local_reconstruction": null,
+      "changed_alpha_pixels": 3115,
+      "raised_over_source_alpha_pixels": 0,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 7,
+      "source_runtime_asset": "raw_rgba/frame_007.rgba",
+      "source_runtime_sha256": "44cfd7a9f67f90453c102c3fcb6861a8bf362bcde022014e15657791397ff41a",
+      "source_runtime_bytes": 1138176,
+      "runtime_asset": "raw_rgba/AAX4-FALL6-frame007.rgba",
+      "runtime_sha256": "400b8b3a05441f2d177e7b30ae6e51d02fb7e07a0d311ea1bf36316e3d535213",
+      "runtime_bytes": 1138176,
+      "rgba": "rgba/frame_007.png",
+      "rgba_sha256": "f77bed6ecaf89a10483090344ef295537a36df494d153dc6c9ee9b3c74bafcf8",
+      "alpha": "alpha/frame_007.png",
+      "alpha_sha256": "728af3d5d4b98978ddd1075a3fc110365c1e95cca683c8d6a6a38a0a97e08a18",
+      "spline": {
+        "source_nonzero": 194752,
+        "components": 1,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 2950,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2224,
+            "fit_samples": 1439,
+            "curve_points": 4317
+          }
+        ]
+      },
+      "local_reconstruction": null,
+      "changed_alpha_pixels": 3115,
+      "raised_over_source_alpha_pixels": 0,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 8,
+      "source_runtime_asset": "raw_rgba/frame_008.rgba",
+      "source_runtime_sha256": "47d7b37db48d6b135fcff8de5a3d92a3cf88ee639c714f10fc771521ee74841d",
+      "source_runtime_bytes": 1138176,
+      "runtime_asset": "raw_rgba/AAX4-FALL6-frame008.rgba",
+      "runtime_sha256": "5d6176d4c68d9f9942ae390082a03358fd2436f73c0e70b07a657db851abb21a",
+      "runtime_bytes": 1138176,
+      "rgba": "rgba/frame_008.png",
+      "rgba_sha256": "f39b5b3f6790b056518d3be7948c9877a48a866af162e0f89f734acab8900b2a",
+      "alpha": "alpha/frame_008.png",
+      "alpha_sha256": "728af3d5d4b98978ddd1075a3fc110365c1e95cca683c8d6a6a38a0a97e08a18",
+      "spline": {
+        "source_nonzero": 194752,
+        "components": 1,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 2950,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2224,
+            "fit_samples": 1439,
+            "curve_points": 4317
+          }
+        ]
+      },
+      "local_reconstruction": null,
+      "changed_alpha_pixels": 3115,
+      "raised_over_source_alpha_pixels": 0,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 9,
+      "source_runtime_asset": "raw_rgba/frame_009.rgba",
+      "source_runtime_sha256": "64767af59c853f9ac47f94b51cf72fcdd86d086e7cd902177046501c3d0361e2",
+      "source_runtime_bytes": 1072512,
+      "runtime_asset": "raw_rgba/AAX4-FALL6-frame009.rgba",
+      "runtime_sha256": "9741bbe135b74b30f3ce7694b717519a4f4bf06239c757bc1b5d93326e1c63ac",
+      "runtime_bytes": 1072512,
+      "rgba": "rgba/frame_009.png",
+      "rgba_sha256": "0fe0e7024fe771300a4284999226ece0aabb5a6155939908c5830abc7109a068",
+      "alpha": "alpha/frame_009.png",
+      "alpha_sha256": "169aad068be5e891270cc8ef9184dff813941b0d85565ad4a06305cf376a2e9a",
+      "spline": {
+        "source_nonzero": 168560,
+        "components": 1,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 2978,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2224,
+            "fit_samples": 1430,
+            "curve_points": 4290
+          }
+        ]
+      },
+      "local_reconstruction": null,
+      "changed_alpha_pixels": 3128,
+      "raised_over_source_alpha_pixels": 0,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 10,
+      "source_runtime_asset": "raw_rgba/frame_010.rgba",
+      "source_runtime_sha256": "c60a2a1e8b37e01878ac0a4543701a3bcc5d33964037b9516157c2dc863e4b86",
+      "source_runtime_bytes": 1072512,
+      "runtime_asset": "raw_rgba/AAX4-FALL6-frame010.rgba",
+      "runtime_sha256": "2e35cc3bf4ffd2e78da701c9adddd513ccd5732d9d010f1e29cc1d14f7a9fad2",
+      "runtime_bytes": 1072512,
+      "rgba": "rgba/frame_010.png",
+      "rgba_sha256": "dc908592002cce6e7aab3df1a93ffb7c9d523bc73d2932854e99aa8f69161209",
+      "alpha": "alpha/frame_010.png",
+      "alpha_sha256": "169aad068be5e891270cc8ef9184dff813941b0d85565ad4a06305cf376a2e9a",
+      "spline": {
+        "source_nonzero": 168560,
+        "components": 1,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 2978,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2224,
+            "fit_samples": 1430,
+            "curve_points": 4290
+          }
+        ]
+      },
+      "local_reconstruction": null,
+      "changed_alpha_pixels": 3128,
+      "raised_over_source_alpha_pixels": 0,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 11,
+      "source_runtime_asset": "raw_rgba/frame_011.rgba",
+      "source_runtime_sha256": "bcbe20541f33242e245680b701b57dffb8b2f99e231ef888fb8e11b8b856190d",
+      "source_runtime_bytes": 1072512,
+      "runtime_asset": "raw_rgba/AAX4-FALL6-frame011.rgba",
+      "runtime_sha256": "d61b317c9bbb326dd8f21ac9a160c7db8b865e83cdc4a1c28a7e6e88794de915",
+      "runtime_bytes": 1072512,
+      "rgba": "rgba/frame_011.png",
+      "rgba_sha256": "b774b231c8b446c0d6f2a69b0d7a01d11d4f0f0b42c2f2e9b0d4ece60f0edefb",
+      "alpha": "alpha/frame_011.png",
+      "alpha_sha256": "169aad068be5e891270cc8ef9184dff813941b0d85565ad4a06305cf376a2e9a",
+      "spline": {
+        "source_nonzero": 168560,
+        "components": 1,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 2978,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2224,
+            "fit_samples": 1430,
+            "curve_points": 4290
+          }
+        ]
+      },
+      "local_reconstruction": null,
+      "changed_alpha_pixels": 3128,
+      "raised_over_source_alpha_pixels": 0,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 12,
+      "source_runtime_asset": "raw_rgba/frame_012.rgba",
+      "source_runtime_sha256": "b9a483d66a852d0331159d944fa89255c56d725a63ac773a6702c34bd2e65847",
+      "source_runtime_bytes": 806400,
+      "runtime_asset": "raw_rgba/AAX4-FALL6-frame012.rgba",
+      "runtime_sha256": "51228df3c9c6536f234deda8ec514548f9c2d25d9342dc7a5f01d997847a36fb",
+      "runtime_bytes": 806400,
+      "rgba": "rgba/frame_012.png",
+      "rgba_sha256": "deb7efefe48f98b032f0a73a89dc06d3ba15bf2827bed754542cdbee6229e2c4",
+      "alpha": "alpha/frame_012.png",
+      "alpha_sha256": "ab7eb299b7ab28fa8539cc420886c35d5220a181e38fa0bcfdc3ced347be6701",
+      "spline": {
+        "source_nonzero": 118688,
+        "components": 2,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 3370,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 640,
+            "fit_samples": 417,
+            "curve_points": 1251
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 1848,
+            "fit_samples": 1198,
+            "curve_points": 3594
+          }
+        ]
+      },
+      "local_reconstruction": null,
+      "changed_alpha_pixels": 3581,
+      "raised_over_source_alpha_pixels": 0,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 13,
+      "source_runtime_asset": "raw_rgba/frame_013.rgba",
+      "source_runtime_sha256": "f1f93a3b735b2a042281dc707c2acff78079f449466fa471df60777a383861a5",
+      "source_runtime_bytes": 806400,
+      "runtime_asset": "raw_rgba/AAX4-FALL6-frame013.rgba",
+      "runtime_sha256": "5dceb96dd92d3a5dd704941eeb2a1f6444069aff227d48f48bd0fec3de45ea4f",
+      "runtime_bytes": 806400,
+      "rgba": "rgba/frame_013.png",
+      "rgba_sha256": "65289accd0bd2a2f20da882b6dd5a5181b4bbbe6462b26ed69d3843145b832a9",
+      "alpha": "alpha/frame_013.png",
+      "alpha_sha256": "ab7eb299b7ab28fa8539cc420886c35d5220a181e38fa0bcfdc3ced347be6701",
+      "spline": {
+        "source_nonzero": 118688,
+        "components": 2,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 3370,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 640,
+            "fit_samples": 417,
+            "curve_points": 1251
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 1848,
+            "fit_samples": 1198,
+            "curve_points": 3594
+          }
+        ]
+      },
+      "local_reconstruction": null,
+      "changed_alpha_pixels": 3581,
+      "raised_over_source_alpha_pixels": 0,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 14,
+      "source_runtime_asset": "raw_rgba/frame_014.rgba",
+      "source_runtime_sha256": "b9896c3c34c56688a1e677b8b400ccccb2ecbcba3f0ce13274c58deb30f2b35d",
+      "source_runtime_bytes": 806400,
+      "runtime_asset": "raw_rgba/AAX4-FALL6-frame014.rgba",
+      "runtime_sha256": "f44635b79cbc84ae255d22fa8b9aec966e57d4e948819ef73629b95b41687541",
+      "runtime_bytes": 806400,
+      "rgba": "rgba/frame_014.png",
+      "rgba_sha256": "726346eaacaabd4dda67ca56a69352a54366ec54b50a30292511355dc295fb7b",
+      "alpha": "alpha/frame_014.png",
+      "alpha_sha256": "ab7eb299b7ab28fa8539cc420886c35d5220a181e38fa0bcfdc3ced347be6701",
+      "spline": {
+        "source_nonzero": 118688,
+        "components": 2,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 3370,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 640,
+            "fit_samples": 417,
+            "curve_points": 1251
+          },
+          {
+            "status": "fitted",
+            "input_vertices": 1848,
+            "fit_samples": 1198,
+            "curve_points": 3594
+          }
+        ]
+      },
+      "local_reconstruction": null,
+      "changed_alpha_pixels": 3581,
+      "raised_over_source_alpha_pixels": 0,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 15,
+      "source_runtime_asset": "raw_rgba/frame_015.rgba",
+      "source_runtime_sha256": "29e0f87dc2fc2c91c83185a5fcb305146250ab25d87ccb7ee5969d175b3d9f0e",
+      "source_runtime_bytes": 1138176,
+      "runtime_asset": "raw_rgba/AAX4-FALL6-frame015.rgba",
+      "runtime_sha256": "99a3c7a83622a03d0765f988214c9672000589454c42b842897d9a8a617458df",
+      "runtime_bytes": 1138176,
+      "rgba": "rgba/frame_015.png",
+      "rgba_sha256": "956e7eae8490f6b82be17ab545cd7c93e3b22d0ff3f84e3cbb2e20b77bb95bb7",
+      "alpha": "alpha/frame_015.png",
+      "alpha_sha256": "728af3d5d4b98978ddd1075a3fc110365c1e95cca683c8d6a6a38a0a97e08a18",
+      "spline": {
+        "source_nonzero": 194752,
+        "components": 1,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 2950,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2224,
+            "fit_samples": 1439,
+            "curve_points": 4317
+          }
+        ]
+      },
+      "local_reconstruction": null,
+      "changed_alpha_pixels": 3115,
+      "raised_over_source_alpha_pixels": 0,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 16,
+      "source_runtime_asset": "raw_rgba/frame_016.rgba",
+      "source_runtime_sha256": "2ace02ab5bed9fe0bef3b7796bb7f523cbfc0115200fbf31d54f106f9576d00d",
+      "source_runtime_bytes": 1138176,
+      "runtime_asset": "raw_rgba/AAX4-FALL6-frame016.rgba",
+      "runtime_sha256": "db49125d0c36aa9e1b48f75a0b57e7ff0baac0a4f999eff9ad66c56a9a4e71ca",
+      "runtime_bytes": 1138176,
+      "rgba": "rgba/frame_016.png",
+      "rgba_sha256": "d1ee0766831a63789f6710fe18045e6d9cdc56ae8c744695b2a842d77be4a452",
+      "alpha": "alpha/frame_016.png",
+      "alpha_sha256": "728af3d5d4b98978ddd1075a3fc110365c1e95cca683c8d6a6a38a0a97e08a18",
+      "spline": {
+        "source_nonzero": 194752,
+        "components": 1,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 2950,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2224,
+            "fit_samples": 1439,
+            "curve_points": 4317
+          }
+        ]
+      },
+      "local_reconstruction": null,
+      "changed_alpha_pixels": 3115,
+      "raised_over_source_alpha_pixels": 0,
+      "rgb_byte_identical": true
+    },
+    {
+      "frame": 17,
+      "source_runtime_asset": "raw_rgba/frame_017.rgba",
+      "source_runtime_sha256": "26923eef24851bcb70a27c4042b95a7fe89ddf12fe96b3fda2f13aac04901d35",
+      "source_runtime_bytes": 1138176,
+      "runtime_asset": "raw_rgba/AAX4-FALL6-frame017.rgba",
+      "runtime_sha256": "f8e2a209fecad4e9548ff8baa1bc1b77eef055ad0ee4a1f3c163acdf1a825fcd",
+      "runtime_bytes": 1138176,
+      "rgba": "rgba/frame_017.png",
+      "rgba_sha256": "78666cf4f1c65f3c6cd29599b1e1cbe3aa4f54d7b93ac379db5bec4192fdc6ce",
+      "alpha": "alpha/frame_017.png",
+      "alpha_sha256": "728af3d5d4b98978ddd1075a3fc110365c1e95cca683c8d6a6a38a0a97e08a18",
+      "spline": {
+        "source_nonzero": 194752,
+        "components": 1,
+        "touches_canvas_edge": true,
+        "intermediate_alpha_pixels": 2950,
+        "protected_source_core_x4": 0,
+        "protected_source_core_pixels": 0,
+        "status": "fitted",
+        "component_reports": [
+          {
+            "status": "fitted",
+            "input_vertices": 2224,
+            "fit_samples": 1439,
+            "curve_points": 4317
+          }
+        ]
+      },
+      "local_reconstruction": null,
+      "changed_alpha_pixels": 3115,
+      "raised_over_source_alpha_pixels": 0,
+      "rgb_byte_identical": true
+    }
+  ]
+}

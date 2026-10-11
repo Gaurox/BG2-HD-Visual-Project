@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM0205A",
+  "correction_id": "am0205a-canvas32-apo8-30fps-accepted-20261011-v1",
+  "decision": "Utilisateur : tout ce que je viens de voir ingame est ok. a valider proprement et garder. Pod x4, canvas feather32 x4, Apollo8 TimedTimeline30 FPS, 54 phases, boucle1.8s. Version actuellement installée vue et acceptée explicitement le2026-10-11 ; ancienne QA Native27/15 FPS conservée comme historique.",
+  "decision_date": "2026-10-11",
+  "decision_id": "2026-10-11-accepted-current-am0205a-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM0205A/runs/am0205a-current-ingame-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "7CD730B5D6CC54ADD82E1965D0F9AFF9C17AC1EC9371A28D76D4680C61F75940",
+    "path": "animations/ressources/AM0205A/runs/am0205a-current-ingame-accepted-20261011-v1",
+    "schema": "bg2-upscale-installed-animation-acceptance-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "recipe_id": "animations-current-acceptance-cleanup-20261011-v1",
+  "recorded_at_utc": "2026-10-11T20:15:57Z",
+  "resref": "AM0205A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0205",
+        "manifest_path": "animations/packs-par-zone/animations-five-current-accepted-20261011-v1/AR0205/manifest.json",
+        "manifest_sha256": "18EF36C1A06B7034AB48D7B90F9887A61E46FAF2313C33D204FFEFB397C8915A",
+        "path": "animations/packs-par-zone/animations-five-current-accepted-20261011-v1/AR0205",
+        "registry_sha256": "0D876FE78ABCA67C34B9FBABFC93DAC35D81CE8627493285EF8907685873F549",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/animations-five-current-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "A1F4B198D549A9554C1C00D63A996844B3A6397C8E927F237D88CE473E798526",
+    "path": "animations/packs-par-zone/animations-five-current-accepted-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0205"
+  ]
+}

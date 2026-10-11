@@ -1,0 +1,85 @@
+{
+  "schema": "bg2-upscale-area-animation-30fps-run-v2",
+  "status": "completed",
+  "created_utc": "2026-09-22T21:56:34.766665+00:00",
+  "plan_sha256": "e9d0e6cd812d3975e8a2f61344ab7a575c198d8318ceef9334aeb12325cf73ce",
+  "input_mode": "spatial-v1",
+  "source_run": "G:/AI/BG2_Upscale/animations/batches/ar5000-am5000ab-seedvr7b-lab-x4-20260922",
+  "source_run_manifest_sha256": "107f08e736ae24bd26259774a3dd714511146bbdfe1e41f4ba7b308640063091",
+  "base_pack": "G:/AI/BG2_Upscale/animations/batches/ar5000-am5000ab-seedvr7b-lab-x4-20260922/03_runtime_pack_contourgauss2",
+  "base_pack_manifest_sha256": "87ef2cada6487d4c26a027ea6697342b76d6470c95d2f6340e5fd67b5ea925eb",
+  "native_fps": {
+    "numerator": 15,
+    "denominator": 1
+  },
+  "target_fps": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "timed_resources": [
+    "AM5000A",
+    "AM5000B"
+  ],
+  "timed_resource_variants": [
+    {
+      "resref": "AM5000A",
+      "variant_index": 0,
+      "position": null
+    },
+    {
+      "resref": "AM5000B",
+      "variant_index": 0,
+      "position": null
+    }
+  ],
+  "topaz": {
+    "ffmpeg": "C:/Program Files/Topaz Labs LLC/Topaz Video AI/ffmpeg.exe",
+    "model_dir": "C:/ProgramData/Topaz Labs LLC/Topaz Video AI/models",
+    "model": "apo-8",
+    "device": "-2",
+    "replace_duplicate_threshold": -0.01,
+    "transparent_rgb_mode": "nearest-opaque-dilate"
+  },
+  "pack": "03_runtime_pack",
+  "pack_manifest_sha256": "93d623838337a8acca84eaab3e1e46207040411f1a10df4eb4a47e2d19f0b970",
+  "registry_sha256": "8a69d459ecaf755bef26ad611a33be78ca942fc78ece8724b713acb5310d5ad4",
+  "reviews": [
+    {
+      "resref": "AM5000A",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "exact",
+      "file": "work/AM5000A-v0/cycle_000/review-30fps-exact.mp4",
+      "sha256": "5170ab1600211ce58c75c73f5b04684644115d41f992d6a59a47db5326a6fe96"
+    },
+    {
+      "resref": "AM5000A",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "loop-4s",
+      "file": "work/AM5000A-v0/cycle_000/review-30fps-loop-4s.mp4",
+      "sha256": "4b4fe04093847eee7959884d2a86792d7c0ceb9e1a01f5177b34301c72d1b64e"
+    },
+    {
+      "resref": "AM5000B",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "exact",
+      "file": "work/AM5000B-v0/cycle_000/review-30fps-exact.mp4",
+      "sha256": "187ccab543a40d4e2ed612ad54399bd18a192bef8938fff2421e0fdc0307a1e7"
+    },
+    {
+      "resref": "AM5000B",
+      "variant_index": 0,
+      "position": null,
+      "cycle": 0,
+      "kind": "loop-4s",
+      "file": "work/AM5000B-v0/cycle_000/review-30fps-loop-4s.mp4",
+      "sha256": "21105eadc0e4da41b56ab2738407015755b2303348b12d54e8b625c4f947388e"
+    }
+  ],
+  "qa_status": "pending-explicit-user-approval"
+}
