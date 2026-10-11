@@ -1,0 +1,83 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM0902L",
+  "correction_id": "lot3-four-decors-accepted-20261011-v1",
+  "decision": "Utilisateur : on valide SeedVR. tu peux valider tout le lot 3. AM0902L validé sur AR0902. SeedVR2 7B INT8 LAB x4 contextuel/Apollo8; silhouette inner2; redécoupe quatre tuiles; 16phases/cycle, 0,533333s.",
+  "decision_date": "2026-10-11",
+  "decision_id": "2026-10-11-accepted-am0902l-lot3-final-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM0902L/runs/am0902l-lot3-four-decors-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "C76CD259A6F09BA25DD1C2F56BD8C5B9DC3AA05D01F4E426A16E66A0BDEE46D5",
+    "path": "animations/ressources/AM0902L/runs/am0902l-lot3-four-decors-accepted-20261011-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/am0902l-seedvr7b-x4-30fps-context-20261011-v1/AR0902/manifest.json",
+        "manifest_sha256": "49E758E9A19A6F43B28741528DC8CA3E077F212871CAA93C735CB29345388026",
+        "path": "animations/packs-par-zone/am0902l-seedvr7b-x4-30fps-context-20261011-v1/AR0902",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/packs-par-zone/lot3-four-decors-accepted-20261011-v1/AR0902/manifest.json",
+        "manifest_sha256": "49E758E9A19A6F43B28741528DC8CA3E077F212871CAA93C735CB29345388026",
+        "path": "animations/packs-par-zone/lot3-four-decors-accepted-20261011-v1/AR0902",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/am0902l-seedvr7b-x4-trial-20261011-v1/manifest.json",
+        "manifest_sha256": "157FA02453D5E56E77963B8438611A163C1831A6B54ECF5DFBF8BBEC9611038C",
+        "path": "animations/batches/am0902l-seedvr7b-x4-trial-20261011-v1",
+        "schema": "bg2-upscale-animation-trial-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM0902L/runs/am0902l-seedvr7b-lab-x4-trial-20261011-v1/manifest.json",
+        "manifest_sha256": "F8FCFA282993D461F12545A08508EED1386210CD8F3D7E1A74407BF7C34EFA72",
+        "path": "animations/ressources/AM0902L/runs/am0902l-seedvr7b-lab-x4-trial-20261011-v1",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM0902L/runs/am0902l-seedvr7b-x4-30fps-context-20261011-v1/manifest.json",
+        "manifest_sha256": "E794A503DAE3AF2258048FD56B9AC17D0055CC14582C8CCF723F67C55180E7FD",
+        "path": "animations/ressources/AM0902L/runs/am0902l-seedvr7b-x4-30fps-context-20261011-v1",
+        "schema": "bg2-upscale-animation-visual-treatment-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "lot3-four-decors-accepted-20261011-v1",
+  "recorded_at_utc": "2026-10-11T13:40:35Z",
+  "resref": "AM0902L",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0902",
+        "manifest_path": "animations/packs-par-zone/lot3-four-decors-accepted-20261011-v1/AR0902/manifest.json",
+        "manifest_sha256": "49E758E9A19A6F43B28741528DC8CA3E077F212871CAA93C735CB29345388026",
+        "path": "animations/packs-par-zone/lot3-four-decors-accepted-20261011-v1/AR0902",
+        "registry_sha256": "06D3084C2E46B43B1C495C155779E45A4319B9A2063605F66BC7F4042DFF4A8D",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/lot3-four-decors-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "13A553EE3A3E87101323BCB91AFFD09B879BF4B94913BF2EF13B15484543ADE6",
+    "path": "animations/packs-par-zone/lot3-four-decors-accepted-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0902"
+  ]
+}

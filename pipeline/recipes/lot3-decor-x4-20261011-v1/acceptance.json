@@ -1,0 +1,107 @@
+{
+  "schema": "bg2-upscale-animation-batch-acceptance-v1",
+  "status": "accepted-ingame",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "decision": "on valide SeedVR. tu peux valider tout le lot 3.",
+  "asset_count": 4,
+  "area_count": 10,
+  "occurrences": 10,
+  "qa_pack": "animations/packs-par-zone/lot3-four-decors-accepted-20261011-v1",
+  "qa_pack_manifest_sha256": "13a553ee3a3e87101323bcb91affd09b879bf4b94913bf2ef13b15484543ade6",
+  "resources": [
+    {
+      "resref": "AM0902L",
+      "areas": [
+        "AR0902"
+      ],
+      "recipe": "SeedVR2 7B INT8 LAB x4 contextuel/Apollo8; silhouette inner2; redÃ©coupe quatre tuiles; 16phases/cycle, 0,533333s",
+      "final_run": "animations/ressources/AM0902L/runs/am0902l-lot3-four-decors-accepted-20261011-v1",
+      "installed_payload_matches": true,
+      "qa_decision": "animations/index/qa-decisions/AM0902L/2026-10-11-accepted-am0902l-lot3-final-v1.json"
+    },
+    {
+      "resref": "AM1001A",
+      "areas": [
+        "AR0905",
+        "AR1001",
+        "AR1006",
+        "AR1007",
+        "AR1009"
+      ],
+      "recipe": "SeedVR2 7B INT8 LAB x4/Apollo8; Potrace angles prÃ©servÃ©s, inner4; 14phases, 0,466667s",
+      "final_run": "animations/ressources/AM1001A/runs/am1001a-lot3-four-decors-accepted-20261011-v1",
+      "installed_payload_matches": true,
+      "qa_decision": "animations/index/qa-decisions/AM1001A/2026-10-11-accepted-am1001a-lot3-final-v1.json"
+    },
+    {
+      "resref": "AM1512PA",
+      "areas": [
+        "AR1512"
+      ],
+      "recipe": "SeedVR2 7B INT8 LAB x4/Apollo8; holds Ã—2 retirÃ©s avant interpolation 7,5â†’30FPS; Potrace angles, inner4; 20phases, 0,666667s",
+      "final_run": "animations/ressources/AM1512PA/runs/am1512pa-lot3-four-decors-accepted-20261011-v1",
+      "installed_payload_matches": true,
+      "qa_decision": "animations/index/qa-decisions/AM1512PA/2026-10-11-accepted-am1512pa-lot3-final-v1.json"
+    },
+    {
+      "resref": "AM2008A",
+      "areas": [
+        "AR1010",
+        "AR2008",
+        "OH5120"
+      ],
+      "recipe": "ReboutCX x4/Apollo8; centres variables conservÃ©s, inner16, prÃ©multiplication unique; 30phases, 1s",
+      "final_run": "animations/ressources/AM2008A/runs/am2008a-lot3-four-decors-accepted-20261011-v1",
+      "installed_payload_matches": true,
+      "qa_decision": "animations/index/qa-decisions/AM2008A/2026-10-11-accepted-am2008a-lot3-final-v1.json"
+    }
+  ],
+  "discarded_AM0902L_cleanup_targets": [
+    {
+      "path": "animations/ressources/AM0902L/runs/am0902l-lot3-decor-x4-20261011-v1",
+      "files": 1,
+      "bytes": 1403,
+      "manifest_sha256": "eae1a7552ae41519e7daa9dd708928250a14402685d664f23cf0c5a2cf102edc"
+    },
+    {
+      "path": "animations/packs-par-zone/lot3-decor-x4-20261011-v1-merged-AR0902",
+      "files": 67,
+      "bytes": 75506875,
+      "manifest_sha256": "e7248b8f39943384df6ad7e7cbcb307f1d56d68c99c85bf04b1c442af0bded18"
+    },
+    {
+      "path": "animations/batches/lot3-decor-x4-20261011-v1/context-spatial",
+      "files": 17,
+      "bytes": 11547999,
+      "manifest_sha256": "5db98ff07be9ae31b27e45384baed2e9651aedeca9283c1ccd292f36fcb5123b"
+    },
+    {
+      "path": "animations/batches/lot3-decor-x4-20261011-v1/context-base",
+      "files": 10,
+      "bytes": 41556486,
+      "manifest_sha256": "111904a2f647ae15f1e0881dfa58a10eb44d59113399509964bd9b6a682ed29b"
+    },
+    {
+      "path": "animations/batches/lot3-decor-x4-20261011-v1/temporal-AM0902L",
+      "files": 73,
+      "bytes": 192290622,
+      "manifest_sha256": "581d55ee4783bf538c949ff4c6944e8f0e6c3327a6c804fea444661f5b7118c8"
+    },
+    {
+      "path": "animations/batches/lot3-decor-x4-20261011-v1/recut-AM0902L",
+      "files": 66,
+      "bytes": 75505781,
+      "manifest_sha256": "ddc9d1e45fbc615f3f427499b64fc5be81115752bee8d84fca38fc4d73c304b8"
+    }
+  ],
+  "retained_shared_archives": "mixed manifests needed by AM2008A/AM1001A/AM1512PA and immutable comparison/installation history",
+  "game_payload_changed": false,
+  "release_status": "not-selected",
+  "cleanup_approval_block": "automatic approval review rejected destruction of all six historical intermediates; explicit confirmation requested",
+  "cleanup_target_bytes": 396409166,
+  "cleanup_status": "completed",
+  "cleanup_explicit_user_confirmation": "Oui, supprimer ces six dossiers",
+  "cleanup_removed_bytes": 396409166.0,
+  "qa_integrity_after_cleanup": "passed for all four accepted assets"
+}

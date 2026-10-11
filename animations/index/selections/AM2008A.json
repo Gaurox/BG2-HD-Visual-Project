@@ -1,0 +1,95 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM2008A",
+  "correction_id": "lot3-four-decors-accepted-20261011-v1",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/lot3-decor-x4-20261011-v1-assets/AR1010/manifest.json",
+        "manifest_sha256": "00400CB6FAECCAEF9CD2BACBE15CCDA5441391F70FF44E64F7BA9C755F7877CC",
+        "path": "animations/packs-par-zone/lot3-decor-x4-20261011-v1-assets/AR1010",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/packs-par-zone/lot3-four-decors-accepted-20261011-v1/AR1010/manifest.json",
+        "manifest_sha256": "F1D6F21BBDF0B65C8DB5F0DE60E6916982F81F1BF979D628406145AE8D7DD2E7",
+        "path": "animations/packs-par-zone/lot3-four-decors-accepted-20261011-v1/AR1010",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/lot3-reboutcx-x4-20261011-v1/manifest.json",
+        "manifest_sha256": "430C0B665FCA1A61818918D2948348F826E49B829D1C52A7237973CF0ED2EE1F",
+        "path": "animations/batches/lot3-reboutcx-x4-20261011-v1",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM2008A/runs/am2008a-lot3-decor-x4-20261011-v1/manifest.json",
+        "manifest_sha256": "3DDDC8F8BD49699A7129769F138A06527AA531694AF6F2CA2544EF418657ADC1",
+        "path": "animations/ressources/AM2008A/runs/am2008a-lot3-decor-x4-20261011-v1",
+        "schema": "bg2-upscale-animation-visual-treatment-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-11",
+    "path": "animations/index/qa-decisions/AM2008A/2026-10-11-accepted-am2008a-lot3-final-v1.json",
+    "sha256": "B25D8F31360C1517E7D1559965D310989459801A0DE6783A51EC570127042296",
+    "status": "accepted"
+  },
+  "recipe_id": "lot3-four-decors-accepted-20261011-v1",
+  "resref": "AM2008A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM2008A/runs/am2008a-lot3-four-decors-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "835931BEF6170AA4FE007E2C5071663F8A7378621DE55AB0F8EFD6D0DBCDF059",
+    "path": "animations/ressources/AM2008A/runs/am2008a-lot3-four-decors-accepted-20261011-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR1010",
+        "manifest_path": "animations/packs-par-zone/lot3-four-decors-accepted-20261011-v1/AR1010/manifest.json",
+        "manifest_sha256": "F1D6F21BBDF0B65C8DB5F0DE60E6916982F81F1BF979D628406145AE8D7DD2E7",
+        "path": "animations/packs-par-zone/lot3-four-decors-accepted-20261011-v1/AR1010",
+        "registry_sha256": "CC25D76C2A67068311CBF99ED558C0BBF54AB67B1A288C5BA3FD30037A7210A1",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2008",
+        "manifest_path": "animations/packs-par-zone/lot3-four-decors-accepted-20261011-v1/AR2008/manifest.json",
+        "manifest_sha256": "DAFD1DA8A1B1AD511EDB3AC303F01F17F174FE76E7E82B628373F22A59F87267",
+        "path": "animations/packs-par-zone/lot3-four-decors-accepted-20261011-v1/AR2008",
+        "registry_sha256": "CC25D76C2A67068311CBF99ED558C0BBF54AB67B1A288C5BA3FD30037A7210A1",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH5120",
+        "manifest_path": "animations/packs-par-zone/lot3-four-decors-accepted-20261011-v1/OH5120/manifest.json",
+        "manifest_sha256": "24D6E3F1BE041AA2941E8819993886EB9FA05BA229AC172723D96EBB887F24AE",
+        "path": "animations/packs-par-zone/lot3-four-decors-accepted-20261011-v1/OH5120",
+        "registry_sha256": "6EA42818CCA65176E79FAD5B1FD8A0B73D1D20EAE5D0C40E59E87BF9F7049E1F",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/lot3-four-decors-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "13A553EE3A3E87101323BCB91AFFD09B879BF4B94913BF2EF13B15484543ADE6",
+    "path": "animations/packs-par-zone/lot3-four-decors-accepted-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR1010",
+    "AR2008",
+    "OH5120"
+  ],
+  "updated_at_utc": "2026-10-11T13:40:39Z"
+}
