@@ -1,0 +1,19 @@
+{
+  "schema": "bg2-monster-composite-runtime-install-v1",
+  "status": "installed-ingame-accepted",
+  "game_root": "config://bg2ee_game_root",
+  "runtime_reference": "docs/measurements/monster-composite-fix-x2-20261011-v1/runtime.json",
+  "renderer_receipt": "backups/renderer/20261011T090835037764Z-f8d1a2b6/renderer-install-receipt.json",
+  "parent_dll_sha256": "73730a6deb3efb5b7ff1284967cc019ff28b2402f57d5874da9ef0ba281fba24",
+  "dll_sha256": "28651777499111be1d94cfd878947bcd67c0ad5062e2673f8991e153d6a46dcd",
+  "ini_preserved": true,
+  "catalog_preserved": true,
+  "changed_files": [
+    "InfinityEngine-Enhancer.dll"
+  ],
+  "capability_scope": "all registered Monster owner3; composite only when native extra layers active",
+  "ingame_QA": true,
+  "release": false,
+  "qa_reference": "sprite/index/qa-decisions/runtime/2026-10-11-accepted-monster-composite-x2-v1.json",
+  "accepted_at_utc": "2026-10-11T09:18:33.042135+00:00"
+}

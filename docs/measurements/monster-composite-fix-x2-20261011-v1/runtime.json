@@ -1,0 +1,50 @@
+{
+  "schema": "bg2-monster-composite-runtime-candidate-v1",
+  "runtime_id": "monster-composite-fix-x2-20261011-v1",
+  "baseline_dll": {
+    "path": "animations/batches/planar-sphinct-wed-crisp-20261010-v7/.work/runtime-build/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "73730a6deb3efb5b7ff1284967cc019ff28b2402f57d5874da9ef0ba281fba24",
+    "bytes": 2151424
+  },
+  "baseline_source": "animations/batches/planar-sphinct-wed-crisp-20261010-v7/.work/runtime-src",
+  "dll": {
+    "path": "sprite/.work/monster-composite-fix-x2-20261011-v1/candidate/InfinityEngine-Enhancer.dll",
+    "sha256": "28651777499111be1d94cfd878947bcd67c0ad5062e2673f8991e153d6a46dcd",
+    "bytes": 2152448
+  },
+  "ini": {
+    "path": "sprite/.work/monster-composite-fix-x2-20261011-v1/candidate/InfinityEngine-Enhancer.ini",
+    "sha256": "5859f49562e89f71cc1a9b9ddbac4f77b9b5ab95e5983d88e51c09e480042aba",
+    "bytes": 6295
+  },
+  "runtime_patch": {
+    "path": "docs/measurements/monster-composite-fix-x2-20261011-v1/runtime-delta.patch",
+    "sha256": "70f4430438f98129d369ddcc0cd6ed183a91ac4ddbbd983de15bcbb11a9a9b69",
+    "bytes": 4958
+  },
+  "source_provenance": [
+    {
+      "path": "sprite/.work/monster-composite-fix-x2-20261011-v1/runtime-src/src/iee/hooks.cpp",
+      "sha256": "60908aa6cb234e67d1308e12d956aea6347f5bcd980960c6cbe4c4f0f073cee5",
+      "bytes": 291653
+    },
+    {
+      "path": "sprite/.work/monster-composite-fix-x2-20261011-v1/runtime-src/src/iee/creature_sprite_x2.cpp",
+      "sha256": "e31f1a7ba88b4f827483df8f15e9b50c7295c67333fd2ce00c0f8d0046206d07",
+      "bytes": 233775
+    },
+    {
+      "path": "sprite/.work/monster-composite-fix-x2-20261011-v1/runtime-src/tests/iee_tests.cpp",
+      "sha256": "e1565482cd767448ad95577d5181395c31d52799505697b937802e211d515507",
+      "bytes": 388023
+    }
+  ],
+  "unrelated_source_files_identical": true,
+  "native_tests_passed": true,
+  "sprites_recalculated": 0,
+  "catalog_changed": false,
+  "palette_guards_changed": false,
+  "installation": false,
+  "ingame_QA": false,
+  "release": false
+}

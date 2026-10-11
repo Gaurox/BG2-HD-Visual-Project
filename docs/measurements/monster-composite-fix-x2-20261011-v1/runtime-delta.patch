@@ -1,0 +1,90 @@
+--- installed/src/iee/hooks.cpp
++++ candidate/src/iee/hooks.cpp
+@@ -2733,8 +2733,9 @@
+     scope.generation = next_creature_sprite_generation();
+     scope.animationId = resolved.animationId;
+     (void)append_creature_sprite_layer(scope, resolved);
+-    if (scope.animationId == 0x7F09u) {
+-      scope.layeredComposition = true;
++    {
++      // Every native Monster may submit body, extra cell and equipment into
++      // one FX surface. Select composition by active layers, never by ID.
+       const auto& runtime = g_ctx->manifest->areaAnimations;
+       const auto* base = static_cast<const std::byte*>(thisPtr);
+       for (std::size_t index = 0; index < runtime.monsterCompositeCells.size(); ++index) {
+@@ -2743,22 +2744,34 @@
+         if (!runtime.monsterCompositeCells[index] ||
+             !runtime.monsterCompositeEnabled[index] ||
+             !core::safe_read(base + runtime.monsterCompositeEnabled[index], enabled)) {
++          scope.layeredComposition = true;
+           scope.compositionIncomplete = true;
+           continue;
+         }
+         if (!enabled) continue;
+         if (!core::safe_read(base + runtime.monsterCompositeCells[index], cell)) {
++          scope.layeredComposition = true;
+           scope.compositionIncomplete = true;
+           continue;
+         }
+         // Native equipment is optional even when its enable flag is set.
+         if (!cell && index == 1) continue;
++        // An active unresolved layer must also select composition: falling
++        // back to the body-only path would erase it when its bounds fit.
++        scope.layeredComposition = true;
+         ResolvedCreatureSpriteFrame overlay{};
+         if (!read_registered_creature_cell(scope.animationId, cell,
+                                             "CGameAnimationTypeMonster overlay", overlay) ||
+             !append_creature_sprite_layer(scope, overlay)) {
+           scope.compositionIncomplete = true;
+         }
++      }
++    }
++    if (scope.layeredComposition) {
++      static std::array<std::atomic<bool>, 65'536> compositionScopeLogged{};
++      if (!compositionScopeLogged[scope.animationId].exchange(true, std::memory_order_relaxed)) {
++        LOG_INFO("Monster native composite scope animation=0x{:04X}, registered layers={}, incomplete={}",
++                 scope.animationId, scope.layerCount, scope.compositionIncomplete);
+       }
+     }
+   }
+--- installed/src/iee/creature_sprite_x2.cpp
++++ candidate/src/iee/creature_sprite_x2.cpp
+@@ -5214,7 +5214,7 @@
+           "({}, delete-pending after queued draw)",
+           resref_name(resource->resref), layer.frame.animationId,
+           layer.frame.frameIndex,
+-          layer.frame.animationId == 0x7F09u ? "Monster" : "Character",
++          core::sprite_family_owner(layer.frame.animationId) == 3 ? "Monster" : "Creature",
+           index + 1, layerCount, physicalScale,
+           frame.logicalWidth, frame.logicalHeight, logicalWidth, logicalHeight,
+           static_cast<std::int64_t>(logicalWidth) * physicalScale,
+--- installed/tests/iee_tests.cpp
++++ candidate/tests/iee_tests.cpp
+@@ -2305,6 +2305,27 @@
+               "MSAH idle must also retain the equipment layer");
+   expect_eq(msahBounds.logical_width(), 51, "MSAH idle union explains apparent small padding");
+   expect_eq(msahBounds.logical_height(), 86, "MSAH idle union matches the native canvas");
++  // Actual MFIGG12/MFIGG1WH frame 551 from the 2026-10-11 session.
++  // The body-only 87x173 texture must become the exact native 87x193 union.
++  constexpr std::array<FrameGeometry, 2> giantHammer{{
++      {85, 171, 53, 137}, {20, 21, 8, 157},
++  }};
++  CompositeBounds giantBounds{};
++  expect_true(calculate_composite_bounds(giantHammer.data(), giantHammer.size(), giantBounds),
++              "Fire giant must combine its independently centered hammer");
++  expect_eq(giantBounds.logical_width(), 87, "Fire giant hammer union native width");
++  expect_eq(giantBounds.logical_height(), 193, "Fire giant hammer union native height");
++  expect_eq(physical_layer_offset(137, giantBounds.top, 2), std::int64_t{42},
++            "Fire giant body must retain its native center in the taller composite");
++  expect_eq(physical_layer_offset(157, giantBounds.top, 2), std::int64_t{2},
++            "Fire giant hammer must occupy the top of the bordered composite");
++  constexpr std::array<FrameGeometry, 2> giantAxe{{
++      {85, 171, 53, 137}, {16, 25, 7, 160},
++  }};
++  expect_true(calculate_composite_bounds(giantAxe.data(), giantAxe.size(), giantBounds),
++              "Fire giant must also combine its axe");
++  expect_eq(giantBounds.logical_width(), 87, "Fire giant axe union native width");
++  expect_eq(giantBounds.logical_height(), 196, "Fire giant axe union native height");
+   // Regression: the live MDR12100 draw is 111x139, not 113x141. Its
+   // descriptor, backing and pixel origin must all obey the same contract.
+   constexpr auto unbordered = FrameTextureLayout::Unbordered;

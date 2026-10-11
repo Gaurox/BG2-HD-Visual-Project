@@ -1,0 +1,175 @@
+{
+  "schema": "bg2-monster-composite-diagnosis-v1",
+  "latest_session_start_line": 38245,
+  "latest_session_start": "[2026-10-11 10:52:17.600] [info] InfinityEngine-Enhancer loaded (config applied)",
+  "last_retained_line": "[2026-10-11 10:52:40.313] [info] Area animation clock probe (periodic): gen=4, resref=AM5204A, seq=0, calls=284, occurrenceEpochs=284, sameEpochCalls=0, starts=0, slots=75, epochsPerSlot=3.80[1..4], slotMs=67.05[16.80..132.81], stalledSlots=0, longGaps=0, transitions={sequential:70, skipped:0, wraps:5, backward:0, sequence:0}, worldActive={on:284, off:0, unknown:0, changes:0}, nonMonotonic=0",
+  "game_root": "config://bg2ee_game_root",
+  "executable_sha256": "b51093a49140b2b8a7c046b4652bb8e535be24ebbc12b1d735e0b94217a14d57",
+  "installed_dll_sha256": "73730a6deb3efb5b7ff1284967cc019ff28b2402f57d5874da9ef0ba281fba24",
+  "warning_lines": [
+    {
+      "line": 38702,
+      "text": "[2026-10-11 10:52:33.062] [warning] Creature sprite xBR2x skipped: RenderTexture packed argument is 87x193, expected native bordered texture 87x173 for BAM frame 85x171"
+    },
+    {
+      "line": 38703,
+      "text": "[2026-10-11 10:52:33.062] [warning] Registered creature animation 0x7F3E reached no compatible owner-scoped palette/texture (target Realize=1, foreign Realize=1, layers=1, captured=0, incomplete=false); native BAM rendering remains active"
+    }
+  ],
+  "exact_geometry": [
+    {
+      "body": "MFIGG12",
+      "frame": 551,
+      "body_geometry": [
+        85,
+        171,
+        53,
+        137
+      ],
+      "weapon": "MFIGG1AX",
+      "weapon_geometry": [
+        16,
+        25,
+        7,
+        160
+      ],
+      "bordered_union": [
+        87,
+        196
+      ]
+    },
+    {
+      "body": "MFIGG12",
+      "frame": 551,
+      "body_geometry": [
+        85,
+        171,
+        53,
+        137
+      ],
+      "weapon": "MFIGG1WH",
+      "weapon_geometry": [
+        20,
+        21,
+        8,
+        157
+      ],
+      "bordered_union": [
+        87,
+        193
+      ]
+    }
+  ],
+  "monster_ids_with_sources": 77,
+  "equipment_models": [
+    {
+      "animation_id": "0x7F09",
+      "name": "SAHUAGIN",
+      "resources": [
+        "MSAHG1CB",
+        "MSAHG1QS",
+        "MSAHG1SP",
+        "MSAHG2CB",
+        "MSAHG2QS",
+        "MSAHG2SP"
+      ],
+      "currently_composite": true
+    },
+    {
+      "animation_id": "0x7F0C",
+      "name": "KUO-TOA",
+      "resources": [
+        "MKUOG1CB",
+        "MKUOG1SL",
+        "MKUOG1SP",
+        "MKUOG2CB",
+        "MKUOG2SL",
+        "MKUOG2SP"
+      ],
+      "currently_composite": false
+    },
+    {
+      "animation_id": "0x7F10",
+      "name": "RAKSHASA",
+      "resources": [
+        "MRAKG1CB",
+        "MRAKG1S1",
+        "MRAKG2CB",
+        "MRAKG2S1"
+      ],
+      "currently_composite": false
+    },
+    {
+      "animation_id": "0x7F23",
+      "name": "SAHUAGIN_LARGE",
+      "resources": [
+        "MSATG1CB",
+        "MSATG1QS",
+        "MSATG1SP",
+        "MSATG2CB",
+        "MSATG2QS",
+        "MSATG2SP"
+      ],
+      "currently_composite": false
+    },
+    {
+      "animation_id": "0x7F28",
+      "name": "KUO-TOA_LARGE",
+      "resources": [
+        "MKULG1CB",
+        "MKULG1SL",
+        "MKULG1SP",
+        "MKULG2CB",
+        "MKULG2SL",
+        "MKULG2SP"
+      ],
+      "currently_composite": false
+    },
+    {
+      "animation_id": "0x7F3B",
+      "name": "SOLAR",
+      "resources": [
+        "MSOGG1BW",
+        "MSOGG1S1",
+        "MSOGG2BW",
+        "MSOGG2S1"
+      ],
+      "currently_composite": false
+    },
+    {
+      "animation_id": "0x7F3C",
+      "name": "DEVA_MONADIC",
+      "resources": [
+        "MASGG1BW",
+        "MASGG1S1",
+        "MASGG2BW",
+        "MASGG2S1"
+      ],
+      "currently_composite": false
+    },
+    {
+      "animation_id": "0x7F3E",
+      "name": "GIANT_FIRE",
+      "resources": [
+        "MFIGG1AX",
+        "MFIGG1WH",
+        "MFIGG2AX",
+        "MFIGG2WH"
+      ],
+      "currently_composite": false
+    },
+    {
+      "animation_id": "0x7F3F",
+      "name": "GIANT_YAGA-SHURA",
+      "resources": [
+        "MFIGG1AX",
+        "MFIGG1WH",
+        "MFIGG2AX",
+        "MFIGG2WH"
+      ],
+      "currently_composite": false
+    }
+  ],
+  "ingame_validation": false,
+  "installation_changed": false
+}

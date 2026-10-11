@@ -5229,7 +5229,7 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
           "({}, delete-pending after queued draw)",
           resref_name(resource->resref), layer.frame.animationId,
           layer.frame.frameIndex,
-          layer.frame.animationId == 0x7F09u ? "Monster" : "Character",
+          core::sprite_family_owner(layer.frame.animationId) == 3 ? "Monster" : "Creature",
           index + 1, layerCount, physicalScale,
           frame.logicalWidth, frame.logicalHeight, logicalWidth, logicalHeight,
           static_cast<std::int64_t>(logicalWidth) * physicalScale,

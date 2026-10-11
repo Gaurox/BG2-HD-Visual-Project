@@ -2733,8 +2733,9 @@ static void detour_monster_render(
     scope.generation = next_creature_sprite_generation();
     scope.animationId = resolved.animationId;
     (void)append_creature_sprite_layer(scope, resolved);
-    if (scope.animationId == 0x7F09u) {
-      scope.layeredComposition = true;
+    {
+      // Every native Monster may submit body, extra cell and equipment into
+      // one FX surface. Select composition by active layers, never by ID.
       const auto& runtime = g_ctx->manifest->areaAnimations;
       const auto* base = static_cast<const std::byte*>(thisPtr);
       for (std::size_t index = 0; index < runtime.monsterCompositeCells.size(); ++index) {
@@ -2743,22 +2744,34 @@ static void detour_monster_render(
         if (!runtime.monsterCompositeCells[index] ||
             !runtime.monsterCompositeEnabled[index] ||
             !core::safe_read(base + runtime.monsterCompositeEnabled[index], enabled)) {
+          scope.layeredComposition = true;
           scope.compositionIncomplete = true;
           continue;
         }
         if (!enabled) continue;
         if (!core::safe_read(base + runtime.monsterCompositeCells[index], cell)) {
+          scope.layeredComposition = true;
           scope.compositionIncomplete = true;
           continue;
         }
         // Native equipment is optional even when its enable flag is set.
         if (!cell && index == 1) continue;
+        // An active unresolved layer must also select composition: falling
+        // back to the body-only path would erase it when its bounds fit.
+        scope.layeredComposition = true;
         ResolvedCreatureSpriteFrame overlay{};
         if (!read_registered_creature_cell(scope.animationId, cell,
                                             "CGameAnimationTypeMonster overlay", overlay) ||
             !append_creature_sprite_layer(scope, overlay)) {
           scope.compositionIncomplete = true;
         }
+      }
+    }
+    if (scope.layeredComposition) {
+      static std::array<std::atomic<bool>, 65'536> compositionScopeLogged{};
+      if (!compositionScopeLogged[scope.animationId].exchange(true, std::memory_order_relaxed)) {
+        LOG_INFO("Monster native composite scope animation=0x{:04X}, registered layers={}, incomplete={}",
+                 scope.animationId, scope.layerCount, scope.compositionIncomplete);
       }
     }
   }

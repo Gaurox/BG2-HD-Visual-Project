@@ -1,5 +1,7 @@
 # Inventaire normalisé des sprites BG2EE — contrat agent
 
+- **2026-10-11 : correctif runtime Monster installé et accepté ingame** — composition corps/équipements conditionnée aux couches actives pour toute la classe ; assets/catalogue inchangés. [QA](qa-decisions/runtime/2026-10-11-accepted-monster-composite-x2-v1.json), [état/restauration](../../docs/measurements/monster-composite-fix-x2-20261011-v1/README.md). Aucun retest individuel des 77 IDs déduit.
+
 - **État final validé 2026-10-07 : 15 familles /331 IDs produits/installés/acceptés**, Monster77 et runtime commun confirmés ; aucun lot/retest restant du périmètre retenu. [QA finale](../../docs/measurements/q3m-sprites-final-accepted-x2-20261007-v1/README.md).
 
 - **Runtime commun installé 2026-10-07** : 331 IDs/15 familles, attente à froid +Loop/Clamp CVidCell généralisés ; Character6110 seq15 slot12 corrigé. 0 recalcul, mêmes assets ; confirmation ingame requise. [Preuves](../../docs/measurements/q3m-all-sprite-playback-x2-20261007-v1/README.md).

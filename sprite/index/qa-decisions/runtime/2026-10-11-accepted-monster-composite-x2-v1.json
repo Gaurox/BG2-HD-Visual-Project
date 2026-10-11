@@ -1,0 +1,47 @@
+{
+  "schema": "bg2-upscale-common-sprite-runtime-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-10-11T09:18:33.042135+00:00",
+  "scope": {
+    "kind": "shared-runtime-fix-user-confirmation",
+    "engine_family": "monster",
+    "owner": 3,
+    "equipment_animation_ids": [
+      "0x7F09",
+      "0x7F0C",
+      "0x7F10",
+      "0x7F23",
+      "0x7F28",
+      "0x7F3B",
+      "0x7F3C",
+      "0x7F3E",
+      "0x7F3F"
+    ],
+    "contract": "native active cells select full body/extra/equipment composite; body-only path otherwise",
+    "all77_individually_retested": false
+  },
+  "user_confirmation": "validé. committe",
+  "acceptance_basis": "User accepts the installed Monster composite correction after ingame test; individual coverage of every monster, direction and equipment variant is not inferred.",
+  "installed_dll": {
+    "path": "sprite/.work/monster-composite-fix-x2-20261011-v1/candidate/InfinityEngine-Enhancer.dll",
+    "sha256": "28651777499111be1d94cfd878947bcd67c0ad5062e2673f8991e153d6a46dcd",
+    "bytes": 2152448
+  },
+  "installation_receipt": "backups/renderer/20261011T090835037764Z-f8d1a2b6/renderer-install-receipt.json",
+  "runtime": {
+    "path": "docs/measurements/monster-composite-fix-x2-20261011-v1/runtime.json",
+    "sha256": "5d4eab96245810aeb60797aafa401833712fdd0aea50e2ba7d7822e14e5368a6",
+    "bytes": 2103
+  },
+  "native_tests": {
+    "path": "docs/measurements/monster-composite-fix-x2-20261011-v1/native-tests.log",
+    "sha256": "5611ee739ac80db97908856d59edaa7949c1bca62c6ad0a7006776b5aba83732",
+    "bytes": 31354
+  },
+  "native_tests_passed": true,
+  "source_assets_changed": false,
+  "catalog_changed": false,
+  "palette_guards_changed": false,
+  "release": false
+}

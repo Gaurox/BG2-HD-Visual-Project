@@ -35,6 +35,11 @@ CMakeLists.txt text eol=lf
 *.bgra binary
 *.rgba binary
 
+# Accepted Monster runtime QA pins these exact evidence bytes.
+docs/measurements/monster-composite-fix-x2-20261011-v1/runtime.json -text whitespace=cr-at-eol
+docs/measurements/monster-composite-fix-x2-20261011-v1/native-tests.log -text whitespace=cr-at-eol
+docs/measurements/monster-composite-fix-x2-20261011-v1/runtime-delta.patch -text whitespace=cr-at-eol
+
 # Preserve the imported upstream readme byte-for-byte; its historic trailing
 # spaces are not repository formatting errors.
 portraits/mod-PPE/Readme-PPE-original.txt -text -whitespace

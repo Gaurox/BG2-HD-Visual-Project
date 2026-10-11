@@ -2317,6 +2317,27 @@ void test_creature_sprite_xn_native_border_geometry() {
               "MSAH idle must also retain the equipment layer");
   expect_eq(msahBounds.logical_width(), 51, "MSAH idle union explains apparent small padding");
   expect_eq(msahBounds.logical_height(), 86, "MSAH idle union matches the native canvas");
+  // Actual MFIGG12/MFIGG1WH frame 551 from the 2026-10-11 session.
+  // The body-only 87x173 texture must become the exact native 87x193 union.
+  constexpr std::array<FrameGeometry, 2> giantHammer{{
+      {85, 171, 53, 137}, {20, 21, 8, 157},
+  }};
+  CompositeBounds giantBounds{};
+  expect_true(calculate_composite_bounds(giantHammer.data(), giantHammer.size(), giantBounds),
+              "Fire giant must combine its independently centered hammer");
+  expect_eq(giantBounds.logical_width(), 87, "Fire giant hammer union native width");
+  expect_eq(giantBounds.logical_height(), 193, "Fire giant hammer union native height");
+  expect_eq(physical_layer_offset(137, giantBounds.top, 2), std::int64_t{42},
+            "Fire giant body must retain its native center in the taller composite");
+  expect_eq(physical_layer_offset(157, giantBounds.top, 2), std::int64_t{2},
+            "Fire giant hammer must occupy the top of the bordered composite");
+  constexpr std::array<FrameGeometry, 2> giantAxe{{
+      {85, 171, 53, 137}, {16, 25, 7, 160},
+  }};
+  expect_true(calculate_composite_bounds(giantAxe.data(), giantAxe.size(), giantBounds),
+              "Fire giant must also combine its axe");
+  expect_eq(giantBounds.logical_width(), 87, "Fire giant axe union native width");
+  expect_eq(giantBounds.logical_height(), 196, "Fire giant axe union native height");
   // Regression: the live MDR12100 draw is 111x139, not 113x141. Its
   // descriptor, backing and pixel origin must all obey the same contract.
   constexpr auto unbordered = FrameTextureLayout::Unbordered;
