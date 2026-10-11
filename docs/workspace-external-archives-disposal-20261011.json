@@ -1,0 +1,58 @@
+{
+  "schema": "bg2-upscale-external-archives-disposal-v1",
+  "date": "2026-10-11",
+  "authority_policy": "Current physical availability only. Supersedes historical archive availability, not production, QA, installation or release decisions. Historical receipts remain byte-identical.",
+  "reported_by": "user: all three external directories deleted",
+  "deleted_roots": [
+    {
+      "former_path": "G:/AI/BG2_Upscale-data",
+      "status": "deleted",
+      "exists_at_check": false
+    },
+    {
+      "former_path": "G:/AI/BG2_Upscale-artifacts",
+      "status": "deleted",
+      "exists_at_check": false
+    },
+    {
+      "former_path": "G:/AI/BG2",
+      "status": "deleted",
+      "exists_at_check": false
+    }
+  ],
+  "affected_archive_ids": [
+    "archive-pre-cleanup-20260827",
+    "archive-post-release-20260827",
+    "pre-cleanup-20260827",
+    "animations/cleanup-20260907",
+    "performance-audit",
+    "renderer-candidates",
+    "renderer-transactions"
+  ],
+  "local_configuration": {
+    "key": "animation_artifacts_archive",
+    "value": "",
+    "status": "unconfigured"
+  },
+  "historical_receipts": [
+    {
+      "path": "docs/workspace-archive-manifest-animation-20260907.json",
+      "sha256": "1a83cd15c37b97a020cc1b8e213548b4ab6b6bd996dcc5c89b2ad31c902e2e00",
+      "reference_status": "historical-only; former external paths unavailable; not restorable from deleted archives"
+    },
+    {
+      "path": "docs/workspace-restoration-manifest.json",
+      "sha256": "d9839f185bd3cf9f26e2aafff582642a15d674984591eede500e3ba9964ccdde",
+      "reference_status": "historical-only; former external paths unavailable; not restorable from deleted archives"
+    },
+    {
+      "path": "sprite/index/sprite-layout.json",
+      "sha256": "ecea8857b3db577c810a4d8d0c298cba9266bee827733d494c56645c5c9a842d",
+      "reference_status": "historical-only; former external paths unavailable; not restorable from deleted archives"
+    }
+  ],
+  "archival_tool": "pipeline/scripts/archive_animation_artifacts.py --check verifies the deleted 2026-09-07 archive; obsolete for current workspace availability, expected to fail after disposal.",
+  "current_sources": "Use domain source/production indexes and existing project assets; never infer that missing external archives remain recoverable.",
+  "historical_reference_policy": "Former paths in immutable receipts, imported provenance and their frozen copies are historical identifiers only. All external availability/restoration assumptions for these roots are superseded by this record.",
+  "documentation_copies_corrected": 155
+}

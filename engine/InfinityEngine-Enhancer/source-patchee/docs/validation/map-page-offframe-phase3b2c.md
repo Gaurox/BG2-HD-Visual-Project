@@ -1,5 +1,12 @@
 # Map Page Off-Frame Phase 3e-B2c Lifecycle Trace
 
+## Evidence availability — 2026-10-11
+
+The user deleted the external audit archive. Candidate binaries, install/restore receipts
+and runtime logs formerly stored there are unavailable. `Deleted evidence:` labels below
+are historical identifiers, not filesystem paths. Storage/retention statements describe
+the 2026-08-30 campaign; recorded results and hashes remain unchanged.
+
 ## Status and purpose
 
 Phase 3e-B2c compared the passing two-claim boundary with the rejected three-claim boundary on
@@ -45,7 +52,7 @@ transaction preflight passed.
 Prepared candidate:
 
 ```text
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2c-20260830\candidate-b2c-two-claim-control-v1
+Deleted evidence: performance-audit/map-page-offframe-phase3b2c-20260830/candidate-b2c-two-claim-control-v1
 ```
 
 | File | Bytes | SHA-256 |
@@ -63,8 +70,8 @@ is expected or observed because occupancy remains far below 128.
 Evidence and transaction:
 
 ```text
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2c-20260830\ingame-ar0900-two-claim-control
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2c-20260830\ingame-ar0900-two-claim-control\20260830T165734652462Z-f7c84bbf
+Deleted evidence: performance-audit/map-page-offframe-phase3b2c-20260830/ingame-ar0900-two-claim-control
+Deleted evidence: performance-audit/map-page-offframe-phase3b2c-20260830/ingame-ar0900-two-claim-control/20260830T165734652462Z-f7c84bbf
 ```
 
 | Evidence | Bytes | SHA-256 |
@@ -78,7 +85,7 @@ G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2c-20260830\in
 Prepared candidate:
 
 ```text
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2c-20260830\candidate-b2c-three-claim-trace-v1
+Deleted evidence: performance-audit/map-page-offframe-phase3b2c-20260830/candidate-b2c-three-claim-trace-v1
 ```
 
 | File | Bytes | SHA-256 |
@@ -113,8 +120,8 @@ that the decoded copy, native cache or texture publication is corrupt.
 Evidence and transaction:
 
 ```text
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2c-20260830\ingame-ar0900-three-claim-trace
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2c-20260830\ingame-ar0900-three-claim-trace\20260830T170403558956Z-69b47fc8
+Deleted evidence: performance-audit/map-page-offframe-phase3b2c-20260830/ingame-ar0900-three-claim-trace
+Deleted evidence: performance-audit/map-page-offframe-phase3b2c-20260830/ingame-ar0900-three-claim-trace/20260830T170403558956Z-69b47fc8
 ```
 
 | Evidence | Bytes | SHA-256 |

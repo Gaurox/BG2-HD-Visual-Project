@@ -1,5 +1,12 @@
 # Map Page Off-Frame Phase 3e-B1 Qualification
 
+## Evidence availability — 2026-10-11
+
+The user deleted the external audit archive. Candidate binaries, install/restore receipts
+and runtime logs formerly stored there are unavailable. `Deleted evidence:` labels below
+are historical identifiers, not filesystem paths. Storage/retention statements describe
+the 2026-08-30 campaign; recorded results and hashes remain unchanged.
+
 ## Status and scope
 
 Phase 3e-B1 is implemented and qualified offline and ingame for the positively identified BG2EE
@@ -77,7 +84,7 @@ record native upload/texture activity.
 Prepared candidate, outside the repository data plane:
 
 ```text
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b1-20260830\candidate-b1-offline-v1
+Deleted evidence: performance-audit/map-page-offframe-phase3b1-20260830/candidate-b1-offline-v1
 ```
 
 | File | Bytes | SHA-256 |
@@ -123,7 +130,7 @@ AR0900 area map rendered correctly, without visible seam, corruption, crash or d
 The full journal and a copy of the receipt are archived outside the repository at:
 
 ```text
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b1-20260830\ingame-ar0900-one-page
+Deleted evidence: performance-audit/map-page-offframe-phase3b1-20260830/ingame-ar0900-one-page
 ```
 
 | Evidence | Bytes | SHA-256 |

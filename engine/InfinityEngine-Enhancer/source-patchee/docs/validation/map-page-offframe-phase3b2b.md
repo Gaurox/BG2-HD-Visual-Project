@@ -1,5 +1,12 @@
 # Map Page Off-Frame Phase 3e-B2b Threshold Qualification
 
+## Evidence availability — 2026-10-11
+
+The user deleted the external audit archive. Candidate binaries, install/restore receipts
+and runtime logs formerly stored there are unavailable. `Deleted evidence:` labels below
+are historical identifiers, not filesystem paths. Storage/retention statements describe
+the 2026-08-30 campaign; recorded results and hashes remain unchanged.
+
 ## Status and purpose
 
 Phase 3e-B2b qualified two default-off AR0900 discriminator candidates on 2026-08-30 for the
@@ -37,7 +44,7 @@ cache/upload/free continuation were unchanged.
 Prepared candidate:
 
 ```text
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2b1-20260830\candidate-b2b1-one-claim-control-v1
+Deleted evidence: performance-audit/map-page-offframe-phase3b2b1-20260830/candidate-b2b1-one-claim-control-v1
 ```
 
 | File | Bytes | SHA-256 |
@@ -61,7 +68,7 @@ exited cleanly. The added detour is therefore transparent at the B1 boundary.
 Evidence:
 
 ```text
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2b1-20260830\ingame-ar0900-one-claim-control
+Deleted evidence: performance-audit/map-page-offframe-phase3b2b1-20260830/ingame-ar0900-one-claim-control
 ```
 
 | Evidence | Bytes | SHA-256 |
@@ -78,7 +85,7 @@ beginning at `2026-08-30 18:13:48`.
 Prepared candidate:
 
 ```text
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2b2-20260830\candidate-b2b2-two-claim-discriminator-v1
+Deleted evidence: performance-audit/map-page-offframe-phase3b2b2-20260830/candidate-b2b2-two-claim-discriminator-v1
 ```
 
 | File | Bytes | SHA-256 |
@@ -109,7 +116,7 @@ remained stable for more than 22 seconds and the game exited cleanly.
 Evidence:
 
 ```text
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2b2-20260830\ingame-ar0900-two-claim-discriminator
+Deleted evidence: performance-audit/map-page-offframe-phase3b2b2-20260830/ingame-ar0900-two-claim-discriminator
 ```
 
 | Evidence | Bytes | SHA-256 |

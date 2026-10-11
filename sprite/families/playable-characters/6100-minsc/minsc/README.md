@@ -11,9 +11,10 @@ travail, résoudre l'ID exact du CRE ou de la sauvegarde dans
 `../../../../index/sprite_animations.csv` et `../../../../index/sprite_families.csv`.
 
 Le contenu historique comprend 24 BAM `CHMM1*`, soit 10 334 cadres PNG avec transparence native.
-Les données ont été sorties de l'arbre actif le 2026-08-27 vers
-`G:\AI\BG2_Upscale-data\archive-pre-cleanup-20260827\sprite\6100-minsc-historical\`.
-Le manifeste reste ici comme index de provenance ; ses chemins de données sont donc historiques.
+Les données ont été sorties de l'arbre actif le 2026-08-27, puis leur archive externe
+supprimée par l'utilisateur le 2026-10-11. Les images/BAM de cet essai ne sont plus disponibles
+dans cette archive. Le manifeste conservé ici est un index de provenance, pas un chemin
+vers des données présentes ni une source de restauration.
 
 - `gameplay-animation-0x6100/` : nom de dossier historique erroné ; son contenu `CHMM1*` est une
   famille de moine humain masculin, pas la famille `0x6100`.

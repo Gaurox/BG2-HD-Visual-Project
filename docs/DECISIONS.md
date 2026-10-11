@@ -147,7 +147,7 @@ occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans
 | Packages/ZIP | hors dépôt, reproductibles depuis sources et manifests |
 | Dépendances | hors dépôt, aucun junction `node_modules` |
 | Références externes | URL + commit suffisent ; re-cloner au besoin |
-| Data-plane supersédé | archive externe indexée ; restaurer seulement l'entrée nécessaire |
+| Data-plane supersédé | archives externes des nettoyages 2026-08-27 et 2026-09-07 supprimées par l'utilisateur le 2026-10-11 ; aucune restauration depuis ces archives ; [état de suppression](workspace-external-archives-disposal-20261011.json) ; reçus historiques conservés comme provenance |
 | Clone autonome | le plan de contrôle committé fait autorité ; médias ignorés seulement si déclarés |
 | Candidat renderer | transaction DLL+INI avec reçu, jamais copie brute |
 | Tests locaux | code : `--targeted --path ...`, module direct seulement ; autorités/assets/docs : aucun test Python |

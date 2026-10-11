@@ -1,5 +1,12 @@
 # Map Page Off-Frame Phase 3e-B2e Four-Claim Gate
 
+## Evidence availability — 2026-10-11
+
+The user deleted the external audit archive. Candidate binaries, install/restore receipts
+and runtime logs formerly stored there are unavailable. `Deleted evidence:` labels below
+are historical identifiers, not filesystem paths. Storage/retention statements describe
+the 2026-08-30 campaign; recorded results and hashes remain unchanged.
+
 ## Status and purpose
 
 Phase 3e-B2e raises only the bounded prepared-consumer limit from three to four claims per area
@@ -35,7 +42,7 @@ The exact target executable was BG2EE 2.7.3 `BaldurReal.exe`, SHA-256
 Candidate:
 
 ```text
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2e-20260830\candidate-b2e-four-claim-handshake-v1
+Deleted evidence: performance-audit/map-page-offframe-phase3b2e-20260830/candidate-b2e-four-claim-handshake-v1
 ```
 
 | File | Bytes | SHA-256 |
@@ -46,8 +53,8 @@ G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2e-20260830\ca
 Evidence and transaction:
 
 ```text
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2e-20260830\ingame-ar0900-four-claim-handshake
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2e-20260830\ingame-ar0900-four-claim-handshake\20260830T174721032332Z-8eff3191
+Deleted evidence: performance-audit/map-page-offframe-phase3b2e-20260830/ingame-ar0900-four-claim-handshake
+Deleted evidence: performance-audit/map-page-offframe-phase3b2e-20260830/ingame-ar0900-four-claim-handshake/20260830T174721032332Z-8eff3191
 ```
 
 | Evidence | Bytes | SHA-256 |

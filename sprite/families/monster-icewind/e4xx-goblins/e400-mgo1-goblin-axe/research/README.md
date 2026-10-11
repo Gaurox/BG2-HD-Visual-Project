@@ -9,9 +9,10 @@ BAM prefix:     MGO1
 
 ## Contenu
 
-Les images de cette expérience ont été sorties de l'arbre actif le 2026-08-27 vers
-`G:\AI\BG2_Upscale-data\archive-pre-cleanup-20260827\sprite\e400-mgo1-research\`.
-La liste ci-dessous décrit cette archive ; aucun de ces essais n'est une méthode actuelle.
+Les images de cette expérience ont été sorties de l'arbre actif le 2026-08-27.
+L'archive externe a été supprimée par l'utilisateur le 2026-10-11 ; ces images ne sont
+plus disponibles dans cette archive. La liste ci-dessous est historique ; aucun de ces
+essais n'est une méthode actuelle ni une source de restauration.
 
 - `source/frame-016-original.png` : référence native de la frame 016.
 - `comparisons/` : planches x2 et comparaison globale.
@@ -21,5 +22,6 @@ La liste ci-dessous décrit cette archive ; aucun de ces essais n'est une métho
 - `experiments/xbr-x4-double-pass/` : essai xBR x4.
 - `experiments/xbrz-x2/` et `experiments/xbrz-x4/` : essais xBRZ.
 
-Les copies d'original présentes dans certains dossiers d'essais sont conservées pour que chaque
-comparaison reste autonome. La référence canonique est `source/frame-016-original.png`.
+Les copies d'original rendaient chaque comparaison autonome. La référence de cet essai était
+`source/frame-016-original.png` ; elle a été supprimée avec l'archive. Pour une nouvelle extraction,
+utiliser les sources et index courants de la famille MGO1.

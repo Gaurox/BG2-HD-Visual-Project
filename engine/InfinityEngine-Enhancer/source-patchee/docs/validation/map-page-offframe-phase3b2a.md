@@ -1,5 +1,12 @@
 # Map Page Off-Frame Phase 3e-B2a Diagnostic
 
+## Evidence availability — 2026-10-11
+
+The user deleted the external audit archive. Candidate binaries, install/restore receipts
+and runtime logs formerly stored there are unavailable. `Deleted evidence:` labels below
+are historical identifiers, not filesystem paths. Storage/retention statements describe
+the 2026-08-30 campaign; recorded results and hashes remain unchanged.
+
 ## Status and purpose
 
 Phase 3e-B2a is a default-off diagnostic candidate for the positively identified BG2EE 2.7.3
@@ -45,7 +52,7 @@ and release.
 Prepared candidate outside the repository data plane:
 
 ```text
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2a-20260830\candidate-b2a-three-claim-diagnostic-v1
+Deleted evidence: performance-audit/map-page-offframe-phase3b2a-20260830/candidate-b2a-three-claim-diagnostic-v1
 ```
 
 | File | Bytes | SHA-256 |
@@ -118,7 +125,7 @@ to exactly two claims. B2/B2a remain rejected for release.
 The complete evidence is outside the repository at:
 
 ```text
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2a-20260830\ingame-ar0900-three-claim-diagnostic
+Deleted evidence: performance-audit/map-page-offframe-phase3b2a-20260830/ingame-ar0900-three-claim-diagnostic
 ```
 
 | Evidence | Bytes | SHA-256 |

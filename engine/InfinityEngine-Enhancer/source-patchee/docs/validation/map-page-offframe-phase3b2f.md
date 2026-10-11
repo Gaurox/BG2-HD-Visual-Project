@@ -1,5 +1,12 @@
 # Phase 3e-B2f — single-slot just-in-time scheduling
 
+## Evidence availability — 2026-10-11
+
+The user deleted the external audit archive. Candidate binaries, install/restore receipts
+and runtime logs formerly stored there are unavailable. `Deleted evidence:` labels below
+are historical identifiers, not filesystem paths. Storage/retention statements describe
+the 2026-08-30 campaign; recorded results and hashes remain unchanged.
+
 ## Status
 
 Phase 3e-B2f is a default-off performance prototype for `MAP-PERF-001`. It keeps the four-claim
@@ -37,7 +44,7 @@ authoritative. Every mismatch still falls back to the original zlib/native path.
 Candidate used ingame:
 
 ```text
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2f-20260830\candidate-b2f-single-slot-idle-v1
+Deleted evidence: performance-audit/map-page-offframe-phase3b2f-20260830/candidate-b2f-single-slot-idle-v1
 ```
 
 | File | Bytes | SHA-256 |
@@ -51,7 +58,7 @@ per frame, an 8 ms scheduler budget, a 96-page plan ceiling and a 30-frame delay
 The transaction and evidence are stored under:
 
 ```text
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2f-20260830\ingame-four-zone-single-slot
+Deleted evidence: performance-audit/map-page-offframe-phase3b2f-20260830/ingame-four-zone-single-slot
 ```
 
 The install receipt is

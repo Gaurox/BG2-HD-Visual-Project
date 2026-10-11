@@ -1,5 +1,12 @@
 # Map Page Off-Frame Phase 3e-B2d In-Flight Retirement Handshake
 
+## Evidence availability — 2026-10-11
+
+The user deleted the external audit archive. Candidate binaries, install/restore receipts
+and runtime logs formerly stored there are unavailable. `Deleted evidence:` labels below
+are historical identifiers, not filesystem paths. Storage/retention statements describe
+the 2026-08-30 campaign; recorded results and hashes remain unchanged.
+
 ## Status and purpose
 
 Phase 3e-B2d corrects only the file-reader lifetime collision proved by B2c. The shadow queue now
@@ -42,7 +49,7 @@ The candidate targeted the positively identified BG2EE 2.7.3 `BaldurReal.exe`
 (`B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57`).
 
 ```text
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2d-20260830\candidate-b2d-three-claim-handshake-v1
+Deleted evidence: performance-audit/map-page-offframe-phase3b2d-20260830/candidate-b2d-three-claim-handshake-v1
 ```
 
 | File | Bytes | SHA-256 |
@@ -53,8 +60,8 @@ G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2d-20260830\ca
 Evidence and transaction:
 
 ```text
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2d-20260830\ingame-ar0900-three-claim-handshake
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2d-20260830\ingame-ar0900-three-claim-handshake\20260830T172426281878Z-6f05d3dc
+Deleted evidence: performance-audit/map-page-offframe-phase3b2d-20260830/ingame-ar0900-three-claim-handshake
+Deleted evidence: performance-audit/map-page-offframe-phase3b2d-20260830/ingame-ar0900-three-claim-handshake/20260830T172426281878Z-6f05d3dc
 ```
 
 | Evidence | Bytes | SHA-256 |

@@ -1,5 +1,12 @@
 # Map Page Off-Frame Phase 3e-B2 Qualification
 
+## Evidence availability — 2026-10-11
+
+The user deleted the external audit archive. Candidate binaries, install/restore receipts
+and runtime logs formerly stored there are unavailable. `Deleted evidence:` labels below
+are historical identifiers, not filesystem paths. Storage/retention statements describe
+the 2026-08-30 campaign; recorded results and hashes remain unchanged.
+
 ## Status and scope
 
 Phase 3e-B2 is implemented and qualified offline for the positively identified BG2EE 2.7.3
@@ -47,7 +54,7 @@ fallback families, CRC/copy times and `mode=bounded-four-page-consume` in the ar
 Prepared candidate outside the repository data plane:
 
 ```text
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2-20260830\candidate-b2-four-page-offline-v1
+Deleted evidence: performance-audit/map-page-offframe-phase3b2-20260830/candidate-b2-four-page-offline-v1
 ```
 
 | File | Bytes | SHA-256 |
@@ -103,7 +110,7 @@ successful records alone.
 The complete evidence is archived outside the repository at:
 
 ```text
-G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2-20260830\ingame-ar0900-four-page
+Deleted evidence: performance-audit/map-page-offframe-phase3b2-20260830/ingame-ar0900-four-page
 ```
 
 | Evidence | Bytes | SHA-256 |
