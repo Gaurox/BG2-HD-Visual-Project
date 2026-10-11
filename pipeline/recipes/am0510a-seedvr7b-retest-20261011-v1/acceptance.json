@@ -1,0 +1,245 @@
+{
+  "schema": "bg2-upscale-animation-batch-acceptance-v1",
+  "status": "accepted-ingame",
+  "decision_date": "2026-10-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "resref": "AM0510A",
+  "tested_areas": [
+    "AR0510"
+  ],
+  "final_run": "animations/ressources/AM0510A/runs/am0510a-seedvr7b-retest-accepted-20261011-v1",
+  "qa_pack": "animations/packs-par-zone/am0510a-seedvr7b-retest-30fps-mask-20261011-v1",
+  "qa_decision": "animations/index/qa-decisions/AM0510A/2026-10-11-accepted-am0510a-lot4-final-v1.json",
+  "lot5_preserved": {
+    "pack": "animations/packs-par-zone/lot5-current-20261011-v1",
+    "areas": [
+      "AR1008",
+      "AR3000",
+      "AR3003",
+      "AR3004",
+      "AR3005",
+      "AR3006",
+      "AR3007",
+      "AR3008",
+      "AR3009",
+      "AR3010",
+      "AR3011",
+      "AR3012",
+      "AR3013",
+      "AR3014",
+      "AR3015",
+      "AR3016",
+      "AR3017",
+      "AR3019",
+      "AR3020",
+      "OH4210"
+    ],
+    "installed_bytes_identical": true,
+    "qa_status": "pending-ingame",
+    "selected_runs": {
+      "AM3000E": "animations/ressources/AM3000E/runs/am3000e-lot5-current-20261011-v1",
+      "FLM2PUR": "animations/ressources/FLM2PUR/runs/flm2pur-lot5-current-20261011-v1",
+      "AMWRPGT1": "animations/ressources/AMWRPGT1/runs/amwrpgt1-lot5-current-20261011-v1"
+    }
+  },
+  "cleanup_status": "partial-pending-shared-pack-approval",
+  "cleanup_targets": [
+    {
+      "path": "animations/ressources/AM0510A/runs/am0510a-seedvr7b-lab-x4-20260919",
+      "files": 106,
+      "bytes": 40795496,
+      "status": "deleted"
+    },
+    {
+      "path": "animations/ressources/AM0510A/runs/am0510a-apo8-x4-30fps-v2-20260919",
+      "files": 81,
+      "bytes": 52118247,
+      "status": "deleted"
+    },
+    {
+      "path": "animations/ressources/AM0510A/runs/am0510a-lot45-final-20261011-v1",
+      "files": 1,
+      "bytes": 1430,
+      "status": "deleted"
+    },
+    {
+      "path": "animations/batches/lot45-final-20261011-v1/final-AM0510A",
+      "files": 20,
+      "bytes": 18889695,
+      "status": "deleted"
+    },
+    {
+      "path": "animations/batches/lot45-final-20261011-v1/mask-AM0510A",
+      "files": 3,
+      "bytes": 784288,
+      "status": "deleted"
+    },
+    {
+      "path": "animations/packs-par-zone/lot45-final-20261011-v1-merged-AR0510",
+      "files": 63,
+      "bytes": 19246891,
+      "status": "deleted"
+    },
+    {
+      "path": "animations/packs-par-zone/lot45-final-20261011-v1-complete",
+      "files": 2455,
+      "bytes": 1246064529,
+      "status": "pending"
+    },
+    {
+      "path": "animations/batches/lot45-final-20261011-v1/preview.png",
+      "files": 1,
+      "bytes": 167915,
+      "status": "deleted"
+    },
+    {
+      "path": "animations/batches/lot45-final-20261011-v1/preview-lot4.png",
+      "files": 1,
+      "bytes": 717882,
+      "status": "deleted"
+    },
+    {
+      "path": "animations/batches/am0510a-seedvr7b-retest-20261011-v1/comparison.png",
+      "files": 1,
+      "bytes": 575707,
+      "status": "deleted"
+    },
+    {
+      "path": "animations/batches/am0510a-seedvr7b-retest-20261011-v1/comparison-three-poses.png",
+      "files": 1,
+      "bytes": 1711923,
+      "status": "deleted"
+    },
+    {
+      "path": "animations/batches/am0510a-seedvr7b-retest-20261011-v1/comparison.gif",
+      "files": 1,
+      "bytes": 6049140,
+      "status": "deleted"
+    },
+    {
+      "path": "backups/animations/area-tests/AR0510-20261011T135200436072Z-afb89e4e/previous/AAX4-AM0510A-frame000.rgba",
+      "files": 1,
+      "bytes": 1048576,
+      "status": "deleted"
+    },
+    {
+      "path": "backups/animations/area-tests/AR0510-20261011T135200436072Z-afb89e4e/previous/AAX4-AM0510A-frame001.rgba",
+      "files": 1,
+      "bytes": 1048576,
+      "status": "deleted"
+    },
+    {
+      "path": "backups/animations/area-tests/AR0510-20261011T135200436072Z-afb89e4e/previous/AAX4-AM0510A-frame002.rgba",
+      "files": 1,
+      "bytes": 1048576,
+      "status": "deleted"
+    },
+    {
+      "path": "backups/animations/area-tests/AR0510-20261011T135200436072Z-afb89e4e/previous/AAX4-AM0510A-frame003.rgba",
+      "files": 1,
+      "bytes": 1048576,
+      "status": "deleted"
+    },
+    {
+      "path": "backups/animations/area-tests/AR0510-20261011T135200436072Z-afb89e4e/previous/AAX4-AM0510A-frame004.rgba",
+      "files": 1,
+      "bytes": 1048576,
+      "status": "deleted"
+    },
+    {
+      "path": "backups/animations/area-tests/AR0510-20261011T135200436072Z-afb89e4e/previous/AAX4-AM0510A-frame005.rgba",
+      "files": 1,
+      "bytes": 1048576,
+      "status": "deleted"
+    },
+    {
+      "path": "backups/animations/area-tests/AR0510-20261011T135200436072Z-afb89e4e/previous/AAX4-AM0510A-frame006.rgba",
+      "files": 1,
+      "bytes": 1048576,
+      "status": "deleted"
+    },
+    {
+      "path": "backups/animations/area-tests/AR0510-20261011T135200436072Z-afb89e4e/previous/AAX4-AM0510A-frame007.rgba",
+      "files": 1,
+      "bytes": 1048576,
+      "status": "deleted"
+    },
+    {
+      "path": "backups/animations/area-tests/AR0510-20261011T135200436072Z-afb89e4e/previous/AAX4-AM0510A-frame008.rgba",
+      "files": 1,
+      "bytes": 1048576,
+      "status": "deleted"
+    },
+    {
+      "path": "backups/animations/area-tests/AR0510-20261011T135200436072Z-afb89e4e/previous/AAX4-AM0510A-frame009.rgba",
+      "files": 1,
+      "bytes": 1048576,
+      "status": "deleted"
+    },
+    {
+      "path": "backups/animations/area-tests/AR0510-20261011T135200436072Z-afb89e4e/previous/AAX4-AM0510A-frame010.rgba",
+      "files": 1,
+      "bytes": 1048576,
+      "status": "deleted"
+    },
+    {
+      "path": "backups/animations/area-tests/AR0510-20261011T135200436072Z-afb89e4e/previous/AAX4-AM0510A-frame011.rgba",
+      "files": 1,
+      "bytes": 1048576,
+      "status": "deleted"
+    },
+    {
+      "path": "backups/animations/area-tests/AR0510-20261011T135200436072Z-afb89e4e/previous/AAX4-AM0510A-frame012.rgba",
+      "files": 1,
+      "bytes": 1048576,
+      "status": "deleted"
+    },
+    {
+      "path": "backups/animations/area-tests/AR0510-20261011T135200436072Z-afb89e4e/previous/AAX4-AM0510A-frame013.rgba",
+      "files": 1,
+      "bytes": 1048576,
+      "status": "deleted"
+    },
+    {
+      "path": "backups/animations/area-tests/AR0510-20261011T135200436072Z-afb89e4e/previous/AAX4-AM0510A-frame014.rgba",
+      "files": 1,
+      "bytes": 1048576,
+      "status": "deleted"
+    },
+    {
+      "path": "backups/animations/area-tests/AR0510-20261011T135200436072Z-afb89e4e/previous/AAX4-AM0510A-frame015.rgba",
+      "files": 1,
+      "bytes": 1048576,
+      "status": "deleted"
+    },
+    {
+      "path": "backups/animations/area-tests/AR0510-20261011T135200436072Z-afb89e4e/previous/AAX4-AM0510A-frame016.rgba",
+      "files": 1,
+      "bytes": 1048576,
+      "status": "deleted"
+    },
+    {
+      "path": "backups/animations/area-tests/AR0510-20261011T135200436072Z-afb89e4e/previous/AAX4-AM0510A-frame017.rgba",
+      "files": 1,
+      "bytes": 1048576,
+      "status": "deleted"
+    }
+  ],
+  "cleanup_bytes": 1405997511,
+  "retained": "Native BAM/paint references, accepted mask, current SeedVR/temporal/final outputs, sibling assets; immutable historical metadata only",
+  "backup_rollback_retired": "Old AM0510A frames removed from previous; historical receipt remains. This backup cannot restore the discarded portal.",
+  "game_payload_changed": false,
+  "release_status": "not-selected",
+  "cleanup_pending": [
+    "animations/packs-par-zone/lot45-final-20261011-v1-complete"
+  ],
+  "cleanup_deleted_bytes": 159932982,
+  "verification": {
+    "accepted_qa_lineage_valid": true,
+    "installed_area_payloads_identical": 21,
+    "lock_recipes_valid": 21,
+    "mask_sha256": "39564e36dacc98902cfce1c2e5866bfb50d022f049b77a21ec5e663670ca1105",
+    "verified_utc": "2026-10-11T14:04:24.438891+00:00"
+  },
+  "cleanup_approval_reason": "Automatic approval review rejected deletion of the shared complete index: other 20 lot5 areas need explicit authorization despite preserved exact copies."
+}

@@ -1,6 +1,8 @@
 # Lots4/5 — traitement et installation, 2026-10-11
 
-État : 4assets/5variantes palette, 21cartes/69occurrences installées ; **lots4/5 toujours en attente de QA**, registre `à-valider`, release non sélectionnée. Lot3 accepté séparément le 2026-10-11 (AM0902L SeedVR retenu). L'ancien index de commandes combinées31cartes/79occurrences reste disponible ; la QA restante porte sur les21cartes des lots4/5.
+État courant : **lot4 accepté ingame et terminé**, AM0510A nouvel essai SeedVR7B seed20261011 retenu. **Lot5 seul en attente** :3assets/4variantes/20cartes/68occurrences, registre `à-valider`, release non sélectionnée. Lot3 accepté séparément (AM0902L SeedVR retenu). Détails QA/retrait : `../am0510a-seedvr7b-retest-20261011-v1/README.md` et `acceptance.json`. Ce document décrit aussi la production initiale historique.
+
+Index courant lot5 : `animations/packs-par-zone/lot5-current-20261011-v1` ;20feuilles byte-identiques à l'installation. Aperçu et commandes : `animations/batches/lot5-current-20261011-v1/{preview-lot5.png,CLUA.md}`. Les sorties propres/aperçus AM0510A écartés ont été supprimés ; l'ancien index complete21cartes reste présent après refus du contrôle automatique, en attente de confirmation explicite pour ce dossier partagé. Les métadonnées historiques restent immuables. Les scripts historiques ne sont pas à rejouer sur ces IDs.
 
 | Lot / asset | Recette finale | Durées / déduplication |
 |---|---|---|
@@ -29,8 +31,10 @@
 - Transaction AreaTest :21/21 feuilles vérifiées par hashes, sauvegardes/récépissés `backups/animations/area-tests`, jeu/InfinityLoader arrêtés. DLL/INI/ARE et tous les frères préservés ; lot3 exact conservé. Aucun payload/staging/TP2/manifeste release modifié.
 - `CLUA.md` :69occurrences ; **`CLUA-lots3-4-5.md` :79occurrences/31cartes**, coordonnées logiques x1 + portrait0 ; commande temporaire pour les deux effets désactivés (OH5120 Fiery_Boil du lot3, AR3017 ExitPortal). QA non déduite de l'installation.
 
-## Lot4 à tester
+## Lot4 terminé
 
 - **AM0510A uniquement**, arche lumineuse et halo au sol sur AR0510 (839,397) ; 18phases/30FPS, boucle0,6s.
-- Aperçu final sur référence de carte : batch `preview-lot4.png`, phases0/6/12 ; commandes `CLUA-lot4.md`.
+- Ancien aperçu `preview-lot4.png` retiré avec la variante écartée ; commandes `CLUA-lot4.md` conservées.
 - `C:MoveToArea("AR0510")` puis `C:Eval('JumpToPoint([839.397])',0)` ; contrôler arche, halo, disparition du rectangle statique et raccord avec la carte.
+- Activation nécessaire : le script AR0510 BCS désactive AM0510A après chargement ; une fois la zone initialisée, `C:Eval('AmbientActivate("AM0510A",1)')`, fermer la console/reprendre le jeu. Le flag ARE actif ne suffit pas à prédire l'état script/sauvegarde.
+- **Sélection AM0510A acceptée le 2026-10-11** : nouveau SeedVR7B LAB seed20261011/Apollo8, même masque,18phases/0,6s ; `../am0510a-seedvr7b-retest-20261011-v1/README.md`. Reçu courant `animations/batches/am0510a-seedvr7b-retest-20261011-v1/installation.json` ; QA `2026-10-11-accepted-am0510a-lot4-final-v1`. Le batch lot45 initial reste historique, sorties de l'ancien portail retirées.

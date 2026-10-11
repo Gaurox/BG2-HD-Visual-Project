@@ -1,0 +1,83 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM0510A",
+  "correction_id": "am0510a-seedvr7b-retest-accepted-20261011-v1",
+  "decision": "Utilisateur : ok je valide ta derniere version. AM0510A / AR0510 accepté ingame. SeedVR2 7B INT8 LAB x4 seed20261011 pad32; Apollo8 15→30FPS; masque arche/halo; 9poses distinctes→18phases, 0,6s.",
+  "decision_date": "2026-10-11",
+  "decision_id": "2026-10-11-accepted-am0510a-lot4-final-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM0510A/runs/am0510a-seedvr7b-retest-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "81BBE2CBADB788DF9D21DEF91C6AE42FCF81B5548F603BB254F627C302F77931",
+    "path": "animations/ressources/AM0510A/runs/am0510a-seedvr7b-retest-accepted-20261011-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/am0510a-seedvr7b-retest-20261011-v1/temporal/03_runtime_pack/manifest.json",
+        "manifest_sha256": "046381FFE21A97634BA0739475BE57BCCEC09C31FAB679BE2CE835BE5F5A81B2",
+        "path": "animations/batches/am0510a-seedvr7b-retest-20261011-v1/temporal/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/packs-par-zone/am0510a-seedvr7b-retest-30fps-mask-20261011-v1/AR0510/manifest.json",
+        "manifest_sha256": "21319DD622FF44C0D5B92E7CBAA8CA6284B52DDDA71B16AA79CDE2D9736AAE92",
+        "path": "animations/packs-par-zone/am0510a-seedvr7b-retest-30fps-mask-20261011-v1/AR0510",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM0510A/runs/am0510a-seedvr7b-lab-x4-retest-20261011-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "3891E1678A10073F5C59175D0CBD608225A71158957820074D65462EBFB56F7E",
+        "path": "animations/ressources/AM0510A/runs/am0510a-seedvr7b-lab-x4-retest-20261011-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/am0510a-seedvr7b-retest-20261011-v1/temporal/manifest.json",
+        "manifest_sha256": "30F41CB2F5E5AF27A66BA3432481F1981CBDA44F0B992B715B08704C81F34FDC",
+        "path": "animations/batches/am0510a-seedvr7b-retest-20261011-v1/temporal",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM0510A/runs/am0510a-seedvr7b-lab-x4-retest-20261011-v1/manifest.json",
+        "manifest_sha256": "D76F337FC4B1CAC93182C644FFA3FAE2B46DD84A47CC7568560C6DF7A1C8D0A0",
+        "path": "animations/ressources/AM0510A/runs/am0510a-seedvr7b-lab-x4-retest-20261011-v1",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "am0510a-seedvr7b-retest-accepted-20261011-v1",
+  "recorded_at_utc": "2026-10-11T14:02:28Z",
+  "resref": "AM0510A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0510",
+        "manifest_path": "animations/packs-par-zone/am0510a-seedvr7b-retest-30fps-mask-20261011-v1/AR0510/manifest.json",
+        "manifest_sha256": "21319DD622FF44C0D5B92E7CBAA8CA6284B52DDDA71B16AA79CDE2D9736AAE92",
+        "path": "animations/packs-par-zone/am0510a-seedvr7b-retest-30fps-mask-20261011-v1/AR0510",
+        "registry_sha256": "6249543D82ED87DE88869A3D619C26DC1687B33C92112CCE19D9631D782D8A7D",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am0510a-seedvr7b-retest-30fps-mask-20261011-v1/manifest.json",
+    "manifest_sha256": "394348FB8F3E8A2FBC48ECB8698A603B534C84CB8E64B1D11B0E5FACACEEF399",
+    "path": "animations/packs-par-zone/am0510a-seedvr7b-retest-30fps-mask-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0510"
+  ]
+}
