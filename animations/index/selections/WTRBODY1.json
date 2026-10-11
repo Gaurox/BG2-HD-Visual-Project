@@ -1,0 +1,77 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:WTRBODY1",
+  "correction_id": "wtrbody1-xbr-apo8-collapse-20261011-v1",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/wtrbody1-xbr-apo8-collapse-20261011-v1/00_deduplicated_native_pack/manifest.json",
+        "manifest_sha256": "3BBEBD6E255446FAEBDF7215404F80747102EE31053948AF313F112786ED12C8",
+        "path": "animations/batches/wtrbody1-xbr-apo8-collapse-20261011-v1/00_deduplicated_native_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/packs-par-zone/wtrbody1-xbr-apo8-collapse-20261011-v1/AR0502/manifest.json",
+        "manifest_sha256": "D947AF341CE0CC111F960E0CCCCF4079845A995467EF43128CDDFEA0EB0B8AA6",
+        "path": "animations/packs-par-zone/wtrbody1-xbr-apo8-collapse-20261011-v1/AR0502",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/WTRBODY1/runs/wtrbody1-xbr-apo8-collapse-20261011-v1/03_runtime_pack/manifest.json",
+        "manifest_sha256": "440986738F184F5E97A4E1A40331026BAF6422071CDAB439243385EC8840BAC1",
+        "path": "animations/ressources/WTRBODY1/runs/wtrbody1-xbr-apo8-collapse-20261011-v1/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/WTRBODY1/runs/wtrbody1-xbr-apo8-collapse-20261011-v1/manifest.json",
+        "manifest_sha256": "769D6F12378A2384C466D898772FA046C3BE47F35A595A71AD4192AFDE9E43FA",
+        "path": "animations/ressources/WTRBODY1/runs/wtrbody1-xbr-apo8-collapse-20261011-v1",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-11",
+    "path": "animations/index/qa-decisions/WTRBODY1/2026-10-11-accepted-wtrbody1-lot2-final-v1.json",
+    "sha256": "A43AC2033C08466635867EBDC401E7EA56DFC914DEE0F97EBF4C43FB5BEDA964",
+    "status": "accepted"
+  },
+  "recipe_id": "wtrbody1-lot2-final-20261011-v1",
+  "resref": "WTRBODY1",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/WTRBODY1/runs/wtrbody1-lot2-selection-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "5373F14A8E23B74607C807F688D82856EDCBA8665F33DDCAC058A8C7958DC423",
+    "path": "animations/ressources/WTRBODY1/runs/wtrbody1-lot2-selection-accepted-20261011-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0502",
+        "manifest_path": "animations/packs-par-zone/wtrbody1-xbr-apo8-collapse-20261011-v1/AR0502/manifest.json",
+        "manifest_sha256": "D947AF341CE0CC111F960E0CCCCF4079845A995467EF43128CDDFEA0EB0B8AA6",
+        "path": "animations/packs-par-zone/wtrbody1-xbr-apo8-collapse-20261011-v1/AR0502",
+        "registry_sha256": "511E5AC0EE300EE245BA8F2DDC867D2324791D6766B1223AAD2559EBCB426338",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/wtrbody1-xbr-apo8-collapse-20261011-v1/manifest.json",
+    "manifest_sha256": "096A04EA3AD7BA51212CBE974F956264414FC50FE673F7A655316695BA4A9D7D",
+    "path": "animations/packs-par-zone/wtrbody1-xbr-apo8-collapse-20261011-v1",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0502"
+  ],
+  "updated_at_utc": "2026-10-11T10:03:13Z"
+}

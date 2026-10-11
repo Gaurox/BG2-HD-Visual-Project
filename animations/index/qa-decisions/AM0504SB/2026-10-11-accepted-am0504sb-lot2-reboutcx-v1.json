@@ -1,0 +1,69 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM0504SB",
+  "correction_id": "lot2-small-effects-20261011-v1",
+  "decision": "Utilisateur : on valide la flamme violette en ReboutCX. AM0504SB accepte sur AR0504 ; installation courante sur les 6 occurrences. Autres assets hors validation.",
+  "decision_date": "2026-10-11",
+  "decision_id": "2026-10-11-accepted-am0504sb-lot2-reboutcx-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM0504SB/runs/am0504sb-lot2-reboutcx-selection-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "8B5662BB7B1117B8A4DDE84D905BACE7572BA44793CF79DAD5C5814469E18C3F",
+    "path": "animations/ressources/AM0504SB/runs/am0504sb-lot2-reboutcx-selection-accepted-20261011-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/lot2-small-effects-20261011-v1-final-assets/AR0504/manifest.json",
+        "manifest_sha256": "A0782F22FCBB160A030022138A45CD973C6703A34D589BE5F46BC64DE07637B7",
+        "path": "animations/packs-par-zone/lot2-small-effects-20261011-v1-final-assets/AR0504",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/lot2-reboutcx-xbr-x4-20261011-v1/manifest.json",
+        "manifest_sha256": "B7D052252B9834EC1D0EDA45C6655D1DD77A75856A764020A007E119B5B4D07C",
+        "path": "animations/batches/lot2-reboutcx-xbr-x4-20261011-v1",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM0504SB/runs/am0504sb-lot2-small-effects-20261011-v1/manifest.json",
+        "manifest_sha256": "7AE876B3B553ED815DBAF2ADC797B026BC49058D1C935038DE40AC42F779CD5B",
+        "path": "animations/ressources/AM0504SB/runs/am0504sb-lot2-small-effects-20261011-v1",
+        "schema": "bg2-upscale-animation-visual-treatment-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "am0504sb-lot2-reboutcx-apo8-inner12-premultiply",
+  "recorded_at_utc": "2026-10-11T10:00:53Z",
+  "resref": "AM0504SB",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0504",
+        "manifest_path": "animations/packs-par-zone/lot2-small-effects-20261011-v1-complete/AR0504/manifest.json",
+        "manifest_sha256": "6BD93C294957399A8589E0891992BA71D51C97AC26CEA316F34904A51450F894",
+        "path": "animations/packs-par-zone/lot2-small-effects-20261011-v1-complete/AR0504",
+        "registry_sha256": "390F03FB680268CB61A066E8C9E43CFFA0DF094BAA5EB37D4E11008F7155FE35",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/lot2-small-effects-20261011-v1-complete/manifest.json",
+    "manifest_sha256": "4CF7E8C2455141644B3320341AD7C735C8B7595BAEEB67544C613E6A51D37C5C",
+    "path": "animations/packs-par-zone/lot2-small-effects-20261011-v1-complete",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0504"
+  ]
+}

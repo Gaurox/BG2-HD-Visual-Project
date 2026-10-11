@@ -1,0 +1,77 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:BUBBLEA",
+  "correction_id": "lot2-small-effects-20261011-v1",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/lot2-small-effects-20261011-v1-complete/AR2903/manifest.json",
+        "manifest_sha256": "99CA485E8E7DAFA34957B92FD9903340D939751BFE12A8E9006EF463AA519962",
+        "path": "animations/packs-par-zone/lot2-small-effects-20261011-v1-complete/AR2903",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/packs-par-zone/lot2-small-effects-20261011-v1-final-assets/AR2903/manifest.json",
+        "manifest_sha256": "3D4027EF1C6F6CDC246F92A99105080BB09DC0C54F3C10431908C5C5238D8677",
+        "path": "animations/packs-par-zone/lot2-small-effects-20261011-v1-final-assets/AR2903",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/lot2-reboutcx-xbr-x4-20261011-v1/manifest.json",
+        "manifest_sha256": "B7D052252B9834EC1D0EDA45C6655D1DD77A75856A764020A007E119B5B4D07C",
+        "path": "animations/batches/lot2-reboutcx-xbr-x4-20261011-v1",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/BUBBLEA/runs/bubblea-lot2-small-effects-20261011-v1/manifest.json",
+        "manifest_sha256": "9EE39CA29D443B7FE03CC178F12CFDFECFCE6636BD31011225B75EFF8240FE8F",
+        "path": "animations/ressources/BUBBLEA/runs/bubblea-lot2-small-effects-20261011-v1",
+        "schema": "bg2-upscale-animation-visual-treatment-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-11",
+    "path": "animations/index/qa-decisions/BUBBLEA/2026-10-11-accepted-bubblea-lot2-final-v1.json",
+    "sha256": "E8DD8ADF04A60D5FA89A7D3C362475B57A0EA62505239FDC337BDB02D9D21AC5",
+    "status": "accepted"
+  },
+  "recipe_id": "bubblea-lot2-final-20261011-v1",
+  "resref": "BUBBLEA",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/BUBBLEA/runs/bubblea-lot2-selection-accepted-20261011-v1/manifest.json",
+    "manifest_sha256": "6D3C9513B2CC0C3FF789F56DBDCD1B63A780ADFBD33E4514FFACA54BFEE4C539",
+    "path": "animations/ressources/BUBBLEA/runs/bubblea-lot2-selection-accepted-20261011-v1",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR2903",
+        "manifest_path": "animations/packs-par-zone/lot2-small-effects-20261011-v1-complete/AR2903/manifest.json",
+        "manifest_sha256": "99CA485E8E7DAFA34957B92FD9903340D939751BFE12A8E9006EF463AA519962",
+        "path": "animations/packs-par-zone/lot2-small-effects-20261011-v1-complete/AR2903",
+        "registry_sha256": "59FF73BD7F50E471FBFAA960591BD09ACF14EB8C564867D5E59E63D158B3C832",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/lot2-small-effects-20261011-v1-complete/manifest.json",
+    "manifest_sha256": "4CF7E8C2455141644B3320341AD7C735C8B7595BAEEB67544C613E6A51D37C5C",
+    "path": "animations/packs-par-zone/lot2-small-effects-20261011-v1-complete",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR2903"
+  ],
+  "updated_at_utc": "2026-10-11T10:03:13Z"
+}

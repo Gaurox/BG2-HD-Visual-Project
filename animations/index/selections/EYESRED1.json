@@ -1,0 +1,63 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:EYESRED1",
+  "correction_id": "lot2-seedvr-selected-20261011-v1",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/lot2-seedvr-selected-20261011-v1-complete/AR0329/manifest.json",
+        "manifest_sha256": "8FD41A4912A4B83386321417CB52CC9B256EE9FBF6FC9B9F0B412297FA3EA643",
+        "path": "animations/packs-par-zone/lot2-seedvr-selected-20261011-v1-complete/AR0329",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/lot2-seedvr7b-lab-x4-20261011-v1/manifest.json",
+        "manifest_sha256": "D981EDD63917F664DEAB75858319AF0B17FEBF74FFCFDD78FBA61626FA49E7D4",
+        "path": "animations/batches/lot2-seedvr7b-lab-x4-20261011-v1",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-10-11",
+    "path": "animations/index/qa-decisions/EYESRED1/2026-10-11-accepted-eyesred1-lot2-final-v1.json",
+    "sha256": "46BB313C179E49F26E3E5F480B5D03CE0822F5A9F761D2D8D749971159816892",
+    "status": "accepted"
+  },
+  "recipe_id": "eyesred1-lot2-final-20261011-v1",
+  "resref": "EYESRED1",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/EYESRED1/runs/eyesred1-lot2-selection-accepted-20261011-v2/manifest.json",
+    "manifest_sha256": "DC905A6E70372D9E543AF62CF4353911B401036638894647B2C19FFCEEF6C6FC",
+    "path": "animations/ressources/EYESRED1/runs/eyesred1-lot2-selection-accepted-20261011-v2",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0329",
+        "manifest_path": "animations/packs-par-zone/lot2-seedvr-selected-20261011-v1-complete/AR0329/manifest.json",
+        "manifest_sha256": "8FD41A4912A4B83386321417CB52CC9B256EE9FBF6FC9B9F0B412297FA3EA643",
+        "path": "animations/packs-par-zone/lot2-seedvr-selected-20261011-v1-complete/AR0329",
+        "registry_sha256": "7FEEA34FC9CD1D7FA257CD2AAB774AF42275A49CD67F26FFE5D959D5B454190E",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/lot2-seedvr-selected-20261011-v1-complete/manifest.json",
+    "manifest_sha256": "A6FA540C20129833C603098292F5FEC0A70928DB0BBB0006E3C203C5F7BEF2C7",
+    "path": "animations/packs-par-zone/lot2-seedvr-selected-20261011-v1-complete",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0329"
+  ],
+  "updated_at_utc": "2026-10-11T10:03:12Z"
+}

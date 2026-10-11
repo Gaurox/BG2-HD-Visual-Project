@@ -429,15 +429,15 @@
    }
   },
   "AR0329": {
-   "recorded_utc": "2026-09-18T23:34:21.374341+00:00",
+   "recorded_utc": "2026-10-11T09:43:16.899227+00:00",
    "resources": {
     "AM0307BH": {
-     "sig": "3f5a77ef5a16",
+     "sig": "e0c5936d3a7e",
      "frames": 21
     },
     "AM307RED": {
-     "sig": "cf0d8735910e",
-     "frames": 21
+     "sig": "7341eed6c7de",
+     "frames": 28
     },
     "AM307TT1": {
      "sig": "544cc0290aba",
@@ -455,6 +455,10 @@
      "sig": "3d067dd30fc2",
      "frames": 8
     },
+    "EYESRED1": {
+     "sig": "75eeeb3adeb1",
+     "frames": 20
+    },
     "FIRE_4": {
      "sig": "414b3adf5fa8",
      "frames": 14
@@ -465,21 +469,12 @@
     }
    },
    "fingerprint": {
-    "files": 116,
-    "bytes": 77683452,
-    "max_mtime_ns": 1789774460735826200
+    "files": 143,
+    "bytes": 79187296,
+    "max_mtime_ns": 1791711796187502100
    },
    "build": {
-    "merged_from": [
-     "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0329::AM0307BH",
-     "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0329::AM307RED",
-     "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0329::AM307TT1",
-     "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0329::AM307UR1",
-     "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0329::AM307UR2",
-     "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0329::AM307UR3",
-     "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0329::FIRE_4",
-     "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0329"
-    ]
+    "leaf": "animations/packs-par-zone/lot2-seedvr-selected-20261011-v1-complete/AR0329"
    }
   },
   "AR0331": {
@@ -767,25 +762,36 @@
    }
   },
   "AR0502": {
-   "recorded_utc": "2026-09-18T23:34:29.611957+00:00",
+   "recorded_utc": "2026-10-11T09:59:38.410032+00:00",
    "resources": {
     "FLAME2S": {
      "sig": "6fd483b997af",
      "frames": 27
+    },
+    "WTRBODY1": {
+     "sig": "0c73a35a71b0",
+     "frames": 40
     }
    },
    "fingerprint": {
-    "files": 28,
-    "bytes": 249168,
-    "max_mtime_ns": 1789774469541253800
+    "files": 68,
+    "bytes": 2871228,
+    "max_mtime_ns": 1791712777984967200
    },
    "build": {
-    "leaf": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0502"
+    "merged_from": [
+     "G:/AI/BG2_Upscale/animations/packs-par-zone/lot2-small-effects-20261011-v1-complete/AR0502::FLAME2S",
+     "G:/AI/BG2_Upscale/animations/ressources/WTRBODY1/runs/wtrbody1-xbr-apo8-collapse-20261011-v1/03_runtime_pack::WTRBODY1"
+    ]
    }
   },
   "AR0504": {
-   "recorded_utc": "2026-09-18T23:34:31.082853+00:00",
+   "recorded_utc": "2026-10-11T09:53:53.813056+00:00",
    "resources": {
+    "AM0504SB": {
+     "sig": "d5545484ace9",
+     "frames": 40
+    },
     "FIRE_4": {
      "sig": "414b3adf5fa8",
      "frames": 14
@@ -796,15 +802,12 @@
     }
    },
    "fingerprint": {
-    "files": 42,
-    "bytes": 564788,
-    "max_mtime_ns": 1789774470967055500
+    "files": 82,
+    "bytes": 3227808,
+    "max_mtime_ns": 1791712433497031300
    },
    "build": {
-    "merged_from": [
-     "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0504",
-     "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0504"
-    ]
+    "leaf": "animations/packs-par-zone/lot2-small-effects-20261011-v1-complete/AR0504"
    }
   },
   "AR0505": {
@@ -3641,6 +3644,23 @@
     ]
    }
   },
+  "AR2903": {
+   "recorded_utc": "2026-10-11T09:28:50.092294+00:00",
+   "resources": {
+    "BUBBLEA": {
+     "sig": "7cbec146ffcd",
+     "frames": 80
+    }
+   },
+   "fingerprint": {
+    "files": 81,
+    "bytes": 6695112,
+    "max_mtime_ns": 1791710929869121800
+   },
+   "build": {
+    "leaf": "animations/packs-par-zone/lot2-small-effects-20261011-v1-complete/AR2903"
+   }
+  },
   "AR3000": {
    "recorded_utc": "2026-09-18T21:48:50.746013+00:00",
    "resources": {
@@ -4016,6 +4036,23 @@
    },
    "build": {
     "leaf": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR3027"
+   }
+  },
+  "AR4000": {
+   "recorded_utc": "2026-10-11T09:43:19.510775+00:00",
+   "resources": {
+    "AM4000Z": {
+     "sig": "1b65cf2d327f",
+     "frames": 44
+    }
+   },
+   "fingerprint": {
+    "files": 45,
+    "bytes": 3007428,
+    "max_mtime_ns": 1791711799338552500
+   },
+   "build": {
+    "leaf": "animations/packs-par-zone/lot2-seedvr-selected-20261011-v1-complete/AR4000"
    }
   },
   "AR4500": {
@@ -5399,5 +5436,5 @@
    }
   }
  },
- "updated_utc": "2026-10-11T08:38:40.163588+00:00"
+ "updated_utc": "2026-10-11T09:59:38.414533+00:00"
 }

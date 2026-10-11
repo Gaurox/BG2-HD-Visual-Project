@@ -24,6 +24,8 @@ Une ressemblance de couleur seule ne suffit pas.
 
 ## Règles de choix
 
+- **Sujets minuscules** (décision utilisateur, 2026-10-11) : partir directement sur ReboutCX ou xBR ; aucun essai SeedVR pour quelques pixels. Juger le sujet visible et ses détails, pas seulement la taille du canevas. Cette règle prime sur les comparaisons SeedVR systématiques des recettes génériques.
+- **Doublons avant interpolation** (rappel utilisateur, 2026-10-11) : dédoublonner les poses identiques ; conserver la durée cible du cycle. Maintiens uniformes ×2 : entrée15/2 FPS → sortie30 FPS, `--collapse-uniform-duplicate-holds` ; ne pas accélérer la boucle en réduisant le nombre de poses.
 - **Géométrie** : une frame x4 garde exactement la taille logique de la frame BAM native. Le moteur
   compare cette taille au dessin CVidCell et retombe en vanilla **sans journaliser** si elle diffère —
   donc jamais de rembourrage de canevas (`--gaussian-padding-x4`) ; utiliser `--gaussian-preserve-geometry`.
@@ -152,3 +154,17 @@ AM3022D : `C:MoveToArea("AR3022")`, puis `C:Eval('JumpToPoint([1550.1760])')` ; 
 - Packs actifs : `animations/packs-par-zone/portails-deux-correctif-20261010-v1-complete/{AR0811,OH8100}` ; `portails-cinq-selection-20261010-v1-complete/{AR6108,OH4220,OH4230,OH5400,OH5500}`.
 - Contrat BDFORCEW : DLL `748fe476d24ffa32007d33d34f5c6e506b56147570772ee40b810556ad317c56` ; reçu `backups/renderer/20261010T150141567331Z-182aac70/renderer-install-receipt.json`. Translation après masque WED indispensable : déplacer seulement l'ARE accentue la coupe. Centres/dimensions BAM et coordonnées ARE/sauvegardes conservés ; seul le dessin final se décale. Tests natifs et concordance du fondu C++/preview GLSL acquis.
 - [Acceptation finale et recettes](../pipeline/recipes/portails-cinq-validation-20261010-v1/acceptance.json), [enregistrement reproductible](../pipeline/recipes/portails-cinq-validation-20261010-v1/record.py). Décisions/runs/reçus antérieurs conservés ; essais WED4 et SeedVR non retenus pour BDFORCEW. Aucune intégration release.
+
+## Lot 2 — cinq petits effets validés ingame le 2026-10-11
+
+| Asset / zone / occurrences | Recette finale | Autorité |
+|---|---|---|
+| AM0504SB / AR0504 / 6 | ReboutCX x4 → Apollo8 30 FPS → inner12 → prémultiplication unique. Essai SeedVR abandonné ; retour ReboutCX validé. | [Sélection](index/selections/AM0504SB.json) |
+| AM4000Z / AR4000 / 10 | SeedVR2 7B INT8/LAB x4 seed20261011 → Apollo8 30 FPS ; sans fondu pour préserver les braises ; prémultiplication unique. Deux cycles12/10 → 24/20 phases. | [Sélection](index/selections/AM4000Z.json) |
+| BUBBLEA / AR2903 / 3 | xBR2 blend → nearest2 → Apollo8 30 FPS `--preserve-segmented-holds` ; 3 cycles49 → 98 phases, pauses natives exactes ; prémultiplication unique. | [Sélection](index/selections/BUBBLEA.json) |
+| EYESRED1 / AR0329 / 1 | SeedVR2 7B INT8/LAB x4 seed20261011 ; cadence native20 frames ; sans fondu ; prémultiplication unique. | [Sélection](index/selections/EYESRED1.json) |
+| WTRBODY1 / AR0502 / 1 | xBR2 → nearest2 ; 20 frames natives → 10 poses uniques ; Apollo8 7,5→30 FPS → 40 frames distinctes, boucle20/15 s ; 10 ancres xBR identiques octet pour octet. | [Sélection](index/selections/WTRBODY1.json) |
+
+- Total : 5 assets / 5 cartes / 21 occurrences ; dimensions/centres natifs, autres ressources conservés ; pont d'occlusion natif installé, aucun masque WED figé ajouté.
+- SeedVR essayé sur les cinq assets à la demande explicite de l'utilisateur ; retenu seulement pour AM4000Z et EYESRED1. Règle générale petits sujets ReboutCX/xBR conservée.
+- Reprise : [`finalize.py`](../pipeline/recipes/lot2-small-effects-20261011-v1/finalize.py) ; correctif temporel [`build.py`](../pipeline/recipes/wtrbody1-xbr-apo8-collapse-20261011-v1/build.py). Preuve finale : `animations/batches/lot2-five-effects-accepted-20261011-v1/manifest.json`. QA et reçus historiques immuables ; aucune intégration release.

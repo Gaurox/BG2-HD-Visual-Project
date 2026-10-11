@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM4000Z",
+  "correction_id": "lot2-seedvr-selected-20261011-v1",
+  "decision": "Utilisateur : ok lot 2 validé. MAJ le suivi et committe. AM4000Z accepte en jeu sur AR4000 (10 occurrences); recette finale : SeedVR2 7B INT8/LAB x4 seed20261011; Apollo8 30fps; premultiply once; sans fondu.",
+  "decision_date": "2026-10-11",
+  "decision_id": "2026-10-11-accepted-am4000z-lot2-final-v1",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM4000Z/runs/am4000z-lot2-selection-accepted-20261011-v2/manifest.json",
+    "manifest_sha256": "EE7349A00E79D23537703A1E4790BFF75E4AD7DE5D085FDA95F0B30502995272",
+    "path": "animations/ressources/AM4000Z/runs/am4000z-lot2-selection-accepted-20261011-v2",
+    "schema": "bg2-upscale-animation-final-selection-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/lot2-seedvr-selected-20261011-v1-complete/AR4000/manifest.json",
+        "manifest_sha256": "AB2EE982AE016E7BF5DD4F99C6FC966A388EB6D8F284AAA7E3509A8CAD4EF4B5",
+        "path": "animations/packs-par-zone/lot2-seedvr-selected-20261011-v1-complete/AR4000",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/lot2-seedvr7b-lab-x4-20261011-v1/manifest.json",
+        "manifest_sha256": "D981EDD63917F664DEAB75858319AF0B17FEBF74FFCFDD78FBA61626FA49E7D4",
+        "path": "animations/batches/lot2-seedvr7b-lab-x4-20261011-v1",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "am4000z-lot2-final-20261011-v1",
+  "recorded_at_utc": "2026-10-11T10:03:11Z",
+  "resref": "AM4000Z",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR4000",
+        "manifest_path": "animations/packs-par-zone/lot2-seedvr-selected-20261011-v1-complete/AR4000/manifest.json",
+        "manifest_sha256": "AB2EE982AE016E7BF5DD4F99C6FC966A388EB6D8F284AAA7E3509A8CAD4EF4B5",
+        "path": "animations/packs-par-zone/lot2-seedvr-selected-20261011-v1-complete/AR4000",
+        "registry_sha256": "915452D22EE677E1DF2B262B2EDB6B5EF9FA4ABE2A6514B111A818D43805453F",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/lot2-seedvr-selected-20261011-v1-complete/manifest.json",
+    "manifest_sha256": "A6FA540C20129833C603098292F5FEC0A70928DB0BBB0006E3C203C5F7BEF2C7",
+    "path": "animations/packs-par-zone/lot2-seedvr-selected-20261011-v1-complete",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR4000"
+  ]
+}
