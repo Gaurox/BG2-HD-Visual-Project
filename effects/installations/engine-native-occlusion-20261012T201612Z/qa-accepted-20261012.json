@@ -1,0 +1,39 @@
+{
+  "decision": "ca fonctionne. MAJ le suivi et committe",
+  "decision_date": "2026-10-12",
+  "decision_origin": "explicit-user-ingame-qa",
+  "gpu_evidence": {
+    "path": "effects/installations/engine-native-occlusion-20261012T201612Z/gpu-verification.json",
+    "sha256": "045A7188C0F88770EF2E1BFF6DE973C27801C53A2A241531239081FF3AF8A732"
+  },
+  "installation_receipt": "effects/installations/engine-native-occlusion-20261012T201612Z/backups/20261012T201613670764Z-346aa40e/renderer-install-receipt.json",
+  "installed_dll_sha256": "6E0FDE1C7FAE1DF407A98E713D3662AAFD9F4758BA24EC167181A1ACEEA17226",
+  "installed_effect_assets_unchanged": true,
+  "installed_registry_sha256": "D7E614490174CEBC3D576F7A35A599772A93338B72BBB9D0F3209035F2D89AC5",
+  "native_tests": [
+    "iee_effect_occlusion_tests passed",
+    "iee_native_occlusion_feather_tests passed",
+    "iee_tests passed"
+  ],
+  "observed_owner": "VVC",
+  "observed_resrefs": [
+    "1WDCSDAM"
+  ],
+  "schema": "bg2-effects-engine-occlusion-ingame-qa-v1",
+  "scope": "general native WED occlusion transfer for registered VVC and ProjectileBAM effects",
+  "session": {
+    "effect_occlusion_samples_by_owner": {
+      "VVC": 114
+    },
+    "native_fallback_count": 0,
+    "native_occlusion_bound": [
+      {
+        "line": 18584,
+        "text": "[2026-10-12 23:07:50.084] [info] Effect animation x4 diagnostic: resref=1WDCSDAM, stage=native-occlusion-bound, registeredCellReads=1, registryResolved=1, registryFallback=0, timelineResolved=1, x4Bound=1, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=62x66; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+      }
+    ],
+    "source": "config://bg2ee_game_root/InfinityEngine-Enhancer.log",
+    "started": "[2026-10-12 23:07:40.986] [info] Infinity Engine Enhancer initializing..."
+  },
+  "status": "accepted"
+}

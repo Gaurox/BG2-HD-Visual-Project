@@ -29,7 +29,7 @@ constexpr std::uint32_t kMaxResources = 512;
 constexpr std::uint32_t kMaxFramesPerResource = 4096;
 constexpr std::uint32_t kMaxCyclesPerResource = 256;
 constexpr std::uint32_t kMaxCycleSlots = 65536;
-constexpr std::uint64_t kMaxRawBytes = 128ull * 1024ull * 1024ull;
+constexpr std::uint64_t kMaxRawBytes = 512ull * 1024ull * 1024ull;
 
 struct Frame {
   int logicalWidth{};

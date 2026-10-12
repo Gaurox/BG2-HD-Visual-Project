@@ -225,6 +225,8 @@ constexpr std::uint32_t kEffectDiagnosticRegistryFallback = 1u << 1;
 constexpr std::uint32_t kEffectDiagnosticTimelineResolved = 1u << 2;
 constexpr std::uint32_t kEffectDiagnosticX4Bound = 1u << 3;
 constexpr std::uint32_t kEffectDiagnosticBindFallback = 1u << 4;
+constexpr std::uint32_t kEffectDiagnosticOcclusionBound = 1u << 5;
+constexpr std::uint32_t kEffectDiagnosticOcclusionFallback = 1u << 6;
 EffectAnimationDiagnostics g_effectAnimationDiagnostics;
 
 [[nodiscard]] std::string effect_animation_resref_name(
@@ -434,6 +436,8 @@ std::string_view native_occlusion_owner_label(core::NativeOcclusionOwner owner) 
     case Owner::AdditionalCreature: return "AdditionalCreature";
     case Owner::MonsterMulti:
       return "MonsterMulti";
+    case Owner::ProjectileBam: return "ProjectileBAM";
+    case Owner::VvcEffect: return "VVC";
     default:
       return "None";
   }
@@ -449,6 +453,7 @@ std::string_view native_occlusion_replacement_label(
       return "area-prototype";
     case Replacement::CreatureSprite:
       return "creature-sprite";
+    case Replacement::EffectAnimation: return "effect-animation";
   }
   return "unknown";
 }
@@ -1243,6 +1248,14 @@ bool read_area_animation_frame(void* gameStatic, ResolvedAreaAnimationFrame& res
   resolved.sequence = currentSequence;
   resolved.slot = currentFrame;
   return true;
+}
+
+bool read_registered_effect_resref(void* cell, std::array<char, 8>& resref) noexcept {
+  if (!cell || !g_ctx || !g_ctx->manifest || !effect_animation_x4::ready()) return false;
+  const auto& runtime = g_ctx->manifest->areaAnimations;
+  return runtime.enabled &&
+      core::safe_read(static_cast<const std::byte*>(cell) + runtime.vidCellResref, resref) &&
+      effect_animation_x4::contains_resource(resref);
 }
 
 bool read_effect_animation_frame(void* cell, int logicalWidth, int logicalHeight,
@@ -2667,6 +2680,16 @@ static void detour_projectile_bam_render(void* thisPtr, std::uintptr_t drawFlags
             g_ctx->manifest->effectAnimations.projectileVidCell,
         cell);
   }
+  std::array<char, 8> resref{};
+  const bool occlusionTarget = scoped && read_registered_effect_resref(cell, resref);
+  core::NativeOcclusionCorrelation nativeOcclusion{
+      core::NativeOcclusionOwner::ProjectileBam,
+      reinterpret_cast<std::uintptr_t>(thisPtr), pack_probe_subject(resref)};
+  NativeOcclusionCorrelationOverride nativeOcclusionOverride(
+      g_nativeOcclusionProbeHookEnabled && occlusionTarget ? &nativeOcclusion : nullptr);
+  core::NativeOcclusionMaskCapture nativeOcclusionMask{};
+  NativeOcclusionMaskCaptureOverride nativeOcclusionMaskOverride(
+      g_nativeOcclusionBridgeEnabled && occlusionTarget ? &nativeOcclusionMask : nullptr);
   const auto previousInstance = g_effectAnimationInstance;
   const auto previousCell = g_effectAnimationCell;
   if (scoped) {
@@ -2691,6 +2714,17 @@ static void detour_vvc_vid_cell_render(void* thisPtr, void* gameArea, void* vidM
             g_ctx->manifest->effectAnimations.vvcVidCell,
         cell);
   }
+  std::array<char, 8> resref{};
+  const bool occlusionTarget = scoped && read_registered_effect_resref(cell, resref);
+  core::NativeOcclusionCorrelation nativeOcclusion{
+      core::NativeOcclusionOwner::VvcEffect,
+      reinterpret_cast<std::uintptr_t>(thisPtr), pack_probe_subject(resref)};
+  // Unregistered/nested effects must not inherit another object's WED mask.
+  NativeOcclusionCorrelationOverride nativeOcclusionOverride(
+      g_nativeOcclusionProbeHookEnabled && occlusionTarget ? &nativeOcclusion : nullptr);
+  core::NativeOcclusionMaskCapture nativeOcclusionMask{};
+  NativeOcclusionMaskCaptureOverride nativeOcclusionMaskOverride(
+      g_nativeOcclusionBridgeEnabled && occlusionTarget ? &nativeOcclusionMask : nullptr);
   const auto previousInstance = g_effectAnimationInstance;
   const auto previousCell = g_effectAnimationCell;
   if (scoped) {
@@ -3906,8 +3940,7 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
         probeReplacement = core::NativeOcclusionReplacement::AreaPrototype;
         break;
       case ReplacementKind::EffectAnimation:
-        // Projectile scopes never create an occlusion correlation; retain a
-        // native draw if a future nested scope somehow reaches this branch.
+        probeReplacement = core::NativeOcclusionReplacement::EffectAnimation;
         break;
       case ReplacementKind::AreaRegistry:
       case ReplacementKind::None:
@@ -3942,23 +3975,32 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
       g_nativeOcclusionMaskCapture) {
     std::vector<std::uint8_t> visibilityTransfer;
     bool changed = false;
-    if (g_nativeOcclusionMaskCapture->build_transfer(
-            logicalWidth, logicalHeight, visibilityTransfer, changed) &&
-        changed) {
+    const bool transferReady = g_nativeOcclusionMaskCapture->build_transfer(
+        logicalWidth, logicalHeight, visibilityTransfer, changed);
+    bool maskBound = false;
+    if (transferReady && changed) {
       const int replacementTextureId =
           current_engine_texture_id(g_nativeOcclusionTextureApi);
       const auto smoothingWed = g_ctx ? g_ctx->wed.load(std::memory_order_acquire) : nullptr;
       const auto smoothingArea = smoothingWed ? smoothingWed->areaResrefView() : std::string_view{};
       const auto planarMaskIndex = core::planar_sphinct_mask_index(
           *nativeOcclusionSample, smoothingArea, logicalWidth, logicalHeight);
-      (void)native_occlusion_bridge::bind_masked_texture(
+      maskBound = native_occlusion_bridge::bind_masked_texture(
           visibilityTransfer, logicalWidth, logicalHeight, replacementTextureId,
           g_nativeOcclusionTextureApi, transientOcclusionTextureId,
           replacement == ReplacementKind::AreaRegistry &&
               core::area_occlusion_smoothing_enabled(*nativeOcclusionSample,
                   smoothingWed ? smoothingWed->areaResrefView() : std::string_view{}),
           nativeOcclusionSample->subjectId == 0x0054434E49485053ull,
-          native_occlusion_bridge::planar_sphinct_mask(planarMaskIndex));
+          native_occlusion_bridge::planar_sphinct_mask(planarMaskIndex),
+          replacement == ReplacementKind::EffectAnimation);
+      if (maskBound && replacement == ReplacementKind::EffectAnimation) {
+        log_effect_animation_diagnostic_once(
+            resolvedEffectAnimationFrame.resref, kEffectDiagnosticOcclusionBound,
+            "native-occlusion-bound", resolvedEffectAnimationFrame.sequence,
+            resolvedEffectAnimationFrame.slot, resolvedEffectAnimationFrame.timelinePhase,
+            logicalWidth, logicalHeight);
+      }
     } else if (g_nativeOcclusionMaskCapture->successful_call_count() > 0 &&
                (g_nativeOcclusionMaskCapture->width() != logicalWidth ||
                 g_nativeOcclusionMaskCapture->height() != logicalHeight)) {
@@ -3969,6 +4011,23 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
             "does not match final logical texture {}x{}; xN replacement retained",
             g_nativeOcclusionMaskCapture->width(),
             g_nativeOcclusionMaskCapture->height(), logicalWidth, logicalHeight);
+      }
+    }
+    if (core::native_effect_occlusion_fallback_required(
+            nativeOcclusionSample->draw.replacement,
+            nativeOcclusionSample->successfulClippingCallCount,
+            transferReady, changed, maskBound)) {
+      // The engine's original FX texture already contains the native WED cut.
+      // An unavailable/incompatible transfer must never expose unclipped light.
+      effect_animation_x4::restore_texture(g_effectAnimationTextureApi, previousTextureId);
+      replacement = ReplacementKind::None;
+      if (effect_animation_x4::mark_diagnostic_stage_once(
+              resolvedEffectAnimationFrame.resref, kEffectDiagnosticOcclusionFallback)) {
+        LOG_WARN("Effect native occlusion fallback: resref={}, clipped native FX retained; "
+                 "maskReady={}, maskChanged={}, maskBound={}, captured={}x{}, draw={}x{}",
+                 effect_animation_resref_name(resolvedEffectAnimationFrame.resref),
+                 transferReady, changed, maskBound, g_nativeOcclusionMaskCapture->width(),
+                 g_nativeOcclusionMaskCapture->height(), logicalWidth, logicalHeight);
       }
     }
   }
@@ -5282,7 +5341,7 @@ bool install_all(AppContext& ctx) {
     g_paperdollProbeReady = prepare_paperdoll_ui_probe(ctx);
     const bool hasBridgeTarget =
         g_areaCompositionMode == AreaCompositionMode::Registry ||
-        g_creatureSpriteHooksEnabled;
+        g_creatureSpriteHooksEnabled || g_effectAnimationHooksEnabled;
     if (ctx.cfg.enableNativeOcclusionBridge && hasBridgeTarget) {
       g_nativeOcclusionBridgeEnabled = validate_native_occlusion_bridge_runtime(ctx);
       if (g_nativeOcclusionBridgeEnabled) {
@@ -5294,7 +5353,7 @@ bool install_all(AppContext& ctx) {
     } else if (ctx.cfg.enableNativeOcclusionBridge) {
       LOG_WARN(
           "Native occlusion phase1 bridge not prepared: no registry-backed area "
-          "animation or creature xN path is active");
+          "animation, creature or effect xN path is active");
     }
     if (g_areaCompositionMode != AreaCompositionMode::None || g_effectAnimationHooksEnabled ||
         g_creatureSpriteHooksEnabled || g_itemIconHooksEnabled ||
@@ -5544,10 +5603,10 @@ bool install_all(AppContext& ctx) {
 
     if (ctx.cfg.enableNativeOcclusionProbe || g_nativeOcclusionBridgeEnabled) {
       if (g_areaCompositionMode == AreaCompositionMode::None &&
-          !g_creatureSpriteHooksEnabled) {
+          !g_creatureSpriteHooksEnabled && !g_effectAnimationHooksEnabled) {
         LOG_WARN(
-            "Native occlusion phase0 probe not installed: no xN area-animation or "
-            "creature composition path is active");
+            "Native occlusion phase0 probe not installed: no xN area-animation, "
+            "creature or effect composition path is active");
       } else {
         try {
           const auto module = core::get_module_span(nullptr);

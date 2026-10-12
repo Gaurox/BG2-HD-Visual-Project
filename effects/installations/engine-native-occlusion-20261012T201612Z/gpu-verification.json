@@ -1,0 +1,34 @@
+{
+  "renderer": "NVIDIA GeForce RTX 5090/PCIe/SSE2",
+  "version": "4.6.0 NVIDIA 616.64",
+  "cases": [
+    {
+      "scale": 2,
+      "effect_rgb_transfer": false,
+      "pixels_verified": 20,
+      "cases": "complete clear; half visibility; unchanged; fixed black dither; edge clear",
+      "status": "passed"
+    },
+    {
+      "scale": 2,
+      "effect_rgb_transfer": true,
+      "pixels_verified": 20,
+      "cases": "complete clear; half visibility; unchanged; fixed black dither; edge clear",
+      "status": "passed"
+    },
+    {
+      "scale": 4,
+      "effect_rgb_transfer": false,
+      "pixels_verified": 80,
+      "cases": "complete clear; half visibility; unchanged; fixed black dither; edge clear",
+      "status": "passed"
+    },
+    {
+      "scale": 4,
+      "effect_rgb_transfer": true,
+      "pixels_verified": 80,
+      "cases": "complete clear; half visibility; unchanged; fixed black dither; edge clear",
+      "status": "passed"
+    }
+  ]
+}

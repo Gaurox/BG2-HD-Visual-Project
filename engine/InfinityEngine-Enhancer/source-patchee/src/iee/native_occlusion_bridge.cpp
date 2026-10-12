@@ -378,7 +378,8 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
                          int replacementTextureId, const EngineTextureApi& api,
                          int& transientTextureId, bool inwardFeather,
                          bool straightAlphaFeather,
-                         const std::vector<std::uint8_t>* physicalWorldTransfer) noexcept {
+                         const std::vector<std::uint8_t>* physicalWorldTransfer,
+                         bool transferEffectRgb) noexcept {
   transientTextureId = 0;
   if (logicalWidth <= 0 || logicalHeight <= 0 || replacementTextureId <= 0 ||
       !api.DrawGenTexture || !api.DrawBindTexture || !api.DrawDeleteTexture ||
@@ -573,7 +574,9 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
     gl.glUniform1i(g_replacementUniform, 0);
     gl.glUniform1i(g_maskUniform, 1);
     gl.glUniform1i(g_scaleUniform, physicalWorldTransfer ? 1 : scale);
-    gl.glUniform1i(g_premultipliedUniform, mips ? 1 : 0);
+    // Blended effects carry light in RGB; alpha-only clipping cannot hide it.
+    // Mipmap selection remains exclusively tied to registered creature parents.
+    gl.glUniform1i(g_premultipliedUniform, mips || transferEffectRgb ? 1 : 0);
     // Mode 1 keeps the accepted additive/premultiplied path; mode 2 changes
     // alpha only for straight-alpha SPHINCT, avoiding a second RGB attenuation.
     gl.glUniform1i(g_inwardFeatherUniform, physicalWorldTransfer ? 3 :

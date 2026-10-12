@@ -31,7 +31,8 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
                          int& transientTextureId,
                          bool inwardFeather = false,
                          bool straightAlphaFeather = false,
-                         const std::vector<std::uint8_t>* physicalWorldTransfer = nullptr) noexcept;
+                         const std::vector<std::uint8_t>* physicalWorldTransfer = nullptr,
+                         bool transferEffectRgb = false) noexcept;
 
 // Immutable x4 world masks for the three selected AR0516 SPHINCT occurrences.
 const std::vector<std::uint8_t>* planar_sphinct_mask(int index) noexcept;

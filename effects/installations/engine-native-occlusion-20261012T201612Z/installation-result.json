@@ -1,0 +1,30 @@
+{
+  "schema": "bg2-effects-engine-occlusion-install-v1",
+  "status": "installed",
+  "created_utc": "2026-10-12T20:16:13.998101+00:00",
+  "scope": "registered VVC and ProjectileBAM effects; native WED visibility transfer; no asset/map edits",
+  "build": "build/iee-effects-occlusion-20261012",
+  "previous_dll_sha256": "EE09A26AD78CBCE650DDAA09D4AF17653085FD959266E097C51CEA066C5CE72F",
+  "installed_dll_sha256": "6E0FDE1C7FAE1DF407A98E713D3662AAFD9F4758BA24EC167181A1ACEEA17226",
+  "ini_sha256": "5859F49562E89F71CC1A9B9DDBAC4F77B9B5AB95E5983D88E51C09E480042ABA",
+  "ini_unchanged": true,
+  "effect_files_checked": 441,
+  "effect_assets_unchanged": true,
+  "registry_sha256": "D7E614490174CEBC3D576F7A35A599772A93338B72BBB9D0F3209035F2D89AC5",
+  "managed_files": [
+    "InfinityEngine-Enhancer.dll",
+    "InfinityEngine-Enhancer.ini"
+  ],
+  "receipt": "effects/installations/engine-native-occlusion-20261012T201612Z/backups/20261012T201613670764Z-346aa40e/renderer-install-receipt.json",
+  "native_tests": [
+    "iee_effect_occlusion_tests passed",
+    "iee_native_occlusion_feather_tests passed",
+    "iee_tests passed"
+  ],
+  "gpu_test": {
+    "source": ".tmp/check_effect_mask_gpu.py",
+    "result": "gpu-verification.json",
+    "passed_cases": 4
+  },
+  "ingame_qa": "pending-user"
+}

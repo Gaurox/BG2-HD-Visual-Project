@@ -1,0 +1,34 @@
+{
+  "schema": "bg2-effects-install-plan-v1",
+  "resrefs": [
+    "1WDCCDAM",
+    "1WDCLDAM",
+    "1WDCMDAM",
+    "1WDCSDAM"
+  ],
+  "candidate": "effects/installations/1wdc-seedvr3b-30fps-gauss12-feather12-20261012T195433Z/candidate",
+  "new_packs": [
+    "effects/ressources/1WDCCDAM/packs/1wdccdam-seedvr3b-apollo30-gauss12-feather12-20261012T195433Z",
+    "effects/ressources/1WDCLDAM/packs/1wdcldam-seedvr3b-apollo30-gauss12-feather12-20261012T195433Z",
+    "effects/ressources/1WDCMDAM/packs/1wdcmdam-seedvr3b-apollo30-gauss12-feather12-20261012T195433Z",
+    "effects/ressources/1WDCSDAM/packs/1wdcsdam-seedvr3b-apollo30-gauss12-feather12-20261012T195433Z"
+  ],
+  "existing_pack_snapshot": "effects/installations/1wdc-seedvr3b-30fps-gauss12-feather12-20261012T195433Z/installed-before/effects",
+  "registry_version": 2,
+  "resource_count": 10,
+  "frame_count": 439,
+  "raw_bytes": 224001024,
+  "registry_sha256": "D7E614490174CEBC3D576F7A35A599772A93338B72BBB9D0F3209035F2D89AC5",
+  "runtime_raw_limit_bytes": 536870912,
+  "build": "build/iee-effects-cap512-20261012",
+  "clua": {
+    "1WDCCDAM": "C:Eval('CreateVisualEffectObject(\"1WDCCDAM\",Player1)',0)",
+    "1WDCLDAM": "C:Eval('CreateVisualEffectObject(\"1WDCLDAM\",Player1)',0)",
+    "1WDCMDAM": "C:Eval('CreateVisualEffectObject(\"1WDCMDAM\",Player1)',0)",
+    "1WDCSDAM": "C:Eval('CreateVisualEffectObject(\"1WDCSDAM\",Player1)',0)"
+  },
+  "dll_sha256": "EE09A26AD78CBCE650DDAA09D4AF17653085FD959266E097C51CEA066C5CE72F",
+  "ini_sha256": "5859F49562E89F71CC1A9B9DDBAC4F77B9B5AB95E5983D88E51C09E480042ABA",
+  "previous_payloads_preserved": true,
+  "engine_test": "iee_effect_animation_x4_registry_tests passed"
+}

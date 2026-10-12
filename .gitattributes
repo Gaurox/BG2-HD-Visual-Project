@@ -36,6 +36,9 @@ pipeline/git-hooks/* text eol=lf
 *.bgra binary
 *.rgba binary
 
+# Effect occlusion QA pins the original GPU evidence bytes, including CRLF.
+effects/installations/engine-native-occlusion-20261012T201612Z/gpu-verification.json -text whitespace=cr-at-eol
+
 # Tree QA pins raw runtime/installation receipt bytes; patches keep native context whitespace.
 pipeline/recipes/trees-seedvr-static-x4-20261011-v1/*.json -text whitespace=cr-at-eol
 pipeline/recipes/trees-native-lighting-20261011-v1/*.json -text whitespace=cr-at-eol

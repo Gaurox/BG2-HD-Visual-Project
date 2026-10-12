@@ -86,6 +86,7 @@ occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans
 | Sujet | Décision retenue | Réouvrir seulement si… |
 |---|---|---|
 | Frontière moteur | owner scopes `CProjectileBAM::Render` + `CVEFVidCell::Render`, substitution au `CInfinity::FXRender` final | nouveau build ou famille hors de ces owners |
+| Occlusion WED HD | capture native avant/après `FXRenderClippingPolys` dans les deux owners ; transfert RGB + alpha sur le backing x4 ; repli natif déjà masqué si transfert impossible ; QA ingame `1WDCSDAM` : [`engine-native-occlusion-20261012T201612Z`](../effects/installations/engine-native-occlusion-20261012T201612Z/qa-accepted-20261012.json) ; aucune retouche map/asset | nouveau kernel natif, géométrie incompatible ou owner différent |
 | Sélection | resref présent dans le registre ; aucun sort/resref codé en dur | besoin démontré d'un routage par occurrence |
 | Diagnostics | stages et mesures de chaque slot bornés par ressource | format de preuve runtime versionné |
 | Ajout d'un effet | pack mono-resref immuable puis composition cumulative | format de registre hétérogène requis |

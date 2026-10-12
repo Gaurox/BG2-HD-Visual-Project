@@ -17,13 +17,25 @@ enum class NativeOcclusionOwner : std::uint8_t {
   MultiNew,
   MonsterMulti,
   AdditionalCreature,
+  ProjectileBam,
+  VvcEffect,
 };
 
 enum class NativeOcclusionReplacement : std::uint8_t {
   AreaRegistry,
   AreaPrototype,
   CreatureSprite,
+  EffectAnimation,
 };
+
+// A failed transfer after native clipping must not replace the already clipped
+// effect with an unmasked HD backing. No clipping/no change keeps the HD draw.
+[[nodiscard]] constexpr bool native_effect_occlusion_fallback_required(
+    NativeOcclusionReplacement replacement, std::uint32_t successfulClippingCalls,
+    bool transferReady, bool changed, bool maskBound) noexcept {
+  return replacement == NativeOcclusionReplacement::EffectAnimation &&
+      successfulClippingCalls > 0 && (!transferReady || (changed && !maskBound));
+}
 
 struct NativeOcclusionCall {
   std::uintptr_t infinity{};

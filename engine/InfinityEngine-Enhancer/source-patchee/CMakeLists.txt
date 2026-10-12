@@ -332,6 +332,11 @@ if(BUILD_TESTING)
     iee_configure_target(iee_native_occlusion_feather_tests)
     add_test(NAME iee_native_occlusion_feather_tests COMMAND iee_native_occlusion_feather_tests)
 
+    add_executable(iee_effect_occlusion_tests tests/effect_occlusion_tests.cpp)
+    target_link_libraries(iee_effect_occlusion_tests PRIVATE iee_common)
+    iee_configure_target(iee_effect_occlusion_tests)
+    add_test(NAME iee_effect_occlusion_tests COMMAND iee_effect_occlusion_tests)
+
     add_executable(iee_map_page_shadow_preflight
         tools/map_page_shadow_preflight.cpp
     )
