@@ -1,0 +1,38 @@
+{
+  "schema": "bg2-water-runtime-contract-recovery-v1",
+  "status": "installed",
+  "recorded_at_utc": "2026-10-12T23:27:28.071657+00:00",
+  "area": "AR3000",
+  "cause": "effects occlusion renderer build reused an explicit stale v2 registry in CMakeCache",
+  "stale_build_cache": "build/iee-effects-occlusion-20261012/CMakeCache.txt",
+  "before_dll_sha256": "6E0FDE1C7FAE1DF407A98E713D3662AAFD9F4758BA24EC167181A1ACEEA17226",
+  "installed_dll_sha256": "42A2DD427EC854F261600E24CEB97056715435FBE5AE493E9E3862EC731F97BB",
+  "build": "build/iee-water-contract-recovery-20261013-v1",
+  "build_contract": "IEE_WATER_ROUTE2_V1:E582C7879B50C0765DAC7918EF80AD9CE3CC17E884FAE6E599E81796FF635471:3:188",
+  "registry": {
+    "path": "pipeline/water/requests/ar6300-water-30fps-20260929-v4/registry-v3.json",
+    "sha256_lf": "E582C7879B50C0765DAC7918EF80AD9CE3CC17E884FAE6E599E81796FF635471"
+  },
+  "registry_version": 3,
+  "registry_entries": 188,
+  "installation_receipt": "backups/water/ar3000-runtime-contract-recovery-20261013-v1/renderer/20261012T232727887007Z-9cf0f173/renderer-install-receipt.json",
+  "previous_pointer_backup": "backups/water/ar3000-runtime-contract-recovery-20261013-v1/previous-route2-registry-current.json",
+  "protections": [
+    "cached registry overrides checked at configure and generation",
+    "renderer installer rejects missing or divergent embedded registry fingerprints",
+    "water installer checks the DLL against the explicitly declared registry"
+  ],
+  "python_regression_tests_passed": 21,
+  "cmake_stale_override_rejected": true,
+  "native_tests": [
+    "iee_tests",
+    "iee_effect_occlusion_tests",
+    "iee_native_occlusion_feather_tests"
+  ],
+  "ar3000_pages_checked_and_unchanged": 16,
+  "sprite_shader_hashes_unchanged": true,
+  "ini_sha256_unchanged": "5859F49562E89F71CC1A9B9DDBAC4F77B9B5AB95E5983D88E51C09E480042ABA",
+  "assets_reprocessed": false,
+  "release_changed": false,
+  "current_ingame_recheck": "pending-user"
+}

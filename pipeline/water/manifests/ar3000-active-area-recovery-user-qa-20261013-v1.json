@@ -1,0 +1,40 @@
+{
+  "schema": "bg2-water-user-qa-v1",
+  "status": "user-validated",
+  "recorded_date": "2026-10-13",
+  "area": "AR3000",
+  "user_response": "Elles ont disparu",
+  "scope": "disappearance of pale water-border tiles with current renderer; no release integration",
+  "installation_manifest": "pipeline/water/manifests/ar3000-runtime-contract-recovery-20261013-v2.json",
+  "dll_sha256": "EA6469FF4961D7AB879C57AD6C200196CD149C06A75E9D0E5748F7C046372FCB",
+  "registry_sha256_lf": "E582C7879B50C0765DAC7918EF80AD9CE3CC17E884FAE6E599E81796FF635471",
+  "runtime_session": "2026-10-13 01:42:32.113",
+  "runtime_evidence": {
+    "registry_version": 3,
+    "registry_entries_validated": 188,
+    "loaded_wed": "AR3000",
+    "overlay_count": 5,
+    "base_grid": [42, 44],
+    "liquid_overlay_mask": "0x1E",
+    "secondary_art_native_alpha": 128,
+    "secondary_art_draw_alpha": 160,
+    "opacity_tiles_logged": [1848, 1849, 1850, 1851, 1852, 1853, 1856, 1857],
+    "water_slots_observed": [1, 2, 3, 4],
+    "temporal": true,
+    "source_fps": 30,
+    "target_fps": 30,
+    "dry_q": 0.4,
+    "owner_recovery_branch_observed": false,
+    "owner_recovery_branch_validation": "native regression test; this ingame session observed the normal LoadArea path"
+  },
+  "tests": {
+    "python_regression_tests_passed": 21,
+    "native_suites_passed": ["iee_tests", "iee_effect_occlusion_tests", "iee_native_occlusion_feather_tests"]
+  },
+  "ar3000_pages_unchanged": 16,
+  "sprite_shaders_unchanged": true,
+  "ini_unchanged": true,
+  "assets_reprocessed": false,
+  "historical_qa_modified": false,
+  "release_changed": false
+}

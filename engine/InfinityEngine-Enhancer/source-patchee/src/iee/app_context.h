@@ -20,8 +20,8 @@ struct AppContext {
   game::DrawApi draw{};
 
   std::atomic<const game::CGameArea*> activeArea{nullptr};
-  // CInfGame from the LoadArea hook; lets the render thread re-resolve
-  // the active area when transitions settle after LoadArea returns.
+  // CInfGame from LoadArea, or the validated rendered-area owner if load preceded
+  // hook activation; lets rendering re-resolve settled transitions.
   std::atomic<void*> infGame{nullptr};
   std::atomic<std::shared_ptr<const game::WedAreaInfo>> wed{};
   game::ResrefBuffer lastLoggedWedArea{};

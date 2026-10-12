@@ -14,6 +14,12 @@
 #include "iee/core/logger.h"
 #include "iee/water_route2_registry.generated.h"
 
+// The exported reference keeps the registry fingerprint in the PE even with
+// whole-program optimization; installers inspect it without loading the DLL.
+extern "C" __declspec(dllexport) const char* IEE_WaterRegistryBuildContract() noexcept {
+  return iee::water_route2::generated::kRegistryBuildContract;
+}
+
 namespace iee::water_route2 {
 namespace {
 struct ValidatedRegistry {

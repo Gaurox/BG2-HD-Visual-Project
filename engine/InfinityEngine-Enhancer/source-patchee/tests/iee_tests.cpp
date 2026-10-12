@@ -46,6 +46,7 @@
 #include "iee/core/process_resource_telemetry.h"
 #include "iee/core/pvr_demand_telemetry.h"
 #include "iee/features/tile_render.h"
+#include "iee/game/active_area_runtime.h"
 #include "iee/game/area_texture.h"
 #include "iee/game/build_manifest.h"
 #include "iee/game/dds_texture.h"
@@ -694,6 +695,74 @@ void test_manifest_loading() {
                                                     "Baldur's Gate II: Enhanced Edition")
                    .has_value(),
               "Adjacent unknown versions must fail closed even with a known product name");
+}
+
+void test_rendered_area_owner_recovery() {
+  using namespace iee::game;
+  const auto known = find_manifest_for_identity(2, 7, 3, 0, "Baldur's Gate II: Enhanced Edition");
+  expect_true(known.has_value(), "Owner recovery needs the supported BG2EE manifest");
+  if (!known) return;
+  const auto& manifest = known->get();
+  CInfGame owner{};
+  CGameArea active{};
+  CGameArea other{};
+  const void* denied = nullptr;
+  const auto read = [&](const auto* address, auto& value) {
+    if (address == denied) return false;
+    const auto begin = reinterpret_cast<std::uintptr_t>(address);
+    const auto inObject = [&](const auto& object) {
+      const auto base = reinterpret_cast<std::uintptr_t>(&object);
+      return begin >= base && begin - base <= sizeof(object) &&
+             sizeof(value) <= sizeof(object) - (begin - base);
+    };
+    if (!inObject(owner) && !inObject(active) && !inObject(other)) return false;
+    std::memcpy(&value, address, sizeof(value));
+    return true;
+  };
+  const auto store = [&](std::uintptr_t offset, const auto& value) {
+    std::memcpy(reinterpret_cast<std::byte*>(&owner) + offset, &value, sizeof(value));
+  };
+  std::array<CGameArea*, 12> areas{};
+  areas[0] = &active;
+  areas[1] = &other;
+  store(manifest.offsets.infGameAreas, areas);
+  store(manifest.offsets.infGameVisibleArea, std::uint8_t{0});
+  active.m_pGame = other.m_pGame = &owner;
+  active.m_bAreaLoaded = other.m_bAreaLoaded = 1;
+
+  expect_true(resolve_rendered_area_owner(&active, manifest, read) == &owner,
+              "An already-loaded visible area must recover the owner without a LoadArea callback");
+  expect_true(!resolve_rendered_area_owner(&other, manifest, read),
+              "An offscreen area's identical owner must not seed active rendering");
+  active.m_pGame = nullptr;
+  expect_true(!resolve_rendered_area_owner(&active, manifest, read),
+              "A missing owner must fail closed");
+  active.m_pGame = reinterpret_cast<CInfGame*>(std::uintptr_t{0x1000});
+  expect_true(!resolve_rendered_area_owner(&active, manifest, read),
+              "An unreadable owner must fail closed without dereferencing it");
+  active.m_pGame = &owner;
+  denied = &active.m_pGame;
+  expect_true(!resolve_rendered_area_owner(&active, manifest, read),
+              "An unreadable back pointer must fail closed");
+  denied = nullptr;
+  active.m_bAreaLoaded = 0;
+  expect_true(!resolve_rendered_area_owner(&active, manifest, read),
+              "An area that is still loading must not seed rendering");
+  active.m_bAreaLoaded = 1;
+  store(manifest.offsets.infGameVisibleArea, std::uint8_t{1});
+  expect_true(!resolve_rendered_area_owner(&active, manifest, read) &&
+                  resolve_rendered_area_owner(&other, manifest, read) == &owner,
+              "Owner recovery must follow the settled visible area across a transition");
+  store(manifest.offsets.infGameVisibleArea, std::uint8_t{0xFF});
+  CGameArea* master = &active;
+  store(manifest.offsets.infGameAreaMaster, master);
+  expect_true(resolve_rendered_area_owner(&active, manifest, read) == &owner,
+              "The existing loaded-master fallback must remain available");
+  denied = &active.m_bAreaLoaded;
+  expect_true(!resolve_rendered_area_owner(&active, manifest, read),
+              "An unreadable loaded flag must not pass the owner's round trip");
+  expect_true(!resolve_rendered_area_owner(nullptr, manifest, read),
+              "A null render target must fail closed");
 }
 
 void test_runtime_type_layouts() {
@@ -7455,6 +7524,7 @@ int main() {
   test_rel32_target_checked();
   test_writable_non_executable_guards();
   test_manifest_loading();
+  test_rendered_area_owner_recovery();
   test_runtime_type_layouts();
   test_file_format_layouts();
   test_eeex_doc_layout_maps();

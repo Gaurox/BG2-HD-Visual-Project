@@ -31,10 +31,26 @@ def fake_x64_dll(marker: bytes) -> bytes:
     struct.pack_into("<HH", payload, 0x94, 0xF0, 0x2022)
     struct.pack_into("<H", payload, 0x98, 0x20B)
     payload[0x190 : 0x190 + len(marker)] = marker
-    return bytes(payload)
+    return bytes(payload) + transaction.current_water_build_contract() + b"\0"
 
 
 class RendererCandidateTransactionTests(unittest.TestCase):
+    def test_stale_water_namespace_is_rejected_before_game_or_backup_mutation(self) -> None:
+        dll = self.candidate / transaction.MANAGED_FILES[0]
+        contract = transaction.current_water_build_contract()
+        dll.write_bytes(self.candidate_dll.replace(contract, b"IEE_WATER_ROUTE2_V1:" + b"0" * 64 + b":2:1"))
+        with self.assertRaisesRegex(transaction.TransactionError, "registre eau"):
+            transaction.install_candidate(self.candidate, game_root=self.game,
+                                          backup_root=self.backups, process_checker=lambda: [])
+        self.assertEqual((self.game / transaction.MANAGED_FILES[0]).read_bytes(), self.before_dll)
+        self.assertFalse(self.backups.exists())
+
+    def test_unidentified_water_namespace_is_rejected(self) -> None:
+        dll = self.candidate / transaction.MANAGED_FILES[0]
+        dll.write_bytes(self.candidate_dll[:0x200])
+        with self.assertRaisesRegex(transaction.TransactionError, "registre eau"):
+            transaction.collect_candidate_files(self.candidate)
+
     def setUp(self) -> None:
         self.temporary = tempfile.TemporaryDirectory()
         self.root = Path(self.temporary.name)

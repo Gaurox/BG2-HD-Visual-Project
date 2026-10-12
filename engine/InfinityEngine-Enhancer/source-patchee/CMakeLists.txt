@@ -174,25 +174,34 @@ if(IEE_BUILD_WINDOWS_DLL)
     find_package(Python3 REQUIRED COMPONENTS Interpreter)
     set(IEE_WATER_ROUTE2_REGISTRY
         "" CACHE FILEPATH "Water registry override; empty follows the current workspace registry")
-    if(NOT IEE_WATER_ROUTE2_REGISTRY)
-        execute_process(
-            COMMAND "${Python3_EXECUTABLE}"
-                    "${CMAKE_SOURCE_DIR}/tools/generate_water_route2_registry.py" --print-default
-            OUTPUT_VARIABLE IEE_WATER_ROUTE2_DEFAULT
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-            COMMAND_ERROR_IS_FATAL ANY
-        )
-        string(JSON IEE_WATER_ROUTE2_REGISTRY GET "${IEE_WATER_ROUTE2_DEFAULT}" registry)
-        string(JSON IEE_WATER_ROUTE2_POINTER GET "${IEE_WATER_ROUTE2_DEFAULT}" pointer)
-        set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
-            "${IEE_WATER_ROUTE2_POINTER}"
-            "${CMAKE_SOURCE_DIR}/tools/generate_water_route2_registry.py")
+    option(IEE_WATER_ROUTE2_ALLOW_REGISTRY_CHANGE "Explicit water-authoring build using a different registry" OFF)
+    set(IEE_WATER_ROUTE2_ARGS)
+    set(IEE_WATER_ROUTE2_POLICY_ARGS)
+    if(IEE_WATER_ROUTE2_REGISTRY)
+        list(APPEND IEE_WATER_ROUTE2_ARGS --input "${IEE_WATER_ROUTE2_REGISTRY}")
     endif()
+    if(IEE_WATER_ROUTE2_ALLOW_REGISTRY_CHANGE)
+        list(APPEND IEE_WATER_ROUTE2_ARGS --allow-registry-change)
+        list(APPEND IEE_WATER_ROUTE2_POLICY_ARGS --allow-registry-change)
+    endif()
+    # Validate cached explicit overrides as well: an old cache must never
+    # silently replace the current water namespace during an unrelated patch.
+    execute_process(
+        COMMAND "${Python3_EXECUTABLE}"
+                "${CMAKE_SOURCE_DIR}/tools/generate_water_route2_registry.py"
+                --print-default ${IEE_WATER_ROUTE2_ARGS}
+        OUTPUT_VARIABLE IEE_WATER_ROUTE2_DEFAULT
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        COMMAND_ERROR_IS_FATAL ANY
+    )
+    string(JSON IEE_WATER_ROUTE2_REGISTRY GET "${IEE_WATER_ROUTE2_DEFAULT}" registry)
+    string(JSON IEE_WATER_ROUTE2_POINTER GET "${IEE_WATER_ROUTE2_DEFAULT}" pointer)
+    set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
+        "${IEE_WATER_ROUTE2_POINTER}"
+        "${CMAKE_SOURCE_DIR}/tools/generate_water_route2_registry.py")
     message(STATUS "Water route2 registry: ${IEE_WATER_ROUTE2_REGISTRY}")
-    set(IEE_WATER_ROUTE2_PARENT_REGISTRY
-        "${CMAKE_SOURCE_DIR}/../../../pipeline/water/route2-registry-v1.json")
-    set(IEE_WATER_ROUTE2_ACTIVE_REGISTRY
-        "${CMAKE_SOURCE_DIR}/assets/water-route2/registry-v2.json")
+    string(JSON IEE_WATER_ROUTE2_PARENT_REGISTRY GET "${IEE_WATER_ROUTE2_DEFAULT}" parent_registry)
+    string(JSON IEE_WATER_ROUTE2_ACTIVE_REGISTRY GET "${IEE_WATER_ROUTE2_DEFAULT}" active_registry)
     set(IEE_WATER_ROUTE2_GENERATED
         "${IEE_GENERATED_DIR}/iee/water_route2_registry.generated.h")
     add_custom_command(
@@ -200,6 +209,7 @@ if(IEE_BUILD_WINDOWS_DLL)
         COMMAND "${Python3_EXECUTABLE}"
                 "${CMAKE_SOURCE_DIR}/tools/generate_water_route2_registry.py"
                 --input "${IEE_WATER_ROUTE2_REGISTRY}"
+                ${IEE_WATER_ROUTE2_POLICY_ARGS}
                 --output "${IEE_WATER_ROUTE2_GENERATED}"
         DEPENDS
             "${CMAKE_SOURCE_DIR}/tools/generate_water_route2_registry.py"

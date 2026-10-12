@@ -18,6 +18,7 @@
 #include "iee/core/logger.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/core/water_overlay_policy.h"
+#include "iee/game/active_area_runtime.h"
 #include "iee/game/area_texture.h"
 #include "iee/game/opengl_types.h"
 #include "iee/game/resref_runtime.h"
@@ -278,18 +279,8 @@ std::array<float, 3> resolve_snapshot_tint(const AreaGpuSnapshot& snapshot) {
 }
 
 const game::CGameArea* read_loaded_area_candidate(const game::CGameArea* candidate) {
-  if (!candidate) {
-    return nullptr;
-  }
-
-  std::uint8_t loaded = 0;
-  const auto* loadedAddress =
-      reinterpret_cast<const std::byte*>(candidate) + offsetof(game::CGameArea, m_bAreaLoaded);
-  if (!core::safe_read(loadedAddress, loaded) || loaded == 0) {
-    return nullptr;
-  }
-
-  return candidate;
+  return game::read_loaded_area_candidate(candidate,
+      [](const auto* address, auto& value) { return core::safe_read(address, value); });
 }
 }  // namespace
 
@@ -298,37 +289,8 @@ void configure_texture_table(const std::byte* validatedTextureTable) noexcept {
 }
 
 const game::CGameArea* resolve_active_area(void* infGame, const game::BuildManifest& manifest) {
-  if (!infGame) {
-    return nullptr;
-  }
-
-  const auto* gameBytes = reinterpret_cast<const std::byte*>(infGame);
-
-  std::uint8_t visibleArea = 0;
-  std::array<game::CGameArea*, 12> areas{};
-  if (!core::safe_read(gameBytes + manifest.offsets.infGameVisibleArea, visibleArea) ||
-      !core::safe_read(gameBytes + manifest.offsets.infGameAreas, areas) ||
-      visibleArea >= areas.size()) {
-    visibleArea = 0xFF;
-  } else if (const auto* visible = read_loaded_area_candidate(areas[visibleArea])) {
-    return visible;
-  }
-
-  game::CGameArea* masterArea = nullptr;
-  if (core::safe_read(gameBytes + manifest.offsets.infGameAreaMaster, masterArea)) {
-    if (const auto* master = read_loaded_area_candidate(masterArea)) {
-      return master;
-    }
-  }
-
-  if (visibleArea != 0xFF) {
-    for (const auto* area : areas) {
-      if (const auto* loaded = read_loaded_area_candidate(area)) {
-        return loaded;
-      }
-    }
-  }
-  return nullptr;
+  return game::resolve_active_area(infGame, manifest,
+      [](const auto* address, auto& value) { return core::safe_read(address, value); });
 }
 
 bool read_view_transform(const game::CGameArea* area, ViewTransform& out) {

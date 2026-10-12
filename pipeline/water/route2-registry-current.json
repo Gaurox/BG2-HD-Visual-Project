@@ -1,6 +1,6 @@
 {
   "schema": "bg2-water-route2-registry-current-v1",
-  "note": "Registry compiled into the installed InfinityEngine-Enhancer.dll. Base of every new 30 fps run; updated only by pipeline/scripts/Install-WaterRuntime.ps1.",
+  "note": "Registry compiled into the installed InfinityEngine-Enhancer.dll. Base of every new 30 fps run; updated by Install-WaterRuntime.ps1 or a verified renderer recovery transaction.",
   "registry": {
     "path": "pipeline/water/requests/ar6300-water-30fps-20260929-v4/registry-v3.json",
     "sha256_lf": "E582C7879B50C0765DAC7918EF80AD9CE3CC17E884FAE6E599E81796FF635471"
@@ -1135,7 +1135,7 @@
       "state": "candidate-installable-pending-qa"
     }
   ],
-  "dll_sha256": "5D4EE06D84E0D6C6F6FB81797EAB0E9756B3ECE335EBF537E57C5597E0B40BCF",
-  "installed_by": "pipeline/recipes/trees-night-color-20261011-v2/installation.json",
-  "updated": "2026-10-11"
+  "dll_sha256": "EA6469FF4961D7AB879C57AD6C200196CD149C06A75E9D0E5748F7C046372FCB",
+  "installed_by": "backups/water/ar3000-runtime-contract-recovery-20261013-v2/renderer/20261012T234216914005Z-d6b3b14b/renderer-install-receipt.json",
+  "updated": "2026-10-13"
 }

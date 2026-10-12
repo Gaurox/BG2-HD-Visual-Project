@@ -16,6 +16,38 @@ SPEC.loader.exec_module(GENERATOR)
 
 
 class WaterRegistryDefaultTests(unittest.TestCase):
+    def test_declared_registry_and_dll_fingerprint_must_match(self):
+        path = GENERATOR.default_input()
+        with tempfile.TemporaryDirectory() as directory:
+            dll = Path(directory) / 'test.dll'
+            expected = GENERATOR.build_contract(path)
+            dll.write_bytes(b'MZfixture' + expected.encode('ascii') + b'\0')
+            self.assertEqual(GENERATOR.verify_dll_contract(dll, path), expected)
+            dll.write_bytes(b'MZfixtureIEE_WATER_ROUTE2_V1:' + b'0' * 64 + b':2:1\0')
+            with self.assertRaisesRegex(RuntimeError, 'fingerprint'):
+                GENERATOR.verify_dll_contract(dll, path)
+
+    def test_unidentified_dll_cannot_be_registered_as_current(self):
+        with tempfile.TemporaryDirectory() as directory:
+            dll = Path(directory) / 'test.dll'
+            dll.write_bytes(b'MZlegacy-without-proof')
+            with self.assertRaisesRegex(RuntimeError, 'fingerprint'):
+                GENERATOR.verify_dll_contract(dll, GENERATOR.default_input())
+
+    def test_cached_legacy_override_cannot_bypass_current_authority(self):
+        stale = GENERATOR.SOURCE_ROOT / "assets/water-route2/registry-v2.json"
+        with self.assertRaisesRegex(RuntimeError, "override differs"):
+            GENERATOR.resolve_input(stale)
+
+    def test_explicit_water_authoring_can_choose_a_different_registry(self):
+        historical = GENERATOR.SOURCE_ROOT / "assets/water-route2/registry-v2.json"
+        self.assertEqual(GENERATOR.resolve_input(historical, allow_registry_change=True), historical.resolve())
+
+    def test_current_build_embeds_the_registry_fingerprint(self):
+        path = GENERATOR.default_input()
+        output = GENERATOR.generate(path)
+        self.assertIn(f"IEE_WATER_ROUTE2_V1:{GENERATOR.registry_sha256_lf(path)}:3:188", output)
+
     def test_workspace_default_retains_ar3000_paving_and_opacity(self):
         output = GENERATOR.generate(GENERATOR.default_input())
         self.assertIn("kRegistryVersion = 3", output)

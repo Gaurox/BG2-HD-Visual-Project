@@ -368,6 +368,8 @@ def collect_candidate_files(candidate_root: Path) -> tuple[list[CandidateFile], 
         if path.name != name or path.is_symlink() or not path.is_file():
             raise TransactionError(f"source candidate non canonique : {path}")
         snapshot = validate_dll(path) if name.endswith(".dll") else validate_ini(path)
+        if name.endswith(".dll"):
+            validate_current_water_contract(path)
         files.append(CandidateFile(name, path, snapshot))
     effects_container = by_lower.get("iee-assets")
     if effects_container is not None:
@@ -378,6 +380,23 @@ def collect_candidate_files(candidate_root: Path) -> tuple[list[CandidateFile], 
             raise TransactionError("inventaire iee-assets candidat divergent")
         files.extend(validate_effect_pack(effect_entries[0]))
     return files, source
+
+
+def current_water_build_contract() -> bytes:
+    from generate_water_route2_registry import build_contract, default_input
+
+    return build_contract(default_input()).encode("ascii")
+
+
+def validate_current_water_contract(path: Path) -> None:
+    # Inspect the build fingerprint without loading candidate code. Structural
+    # PE validation alone accepted the stale v2 effects build that lost AR3000.
+    try:
+        from generate_water_route2_registry import default_input, verify_dll_contract
+        verify_dll_contract(path, default_input())
+    except (OSError, RuntimeError, ValueError) as exc:
+        raise TransactionError("registre eau de la DLL absent ou différent du registre courant ; "
+                               "reconstruire avec le registre courant avant installation") from exc
 
 
 def state_to_json(snapshot: FileSnapshot | None) -> dict[str, object]:

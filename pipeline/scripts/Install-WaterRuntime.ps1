@@ -77,9 +77,16 @@ if (-not $registryPath.StartsWith($requests, [StringComparison]::OrdinalIgnoreCa
     throw 'Le registre doit etre la copie versionnee sous pipeline/water/requests/<run>/.'
 }
 $pointer = Get-Content -LiteralPath $pointerPath -Raw | ConvertFrom-Json
+$contractTool = Join-Path $workspaceRoot 'engine/InfinityEngine-Enhancer/source-patchee/tools/generate_water_route2_registry.py'
+& python -B $contractTool --input $registryPath --allow-registry-change --check-dll $source
+if ($LASTEXITCODE -ne 0) { throw 'La DLL candidate ne porte pas le registre eau declare ; aucune installation.' }
 $before = Get-Sha $target
 if ($before -ne $pointer.dll_sha256) {
-    throw "DLL live $before absente du pointeur ($($pointer.dll_sha256)) : registre porte inconnu, installation refusee."
+    # An unrelated renderer patch can change the DLL hash while preserving its
+    # exact water namespace. Accept only an embedded proof of that contract.
+    $currentRegistryPath = Resolve-InWorkspace $pointer.registry.path
+    & python -B $contractTool --input $currentRegistryPath --check-dll $target
+    if ($LASTEXITCODE -ne 0) { throw "DLL live $before : contrat eau inconnu ou divergent, installation refusee." }
 }
 $backupDir = Join-Path $workspaceRoot "backups\water\$Label\runtime"
 if (Test-Path -LiteralPath $backupDir) { throw "Sauvegarde deja presente : $backupDir (choisir un nouveau Label)." }

@@ -50,6 +50,7 @@
 #include "iee/core/pvr_demand_telemetry.h"
 #include "iee/features/tile_render.h"
 #include "iee/frame_hook.h"
+#include "iee/game/active_area_runtime.h"
 #include "iee/game/game_types.h"
 #include "iee/game/renderer.h"
 #include "iee/game/resref_runtime.h"
@@ -5000,6 +5001,27 @@ static void detour_render_texture(void* thisPtr, int texId, void* unused, int x,
 // native area so the bridge is resolved as part of the map; all screen HUD and
 // full-screen menus are consequently drawn above it.
 static void detour_game_area_render(void* thisPtr, void* vidMode) {
+  // Startup can finish LoadArea before this DLL has enabled its hooks. Seed the
+  // missing owner from a validated round trip, then use the normal WED refresh.
+  // Never overwrite an owner concurrently captured by a native LoadArea call.
+  if (g_ctx && g_ctx->manifest && !g_ctx->infGame.load(std::memory_order_relaxed) &&
+      g_nativeAreaLoadDepth.load(std::memory_order_acquire) == 0) {
+    try {
+      auto* owner = game::resolve_rendered_area_owner(
+          static_cast<const game::CGameArea*>(thisPtr), *g_ctx->manifest,
+          [](const auto* address, auto& value) { return core::safe_read(address, value); });
+      void* missingOwner = nullptr;
+      if (owner && g_ctx->infGame.compare_exchange_strong(missingOwner, owner)) {
+        LOG_INFO("Recovered active game owner from CGameArea::Render; initial LoadArea was not observed");
+        // CPU only; the next native world-pass draw owns the queued GL upload.
+        publish_view_state(true, false);
+      }
+    } catch (const std::exception& error) {
+      LOG_WARN("Rendered-area owner recovery failed; retaining native rendering: {}", error.what());
+    } catch (...) {
+      LOG_WARN("Rendered-area owner recovery failed; retaining native rendering");
+    }
+  }
   g_gameAreaRenderHook.original()(thisPtr, vidMode);
   // The GL renderer batches the native area's commands until DrawEndScaled.
   // Flush them while its map FBO is still current; otherwise those deferred
