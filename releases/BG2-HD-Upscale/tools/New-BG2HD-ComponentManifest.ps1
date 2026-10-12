@@ -172,11 +172,21 @@ $spriteComponents = foreach ($group in $sprites) {
     [ordered]@{
         id = [int]$group.Name
         label = $labels[0]
-        name = 'Playable-character sprites (x2)'
+        name = 'Creature sprites (Q3m x2, Nearest, 331 animations)'
         status = 'validated'
         depends_on = @(0)
         payload_groups = @($groups[0])
     }
+}
+
+$paperdolls = @($content.entries | Where-Object { $_.kind -eq 'paperdoll' } | Group-Object component_id)
+$paperdollComponents = foreach ($group in $paperdolls) {
+    $entries = @($group.Group)
+    if ([int]$group.Name -ne 4210 -or $entries.Count -ne 81 -or @($entries | Where-Object {
+        $_.component_label -ne 'paperdolls-q3m-6110-x2' -or $_.payload_group -ne 'paperdolls-q3m-6110-x2' -or
+        $_.area -ne 'UI' -or [int]$_.scale -ne 2 -or $_.destination -notlike 'iee-assets/paperdolls/*'
+    }).Count -gt 0) { throw 'Composant paperdolls Q3m incoherent.' }
+    [ordered]@{ id = 4210; label = 'paperdolls-q3m-6110-x2'; name = 'Inventory paperdolls (Q3m x2, body 0x6110 and shared equipment)'; status = 'validated'; depends_on = @(0); payload_groups = @('paperdolls-q3m-6110-x2') }
 }
 
 $effects = @($content.entries | Where-Object { $_.kind -eq 'effect' } | Group-Object component_id | Sort-Object { [int]$_.Name })
@@ -199,7 +209,7 @@ $effectComponents = foreach ($group in $effects) {
     }
 }
 
-$components = @(($base + $overlayComponents + $mapComponents + $animationComponents + $spriteComponents + $effectComponents) | Sort-Object {
+$components = @(($base + $overlayComponents + $mapComponents + $animationComponents + $spriteComponents + $paperdollComponents + $effectComponents) | Sort-Object {
     if ($_ -is [System.Collections.IDictionary]) { [int]$_['id'] } else { [int]$_.id }
 })
 $ids = @($components | ForEach-Object { [int]$_.id })

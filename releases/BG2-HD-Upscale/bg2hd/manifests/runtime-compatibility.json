@@ -103,8 +103,6 @@
       "Shaders": {
         "EnableWaterEffect": "true",
         "EnableEffectAnimationX4": "true",
-        "EnableCreatureSpriteUpscaleTest": "true",
-        "CreatureSpriteFilter": "CatmullRom",
         "EnableNativeOcclusionBridge": "true",
         "EnableAreaAnimationX4": "true",
         "EnableWaterOverlayRoute2": "true",
@@ -116,6 +114,18 @@
         "EnableBigLogoX4Test": "true",
         "EnableMainMenuX4Test": "true",
         "EnableMenuX2Test": "false"
+      }
+    },
+    "sprites-approved-creatures-x2": {
+      "Shaders": {
+        "EnableCreatureSpriteUpscaleTest": "true",
+        "CreatureSpriteFilter": "Nearest"
+      }
+    },
+    "paperdolls-q3m-6110-x2": {
+      "Shaders": {
+        "EnablePaperdollQ3mTest": "true",
+        "EnablePaperdollUIProbe": "false"
       }
     }
   }

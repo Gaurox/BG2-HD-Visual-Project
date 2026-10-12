@@ -7,7 +7,7 @@
     "setup_executable": "setup-bg2hd.exe",
     "release_repository": "BG2-HD-Upscale"
   },
-  "version": "0.1.0-alpha.6",
+  "version": "0.1.0-alpha.7",
   "target": {
     "store": "Steam",
     "steam_app_id": 257350,
@@ -24,7 +24,8 @@
     "bootstrap-clean-game-eeex-absent-lifecycle-test-pending",
     "renderer-clean-game-lifecycle-test-pending",
     "renderer-alpha.9-clean-game-combined-lifecycle-test-pending",
-    "public-contact-and-provenance-record-pending"
+    "public-contact-and-provenance-record-pending",
+    "q3m-world-and-paperdolls-clean-game-lifecycle-test-pending"
   ],
   "manifest_files": [
     "manifests/runtime-compatibility.json",
@@ -43,7 +44,7 @@
     "maps": "399 variantes x4 : selections explicites dans map-release-candidates.csv, inventaires et QA acquises dans map-release-assemblies.json ; 63 assemblages eau/contours/WED/overlays jour-pluie finaux et AR3003 actualises a octets constants. OH6460 utilise le tileset partage du composant OH8100 sans duplication.",
     "ui": "approved Topaz Recovery v2 Detail 50 x4 atlas set",
     "overlays": "overlay-sources.json gouverne les overlays partages historiques ; les 188 identites liquides locales du registre runtime courant sont groupees avec leur map (TIS/PVRZ jour-pluie + WED), inventoriees dans map-release-assemblies.json.",
-    "sprites": "approved 173-animation playable, monster and Icewind creature x2 Catmull-Rom catalog, projected byte-for-byte",
+    "sprites": "331 acquired animation IDs / 15 families; Q3m x2 Nearest mixed V6/V7/V9 catalog; 81 acquired V6 P7 paperdolls (0x6110 body + 77 shared equipment packs); local-only qualification pending.",
     "effects": "approved SPMAGMIS, SPMINDAT and SPFEAREF x4 runtime pack, projected byte-for-byte",
     "excluded": [
       "all x2 map builds",

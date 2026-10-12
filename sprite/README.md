@@ -27,6 +27,16 @@ installation, ni une validation ingame.
 
 ## Méthode actuelle
 
+Décision de rangement du **2026-10-12** : raster final xBR abandonné ; release
+locale Q3m x2 / Nearest, **331 IDs / 15 familles**, plus **81 paperdolls P7**
+(corps 0x6110 + équipements partagés). Autorité :
+[`index/maintenance/20261012-cleanup-local-release-v1.json`](index/maintenance/20261012-cleanup-local-release-v1.json) ;
+sélection package : [`../releases/BG2-HD-Upscale/manifests/sprite-release-candidates.json`](../releases/BG2-HD-Upscale/manifests/sprite-release-candidates.json).
+Caches GPU/Q3m et réserve Character V10 conservés. Les anciens manifests/runs
+raster restent des preuves historiques après retrait de leurs sorties ; ne pas
+les reprendre comme productions courantes. Qualification sur jeu propre et
+publication restent distinctes du package local.
+
 **Suivi courant de tous les sprites : [Q3m / 15 familles d'intégration](SUIVI_Q3M.md)** ; queue par animation sous `index/q3m-work-items.csv`, moteur estimé à 90 % par l'utilisateur. Les productions finales xBR/ReboutCX antérieures sont historiques et ne comptent plus dans l'avancement Q3m.
 
 **Reprise actuelle Q3m x2, y compris préparation monstres/PNJ** : [`../pipeline/SPRITES_PRODUCTION_Q3M_X2.md`](../pipeline/SPRITES_PRODUCTION_Q3M_X2.md). 78 Character monde produits/assemblés/installés, 4 510 BAM / 1 564 054 frames, BOX global ; QA visuelle complète distincte, aucune release déduite.

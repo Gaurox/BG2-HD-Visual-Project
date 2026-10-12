@@ -93,7 +93,7 @@ foreach ($component in $components) {
 }
 foreach ($entry in $content) {
     if (-not $componentById.ContainsKey([int]$entry.component_id)) { throw "Entree de contenu sans composant : $($entry.source)" }
-    $validScale = ([int]$entry.scale -eq 4) -or ($entry.kind -in @('overlay', 'sprite') -and [int]$entry.scale -eq 2)
+    $validScale = ([int]$entry.scale -eq 4) -or ($entry.kind -in @('overlay', 'sprite', 'paperdoll') -and [int]$entry.scale -eq 2)
     if ($entry.qa_status -ne 'validated' -or -not $validScale) { throw "Contenu non valide : $($entry.source)" }
     if ($entry.source -match '(^|/)(override|backups|archive|captures|temp)(/|$)') { throw "Source interdite : $($entry.source)" }
 }
@@ -162,6 +162,13 @@ foreach ($component in $components) {
             $lines.Add('  AT_NOW ui_config_result ~powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File bg2hd/tools/bg2hd-config.ps1 -Action Apply -GameRoot . -Owner ui-mainmenu-x4 -StatePath bg2hd/state/renderer-config-ui-mainmenu.json~')
             $lines.Add('  ACTION_IF ui_config_result != 0 THEN BEGIN FAIL @19 END')
             $lines.Add('  AT_UNINSTALL ~powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File bg2hd/tools/bg2hd-config.ps1 -Action Restore -GameRoot . -Owner ui-mainmenu-x4 -StatePath bg2hd/state/renderer-config-ui-mainmenu.json~')
+        }
+        if ($component.label -in @('sprites-approved-creatures-x2', 'paperdolls-q3m-6110-x2')) {
+            $owner = [string]$component.label
+            $state = "bg2hd/state/renderer-config-$owner.json"
+            $lines.Add("  AT_NOW sprite_config_result ~powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File bg2hd/tools/bg2hd-config.ps1 -Action Apply -GameRoot . -Owner $owner -StatePath $state~")
+            $lines.Add('  ACTION_IF sprite_config_result != 0 THEN BEGIN FAIL @19 END')
+            $lines.Add("  AT_UNINSTALL ~powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File bg2hd/tools/bg2hd-config.ps1 -Action Restore -GameRoot . -Owner $owner -StatePath $state~")
         }
     }
     $lines.Add('')

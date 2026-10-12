@@ -1,0 +1,104 @@
+{
+  "schema": "sprite-cleanup-local-release-status-v1",
+  "date": "2026-10-12",
+  "version": "0.1.0-alpha.7",
+  "release_status": "blocked",
+  "local_package": "verified-fixtures-not-public",
+  "QA": {
+    "acquired_ids": 331,
+    "families": 15,
+    "paperdoll_files": 81,
+    "new_ingame_QA": false,
+    "original_QA_decisions_unchanged": true
+  },
+  "content": {
+    "passed": true,
+    "other_domain_entries_unchanged": 28629,
+    "files": 43041,
+    "bytes": 25311431640,
+    "counts": {
+      "overlay": 26,
+      "ui": 15,
+      "map": 8566,
+      "area-animation": 19858,
+      "effect": 164,
+      "sprite": 14331,
+      "paperdoll": 81
+    },
+    "bytes_by_kind": {
+      "overlay": 4185910,
+      "ui": 150994944,
+      "map": 9317400526,
+      "area-animation": 8665029635,
+      "effect": 67091482,
+      "sprite": 7104609867,
+      "paperdoll": 2119276
+    }
+  },
+  "package": {
+    "archive": "G:\\AI\\BG2_Upscale\\releases\\BG2-HD-Upscale\\dist-local\\alpha7-sprites-q3m-20261012-v1\\BG2HD-0.1.0-alpha.7-windows-local-alpha.zip",
+    "archive_bytes": 25397145849,
+    "sha256": "3677905D7420DCDE694AC0AD8E45098BEA68DE6A1395F77011C346F864D9BA1A",
+    "compression": "NoCompression",
+    "canonical_staging": "releases/BG2-HD-Upscale/bg2hd/payload-allvalidated"
+  },
+  "cleanup": {
+    "D0_files": 152242,
+    "D0_logical_bytes": 31617008465,
+    "R_D1": {
+      "D1-files": 9241,
+      "D1-bytes": 5452782223,
+      "distinct_bytes_last_link": 89596552083,
+      "R-files": 59743,
+      "R-bytes": 120521878055
+    },
+    "X": {
+      "X-files": 12955,
+      "X-bytes": 204499575182,
+      "distinct_bytes_last_link": 170217140469
+    },
+    "abandoned_extras": {
+      "files": 1952,
+      "bytes": 89096670,
+      "distinct_bytes_last_link": 89096670
+    },
+    "P": {
+      "copies": 1297,
+      "distinct_bytes_last_link": 1966206306,
+      "historical_paths_bytes_QA_preserved": true,
+      "store": "sprite/accepted-storage/sha256",
+      "immutable_accepted_sources_only": true,
+      "GPU_production": false
+    },
+    "distinct_bytes_removed_or_shared_excluding_D0": 261868995528,
+    "immutable_metadata_preserved": true,
+    "native_sources_preserved": true,
+    "current_Q3m_caches_preserved": true,
+    "V10_reserve_preserved": true,
+    "backups_and_historical_archives_preserved": true
+  },
+  "verification": {
+    "verifier_unit_tests": 6,
+    "source_and_staging_hashes": "passed",
+    "phase2": "passed",
+    "phase4": "passed-in-build",
+    "phase6b": "passed",
+    "phase5a_fixture_suite": "passed",
+    "new_sprite_config_lifecycles": 4,
+    "other_domain_content_unchanged": true,
+    "installed_game_changed": false,
+    "GPU_production": false
+  },
+  "remaining": [
+    "in-place-steam-shim-clean-install-lifecycle-test-pending",
+    "future-hd-save-native-vanilla-lifecycle-test-pending",
+    "full-vanilla-uninstall-restoration-test-pending",
+    "bootstrap-clean-game-eeex-absent-lifecycle-test-pending",
+    "renderer-clean-game-lifecycle-test-pending",
+    "renderer-alpha.9-clean-game-combined-lifecycle-test-pending",
+    "public-contact-and-provenance-record-pending",
+    "q3m-world-and-paperdolls-clean-game-lifecycle-test-pending",
+    "installer-full-source-path-length-preflight-before-publication",
+    "config-rollback-no-journal-primary-error-preservation-before-publication"
+  ]
+}

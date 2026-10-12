@@ -515,6 +515,32 @@ function Get-SpriteCandidateEntries {
 
     $result = [System.Collections.Generic.List[object]]::new()
     $register = Read-Json $CandidatesPath
+    if ([int]$register.schema_version -eq 2) {
+        $verification = @(& python -B (Join-Path $Workspace 'pipeline/scripts/verify_sprite_release_candidate.py') --workspace-root $Workspace --candidates $CandidatesPath 2>&1)
+        Require ($LASTEXITCODE -eq 0) ('Selection Q3m invalide : ' + ($verification -join [Environment]::NewLine))
+        foreach ($candidate in @($register.candidates)) {
+            $inventory = Read-Json (Join-Path $Workspace ([string]$candidate.source_pack.path))
+            $baseSpec = @{
+                ComponentId = [int]$candidate.component_id
+                ComponentLabel = [string]$candidate.component_label
+                PayloadGroup = [string]$candidate.payload_group
+                Area = [string]$candidate.area
+                SourceRun = (Split-Path -Parent ([string]$inventory.files[0].source)).Replace('\', '/')
+                Kind = [string]$candidate.kind
+                DestinationRoot = [string]$candidate.destination_root
+                Model = 'Q3m-x2-Nearest'
+                InstallOrder = [int]$candidate.component_id
+                ReplacesComponentOutput = $false
+                Scale = 2
+            }
+            foreach ($record in @($inventory.files)) {
+                $file = Get-Item -LiteralPath (Join-Path $Workspace ([string]$record.source)) -ErrorAction Stop
+                Require ([string]$record.destination -ceq "$($candidate.destination_root)/$($file.Name)") "Destination Q3m incoherente : $($file.Name)"
+                $result.Add((New-ContentEntry $baseSpec $file))
+            }
+        }
+        return @($result)
+    }
     foreach ($candidate in @($register.candidates | Where-Object { $_.approval_status -eq 'approved-for-release' -and $_.payload_projection.status -eq 'integrated' })) {
         Require ([bool]$candidate.payload_projection.content_manifest_integration) "Projection sprite non integree : $($candidate.candidate_id)"
         $source = $candidate.source_generation

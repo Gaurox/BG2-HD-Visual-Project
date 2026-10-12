@@ -229,7 +229,7 @@ foreach ($language in $expectedLanguages) {
     Require (($ids -join ',') -eq ($expectedIds -join ',')) "Identifiants TRA invalides : $language"
 }
 
-$tempTp2 = Join-Path ([IO.Path]::GetTempPath()) ('bg2hd-tp2-' + [Guid]::NewGuid().ToString('N') + '.tp2')
+$tempTp2 = Join-Path $workspace ('.tmp/bg2hd-tp2-' + [Guid]::NewGuid().ToString('N') + '.tp2')
 try {
     & (Join-Path $ReleaseRoot 'tools/Generate-BG2HD-Tp2.ps1') -ReleaseRoot $ReleaseRoot -OutputPath $tempTp2 | Out-Null
     $checkedInTp2 = Join-Path $ReleaseRoot 'bg2hd/bg2hd.tp2'
@@ -300,6 +300,30 @@ foreach ($name in @('animation-release-candidates.json', 'sprite-release-candida
     Require ((Get-FileHash -LiteralPath $authority -Algorithm SHA256).Hash -eq (Get-FileHash -LiteralPath $mirror -Algorithm SHA256).Hash) "Miroir package divergent : $name"
 }
 
+$spriteCandidates = Get-Content -LiteralPath (Join-Path $ReleaseRoot 'manifests/sprite-release-candidates.json') -Raw | ConvertFrom-Json
+if ([int]$spriteCandidates.schema_version -eq 2) {
+    foreach ($candidate in @($spriteCandidates.candidates)) {
+        $inventoryPath = Join-Path $workspace ([string]$candidate.source_pack.path)
+        Require ((Get-FileHash -LiteralPath $inventoryPath -Algorithm SHA256).Hash -eq [string]$candidate.source_pack.sha256) 'Q3m inventory evidence differs.'
+        $inventory = Get-Content -LiteralPath $inventoryPath -Raw | ConvertFrom-Json
+        $entries = @($content | Where-Object { [int]$_.component_id -eq [int]$candidate.component_id })
+        Require ($entries.Count -eq [int]$candidate.asset_scope.file_count -and $entries.Count -eq @($inventory.files).Count) 'Incomplete Q3m content projection.'
+        $expected = @{}
+        foreach ($record in @($inventory.files)) { $expected[[string]$record.destination] = $record }
+        foreach ($entry in $entries) {
+            $record = $expected[[string]$entry.destination]
+            Require ($null -ne $record -and $entry.source -ceq $record.source -and $entry.sha256 -eq $record.sha256 -and [int64]$entry.bytes -eq [int64]$record.bytes) 'Q3m content differs from acquired inventory.'
+            Require ($entry.kind -eq $candidate.kind -and $entry.component_label -eq $candidate.component_label -and $entry.payload_group -eq $candidate.payload_group) 'Q3m component assignment differs.'
+        }
+        $mirror = Join-Path $ReleaseRoot ('bg2hd/manifests/sprite-inventories/' + [IO.Path]::GetFileName($inventoryPath))
+        Require ((Get-FileHash -LiteralPath $mirror -Algorithm SHA256).Hash -eq [string]$candidate.source_pack.sha256) 'Q3m package inventory mirror differs.'
+        Require ($tp2 -match ([regex]::Escape('-Owner ' + [string]$candidate.component_label))) 'Q3m component configuration owner absent.'
+    }
+    Require ($null -eq $runtimeCompatibility.owned_ini_keys.'core-steam'.Shaders.EnableCreatureSpriteUpscaleTest) 'Core owns optional sprite activation.'
+    Require ($runtimeCompatibility.owned_ini_keys.'sprites-approved-creatures-x2'.Shaders.CreatureSpriteFilter -eq 'Nearest') 'Q3m world filter is not Nearest.'
+    Require ($runtimeCompatibility.owned_ini_keys.'paperdolls-q3m-6110-x2'.Shaders.EnablePaperdollUIProbe -eq 'false') 'Development paperdoll probe enabled.'
+}
+
 Require (([regex]::Matches($tp2, '(?m)^LANGUAGE ')).Count -eq 9) 'Le TP2 doit declarer neuf langues.'
 Require (([regex]::Matches($tp2, '(?m)^BEGIN ')).Count -eq @($components).Count) 'Le TP2 ne couvre pas tous les composants declares.'
 Require (([regex]::Matches($tp2, '(?m)^  COPY_LARGE ')).Count -eq @($content).Count) 'Le TP2 ne couvre pas toutes les entrees du manifeste de contenu.'
@@ -343,7 +367,7 @@ Require (-not (Compare-Object (@($validated | Sort-Object -Unique) | Sort-Object
 
 if ($WeiDUExecutable) {
     Require (Test-Path -LiteralPath $WeiDUExecutable -PathType Leaf) "WeiDU absent : $WeiDUExecutable"
-    $weiduTestRoot = Join-Path ([IO.Path]::GetTempPath()) ('bg2hd-tp2-runtime-' + [Guid]::NewGuid().ToString('N'))
+    $weiduTestRoot = Join-Path $workspace ('.tmp/bg2hd-tp2-runtime-' + [Guid]::NewGuid().ToString('N'))
     $locationPushed = $false
     try {
         New-Item -ItemType Directory -Path $weiduTestRoot | Out-Null

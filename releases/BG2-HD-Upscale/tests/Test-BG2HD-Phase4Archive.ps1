@@ -41,6 +41,8 @@ try {
     $fixture=Join-Path $game 'override/AR0300.TIS';New-Item -ItemType Directory -Path (Split-Path -Parent $fixture) -Force|Out-Null;[IO.File]::WriteAllBytes($fixture,[byte[]](7,4,2,1));$fixtureHash=Get-Hash $fixture
     $uiFixture=Join-Path $game 'iee-assets/BIGLOGO-MOS0017-x4.dxt5';New-Item -ItemType Directory -Path (Split-Path -Parent $uiFixture) -Force|Out-Null;[IO.File]::WriteAllBytes($uiFixture,[byte[]](8,6,4,2));$uiFixtureHash=Get-Hash $uiFixture
     $animationFixture=Join-Path $game 'iee-assets/areas/AR0603/AreaAnimations-X4.registry';New-Item -ItemType Directory -Path (Split-Path -Parent $animationFixture) -Force|Out-Null;[IO.File]::WriteAllBytes($animationFixture,[byte[]](5,3,1));$animationFixtureHash=Get-Hash $animationFixture
+    $spriteFixture=Join-Path $game 'iee-assets/creature-sprites/CreatureSprites-XN.catalog';New-Item -ItemType Directory -Path (Split-Path -Parent $spriteFixture) -Force|Out-Null;[IO.File]::WriteAllBytes($spriteFixture,[byte[]](9,7,3));$spriteFixtureHash=Get-Hash $spriteFixture
+    $paperdollFixture=Join-Path $game 'iee-assets/paperdolls/CHFF1INV-Q3m-X2.registry';New-Item -ItemType Directory -Path (Split-Path -Parent $paperdollFixture) -Force|Out-Null;[IO.File]::WriteAllBytes($paperdollFixture,[byte[]](2,8,4));$paperdollFixtureHash=Get-Hash $paperdollFixture
     $wedFixture=Join-Path $game 'override/AR0516.WED';[IO.File]::WriteAllBytes($wedFixture,[byte[]](6,5,1));$wedFixtureHash=Get-Hash $wedFixture
     Expand-Archive -LiteralPath $archive -DestinationPath $game
     $layoutPath=Join-Path $game 'bg2hd/state/install-layout.json';New-Item -ItemType Directory -Path (Split-Path -Parent $layoutPath) -Force|Out-Null;[IO.File]::WriteAllText($layoutPath,([ordered]@{schema_version=1;source_game_root=$steamSource;hd_game_root=$game;source_baldur_sha256=$runtime.target_game.sha256;launch_mode='dedicated-shortcut-only';steam_source_untouched=$true;created_at=(Get-Date).ToUniversalTime().ToString('o');package_version='test'}|ConvertTo-Json),[Text.UTF8Encoding]::new($false))
@@ -53,14 +55,19 @@ try {
         $mapAssemblies=(Get-Content -LiteralPath (Join-Path $game 'bg2hd/manifests/map-release-assemblies.json') -Raw -Encoding utf8|ConvertFrom-Json).variants
         $mapSamples=@($mapAssemblies|Where-Object{$_.frozen_assembly})
         Require ($mapSamples.Count-eq64) 'Final map sample set incomplete.'
-        $componentIds=@(@(0,100,110,1000,1010,1020,1030,1040,1050,1060,1580)+@($animationSamples|ForEach-Object{[int]$_.component_id})+@($mapSamples|ForEach-Object{[int]$_.component_id})|Sort-Object -Unique)
+        $componentIds=@(@(0,100,110,1000,1010,1020,1030,1040,1050,1060,1580,4200,4210)+@($animationSamples|ForEach-Object{[int]$_.component_id})+@($mapSamples|ForEach-Object{[int]$_.component_id})|Sort-Object -Unique)
         foreach($id in $componentIds){$output=& .\setup-bg2hd.exe '--noautoupdate' '--force-install-list' "$id" '--language' '0' '--no-exit-pause' 2>&1|Out-String;$code=$LASTEXITCODE;Require ($code -eq 0) "Installation WeiDU echouee : composant $id ($code) $output"}
         $content=Get-Content -LiteralPath (Join-Path $game 'bg2hd/manifests/content.json') -Raw -Encoding utf8|ConvertFrom-Json
         $byDestination=@{};foreach($entry in @($content.entries|Where-Object{[int]$_.component_id-in$componentIds})){if(-not $byDestination.ContainsKey($entry.destination) -or [int]$entry.install_order -ge [int]$byDestination[$entry.destination].install_order){$byDestination[$entry.destination]=$entry}}
         foreach($destination in $byDestination.Keys){$entry=$byDestination[$destination];$file=Join-Path $game ($destination.Replace('/','\'));Require (Test-Path -LiteralPath $file -PathType Leaf) "Fichier installe absent : $destination";Require ((Get-Hash $file) -eq $entry.sha256) "Hash installe incorrect : $destination"}
         $installedIni=Get-Content -LiteralPath (Join-Path $game 'InfinityEngine-Enhancer.ini') -Raw
         foreach($setting in @('EnableBigLogoX4Test\s*=\s*true','EnableMainMenuX4Test\s*=\s*true','EnableMenuX2Test\s*=\s*false','EnableWaterOverlayRoute2\s*=\s*true','WaterOverlayStrength\s*=\s*1\.00')){Require ($installedIni -match "(?im)^\s*$setting\s*$") "Configuration UI x4 absente : $setting"}
+        foreach($setting in @('EnableCreatureSpriteUpscaleTest\s*=\s*true','CreatureSpriteFilter\s*=\s*Nearest','EnablePaperdollQ3mTest\s*=\s*true','EnablePaperdollUIProbe\s*=\s*false')){Require ($installedIni -match "(?im)^\s*$setting\s*$") "Configuration Q3m absente : $setting"}
         foreach($id in @($componentIds|Sort-Object -Descending)){$output=& .\setup-bg2hd.exe '--noautoupdate' '--uninstall' "$id" '--language' '0' '--no-exit-pause' 2>&1|Out-String;$code=$LASTEXITCODE;Require ($code -eq 0) "Desinstallation WeiDU echouee : composant $id ($code) $output"}
+        Require ((Get-Hash $spriteFixture) -eq $spriteFixtureHash) 'Prior sprite catalogue not restored.'
+        Require ((Get-Hash $paperdollFixture) -eq $paperdollFixtureHash) 'Prior paperdoll bytes not restored.'
+        Require (@(Get-ChildItem -LiteralPath (Split-Path -Parent $spriteFixture) -File -Filter '*.registry').Count -eq 0) 'New world leaves remain after uninstall.'
+        Require (@(Get-ChildItem -LiteralPath (Split-Path -Parent $paperdollFixture) -File -Filter '*.registry').Count -eq 1) 'New paperdoll leaves remain after uninstall.'
     } finally {Pop-Location}
     Require ((Get-Hash (Join-Path $game 'Baldur.exe')) -eq $loaderHash) 'Le retrait archive n a pas conserve le shim EEex.'
     Require ((Get-Hash (Join-Path $game 'BaldurReal.exe')) -eq $originalBaldur) 'Le retrait archive n a pas preserve l executable officiel.'

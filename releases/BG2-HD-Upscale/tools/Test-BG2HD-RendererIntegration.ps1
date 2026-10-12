@@ -16,7 +16,8 @@ $rendererManifestPath=if($RendererManifestPath){(Resolve-Path -LiteralPath $Rend
 $manifest=Get-Content -LiteralPath $rendererManifestPath -Raw -Encoding utf8|ConvertFrom-Json
 $compat=Join-Path $manifestRoot 'runtime-compatibility.json'
 $payload=if($PayloadRoot){(Resolve-Path -LiteralPath $PayloadRoot).Path}else{Join-Path $release 'bg2hd\renderer'}
-$testRoot=Join-Path ([IO.Path]::GetTempPath()) ('bg2hd-renderer-'+[guid]::NewGuid().ToString('N'))
+$workspaceRoot=[IO.Path]::GetFullPath((Join-Path $release '../..'))
+$testRoot=Join-Path $workspaceRoot ('.tmp/bg2hd-renderer-'+[guid]::NewGuid().ToString('N'))
 try{
     New-Item -ItemType Directory -Path $testRoot|Out-Null
     $expected=@($manifest.files|Where-Object{$_.path -ne 'InfinityEngine-Enhancer.sample.ini'})

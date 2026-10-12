@@ -281,3 +281,12 @@ releases/BG2-HD-Upscale/manifests/map-release-assemblies.json -text whitespace=c
 releases/BG2-HD-Upscale/bg2hd/manifests/map-release-assemblies.json -text whitespace=cr-at-eol
 releases/BG2-HD-Upscale/manifests/map-release-candidates.csv -text whitespace=cr-at-eol
 releases/BG2-HD-Upscale/bg2hd/manifests/map-release-candidates.csv -text whitespace=cr-at-eol
+
+# Sprite release inventories and retirement receipts retain their recorded bytes.
+docs/measurements/sprites-cleanup-release-20261012-v1/** -text whitespace=cr-at-eol
+docs/validation/sprites-release-status-20261012-v1.json -text whitespace=cr-at-eol
+sprite/index/maintenance/20261012-*.json -text whitespace=cr-at-eol
+releases/BG2-HD-Upscale/manifests/sprite-release-candidates.json -text whitespace=cr-at-eol
+releases/BG2-HD-Upscale/bg2hd/manifests/sprite-release-candidates.json -text whitespace=cr-at-eol
+releases/BG2-HD-Upscale/manifests/sprite-inventories/** -text whitespace=cr-at-eol
+releases/BG2-HD-Upscale/bg2hd/manifests/sprite-inventories/** -text whitespace=cr-at-eol

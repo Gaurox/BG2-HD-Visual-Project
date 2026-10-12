@@ -136,6 +136,10 @@ $names = @(
     'licenses-and-exclusions.json',
     'release.json'
 )
+$spriteInventoryRoot = Join-Path $source 'sprite-inventories'
+if (Test-Path -LiteralPath $spriteInventoryRoot) {
+    $names += @(Get-ChildItem -LiteralPath $spriteInventoryRoot -File -Filter '*.json' | ForEach-Object { 'sprite-inventories/' + $_.Name })
+}
 $mirrorPlan = foreach ($name in $names) {
     $sourcePath = Join-Path $source $name
     $fullSourcePath = [IO.Path]::GetFullPath($sourcePath)

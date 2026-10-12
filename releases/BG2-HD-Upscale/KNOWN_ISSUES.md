@@ -1,5 +1,12 @@
 # Known issues — alpha locale BG2 HD
 
+- Sprites alpha.7 : 331 IDs Q3m x2 / Nearest acquis. Les paperdolls P7 couvrent
+  le corps 0x6110 et 77 équipements partagés ; les autres corps restent natifs.
+  E060, E0D0, E261 et E262 sont hors portée source Icewind retenue. Le test
+  combiné installation/désinstallation sur jeu propre reste ouvert.
+- Les shaders source comportent la réserve Character SDF V10 ; le package
+  conserve les shaders live acquis, sans activer cette réserve.
+
 - Windows/Steam x64 uniquement. Linux, Steam Deck et Proton ne sont pas pris en charge par le Core actuel.
 - BG2EE Steam 2.7.3.0 et les empreintes EEex/InfinityLoader declarees sont strictement requises. Une mise a jour Steam inconnue est refusee sans ecriture.
 - Le renderer fige est maintenant embarque dans l'alpha locale avec rollback

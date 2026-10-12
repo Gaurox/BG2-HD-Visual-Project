@@ -5,7 +5,7 @@ param(
     [string]$CompatibilityManifestPath,
     [string]$StatePath,
     [string]$TemplatePath,
-    [ValidateSet('core-steam','ui-mainmenu-x4')] [string]$Owner = 'core-steam'
+    [ValidateSet('core-steam','ui-mainmenu-x4','sprites-approved-creatures-x2','paperdolls-q3m-6110-x2')] [string]$Owner = 'core-steam'
 )
 
 $ErrorActionPreference = 'Stop'

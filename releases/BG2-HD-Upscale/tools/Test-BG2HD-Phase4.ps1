@@ -19,7 +19,7 @@ Require (Test-Json -Path $contentPath -SchemaFile (Join-Path $release 'schemas/c
 $content = Get-Content -LiteralPath $contentPath -Raw -Encoding utf8 | ConvertFrom-Json
 $expected = @{}
 foreach($entry in $content.entries) {
-    $validScale = ([int]$entry.scale -eq 4) -or ($entry.kind -in @('overlay', 'sprite') -and [int]$entry.scale -eq 2)
+    $validScale = ([int]$entry.scale -eq 4) -or ($entry.kind -in @('overlay', 'sprite', 'paperdoll') -and [int]$entry.scale -eq 2)
     Require ($entry.qa_status -eq 'validated' -and $validScale) "Entree non validee : $($entry.source)"
     Require ($entry.source -notmatch '(^|/)(override|backups|archive|captures|temp)(/|$)') "Source interdite : $($entry.source)"
     $relative = (Join-Path $entry.payload_group ([IO.Path]::GetFileName($entry.source))).Replace('\','/')

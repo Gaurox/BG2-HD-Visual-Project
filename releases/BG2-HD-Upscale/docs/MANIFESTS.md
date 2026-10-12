@@ -18,7 +18,8 @@ small daily-write authorities; `areas.csv` is a production catalogue and the dev
 | `map-release-assemblies.json` | exact acquired QA, source-layer provenance, final water stacks and runtime guards |
 | `animation-release-candidates.json` | approved per-area v2/v3 animation packs and renderer contract |
 | `effect-release-candidates.json` | approved shared x4/30 FPS effect packs, QA and renderer contract |
-| `sprite-release-candidates.json` | approved sprite scope, sealed generation, QA and runtime contract |
+| `sprite-release-candidates.json` | v2 acquired flat Q3m world/UI selection, exact inventories, immutable family QA and pinned renderer |
+| `sprite-inventories/*.json` | exact Q3m world catalogue/leaves and scoped P7 paperdoll files, sizes and SHA-256 |
 | `overlay-sources.json` | authoritative stock/x2/x4 decision and hashes for shared liquid resrefs |
 | `renderer-bundle.json` | frozen renderer candidate inventory |
 | `licenses-and-exclusions.json` | provenance status and forbidden payload classes |
@@ -27,8 +28,11 @@ During finalization, every content entry must have a canonical source, normalize
 component ID, install order, byte count, SHA-256 and approved QA status. A destination collision is
 accepted only when explicitly ordered and validated.
 
-Sprite candidates remain `approved`, not `integrated`, until a scoped catalogue excludes every
-unapproved animation and its files are projected into `content.json`.
+Sprite component 4200 selects 331 acquired world IDs (V6/V7/V9, x2 Nearest).
+Component 4210 selects 81 V6 P7 paperdolls (0x6110 body plus 77 equipment packs).
+The verifier checks physical files against the sealed catalog and acquired QA.
+Projection into `content.json` remains separate from clean-game qualification
+and public publication. Configuration owners restore only their own INI keys.
 
 `map-release-candidates.csv` selects all 399 variants; the historical compiler bootstrap has been
 migrated into data without changing component IDs. `catalog_source_path` preserves the acquired

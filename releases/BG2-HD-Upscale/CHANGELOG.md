@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.0-alpha.7 — acquired Q3m sprites, local test package
+
+- Replaces the historical 173-ID xBR catalogue with the acquired 331-ID,
+  15-family Q3m x2 catalogue, using Nearest and mixed V6/V7/V9 leaves.
+- Adds component 4210: 81 acquired P7 inventory packs, covering body 0x6110
+  and 77 shared equipment resrefs. Other inventory bodies remain native.
+- Component 4200 owns world sprite activation/filter; component 4210 owns
+  paperdoll activation and disables its development probe. Each restores its
+  own prior INI values, preserving unrelated settings.
+- Preserves maps, animations, effects, native sources, renderer alpha.9 and
+  pinned live shaders. Character SDF V10 remains an uninstalled reserve.
+- Local tests only; combined clean-game/save/uninstall qualification and
+  public contact/provenance conditions remain open. No new visual QA claimed.
+
 ## 0.1.0-alpha.6 — validated maps and area animations
 
 - Consolidates all 399 packaged map variants in the explicit candidate register,

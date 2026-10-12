@@ -45,7 +45,7 @@ try {
 $weidu = (Resolve-Path -LiteralPath $WeiDUExecutable).Path
 $stagedPayload = (Resolve-Path -LiteralPath $PayloadRoot -ErrorAction Stop).Path
 $output = [IO.Path]::GetFullPath($OutputRoot)
-& (Join-Path $release 'tools\Test-BG2HD-Phase4.ps1') -ReleaseRoot $release
+& (Join-Path $release 'tools\Test-BG2HD-Phase4.ps1') -ReleaseRoot $release -PayloadRoot $stagedPayload
 $releaseManifestPath = Join-Path $release 'manifests\release.json'
 $contentManifestPath = Join-Path $release 'manifests\content.json'
 $manifest = Get-Content -LiteralPath $releaseManifestPath -Raw -Encoding utf8 | ConvertFrom-Json
@@ -98,7 +98,7 @@ try {
         'Save compatibility: future save chains disable EEex X-BIV1.0 marshalling.',
         'EEex: guided external prerequisite; never redistributed by BG2HD.',
         'Renderer: bundled BG2HD local-alpha payload; clean lifecycle validation remains required.',
-        'Content: manifest-selected validated maps, UI, overlays, area animations, effects and playable-character sprites.'
+        'Content: manifest-selected validated maps, UI, overlays, area animations, effects, Q3m creature sprites and scoped inventory paperdolls.'
     )
     $buildManifest = [ordered]@{
         schema_version = 1

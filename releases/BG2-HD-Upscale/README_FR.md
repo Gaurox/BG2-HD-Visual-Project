@@ -25,6 +25,12 @@ Le contenu exact vient de `manifests/content.json` et `components.json` : cartes
 composants UI approuvés, overlays explicitement sélectionnés et packs animation approuvés. Les
 cartes `installed-pending-qa`, builds de développement, backups et captures sont exclus.
 
+Le composant sprites propose 331 animations de créatures en Q3m x2 / Nearest.
+Le composant paperdolls améliore l'apparence en inventaire de l'humaine guerrière
+(corps 0x6110, quatre variantes d'armure) et 77 ressources d'équipement partagées.
+Les autres corps en inventaire restent natifs. Ces deux composants sont
+optionnels et restaurent leurs réglages précédents lors de la désinstallation.
+
 Le Core installe le shim vérifié `Baldur.exe → InfinityLoader → BaldurReal.exe`, le renderer et le
 garde save-neutral `M_IEEE.lua`. Ce garde empêche les nouvelles chaînes compatibles vanilla de
 recevoir les blocs EEex `X-BIV1.0`; il ne répare pas les anciennes sauvegardes qui en contiennent.

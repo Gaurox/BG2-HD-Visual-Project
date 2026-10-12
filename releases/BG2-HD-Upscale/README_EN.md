@@ -1,5 +1,11 @@
 # BG2 HD Upscale — user guide
 
+The sprite component includes 331 acquired creature animations in Q3m x2 /
+Nearest. The separate inventory component covers the human female fighter
+(body 0x6110, four armor variants) and 77 shared equipment resources. Other
+inventory bodies remain native. Both optional components restore their prior
+settings on uninstall.
+
 ## Status and requirements
 
 The exact version and status are authoritative in
