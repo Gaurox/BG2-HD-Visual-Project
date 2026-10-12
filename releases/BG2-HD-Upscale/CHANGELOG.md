@@ -1,6 +1,17 @@
 # Changelog
 
-## 0.1.0-alpha.6 — validated area-animation release
+## 0.1.0-alpha.6 — validated maps and area animations
+
+- Consolidates all 399 packaged map variants in the explicit candidate register,
+  with acquired QA and exact file inventories in `map-release-assemblies.json`.
+- Replaces 63 legacy water assemblies with the final accepted decor, contours,
+  WED and 188 dry/rain runtime identities; preserves the accepted AR3003 portal
+  patch and the independent AR0516 animation WED contract.
+- Activates `Shaders.EnableWaterOverlayRoute2=true` and
+  `WaterOverlayStrength=1.00`, with exact prior INI restoration.
+- Pins the final AR0413 oil stack accepted on September 28 (22 files), replacing
+  the historical August-only contract. OH6460 continues to share OH8100.
+- Preserves animation/sprite/effect payloads and renderer alpha.9 byte for byte.
 
 - Packages the complete current animation composition of 234 areas, with exact
   runtime registries and immutable QA evidence for the 246 accepted BAM assets.

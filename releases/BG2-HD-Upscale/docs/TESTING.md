@@ -28,12 +28,12 @@ helper lifecycle matrix, fault-injection rollback tests, WeiDU update test,
 archive install/uninstall test and EEex-to-vanilla test. The Phase 5A wrapper
 records this suite:
 
-The static payload gate proves that every compiled bootstrap/candidate map is still
-`validated-installed`, matches its selected CSV run, and has no undeclared staged file. A validated
-production map is not implicitly included in a release.
-It separately executes `Test-BG2HD-AR0413Contract.ps1`; changing AR0413 or its
-renderer classification requires an explicit, reviewed update of the pinned
-17-file contract after a new in-game validation.
+The static gate verifies every explicit map candidate against acquired QA, its original catalog
+run and the exact final assembly inventory. Water WED/base TIS and all dry/rain overlays must match
+the 188 runtime identities; no undeclared file may enter staging. The archive fixture installs,
+rehashes and removes all 64 updated map variants, preserving existing animation samples.
+`Test-BG2HD-AR0413Contract.ps1` pins the 22-file final oil stack accepted on September 28;
+new asset bytes still require an acquired QA decision before changing this contract.
 
 ```powershell
 & .\tools\Test-BG2HD-Phase5A.ps1 `
@@ -56,10 +56,8 @@ On an otherwise clean, supported Steam install with the external prerequisite:
 - entrer dans AR0516 avec le bridge activé ; vérifier `SPHINCT`, `SPHINCT2` et le polygone WED
   local du SPHINCT inférieur, puis exiger les traces `bridge prepared`, hook
   `FXRenderClippingPolys` et `bridge active` ;
-- enter AR0413 and require the renderer log to classify its stock `WTOIL`
-  overlay as `Oil`, with `liquidOverlayMask=0x02`; visually confirm animated
-  oil on the 283 released base cells and no black gaps at the 12 corrected
-  sentinel contours;
+- enter AR0413 and require the final `YFGPKI/YFGPKIR` oil contract, q0.25 dry/q0 rain,
+  paired opacity64/64, 30 FPS and the accepted 283-cell oil treatment;
 - create a new HD save chain, scan both GAM/SAV for zero `X-BIV1.0`, perform
   the full vanilla uninstall, then load, save and reload it in native vanilla;
 - Steam Verify followed by Repair; Core reinstall; normal Core removal (Steam

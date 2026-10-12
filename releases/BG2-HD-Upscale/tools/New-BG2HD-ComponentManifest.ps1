@@ -92,9 +92,7 @@ if (@($base | Where-Object { [int]$_.id -eq 0 }).Count -ne 1) { throw 'Composant
 if (@($base | Where-Object { [int]$_.id -eq 100 }).Count -ne 1 -or @($base | Where-Object { [int]$_.id -eq 110 }).Count -ne 1) { throw 'Composants UI attendus absents.' }
 
 $maps = @($content.entries | Where-Object { $_.kind -eq 'map' } | Group-Object component_id | Sort-Object { [int]$_.Name })
-$mapOverlayDependencies = @{
-    AR3000 = @(70, 80, 90, 95)
-}
+$mapOverlayDependencies = @{} # Final map-local overlays are packaged with their map.
 $mapComponents = foreach ($group in $maps) {
     $entries = @($group.Group)
     $labels = @($entries | ForEach-Object { [string]$_.component_label } | Sort-Object -Unique)

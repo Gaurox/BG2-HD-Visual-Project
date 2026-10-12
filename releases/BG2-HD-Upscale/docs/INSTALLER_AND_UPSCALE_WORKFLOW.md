@@ -21,6 +21,7 @@ Local ZIP: `Build-BG2HD-LocalReproducible.ps1 -ZipCompression NoCompression`
 | Components | `manifests/components.json` |
 | Payload files | generated `manifests/content.json` |
 | Map candidates | `manifests/map-release-candidates.csv` |
+| Final map assemblies / acquired QA | `manifests/map-release-assemblies.json` |
 | Animation candidates | `manifests/animation-release-candidates.json` |
 | Effect candidates | `manifests/effect-release-candidates.json` |
 | Sprite candidates | `manifests/sprite-release-candidates.json` |

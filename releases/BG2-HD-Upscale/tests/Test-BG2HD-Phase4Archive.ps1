@@ -50,13 +50,16 @@ try {
         $animationCandidates=(Get-Content -LiteralPath (Join-Path $game 'bg2hd/manifests/animation-release-candidates.json') -Raw -Encoding utf8|ConvertFrom-Json).candidates
         $animationSamples=@($animationCandidates|Where-Object{$_.area-in@('AR0603','AR0900','AR0516')})
         Require ($animationSamples.Count-eq3 -and @($animationSamples|Where-Object{$_.approval_status-ne'approved-for-release'}).Count-eq0) 'Echantillons release animation absents ou non approuves.'
-        $componentIds=@(@(0,100,110,1000,1010,1020,1030,1040,1050,1060,1580)+@($animationSamples|ForEach-Object{[int]$_.component_id})|Sort-Object -Unique)
+        $mapAssemblies=(Get-Content -LiteralPath (Join-Path $game 'bg2hd/manifests/map-release-assemblies.json') -Raw -Encoding utf8|ConvertFrom-Json).variants
+        $mapSamples=@($mapAssemblies|Where-Object{$_.frozen_assembly})
+        Require ($mapSamples.Count-eq64) 'Final map sample set incomplete.'
+        $componentIds=@(@(0,100,110,1000,1010,1020,1030,1040,1050,1060,1580)+@($animationSamples|ForEach-Object{[int]$_.component_id})+@($mapSamples|ForEach-Object{[int]$_.component_id})|Sort-Object -Unique)
         foreach($id in $componentIds){$output=& .\setup-bg2hd.exe '--noautoupdate' '--force-install-list' "$id" '--language' '0' '--no-exit-pause' 2>&1|Out-String;$code=$LASTEXITCODE;Require ($code -eq 0) "Installation WeiDU echouee : composant $id ($code) $output"}
         $content=Get-Content -LiteralPath (Join-Path $game 'bg2hd/manifests/content.json') -Raw -Encoding utf8|ConvertFrom-Json
         $byDestination=@{};foreach($entry in @($content.entries|Where-Object{[int]$_.component_id-in$componentIds})){if(-not $byDestination.ContainsKey($entry.destination) -or [int]$entry.install_order -ge [int]$byDestination[$entry.destination].install_order){$byDestination[$entry.destination]=$entry}}
         foreach($destination in $byDestination.Keys){$entry=$byDestination[$destination];$file=Join-Path $game ($destination.Replace('/','\'));Require (Test-Path -LiteralPath $file -PathType Leaf) "Fichier installe absent : $destination";Require ((Get-Hash $file) -eq $entry.sha256) "Hash installe incorrect : $destination"}
         $installedIni=Get-Content -LiteralPath (Join-Path $game 'InfinityEngine-Enhancer.ini') -Raw
-        foreach($setting in @('EnableBigLogoX4Test\s*=\s*true','EnableMainMenuX4Test\s*=\s*true','EnableMenuX2Test\s*=\s*false')){Require ($installedIni -match "(?im)^\s*$setting\s*$") "Configuration UI x4 absente : $setting"}
+        foreach($setting in @('EnableBigLogoX4Test\s*=\s*true','EnableMainMenuX4Test\s*=\s*true','EnableMenuX2Test\s*=\s*false','EnableWaterOverlayRoute2\s*=\s*true','WaterOverlayStrength\s*=\s*1\.00')){Require ($installedIni -match "(?im)^\s*$setting\s*$") "Configuration UI x4 absente : $setting"}
         foreach($id in @($componentIds|Sort-Object -Descending)){$output=& .\setup-bg2hd.exe '--noautoupdate' '--uninstall' "$id" '--language' '0' '--no-exit-pause' 2>&1|Out-String;$code=$LASTEXITCODE;Require ($code -eq 0) "Desinstallation WeiDU echouee : composant $id ($code) $output"}
     } finally {Pop-Location}
     Require ((Get-Hash (Join-Path $game 'Baldur.exe')) -eq $loaderHash) 'Le retrait archive n a pas conserve le shim EEex.'
@@ -71,6 +74,10 @@ try {
     Require ((Get-Hash $animationFixture) -eq $animationFixtureHash) 'Le registre animation precedent n a pas ete restaure.'
     Require ((Get-ChildItem -LiteralPath (Split-Path -Parent $animationFixture) -File).Count-eq1) 'Des payloads animation nouveaux subsistent apres desinstallation.'
     Require ((Get-Hash $wedFixture) -eq $wedFixtureHash) 'Le WED AR0516 precedent n a pas ete restaure.'
+    foreach($entry in @($content.entries|Where-Object{$_.kind-eq'map' -and [int]$_.component_id-in$componentIds})){
+        if($entry.destination-in@('override/AR0300.TIS','override/AR0516.WED')){continue}
+        Require (-not(Test-Path -LiteralPath (Join-Path $game $entry.destination))) "Nouveau fichier map subsiste apres desinstallation : $($entry.destination)"
+    }
     Require ((Get-ChildItem -LiteralPath $desktop -File -ErrorAction SilentlyContinue).Count -eq 0) 'Le raccourci de test subsiste.'
     Write-Output 'PHASE4_ARCHIVE_INSTALL_UNINSTALL=PASSED'
 }

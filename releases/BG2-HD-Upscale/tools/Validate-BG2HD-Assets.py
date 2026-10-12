@@ -212,7 +212,8 @@ def main() -> int:
         animation_summary = validate_area_animations(animations, root)
         print(json.dumps({"area_animations": animation_summary}, sort_keys=True))
         return 0
-    map_tis = [entry for entry in maps if entry["source"].upper().endswith(".TIS")]
+    # Local water overlay TIS belong to their map component; count base TIS separately.
+    map_tis = [entry for entry in maps if Path(entry["source"]).name.upper() == entry["area"] + ".TIS"]
     expected_tis = len({entry["area"] for entry in maps})
     if len(map_tis) != expected_tis:
         fail(
@@ -231,7 +232,7 @@ def main() -> int:
             formats.update(validate_tis(root / entry["source"], pvrz))
     ui_dimensions = validate_ui(ui, root)
     animation_summary = validate_area_animations(animations, root)
-    print(json.dumps({"tis": len(map_tis), "pvrz": len(maps) - len(map_tis), "pvr_formats": {str(key): value for key, value in sorted(formats.items())}, "ui": len(ui), "ui_dimensions": {str(key): value for key, value in sorted(ui_dimensions.items())}, "area_animations": animation_summary}, sort_keys=True))
+    print(json.dumps({"tis": len(map_tis), "pvrz": sum(entry["source"].upper().endswith(".PVRZ") for entry in maps), "local_overlay_tis": sum(entry["source"].upper().endswith(".TIS") for entry in maps) - len(map_tis), "wed": sum(entry["source"].upper().endswith(".WED") for entry in maps), "pvr_formats": {str(key): value for key, value in sorted(formats.items())}, "ui": len(ui), "ui_dimensions": {str(key): value for key, value in sorted(ui_dimensions.items())}, "area_animations": animation_summary}, sort_keys=True))
     return 0
 
 

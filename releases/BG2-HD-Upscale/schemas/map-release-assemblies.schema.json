@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema_version", "state", "game_mutation", "new_ingame_qa", "runtime", "catalog", "variants"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "state": {"const": "approved-for-local-release"},
+    "game_mutation": {"const": false},
+    "new_ingame_qa": {"const": false},
+    "runtime": {
+      "type": "object",
+      "required": ["registry", "registry_sha256", "entries", "dll_sha256", "owned_ini_keys"],
+      "properties": {
+        "registry": {"type": "string", "pattern": "^pipeline/water/requests/"},
+        "registry_sha256": {"$ref": "#/$defs/sha"},
+        "dll_sha256": {"$ref": "#/$defs/sha"},
+        "entries": {"type": "integer", "minimum": 1},
+        "owned_ini_keys": {"type": "object"}
+      }
+    },
+    "catalog": {"type": "object", "required": ["path", "shared_tilesets", "validated_variants", "packaged_variants"]},
+    "variants": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["area", "component_id", "source_path", "catalog_source_path", "include_wed", "qa_state", "new_ingame_qa", "water", "frozen_assembly", "qa_evidence", "files"],
+        "properties": {
+          "area": {"type": "string", "pattern": "^(AR|OH)[0-9]{4}N?$"},
+          "component_id": {"type": "integer", "minimum": 1},
+          "source_path": {"type": "string", "pattern": "^maps/(AR|OH)[0-9]{4}/runs/"},
+          "catalog_source_path": {"type": "string", "pattern": "^maps/(AR|OH)[0-9]{4}/runs/"},
+          "include_wed": {"type": "boolean"},
+          "qa_state": {"const": "acquired"},
+          "new_ingame_qa": {"const": false},
+          "water": {"type": "boolean"},
+          "frozen_assembly": {"type": "boolean"},
+          "qa_evidence": {"type": "array", "items": {"type": "object", "required": ["id", "path", "sha256"], "properties": {"sha256": {"$ref": "#/$defs/sha"}}}},
+          "files": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["name", "bytes", "sha256", "source", "original_source"], "properties": {"name": {"type": "string", "pattern": "^[A-Z0-9_]+[.](TIS|PVRZ|WED)$"}, "bytes": {"type": "integer", "minimum": 1}, "sha256": {"$ref": "#/$defs/sha"}, "source": {"type": "string"}, "original_source": {"type": "string"}}}}
+        }
+      }
+    }
+  },
+  "$defs": {"sha": {"type": "string", "pattern": "^[A-F0-9]{64}$"}}
+}

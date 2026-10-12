@@ -125,6 +125,8 @@ $names = @(
     'dependency-bootstrap.json',
     'components.json',
     'content.json',
+    'map-release-candidates.csv',
+    'map-release-assemblies.json',
     'animation-release-candidates.json',
     'effect-release-candidates.json',
     'sprite-release-candidates.json',

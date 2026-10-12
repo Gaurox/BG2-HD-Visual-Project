@@ -1,7 +1,25 @@
 # Maps — état courant et réserves
 
-Mise au propre du périmètre maps clôturée : 2026-10-12. Travail validé, fichiers installés
-et release conservés ; seuls les médias d'essais explicitement autorisés ont été retirés.
+Mise au propre du suivi/nettoyage clôturée : 2026-10-12. Finalisation release locale maps terminée
+le même jour ; sources validées et fichiers du jeu conservés.
+
+## Release / installeur locaux — terminés le 2026-10-12
+
+- Alpha locale `0.1.0-alpha.6` : 399 variantes (OH6460 via OH8100), 8 566 fichiers maps.
+- 64 assemblages actualisés : 63 WED liquides avec décor/contours/TIS/WED et 188 identités
+  overlay jour/pluie, plus AR3003. Sources finales copiées à octets constants, 144 preuves QA
+  acquises reliées ; aucune nouvelle validation ingame.
+- AR3003 : quatre pages du patch réellement installé le 2026-09-06 retrouvées dans `output/` ;
+  reçu historique exact, rendu accepté le 2026-10-11. AR0413 : pile finale du 2026-09-28,
+  22 fichiers ; AR0516 : contrat WED animation conservé exact.
+- Animations/sprites/effets/overlays partagés/renderer conservés. Core possède maintenant
+  `[Shaders].EnableWaterOverlayRoute2=true`, `WaterOverlayStrength=1.00`, valeurs du rendu validé.
+- Compilation, staging, formats, ZIP, installation/mise à jour/retrait/restauration sur fixtures
+  passés ; 33 tests unitaires. ZIP **sans compression** (29 141 entrées ZIP_STORED).
+- Rapport : [`../docs/validation/maps-release-status-20261012-v1.json`](../docs/validation/maps-release-status-20261012-v1.json).
+  Recette : `../pipeline/recipes/maps-release-finalization-20261012-v1/README.md`.
+- Jeu installé inchangé. Publication toujours `blocked` : qualifications réelles Steam/EEex,
+  renderer combiné, sauvegardes HD→vanilla, retrait complet et provenance/contact publics.
 
 ## Statut : production, QA visuelle, suivi et nettoyage terminés
 
@@ -25,6 +43,7 @@ et release conservés ; seuls les médias d'essais explicitement autorisés ont 
 | QA exacte | `../pipeline/water/manifests/*user-qa*.json`, `*validated*.json` | décisions immuables ; réserve acceptée ≠ travail bloqué ; portée météo/variante explicite |
 | Registre runtime courant déclaré | `../pipeline/water/route2-registry-current.json` | pointeur distinct de la QA et des états historiques intégrés aux registres d'inférence |
 | Anciennes sélections eau | `../pipeline/water/release-tracking-v1.json` | QA du traitement actualisée ; overlay/q/artifacts/runtime = photographie legacy du 2026-09-12, pas preuve des octets actuellement installés |
+| Sélection / assemblages release locale | `../releases/BG2-HD-Upscale/manifests/map-release-candidates.csv`, `map-release-assemblies.json` | 399 variantes explicites, inventaires/hashes/sources/QA acquises ; assemblages finaux distincts des sélections legacy |
 | Animations / release | `../animations/index/`, `../releases/BG2-HD-Upscale/manifests/` | domaines indépendants ; aucune validation ni intégration déduite du statut décor |
 
 ## Réserves visuelles clôturées le 2026-10-11

@@ -36,12 +36,13 @@
     "manifests/effect-release-candidates.json",
     "manifests/sprite-release-candidates.json",
     "manifests/overlay-sources.json",
-    "manifests/licenses-and-exclusions.json"
+    "manifests/licenses-and-exclusions.json",
+    "manifests/map-release-assemblies.json"
   ],
   "content_scope": {
-    "maps": "399 variantes de zone x4 validees ingame (variantes nuit comprises) : SeedVR2 7B INT8, correction couleur LAB, ou none pour les zones du lot eau ; plus les reparations eau/WED validees et epinglees a l'octet. Le bootstrap historique de New-BG2HD-ContentManifest.ps1 et map-release-candidates.csv sont les deux sources ; OH6460 en est absente car son payload est celui du composant map-oh8100 (tileset partage).",
+    "maps": "399 variantes x4 : selections explicites dans map-release-candidates.csv, inventaires et QA acquises dans map-release-assemblies.json ; 63 assemblages eau/contours/WED/overlays jour-pluie finaux et AR3003 actualises a octets constants. OH6460 utilise le tileset partage du composant OH8100 sans duplication.",
     "ui": "approved Topaz Recovery v2 Detail 50 x4 atlas set",
-    "overlays": "overlay-sources.json is authoritative: validated WTLAKE/WTPOOL2/WSWPIL aliases and WTLAV family; WTSWAM/WTSEW/WTOIL remain stock",
+    "overlays": "overlay-sources.json gouverne les overlays partages historiques ; les 188 identites liquides locales du registre runtime courant sont groupees avec leur map (TIS/PVRZ jour-pluie + WED), inventoriees dans map-release-assemblies.json.",
     "sprites": "approved 173-animation playable, monster and Icewind creature x2 Catmull-Rom catalog, projected byte-for-byte",
     "effects": "approved SPMAGMIS, SPMINDAT and SPFEAREF x4 runtime pack, projected byte-for-byte",
     "excluded": [

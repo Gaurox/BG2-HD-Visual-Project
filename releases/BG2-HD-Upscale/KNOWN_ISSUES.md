@@ -9,7 +9,10 @@
 - Les licences MIT du code ne couvrent pas ces assets. Les anciens packages ne sont pas
   retroactivement mis a jour : regenerer un nouveau package avec notices et source WeiDU, puis
   confirmer les dependances du renderer fige avant publication.
-- AR2300 est incluse avec le correctif de saturation du cache PVRZ valide en jeu. L'ecart de couleur entre l'eau statique et l'eau animee en cascade reste a corriger.
+- Les 399 variantes maps et les 63 traitements liquides sélectionnés reprennent les QA acquises.
+  Réserves esthétiques acceptées : panneaux AR1604 imparfaits, arrondis BC3 AR0506/AR1003/AR1004,
+  liseré cyan-vert AR1600, anneaux de pluie discrets AR1000/AR2000. Les conditions météo/pause/cycles
+  non observées ailleurs restent non attestées ; qualification combinée sur jeu propre encore requise.
 - Les traductions allemande, espagnole, italienne, polonaise, russe, coreenne et chinoise utilisent encore le repli anglais pour les nouvelles chaines et demandent une relecture native avant publication.
 - Une verification Steam peut restaurer `Baldur.exe`; utiliser le composant Core pour reparer ou desinstaller le patch, jamais une copie manuelle d'executable.
 - Une ancienne sauvegarde qui contient deja des blocs EEex `X-BIV1.0` reste

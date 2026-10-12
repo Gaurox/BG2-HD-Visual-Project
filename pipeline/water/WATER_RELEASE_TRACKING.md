@@ -16,8 +16,16 @@ enregistrée une seule fois.
 | Réserves / incertitudes courantes | `maps/SUIVI.md` |
 | Recherche documentaire / vérifications ingame restantes | `maps/qa-documentaire-20261011-v1.json`, `maps/VERIFICATIONS_INGAME.md` |
 | Recettes | `pipeline/water/VALIDATED_WATER_RECIPES.md` |
-| Registre runtime | preuve indiquée par `runtime.registry_evidence_id` |
-| Release publiée | `releases/BG2-HD-Upscale/manifests/`, séparée de ce suivi |
+| Registre runtime legacy | preuve indiquée par `runtime.registry_evidence_id` |
+| Registre runtime courant | `pipeline/water/route2-registry-current.json` |
+| Sélections release locale courantes | `releases/BG2-HD-Upscale/manifests/map-release-candidates.csv`, `map-release-assemblies.json` |
+| Paquet / statut public | `releases/BG2-HD-Upscale/manifests/release.json` ; local buildable ≠ publié |
+
+Finalisation maps du 2026-10-12 : 399 variantes, 63 WED liquides, 188 identités runtime
+jour/pluie ; sources finales figées, QA acquises conservées. Recette :
+`pipeline/recipes/maps-release-finalization-20261012-v1/README.md`.
+`release-tracking-v1.json` reste une photographie legacy ; ses artefacts manquants et anciennes
+sélections ne sont pas réutilisés comme sources du paquet courant.
 
 ## Structure du JSON
 

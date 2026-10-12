@@ -15,6 +15,7 @@ small daily-write authorities; `areas.csv` is a production catalogue and the dev
 | `components.json` | permanent component IDs, labels and dependencies |
 | `content.json` | source, destination, component, byte count and SHA-256 per payload file |
 | `map-release-candidates.csv` | accepted map variants and selected source directories |
+| `map-release-assemblies.json` | exact acquired QA, source-layer provenance, final water stacks and runtime guards |
 | `animation-release-candidates.json` | approved per-area v2/v3 animation packs and renderer contract |
 | `effect-release-candidates.json` | approved shared x4/30 FPS effect packs, QA and renderer contract |
 | `sprite-release-candidates.json` | approved sprite scope, sealed generation, QA and runtime contract |
@@ -29,10 +30,13 @@ accepted only when explicitly ordered and validated.
 Sprite candidates remain `approved`, not `integrated`, until a scoped catalogue excludes every
 unapproved animation and its files are projected into `content.json`.
 
-`map-release-candidates.csv` is the inclusion register for newly accepted maps. Adding a row performs
-no scan or hash. Historical map specifications embedded in `New-BG2HD-ContentManifest.ps1` are a
-compatibility bootstrap only. During finalization, the generator combines both sources and computes
-the final inventory; `New-BG2HD-ComponentManifest.ps1` derives the matching components.
+`map-release-candidates.csv` selects all 399 variants; the historical compiler bootstrap has been
+migrated into data without changing component IDs. `catalog_source_path` preserves the acquired
+decor run in `areas.csv`; `source_path` may identify its exact frozen final assembly.
+`map-release-assemblies.json` pins every file and existing QA; 63 liquid WEDs include local dry/rain
+overlay TIS/PVRZ in the same map component. `verify_map_release_candidates.py` rejects missing
+layers, changed QA/bytes, wrong catalog runs, runtime guard mismatches and incomplete projections.
+The installed game is a read-only continuity witness; all packaged files come from retained sources.
 
 Une animation dont `occlusion_contract.mode` vaut `native-wed-bridge-v1` impose simultanément :
 
@@ -41,11 +45,14 @@ Une animation dont `occlusion_contract.mode` vaut `native-wed-bridge-v1` impose 
 - `Shaders.EnableNativeOcclusionBridge=true` possédé par `core-steam` ;
 - un bundle renderer contenant `EnableNativeOcclusionBridge` et `FXRenderClippingPolys`.
 
-AR0516 est le témoin initial. Alpha.5 et alpha.6 précèdent ce contrat et restent non promouvables.
+AR0516 est le témoin initial ; l'alpha.6 locale conserve son rattachement QA acquis et son WED exact.
+La publication reste bloquée par les essais de cycle complet sur jeu propre.
 
 `New-BG2HD-ContentManifest.ps1` accepts the fixed x4 source register, plus only the overlays
 declared as `package` by `overlay-sources.json`; `stock` entries are forbidden from the payload.
-The current policy keeps the validated water set x2 and the lava family x4.
+Shared overlay selections remain governed independently; local final water overlays are x4 and
+travel with their map. Core owns `Shaders.EnableWaterOverlayRoute2=true` and
+`WaterOverlayStrength=1.00`, the configuration used for the final acquired review.
 `Stage-BG2HDPayload.ps1` copies from that manifest and
 rechecks hashes; x2 is rejected for every other content kind.
 `Generate-BG2HD-Tp2.ps1` emits explicit `COPY_LARGE` operations. These global projections are

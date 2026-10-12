@@ -61,6 +61,7 @@ $schemas = @(
     @('runtime-compatibility.json', 'runtime-compatibility.schema.json'),
     @('dependency-bootstrap.json', 'dependency-bootstrap.schema.json'),
     @('content.json', 'content.schema.json'),
+    @('map-release-assemblies.json', 'map-release-assemblies.schema.json'),
     @('animation-release-candidates.json', 'animation-release-candidates.schema.json'),
     @('sprite-release-candidates.json', 'sprite-release-candidates.schema.json'),
     @('overlay-sources.json', 'overlay-sources.schema.json'),
@@ -73,6 +74,9 @@ foreach ($pair in $schemas) {
     $schema = Join-Path $ReleaseRoot (Join-Path 'schemas' $pair[1])
     Require (Test-Json -Path $manifest -SchemaFile $schema) "Schema invalide : $($pair[0])"
 }
+
+& python (Join-Path $workspace 'pipeline/scripts/verify_map_release_candidates.py') --workspace-root $workspace --content (Join-Path $ReleaseRoot 'manifests/content.json') --metadata-only
+Require ($LASTEXITCODE -eq 0) 'Map projection / acquired QA / runtime contract verification failed.'
 
 $animationQaSchema = Join-Path $ReleaseRoot 'schemas\animation-qa-approval.schema.json'
 $animationDecisionSchema = Join-Path $workspace 'animations\schemas\animation-qa-decision.schema.json'

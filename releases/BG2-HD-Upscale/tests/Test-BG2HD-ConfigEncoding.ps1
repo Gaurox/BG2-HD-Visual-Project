@@ -15,7 +15,7 @@ try {
     for($i=0;$i-lt$encodings.Count;$i++){
         $encoding=$encodings[$i];$game=Join-Path $scratch "$i";New-Item -ItemType Directory -Path $game|Out-Null
         $ini=Join-Path $game 'InfinityEngine-Enhancer.ini'
-        $original="; préserver éè`r`n[Shaders]`r`nEnableAreaAnimationX4 = false ; original`r`nForeign = avant`r`n"
+        $original="; préserver éè`r`n[Shaders]`r`nEnableAreaAnimationX4 = false ; original`r`nEnableWaterOverlayRoute2 = false ; original water`r`nWaterOverlayStrength = 0.27`r`nForeign = avant`r`n"
         [IO.File]::WriteAllText($ini,$original,$encoding)
         $before=[Convert]::ToBase64String([IO.File]::ReadAllBytes($ini))
         Invoke-Config 'Apply' $game
@@ -23,6 +23,7 @@ try {
         Require ($bom.Length-eq0 -or [Convert]::ToBase64String($bytes[0..($bom.Length-1)])-eq[Convert]::ToBase64String($bom)) "BOM changed: $i"
         $text=$encoding.GetString($bytes,$bom.Length,$bytes.Length-$bom.Length)
         Require ($text-match'(?m)^EnableAreaAnimationX4 = true ; original\r?$') "Animation activation missing: $i"
+        Require ($text-match'(?m)^EnableWaterOverlayRoute2 = true ; original water\r?$' -and $text-match'(?m)^WaterOverlayStrength = 1\.00\r?$') "Water activation/strength missing: $i"
         Require ($text.Contains('; préserver éè') -and $text.Contains('Foreign = avant')) "Foreign text changed: $i"
         Invoke-Config 'Restore' $game
         Require ([Convert]::ToBase64String([IO.File]::ReadAllBytes($ini))-eq$before) "Exact restoration failed: $i"
@@ -31,7 +32,7 @@ try {
         [IO.File]::WriteAllText($ini,$text,$encoding)
         Invoke-Config 'Restore' $game
         $text=[IO.File]::ReadAllText($ini,$encoding)
-        Require ($text.Contains('Foreign = après') -and $text.Contains('EnableAreaAnimationX4 = false ; original')) "Edited foreign key lost: $i"
+        Require ($text.Contains('Foreign = après') -and $text.Contains('EnableAreaAnimationX4 = false ; original') -and $text.Contains('EnableWaterOverlayRoute2 = false ; original water') -and $text.Contains('WaterOverlayStrength = 0.27')) "Edited foreign key lost: $i"
     }
     Write-Output 'CONFIG_ENCODINGS=PASSED (UTF-8, UTF-8 BOM, UTF-16 LE, UTF-16 BE)'
 } finally {
