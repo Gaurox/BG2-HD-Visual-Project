@@ -890,6 +890,7 @@ def build_interpolated_pack_record(
             "logical_size_x1": runtime_logical,
             "physical_size_x4": runtime_physical,
             "alpha_source_frame": frame.get("alpha_source_frame"),
+            "source_centre_x1": frame.get("centre_x1"),
         }
         if interpolation_geometry is not None:
             asset.update(
@@ -931,6 +932,39 @@ def build_interpolated_pack_record(
         "timeline_frame_indices": timeline_indices,
     }
     return bytes(registry), assets, timeline
+
+
+def deduplicate_interpolated_record(
+    resref: str, assets: list[dict[str, Any]], timeline: dict[str, Any],
+) -> tuple[bytes, list[dict[str, Any]], dict[str, Any]]:
+    """Share identical backings; retain every native slot and 30 FPS phase."""
+    unique: list[dict[str, Any]] = []
+    identities: dict[tuple[Any, ...], int] = {}
+    mapping: list[int] = []
+    for phase, asset in enumerate(assets):
+        identity = (asset["sha256"], tuple(asset["logical_size_x1"]),
+                    tuple(asset.get("runtime_centre_x1") or asset.get("source_centre_x1") or []))
+        index = identities.get(identity)
+        if index is None:
+            index = len(unique)
+            identities[identity] = index
+            item = dict(asset, frame=index, asset=frame_asset_name(resref, index), source_phase_indices=[])
+            unique.append(item)
+        unique[index]["source_phase_indices"].append(phase)
+        mapping.append(index)
+    result = dict(timeline)
+    result["native_frame_indices"] = [mapping[index] for index in timeline["native_frame_indices"]]
+    result["timeline_frame_indices"] = [mapping[index] for index in timeline["timeline_frame_indices"]]
+    record = bytearray(resref.encode("ascii").ljust(8, b"\0"))
+    record.extend(struct.pack("<II", len(unique), 1))
+    for asset in unique:
+        record.extend(struct.pack("<II", *asset["logical_size_x1"]))
+    native = result["native_frame_indices"]
+    phases = result["timeline_frame_indices"]
+    record.extend(struct.pack(f"<I{len(native)}I", len(native), *native))
+    record.extend(struct.pack("<IIIII", *result["native_fps"], *result["target_fps"], len(phases)))
+    record.extend(struct.pack(f"<{len(phases)}I", *phases))
+    return bytes(record), unique, result
 
 
 def write_pack(output: Path, registry: bytes, assets: list[dict[str, Any]],
@@ -1036,6 +1070,7 @@ def main(argv: list[str] | None = None) -> int:
         help="versioned alpha policy relative to the workspace",
     )
     parser.add_argument("--run", action="store_true", help="write the runtime pack")
+    parser.add_argument("--deduplicate", action="store_true", help="share identical 30 FPS payloads without changing timing")
     args = parser.parse_args(argv)
     try:
         resref = args.resref.strip().upper()
@@ -1082,6 +1117,8 @@ def main(argv: list[str] | None = None) -> int:
                 runtime_geometry,
                 alpha_policy,
             )
+            if args.deduplicate:
+                registry_record, assets, timeline = deduplicate_interpolated_record(resref, assets, timeline)
             registry_version = TIMELINE_REGISTRY_VERSION
         else:
             registry_record, assets = build_pack_record(

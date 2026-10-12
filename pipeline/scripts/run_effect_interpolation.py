@@ -1,7 +1,7 @@
 """Produce one sealed 30 FPS effect run derived from a sealed spatial x4 run.
 
-Apollo receives only RGB frames on a closed loop.  The original enlarged alpha
-is reattached by deterministic nearest temporal phase; no alpha is invented by
+Apollo receives only RGB frames, with a loop or a held one-shot endpoint. The original enlarged alpha
+is reattached by deterministic temporal phase; no alpha is invented by
 the interpolation model.  The command never selects, installs or releases the
 result: registration remains an explicit workflow transition.
 """
@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 from dataclasses import dataclass
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -58,6 +59,9 @@ class InterpolationPlan:
     tvai_model_dir: Path
     model: str
     device: str
+    loop_closed: bool = True
+    alpha_phase: str = "nearest"
+    deduplicate_outputs: bool = False
 
     @property
     def interpolation_root(self) -> Path:
@@ -258,11 +262,17 @@ def build_plan(
     tvai_model_dir: Path,
     model: str,
     device: str,
+    *,
+    loop_closed: bool = True,
+    alpha_phase: str = "nearest",
+    deduplicate_outputs: bool = False,
 ) -> InterpolationPlan:
     if native_fps <= 0 or target_fps <= native_fps or target_fps % native_fps:
         raise InterpolationError("cadences invalides : cible doit être un multiple strict du natif")
     if not recipe_id.strip() or not re.fullmatch(r"[a-z0-9][a-z0-9._-]*", recipe_id.strip()):
         raise InterpolationError("recipe-id invalide")
+    if alpha_phase not in {"nearest", "left"}:
+        raise InterpolationError("phase alpha invalide")
     try:
         resref, asset, _processing, resource_root = workflow.load_asset(root, raw_resref)
         parent_run = workflow.validate_run_id(spatial_run)
@@ -299,6 +309,9 @@ def build_plan(
         tvai_model_dir=tvai_model_dir.resolve(),
         model=model,
         device=device,
+        loop_closed=loop_closed,
+        alpha_phase=alpha_phase,
+        deduplicate_outputs=deduplicate_outputs,
     )
     validate_spatial_manifest(plan)
     if not plan.tvai_ffmpeg.is_file() or not plan.tvai_model_dir.is_dir():
@@ -317,10 +330,12 @@ def recipe_snapshot(plan: InterpolationPlan) -> dict[str, Any]:
         "timing": {
             "native_fps": [plan.native_fps, 1],
             "target_fps": [plan.target_fps, 1],
-            "loop_closed": True,
+            "loop_closed": plan.loop_closed,
         },
         "rgb_policy": "Topaz Apollo receives x4 RGB only; source alpha is never model-generated",
-        "alpha_policy": "nearest deterministic temporal phase from enlarged spatial source alpha",
+        "alpha_policy": f"{plan.alpha_phase} deterministic temporal phase from enlarged spatial source alpha",
+        "native_anchor_policy": "exact spatial RGB on every native phase",
+        "deduplicate_outputs": plan.deduplicate_outputs,
         "topaz": {
             "ffmpeg": workflow.relative_path(plan.root, plan.tvai_ffmpeg)
             if plan.tvai_ffmpeg.is_relative_to(plan.root)
@@ -362,7 +377,7 @@ def descriptor(
         "asset_ids": [f"effects:bam:{plan.resref}"],
         "pipeline": {
             "id": PIPELINE_ID,
-            "version": "effect-interpolation-runner.v1",
+            "version": "effect-interpolation-runner.v2",
             "recipe_path": workflow.relative_path(plan.root, plan.recipe_path),
             "recipe_sha256": workflow.sha256_file(plan.recipe_path),
         },
@@ -395,8 +410,28 @@ def reserve(plan: InterpolationPlan) -> None:
         raise InterpolationError(str(exc)) from exc
 
 
-def alpha_source_slot(phase: int, source_slots: int, target_slots: int) -> int:
-    return ((2 * phase * source_slots + target_slots) // (2 * target_slots)) % source_slots
+def alpha_source_slot(phase: int, source_slots: int, target_slots: int, *,
+                      loop_closed: bool = True, policy: str = "nearest") -> int:
+    if policy == "left":
+        slot = phase * source_slots // target_slots
+    elif policy == "nearest":
+        slot = (2 * phase * source_slots + target_slots) // (2 * target_slots)
+    else:
+        raise InterpolationError("phase alpha invalide")
+    return slot % source_slots if loop_closed else min(slot, source_slots - 1)
+
+
+def visible_frame_digest(rgba: Image.Image, canvas: tuple[int, int],
+                         offset: tuple[int, int]) -> str | None:
+    """Compare actual anchored pixels; ignore arbitrary RGB under zero alpha."""
+    alpha = rgba.getchannel("A")
+    if alpha.getbbox() is None:
+        return None
+    normalized = rgba.copy()
+    normalized.paste((0, 0, 0, 0), mask=alpha.point(lambda value: 255 if value == 0 else 0))
+    aligned = Image.new("RGBA", canvas, (0, 0, 0, 0))
+    aligned.paste(normalized, offset)
+    return hashlib.sha256(aligned.tobytes()).hexdigest()
 
 
 def geometry_source_slot(phase: int, multiplier: int, source_slots: int) -> int:
@@ -435,7 +470,8 @@ def execute(plan: InterpolationPlan) -> dict[str, Any]:
             else:
                 rgba = Image.frombytes("RGBA", input_physical, raw_path.read_bytes())
             rgba.convert("RGB").save(input_root / f"in_{slot:03d}.png", format="PNG", compress_level=9)
-        shutil.copyfile(input_root / "in_000.png", input_root / f"in_{len(source_cycle):03d}.png")
+        endpoint_slot = 0 if plan.loop_closed else len(source_cycle) - 1
+        shutil.copyfile(input_root / f"in_{endpoint_slot:03d}.png", input_root / f"in_{len(source_cycle):03d}.png")
 
         command = [
             str(plan.tvai_ffmpeg), "-hide_banner", "-loglevel", "error", "-y",
@@ -457,17 +493,31 @@ def execute(plan: InterpolationPlan) -> dict[str, Any]:
                 f"Apollo a produit {len(produced)} frames, attendu {target_count} ou {target_count + 1}"
             )
         records: list[dict[str, Any]] = []
+        stored_outputs: dict[tuple[Any, ...], dict[str, Any]] = {}
+        visible_digests: dict[str, int] = {}
+        visible_duplicates: list[list[int]] = []
+        empty_phases = 0
         for phase, rgb_path in enumerate(produced[:target_count]):
             with Image.open(rgb_path) as source_rgb:
                 rgb = source_rgb.convert("RGB")
             if rgb.size != input_physical:
                 raise InterpolationError(f"Apollo : dimensions inattendues {rgb.size} à la phase {phase}")
-            source_slot = alpha_source_slot(phase, len(source_cycle), target_count)
+            source_slot = alpha_source_slot(phase, len(source_cycle), target_count,
+                                            loop_closed=plan.loop_closed, policy=plan.alpha_phase)
             source_index = source_cycle[source_slot]
             alpha_source = frames[source_index]
             geometry_slot = geometry_source_slot(phase, multiplier, len(source_cycle))
             geometry_index = source_cycle[geometry_slot]
             geometry_source = frames[geometry_index]
+            if phase % multiplier == 0:
+                anchor = plan.spatial_manifest.parent / str(geometry_source[
+                    "aligned_rgba_xn" if input_kind == "aligned" else "raw_rgba_xn"
+                ])
+                if input_kind == "aligned":
+                    with Image.open(anchor) as image:
+                        rgb = image.convert("RGB")
+                else:
+                    rgb = Image.frombytes("RGBA", input_physical, anchor.read_bytes()).convert("RGB")
             logical = [int(value) for value in geometry_source["logical_size_x1"]]
             physical = tuple(int(value) for value in geometry_source["physical_size_xn"])
             if input_kind == "aligned":
@@ -477,26 +527,44 @@ def execute(plan: InterpolationPlan) -> dict[str, Any]:
                 with Image.open(alpha_path) as aligned_image:
                     alpha = aligned_image.convert("RGBA").getchannel("A").crop(crop)
             else:
+                crop = (0, 0, *physical)
                 alpha_path = plan.spatial_manifest.parent / str(alpha_source["alpha_xn"])
                 with Image.open(alpha_path) as alpha_image:
                     alpha = alpha_image.convert("L")
             if rgb.size != physical or alpha.size != physical:
                 raise InterpolationError(f"alpha source : dimensions inattendues à la phase {phase}")
             rgba = Image.merge("RGBA", (*rgb.split(), alpha))
+            rgba.paste((0, 0, 0, 0), mask=alpha.point(lambda value: 255 if value == 0 else 0))
+            digest = visible_frame_digest(rgba, input_physical, (crop[0], crop[1]))
+            if digest is None:
+                empty_phases += 1
+            elif digest in visible_digests:
+                visible_duplicates.append([visible_digests[digest], phase])
+            else:
+                visible_digests[digest] = phase
+            output_key = (physical, tuple(geometry_source.get("centre_x1", [0, 0])),
+                          hashlib.sha256(rgba.tobytes()).hexdigest())
+            shared = stored_outputs.get(output_key) if plan.deduplicate_outputs else None
             png = output_root / f"frame_{phase:03d}.png"
             raw = output_root / f"frame_{phase:03d}.rgba"
-            rgba.save(png, format="PNG", compress_level=9)
-            raw.write_bytes(rgba.tobytes())
+            if shared is None:
+                rgba.save(png, format="PNG", compress_level=9)
+                raw.write_bytes(rgba.tobytes())
+                stored_outputs[output_key] = {"phase": phase, "png": png, "raw": raw}
+            else:
+                png, raw = shared["png"], shared["raw"]
             records.append(
                 {
                     "frame": phase,
                     "apollo_rgb": f"apollo-raw/{rgb_path.name}",
                     "apollo_rgb_sha256": workflow.sha256_file(rgb_path),
                     "alpha_source_frame": source_index,
-                    "alpha_phase_source": "deterministic-nearest-source-slot",
+                    "alpha_phase_source": f"deterministic-{plan.alpha_phase}-source-slot",
                     "geometry_source_frame": geometry_index,
                     "logical_size_x1": logical,
                     "physical_size_x4": list(physical),
+                    "centre_x1": geometry_source.get("centre_x1"),
+                    "runtime_crop_box_x4": list(crop),
                     "rgba_x4": f"frames-rgba/{png.name}",
                     "rgba_x4_sha256": workflow.sha256_file(png),
                     "raw_rgba_x4": f"frames-rgba/{raw.name}",
@@ -505,6 +573,8 @@ def execute(plan: InterpolationPlan) -> dict[str, Any]:
                 }
             )
         native_indices = [slot * multiplier for slot in range(len(source_cycle))]
+        if plan.deduplicate_outputs and visible_duplicates:
+            raise InterpolationError(f"frames lumineuses dupliquées après Apollo : {visible_duplicates}")
         manifest = {
             "schema": INTERPOLATION_SCHEMA,
             "status": "completed",
@@ -525,7 +595,18 @@ def execute(plan: InterpolationPlan) -> dict[str, Any]:
                 "timeline_phase_count": target_count,
                 "native_frame_indices": native_indices,
                 "timeline_frame_indices": list(range(target_count)),
-                "loop_closed": True,
+                "loop_closed": plan.loop_closed,
+            },
+            "alpha_policy": recipe["alpha_policy"],
+            "native_anchor_policy": recipe["native_anchor_policy"],
+            "duplicate_audit": {
+                "method": "SHA-256 anchored RGBA pixels, zero-alpha RGB ignored",
+                "visible_phase_count": target_count - empty_phases,
+                "empty_phase_count": empty_phases,
+                "exact_visible_duplicates": visible_duplicates,
+                "stored_rgba_frame_count": len({record["rgba_x4"] for record in records}),
+                "unique_rgba_frame_count": len(stored_outputs),
+                "deduplicate_outputs": plan.deduplicate_outputs,
             },
             "topaz": {
                 "ffmpeg": str(plan.tvai_ffmpeg),
@@ -549,6 +630,7 @@ def execute(plan: InterpolationPlan) -> dict[str, Any]:
             "resref": plan.resref,
             "run_id": plan.run_id,
             "frame_count": target_count,
+            "duplicate_audit": manifest["duplicate_audit"],
             "run_descriptor": workflow.relative_path(plan.root, plan.descriptor_path),
             "run_descriptor_sha256": workflow.sha256_file(plan.descriptor_path),
             "next": f"effect_workflow.py register-run --resref {plan.resref} --stage interpolation --run-id {plan.run_id}",
@@ -596,6 +678,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--tvai-model-dir", type=Path, default=DEFAULT_TVAI_MODEL_DIR)
     parser.add_argument("--model", default=DEFAULT_MODEL)
     parser.add_argument("--device", default="-2")
+    parser.add_argument("--one-shot", action="store_true", help="maintient la dernière pose; aucune transition fin-début")
+    parser.add_argument("--alpha-phase", choices=("nearest", "left"), default="nearest")
+    parser.add_argument("--deduplicate", action="store_true", help="partage les sorties identiques et refuse les doublons lumineux")
     parser.add_argument("--run", action="store_true", help="produire le run, sinon plan seulement")
     parser.add_argument("--register", action="store_true", help="avec --run : met à jour le suivi après production réussie")
     args = parser.parse_args(argv)
@@ -606,6 +691,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             args.workspace_root.resolve(), args.resref, args.spatial_run, args.run_id,
             args.recipe_id, args.native_fps, args.target_fps, args.tvai_ffmpeg,
             args.tvai_model_dir, args.model, args.device,
+            loop_closed=not args.one_shot, alpha_phase=args.alpha_phase,
+            deduplicate_outputs=args.deduplicate,
         )
         result = execute(plan) if args.run else plan_payload(plan)
         if args.register:

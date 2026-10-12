@@ -35,6 +35,29 @@ class EffectInterpolationManifestTests(unittest.TestCase):
             [0, 0, 1, 1, 2, 2],
         )
 
+    def test_one_shot_nearest_alpha_does_not_restart_at_the_final_phase(self) -> None:
+        self.assertEqual(interpolation.alpha_source_slot(99, 50, 100), 0)
+        self.assertEqual(
+            interpolation.alpha_source_slot(99, 50, 100, loop_closed=False), 49
+        )
+
+    def test_left_alpha_keeps_the_last_visible_slot_for_both_target_phases(self) -> None:
+        slots = [interpolation.alpha_source_slot(phase, 50, 100,
+                                                loop_closed=False, policy="left")
+                 for phase in (36, 37, 38, 99)]
+        self.assertEqual(slots, [18, 18, 19, 49])
+
+    def test_duplicate_digest_ignores_hidden_rgb_but_keeps_visible_position(self) -> None:
+        left = Image.new("RGBA", (2, 2), (255, 0, 0, 0))
+        left.putpixel((1, 1), (0, 100, 255, 255))
+        right = Image.new("RGBA", (2, 2), (0, 255, 0, 0))
+        right.putpixel((1, 1), (0, 100, 255, 255))
+        digest = interpolation.visible_frame_digest(left, (8, 8), (2, 3))
+        self.assertEqual(digest, interpolation.visible_frame_digest(right, (8, 8), (2, 3)))
+        self.assertNotEqual(digest, interpolation.visible_frame_digest(right, (8, 8), (3, 3)))
+        self.assertIsNone(interpolation.visible_frame_digest(
+            Image.new("RGBA", (2, 2), (255, 255, 255, 0)), (8, 8), (2, 3)))
+
     def test_variable_frames_use_the_common_aligned_canvas(self) -> None:
         frames = []
         for index, logical, crop in ((0, [1, 1], [4, 0, 8, 4]), (1, [2, 1], [0, 0, 8, 4])):

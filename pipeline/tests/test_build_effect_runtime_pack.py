@@ -22,6 +22,22 @@ def sha256(path: Path) -> str:
 
 
 class EffectRuntimePackTests(unittest.TestCase):
+    def test_deduplicated_backings_preserve_native_and_target_timeline_slots(self) -> None:
+        assets = [{"frame": i, "asset": pack.frame_asset_name("TESTFX", i),
+                   "sha256": str(min(i, 2)), "logical_size_x1": [1, 1],
+                   "source_centre_x1": [0, 0]} for i in range(6)]
+        timeline = {"native_fps": [15, 1], "target_fps": [30, 1], "phase_count": 6,
+                    "native_frame_indices": [0, 2, 4], "timeline_frame_indices": list(range(6))}
+        record, compact, timing = pack.deduplicate_interpolated_record("TESTFX", assets, timeline)
+        self.assertEqual(len(compact), 3)
+        self.assertEqual(compact[2]["source_phase_indices"], [2, 3, 4, 5])
+        self.assertEqual(timing["native_frame_indices"], [0, 2, 2])
+        self.assertEqual(timing["timeline_frame_indices"], [0, 1, 2, 2, 2, 2])
+        self.assertEqual(pack.struct.unpack_from("<II", record, 8), (3, 1))
+        self.assertEqual(pack.struct.unpack_from("<I3I", record, 40), (3, 0, 2, 2))
+        self.assertEqual(pack.struct.unpack_from("<5I", record, 56), (15, 1, 30, 1, 6))
+        self.assertEqual(pack.struct.unpack_from("<6I", record, 76), (0, 1, 2, 2, 2, 2))
+
     def setUp(self) -> None:
         self.temporary = tempfile.TemporaryDirectory()
         self.root = Path(self.temporary.name)

@@ -1,0 +1,27 @@
+{
+  "schema": "bg2-effects-install-plan-v1",
+  "resrefs": [
+    "PRAYERB",
+    "PRAYERG",
+    "SPPRAYRI"
+  ],
+  "candidate": "effects/installations/prayer-seedvr3b-30fps-gauss12-feather12-20261012T192146Z/candidate",
+  "new_packs": [
+    "effects/ressources/PRAYERB/packs/prayerb-seedvr3b-apollo30-gauss12-feather12-20261012T192146Z",
+    "effects/ressources/PRAYERG/packs/prayerg-seedvr3b-apollo30-gauss12-feather12-20261012T192146Z",
+    "effects/ressources/SPPRAYRI/packs/spprayri-seedvr3b-apollo30-gauss12-feather12-20261012T192146Z"
+  ],
+  "existing_pack_snapshot": "effects/installations/prayer-seedvr3b-30fps-gauss12-feather12-20261012T192146Z/installed-before/effects",
+  "registry_version": 2,
+  "resource_count": 6,
+  "frame_count": 279,
+  "raw_bytes": 126001280,
+  "registry_sha256": "9E3290836121CA08A344C070A83881E1CADF68C69D4B6D373EFBB6C0EFD5BE54",
+  "dll_sha256": "5D4EE06D84E0D6C6F6FB81797EAB0E9756B3ECE335EBF537E57C5597E0B40BCF",
+  "ini_sha256": "5859F49562E89F71CC1A9B9DDBAC4F77B9B5AB95E5983D88E51C09E480042ABA",
+  "clua": {
+    "PRAYERB": "C:Eval('CreateVisualEffectObject(\"PRAYERB\",Player1)',0)",
+    "PRAYERG": "C:Eval('CreateVisualEffectObject(\"PRAYERG\",Player1)',0)",
+    "SPPRAYRI": "C:Eval('CreateVisualEffectObject(\"ICPRAYI\",Player1)',0)"
+  }
+}

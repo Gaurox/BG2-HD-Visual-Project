@@ -105,6 +105,36 @@ Le producteur écrit `00-frames-x1/`, `01-spatial-x4/`, `recipe.json` et `run.js
 Source/alpha conservés ; aucun run scellé modifié. Sans `--register`, le CSV reste inchangé.
 `run_effect_interpolation.py` propose aussi `--run --register` ; le parent spatial reste obligatoire.
 
+Effets one-shot à 15 FPS :
+
+```powershell
+python pipeline/scripts/run_effect_interpolation.py --resref <RESREF> --spatial-run <run-spatial> --recipe-id apollo8-rgb-left-alpha-one-shot-dedup --native-fps 15 --target-fps 30 --one-shot --alpha-phase left --deduplicate --run --register
+```
+
+`--one-shot` maintient la dernière pose au lieu de relier fin→début. Alpha `left` = masque du slot
+natif courant ; RGB des phases natives repris exactement du spatial. `--deduplicate` partage les
+PNG/RGBA identiques sans raccourcir la timeline ; une pause native peut donc référencer un seul
+fichier vide. `duplicate_audit` compare les pixels RGBA ancrés, ignore le RGB sous alpha nul et
+refuse de sceller ce mode si des phases lumineuses sont identiques.
+
+Adoucissement léger après interpolation :
+
+```powershell
+python pipeline/scripts/run_effect_visual_treatment.py --resref <RESREF> --interpolation-run <run-30fps> --run-id <nouveau-run> --sigma-x4 0.6 --inner-feather-x4 4 --run --register
+```
+
+Nouveau run lié au manifeste temporel source ; géométrie/timing identiques, 0 doublon lumineux.
+RGB de sortie **prémultiplié** pour `Blended` : ne pas prémultiplier une seconde fois au pack.
+Une preview sur noir affiche directement le RGB de ces frames ; un composite RGBA standard
+multiplierait leur alpha une seconde fois.
+
+Pack 30 FPS : `build_effect_runtime_pack.py --deduplicate` conserve toutes les phases et tous les
+slots natifs, mais partage les backings RGBA/géométrie/ancre identiques ; le registre v2 accepte
+ces références répétées. Installation ciblée : packs mono-BAM + snapshot du pack actif sous
+`effects/installations/<id>/`; candidat = DLL/INI actifs inchangés + pack composé. Installer avec
+`engine/InfinityEngine-Enhancer/source-patchee/tools/install_renderer_candidate.py`, puis vérifier
+son reçu et enregistrer uniquement les trois lignes concernées avec `effect_authority.guard/commit`.
+
 ## Initialisation / extraction
 
 ```powershell
