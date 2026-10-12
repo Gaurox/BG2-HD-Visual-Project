@@ -74,6 +74,19 @@ historique : produire une nouvelle version lorsque son remplacement est nécessa
 - Les artefacts déjà désignés comme preuves finales ou historiques restent immuables ; créer une
   nouvelle version seulement si leur remplacement est réellement nécessaire.
 
+## Sauvegarde complète du projet
+
+- Demande utilisateur 2026-10-12 : H: doit sauvegarder **toutes les productions**, caches,
+  sources, sorties, archives et fichiers ignorés ; un push Git seul ne vaut pas sauvegarde.
+- Commande canonique : `python -B pipeline/scripts/sync_full_project_backup.py`.
+  Configuration : `config://full_project_backup_source`, `config://full_project_backup_root`.
+- Le hook `pipeline/git-hooks/pre-push` déclenche cette copie pour le remote `local`, même
+  sans nouveau commit. Conserver les hooks Git LFS. Échec de copie => push local refusé.
+- SHA-256 des nouvelles copies, liens physiques conservés, fichiers remplacés retenus sous
+  `historique/`, aucune purge automatique. État réussi : `<backup_root>/.backup-state/completed.json`.
+- Après synchronisation, vérifier ce reçu ; ne pas déduire la présence des assets depuis Git.
+- Détails et restauration : [`docs/SAUVEGARDE_COMPLETE_H.md`](docs/SAUVEGARDE_COMPLETE_H.md).
+
 ## Site public séparé
 
 - URL : `https://bg2hd.gaurox.dev/`.

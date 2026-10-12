@@ -1,0 +1,7 @@
+#!/bin/sh
+command -v git-lfs >/dev/null 2>&1 || { echo >&2 'Git LFS is required by the existing repository hooks.'; exit 2; }
+git lfs pre-push "$@" || exit $?
+if [ "$1" = "local" ]; then
+    root=$(git rev-parse --show-toplevel) || exit $?
+    python -B "$root/pipeline/scripts/sync_full_project_backup.py" --from-git-hook || exit $?
+fi
