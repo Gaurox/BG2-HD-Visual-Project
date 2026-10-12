@@ -12,6 +12,8 @@ import io
 from pathlib import Path
 from typing import Iterable, Mapping
 
+import effect_authority as authority
+
 
 ROOT = Path(__file__).resolve().parents[2]
 BAM_ASSETS = ROOT / "effects/index/bam-assets.csv"
@@ -121,18 +123,16 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run", action="store_true", help="écrit effects/index/processing.csv")
     args = parser.parse_args()
-    rows, additions = build_rows()
-    payload = csv_bytes(rows)
-    unchanged = PROCESSING.is_file() and PROCESSING.read_bytes() == payload
-    print(
-        f"assets: {len(rows)}; additions: {additions}; "
-        f"write: {'yes' if args.run and not unchanged else 'no'}"
-    )
-    if args.run and not unchanged:
-        PROCESSING.parent.mkdir(parents=True, exist_ok=True)
-        temporary = PROCESSING.with_suffix(".csv.partial")
-        temporary.write_bytes(payload)
-        temporary.replace(PROCESSING)
+    with authority.guard(ROOT, args.run):
+        rows, additions = build_rows()
+        payload = csv_bytes(rows)
+        unchanged = PROCESSING.is_file() and PROCESSING.read_bytes() == payload
+        print(
+            f"assets: {len(rows)}; additions: {additions}; "
+            f"write: {'yes' if args.run and not unchanged else 'no'}"
+        )
+        if args.run and not unchanged:
+            authority.commit(ROOT, {"effects/index/processing.csv": payload})
     return 0
 
 

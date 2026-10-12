@@ -44,6 +44,7 @@
 | Formats BG2EE | [`BG2EE_Documentation_Modders_FR/INDEX.md`](BG2EE_Documentation_Modders_FR/INDEX.md) |
 | Cartes | [`areas.csv`](areas.csv) |
 | Animations | [`animations/index/`](animations/index/) |
+| Effects : file/asset/acceptation | [`effects/README.md`](effects/README.md#quotidien--minimum-utile) ; `effect_tracking.py queue`, `effect_workflow.py status/accept` |
 | Sprites | [`sprite/index/`](sprite/index/) |
 | Release | [`releases/BG2-HD-Upscale/manifests/release.json`](releases/BG2-HD-Upscale/manifests/release.json) |
 

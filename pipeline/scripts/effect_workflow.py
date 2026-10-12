@@ -2,8 +2,8 @@
 
 Runs are produced by a separate renderer. This command never generates pixels:
 it reserves an immutable run id, validates its generic ``run.json`` descriptor,
-then records the spatial or derived interpolation run in ``processing.csv``.
-QA, installation and release are intentionally separate authorities.
+then records the latest trial in ``processing.csv``. ``accept`` pins the exact
+user-approved result transactionally. Installation and release stay independent.
 """
 
 from __future__ import annotations
@@ -17,6 +17,8 @@ import json
 from pathlib import Path
 import re
 from typing import Any, Iterable, Mapping, Sequence
+
+import effect_authority as authority
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -38,6 +40,8 @@ STAGES = {
     "interpolation": "effects.interpolation-30fps.v1",
 }
 ACTIVE_PRODUCTION_STATES = {"in-progress", "produced", "verified"}
+PRODUCTION_STATES = ACTIVE_PRODUCTION_STATES | {"not-started", "rejected", "blocked", "not-applicable"}
+SELECTION_SCHEMA = "bg2-effects-selection-v1"
 
 
 class WorkflowError(ValueError):
@@ -322,6 +326,7 @@ def verify_parent_binding(root: Path, resource_root: Path, resref: str, spatial_
         raise WorkflowError("aucune preuve interpolation ne lie une sortie du parent spatial")
 
 
+@authority.guarded
 def new_run(root: Path, raw_resref: str, stage: str, recipe: str, run_id: str | None, write: bool) -> dict[str, Any]:
     if stage not in STAGES:
         raise WorkflowError(f"étape inconnue: {stage}")
@@ -353,6 +358,7 @@ def new_run(root: Path, raw_resref: str, stage: str, recipe: str, run_id: str | 
     }
 
 
+@authority.guarded
 def register_run(root: Path, raw_resref: str, stage: str, raw_run_id: str, write: bool) -> dict[str, Any]:
     if stage not in STAGES:
         raise WorkflowError(f"étape inconnue: {stage}")
@@ -360,8 +366,10 @@ def register_run(root: Path, raw_resref: str, stage: str, raw_run_id: str, write
     current, run_id = processing_row(processing, resref), validate_run_id(raw_run_id)
     state_field, run_field = f"{stage}_state", f"{stage}_run"
     existing_run = current.get(run_field, "")
-    if existing_run and existing_run != run_id and current.get(state_field) in ACTIVE_PRODUCTION_STATES:
-        raise WorkflowError(f"{resref}: {stage} déjà actif sous {existing_run}; ne pas écraser un run retenu")
+    # Production points at the latest trial. Accepted bytes stay pinned separately
+    # in selections/<RESREF>.json; correcting a BAM never discards its acquired QA.
+    if current.get("qa_state") in {"passed", "native"} and not selection_path(root, resref).is_file():
+        raise WorkflowError("sélection historique à importer : bootstrap --run")
     spatial_run = current.get("spatial_run", "")
     verification = verify_run_descriptor(root, resource_root, resref, run_id, stage=stage, spatial_run=spatial_run)
     if not verification["ok"]:
@@ -383,21 +391,295 @@ def register_run(root: Path, raw_resref: str, stage: str, raw_run_id: str, write
 
     candidate = {row["asset_key"]: dict(row) for row in processing}
     candidate_row = candidate[f"effects:bam:{resref}"]
-    candidate_row[run_field], candidate_row[state_field] = run_id, "produced"
+    production_state = current[state_field] if existing_run == run_id and current[state_field] == "verified" else "produced"
+    candidate_row[run_field], candidate_row[state_field] = run_id, production_state
+    if stage == "spatial" and existing_run != run_id:
+        candidate_row["interpolation_run"] = ""
+        candidate_row["interpolation_state"] = "not-started"
     payload = csv_bytes(candidate[row["asset_key"]] for row in processing)
     if write:
-        atomic_write(authority_paths(root)[1], payload)
+        authority.commit(root, {"effects/index/processing.csv": payload})
         reservation.unlink(missing_ok=True)
     return {
         "command": "register-run", "write": write, "resref": resref,
         "asset_id": f"effects:bam:{resref}", "stage": stage, "run_id": run_id,
         "run_descriptor": verification["descriptor_path"],
         "run_descriptor_sha256": verification["descriptor_sha256"],
-        "production_state": "produced", "release_mutation": False,
+        "production_state": production_state, "release_mutation": False,
     }
 
 
-def status_asset(root: Path, raw_resref: str) -> dict[str, Any]:
+def selection_path(root: Path, resref: str) -> Path:
+    return root / f"effects/index/selections/{validate_resref(resref)}.json"
+
+
+def file_evidence(root: Path, path: Path) -> dict[str, Any]:
+    return {"path": relative_path(root, path), "sha256": sha256_file(path), "bytes": path.stat().st_size}
+
+
+def pinned_file(root: Path, path_text: str, digest: str) -> Path:
+    path = resolve_relative(root, path_text, "preuve")
+    if not SHA256_RE.fullmatch(str(digest).upper()) or not path.is_file() or sha256_file(path) != digest.upper():
+        raise WorkflowError(f"preuve absente ou modifiée : {path_text}")
+    return path
+
+
+def pack_binding(root: Path, resref: str, asset: Mapping[str, str], manifest_path: Path) -> tuple[dict[str, Any], dict[str, Any]]:
+    pack = json.loads(manifest_path.read_text(encoding="utf-8-sig"))
+    if pack.get("schema") != "bg2-upscale-effect-animation-runtime-pack-v1" or pack.get("status") != "completed" or pack.get("scale") != 4:
+        raise WorkflowError("pack effects incomplet ou incompatible")
+    members = pack.get("resources", [pack])
+    matches = [m for m in members if m.get("resref") == resref]
+    if len(matches) != 1:
+        raise WorkflowError("BAM absent ou dupliqué dans le pack")
+    resource = matches[0]
+    source = resource.get("source", {})
+    if str(source.get("source_bam_sha256", "")).upper() != asset["source_sha256"].upper():
+        raise WorkflowError("source du pack différente de l'inventaire")
+    resource_root = root / f"effects/ressources/{resref}"
+    spatial = validate_run_id(source.get("spatial_run", ""))
+    verification = verify_run_descriptor(root, resource_root, resref, spatial, stage="spatial")
+    if not verification["ok"]:
+        raise WorkflowError("spatial du pack invalide : " + "; ".join(verification["errors"]))
+    assert_source_matches_inventory(resource_root, asset, verification)
+    if verification["descriptor_sha256"] != str(source.get("spatial_run_descriptor_sha256", "")).upper():
+        raise WorkflowError("descripteur spatial différent du pack")
+    if not any(item.get("role") == "spatial-manifest"
+               and item.get("sha256", "").upper() == str(source.get("spatial_manifest_sha256", "")).upper()
+               for item in verification["outputs"]):
+        raise WorkflowError("sortie spatiale différente du pack")
+    temporal = source.get("interpolation_run", "")
+    if temporal:
+        child = verify_run_descriptor(root, resource_root, resref, temporal, stage="interpolation", spatial_run=spatial)
+        if not child["ok"]:
+            raise WorkflowError("interpolation du pack invalide : " + "; ".join(child["errors"]))
+        verify_parent_binding(root, resource_root, resref, spatial, child)
+        if child["descriptor_sha256"] != str(source.get("interpolation_run_descriptor_sha256", "")).upper():
+            raise WorkflowError("descripteur interpolation différent du pack")
+    for name in ("runtime_geometry", "alpha_policy"):
+        if source.get(name):
+            pinned_file(root, source[name]["path"], source[name]["sha256"])
+    registry = pack.get("registry")
+    if registry != "EffectAnimations-X4.registry" or pack.get("registry_version") not in {1, 2}:
+        raise WorkflowError("registre effects incompatible")
+    registry_path = manifest_path.parent / registry
+    if not registry_path.is_file() or sha256_file(registry_path) != str(pack.get("registry_sha256", "")).upper():
+        raise WorkflowError("registre runtime modifié")
+    return pack, resource
+
+
+def selection_from_qa(root: Path, resref: str, asset: Mapping[str, str], qa_relative: str) -> dict[str, Any]:
+    qa_path = resolve_relative(root, qa_relative, "QA")
+    if qa_path.parent != root / f"effects/index/qa-decisions/{resref}":
+        raise WorkflowError("décision QA hors du BAM propriétaire")
+    qa = json.loads(qa_path.read_text(encoding="utf-8-sig"))
+    if (qa.get("schema") != "bg2-upscale-effect-qa-decision-v1" or qa.get("schema_version") != 1
+            or qa.get("asset_id") != f"effects:bam:{resref}" or qa.get("resref") != resref
+            or qa.get("status") not in {"accepted", "accepted-native"} or not qa.get("decision")):
+        raise WorkflowError("décision QA acceptée invalide")
+    try:
+        if not isinstance(qa.get("decision_date"), str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", qa["decision_date"]):
+            raise ValueError("ISO date required")
+        datetime.strptime(qa["decision_date"], "%Y-%m-%d")
+    except (KeyError, TypeError, ValueError) as error:
+        raise WorkflowError("date QA invalide") from error
+    native = qa["status"] == "accepted-native"
+    origin = "explicit-user-native-decision" if native else "explicit-user-ingame-qa"
+    if qa.get("decision_origin") != origin:
+        raise WorkflowError("origine de décision utilisateur explicite requise")
+    selected = {"$schema": "../../schemas/effect-selection.schema.json", "schema": SELECTION_SCHEMA,
+                "schema_version": 1, "asset_id": asset["asset_key"], "resref": resref,
+                "mode": "native" if native else "x4", "decision_date": qa["decision_date"],
+                "qa_evidence": file_evidence(root, qa_path), "selected_run": "",
+                "source": file_evidence(root, root / asset["extracted_path"])}
+    if selected["source"]["sha256"] != asset["source_sha256"].upper():
+        raise WorkflowError("source native différente de l'inventaire")
+    if native:
+        if qa.get("source_bam") != selected["source"]:
+            raise WorkflowError("décision native non liée au BAM exact")
+        return selected
+    run = qa.get("selected_run", {})
+    run_id = validate_run_id(run.get("run_id", ""))
+    descriptor = root / f"effects/ressources/{resref}/runs/{run_id}/run.json"
+    if relative_path(root, descriptor) != run.get("descriptor_path"):
+        raise WorkflowError("chemin du run QA divergent")
+    pinned_file(root, run["descriptor_path"], run.get("descriptor_sha256", ""))
+    evidence = qa.get("runtime_pack", qa.get("installed_candidate", {}))
+    manifest = pinned_file(root, evidence.get("manifest_path", ""), evidence.get("manifest_sha256", ""))
+    pack, resource = pack_binding(root, resref, asset, manifest)
+    source = resource["source"]
+    if run_id != (source.get("interpolation_run") or source["spatial_run"]):
+        raise WorkflowError("run QA différent de celui du pack")
+    if evidence.get("registry_sha256", "").upper() != pack["registry_sha256"].upper():
+        raise WorkflowError("registre QA différent du pack")
+    selected.update({"selected_run": run_id, "run_descriptor": file_evidence(root, descriptor),
+                     "runtime_pack": {"manifest": file_evidence(root, manifest),
+                                      "registry": file_evidence(root, manifest.parent / pack["registry"]),
+                                      "registry_version": pack["registry_version"]},
+                     "contract": {"source": source, "cycles": resource.get("cycles", []),
+                                  "timeline": resource.get("timeline"), "frame_count": resource["frame_count"]}})
+    # Historical decisions can carry detailed policy evidence; don't drop it.
+    for name in ("runtime_geometry", "alpha_policy"):
+        if qa.get(name):
+            pinned_file(root, qa[name]["path"], qa[name]["sha256"])
+            if source.get(name, {}).get("sha256", "").upper() != qa[name]["sha256"].upper():
+                raise WorkflowError(f"{name} QA différente du pack")
+    return selected
+
+
+def release_reference(root: Path, current: Mapping[str, str], selection: Mapping[str, Any] | None) -> dict[str, Any]:
+    path = root / "releases/BG2-HD-Upscale/manifests/effect-release-candidates.json"
+    result = {"recorded_state": current["release_state"], "candidate": current["release_candidate"],
+              "matches_current_selection": False}
+    if selection and path.is_file():
+        data = json.loads(path.read_text(encoding="utf-8-sig"))
+        result["matches_current_selection"] = any(
+            c.get("candidate_id") == current["release_candidate"] and c.get("approval_status") == "approved-for-release"
+            and any(r.get("asset_id") == current["asset_key"]
+                    and r.get("selected_run") == selection["selected_run"]
+                    and r.get("qa_evidence_sha256", "").upper() == selection["qa_evidence"]["sha256"]
+                    for r in c.get("resources", [])) for c in data.get("candidates", []))
+    return result
+
+
+@authority.guarded
+def accept_asset(root: Path, raw_resref: str, *, qa_evidence: str | None = None,
+                 pack_path: str | None = None, decision: str | None = None,
+                 decision_date: str | None = None, native: bool = False, write: bool = False) -> dict[str, Any]:
+    resref, asset, processing, _ = load_asset(root, raw_resref)
+    current = processing_row(processing, resref)
+    if asset["source_state"] != "available":
+        raise WorkflowError("source absente : aucune acceptation possible")
+    changes, immutable = {}, ()
+    if qa_evidence:
+        if any((pack_path, decision, decision_date, native)):
+            raise WorkflowError("QA existante et nouvelle décision ne se combinent pas")
+        selection = selection_from_qa(root, resref, asset, qa_evidence)
+    else:
+        if not decision or not decision.strip() or not decision_date:
+            raise WorkflowError("décision utilisateur et date requises")
+        try:
+            if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", decision_date):
+                raise ValueError("ISO date required")
+            datetime.strptime(decision_date, "%Y-%m-%d")
+        except ValueError as error:
+            raise WorkflowError("date attendue YYYY-MM-DD") from error
+        qa = {"schema": "bg2-upscale-effect-qa-decision-v1", "schema_version": 1,
+              "asset_id": asset["asset_key"], "resref": resref,
+              "status": "accepted-native" if native else "accepted",
+              "decision_origin": "explicit-user-native-decision" if native else "explicit-user-ingame-qa",
+              "decision_date": decision_date, "decision": decision.strip()}
+        if native:
+            if pack_path:
+                raise WorkflowError("décision native sans pack x4")
+            qa["source_bam"] = file_evidence(root, root / asset["extracted_path"])
+            if qa["source_bam"]["sha256"] != asset["source_sha256"].upper():
+                raise WorkflowError("source native modifiée")
+        else:
+            if not pack_path:
+                raise WorkflowError("pack mono-BAM requis")
+            pack_root = resolve_relative(root, pack_path, "pack")
+            from compose_effect_runtime_packs import PackError, validate_pack
+            try:
+                validated = validate_pack(pack_root)
+            except PackError as error:
+                raise WorkflowError(str(error)) from error
+            if validated.resource_count != 1 or validated.resources[0]["resref"] != resref:
+                raise WorkflowError("acceptation quotidienne : un pack mono-BAM requis")
+            pack, resource = pack_binding(root, resref, asset, pack_root / "manifest.json")
+            source = resource["source"]
+            run_id = source.get("interpolation_run") or source["spatial_run"]
+            descriptor = root / f"effects/ressources/{resref}/runs/{run_id}/run.json"
+            qa["selected_run"] = {"run_id": run_id, "descriptor_path": relative_path(root, descriptor),
+                                  "descriptor_sha256": sha256_file(descriptor)}
+            qa["runtime_pack"] = {"manifest_path": relative_path(root, pack_root / "manifest.json"),
+                                  "manifest_sha256": validated.manifest_sha256,
+                                  "registry_sha256": pack["registry_sha256"]}
+        qa_bytes = json_bytes(qa)
+        qa_evidence = f"effects/index/qa-decisions/{resref}/{decision_date}-accepted-{authority.digest(qa_bytes)[:12].lower()}.json"
+        changes[qa_evidence], immutable = qa_bytes, (qa_evidence,)
+        # Build the current selection without writing a temporary QA file.
+        selection = {"$schema": "../../schemas/effect-selection.schema.json", "schema": SELECTION_SCHEMA,
+                     "schema_version": 1, "asset_id": asset["asset_key"], "resref": resref,
+                     "mode": "native" if native else "x4", "decision_date": decision_date,
+                     "qa_evidence": {"path": qa_evidence, "sha256": authority.digest(qa_bytes), "bytes": len(qa_bytes)},
+                     "selected_run": "", "source": file_evidence(root, root / asset["extracted_path"])}
+        if not native:
+            selection.update({"selected_run": run_id, "run_descriptor": file_evidence(root, descriptor),
+                              "runtime_pack": {"manifest": file_evidence(root, pack_root / "manifest.json"),
+                                               "registry": file_evidence(root, pack_root / pack["registry"]),
+                                               "registry_version": pack["registry_version"]},
+                              "contract": {"source": source, "cycles": resource.get("cycles", []),
+                                           "timeline": resource.get("timeline"), "frame_count": resource["frame_count"]}})
+    # Acceptance alone changes neither installation nor release authority.
+    current["selected_run"] = selection["selected_run"]
+    current["qa_state"] = "native" if selection["mode"] == "native" else "passed"
+    current["qa_evidence"] = qa_evidence
+    if selection["mode"] == "native":
+        for stage in STAGES:
+            current[f"{stage}_run"] = ""
+            current[f"{stage}_state"] = "not-applicable"
+    if selection["mode"] == "x4":
+        source = selection["contract"]["source"]
+        for stage, field in (("spatial", "spatial_run"), ("interpolation", "interpolation_run")):
+            if current[field] and current[field] == source.get(field):
+                current[f"{stage}_state"] = "verified"
+        if current["spatial_run"] == source["spatial_run"] and not source.get("interpolation_run"):
+            current["interpolation_run"] = ""
+            current["interpolation_state"] = "not-applicable"
+    changes[relative_path(root, selection_path(root, resref))] = json_bytes(selection)
+    changes["effects/index/processing.csv"] = csv_bytes(processing)
+    if write:
+        authority.commit(root, changes, immutable=immutable)
+    return {"command": "accept", "resref": resref, "write": write, "mode": selection["mode"],
+            "selected_run": selection["selected_run"], "qa_evidence": qa_evidence,
+            "selection": relative_path(root, selection_path(root, resref)), "release_mutation": False}
+
+
+@authority.guarded
+def bootstrap(root: Path, write: bool = False) -> dict[str, Any]:
+    assets = {r["asset_key"]: r for r in read_csv(root / "effects/index/bam-assets.csv")}
+    processing = read_csv(root / "effects/index/processing.csv", PROCESSING_FIELDS)
+    changes = {}
+    selected = []
+    for row in processing:
+        if row["qa_state"] not in {"passed", "native"}:
+            continue
+        asset = assets[row["asset_key"]]
+        selection = selection_from_qa(root, asset["resref"], asset, row["qa_evidence"])
+        if row["selected_run"] != selection["selected_run"]:
+            raise WorkflowError("sélection historique/processing divergents")
+        path = selection_path(root, asset["resref"])
+        if path.is_file() and json.loads(path.read_text(encoding="utf-8-sig")) != selection:
+            raise WorkflowError("bootstrap ne remplace pas une sélection courante")
+        changes[relative_path(root, path)] = json_bytes(selection)
+        selected.append(asset["resref"])
+    # Correct stale pointers only when the existing release authority pins the
+    # very same run and QA bytes. No approval, manifest or payload is changed.
+    candidate_path = root / "releases/BG2-HD-Upscale/manifests/effect-release-candidates.json"
+    corrected = []
+    if candidate_path.is_file():
+        candidates = json.loads(candidate_path.read_text(encoding="utf-8-sig")).get("candidates", [])
+        for row in processing:
+            if row["release_state"] != "approved":
+                continue
+            matches = [c["candidate_id"] for c in candidates if c.get("approval_status") == "approved-for-release"
+                       and any(r.get("asset_id") == row["asset_key"] and r.get("selected_run") == row["selected_run"]
+                               and r.get("qa_evidence") == row["qa_evidence"]
+                               and r.get("qa_evidence_sha256", "").upper() == sha256_file(root / row["qa_evidence"])
+                               for r in c.get("resources", []))]
+            if len(matches) == 1 and row["release_candidate"] != matches[0]:
+                row["release_candidate"] = matches[0]
+                corrected.append(row["asset_key"])
+    changes["effects/index/processing.csv"] = csv_bytes(processing)
+    if write:
+        authority.commit(root, changes)
+    return {"command": "bootstrap", "write": write, "imported_selections": selected,
+            "corrected_local_candidate_references": corrected, "new_qa": False, "release_mutation": False}
+
+
+@authority.guarded
+def status_asset(root: Path, raw_resref: str, *, deep: bool = False) -> dict[str, Any]:
     resref, asset, processing, resource_root = load_asset(root, raw_resref)
     current = processing_row(processing, resref)
     runs = []
@@ -405,11 +687,22 @@ def status_asset(root: Path, raw_resref: str) -> dict[str, Any]:
     if runs_root.is_dir():
         for descriptor in sorted(runs_root.glob("*/run.json"), key=lambda path: path.as_posix().casefold()):
             run_id = descriptor.parent.name
-            verification = verify_run_descriptor(root, resource_root, resref, run_id)
-            runs.append({"run_id": run_id, "ok": verification["ok"], "errors": verification["errors"]})
-    return {"command": "status", "resref": resref, "asset": asset, "processing": current, "runs": runs, "release_mutation": False}
+            if deep:
+                verification = verify_run_descriptor(root, resource_root, resref, run_id)
+                runs.append({"run_id": run_id, "ok": verification["ok"], "errors": verification["errors"]})
+            else:
+                data = json.loads(descriptor.read_text(encoding="utf-8-sig"))
+                runs.append({"run_id": run_id, "result": data.get("result", {}), "parents": data.get("provenance", {}).get("parents", [])})
+    from effect_tracking import work_item
+    selected = json.loads(selection_path(root, resref).read_text(encoding="utf-8-sig")) if selection_path(root, resref).is_file() else None
+    return {"command": "status", "resref": resref, "asset": asset, "work": work_item(root, resref),
+            "processing": current, "selection": selected, "runs": runs, "deep": deep,
+            "release": release_reference(root, current, selected),
+            "installation_note": "CSV receipt is recorded history; current game state is not inferred",
+            "release_mutation": False}
 
 
+@authority.guarded
 def check_workspace(root: Path, raw_resref: str | None = None) -> dict[str, Any]:
     assets_path, processing_path = authority_paths(root)
     assets, processing = read_csv(assets_path), read_csv(processing_path, PROCESSING_FIELDS)
@@ -417,6 +710,13 @@ def check_workspace(root: Path, raw_resref: str | None = None) -> dict[str, Any]
     errors: list[str] = []
     checked: list[str] = []
     processing_by_key = {row.get("asset_key", ""): row for row in processing}
+    asset_keys = [row.get("asset_key", "") for row in assets]
+    if len(asset_keys) != len(set(asset_keys)) or len(processing_by_key) != len(processing):
+        errors.append("identité dupliquée dans les autorités")
+    if set(asset_keys) != set(processing_by_key):
+        errors.append("couverture inventory/processing différente")
+    if requested and requested not in {a.get("resref") for a in assets}:
+        errors.append(f"asset inconnu : {requested}")
     for asset in assets:
         resref = str(asset.get("resref", "")).upper()
         if requested and resref != requested:
@@ -428,6 +728,12 @@ def check_workspace(root: Path, raw_resref: str | None = None) -> dict[str, Any]
         if current is None:
             errors.append(f"{resref}: ligne processing absente")
             continue
+        if current.get("asset_directory") != f"effects/ressources/{resref}":
+            errors.append(f"{resref}: asset_directory invalide")
+        if current.get("spatial_state") not in PRODUCTION_STATES or current.get("interpolation_state") not in PRODUCTION_STATES:
+            errors.append(f"{resref}: état de production inconnu")
+        if current.get("qa_state") not in {"not-assessed", "passed", "native", "failed", "pending"}:
+            errors.append(f"{resref}: état QA inconnu")
         resource_root = root / "effects/ressources" / resref
         for stage in STAGES:
             run_id, state = current.get(f"{stage}_run", ""), current.get(f"{stage}_state", "")
@@ -447,6 +753,21 @@ def check_workspace(root: Path, raw_resref: str | None = None) -> dict[str, Any]
                     verify_parent_binding(root, resource_root, resref, current.get("spatial_run", ""), verification)
             except WorkflowError as error:
                 errors.append(f"{resref}: {error}")
+        try:
+            if current.get("qa_state") in {"passed", "native"}:
+                path = selection_path(root, resref)
+                if not path.is_file():
+                    raise WorkflowError("sélection absente : bootstrap --run")
+                saved = json.loads(path.read_text(encoding="utf-8-sig"))
+                expected = selection_from_qa(root, resref, asset, current["qa_evidence"])
+                if saved != expected or current.get("selected_run", "") != expected.get("selected_run", ""):
+                    raise WorkflowError("sélection/QA/processing divergents")
+                if current["qa_state"] != ("native" if expected["mode"] == "native" else "passed"):
+                    raise WorkflowError("mode de sélection différent du statut QA")
+            elif current.get("selected_run") or current.get("qa_evidence"):
+                raise WorkflowError("sélection sans décision QA acceptée")
+        except (WorkflowError, OSError, ValueError, KeyError) as error:
+            errors.append(f"{resref}: {error}")
     return {"command": "check", "resref": requested, "ok": not errors, "checked_files": sorted(set(checked)), "errors": errors, "release_mutation": False}
 
 
@@ -456,6 +777,7 @@ def build_parser() -> argparse.ArgumentParser:
     commands = parser.add_subparsers(dest="command", required=True)
     status = commands.add_parser("status", help="affiche un asset et ses runs physiques")
     status.add_argument("--resref", required=True)
+    status.add_argument("--deep", action="store_true", help="vérifie les hashes des runs de cet asset")
     new_run_parser = commands.add_parser("new-run", help="planifie ou réserve un run immuable")
     new_run_parser.add_argument("--resref", required=True)
     new_run_parser.add_argument("--stage", required=True, choices=tuple(STAGES))
@@ -469,6 +791,18 @@ def build_parser() -> argparse.ArgumentParser:
     register.add_argument("--run", action="store_true", help="met à jour processing.csv")
     check = commands.add_parser("check", help="vérifie les runs référencés par processing.csv")
     check.add_argument("--resref")
+    accept = commands.add_parser("accept", help="enregistre la décision utilisateur, sélection et suivi en une transaction")
+    accept.add_argument("--resref", required=True)
+    accept.add_argument("--qa-evidence", help="décision immuable déjà existante")
+    accept.add_argument("--pack", help="pack mono-BAM déjà produit et revu")
+    accept.add_argument("--native", action="store_true", help="décision explicite de conserver le BAM natif")
+    accept.add_argument("--decision", help="décision visuelle explicite de l'utilisateur, sans l'inférer")
+    accept.add_argument("--date", help="date de la décision YYYY-MM-DD")
+    accept.add_argument("--run", action="store_true")
+    bootstrap_parser = commands.add_parser("bootstrap", help="importe les QA historiques sans en créer")
+    bootstrap_parser.add_argument("--run", action="store_true")
+    recovery = commands.add_parser("recover", help="termine une transaction interrompue")
+    recovery.add_argument("--run", action="store_true")
     return parser
 
 
@@ -477,14 +811,25 @@ def main(argv: Sequence[str] | None = None) -> int:
     root = args.workspace_root.resolve()
     try:
         if args.command == "status":
-            result = status_asset(root, args.resref)
+            result = status_asset(root, args.resref, deep=args.deep)
         elif args.command == "new-run":
             result = new_run(root, args.resref, args.stage, args.recipe, args.run_id, args.run)
         elif args.command == "register-run":
             result = register_run(root, args.resref, args.stage, args.run_id, args.run)
+        elif args.command == "accept":
+            result = accept_asset(root, args.resref, qa_evidence=args.qa_evidence, pack_path=args.pack,
+                                  decision=args.decision, decision_date=args.date, native=args.native, write=args.run)
+        elif args.command == "bootstrap":
+            result = bootstrap(root, args.run)
+        elif args.command == "recover":
+            pending = (root / authority.JOURNAL).is_file()
+            if args.run:
+                with authority.guard(root, True):
+                    pass
+            result = {"command": "recover", "pending": pending, "write": args.run}
         else:
             result = check_workspace(root, args.resref)
-    except WorkflowError as error:
+    except (ValueError, OSError, KeyError, TypeError) as error:
         print(f"ERROR: {error}")
         return 2
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))

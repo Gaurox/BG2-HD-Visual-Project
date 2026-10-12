@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Current exact effect selection; QA and artifacts remain immutable",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema", "schema_version", "asset_id", "resref", "mode", "decision_date", "qa_evidence", "selected_run", "source"],
+  "properties": {
+    "$schema": {"const": "../../schemas/effect-selection.schema.json"},
+    "schema": {"const": "bg2-effects-selection-v1"},
+    "schema_version": {"const": 1},
+    "asset_id": {"type": "string", "pattern": "^effects:bam:[A-Z0-9_]{1,8}$"},
+    "resref": {"type": "string", "pattern": "^[A-Z0-9_]{1,8}$"},
+    "mode": {"enum": ["native", "x4"]},
+    "decision_date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+    "qa_evidence": {"$ref": "#/$defs/file"},
+    "source": {"$ref": "#/$defs/file"},
+    "selected_run": {"type": "string"},
+    "run_descriptor": {"$ref": "#/$defs/file"},
+    "runtime_pack": {
+      "type": "object", "additionalProperties": false,
+      "required": ["manifest", "registry", "registry_version"],
+      "properties": {
+        "manifest": {"$ref": "#/$defs/file"}, "registry": {"$ref": "#/$defs/file"},
+        "registry_version": {"enum": [1, 2]}
+      }
+    },
+    "contract": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source", "cycles", "timeline", "frame_count"],
+      "properties": {
+        "source": {"type": "object"}, "cycles": {"type": "array"},
+        "timeline": {"type": ["object", "null"]}, "frame_count": {"type": "integer", "minimum": 1}
+      }
+    }
+  },
+  "allOf": [
+    {"if": {"properties": {"mode": {"const": "x4"}}},
+     "then": {"required": ["run_descriptor", "runtime_pack", "contract"], "properties": {"selected_run": {"minLength": 1}}},
+     "else": {"properties": {"selected_run": {"const": ""}}, "not": {"anyOf": [{"required": ["runtime_pack"]}, {"required": ["run_descriptor"]}, {"required": ["contract"]}]}}}
+  ],
+  "$defs": {
+    "file": {
+      "type": "object", "additionalProperties": false, "required": ["path", "sha256", "bytes"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+        "bytes": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

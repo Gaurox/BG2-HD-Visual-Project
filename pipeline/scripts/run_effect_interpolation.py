@@ -597,15 +597,20 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--model", default=DEFAULT_MODEL)
     parser.add_argument("--device", default="-2")
     parser.add_argument("--run", action="store_true", help="produire le run, sinon plan seulement")
+    parser.add_argument("--register", action="store_true", help="avec --run : met à jour le suivi après production réussie")
     args = parser.parse_args(argv)
     try:
+        if args.register and not args.run:
+            raise InterpolationError("--register exige --run")
         plan = build_plan(
             args.workspace_root.resolve(), args.resref, args.spatial_run, args.run_id,
             args.recipe_id, args.native_fps, args.target_fps, args.tvai_ffmpeg,
             args.tvai_model_dir, args.model, args.device,
         )
         result = execute(plan) if args.run else plan_payload(plan)
-    except (InterpolationError, workflow.WorkflowError) as exc:
+        if args.register:
+            result["registration"] = workflow.register_run(plan.root, plan.resref, "interpolation", plan.run_id, write=True)
+    except (InterpolationError, workflow.WorkflowError, workflow.authority.AuthorityError) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 2
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))

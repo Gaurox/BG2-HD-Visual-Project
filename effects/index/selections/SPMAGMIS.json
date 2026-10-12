@@ -1,0 +1,107 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPMAGMIS",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 12,
+    "source": {
+      "interpolation_run": "spmagmis-apollo8-30fps-x4-20260907-r2",
+      "interpolation_run_descriptor_sha256": "2E8F0EE497141A7F17E7EF83FAF8945A13735ECE3FBDC831B0328D5FA57D64C5",
+      "runtime_geometry": {
+        "observation": {
+          "log": "config://bg2ee_game_root/InfinityEngine-Enhancer.log",
+          "method": "bounded registry-fallback telemetry plus static CProjectileBAM::Render call-path audit; final CInfinity::FXRender only",
+          "observed_local": "2026-09-07T08:15:07+02:00",
+          "renderer_install_receipt": "backups/renderer/20260907T010228710468Z-f094b8b3/renderer-install-receipt.json"
+        },
+        "path": "effects/runtime-geometry/SPMAGMIS-v1.json",
+        "schema": "bg2-upscale-effect-runtime-geometry-v1",
+        "sha256": "373C176F71E4AAFF216A48FA462E8D71F8E304DA415A80DF1EFA61F6F20CABEE"
+      },
+      "source_bam_sha256": "bee7d9c8bd7e82ba7427968a00cdf1ffa7d58a71e92e39fa56b3a21e0b167944",
+      "spatial_manifest_sha256": "877DD42BA58BA88AC5E006F169F1A932D464DCCCAFF87C94CC7C84BEA59292C3",
+      "spatial_run": "spmagmis-seedvr2-3b-lab-x4-20260907",
+      "spatial_run_descriptor_sha256": "C96ADE8361FECC656F803C2796219860E35FBF1774C32AE4022D26CD46A0AE88"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10
+      ],
+      "phase_count": 12,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    }
+  },
+  "decision_date": "2026-09-07",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 2651,
+    "path": "effects/index/qa-decisions/SPMAGMIS/2026-09-07-accepted-spmagmis-final-fx-r8.json",
+    "sha256": "26BE4A63DE9708A760226D79362663C20FCC4152A2C3FAF3BAAC217CDD5719AF"
+  },
+  "resref": "SPMAGMIS",
+  "run_descriptor": {
+    "bytes": 1632,
+    "path": "effects/ressources/SPMAGMIS/runs/spmagmis-apollo8-30fps-x4-20260907-r2/run.json",
+    "sha256": "2E8F0EE497141A7F17E7EF83FAF8945A13735ECE3FBDC831B0328D5FA57D64C5"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 17283,
+      "path": "build/effect-candidate-spmagmis-30fps-final-fx-20260907-r8/iee-assets/effects/manifest.json",
+      "sha256": "71A6B0CFBD94FABED01739128F1AB8AED7E310B81E9D2CABC1C4A8623B932585"
+    },
+    "registry": {
+      "bytes": 232,
+      "path": "build/effect-candidate-spmagmis-30fps-final-fx-20260907-r8/iee-assets/effects/EffectAnimations-X4.registry",
+      "sha256": "17FBB7B2DFC1256293034E4DF33429E392EEA8E75DEBE74DE4836FAF4830819B"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spmagmis-apollo8-30fps-x4-20260907-r2",
+  "source": {
+    "bytes": 9600,
+    "path": "effects/ressources/SPMAGMIS/source.bam",
+    "sha256": "BEE7D9C8BD7E82BA7427968A00CDF1FFA7D58A71E92E39FA56B3A21E0B167944"
+  }
+}

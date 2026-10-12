@@ -4,11 +4,31 @@
 
 Un asset de production est un BAM visuel : `effects:bam:<RESREF>`. Les VVC/VEF restent des contrôleurs et consommateurs ; un BAM partagé n'est traité qu'une fois.
 
+## Quotidien — minimum utile
+
+```powershell
+python -B pipeline/scripts/effect_tracking.py queue --limit 10
+python -B pipeline/scripts/effect_workflow.py status --resref <BAM>
+# Après QA utilisateur explicite du pack mono-BAM : une seule transaction.
+python -B pipeline/scripts/effect_workflow.py accept --resref <BAM> --pack <pack> --decision "<décision utilisateur>" --date YYYY-MM-DD --run
+```
+
+- Lire la ligne de l'asset et la recette utile ; aucun parcours documentaire global.
+- Producteurs : `--run --register` = produire puis enregistrer automatiquement le run réussi.
+- `status`/`queue` lisent les index ; aucun hash global. `status --deep`/`check --resref <BAM>` sont des diagnostics facultatifs.
+- Tags, priorités et limites techniques = aides ; aucun gate supplémentaire. Une recette compatible peut être réutilisée directement.
+- Nouvelle tentative = pointeurs de production courants ; sélection acceptée et ancienne QA conservées.
+- Acceptation = résultat exact, jamais installation/release implicite. Pas de retest d'une QA acquise à octets/contrat identiques.
+- Après l'asset : arrêt. Composition globale uniquement en finalisation explicitement demandée.
+
 | Fichier | Rôle | Édition |
 |---|---|---|
 | `index/manifest.json`, `resources.csv`, `dependencies.csv` | inventaire VVC/VEF et graphe de dépendances | généré |
 | `index/bam-assets.csv` | inventaire unifié des BAM d'effet, provenance, consommateurs et source | généré |
-| `index/processing.csv` | états spatiaux/temporels, sélection, QA, installation, release | autorité métier |
+| `index/work-items.csv`, `consumers.csv`, `source-work-plan.json` | géométrie/cycles, usages, coût x4, réutilisation ; aucun statut acquis | généré, refresh exceptionnel |
+| `index/classification.json` | overrides facultatifs : recette, tags, priorité, usage, note | uniquement les exceptions utiles |
+| `index/processing.csv` | derniers essais spatiaux/temporels ; références indépendantes QA/installation/release | commandes verrouillées |
+| `index/selections/<RESREF>.json` | résultat retenu exact, source, run, pack, alpha/géométrie et QA hashés | `accept`, transaction récupérable |
 | `index/qa-decisions/<RESREF>/*.json` | décisions QA ingame explicites et preuves hashées | immuable |
 
 `bam-assets.csv` inclut les BAM directement référencés par VVC/VEF, les BAM référencés directement par un PRO et les BAM des BIF dédiées effets. Les BAM partagés avec les projectiles restent des assets `effects`; leurs consommateurs PRO sont listés, sans duplication sous `projectiles/`. `origin=projectile-member` désigne un BAM connu uniquement par un PRO.
@@ -18,6 +38,7 @@ Un asset de production est un BAM visuel : `effects:bam:<RESREF>`. Les VVC/VEF r
 ```text
 effects/
   index/qa-decisions/<RESREF>/*.json # décision QA ingame immuable
+  index/selections/<RESREF>.json   # sélection courante, distincte des essais
   source/{vvc,vef}/                 # contrôleurs stock extraits
   runtime-geometry/<RESREF>-vN.json # mesures runtime liées au hash du BAM
   ressources/<RESREF>/
@@ -27,6 +48,7 @@ effects/
       00-frames-x1/                  # optionnel
       01-spatial-x4/                 # run spatial
       02-interpolation/              # seulement dans un run dérivé
+    packs/<pack-id>/                 # nouveau pack mono-BAM immuable ; --output explicite
 ```
 
 Créer un run directement sous le BAM concerné. Aucun nouveau run sous `effects/runs/`. Un run d'interpolation est distinct, scellé et porte son run spatial parent dans `provenance.parents`. Ne pas créer de répertoires permanents `x4/` ou `interpolation/` hors d'un run. Ne jamais modifier un run scellé.
@@ -56,10 +78,16 @@ python pipeline/scripts/effect_workflow.py register-run --resref <RESREF> --stag
 python pipeline/scripts/effect_workflow.py check --resref <RESREF>
 ```
 
-Le workflow de production ne sélectionne aucun run, ne déclare aucune QA, n'installe
-rien et ne touche pas à la release. Après validation explicite du pack/runtime,
-`processing.csv` lie le run sélectionné, la décision immuable sous
-`index/qa-decisions/` et le reçu installé. La release reste une décision séparée.
+`new-run`/`register-run` ne sélectionnent aucun résultat et ne déclarent aucune QA.
+`accept` lie une décision utilisateur explicite aux octets du pack, puis écrit QA immuable,
+sélection et CSV dans une transaction. `--qa-evidence <ancienne-décision.json>` réutilise une QA
+existante sans la réécrire. `--native --decision "..." --date ...` enregistre une conservation native
+explicite, distincte d'un blocage. Aucun de ces chemins n'installe ni n'approuve une release.
+
+Verrou OS partagé par workflow, synchronisation et classification ; une panne libère le verrou.
+La prochaine écriture termine un commit interrompu ; une modification extérieure divergente est
+préservée et signalée. Lecture pendant un commit interrompu : `recover --run`. Aucun journal à
+renseigner à la main.
 
 ## Producteur spatial
 
@@ -70,11 +98,12 @@ rien et ne touche pas à la release. Après validation explicite du pack/runtime
 python pipeline/scripts/run_effect_spatial.py --resref <RESREF> --workflow <workflow.json> --recipe-id <recipe>
 
 # Production explicite, puis enregistrement distinct après revue du run.
-python pipeline/scripts/run_effect_spatial.py --resref <RESREF> --workflow <workflow.json> --recipe-id <recipe> --run
-python pipeline/scripts/effect_workflow.py register-run --resref <RESREF> --stage spatial --run-id <run-id>
+python pipeline/scripts/run_effect_spatial.py --resref <RESREF> --workflow <workflow.json> --recipe-id <recipe> --run --register
 ```
 
-Le producteur écrit `00-frames-x1/`, `01-spatial-x4/`, `recipe.json` et `run.json` sous le run réservé. Il préserve le BAM source, conserve l'alpha source, refuse un run scellé et laisse `processing.csv` inchangé.
+Le producteur écrit `00-frames-x1/`, `01-spatial-x4/`, `recipe.json` et `run.json` sous le run réservé.
+Source/alpha conservés ; aucun run scellé modifié. Sans `--register`, le CSV reste inchangé.
+`run_effect_interpolation.py` propose aussi `--run --register` ; le parent spatial reste obligatoire.
 
 ## Initialisation / extraction
 
@@ -82,10 +111,14 @@ Le producteur écrit `00-frames-x1/`, `01-spatial-x4/`, `recipe.json` et `run.js
 python pipeline/scripts/build_graphics_inventory.py --extract-effects --run
 python pipeline/scripts/sync_effect_processing.py
 python pipeline/scripts/sync_effect_processing.py --run
+python -B pipeline/scripts/effect_tracking.py refresh --run
 ```
 
 La première commande régénère l'inventaire et extrait seulement les contrôleurs et BAM d'effets.
-La dernière initialise ou complète `processing.csv` sans réécrire une ligne existante.
+La synchronisation complète `processing.csv` sans changer un état existant.
+`refresh` recalcule uniquement les vues techniques après changement d'inventaire/source ; pas pendant
+chaque production. Sources comparées aux hashes ; pixels décodés en mémoire, aucune image générée.
+La classification manuelle reste conservée.
 
 Deux BAM stock absents restent `blocked`; ne pas créer de `source.bam` fictif.
 
@@ -100,6 +133,32 @@ installation_receipt,release_state,release_candidate,notes
 ```
 
 États de production : valeurs du contrat commun (`not-started`, `in-progress`, `produced`, `verified`, `rejected`, `blocked`, `not-applicable`). `qa=passed` exige un `selected_run` et une preuve. Installation et release restent des décisions séparées.
+
+`qa=native` = décision native explicite, sélection hashée sans run x4. Source absente ≠ native accepté.
+Les reçus du CSV décrivent l'installation enregistrée, pas une vérification actuelle du jeu.
+`status.release.matches_current_selection` vérifie le lien vers le candidat existant ; une nouvelle
+sélection n'hérite pas de son approbation. Autorité release : manifeste de candidats, puis `content.json`.
+
+Tags combinables : `static`, `one-shot`, `loop`, `staged`, `directional`, `alpha`, `palette`, `unresolved`.
+`alpha` signale un chemin Blended, sans déduire une recette émissive. `unresolved` : aucun owner
+démontré dans VVC/VEF/PRO ; conserver l'asset. Les cycles ne démontrent pas un découpage spatial.
+`usage=known` = référence trouvée, pas preuve de présence ingame ou de couverture runtime.
+`native-shadow` reste natif ; les cadences PRO non déclarées restent à observer. Timings VEF bruts
+conservés dans `consumers.csv.flags_json`, sans réécrire l'orchestration.
+
+```powershell
+# Facultatif ; aucun fichier manuel par asset.
+python -B pipeline/scripts/effect_tracking.py classify --resref <BAM> --recipe <recette> --priority 20 --run
+```
+
+Réutilisation : source canonique/RGBA/ancre identiques ne suffisent pas ; conserver contexte modèle,
+canevas, palette, alpha et contrat runtime. `reuse_animation` indique une source identique ; jamais
+transférer automatiquement un masque WED, un déplacement local ou sa QA.
+
+Initialisation 2026-10-12 : 494 identités, 492 sources, 478 contenus canoniques ; 19 418 frames,
+17 241 contenus RGBA/géométrie uniques ; 296 mono-cycles, 196 multicycles, 17 statiques,
+23 avec cycle vide. Trois sélections importées depuis les QA existantes ; aucune nouvelle QA.
+Deux références locales de candidat corrigées depuis les approbations existantes ; release inchangée.
 
 ## Gate runtime
 
@@ -122,9 +181,15 @@ RGB source, le RGB x4 produit (seuil ou rampe de luminance) ou la géométrie ru
 puis prémultiplier le RGB pour les chemins `Blended`. Le run scellé reste inchangé ;
 tout slot absent ou terminal conserve le fallback natif strict.
 
-Chaque nouvelle famille doit démontrer : ancrage logique, cycle/timing, alpha,
-palette, partage multi-contrôleur, owner VVC/projectile et fallback natif.
+Vérifier seulement les risques nouveaux : ancrage, cycle/timing, alpha, palette,
+partage ou owner non démontré. Les contrats déjà acquis restent utilisables.
 Une production temporelle ou une installation ne vaut jamais QA ingame.
+
+Limites connues, signalées par asset : interpolation mono-cycle/boucle fermée/ratio FPS entier ;
+cycles vides refusés ; palettes runtime à démontrer ; versions v1/v2 non mélangées ; pack chargé
+intégralement, 512 ressources/128 Mio RGBA. Catalogue estimé ≈7,2 Gio x4 à cadence native : prévoir
+chargement/cache bornés et timeline optionnelle par cycle pour l'intégration complète. Ces évolutions
+moteur restent séparées de la mise en place du suivi ; aucun changement moteur effectué.
 
 ## Packs cumulatifs — finalisation
 

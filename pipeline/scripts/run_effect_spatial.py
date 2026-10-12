@@ -467,12 +467,15 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--run", action="store_true", help="produit le run; sinon plan seulement")
+    parser.add_argument("--register", action="store_true", help="avec --run : met à jour le suivi après production réussie")
     return parser
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
+        if args.register and not args.run:
+            raise SpatialRunError("--register exige --run")
         plan = build_plan(
             args.workspace_root.resolve(), args.resref, args.run_id, args.recipe_id, args.workflow,
             server=args.server, pad=args.pad, poll_seconds=args.poll_seconds,
@@ -480,7 +483,9 @@ def main(argv: Sequence[str] | None = None) -> int:
             color_correction_method=args.color_correction_method,
         )
         result = execute(plan, resume=args.resume) if args.run else plan_payload(plan)
-    except (SpatialRunError, workflow.WorkflowError) as error:
+        if args.register:
+            result["registration"] = workflow.register_run(plan.root, plan.resref, "spatial", plan.run_id, write=True)
+    except (SpatialRunError, workflow.WorkflowError, workflow.authority.AuthorityError) as error:
         print(f"ERROR: {error}")
         return 2
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))

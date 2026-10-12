@@ -7,6 +7,9 @@ import json
 import sys
 import tempfile
 import unittest
+import struct
+from unittest import mock
+from types import SimpleNamespace
 from pathlib import Path
 
 
@@ -111,7 +114,7 @@ class EffectWorkflowTests(unittest.TestCase):
                 "recipe_sha256": workflow.sha256_file(self.recipe),
             },
             "inputs": inputs,
-            "outputs": [self._evidence("runtime-manifest", output)],
+            "outputs": [self._evidence("spatial-manifest" if stage == "spatial" else "interpolation-manifest", output)],
             "provenance": {
                 "created_at_utc": "2026-09-07T12:00:00Z",
                 "generator": "pipeline/tests/test_effect_workflow.py",
@@ -185,6 +188,100 @@ class EffectWorkflowTests(unittest.TestCase):
         descriptor.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
         with self.assertRaisesRegex(workflow.WorkflowError, "hash différent"):
             workflow.register_run(self.root, self.resref, "interpolation", "temporal-a", write=True)
+
+    def _write_pack(self, run_id="spatial-a"):
+        output = self._write_run(run_id, "spatial")
+        pack = self.root / f"packs/{run_id}"
+        pack.mkdir(parents=True, exist_ok=True)
+        name = f"EFX4-{self.resref}-frame000.rgba"
+        rgba = pack / name
+        rgba.write_bytes(bytes(64))
+        registry = pack / "EffectAnimations-X4.registry"
+        registry.write_bytes(struct.pack("<8sIIII8sIIIIII", b"IEEEFX4\0", 1, 4, 1, 0,
+                                         self.resref.encode().ljust(8, b"\0"), 1, 1, 1, 1, 1, 0))
+        manifest = {"schema": "bg2-upscale-effect-animation-runtime-pack-v1", "status": "completed",
+                    "scale": 4, "resref": self.resref, "registry": registry.name, "registry_magic": "IEEEFX4",
+                    "registry_version": 1, "registry_bytes": registry.stat().st_size,
+                    "registry_sha256": workflow.sha256_file(registry), "frame_count": 1,
+                    "cycles": [{"cycle": 0, "frame_indices": [0]}],
+                    "source": {"source_bam_sha256": workflow.sha256_file(self.source),
+                               "spatial_run": run_id, "spatial_run_descriptor_sha256": workflow.sha256_file(output.parent.parent / "run.json"),
+                               "spatial_manifest_sha256": workflow.sha256_file(output)},
+                    "frames": [{"frame": 0, "asset": name, "bytes": 64, "sha256": workflow.sha256_file(rgba)}]}
+        (pack / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+        return pack
+
+    def test_acceptance_is_local_idempotent_and_preserves_acquired_qa_during_correction(self):
+        pack = self._write_pack()
+        workflow.register_run(self.root, self.resref, "spatial", "spatial-a", write=True)
+        before = (self.root / "effects/index/processing.csv").read_bytes()
+        args = {"pack_path": pack.relative_to(self.root).as_posix(), "decision": "User accepted ingame", "decision_date": "2026-10-12"}
+        plan = workflow.accept_asset(self.root, self.resref, **args)
+        self.assertEqual((self.root / "effects/index/processing.csv").read_bytes(), before)
+        self.assertFalse((self.root / plan["qa_evidence"]).exists())
+        accepted = workflow.accept_asset(self.root, self.resref, **args, write=True)
+        self.assertTrue(workflow.check_workspace(self.root)["ok"])
+        selected_path = workflow.selection_path(self.root, self.resref)
+        selected = selected_path.read_bytes()
+        qa = (self.root / accepted["qa_evidence"]).read_bytes()
+        workflow.accept_asset(self.root, self.resref, **args, write=True)
+        self.assertEqual(selected_path.read_bytes(), selected)
+        self.assertEqual((self.root / accepted["qa_evidence"]).read_bytes(), qa)
+        self.assertEqual(self._processing_row()["installation_state"], "not-installed")
+        self.assertEqual(self._processing_row()["release_state"], "not-evaluated")
+        # Registering the same run never downgrades verified to produced.
+        workflow.register_run(self.root, self.resref, "spatial", "spatial-a", write=True)
+        self.assertEqual(self._processing_row()["spatial_state"], "verified")
+        self._write_run("spatial-b", "spatial")
+        workflow.register_run(self.root, self.resref, "spatial", "spatial-b", write=True)
+        self.assertEqual(self._processing_row()["selected_run"], "spatial-a")
+        self.assertEqual(selected_path.read_bytes(), selected)
+        self.assertEqual((self.root / accepted["qa_evidence"]).read_bytes(), qa)
+        self.assertTrue(workflow.check_workspace(self.root)["ok"])
+
+    def test_native_decision_is_distinct_from_blocked_or_upscaled(self):
+        workflow.accept_asset(self.root, self.resref, native=True, decision="Keep native", decision_date="2026-10-12", write=True)
+        row = self._processing_row()
+        self.assertEqual(row["qa_state"], "native")
+        self.assertEqual(row["selected_run"], "")
+        self.assertEqual(row["interpolation_state"], "not-applicable")
+        self.assertTrue(workflow.check_workspace(self.root)["ok"])
+        self.source.write_bytes(b"changed source")
+        self.assertFalse(workflow.check_workspace(self.root)["ok"])
+
+    def test_pack_bound_to_another_source_or_modified_frame_cannot_be_accepted(self):
+        pack = self._write_pack()
+        rgba = next(pack.glob("*.rgba"))
+        rgba.write_bytes(b"bad")
+        with self.assertRaisesRegex(ValueError, "incohérent"):
+            workflow.accept_asset(self.root, self.resref, pack_path=pack.relative_to(self.root).as_posix(),
+                                  decision="accepted", decision_date="2026-10-12", write=True)
+        self.assertFalse(workflow.selection_path(self.root, self.resref).exists())
+
+    def test_foreign_pack_source_is_rejected_before_authority_changes(self):
+        pack = self._write_pack()
+        path = pack / "manifest.json"
+        data = json.loads(path.read_text(encoding="utf-8"))
+        data["source"]["source_bam_sha256"] = sha256(b"another source")
+        path.write_text(json.dumps(data), encoding="utf-8")
+        before = (self.root / "effects/index/processing.csv").read_bytes()
+        with self.assertRaisesRegex(workflow.WorkflowError, "source du pack"):
+            workflow.accept_asset(self.root, self.resref, pack_path=pack.relative_to(self.root).as_posix(),
+                                  decision="accepted", decision_date="2026-10-12", write=True)
+        self.assertEqual((self.root / "effects/index/processing.csv").read_bytes(), before)
+
+    def test_producer_registration_only_happens_after_completed_production(self):
+        import run_effect_spatial as spatial
+        self._write_run("spatial-a", "spatial")
+        plan = SimpleNamespace(root=self.root, resref=self.resref, run_id="spatial-a")
+        argv = ["--resref", self.resref, "--workflow", "workflow.json", "--recipe-id", "test", "--run", "--register"]
+        with mock.patch.object(spatial, "build_plan", return_value=plan), mock.patch.object(spatial, "execute", return_value={}), mock.patch("builtins.print"):
+            self.assertEqual(spatial.main(argv), 0)
+        self.assertEqual(self._processing_row()["spatial_run"], "spatial-a")
+        before = (self.root / "effects/index/processing.csv").read_bytes()
+        with mock.patch.object(spatial, "build_plan", return_value=plan), mock.patch.object(spatial, "execute", side_effect=spatial.SpatialRunError("failed")), mock.patch("builtins.print"):
+            self.assertEqual(spatial.main(argv), 2)
+        self.assertEqual((self.root / "effects/index/processing.csv").read_bytes(), before)
 
 
 if __name__ == "__main__":
