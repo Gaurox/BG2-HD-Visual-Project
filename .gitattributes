@@ -272,3 +272,12 @@ releases/BG2-HD-Upscale/bg2hd/manifests/animation-release-candidates.json -text 
 releases/BG2-HD-Upscale/bg2hd/bg2hd.tp2 -text whitespace=cr-at-eol
 releases/BG2-HD-Upscale/bg2hd/manifests/renderer-bundle.json -text whitespace=cr-at-eol
 releases/BG2-HD-Upscale/bg2hd/manifests/runtime-compatibility.json -text whitespace=cr-at-eol
+
+# Map finalization receipts, selection snapshots and logs pin exact recorded bytes.
+pipeline/recipes/maps-release-finalization-20261012-v1/*.json -text whitespace=cr-at-eol
+pipeline/recipes/maps-release-finalization-20261012-v1/*.log -text whitespace=cr-at-eol
+docs/validation/maps-release-status-20261012-v1.json -text whitespace=cr-at-eol
+releases/BG2-HD-Upscale/manifests/map-release-assemblies.json -text whitespace=cr-at-eol
+releases/BG2-HD-Upscale/bg2hd/manifests/map-release-assemblies.json -text whitespace=cr-at-eol
+releases/BG2-HD-Upscale/manifests/map-release-candidates.csv -text whitespace=cr-at-eol
+releases/BG2-HD-Upscale/bg2hd/manifests/map-release-candidates.csv -text whitespace=cr-at-eol
