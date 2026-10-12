@@ -1,0 +1,37 @@
+{
+  "schema": "bg2-sprite-display-comparison-installation-v1",
+  "status": "installed",
+  "created_at_utc": "2026-10-13T00:03:00.329969+02:00",
+  "game_root": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition",
+  "display_filter": "NearestClassic",
+  "preferred_candidate_preserved": "decision.json",
+  "ini_sha256": "5859F49562E89F71CC1A9B9DDBAC4F77B9B5AB95E5983D88E51C09E480042ABA",
+  "changed_files": [
+    {
+      "name": "fpDraw.glsl",
+      "target": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition\\override\\fpDraw.glsl",
+      "before": "G:\\AI\\BG2_Upscale\\docs\\measurements\\sprite-display-nearest-silhouette-preferred-20261013-v1\\preferred\\override\\fpDraw.glsl",
+      "before_sha256": "7B599F07B057287941B1A7EC8DA631BA1CB8EB0AB0B3CC738A9B5E9ACCBEB2C0",
+      "candidate": "G:\\AI\\BG2_Upscale\\docs\\measurements\\sprite-display-nearest-silhouette-preferred-20261013-v1\\nearest-classic\\override\\fpDraw.glsl",
+      "candidate_sha256": "C6F1F23D99D16BFD34FC3EAC1577F24C096C4C00F0427CEA69E8BDE779311827"
+    },
+    {
+      "name": "fpSprite.glsl",
+      "target": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition\\override\\fpSprite.glsl",
+      "before": "G:\\AI\\BG2_Upscale\\docs\\measurements\\sprite-display-nearest-silhouette-preferred-20261013-v1\\preferred\\override\\fpSprite.glsl",
+      "before_sha256": "8843BF087BFF599F234C6C5AA53DD928DA7A1DA8FB814928289DCDDD430F135A",
+      "candidate": "G:\\AI\\BG2_Upscale\\docs\\measurements\\sprite-display-nearest-silhouette-preferred-20261013-v1\\nearest-classic\\override\\fpSprite.glsl",
+      "candidate_sha256": "065E28C595AF84A7ADDCBD97793BC8EEDCB5052BB26BAB1D92710CB0E2FD0816"
+    },
+    {
+      "name": "fpSELECT.glsl",
+      "target": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition\\override\\fpSELECT.glsl",
+      "before": "G:\\AI\\BG2_Upscale\\docs\\measurements\\sprite-display-nearest-silhouette-preferred-20261013-v1\\preferred\\override\\fpSELECT.glsl",
+      "before_sha256": "56B12A40EBB0E6279062E54460BAB61B00A834C5A360D65A638A4C87CB8FD79B",
+      "candidate": "G:\\AI\\BG2_Upscale\\docs\\measurements\\sprite-display-nearest-silhouette-preferred-20261013-v1\\nearest-classic\\override\\fpSELECT.glsl",
+      "candidate_sha256": "E4E70C98DE1E6826C47F934AC3E600AF06F105F69CC80F84E2289D28E5952815"
+    }
+  ],
+  "ingame_qa": "comparison-pending",
+  "installed_at_utc": "2026-10-12T22:03:27.5566959Z"
+}

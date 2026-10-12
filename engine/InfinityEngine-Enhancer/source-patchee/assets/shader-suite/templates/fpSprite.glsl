@@ -20,7 +20,7 @@ void main()
 	lowp vec4 texColor = ieeFetchCreatureColor(vTc, gaussianRgb);
 
 	lowp vec4 outColor = texColor;
-	if (uIeeCreatureSdfEncoded > 0.5)
+	if (uIeeCreatureSdfEncoded > 0.5 || ieeCreatureNearestSilhouetteActive())
 	{
 		outColor = texColor;
 	}

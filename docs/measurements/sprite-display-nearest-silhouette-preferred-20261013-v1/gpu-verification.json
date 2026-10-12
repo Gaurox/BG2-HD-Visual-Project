@@ -1,0 +1,677 @@
+{
+  "status": "passed",
+  "renderer": "NVIDIA GeForce RTX 5090/PCIe/SSE2",
+  "gl_version": "4.6.0 NVIDIA 616.64",
+  "bicubic_kernel": "CatmullRom",
+  "nearest_silhouette": true,
+  "compiled": [
+    "fpDraw.glsl",
+    "fpSprite.glsl",
+    "fpSELECT.glsl",
+    "native_occlusion_bridge"
+  ],
+  "checks": [
+    {
+      "test": "box_checker_4x4",
+      "actual_rgba": [
+        127,
+        127,
+        127,
+        255
+      ],
+      "expected_rgba": [
+        128,
+        128,
+        128,
+        255
+      ]
+    },
+    {
+      "test": "mips_checker_lod2",
+      "actual_rgba": [
+        127,
+        127,
+        127,
+        255
+      ],
+      "expected_rgba": [
+        128,
+        128,
+        128,
+        255
+      ]
+    },
+    {
+      "test": "box_alpha_no_blue_halo",
+      "actual_rgba": [
+        255,
+        0,
+        0,
+        127
+      ],
+      "expected_rgba": [
+        255,
+        0,
+        0,
+        128
+      ]
+    },
+    {
+      "test": "box_fractional_overlap",
+      "actual_rgba": [
+        119,
+        119,
+        119,
+        255
+      ],
+      "expected_rgba": [
+        119,
+        119,
+        119,
+        255
+      ]
+    },
+    {
+      "test": "box_mirror_fractional_overlap",
+      "actual_rgba": [
+        119,
+        119,
+        119,
+        255
+      ],
+      "expected_rgba": [
+        119,
+        119,
+        119,
+        255
+      ]
+    },
+    {
+      "test": "box_mag_nearest",
+      "actual_rgba": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "expected_rgba": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "test": "mips_alpha_no_dark_halo",
+      "actual_rgba": [
+        255,
+        0,
+        0,
+        127
+      ],
+      "expected_rgba": [
+        255,
+        0,
+        0,
+        128
+      ]
+    },
+    {
+      "test": "mips_mag_straight_decode",
+      "actual_rgba": [
+        255,
+        0,
+        0,
+        128
+      ],
+      "expected_rgba": [
+        255,
+        0,
+        0,
+        128
+      ]
+    },
+    {
+      "test": "nearest_baseline_unchanged",
+      "actual_rgba": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "expected_rgba": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "test": "linear_soft_edge_inward",
+      "actual_rgba": [
+        255,
+        0,
+        0,
+        227
+      ],
+      "expected_rgba": [
+        255,
+        0,
+        0,
+        227
+      ]
+    },
+    {
+      "test": "linear_soft_edge_no_transparent_blue",
+      "actual_rgba": [
+        255,
+        0,
+        0,
+        127
+      ],
+      "expected_rgba": [
+        255,
+        0,
+        0,
+        128
+      ]
+    },
+    {
+      "test": "linear_soft_edge_stays_hidden",
+      "actual_rgba": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_rgba": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "test": "linear_soft_edge_shadow_opacity",
+      "actual_rgba": [
+        0,
+        0,
+        0,
+        127
+      ],
+      "expected_rgba": [
+        0,
+        0,
+        0,
+        127
+      ]
+    },
+    {
+      "test": "linear_soft_edge_opaque_detail",
+      "actual_rgba": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "expected_rgba": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "test": "linear_soft_edge_inactive_nearest",
+      "actual_rgba": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "expected_rgba": [
+        255,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "test": "linear_soft_edge_disabled_suite",
+      "actual_rgba": [
+        127,
+        0,
+        127,
+        127
+      ],
+      "expected_rgba": [
+        128,
+        0,
+        128,
+        128
+      ]
+    },
+    {
+      "test": "nearest_silhouette_opaque_detail",
+      "actual_rgba": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "expected_rgba": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "test": "nearest_silhouette_preserves_center",
+      "actual_rgba": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "expected_rgba": [
+        255,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "test": "nearest_silhouette_alpha_only",
+      "actual_rgba": [
+        255,
+        0,
+        0,
+        127
+      ],
+      "expected_rgba": [
+        255,
+        0,
+        0,
+        128
+      ]
+    },
+    {
+      "test": "nearest_silhouette_outer_coverage",
+      "actual_rgba": [
+        255,
+        0,
+        0,
+        64
+      ],
+      "expected_rgba": [
+        255,
+        0,
+        0,
+        64
+      ]
+    },
+    {
+      "test": "nearest_silhouette_fully_hidden",
+      "actual_rgba": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_rgba": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "test": "nearest_silhouette_shadow_opacity",
+      "actual_rgba": [
+        0,
+        0,
+        0,
+        127
+      ],
+      "expected_rgba": [
+        0,
+        0,
+        0,
+        127
+      ]
+    },
+    {
+      "test": "nearest_silhouette_native_x1_neutral",
+      "actual_rgba": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_rgba": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "test": "nearest_silhouette_masked_linear_sampler",
+      "actual_rgba": [
+        255,
+        0,
+        0,
+        127
+      ],
+      "expected_rgba": [
+        255,
+        0,
+        0,
+        128
+      ]
+    },
+    {
+      "test": "nearest_silhouette_masked_opaque_rgb",
+      "actual_rgba": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "expected_rgba": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "test": "nearest_silhouette_fpSprite_no_rgb_halo",
+      "actual_rgba": [
+        255,
+        0,
+        0,
+        127
+      ],
+      "expected_rgba": [
+        255,
+        0,
+        0,
+        128
+      ]
+    },
+    {
+      "test": "nearest_silhouette_mirror",
+      "actual_rgba": [
+        255,
+        0,
+        0,
+        127
+      ],
+      "expected_rgba": [
+        255,
+        0,
+        0,
+        128
+      ]
+    },
+    {
+      "test": "bicubic_constant_color",
+      "actual_rgba": [
+        73,
+        109,
+        151,
+        255
+      ],
+      "expected_rgba": [
+        73,
+        109,
+        151,
+        255
+      ]
+    },
+    {
+      "test": "bicubic_shadow_opacity",
+      "actual_rgba": [
+        0,
+        0,
+        0,
+        127
+      ],
+      "expected_rgba": [
+        0,
+        0,
+        0,
+        127
+      ]
+    },
+    {
+      "test": "bicubic_hidden_rgb",
+      "actual_rgba": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_rgba": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "test": "bicubic_kernel_identity",
+      "actual_rgba": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "expected_rgba": [
+        255,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "test": "bicubic_phase_0",
+      "actual_rgba": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_rgba": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "test": "bicubic_mirror_0",
+      "actual_rgba": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_rgba": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "test": "bicubic_phase_1",
+      "actual_rgba": [
+        63,
+        100,
+        255,
+        74
+      ],
+      "expected_rgba": [
+        63,
+        100,
+        255,
+        74
+      ]
+    },
+    {
+      "test": "bicubic_mirror_1",
+      "actual_rgba": [
+        63,
+        100,
+        255,
+        74
+      ],
+      "expected_rgba": [
+        63,
+        100,
+        255,
+        74
+      ]
+    },
+    {
+      "test": "bicubic_phase_2",
+      "actual_rgba": [
+        62,
+        89,
+        255,
+        67
+      ],
+      "expected_rgba": [
+        62,
+        89,
+        255,
+        67
+      ]
+    },
+    {
+      "test": "bicubic_mirror_2",
+      "actual_rgba": [
+        62,
+        89,
+        255,
+        67
+      ],
+      "expected_rgba": [
+        62,
+        89,
+        255,
+        67
+      ]
+    },
+    {
+      "test": "bicubic_phase_3",
+      "actual_rgba": [
+        60,
+        43,
+        255,
+        24
+      ],
+      "expected_rgba": [
+        60,
+        43,
+        255,
+        24
+      ]
+    },
+    {
+      "test": "bicubic_mirror_3",
+      "actual_rgba": [
+        60,
+        43,
+        255,
+        24
+      ],
+      "expected_rgba": [
+        60,
+        43,
+        255,
+        24
+      ]
+    },
+    {
+      "test": "bicubic_phase_4",
+      "actual_rgba": [
+        113,
+        65,
+        255,
+        232
+      ],
+      "expected_rgba": [
+        113,
+        65,
+        255,
+        232
+      ]
+    },
+    {
+      "test": "bicubic_mirror_4",
+      "actual_rgba": [
+        113,
+        65,
+        255,
+        232
+      ],
+      "expected_rgba": [
+        113,
+        65,
+        255,
+        232
+      ]
+    },
+    {
+      "test": "mask_premultiplied_visibility",
+      "actual_rgba": [
+        64,
+        0,
+        0,
+        64
+      ],
+      "expected_rgba": [
+        64,
+        0,
+        0,
+        64
+      ]
+    },
+    {
+      "test": "mask_shadow",
+      "actual_rgba": [
+        0,
+        0,
+        0,
+        64
+      ],
+      "expected_rgba": [
+        0,
+        0,
+        0,
+        64
+      ]
+    },
+    {
+      "test": "mask_clear_hidden_rgb",
+      "actual_rgba": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_rgba": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "desktop_input": false,
+  "window_shown": false
+}

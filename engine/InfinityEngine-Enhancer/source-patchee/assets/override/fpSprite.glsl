@@ -297,6 +297,65 @@ lowp vec4 ieeFetchCreatureBox(in mediump vec2 texCoord,
 	return vec4(clamp(total.rgb / total.a, 0.0, 1.0), clamp(total.a, 0.0, 1.0));
 }
 
+// IEE_CREATURE_NEAREST_SILHOUETTE_CONTRACT_V1
+// HD RGBA only: nearest material, bilinear alpha at transparency.
+bool ieeCreatureNearestSilhouetteActive()
+{
+	return ieeCreatureStyleActive() && uIeeCreatureTextureScale > 1.5 &&
+		uIeeCreatureTexelSize.x > 0.0 && uIeeCreatureTexelSize.y > 0.0 &&
+		uIeeCreatureFilterMode > -0.5 && uIeeCreatureFilterMode < 0.5 &&
+		uIeeCreatureSdfEncoded < 0.5;
+}
+
+void ieeChooseNearestSilhouetteColor(in lowp vec4 tap,
+									in mediump float weight,
+									inout lowp vec3 color,
+									inout mediump float bestWeight)
+{
+	// Largest bilinear weight selects the closest covered texel. Do not
+	// average RGB or use RGB hidden behind zero alpha as contour material.
+	if (tap.a > 0.000001 && weight > bestWeight)
+	{
+		color = tap.rgb;
+		bestWeight = weight;
+	}
+}
+
+lowp vec4 ieeFetchCreatureNearestSilhouette(in mediump vec2 texCoord)
+{
+	mediump vec2 texelSize = uIeeCreatureTexelSize;
+	mediump vec2 q = texCoord / texelSize - vec2(0.5);
+	mediump vec2 base = floor(q);
+	mediump vec2 phase = q - base;
+	lowp vec4 tap00 = ieeCreatureWorkingSample((base + vec2(0.5, 0.5)) * texelSize);
+	lowp vec4 tap10 = ieeCreatureWorkingSample((base + vec2(1.5, 0.5)) * texelSize);
+	lowp vec4 tap01 = ieeCreatureWorkingSample((base + vec2(0.5, 1.5)) * texelSize);
+	lowp vec4 tap11 = ieeCreatureWorkingSample((base + vec2(1.5, 1.5)) * texelSize);
+	lowp vec4 nearest = phase.y < 0.5
+		? (phase.x < 0.5 ? tap00 : tap10)
+		: (phase.x < 0.5 ? tap01 : tap11);
+	// Exact centers make this independent from the historical LINEAR sampler
+	// on masked output. Opaque detail and interior shadow opacity stay nearest.
+	if (min(min(tap00.a, tap10.a), min(tap01.a, tap11.a)) > 0.000001)
+		return nearest;
+	mediump vec4 weights = vec4((1.0 - phase.x) * (1.0 - phase.y),
+		phase.x * (1.0 - phase.y), (1.0 - phase.x) * phase.y, phase.x * phase.y);
+	mediump float alpha = dot(weights, vec4(tap00.a, tap10.a, tap01.a, tap11.a));
+	if (alpha <= 0.000001) return vec4(0.0);
+	lowp vec3 color = nearest.rgb;
+	if (nearest.a <= 0.000001)
+	{
+		// Only the one-texel alpha transition needs a neighboring material.
+		// Fully hidden neighborhoods remain zero; coverage has no overshoot.
+		mediump float bestWeight = -1.0;
+		ieeChooseNearestSilhouetteColor(tap00, weights.x, color, bestWeight);
+		ieeChooseNearestSilhouetteColor(tap10, weights.y, color, bestWeight);
+		ieeChooseNearestSilhouetteColor(tap01, weights.z, color, bestWeight);
+		ieeChooseNearestSilhouetteColor(tap11, weights.w, color, bestWeight);
+	}
+	return vec4(color, clamp(alpha, 0.0, 1.0));
+}
+
 lowp vec4 ieeFetchCreatureColor(in mediump vec2 texCoord,
 							  out mediump vec3 gaussianRgb)
 {
@@ -307,6 +366,8 @@ lowp vec4 ieeFetchCreatureColor(in mediump vec2 texCoord,
 	bool box = uIeeCreatureFilterMode > 2.5 && uIeeCreatureFilterMode < 3.5 && validSize;
 	bool sharpen = styleActive && abs(uIeeCreatureSharpen) > 0.000001;
 	gaussianRgb = vec3(0.0);
+	if (ieeCreatureNearestSilhouetteActive())
+		return ieeFetchCreatureNearestSilhouette(texCoord);
 	lowp vec4 color;
 	if (reconstruct || sharpen)
 		color = ieeFetchCreatureCatmullRom(texCoord, uIeeCreatureTexelSize, reconstruct, gaussianRgb);
@@ -519,7 +580,7 @@ void main()
 	lowp vec4 texColor = ieeFetchCreatureColor(vTc, gaussianRgb);
 
 	lowp vec4 outColor = texColor;
-	if (uIeeCreatureSdfEncoded > 0.5)
+	if (uIeeCreatureSdfEncoded > 0.5 || ieeCreatureNearestSilhouetteActive())
 	{
 		outColor = texColor;
 	}

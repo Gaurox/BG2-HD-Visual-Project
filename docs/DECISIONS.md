@@ -113,6 +113,7 @@ occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans
 | Pérennité QA | une acceptation reste acquise tant que les octets concernés et le contrat runtime ne changent pas ; réouverture explicite uniquement |
 | Legacy | conserver les `source/`, jobs, runs et catalogues existants ; aucun déplacement/réécriture d'artefact scellé |
 | Filtrage QA | `NEAREST`; `LINEAR` est seulement un A/B d'affichage |
+| Affichage retenu 2026-10-13 | **Nearest RGB intérieur + antialiasing alpha de silhouette, 4 taps**, validé ingame par l'utilisateur puis intégré au shader commun et installé depuis les sorties standard du projet ; [source/installation et contrôles](measurements/sprite-display-nearest-silhouette-preferred-20261013-v1/project-integration-20261013-v1.json), 23 sorties GPU identiques à la référence approuvée. Branches Linear adouci, Mitchell et AA adapté au zoom retirées ; archives de référence immuables conservées. Aucun sprite retraité, aucune QA exhaustive ni promotion release déduite |
 | Variantes | pipeline xN cumulatif ; AA/xBR4 direct restent archivés |
 | `.work/` | cache supprimable, jamais source |
 | Ajout de famille | runbook actif [`../sprite/FAMILY_APPEND.md`](../sprite/FAMILY_APPEND.md) |

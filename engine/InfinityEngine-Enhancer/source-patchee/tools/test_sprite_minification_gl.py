@@ -5,6 +5,7 @@ The hidden 16x16 window is never shown or activated. Only its own DC is used.
 """
 from __future__ import annotations
 
+import argparse
 import ctypes as c
 from ctypes import wintypes as w
 import json
@@ -27,6 +28,9 @@ class PixelFormat(c.Structure):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--shader-dir", type=Path, default=ROOT / "assets/override")
+    args = parser.parse_args()
     user, gdi, ogl = c.WinDLL("user32"), c.WinDLL("gdi32"), c.WinDLL("opengl32")
     user.CreateWindowExW.restype = w.HWND
     user.CreateWindowExW.argtypes = [w.DWORD, w.LPCWSTR, w.LPCWSTR, w.DWORD,
@@ -139,7 +143,7 @@ void main() {
                 raise RuntimeError(log.value.decode())
             return result
 
-        programs = {name: program(prefix + (ROOT / "assets/override" / name).read_text())
+        programs = {name: program(prefix + (args.shader_dir / name).read_text())
                     for name in ("fpDraw.glsl", "fpSprite.glsl", "fpSELECT.glsl")}
         # Compile the exact embedded native-mask sources as well.
         bridge = (ROOT / "src/iee/native_occlusion_bridge.cpp").read_text()
@@ -157,21 +161,29 @@ void main() {
         viewport(0, 0, 1, 1)
         checks = []
 
-        def render(pixels, width, height, mode, first, footprint):
+        def render(pixels, width, height, mode, first, footprint, style_enabled=False,
+                   texture_scale=2, linear_sampler=False, shader_name="fpDraw.glsl"):
             data = (c.c_ubyte * len(pixels))(*pixels)
             bind_tex(0x0DE1, source_texture)
             image(0x0DE1, 0, 0x8058, width, height, 0, 0x1908, 0x1401, data)
-            parameter(0x0DE1, 0x2801, 0x2600)
-            parameter(0x0DE1, 0x2800, 0x2600)
+            base_filter = 0x2601 if mode == 1 or linear_sampler else 0x2600
+            parameter(0x0DE1, 0x2801, base_filter)
+            parameter(0x0DE1, 0x2800, base_filter)
             parameter(0x0DE1, 0x813D, 0)
             if mode == 4:
                 parameter(0x0DE1, 0x813D, int(math.log2(max(width, height))))
                 generate(0x0DE1)
                 parameter(0x0DE1, 0x2801, 0x2703)
-            target = programs["fpDraw.glsl"]
+            target = programs[shader_name]
             use(target)
             uniform1i(location(target, b"uTex"), 0)
             uniform1f(location(target, b"uIeeCreatureFilterMode"), mode)
+            uniform1f(location(target, b"uIeeShaderSuiteEnabled"), float(style_enabled))
+            uniform1f(location(target, b"uIeeCreatureStyleEnabled"), float(style_enabled))
+            uniform1f(location(target, b"uIeeCreatureTextureScale"), texture_scale)
+            uniform1f(location(target, b"uSpriteBlurAmount"), 1.0)
+            for neutral in (b"uIeeCreatureGamma", b"uIeeCreatureContrast", b"uIeeCreatureSaturation"):
+                uniform1f(location(target, neutral), 1.0)
             uniform2f(location(target, b"uIeeCreatureTexelSize"), 1 / width, 1 / height)
             uniform2f(location(target, b"testFirstEdge"), first[0] / width, first[1] / height)
             uniform2f(location(target, b"testFootprint"), footprint[0] / width, footprint[1] / height)
@@ -200,6 +212,32 @@ void main() {
         expect("mips_alpha_no_dark_halo", render(premult, 2, 2, 4, (0, 0), (2, 2)), [255, 0, 0, 128])
         expect("mips_mag_straight_decode", render([128, 0, 0, 128] * 4, 2, 2, 4, (.1, .1), (.5, .5)), [255, 0, 0, 128])
         expect("nearest_baseline_unchanged", render(asymmetric, 2, 2, 0, (.1, .1), (.5, .5)), [0, 0, 0, 255])
+        edge = [channel for y in range(4) for x in range(4)
+                for channel in ([255, 0, 0, 255] if x < 2 else [0, 0, 255, 0])]
+        expect("nearest_silhouette_opaque_detail", render(checker, 8, 8, 0,
+               (2.7, 2.7), (.5, .5), True), [0, 0, 0, 255])
+        expect("nearest_silhouette_preserves_center", render(edge, 4, 4, 0,
+               (1.25, 1.25), (.5, .5), True), [255, 0, 0, 255])
+        expect("nearest_silhouette_alpha_only", render(edge, 4, 4, 0,
+               (1.75, 1.25), (.5, .5), True), [255, 0, 0, 128])
+        expect("nearest_silhouette_outer_coverage", render(edge, 4, 4, 0,
+               (2.0, 1.25), (.5, .5), True),
+               [255, 0, 0, 64])
+        expect("nearest_silhouette_fully_hidden", render(edge, 4, 4, 0,
+               (2.25, 1.25), (.5, .5), True), [0, 0, 0, 0])
+        expect("nearest_silhouette_shadow_opacity", render([0, 0, 0, 127] * 16, 4, 4, 0,
+               (1.25, 1.25), (.5, .5), True), [0, 0, 0, 127])
+        expect("nearest_silhouette_native_x1_neutral", render(edge, 4, 4, 0,
+               (1.75, 1.25), (.5, .5), True, texture_scale=1), [0, 0, 0, 0])
+        expect("nearest_silhouette_masked_linear_sampler", render(edge, 4, 4, 0,
+               (1.75, 1.25), (.5, .5), True, linear_sampler=True), [255, 0, 0, 128])
+        expect("nearest_silhouette_masked_opaque_rgb", render(checker, 8, 8, 0,
+               (2.7, 2.7), (.5, .5), True, linear_sampler=True), [0, 0, 0, 255])
+        expect("nearest_silhouette_fpSprite_no_rgb_halo", render(edge, 4, 4, 0,
+               (1.75, 1.25), (.5, .5), True, shader_name="fpSprite.glsl"), [255, 0, 0, 128])
+        expect("nearest_silhouette_mirror", render(edge, 4, 4, 0,
+               (2.25, 1.25), (-.5, .5), True), [255, 0, 0, 128])
+
         mask_texture = U()
         gen_tex(1, c.byref(mask_texture))
         for name, transfer, expected in (
@@ -230,6 +268,7 @@ void main() {
             expect(name, list(result), expected)
         print(json.dumps({"status": "passed", "renderer": get_string(0x1F01).decode(),
                           "gl_version": get_string(0x1F02).decode(),
+                          "display_filter": "NearestRGB-SilhouetteAlphaAA",
                           "compiled": list(programs) + ["native_occlusion_bridge"],
                           "checks": checks, "desktop_input": False, "window_shown": False}, indent=2))
     finally:

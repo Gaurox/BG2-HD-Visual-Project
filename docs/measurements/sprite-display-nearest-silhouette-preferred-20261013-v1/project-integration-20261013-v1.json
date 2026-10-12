@@ -1,0 +1,62 @@
+{
+  "schema": "bg2-nearest-silhouette-project-integration-v1",
+  "created_at_utc": "2026-10-13T00:58:30.6477+02:00",
+  "status": "installed-from-project",
+  "authority": "user",
+  "request": "supprime toutes les modifs non validées. garde le candidat final. installe le proprement au projet puis committe",
+  "selected_candidate": "NearestRGB-SilhouetteAlphaAA",
+  "reference": "decision.json",
+  "game_root": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition",
+  "scope": "global registered ordinary-RGBA HD creatures, animation scope 0x0",
+  "method": {
+    "rgb": "nearest covered texel; no RGB averaging",
+    "alpha": "bilinear only at silhouette transparency",
+    "taps": 4,
+    "fpSprite_native_rgb_halo_bypassed": true
+  },
+  "build": "standard build_shader_suite.py --run; no trial switches",
+  "ini_sha256": "5859F49562E89F71CC1A9B9DDBAC4F77B9B5AB95E5983D88E51C09E480042ABA",
+  "gpu_verification": "project-gpu-verification-20261013-v1.json",
+  "gpu_checks_passed": 23,
+  "reference_pixel_outputs_identical": true,
+  "builder_tests_passed": 3,
+  "sdf_contract": "existing HEAD generated shader contract retained in the shared source",
+  "removed_trials": [
+    "soft Linear contours",
+    "Mitchell-Netravali",
+    "zoom-aware silhouette AA 1 screen pixel",
+    "zoom-aware silhouette AA 1.5 screen pixels"
+  ],
+  "files": [
+    {
+      "name": "fpDraw.glsl",
+      "target": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition\\override\\fpDraw.glsl",
+      "before_path": "G:\\AI\\BG2_Upscale\\docs\\measurements\\sprite-display-nearest-silhouette-preferred-20261013-v1\\preferred\\override\\fpDraw.glsl",
+      "before_sha256": "7B599F07B057287941B1A7EC8DA631BA1CB8EB0AB0B3CC738A9B5E9ACCBEB2C0",
+      "project_source": "G:\\AI\\BG2_Upscale\\engine\\InfinityEngine-Enhancer\\source-patchee\\assets\\override\\fpDraw.glsl",
+      "project_sha256": "C50A43EBD580EE840EDABAF6B96B9DF80589A7D793F27A85D1766BC17977BA20"
+    },
+    {
+      "name": "fpSprite.glsl",
+      "target": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition\\override\\fpSprite.glsl",
+      "before_path": "G:\\AI\\BG2_Upscale\\docs\\measurements\\sprite-display-nearest-silhouette-preferred-20261013-v1\\preferred\\override\\fpSprite.glsl",
+      "before_sha256": "8843BF087BFF599F234C6C5AA53DD928DA7A1DA8FB814928289DCDDD430F135A",
+      "project_source": "G:\\AI\\BG2_Upscale\\engine\\InfinityEngine-Enhancer\\source-patchee\\assets\\override\\fpSprite.glsl",
+      "project_sha256": "CF5C2795E37EE31D908801312971B8FA1ED5BE3A87902A7A44F186A013610A73"
+    },
+    {
+      "name": "fpSELECT.glsl",
+      "target": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition\\override\\fpSELECT.glsl",
+      "before_path": "G:\\AI\\BG2_Upscale\\docs\\measurements\\sprite-display-nearest-silhouette-preferred-20261013-v1\\preferred\\override\\fpSELECT.glsl",
+      "before_sha256": "56B12A40EBB0E6279062E54460BAB61B00A834C5A360D65A638A4C87CB8FD79B",
+      "project_source": "G:\\AI\\BG2_Upscale\\engine\\InfinityEngine-Enhancer\\source-patchee\\assets\\override\\fpSELECT.glsl",
+      "project_sha256": "F733B8970A3B1C3FB85F335C5BC3F2DC91A113DE22C6CF0B2CFBD2ACE79B84A5"
+    }
+  ],
+  "assets_reprocessed": false,
+  "DLL_release_changed": false,
+  "full_family_ingame_QA": "not claimed",
+  "installed_at_utc": "2026-10-12T22:58:40.9626758Z",
+  "cleanup_completed": true,
+  "removed_trial_and_work_directories": 15
+}

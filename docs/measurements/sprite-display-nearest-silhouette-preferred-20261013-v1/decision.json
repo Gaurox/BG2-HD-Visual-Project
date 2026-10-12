@@ -1,0 +1,49 @@
+{
+  "schema": "bg2-sprite-display-preference-v2",
+  "recorded_at_utc": "2026-10-12T22:03:00.329468+00:00",
+  "authority": "user",
+  "request": "oui la j'apprécie cet effet. garde en mémoire que c'est le candidat privilégier. puis repasse en nearest classique pour que je compare",
+  "status": "preferred-candidate",
+  "preferred_candidate": "NearestRGB-SilhouetteAlphaAA",
+  "method": {
+    "rgb": "nearest covered texel; no RGB averaging",
+    "alpha": "bilinear only at silhouette transparency",
+    "taps": 4,
+    "fpSprite_native_rgb_halo_bypassed": true
+  },
+  "runtime_transport": "CreatureSpriteFilter=Nearest; shader compile switch enabled",
+  "scope": "global registered ordinary-RGBA HD creatures, animation scope 0x0",
+  "visual_feedback": "positive user feedback; preferred candidate pending comparison with classic Nearest",
+  "full_family_ingame_QA": "not claimed",
+  "assets_reprocessed": false,
+  "catalogue_DLL_release_changed": false,
+  "historical_QA_changed": false,
+  "files": [
+    {
+      "name": "fpDraw.glsl",
+      "preferred_path": "preferred/override/fpDraw.glsl",
+      "preferred_sha256": "7B599F07B057287941B1A7EC8DA631BA1CB8EB0AB0B3CC738A9B5E9ACCBEB2C0",
+      "nearest_classic_path": "nearest-classic/override/fpDraw.glsl",
+      "nearest_classic_sha256": "C6F1F23D99D16BFD34FC3EAC1577F24C096C4C00F0427CEA69E8BDE779311827"
+    },
+    {
+      "name": "fpSprite.glsl",
+      "preferred_path": "preferred/override/fpSprite.glsl",
+      "preferred_sha256": "8843BF087BFF599F234C6C5AA53DD928DA7A1DA8FB814928289DCDDD430F135A",
+      "nearest_classic_path": "nearest-classic/override/fpSprite.glsl",
+      "nearest_classic_sha256": "065E28C595AF84A7ADDCBD97793BC8EEDCB5052BB26BAB1D92710CB0E2FD0816"
+    },
+    {
+      "name": "fpSELECT.glsl",
+      "preferred_path": "preferred/override/fpSELECT.glsl",
+      "preferred_sha256": "56B12A40EBB0E6279062E54460BAB61B00A834C5A360D65A638A4C87CB8FD79B",
+      "nearest_classic_path": "nearest-classic/override/fpSELECT.glsl",
+      "nearest_classic_sha256": "E4E70C98DE1E6826C47F934AC3E600AF06F105F69CC80F84E2289D28E5952815"
+    }
+  ],
+  "ini_path": "preferred/InfinityEngine-Enhancer.ini",
+  "ini_sha256": "5859F49562E89F71CC1A9B9DDBAC4F77B9B5AB95E5983D88E51C09E480042ABA",
+  "gpu_verification": "gpu-verification.json",
+  "comparison_reference": "nearest-classic/",
+  "comparison_installation_receipt": "comparison-installation.json"
+}
