@@ -1,0 +1,45 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "asset_ids": [
+    "effects:bam:SPSHKIMP"
+  ],
+  "domain": "effects",
+  "inputs": [
+    {
+      "bytes": 11404,
+      "path": "effects/ressources/SPSHKIMP/runs/spshkimp-spatial-seedvr3b-lab-lot54-20261013-v1/01-spatial-x4/manifest.json",
+      "role": "parent-spatial-output",
+      "sha256": "A740C078FBE740F200F183612ABA421E8DD0CF23F6CD02465177D02EE76BE220"
+    }
+  ],
+  "outputs": [],
+  "pipeline": {
+    "id": "effects.interpolation-30fps.v1",
+    "recipe_path": "effects/ressources/SPSHKIMP/runs/spshkimp-interpolation-apollo30-left-lot54-20261013-v1/recipe.json",
+    "recipe_sha256": "993D3015DFD2386EA63A724470E24460A1BB9EBD0E73FFEAE046396E944AFD39",
+    "version": "effect-interpolation-runner.v2"
+  },
+  "provenance": {
+    "command": [
+      "run_effect_interpolation.py",
+      "--resref",
+      "SPSHKIMP",
+      "--spatial-run",
+      "spshkimp-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "--run-id",
+      "spshkimp-interpolation-apollo30-left-lot54-20261013-v1"
+    ],
+    "created_at_utc": "2026-10-13T18:02:25Z",
+    "generator": "pipeline/scripts/run_effect_interpolation.py",
+    "parents": [
+      "spshkimp-spatial-seedvr3b-lab-lot54-20261013-v1"
+    ]
+  },
+  "result": {
+    "notes": "frames lumineuses dupliquées sans pause native après Apollo : [[3, 15], [5, 17], [7, 19]]",
+    "sealed": false,
+    "status": "failed"
+  },
+  "run_id": "spshkimp-interpolation-apollo30-left-lot54-20261013-v1",
+  "schema_version": 1
+}

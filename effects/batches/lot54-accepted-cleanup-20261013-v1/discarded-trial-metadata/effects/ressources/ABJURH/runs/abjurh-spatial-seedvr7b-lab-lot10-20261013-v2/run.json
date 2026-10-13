@@ -1,0 +1,59 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "asset_ids": [
+    "effects:bam:ABJURH"
+  ],
+  "domain": "effects",
+  "inputs": [
+    {
+      "bytes": 37106,
+      "path": "effects/ressources/ABJURH/source.bam",
+      "role": "source-bam",
+      "sha256": "5E02E317A9B20524117DCCFFBFF6126F88C6AB0BC40DB025CC1A8ED3C43424DF"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 6891,
+      "path": "effects/ressources/ABJURH/runs/abjurh-spatial-seedvr7b-lab-lot10-20261013-v2/00-frames-x1/manifest.json",
+      "role": "frames-manifest",
+      "sha256": "E2D0DB5706064ED243F9190BBA954C02DF4E82A4AB3BCAD563C0DAEB04CCF440"
+    },
+    {
+      "bytes": 20685,
+      "path": "effects/ressources/ABJURH/runs/abjurh-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/manifest.json",
+      "role": "spatial-manifest",
+      "sha256": "3C63745B75175E62FFA8DB20B059AE108061536AE892360E83BBC4C7A10601C5"
+    },
+    {
+      "bytes": 2254361,
+      "path": "effects/ressources/ABJURH/runs/abjurh-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/preview/animation-x4-contact-sheet.png",
+      "role": "spatial-preview",
+      "sha256": "B2F1F31053366835AABD2ED5ACF5DED0711A0B061BAA2DE3F6C009832DCA43AF"
+    }
+  ],
+  "pipeline": {
+    "id": "effects.spatial-x4.v1",
+    "recipe_path": "effects/ressources/ABJURH/runs/abjurh-spatial-seedvr7b-lab-lot10-20261013-v2/recipe.json",
+    "recipe_sha256": "15E1CC0AF7A07C8BE0859079248244B326C16638056D5373719C8322447A4C01",
+    "version": "effect-spatial-runner.v1"
+  },
+  "provenance": {
+    "command": [
+      "run_effect_spatial.py",
+      "--resref",
+      "ABJURH",
+      "--run-id",
+      "abjurh-spatial-seedvr7b-lab-lot10-20261013-v2"
+    ],
+    "created_at_utc": "2026-10-13T20:03:01Z",
+    "generator": "pipeline/scripts/run_effect_spatial.py"
+  },
+  "result": {
+    "completed_at_utc": "2026-10-13T20:03:29Z",
+    "sealed": true,
+    "status": "completed"
+  },
+  "run_id": "abjurh-spatial-seedvr7b-lab-lot10-20261013-v2",
+  "schema_version": 1
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "bg2-effects-nearest-renderer-install-v1",
+  "status": "installed-verified",
+  "receipt": "engine/InfinityEngine-Enhancer/installations/effects-nearest-20261013-v1/backups/20261013T203832698944Z-05388e97/renderer-install-receipt.json",
+  "dll_sha256": "BEBC79AF1DE842D2FB9269D2625F7668AFF5E45D8275D979B37CD28089A27285",
+  "before_dll_sha256": "3BFD4F1B1C21C4D1E126F06E0DC5857B7A53C8E130A98F9DD8C99D514D4AEA88",
+  "preserved_sha256": {
+    "InfinityEngine-Enhancer.ini": "5859F49562E89F71CC1A9B9DDBAC4F77B9B5AB95E5983D88E51C09E480042ABA",
+    "override/fpDraw.glsl": "C50A43EBD580EE840EDABAF6B96B9DF80589A7D793F27A85D1766BC17977BA20",
+    "override/fpSprite.glsl": "CF5C2795E37EE31D908801312971B8FA1ED5BE3A87902A7A44F186A013610A73",
+    "override/fpSELECT.glsl": "F733B8970A3B1C3FB85F335C5BC3F2DC91A113DE22C6CF0B2CFBD2ACE79B84A5",
+    "iee-assets/effects/manifest.json": "D3878796EBF60BDFFFF463C6BF885F8FA028189F4948096B0373D2FEDC78F2F2",
+    "iee-assets/effects/EffectAnimations-X4.registry": "4F6B48804034ACD17DC300C543DA2947989CAC668B6F531704C92E68B7904311",
+    "iee-assets/creature-sprites/CreatureSprites-XN.catalog": "2AD7838CB4157B3B3226DBF3635D59ED17CE028E209F33615499A7E1700B289C"
+  },
+  "scope": "all registered x4 effects, direct and native-visibility output; permanent loader default",
+  "effect_filter": "NEAREST min/mag; mip level 0 only",
+  "creature_filter": "NearestRGB-SilhouetteAlphaAA retained; output sampler and shader bytecode sources unchanged",
+  "payload": "7B x4/Apollo 30 assets untouched",
+  "tests": [
+    "iee_effect_texture_cache_tests:720 distinct frames GPU pixels and NEAREST min/mag, mip0, cache64, Character allocation each frame",
+    "iee_sprite_minification_tests",
+    "iee_native_occlusion_feather_tests"
+  ],
+  "ingame_qa": "pending user relaunch and CLUA test"
+}

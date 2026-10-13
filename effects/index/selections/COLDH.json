@@ -1,0 +1,136 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:COLDH",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 31,
+    "source": {
+      "interpolation_run": "coldh-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "interpolation_run_descriptor_sha256": "6AC737970F5C8A0BD99D22D41F3AB7D4CF03CB8F05EF1DEDA312DFEC5DAC5588",
+      "source_bam_sha256": "f3658b79afbff8481dd9c8483bab27a304e1663c48adb8d3b5ce1ba8bbc1a5f6",
+      "spatial_manifest_sha256": "FD4D0F6EA10FA1E7ED93814BEF727DE3F7515ADB91216AACECDECAA5E199940A",
+      "spatial_run": "coldh-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "spatial_run_descriptor_sha256": "1F80169105D6902E122CD15453F6D49B677AD96218EAD5DF6DBEE41232112EC9"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "phase_count": 32,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        30
+      ]
+    }
+  },
+  "decision_date": "2026-10-13",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1087,
+    "path": "effects/index/qa-decisions/COLDH/2026-10-13-accepted-95bf7c4f510f.json",
+    "sha256": "95BF7C4F510F3434D3458F1604F63F84F685E0B19995F6EBF3ABE3A266D90F30"
+  },
+  "resref": "COLDH",
+  "run_descriptor": {
+    "bytes": 2376,
+    "path": "effects/ressources/COLDH/runs/coldh-interpolation-gauss12-feather12-lot54-20261013-v1/run.json",
+    "sha256": "6AC737970F5C8A0BD99D22D41F3AB7D4CF03CB8F05EF1DEDA312DFEC5DAC5588"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 24061,
+      "path": "effects/ressources/COLDH/packs/coldh-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/manifest.json",
+      "sha256": "48865E51AB22BA7F886272C95BF5E059A3601F9AA6D9F7698F057C071C179DF3"
+    },
+    "registry": {
+      "bytes": 504,
+      "path": "effects/ressources/COLDH/packs/coldh-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/EffectAnimations-X4.registry",
+      "sha256": "E1C68F0A4D4E950A0E66D1E11AE29C0777150E11578E32369ED45450015665E8"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "coldh-interpolation-gauss12-feather12-lot54-20261013-v1",
+  "source": {
+    "bytes": 38975,
+    "path": "effects/ressources/COLDH/source.bam",
+    "sha256": "F3658B79AFBFF8481DD9C8483BAB27A304E1663C48ADB8D3B5CE1BA8BBC1A5F6"
+  }
+}

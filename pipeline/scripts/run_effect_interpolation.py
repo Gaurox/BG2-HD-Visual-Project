@@ -334,7 +334,7 @@ def recipe_snapshot(plan: InterpolationPlan) -> dict[str, Any]:
         },
         "rgb_policy": "Topaz Apollo receives x4 RGB only; source alpha is never model-generated",
         "alpha_policy": f"{plan.alpha_phase} deterministic temporal phase from enlarged spatial source alpha",
-        "native_anchor_policy": "exact spatial RGB on every native phase",
+        "native_anchor_policy": "exact spatial RGB on native phases and native holds; one-shot endpoint held",
         "deduplicate_outputs": plan.deduplicate_outputs,
         "topaz": {
             "ffmpeg": workflow.relative_path(plan.root, plan.tvai_ffmpeg)
@@ -438,6 +438,27 @@ def geometry_source_slot(phase: int, multiplier: int, source_slots: int) -> int:
     return min(phase // multiplier, source_slots - 1)
 
 
+def native_hold_identity(phase: int, multiplier: int, poses: Sequence[str | None],
+                         *, loop_closed: bool) -> str | None:
+    """Only native anchors, repeated native poses and a one-shot endpoint may repeat."""
+    slot = geometry_source_slot(phase, multiplier, len(poses))
+    following = (slot + 1) % len(poses) if loop_closed else min(slot + 1, len(poses) - 1)
+    if phase % multiplier == 0 or poses[slot] == poses[following]:
+        return poses[slot]
+    return None
+
+
+def native_phase_lineage(phase: int, multiplier: int, poses: Sequence[str | None],
+                         *, loop_closed: bool) -> tuple[Any, ...]:
+    """Repeated native subsequences legitimately repeat their in-between phases."""
+    held = native_hold_identity(phase, multiplier, poses, loop_closed=loop_closed)
+    if held is not None:
+        return ("native", held)
+    slot = geometry_source_slot(phase, multiplier, len(poses))
+    following = (slot + 1) % len(poses) if loop_closed else min(slot + 1, len(poses) - 1)
+    return ("transition", poses[slot], poses[following], phase % multiplier)
+
+
 def execute(plan: InterpolationPlan) -> dict[str, Any]:
     if plan.run_root.exists():
         raise InterpolationError(f"run déjà présent : {plan.run_root}")
@@ -460,6 +481,7 @@ def execute(plan: InterpolationPlan) -> dict[str, Any]:
         output_root = partial / "frames-rgba"
         for directory in (input_root, raw_root, output_root):
             directory.mkdir(parents=True)
+        native_poses: list[str | None] = []
         for slot, source_index in enumerate(source_cycle):
             source = frames[source_index]
             raw_name = "aligned_rgba_xn" if input_kind == "aligned" else "raw_rgba_xn"
@@ -469,6 +491,7 @@ def execute(plan: InterpolationPlan) -> dict[str, Any]:
                     rgba = aligned_image.convert("RGBA")
             else:
                 rgba = Image.frombytes("RGBA", input_physical, raw_path.read_bytes())
+            native_poses.append(visible_frame_digest(rgba, input_physical, (0, 0)))
             rgba.convert("RGB").save(input_root / f"in_{slot:03d}.png", format="PNG", compress_level=9)
         endpoint_slot = 0 if plan.loop_closed else len(source_cycle) - 1
         shutil.copyfile(input_root / f"in_{endpoint_slot:03d}.png", input_root / f"in_{len(source_cycle):03d}.png")
@@ -496,6 +519,15 @@ def execute(plan: InterpolationPlan) -> dict[str, Any]:
         stored_outputs: dict[tuple[Any, ...], dict[str, Any]] = {}
         visible_digests: dict[str, int] = {}
         visible_duplicates: list[list[int]] = []
+        native_hold_duplicates: list[list[int]] = []
+        native_repeat_duplicates: list[list[int]] = []
+        unexpected_duplicates: list[list[int]] = []
+        native_identities = [native_hold_identity(phase, multiplier, native_poses,
+                                                  loop_closed=plan.loop_closed)
+                             for phase in range(target_count)]
+        phase_lineages = [native_phase_lineage(phase, multiplier, native_poses,
+                                               loop_closed=plan.loop_closed)
+                          for phase in range(target_count)]
         empty_phases = 0
         for phase, rgb_path in enumerate(produced[:target_count]):
             with Image.open(rgb_path) as source_rgb:
@@ -509,7 +541,7 @@ def execute(plan: InterpolationPlan) -> dict[str, Any]:
             geometry_slot = geometry_source_slot(phase, multiplier, len(source_cycle))
             geometry_index = source_cycle[geometry_slot]
             geometry_source = frames[geometry_index]
-            if phase % multiplier == 0:
+            if phase % multiplier == 0 or native_identities[phase] is not None:
                 anchor = plan.spatial_manifest.parent / str(geometry_source[
                     "aligned_rgba_xn" if input_kind == "aligned" else "raw_rgba_xn"
                 ])
@@ -539,7 +571,14 @@ def execute(plan: InterpolationPlan) -> dict[str, Any]:
             if digest is None:
                 empty_phases += 1
             elif digest in visible_digests:
-                visible_duplicates.append([visible_digests[digest], phase])
+                pair = [visible_digests[digest], phase]
+                visible_duplicates.append(pair)
+                if phase_lineages[pair[0]] == phase_lineages[phase]:
+                    native_repeat_duplicates.append(pair)
+                    if native_identities[pair[0]] is not None:
+                        native_hold_duplicates.append(pair)
+                else:
+                    unexpected_duplicates.append(pair)
             else:
                 visible_digests[digest] = phase
             output_key = (physical, tuple(geometry_source.get("centre_x1", [0, 0])),
@@ -573,8 +612,8 @@ def execute(plan: InterpolationPlan) -> dict[str, Any]:
                 }
             )
         native_indices = [slot * multiplier for slot in range(len(source_cycle))]
-        if plan.deduplicate_outputs and visible_duplicates:
-            raise InterpolationError(f"frames lumineuses dupliquées après Apollo : {visible_duplicates}")
+        if plan.deduplicate_outputs and unexpected_duplicates:
+            raise InterpolationError(f"frames lumineuses dupliquées sans pause native après Apollo : {unexpected_duplicates}")
         manifest = {
             "schema": INTERPOLATION_SCHEMA,
             "status": "completed",
@@ -604,6 +643,9 @@ def execute(plan: InterpolationPlan) -> dict[str, Any]:
                 "visible_phase_count": target_count - empty_phases,
                 "empty_phase_count": empty_phases,
                 "exact_visible_duplicates": visible_duplicates,
+                "native_hold_duplicates": native_hold_duplicates,
+                "native_repeat_duplicates": native_repeat_duplicates,
+                "unexpected_visible_duplicates": unexpected_duplicates,
                 "stored_rgba_frame_count": len({record["rgba_x4"] for record in records}),
                 "unique_rgba_frame_count": len(stored_outputs),
                 "deduplicate_outputs": plan.deduplicate_outputs,

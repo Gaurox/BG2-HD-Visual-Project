@@ -1,0 +1,68 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "asset_ids": [
+    "effects:bam:EXALTAH"
+  ],
+  "domain": "effects",
+  "inputs": [
+    {
+      "bytes": 43855,
+      "path": "effects/ressources/EXALTAH/runs/exaltah-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/manifest.json",
+      "role": "parent-spatial-output",
+      "sha256": "B2C41C609FE8F22EF6640DE015100911AC7E55CE113E40BA9D26AA05EA23CE9B"
+    },
+    {
+      "bytes": 1738,
+      "path": "effects/ressources/EXALTAH/runs/exaltah-interpolation-apollo30-left-7b-lot10-20261013-v1/run.json",
+      "role": "source-interpolation-descriptor",
+      "sha256": "4143964D62657D5A3096B98C006455D43B78FCDC6F2C2794290E628BA0E2DCE7"
+    },
+    {
+      "bytes": 178246,
+      "path": "effects/ressources/EXALTAH/runs/exaltah-interpolation-apollo30-left-7b-lot10-20261013-v1/02-interpolation/manifest.json",
+      "role": "source-interpolation-manifest",
+      "sha256": "BC70A48B819F551C128F32E30E95013715C46723EFBC243D9810A426A46A36D1"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 228266,
+      "path": "effects/ressources/EXALTAH/runs/exaltah-interpolation-gauss12-feather12-7b-lot10-20261013-v1/02-interpolation/manifest.json",
+      "role": "interpolation-manifest",
+      "sha256": "48A744F7A1D85D8E260E37DCB5C0184134607620C161FE758B8EBC30CF3E3991"
+    }
+  ],
+  "pipeline": {
+    "id": "effects.interpolation-30fps.v1",
+    "recipe_path": "effects/ressources/EXALTAH/runs/exaltah-interpolation-gauss12-feather12-7b-lot10-20261013-v1/recipe.json",
+    "recipe_sha256": "F9B104BDC956C7E772ED840FD58B759F5707B2115586C4C33DCE622473146E33",
+    "version": "effect-visual-treatment.v1"
+  },
+  "provenance": {
+    "command": [
+      "run_effect_visual_treatment.py",
+      "--resref",
+      "EXALTAH",
+      "--interpolation-run",
+      "exaltah-interpolation-apollo30-left-7b-lot10-20261013-v1",
+      "--run-id",
+      "exaltah-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+      "--sigma-x4",
+      "1.2",
+      "--inner-feather-x4",
+      "12.0"
+    ],
+    "created_at_utc": "2026-10-13T20:06:54Z",
+    "generator": "pipeline/scripts/run_effect_visual_treatment.py",
+    "parents": [
+      "exaltah-spatial-seedvr7b-lab-lot10-20261013-v2"
+    ]
+  },
+  "result": {
+    "completed_at_utc": "2026-10-13T20:07:00Z",
+    "sealed": true,
+    "status": "completed"
+  },
+  "run_id": "exaltah-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+  "schema_version": 1
+}

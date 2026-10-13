@@ -1,0 +1,59 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "asset_ids": [
+    "effects:bam:BDETHER"
+  ],
+  "domain": "effects",
+  "inputs": [
+    {
+      "bytes": 436380,
+      "path": "effects/ressources/BDETHER/source.bam",
+      "role": "source-bam",
+      "sha256": "110223DCD804D1C969AFE352B77CFF25BE8A30BB8928DBB56AD5DF2C88F01EE4"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 16965,
+      "path": "effects/ressources/BDETHER/runs/bdether-spatial-seedvr7b-lab-lot10-20261013-v2/00-frames-x1/manifest.json",
+      "role": "frames-manifest",
+      "sha256": "A62870B7A61BADFB5A2D20F66B7155136B7F7C665EFD2E4BC346FFD51E6D92B2"
+    },
+    {
+      "bytes": 51575,
+      "path": "effects/ressources/BDETHER/runs/bdether-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/manifest.json",
+      "role": "spatial-manifest",
+      "sha256": "89338492A3A8B141FE01489AB28C56771640E4C91853F16E325DA5B70C131162"
+    },
+    {
+      "bytes": 9604934,
+      "path": "effects/ressources/BDETHER/runs/bdether-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/preview/animation-x4-contact-sheet.png",
+      "role": "spatial-preview",
+      "sha256": "5ABBE8326BF46D4D6861FECF5F6E028A1415F70678D6CEDE5367420B1DC5798C"
+    }
+  ],
+  "pipeline": {
+    "id": "effects.spatial-x4.v1",
+    "recipe_path": "effects/ressources/BDETHER/runs/bdether-spatial-seedvr7b-lab-lot10-20261013-v2/recipe.json",
+    "recipe_sha256": "15E1CC0AF7A07C8BE0859079248244B326C16638056D5373719C8322447A4C01",
+    "version": "effect-spatial-runner.v1"
+  },
+  "provenance": {
+    "command": [
+      "run_effect_spatial.py",
+      "--resref",
+      "BDETHER",
+      "--run-id",
+      "bdether-spatial-seedvr7b-lab-lot10-20261013-v2"
+    ],
+    "created_at_utc": "2026-10-13T19:54:08Z",
+    "generator": "pipeline/scripts/run_effect_spatial.py"
+  },
+  "result": {
+    "completed_at_utc": "2026-10-13T19:55:22Z",
+    "sealed": true,
+    "status": "completed"
+  },
+  "run_id": "bdether-spatial-seedvr7b-lab-lot10-20261013-v2",
+  "schema_version": 1
+}

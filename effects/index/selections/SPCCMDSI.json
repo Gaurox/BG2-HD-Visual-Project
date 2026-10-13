@@ -1,0 +1,152 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPCCMDSI",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 39,
+    "source": {
+      "interpolation_run": "spccmdsi-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "interpolation_run_descriptor_sha256": "5AE65B002DB43FA8C6F67C1F0C967F0D11AD1ECC66ED2EFDEF3CB871D04CFF34",
+      "source_bam_sha256": "28f597f1148939490a519ec040ba5571ac844a095e78308d5dcd6d1c4503f649",
+      "spatial_manifest_sha256": "6DC75950EEF22AD74F659E8AF0967411644A5ADE2386117DB177AA4B2A42D424",
+      "spatial_run": "spccmdsi-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "spatial_run_descriptor_sha256": "2D93D9E2519A1C8C6E7BDAAF50077EFC7202B1EB3749895D891F243C0FDA9E5F"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        36,
+        38
+      ],
+      "phase_count": 40,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        38
+      ]
+    }
+  },
+  "decision_date": "2026-10-13",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1108,
+    "path": "effects/index/qa-decisions/SPCCMDSI/2026-10-13-accepted-c67de50dfb99.json",
+    "sha256": "C67DE50DFB99EF053663875CD786693CC5FBB00B9854B85A0C1E984614212471"
+  },
+  "resref": "SPCCMDSI",
+  "run_descriptor": {
+    "bytes": 2424,
+    "path": "effects/ressources/SPCCMDSI/runs/spccmdsi-interpolation-gauss12-feather12-lot54-20261013-v1/run.json",
+    "sha256": "5AE65B002DB43FA8C6F67C1F0C967F0D11AD1ECC66ED2EFDEF3CB871D04CFF34"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 30395,
+      "path": "effects/ressources/SPCCMDSI/packs/spccmdsi-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/manifest.json",
+      "sha256": "7CF1667D91142706B8641F8CA255C9A99B3CE18FED811C859D141C6F8F2E39D1"
+    },
+    "registry": {
+      "bytes": 616,
+      "path": "effects/ressources/SPCCMDSI/packs/spccmdsi-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/EffectAnimations-X4.registry",
+      "sha256": "1BF267E609019F5AD993F93C1F7DA99945B58D05A8CD867F0611DCB511EA2500"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spccmdsi-interpolation-gauss12-feather12-lot54-20261013-v1",
+  "source": {
+    "bytes": 112302,
+    "path": "effects/ressources/SPCCMDSI/source.bam",
+    "sha256": "28F597F1148939490A519EC040BA5571AC844A095E78308D5DCD6D1C4503F649"
+  }
+}

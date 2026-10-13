@@ -58,6 +58,23 @@ class EffectInterpolationManifestTests(unittest.TestCase):
         self.assertIsNone(interpolation.visible_frame_digest(
             Image.new("RGBA", (2, 2), (255, 255, 255, 0)), (8, 8), (2, 3)))
 
+    def test_native_pause_and_one_shot_endpoint_are_preserved(self) -> None:
+        poses = ["red", "red", "blue"]
+        self.assertEqual([interpolation.native_hold_identity(p, 2, poses, loop_closed=False)
+                          for p in range(6)], ["red", "red", "red", None, "blue", "blue"])
+
+    def test_interpolated_motion_and_loop_wrap_cannot_claim_a_native_hold(self) -> None:
+        poses = ["red", "green", "blue"]
+        self.assertEqual([interpolation.native_hold_identity(p, 2, poses, loop_closed=True)
+                          for p in range(6)], ["red", None, "green", None, "blue", None])
+
+    def test_repeated_native_subsequence_allows_the_same_transition_not_a_freeze(self) -> None:
+        poses = ["red", "green", "blue", "red", "green", "blue"]
+        lineage = lambda p: interpolation.native_phase_lineage(p, 2, poses, loop_closed=False)
+        self.assertEqual(lineage(1), lineage(7))
+        self.assertNotEqual(lineage(1), lineage(3))
+        self.assertNotEqual(lineage(1), lineage(0))
+
     def test_variable_frames_use_the_common_aligned_canvas(self) -> None:
         frames = []
         for index, logical, crop in ((0, [1, 1], [4, 0, 8, 4]), (1, [2, 1], [0, 0, 8, 4])):

@@ -1,0 +1,760 @@
+{
+  "schema": "bg2-runtime-stable-session-audit-v1",
+  "source_log": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition\\InfinityEngine-Enhancer.log",
+  "source_snapshot_sha256": "42EEB1ECDF4BF546C11BD3C25BAC8AA1682CB7A7A67DE6FD8087890D74824FD1",
+  "session_start_source_line": 30873,
+  "session_end_source_line": 32025,
+  "session_start": "[2026-10-13 21:45:00.207] [info] Infinity Engine Enhancer initializing...",
+  "session_last_line": "[2026-10-13 21:46:24.692] [info] Map page B1: generation=0, pages=27, prepared=0, hits=0, misses=0, consumed=0, rejected=0, failures=0, reservedBytes=0, peakBytes=0, crcMs=0.000, copyMs=0.000, renderWorkerWaits=0",
+  "last_effect_counters": "[2026-10-13 21:46:19.137] [info] Effect animation x4 diagnostic: resref=SPPLANAR, stage=x4-bound, registeredCellReads=1800, registryResolved=1800, registryFallback=0, timelineResolved=1800, x4Bound=1800, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=134x99; x4Bound confirms the 4x backing texture was bound for the native draw geometry",
+  "gpu_cache_reuse": "[2026-10-13 21:45:31.160] [info] Effect animation x4 GPU cache reusing owned slots: capacity=64, resident=64; native Character/UI texture slots remain available",
+  "effects": [
+    {
+      "bam": "ABJURH",
+      "vvc": "ABJURH",
+      "command": "C:Eval('CreateVisualEffectObject(\"ABJURH\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "OHRSHFIE",
+      "vvc": "OHRSHFIE",
+      "command": "C:Eval('CreateVisualEffectObject(\"OHRSHFIE\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPGFLSH1",
+      "vvc": "SPGFLSH1",
+      "command": "C:Eval('CreateVisualEffectObject(\"SPGFLSH1\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "BDFAVSPI",
+      "vvc": "BDFAVSPI",
+      "command": "C:Eval('CreateVisualEffectObject(\"BDFAVSPI\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "BDRSPIRI",
+      "vvc": "BDRSPIRI",
+      "command": "C:Eval('CreateVisualEffectObject(\"BDRSPIRI\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPRAISEI",
+      "vvc": "ICRAISEI",
+      "command": "C:Eval('CreateVisualEffectObject(\"ICRAISEI\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "COLDH",
+      "vvc": "COLDH",
+      "command": "C:Eval('CreateVisualEffectObject(\"COLDH\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "FIREH",
+      "vvc": "FIREH",
+      "command": "C:Eval('CreateVisualEffectObject(\"FIREH\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "MMAGICH",
+      "vvc": "ICMAGICH",
+      "command": "C:Eval('CreateVisualEffectObject(\"ICMAGICH\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPSHKIMP",
+      "vvc": "SPSHKIMP",
+      "command": "C:Eval('CreateVisualEffectObject(\"SPSHKIMP\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "FDAWNX",
+      "vvc": "FDAWNX",
+      "command": "C:Eval('CreateVisualEffectObject(\"FDAWNX\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "GRNDGLOW",
+      "vvc": "FIRECOLD",
+      "command": "C:Eval('CreateVisualEffectObject(\"FIRECOLD\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPCCMDSI",
+      "vvc": "ICCCMDSI",
+      "command": "C:Eval('CreateVisualEffectObject(\"ICCCMDSI\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPUNHOLY",
+      "vvc": "SPUNHOLY",
+      "command": "C:Eval('CreateVisualEffectObject(\"SPUNHOLY\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPDISPMA",
+      "vvc": "SPDISPMA",
+      "command": "C:Eval('CreateVisualEffectObject(\"SPDISPMA\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPHEALIN",
+      "vvc": "SPHEALIN",
+      "command": "C:Eval('CreateVisualEffectObject(\"SPHEALIN\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPHOLLYW",
+      "vvc": "SPHOLY",
+      "command": "C:Eval('CreateVisualEffectObject(\"SPHOLY\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "BDSPLOCK",
+      "vvc": "BDSPLOCK",
+      "command": "C:Eval('CreateVisualEffectObject(\"BDSPLOCK\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "CSHIELDH",
+      "vvc": "CSHIELDH",
+      "command": "C:Eval('CreateVisualEffectObject(\"CSHIELDH\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "CURSEH",
+      "vvc": "CURSEH",
+      "command": "C:Eval('CreateVisualEffectObject(\"CURSEH\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPBLESHI",
+      "vvc": "ICBLESAI",
+      "command": "C:Eval('CreateVisualEffectObject(\"ICBLESAI\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "GARMORH",
+      "vvc": "1WDGARMR",
+      "command": "C:Eval('CreateVisualEffectObject(\"1WDGARMR\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SARMORH",
+      "vvc": "1WDSARMR",
+      "command": "C:Eval('CreateVisualEffectObject(\"1WDSARMR\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPARMORI",
+      "vvc": "ICARMOR",
+      "command": "C:Eval('CreateVisualEffectObject(\"ICARMOR\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "PARALH",
+      "vvc": "PARALH",
+      "command": "C:Eval('CreateVisualEffectObject(\"PARALH\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPDHRMNY",
+      "vvc": "SPDHRMNY",
+      "command": "C:Eval('CreateVisualEffectObject(\"SPDHRMNY\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPCHMPSI",
+      "vvc": "ICCHMPSI",
+      "command": "C:Eval('CreateVisualEffectObject(\"ICCHMPSI\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPSTRENI",
+      "vvc": "ICSTRENI",
+      "command": "C:Eval('CreateVisualEffectObject(\"ICSTRENI\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPSTRONE",
+      "vvc": "ICSTRONE",
+      "command": "C:Eval('CreateVisualEffectObject(\"ICSTRONE\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPPOWATK",
+      "vvc": "SPPOWATK",
+      "command": "C:Eval('CreateVisualEffectObject(\"SPPOWATK\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPSDIMPA",
+      "vvc": "SPSDIMPA",
+      "command": "C:Eval('CreateVisualEffectObject(\"SPSDIMPA\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPTRUSEE",
+      "vvc": "SPTRUSEE",
+      "command": "C:Eval('CreateVisualEffectObject(\"SPTRUSEE\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPUSEANY",
+      "vvc": "SPUSEANY",
+      "command": "C:Eval('CreateVisualEffectObject(\"SPUSEANY\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPFDEATH",
+      "vvc": "SPDEATH3",
+      "command": "C:Eval('CreateVisualEffectObject(\"SPDEATH3\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "ASUMM1X",
+      "vvc": "ASUMM1X",
+      "command": "C:Eval('CreateVisualEffectObject(\"ASUMM1X\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "BDSHSUM",
+      "vvc": "BDSHSUM",
+      "command": "C:Eval('CreateVisualEffectObject(\"BDSHSUM\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "MSUMM1X",
+      "vvc": "MSUMM1X",
+      "command": "C:Eval('CreateVisualEffectObject(\"MSUMM1X\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPFRACTI",
+      "vvc": "ICFRACTI",
+      "command": "C:Eval('CreateVisualEffectObject(\"ICFRACTI\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "BDSPWARD",
+      "vvc": "BDSPWARD",
+      "command": "C:Eval('CreateVisualEffectObject(\"BDSPWARD\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPROTECT",
+      "vvc": "SPROTECT",
+      "command": "C:Eval('CreateVisualEffectObject(\"SPROTECT\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPFLSRIN",
+      "vvc": "SPFLSRIN",
+      "command": "C:Eval('CreateVisualEffectObject(\"SPFLSRIN\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPSETTIH",
+      "vvc": "SPSETTIH",
+      "command": "C:Eval('CreateVisualEffectObject(\"SPSETTIH\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "OHRDARK",
+      "vvc": "OHRDARK",
+      "command": "C:Eval('CreateVisualEffectObject(\"OHRDARK\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPPOWWRD",
+      "vvc": "SPPOWWRD",
+      "command": "C:Eval('CreateVisualEffectObject(\"SPPOWWRD\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "BDETHER",
+      "vvc": "BDETHER",
+      "command": "C:Eval('CreateVisualEffectObject(\"BDETHER\",Player1)',0)",
+      "status": "x4-observed-no-fallback-reported",
+      "stages": {
+        "registry-resolved": 1,
+        "timeline-resolved": 1,
+        "x4-bound": 1,
+        "native-occlusion-bound": 1
+      },
+      "events": [
+        {
+          "source_line": 31398,
+          "snapshot_line": 526,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 21:45:24.654] [info] Effect animation x4 diagnostic: resref=BDETHER, stage=registry-resolved, registeredCellReads=1, registryResolved=1, registryFallback=0, timelineResolved=0, x4Bound=0, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=75x90; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 31399,
+          "snapshot_line": 527,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 21:45:24.654] [info] Effect animation x4 diagnostic: resref=BDETHER, stage=timeline-resolved, registeredCellReads=1, registryResolved=1, registryFallback=0, timelineResolved=1, x4Bound=0, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=75x90; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 31401,
+          "snapshot_line": 529,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 21:45:24.654] [info] Effect animation x4 diagnostic: resref=BDETHER, stage=x4-bound, registeredCellReads=1, registryResolved=1, registryFallback=0, timelineResolved=1, x4Bound=1, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=75x90; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 31403,
+          "snapshot_line": 531,
+          "stage": "native-occlusion-bound",
+          "text": "[2026-10-13 21:45:24.655] [info] Effect animation x4 diagnostic: resref=BDETHER, stage=native-occlusion-bound, registeredCellReads=1, registryResolved=1, registryFallback=0, timelineResolved=1, x4Bound=1, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=75x90; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ]
+    },
+    {
+      "bam": "SHAREAW",
+      "vvc": "SHAREAW",
+      "command": "C:Eval('CreateVisualEffectObject(\"SHAREAW\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "BDSPCLAR",
+      "vvc": "BDSPCLAR",
+      "command": "C:Eval('CreateVisualEffectObject(\"BDSPCLAR\",Player1)',0)",
+      "status": "x4-observed-no-fallback-reported",
+      "stages": {
+        "registry-resolved": 1,
+        "timeline-resolved": 1,
+        "x4-bound": 1,
+        "native-occlusion-bound": 1
+      },
+      "events": [
+        {
+          "source_line": 31475,
+          "snapshot_line": 603,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 21:45:31.059] [info] Effect animation x4 diagnostic: resref=BDSPCLAR, stage=registry-resolved, registeredCellReads=125, registryResolved=125, registryFallback=0, timelineResolved=124, x4Bound=124, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=114x97; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 31476,
+          "snapshot_line": 604,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 21:45:31.059] [info] Effect animation x4 diagnostic: resref=BDSPCLAR, stage=timeline-resolved, registeredCellReads=125, registryResolved=125, registryFallback=0, timelineResolved=125, x4Bound=124, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=114x97; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 31477,
+          "snapshot_line": 605,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 21:45:31.059] [info] Effect animation x4 diagnostic: resref=BDSPCLAR, stage=x4-bound, registeredCellReads=125, registryResolved=125, registryFallback=0, timelineResolved=125, x4Bound=125, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=114x97; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 31479,
+          "snapshot_line": 607,
+          "stage": "native-occlusion-bound",
+          "text": "[2026-10-13 21:45:31.060] [info] Effect animation x4 diagnostic: resref=BDSPCLAR, stage=native-occlusion-bound, registeredCellReads=125, registryResolved=125, registryFallback=0, timelineResolved=125, x4Bound=125, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=114x97; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ]
+    },
+    {
+      "bam": "EXALTAH",
+      "vvc": "EXALTAH",
+      "command": "C:Eval('CreateVisualEffectObject(\"EXALTAH\",Player1)',0)",
+      "status": "x4-observed-no-fallback-reported",
+      "stages": {
+        "registry-resolved": 1,
+        "timeline-resolved": 1,
+        "x4-bound": 1,
+        "native-occlusion-bound": 1
+      },
+      "events": [
+        {
+          "source_line": 31528,
+          "snapshot_line": 656,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 21:45:35.863] [info] Effect animation x4 diagnostic: resref=EXALTAH, stage=registry-resolved, registeredCellReads=229, registryResolved=229, registryFallback=0, timelineResolved=228, x4Bound=228, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=96x90; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 31529,
+          "snapshot_line": 657,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 21:45:35.863] [info] Effect animation x4 diagnostic: resref=EXALTAH, stage=timeline-resolved, registeredCellReads=229, registryResolved=229, registryFallback=0, timelineResolved=229, x4Bound=228, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=96x90; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 31530,
+          "snapshot_line": 658,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 21:45:35.863] [info] Effect animation x4 diagnostic: resref=EXALTAH, stage=x4-bound, registeredCellReads=229, registryResolved=229, registryFallback=0, timelineResolved=229, x4Bound=229, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=96x90; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 31532,
+          "snapshot_line": 660,
+          "stage": "native-occlusion-bound",
+          "text": "[2026-10-13 21:45:35.864] [info] Effect animation x4 diagnostic: resref=EXALTAH, stage=native-occlusion-bound, registeredCellReads=229, registryResolved=229, registryFallback=0, timelineResolved=229, x4Bound=229, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=96x90; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ]
+    },
+    {
+      "bam": "GLDUSTH",
+      "vvc": "GLDUSTH",
+      "command": "C:Eval('CreateVisualEffectObject(\"GLDUSTH\",Player1)',0)",
+      "status": "x4-observed-no-fallback-reported",
+      "stages": {
+        "registry-resolved": 1,
+        "timeline-resolved": 1,
+        "x4-bound": 1,
+        "native-occlusion-bound": 1
+      },
+      "events": [
+        {
+          "source_line": 31581,
+          "snapshot_line": 709,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 21:45:40.667] [info] Effect animation x4 diagnostic: resref=GLDUSTH, stage=registry-resolved, registeredCellReads=517, registryResolved=517, registryFallback=0, timelineResolved=516, x4Bound=516, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=52x52; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 31582,
+          "snapshot_line": 710,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 21:45:40.668] [info] Effect animation x4 diagnostic: resref=GLDUSTH, stage=timeline-resolved, registeredCellReads=517, registryResolved=517, registryFallback=0, timelineResolved=517, x4Bound=516, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=52x52; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 31583,
+          "snapshot_line": 711,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 21:45:40.668] [info] Effect animation x4 diagnostic: resref=GLDUSTH, stage=x4-bound, registeredCellReads=517, registryResolved=517, registryFallback=0, timelineResolved=517, x4Bound=517, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=52x52; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 31593,
+          "snapshot_line": 721,
+          "stage": "native-occlusion-bound",
+          "text": "[2026-10-13 21:45:41.800] [info] Effect animation x4 diagnostic: resref=GLDUSTH, stage=native-occlusion-bound, registeredCellReads=653, registryResolved=653, registryFallback=0, timelineResolved=653, x4Bound=653, bindFallback=0, sequence=0, nativeFrame=18, timelinePhase=36, logical=72x75; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ]
+    },
+    {
+      "bam": "OHRMJAR",
+      "vvc": "OHRMJAR",
+      "command": "C:Eval('CreateVisualEffectObject(\"OHRMJAR\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPNWCHRM",
+      "vvc": "SPNWCHRM",
+      "command": "C:Eval('CreateVisualEffectObject(\"SPNWCHRM\",Player1)',0)",
+      "status": "x4-observed-no-fallback-reported",
+      "stages": {
+        "registry-resolved": 1,
+        "timeline-resolved": 1,
+        "x4-bound": 1
+      },
+      "events": [
+        {
+          "source_line": 31765,
+          "snapshot_line": 893,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 21:46:06.874] [info] Effect animation x4 diagnostic: resref=SPNWCHRM, stage=registry-resolved, registeredCellReads=1093, registryResolved=1093, registryFallback=0, timelineResolved=1092, x4Bound=1092, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=26x25; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 31766,
+          "snapshot_line": 894,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 21:46:06.874] [info] Effect animation x4 diagnostic: resref=SPNWCHRM, stage=timeline-resolved, registeredCellReads=1093, registryResolved=1093, registryFallback=0, timelineResolved=1093, x4Bound=1092, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=26x25; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 31767,
+          "snapshot_line": 895,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 21:46:06.875] [info] Effect animation x4 diagnostic: resref=SPNWCHRM, stage=x4-bound, registeredCellReads=1093, registryResolved=1093, registryFallback=0, timelineResolved=1093, x4Bound=1093, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=26x25; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ]
+    },
+    {
+      "bam": "SPHLYBLS",
+      "vvc": "SPHLYBLS",
+      "command": "C:Eval('CreateVisualEffectObject(\"SPHLYBLS\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPPLANAR",
+      "vvc": "SPPLANAR",
+      "command": "C:Eval('CreateVisualEffectObject(\"SPPLANAR\",Player1)',0)",
+      "status": "x4-observed-no-fallback-reported",
+      "stages": {
+        "registry-resolved": 1,
+        "timeline-resolved": 1,
+        "x4-bound": 1
+      },
+      "events": [
+        {
+          "source_line": 31950,
+          "snapshot_line": 1078,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 21:46:19.137] [info] Effect animation x4 diagnostic: resref=SPPLANAR, stage=registry-resolved, registeredCellReads=1800, registryResolved=1800, registryFallback=0, timelineResolved=1799, x4Bound=1799, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=134x99; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 31951,
+          "snapshot_line": 1079,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 21:46:19.137] [info] Effect animation x4 diagnostic: resref=SPPLANAR, stage=timeline-resolved, registeredCellReads=1800, registryResolved=1800, registryFallback=0, timelineResolved=1800, x4Bound=1799, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=134x99; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 31952,
+          "snapshot_line": 1080,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 21:46:19.137] [info] Effect animation x4 diagnostic: resref=SPPLANAR, stage=x4-bound, registeredCellReads=1800, registryResolved=1800, registryFallback=0, timelineResolved=1800, x4Bound=1800, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=134x99; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ]
+    },
+    {
+      "bam": "SPSPMAZE",
+      "vvc": "SPSPMAZE",
+      "command": "C:Eval('CreateVisualEffectObject(\"SPSPMAZE\",Player1)',0)",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    }
+  ],
+  "character_composites": [
+    {
+      "source_line": 31066,
+      "snapshot_line": 194,
+      "text": "[2026-10-13 21:45:05.352] [info] Composing creature sprite CHMF4G17 animation=0x6100 frame 231 as Creature composite layer 1/4: scale=x2, BAM logical 26x61, final bordered texture 57x84 physical 114x168 via transient replacement id 44 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31067,
+      "snapshot_line": 195,
+      "text": "[2026-10-13 21:45:05.352] [info] Composing creature sprite WQLJAG1 animation=0x6100 frame 231 as Creature composite layer 2/4: scale=x2, BAM logical 51x53, final bordered texture 57x84 physical 114x168 via transient replacement id 44 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31068,
+      "snapshot_line": 196,
+      "text": "[2026-10-13 21:45:05.352] [info] Composing creature sprite WQLC3G1 animation=0x6100 frame 231 as Creature composite layer 3/4: scale=x2, BAM logical 13x23, final bordered texture 57x84 physical 114x168 via transient replacement id 44 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31069,
+      "snapshot_line": 197,
+      "text": "[2026-10-13 21:45:05.352] [info] Composing creature sprite WQLS0G1 animation=0x6100 frame 231 as Creature composite layer 4/4: scale=x2, BAM logical 19x8, final bordered texture 57x84 physical 114x168 via transient replacement id 44 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31074,
+      "snapshot_line": 202,
+      "text": "[2026-10-13 21:45:05.376] [info] Composing creature sprite CHMW4G12 animation=0x6200 frame 193 as Creature composite layer 1/2: scale=x2, BAM logical 29x63, final bordered texture 40x65 physical 80x130 via transient replacement id 45 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31075,
+      "snapshot_line": 203,
+      "text": "[2026-10-13 21:45:05.376] [info] Composing creature sprite WQLF0G1 animation=0x6200 frame 193 as Creature composite layer 2/2: scale=x2, BAM logical 15x16, final bordered texture 40x65 physical 80x130 via transient replacement id 45 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31081,
+      "snapshot_line": 209,
+      "text": "[2026-10-13 21:45:05.415] [info] Composing creature sprite WQLMCG1 animation=0x6000 frame 419 as Creature composite layer 1/3: scale=x2, BAM logical 28x9, final bordered texture 41x65 physical 82x130 via transient replacement id 46 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31082,
+      "snapshot_line": 210,
+      "text": "[2026-10-13 21:45:05.415] [info] Composing creature sprite CHMC4G17 animation=0x6000 frame 419 as Creature composite layer 2/3: scale=x2, BAM logical 17x63, final bordered texture 41x65 physical 82x130 via transient replacement id 46 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31083,
+      "snapshot_line": 211,
+      "text": "[2026-10-13 21:45:05.415] [info] Composing creature sprite WQLMCOG1 animation=0x6000 frame 419 as Creature composite layer 3/3: scale=x2, BAM logical 30x8, final bordered texture 41x65 physical 82x130 via transient replacement id 46 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31088,
+      "snapshot_line": 216,
+      "text": "[2026-10-13 21:45:05.439] [info] Composing creature sprite WQNMCG1 animation=0x6010 frame 617 as Creature composite layer 1/2: scale=x2, BAM logical 17x12, final bordered texture 21x63 physical 42x126 via transient replacement id 47 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31089,
+      "snapshot_line": 217,
+      "text": "[2026-10-13 21:45:05.439] [info] Composing creature sprite CHFC4G17 animation=0x6010 frame 617 as Creature composite layer 2/2: scale=x2, BAM logical 19x61, final bordered texture 21x63 physical 42x126 via transient replacement id 47 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31097,
+      "snapshot_line": 225,
+      "text": "[2026-10-13 21:45:05.511] [info] Composing creature sprite CHFF4G12 animation=0x6110 frame 005 as Creature composite layer 1/4: scale=x2, BAM logical 23x64, final bordered texture 54x86 physical 108x172 via transient replacement id 49 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31098,
+      "snapshot_line": 226,
+      "text": "[2026-10-13 21:45:05.511] [info] Composing creature sprite WQNJ8G1 animation=0x6110 frame 005 as Creature composite layer 2/4: scale=x2, BAM logical 52x52, final bordered texture 54x86 physical 108x172 via transient replacement id 49 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31099,
+      "snapshot_line": 227,
+      "text": "[2026-10-13 21:45:05.511] [info] Composing creature sprite WQNC2G1 animation=0x6110 frame 005 as Creature composite layer 3/4: scale=x2, BAM logical 9x21, final bordered texture 54x86 physical 108x172 via transient replacement id 49 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31100,
+      "snapshot_line": 228,
+      "text": "[2026-10-13 21:45:05.511] [info] Composing creature sprite WQNMCG1 animation=0x6110 frame 005 as Creature composite layer 4/4: scale=x2, BAM logical 9x22, final bordered texture 54x86 physical 108x172 via transient replacement id 49 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31106,
+      "snapshot_line": 234,
+      "text": "[2026-10-13 21:45:05.540] [info] Composing creature sprite WQNQ3G1 animation=0x6210 frame 573 as Creature composite layer 1/2: scale=x2, BAM logical 40x16, final bordered texture 42x66 physical 84x132 via transient replacement id 51 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31107,
+      "snapshot_line": 235,
+      "text": "[2026-10-13 21:45:05.540] [info] Composing creature sprite CHFW4G12 animation=0x6210 frame 573 as Creature composite layer 2/2: scale=x2, BAM logical 30x64, final bordered texture 42x66 physical 84x132 via transient replacement id 51 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31110,
+      "snapshot_line": 238,
+      "text": "[2026-10-13 21:45:05.549] [info] Composing creature sprite CHFB1G17 animation=0x6010 frame 241 as Creature composite layer 1/1: scale=x2, BAM logical 20x63, final bordered texture 22x65 physical 44x130 via transient replacement id 52 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31196,
+      "snapshot_line": 324,
+      "text": "[2026-10-13 21:45:07.758] [info] Composing creature sprite CHFC4G12 animation=0x6010 frame 569 as Creature composite layer 2/2: scale=x2, BAM logical 19x61, final bordered texture 21x63 physical 42x126 via transient replacement id 46 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31199,
+      "snapshot_line": 327,
+      "text": "[2026-10-13 21:45:07.858] [info] Composing creature sprite CHMC4G12 animation=0x6000 frame 381 as Creature composite layer 2/3: scale=x2, BAM logical 17x63, final bordered texture 41x65 physical 82x130 via transient replacement id 45 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31207,
+      "snapshot_line": 335,
+      "text": "[2026-10-13 21:45:08.228] [info] Composing creature sprite CHFF4G11 animation=0x6110 frame 052 as Creature composite layer 1/4: scale=x2, BAM logical 24x67, final bordered texture 54x90 physical 108x180 via transient replacement id 47 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31211,
+      "snapshot_line": 339,
+      "text": "[2026-10-13 21:45:08.292] [info] Composing creature sprite CHMF4G12 animation=0x6100 frame 196 as Creature composite layer 1/4: scale=x2, BAM logical 26x60, final bordered texture 57x84 physical 114x168 via transient replacement id 44 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31228,
+      "snapshot_line": 356,
+      "text": "[2026-10-13 21:45:08.757] [info] Composing creature sprite CHFF4G17 animation=0x6110 frame 617 as Creature composite layer 2/4: scale=x2, BAM logical 20x61, final bordered texture 54x85 physical 108x170 via transient replacement id 47 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31231,
+      "snapshot_line": 359,
+      "text": "[2026-10-13 21:45:09.256] [info] Composing creature sprite CHFF4G1 animation=0x6110 frame 580 as Creature composite layer 2/4: scale=x2, BAM logical 25x61, final bordered texture 55x85 physical 110x170 via transient replacement id 47 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31244,
+      "snapshot_line": 372,
+      "text": "[2026-10-13 21:45:09.960] [info] Composing creature sprite CHMW4G17 animation=0x6200 frame 231 as Creature composite layer 1/2: scale=x2, BAM logical 29x63, final bordered texture 40x65 physical 80x130 via transient replacement id 44 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31259,
+      "snapshot_line": 387,
+      "text": "[2026-10-13 21:45:10.293] [info] Composing creature sprite CHFB1G12 animation=0x6010 frame 193 as Creature composite layer 1/1: scale=x2, BAM logical 20x63, final bordered texture 22x65 physical 44x130 via transient replacement id 51 (NEAREST, delete-pending after queued draw)"
+    },
+    {
+      "source_line": 31285,
+      "snapshot_line": 413,
+      "text": "[2026-10-13 21:45:11.259] [info] Composing creature sprite CHFW4G17 animation=0x6210 frame 617 as Creature composite layer 2/2: scale=x2, BAM logical 26x66, final bordered texture 37x68 physical 74x136 via transient replacement id 49 (NEAREST, delete-pending after queued draw)"
+    }
+  ],
+  "fallback_evidence": [],
+  "counts": {
+    "not-observed": 48,
+    "x4-observed-no-fallback-reported": 6
+  },
+  "user_feedback": "personnages semblent stables; effets upscalés mais qualité visuelle insuffisante sur ensemble",
+  "scope_limits": [
+    "Once-per-stage diagnostics do not certify each frame or all 54 effects.",
+    "No new formal sprite family or effects QA acceptance inferred.",
+    "Pixelation cause is not proven from logs; native-derived alpha and clipping remain candidate explanations."
+  ],
+  "installation_changed": false
+}

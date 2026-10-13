@@ -1,0 +1,68 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "asset_ids": [
+    "effects:bam:SPNWCHRM"
+  ],
+  "domain": "effects",
+  "inputs": [
+    {
+      "bytes": 94693,
+      "path": "effects/ressources/SPNWCHRM/runs/spnwchrm-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/manifest.json",
+      "role": "parent-spatial-output",
+      "sha256": "971FC417F5B516F0CC5B6F88A7977B187D892BD6E841FF05F0E7D9BBC06B1E4F"
+    },
+    {
+      "bytes": 1750,
+      "path": "effects/ressources/SPNWCHRM/runs/spnwchrm-interpolation-apollo30-left-7b-lot10-20261013-v1/run.json",
+      "role": "source-interpolation-descriptor",
+      "sha256": "7E871B983901BA070EC780AB047CAC53691FA3122E8F89A9E6AF969DD8D23898"
+    },
+    {
+      "bytes": 108588,
+      "path": "effects/ressources/SPNWCHRM/runs/spnwchrm-interpolation-apollo30-left-7b-lot10-20261013-v1/02-interpolation/manifest.json",
+      "role": "source-interpolation-manifest",
+      "sha256": "4A2238EDFB8BBFEDA5608159B5AAFBDE5D695002240413860279556EE486A701"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 139451,
+      "path": "effects/ressources/SPNWCHRM/runs/spnwchrm-interpolation-gauss12-feather12-7b-lot10-20261013-v1/02-interpolation/manifest.json",
+      "role": "interpolation-manifest",
+      "sha256": "B3A0613F60E02ABCF16C37C57506F58A03DB9F978BC76FA756BB4CC8532AEB0E"
+    }
+  ],
+  "pipeline": {
+    "id": "effects.interpolation-30fps.v1",
+    "recipe_path": "effects/ressources/SPNWCHRM/runs/spnwchrm-interpolation-gauss12-feather12-7b-lot10-20261013-v1/recipe.json",
+    "recipe_sha256": "FE4D08CFBB234D2EB0FB09200039BBAD1E83B07BFF35C389E01FFAA56EBC53DF",
+    "version": "effect-visual-treatment.v1"
+  },
+  "provenance": {
+    "command": [
+      "run_effect_visual_treatment.py",
+      "--resref",
+      "SPNWCHRM",
+      "--interpolation-run",
+      "spnwchrm-interpolation-apollo30-left-7b-lot10-20261013-v1",
+      "--run-id",
+      "spnwchrm-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+      "--sigma-x4",
+      "1.2",
+      "--inner-feather-x4",
+      "12.0"
+    ],
+    "created_at_utc": "2026-10-13T20:07:40Z",
+    "generator": "pipeline/scripts/run_effect_visual_treatment.py",
+    "parents": [
+      "spnwchrm-spatial-seedvr7b-lab-lot10-20261013-v2"
+    ]
+  },
+  "result": {
+    "completed_at_utc": "2026-10-13T20:07:45Z",
+    "sealed": true,
+    "status": "completed"
+  },
+  "run_id": "spnwchrm-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+  "schema_version": 1
+}

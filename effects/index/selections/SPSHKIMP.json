@@ -1,0 +1,120 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPSHKIMP",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 14,
+    "source": {
+      "interpolation_run": "spshkimp-interpolation-gauss12-feather12-lot54-20261013-v2",
+      "interpolation_run_descriptor_sha256": "8F83B7283E0C641E485FCFD0AA5D8FEDD623E1C05227939C9645C15B938CFFEB",
+      "source_bam_sha256": "a45ad6ba2466971d641b4e49d27b2271235ae171d3d08f22252cb32066f30d39",
+      "spatial_manifest_sha256": "A740C078FBE740F200F183612ABA421E8DD0CF23F6CD02465177D02EE76BE220",
+      "spatial_run": "spshkimp-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "spatial_run_descriptor_sha256": "D000E34FD4AF6FCE967EA3508B04069FCB5C6CDD04BE26B6E2D9BA990D60BB92"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        0,
+        2,
+        4,
+        6,
+        8,
+        10
+      ],
+      "phase_count": 24,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        0,
+        12,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        13,
+        10,
+        10
+      ]
+    }
+  },
+  "decision_date": "2026-10-13",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1108,
+    "path": "effects/index/qa-decisions/SPSHKIMP/2026-10-13-accepted-9b40ba862d0b.json",
+    "sha256": "9B40BA862D0B2C48ABE6AACFA4A1C4F9498487F081276F233FAA04F3BB9DE14E"
+  },
+  "resref": "SPSHKIMP",
+  "run_descriptor": {
+    "bytes": 2424,
+    "path": "effects/ressources/SPSHKIMP/runs/spshkimp-interpolation-gauss12-feather12-lot54-20261013-v2/run.json",
+    "sha256": "8F83B7283E0C641E485FCFD0AA5D8FEDD623E1C05227939C9645C15B938CFFEB"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 12040,
+      "path": "effects/ressources/SPSHKIMP/packs/spshkimp-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/manifest.json",
+      "sha256": "275A4F85A5EB1826D8A7642802DF9C39995C65E551913BC617EC770AECF74FCF"
+    },
+    "registry": {
+      "bytes": 320,
+      "path": "effects/ressources/SPSHKIMP/packs/spshkimp-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/EffectAnimations-X4.registry",
+      "sha256": "C79C79FD956D9A012B7A5E7510A94AD98628EB5759912005C2A4C56BB6DE452A"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spshkimp-interpolation-gauss12-feather12-lot54-20261013-v2",
+  "source": {
+    "bytes": 3728,
+    "path": "effects/ressources/SPSHKIMP/source.bam",
+    "sha256": "A45AD6BA2466971D641B4E49D27B2271235AE171D3D08F22252CB32066F30D39"
+  }
+}

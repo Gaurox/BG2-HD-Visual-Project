@@ -1,0 +1,25 @@
+{
+  "blur": "coverage-normalized Gaussian; no geometry expansion",
+  "fade": "inner smoothstep distance ramp; alpha_final <= alpha_source",
+  "inner_feather_x4": 12.0,
+  "recipe_id": "gaussian-light-inner-contour-fade",
+  "rgb_encoding": "premultiplied",
+  "schema": "bg2-upscale-effect-visual-treatment-recipe-v1",
+  "sigma_x4": 1.2,
+  "source_interpolation_run": "spgflsh1-interpolation-apollo30-left-7b-lot10-20261013-v1",
+  "timing": "copied verbatim",
+  "tools": [
+    {
+      "bytes": 11448,
+      "path": "pipeline/scripts/run_effect_visual_treatment.py",
+      "role": "producer",
+      "sha256": "8CA8F06E27705437C128ACE0609A0616FA861D94C2EE7F1BA71DC904DBE8577A"
+    },
+    {
+      "bytes": 40619,
+      "path": "pipeline/scripts/derive_animation_visual_treatment.py",
+      "role": "animation-treatment",
+      "sha256": "3476061C355BFE31682CC617B09AF821B99EC790D5EB8804DDEDE09A8AA6D63B"
+    }
+  ]
+}

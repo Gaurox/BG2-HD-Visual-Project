@@ -4,6 +4,20 @@
 
 Un asset de production est un BAM visuel : `effects:bam:<RESREF>`. Les VVC/VEF restent des contrôleurs et consommateurs ; un BAM partagé n'est traité qu'une fois.
 
+Affichage par défaut des effets x4 (demande utilisateur 2026-10-13) : **NEAREST** min/mag,
+niveau 0 seul, sur texture directe et sortie du masquage décor. Défaut du chargeur natif,
+indépendant de la recette 3B/7B et du pack ; aucune activation INI nécessaire.
+Personnages : conserver [`NearestRGB-SilhouetteAlphaAA`](../sprite/DISPLAY_DEFAULT.md).
+Installation courante de ce filtre :
+[`effects-nearest-20261013-v1`](../engine/InfinityEngine-Enhancer/installations/effects-nearest-20261013-v1/result.json).
+
+Lot54 accepté ingame en **3B x4 / Apollo30 / gauss1.2 / feather12 / nearest** :
+[`acceptance.json`](batches/lot54-accepted-cleanup-20261013-v1/acceptance.json).
+Installation 54x3B + 10 effets précédents conservés :
+[`lot54-accepted-3b-nearest`](installations/lot54-accepted-3b-nearest-20261013-v1/result.json).
+Essais 7B non retenus retirés ; métadonnées et comparatifs finaux conservés dans
+[`lot54-accepted-cleanup`](batches/lot54-accepted-cleanup-20261013-v1/README.md).
+
 ## Quotidien — minimum utile
 
 ```powershell
@@ -115,7 +129,9 @@ python pipeline/scripts/run_effect_interpolation.py --resref <RESREF> --spatial-
 natif courant ; RGB des phases natives repris exactement du spatial. `--deduplicate` partage les
 PNG/RGBA identiques sans raccourcir la timeline ; une pause native peut donc référencer un seul
 fichier vide. `duplicate_audit` compare les pixels RGBA ancrés, ignore le RGB sous alpha nul et
-refuse de sceller ce mode si des phases lumineuses sont identiques.
+refuse de sceller ce mode si des phases lumineuses sont identiques sans origine native démontrée.
+Les pauses et sous-séquences natives répétées restent exactes (`native_repeat_duplicates`),
+ainsi que la dernière pose one-shot ; `unexpected_visible_duplicates` doit rester vide.
 
 Adoucissement léger après interpolation :
 
@@ -123,7 +139,8 @@ Adoucissement léger après interpolation :
 python pipeline/scripts/run_effect_visual_treatment.py --resref <RESREF> --interpolation-run <run-30fps> --run-id <nouveau-run> --sigma-x4 0.6 --inner-feather-x4 4 --run --register
 ```
 
-Nouveau run lié au manifeste temporel source ; géométrie/timing identiques, 0 doublon lumineux.
+Nouveau run lié au manifeste temporel source ; géométrie/timing identiques, 0 doublon lumineux
+inattendu ; répétitions natives démontrées héritées du parent.
 RGB de sortie **prémultiplié** pour `Blended` : ne pas prémultiplier une seconde fois au pack.
 Une preview sur noir affiche directement le RGB de ces frames ; un composite RGBA standard
 multiplierait leur alpha une seconde fois.
@@ -217,9 +234,10 @@ Une production temporelle ou une installation ne vaut jamais QA ingame.
 
 Limites connues, signalées par asset : interpolation mono-cycle/boucle fermée/ratio FPS entier ;
 cycles vides refusés ; palettes runtime à démontrer ; versions v1/v2 non mélangées ; pack chargé
-intégralement, 512 ressources/128 Mio RGBA. Catalogue estimé ≈7,2 Gio x4 à cadence native : prévoir
+intégralement, 512 ressources/2 Gio RGBA (candidat lot54). Catalogue estimé ≈7,2 Gio x4 à cadence native : prévoir
 chargement/cache bornés et timeline optionnelle par cycle pour l'intégration complète. Ces évolutions
-moteur restent séparées de la mise en place du suivi ; aucun changement moteur effectué.
+moteur restent séparées de la mise en place du suivi. Candidat lot54 (2026-10-13) : limite RGBA
+portée de 512 Mio à 2 Gio, 512 ressources ; chargement natif du pack composé vérifié avant installation.
 
 ## Packs cumulatifs — finalisation
 

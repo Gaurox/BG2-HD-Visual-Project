@@ -1,0 +1,59 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "asset_ids": [
+    "effects:bam:GLDUSTH"
+  ],
+  "domain": "effects",
+  "inputs": [
+    {
+      "bytes": 71393,
+      "path": "effects/ressources/GLDUSTH/source.bam",
+      "role": "source-bam",
+      "sha256": "C1F44B834AA12B113BB4E300303FB7CDF795BD84CD9412ECCE7A1653D97E7043"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 20428,
+      "path": "effects/ressources/GLDUSTH/runs/gldusth-spatial-seedvr7b-lab-lot10-20261013-v2/00-frames-x1/manifest.json",
+      "role": "frames-manifest",
+      "sha256": "DEB3073D6A2E965C170A288266931530A94191CDE6AB73DE35CE97410625DC1C"
+    },
+    {
+      "bytes": 62263,
+      "path": "effects/ressources/GLDUSTH/runs/gldusth-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/manifest.json",
+      "role": "spatial-manifest",
+      "sha256": "3FD42C8585ABE4B11365DA8DB5C2D5A0CF6AF9E57F0C8C2C914436B92EF62AD5"
+    },
+    {
+      "bytes": 3518922,
+      "path": "effects/ressources/GLDUSTH/runs/gldusth-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/preview/animation-x4-contact-sheet.png",
+      "role": "spatial-preview",
+      "sha256": "DC63F878BB0BD10E06E4C3CC55D46D27220D15B8CA1A06BDD7D672328B485340"
+    }
+  ],
+  "pipeline": {
+    "id": "effects.spatial-x4.v1",
+    "recipe_path": "effects/ressources/GLDUSTH/runs/gldusth-spatial-seedvr7b-lab-lot10-20261013-v2/recipe.json",
+    "recipe_sha256": "15E1CC0AF7A07C8BE0859079248244B326C16638056D5373719C8322447A4C01",
+    "version": "effect-spatial-runner.v1"
+  },
+  "provenance": {
+    "command": [
+      "run_effect_spatial.py",
+      "--resref",
+      "GLDUSTH",
+      "--run-id",
+      "gldusth-spatial-seedvr7b-lab-lot10-20261013-v2"
+    ],
+    "created_at_utc": "2026-10-13T19:57:20Z",
+    "generator": "pipeline/scripts/run_effect_spatial.py"
+  },
+  "result": {
+    "completed_at_utc": "2026-10-13T19:58:43Z",
+    "sealed": true,
+    "status": "completed"
+  },
+  "run_id": "gldusth-spatial-seedvr7b-lab-lot10-20261013-v2",
+  "schema_version": 1
+}

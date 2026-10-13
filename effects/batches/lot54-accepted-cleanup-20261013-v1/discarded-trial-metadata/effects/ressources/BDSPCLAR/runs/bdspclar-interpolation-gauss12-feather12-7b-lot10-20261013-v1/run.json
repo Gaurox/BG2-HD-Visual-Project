@@ -1,0 +1,68 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "asset_ids": [
+    "effects:bam:BDSPCLAR"
+  ],
+  "domain": "effects",
+  "inputs": [
+    {
+      "bytes": 43884,
+      "path": "effects/ressources/BDSPCLAR/runs/bdspclar-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/manifest.json",
+      "role": "parent-spatial-output",
+      "sha256": "A6E9F90C21408E11BB33DEE067323D515FF818073D38B58C6243707B09F3EF9A"
+    },
+    {
+      "bytes": 1749,
+      "path": "effects/ressources/BDSPCLAR/runs/bdspclar-interpolation-apollo30-left-7b-lot10-20261013-v1/run.json",
+      "role": "source-interpolation-descriptor",
+      "sha256": "8570B554902AB7CA42244FC3E7DCB9FDF79CDEADCE5C3F92A7B6F6A15BC8D825"
+    },
+    {
+      "bytes": 49865,
+      "path": "effects/ressources/BDSPCLAR/runs/bdspclar-interpolation-apollo30-left-7b-lot10-20261013-v1/02-interpolation/manifest.json",
+      "role": "source-interpolation-manifest",
+      "sha256": "620818E16CC9710702F76FDA37B18D5E14A7EACD3C01DC072242F2B3D22FC56E"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 64471,
+      "path": "effects/ressources/BDSPCLAR/runs/bdspclar-interpolation-gauss12-feather12-7b-lot10-20261013-v1/02-interpolation/manifest.json",
+      "role": "interpolation-manifest",
+      "sha256": "E1EE6580C604B1EBA2876D00006532D6C5F9F10590C8D82A52F57E38BF726AE0"
+    }
+  ],
+  "pipeline": {
+    "id": "effects.interpolation-30fps.v1",
+    "recipe_path": "effects/ressources/BDSPCLAR/runs/bdspclar-interpolation-gauss12-feather12-7b-lot10-20261013-v1/recipe.json",
+    "recipe_sha256": "B49E090C50289EA38F8953340930110BB09F446A1113A48E8E81A1F723C9DE3A",
+    "version": "effect-visual-treatment.v1"
+  },
+  "provenance": {
+    "command": [
+      "run_effect_visual_treatment.py",
+      "--resref",
+      "BDSPCLAR",
+      "--interpolation-run",
+      "bdspclar-interpolation-apollo30-left-7b-lot10-20261013-v1",
+      "--run-id",
+      "bdspclar-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+      "--sigma-x4",
+      "1.2",
+      "--inner-feather-x4",
+      "12.0"
+    ],
+    "created_at_utc": "2026-10-13T20:06:23Z",
+    "generator": "pipeline/scripts/run_effect_visual_treatment.py",
+    "parents": [
+      "bdspclar-spatial-seedvr7b-lab-lot10-20261013-v2"
+    ]
+  },
+  "result": {
+    "completed_at_utc": "2026-10-13T20:06:27Z",
+    "sealed": true,
+    "status": "completed"
+  },
+  "run_id": "bdspclar-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+  "schema_version": 1
+}

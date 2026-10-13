@@ -140,8 +140,9 @@ struct EngineConfig {
   // new enum takes precedence when CreatureSpriteFilter is present. This bool
   // remains a parsed and serialized compatibility surface for older INIs.
   bool enableCreatureSpriteLinearFiltering = false;
-  // Effective startup mode. NEAREST remains the safe default and formal QA
-  // baseline; CatmullRom uses a NEAREST sampler plus the targeted shader path.
+  // Project display default: NearestRGB-SilhouetteAlphaAA; see sprite/display-default.json.
+  // Nearest + active ShaderSuite/CreatureHD = nearest interior, silhouette-only alpha AA.
+  // CatmullRom uses a NEAREST sampler plus the targeted shader path.
   CreatureSpriteFilterMode creatureSpriteFilter = CreatureSpriteFilterMode::Nearest;
   // 0 retains the global filter policy. A scoped test leaves other animations
   // at Nearest; P4 uses 0x6110. Box/Mipmaps are supported on x4 only.

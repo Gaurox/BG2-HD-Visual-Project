@@ -1,0 +1,60 @@
+{
+  "schema": "bg2-sprite-display-default-v1",
+  "default_mode": "NearestRGB-SilhouetteAlphaAA",
+  "authority": "user",
+  "default_confirmed_on": "2026-10-13",
+  "scope": "registered ordinary-RGBA HD creature textures x2/x4; global animation scope 0x0",
+  "method": {
+    "rgb": "nearest covered texel; no RGB averaging",
+    "alpha": "bilinear only at silhouette transparency; interior alpha stays nearest",
+    "taps": 4,
+    "fpSprite_native_rgb_halo_bypassed": true
+  },
+  "ini": {
+    "Shaders": {
+      "EnableCreatureSpriteUpscaleTest": true,
+      "EnableCreatureSpriteLinearFiltering": false,
+      "CreatureSpriteFilter": "Nearest",
+      "CreatureSpriteFilterAnimation": "0x0"
+    },
+    "ShaderSuite": { "Enabled": true },
+    "ShaderSuite.CreatureHD": {
+      "Enabled": true,
+      "ColorSpace": "Stored",
+      "Sharpen": 0,
+      "Gamma": 1,
+      "Contrast": 1,
+      "Brightness": 0,
+      "Saturation": 1,
+      "HueDegrees": 0,
+      "OutlineMode": "Native",
+      "OutlineSize": 2,
+      "SelectedOutlineSize": 3.5
+    },
+    "ShaderSuite.fpSprite": { "Enabled": false },
+    "ShaderSuite.fpSELECT": { "Enabled": false },
+    "Rendering": {
+      "EnableFullFrameFXAA": false,
+      "EnableFullFrameSSAA2x": false
+    }
+  },
+  "shaders": [
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpDraw.glsl",
+      "sha256": "C50A43EBD580EE840EDABAF6B96B9DF80589A7D793F27A85D1766BC17977BA20"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSprite.glsl",
+      "sha256": "CF5C2795E37EE31D908801312971B8FA1ED5BE3A87902A7A44F186A013610A73"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSELECT.glsl",
+      "sha256": "F733B8970A3B1C3FB85F335C5BC3F2DC91A113DE22C6CF0B2CFBD2ACE79B84A5"
+    }
+  ],
+  "reference_directory": "docs/measurements/sprite-display-nearest-silhouette-preferred-20261013-v1",
+  "validation": "confirmation-20261013-v1.json",
+  "project_integration": "project-integration-20261013-v1.json",
+  "gpu_equivalence": "project-gpu-verification-20261013-v1.json",
+  "current_installation_check": "docs/measurements/sprite-display-default-confirmation-20261013-v1/installed-check.json"
+}

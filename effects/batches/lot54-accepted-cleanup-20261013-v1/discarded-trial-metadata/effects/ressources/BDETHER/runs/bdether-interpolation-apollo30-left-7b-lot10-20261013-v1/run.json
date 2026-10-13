@@ -1,0 +1,52 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "asset_ids": [
+    "effects:bam:BDETHER"
+  ],
+  "domain": "effects",
+  "inputs": [
+    {
+      "bytes": 51575,
+      "path": "effects/ressources/BDETHER/runs/bdether-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/manifest.json",
+      "role": "parent-spatial-output",
+      "sha256": "89338492A3A8B141FE01489AB28C56771640E4C91853F16E325DA5B70C131162"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 58927,
+      "path": "effects/ressources/BDETHER/runs/bdether-interpolation-apollo30-left-7b-lot10-20261013-v1/02-interpolation/manifest.json",
+      "role": "interpolation-manifest",
+      "sha256": "1435713D11968703ACD0F7E81404538017F8401FF1FCCC4DDB9B6C599A450D89"
+    }
+  ],
+  "pipeline": {
+    "id": "effects.interpolation-30fps.v1",
+    "recipe_path": "effects/ressources/BDETHER/runs/bdether-interpolation-apollo30-left-7b-lot10-20261013-v1/recipe.json",
+    "recipe_sha256": "9D856B1D6D910A566816551EECB5FA2767F0BD52D4ECA7CDDC93DE03FD4CC23A",
+    "version": "effect-interpolation-runner.v2"
+  },
+  "provenance": {
+    "command": [
+      "run_effect_interpolation.py",
+      "--resref",
+      "BDETHER",
+      "--spatial-run",
+      "bdether-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "--run-id",
+      "bdether-interpolation-apollo30-left-7b-lot10-20261013-v1"
+    ],
+    "created_at_utc": "2026-10-13T20:05:20Z",
+    "generator": "pipeline/scripts/run_effect_interpolation.py",
+    "parents": [
+      "bdether-spatial-seedvr7b-lab-lot10-20261013-v2"
+    ]
+  },
+  "result": {
+    "completed_at_utc": "2026-10-13T20:05:48Z",
+    "sealed": true,
+    "status": "completed"
+  },
+  "run_id": "bdether-interpolation-apollo30-left-7b-lot10-20261013-v1",
+  "schema_version": 1
+}

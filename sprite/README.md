@@ -27,6 +27,8 @@ installation, ni une validation ingame.
 
 ## Méthode actuelle
 
+**Affichage par défaut validé : [NearestRGB-SilhouetteAlphaAA](DISPLAY_DEFAULT.md)** ; autorité [`display-default.json`](display-default.json). RGB intérieur nearest + AA alpha uniquement sur la silhouette, 4 taps ; `CreatureSpriteFilter=Nearest` avec ShaderSuite/CreatureHD actifs. Sorts : contrat distinct.
+
 Décision de rangement du **2026-10-12** : raster final xBR abandonné ; release
 locale Q3m x2 / Nearest, **331 IDs / 15 familles**, plus **81 paperdolls P7**
 (corps 0x6110 + équipements partagés). Autorité :
@@ -39,7 +41,7 @@ publication restent distinctes du package local.
 
 **Suivi courant de tous les sprites : [Q3m / 15 familles d'intégration](SUIVI_Q3M.md)** ; queue par animation sous `index/q3m-work-items.csv`, moteur estimé à 90 % par l'utilisateur. Les productions finales xBR/ReboutCX antérieures sont historiques et ne comptent plus dans l'avancement Q3m.
 
-**Reprise actuelle Q3m x2, y compris préparation monstres/PNJ** : [`../pipeline/SPRITES_PRODUCTION_Q3M_X2.md`](../pipeline/SPRITES_PRODUCTION_Q3M_X2.md). 78 Character monde produits/assemblés/installés, 4 510 BAM / 1 564 054 frames, BOX global ; QA visuelle complète distincte, aucune release déduite.
+**Reprise actuelle Q3m x2, y compris préparation monstres/PNJ** : [`../pipeline/SPRITES_PRODUCTION_Q3M_X2.md`](../pipeline/SPRITES_PRODUCTION_Q3M_X2.md). 78 Character monde produits/assemblés/installés, 4 510 BAM / 1 564 054 frames ; affichage courant défini par `display-default.json` (ancien essai BOX historique) ; QA visuelle complète distincte, aucune release déduite.
 
 Recherche et contrat de remplacement par palettes dynamiques : [études et guide](Etudes_Sprite_codex_claude/README.md),
 [P1 Q3m K6](families/playable-characters/6110-human-female-fighter/research/palette-q3m-p1-20260930-v1/README.md).
@@ -66,7 +68,7 @@ Runbook opérationnel : [`PROCESSING.md`](PROCESSING.md). Publication catalogue,
 |---|---|
 | xBR | base canonique déterministe ; ajoute les nouvelles familles/animations |
 | ReboutCX | remplacements explicites dans un catalogue dérivé de xBR |
-| Q3m K6 Character | cache partagé I/F/dep, catalogue V6 ; monde x2+BOX actuellement installé |
+| Q3m K6 Character | cache partagé I/F/dep, catalogue V6 ; affichage courant : `display-default.json` |
 
 Un catalogue ReboutCX reste complet : composants ciblés en ReboutCX, tous les autres en xBR. Les
 deux modes produisent les mêmes contrats runtime x2 ; aucun choix par créature ou hot-swap ingame.

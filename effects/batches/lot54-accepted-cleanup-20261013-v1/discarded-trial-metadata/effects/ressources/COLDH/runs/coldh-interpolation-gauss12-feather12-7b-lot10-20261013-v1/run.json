@@ -1,0 +1,68 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "asset_ids": [
+    "effects:bam:COLDH"
+  ],
+  "domain": "effects",
+  "inputs": [
+    {
+      "bytes": 26777,
+      "path": "effects/ressources/COLDH/runs/coldh-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/manifest.json",
+      "role": "parent-spatial-output",
+      "sha256": "9B95EE19067D28F56236CEF1B1E4BDBFA7EEC1833EB77F2772283476CD406286"
+    },
+    {
+      "bytes": 1713,
+      "path": "effects/ressources/COLDH/runs/coldh-interpolation-apollo30-left-7b-lot10-20261013-v1/run.json",
+      "role": "source-interpolation-descriptor",
+      "sha256": "B7382D34104E266F8566658EA76FEC092A589BFCCE0CC7B38CDB5AC765553966"
+    },
+    {
+      "bytes": 30321,
+      "path": "effects/ressources/COLDH/runs/coldh-interpolation-apollo30-left-7b-lot10-20261013-v1/02-interpolation/manifest.json",
+      "role": "source-interpolation-manifest",
+      "sha256": "08C4E32A464F4463A07874BE27638A60896F4EE14149FEAC1E4C997C36851726"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 39219,
+      "path": "effects/ressources/COLDH/runs/coldh-interpolation-gauss12-feather12-7b-lot10-20261013-v1/02-interpolation/manifest.json",
+      "role": "interpolation-manifest",
+      "sha256": "F931B50243709EE3615D686344381F17F0314D88E777767F019C088020197C04"
+    }
+  ],
+  "pipeline": {
+    "id": "effects.interpolation-30fps.v1",
+    "recipe_path": "effects/ressources/COLDH/runs/coldh-interpolation-gauss12-feather12-7b-lot10-20261013-v1/recipe.json",
+    "recipe_sha256": "9BFFB61EF1BAFBD70BCD6D189F1AAF5F6E9C09934D39B2EA13191E494005219D",
+    "version": "effect-visual-treatment.v1"
+  },
+  "provenance": {
+    "command": [
+      "run_effect_visual_treatment.py",
+      "--resref",
+      "COLDH",
+      "--interpolation-run",
+      "coldh-interpolation-apollo30-left-7b-lot10-20261013-v1",
+      "--run-id",
+      "coldh-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+      "--sigma-x4",
+      "1.2",
+      "--inner-feather-x4",
+      "12.0"
+    ],
+    "created_at_utc": "2026-10-13T20:09:47Z",
+    "generator": "pipeline/scripts/run_effect_visual_treatment.py",
+    "parents": [
+      "coldh-spatial-seedvr7b-lab-lot10-20261013-v2"
+    ]
+  },
+  "result": {
+    "completed_at_utc": "2026-10-13T20:09:50Z",
+    "sealed": true,
+    "status": "completed"
+  },
+  "run_id": "coldh-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+  "schema_version": 1
+}

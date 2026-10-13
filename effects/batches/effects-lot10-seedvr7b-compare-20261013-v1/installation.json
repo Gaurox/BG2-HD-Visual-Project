@@ -1,0 +1,165 @@
+{
+  "schema": "bg2-effects-7b-installation-v1",
+  "status": "installed-verified",
+  "resrefs": [
+    "BDETHER",
+    "BDSPCLAR",
+    "EXALTAH",
+    "GLDUSTH",
+    "SPNWCHRM",
+    "SPPLANAR",
+    "ABJURH",
+    "SPGFLSH1",
+    "COLDH",
+    "SPCCMDSI"
+  ],
+  "model": "seedvr2_7b_int8_convrot.safetensors",
+  "scale": 4,
+  "target_fps": [
+    30,
+    1
+  ],
+  "registry_version": 2,
+  "receipt": "effects/installations/lot10-seedvr7b-apollo30-20261013-v1/backups/20261013T202002717352Z-8c07e253/renderer-install-receipt.json",
+  "registry_sha256": "4F6B48804034ACD17DC300C543DA2947989CAC668B6F531704C92E68B7904311",
+  "manifest_sha256": "D3878796EBF60BDFFFF463C6BF885F8FA028189F4948096B0373D2FEDC78F2F2",
+  "payload_checks": [
+    {
+      "resref": "BDETHER",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "phase_count": 64,
+      "changed_backings": 63,
+      "all_installed_pixels_match_7b_pack": true,
+      "spatial_run": "bdether-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "interpolation_run": "bdether-interpolation-gauss12-feather12-7b-lot10-20261013-v1"
+    },
+    {
+      "resref": "BDSPCLAR",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "phase_count": 54,
+      "changed_backings": 52,
+      "all_installed_pixels_match_7b_pack": true,
+      "spatial_run": "bdspclar-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "interpolation_run": "bdspclar-interpolation-gauss12-feather12-7b-lot10-20261013-v1"
+    },
+    {
+      "resref": "EXALTAH",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "phase_count": 200,
+      "changed_backings": 52,
+      "all_installed_pixels_match_7b_pack": true,
+      "spatial_run": "exaltah-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "interpolation_run": "exaltah-interpolation-gauss12-feather12-7b-lot10-20261013-v1"
+    },
+    {
+      "resref": "GLDUSTH",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "phase_count": 80,
+      "changed_backings": 54,
+      "all_installed_pixels_match_7b_pack": true,
+      "spatial_run": "gldusth-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "interpolation_run": "gldusth-interpolation-gauss12-feather12-7b-lot10-20261013-v1"
+    },
+    {
+      "resref": "SPNWCHRM",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "phase_count": 120,
+      "changed_backings": 119,
+      "all_installed_pixels_match_7b_pack": true,
+      "spatial_run": "spnwchrm-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "interpolation_run": "spnwchrm-interpolation-gauss12-feather12-7b-lot10-20261013-v1"
+    },
+    {
+      "resref": "SPPLANAR",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "phase_count": 90,
+      "changed_backings": 89,
+      "all_installed_pixels_match_7b_pack": true,
+      "spatial_run": "spplanar-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "interpolation_run": "spplanar-interpolation-gauss12-feather12-7b-lot10-20261013-v1"
+    },
+    {
+      "resref": "ABJURH",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "phase_count": 24,
+      "changed_backings": 23,
+      "all_installed_pixels_match_7b_pack": true,
+      "spatial_run": "abjurh-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "interpolation_run": "abjurh-interpolation-gauss12-feather12-7b-lot10-20261013-v1"
+    },
+    {
+      "resref": "SPGFLSH1",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "phase_count": 24,
+      "changed_backings": 23,
+      "all_installed_pixels_match_7b_pack": true,
+      "spatial_run": "spgflsh1-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "interpolation_run": "spgflsh1-interpolation-gauss12-feather12-7b-lot10-20261013-v1"
+    },
+    {
+      "resref": "COLDH",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "phase_count": 32,
+      "changed_backings": 31,
+      "all_installed_pixels_match_7b_pack": true,
+      "spatial_run": "coldh-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "interpolation_run": "coldh-interpolation-gauss12-feather12-7b-lot10-20261013-v1"
+    },
+    {
+      "resref": "SPCCMDSI",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "phase_count": 40,
+      "changed_backings": 39,
+      "all_installed_pixels_match_7b_pack": true,
+      "spatial_run": "spccmdsi-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "interpolation_run": "spccmdsi-interpolation-gauss12-feather12-7b-lot10-20261013-v1"
+    }
+  ],
+  "resource_count": 64,
+  "preserved_resources": 54,
+  "raw_bytes": 1841195968,
+  "dll_sha256": "3BFD4F1B1C21C4D1E126F06E0DC5857B7A53C8E130A98F9DD8C99D514D4AEA88",
+  "renderer_and_character_profile_preserved": true,
+  "per_asset_technical_checks": "10/10 passed; input hashes bound to installed packs",
+  "visual_qa": "pending-user-ingame"
+}

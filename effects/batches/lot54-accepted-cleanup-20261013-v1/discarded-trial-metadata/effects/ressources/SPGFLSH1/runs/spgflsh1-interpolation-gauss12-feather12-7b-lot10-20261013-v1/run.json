@@ -1,0 +1,68 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "asset_ids": [
+    "effects:bam:SPGFLSH1"
+  ],
+  "domain": "effects",
+  "inputs": [
+    {
+      "bytes": 20697,
+      "path": "effects/ressources/SPGFLSH1/runs/spgflsh1-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/manifest.json",
+      "role": "parent-spatial-output",
+      "sha256": "7BA9E05625EAF0A281B7D3F1490105701254B2DA45A5BAEFCBC0720982841E56"
+    },
+    {
+      "bytes": 1749,
+      "path": "effects/ressources/SPGFLSH1/runs/spgflsh1-interpolation-apollo30-left-7b-lot10-20261013-v1/run.json",
+      "role": "source-interpolation-descriptor",
+      "sha256": "C5008A6C36C10EC41C750E87737ECA1ED4E3240612B7E7B2728ED1227009B23B"
+    },
+    {
+      "bytes": 23295,
+      "path": "effects/ressources/SPGFLSH1/runs/spgflsh1-interpolation-apollo30-left-7b-lot10-20261013-v1/02-interpolation/manifest.json",
+      "role": "source-interpolation-manifest",
+      "sha256": "346DFB7FEE7AAC317F65D73BECF19CC5924EA90ABF4F32A953CBEA7FE2E1C364"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 30521,
+      "path": "effects/ressources/SPGFLSH1/runs/spgflsh1-interpolation-gauss12-feather12-7b-lot10-20261013-v1/02-interpolation/manifest.json",
+      "role": "interpolation-manifest",
+      "sha256": "B76C2BF94B9626597DE9DD1532F22F5F5AEC9E9F4D20948295E8A9BEB6EC0F0E"
+    }
+  ],
+  "pipeline": {
+    "id": "effects.interpolation-30fps.v1",
+    "recipe_path": "effects/ressources/SPGFLSH1/runs/spgflsh1-interpolation-gauss12-feather12-7b-lot10-20261013-v1/recipe.json",
+    "recipe_sha256": "1ABE44241642A6E020935788A9C6C09EBFB33D88723D5DD1003635293EB40FB2",
+    "version": "effect-visual-treatment.v1"
+  },
+  "provenance": {
+    "command": [
+      "run_effect_visual_treatment.py",
+      "--resref",
+      "SPGFLSH1",
+      "--interpolation-run",
+      "spgflsh1-interpolation-apollo30-left-7b-lot10-20261013-v1",
+      "--run-id",
+      "spgflsh1-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+      "--sigma-x4",
+      "1.2",
+      "--inner-feather-x4",
+      "12.0"
+    ],
+    "created_at_utc": "2026-10-13T20:09:31Z",
+    "generator": "pipeline/scripts/run_effect_visual_treatment.py",
+    "parents": [
+      "spgflsh1-spatial-seedvr7b-lab-lot10-20261013-v2"
+    ]
+  },
+  "result": {
+    "completed_at_utc": "2026-10-13T20:09:34Z",
+    "sealed": true,
+    "status": "completed"
+  },
+  "run_id": "spgflsh1-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+  "schema_version": 1
+}

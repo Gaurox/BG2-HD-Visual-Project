@@ -1,0 +1,180 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:BDSPCLAR",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 53,
+    "source": {
+      "interpolation_run": "bdspclar-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "interpolation_run_descriptor_sha256": "7506954BA76747C51574C8E66B71BCF6824D6A091F75C52C9C6AFDBDED0C9EEA",
+      "source_bam_sha256": "e265e87ff9c567c5ff56d0e44dc5284ad9817c4d4760acc18636fb7036f77159",
+      "spatial_manifest_sha256": "C4D6E3B266391D05A3DCBC5A0F62553553AC32B9F325B40781EFAC55F08B3DA4",
+      "spatial_run": "bdspclar-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "spatial_run_descriptor_sha256": "B1EF294FFBFECF23CA6EBAC9BBF02BF036B886B0CE71139D17D989D505C1823F"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        36,
+        38,
+        40,
+        42,
+        44,
+        46,
+        48,
+        50,
+        52
+      ],
+      "phase_count": 54,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        52
+      ]
+    }
+  },
+  "decision_date": "2026-10-13",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1108,
+    "path": "effects/index/qa-decisions/BDSPCLAR/2026-10-13-accepted-b0b70dcda8b6.json",
+    "sha256": "B0B70DCDA8B6CCF2EDF3293640F7F113B1401FE9D5C9055B2E35F848E27D3F7B"
+  },
+  "resref": "BDSPCLAR",
+  "run_descriptor": {
+    "bytes": 2424,
+    "path": "effects/ressources/BDSPCLAR/runs/bdspclar-interpolation-gauss12-feather12-lot54-20261013-v1/run.json",
+    "sha256": "7506954BA76747C51574C8E66B71BCF6824D6A091F75C52C9C6AFDBDED0C9EEA"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 40739,
+      "path": "effects/ressources/BDSPCLAR/packs/bdspclar-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/manifest.json",
+      "sha256": "680A0EBC2D1F0720A5C27119F56765E0696F21CE027A375862F1EB8F2755E920"
+    },
+    "registry": {
+      "bytes": 812,
+      "path": "effects/ressources/BDSPCLAR/packs/bdspclar-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/EffectAnimations-X4.registry",
+      "sha256": "6752778F0977A0067D1072251C9F5AFFB49475C0FA1C0C73A50BFE183ADCBC89"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "bdspclar-interpolation-gauss12-feather12-lot54-20261013-v1",
+  "source": {
+    "bytes": 133873,
+    "path": "effects/ressources/BDSPCLAR/source.bam",
+    "sha256": "E265E87FF9C567C5FF56D0E44DC5284AD9817C4D4760ACC18636FB7036F77159"
+  }
+}

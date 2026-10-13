@@ -1,0 +1,68 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "asset_ids": [
+    "effects:bam:ABJURH"
+  ],
+  "domain": "effects",
+  "inputs": [
+    {
+      "bytes": 20685,
+      "path": "effects/ressources/ABJURH/runs/abjurh-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/manifest.json",
+      "role": "parent-spatial-output",
+      "sha256": "3C63745B75175E62FFA8DB20B059AE108061536AE892360E83BBC4C7A10601C5"
+    },
+    {
+      "bytes": 1725,
+      "path": "effects/ressources/ABJURH/runs/abjurh-interpolation-apollo30-left-7b-lot10-20261013-v1/run.json",
+      "role": "source-interpolation-descriptor",
+      "sha256": "983C8602DDA1BD531FB10372B0ACDF6B02E58890E65C9E08688511143FCF8200"
+    },
+    {
+      "bytes": 23283,
+      "path": "effects/ressources/ABJURH/runs/abjurh-interpolation-apollo30-left-7b-lot10-20261013-v1/02-interpolation/manifest.json",
+      "role": "source-interpolation-manifest",
+      "sha256": "9DD7C5B087BD902F5BBE6198FA14F7118EA09D7AC4C8F36494A2668035A17EF4"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 30359,
+      "path": "effects/ressources/ABJURH/runs/abjurh-interpolation-gauss12-feather12-7b-lot10-20261013-v1/02-interpolation/manifest.json",
+      "role": "interpolation-manifest",
+      "sha256": "E9DB36D0A09AAC06E7103D1BC0CF0C44921B5E564364FB5D5495929D6397DD12"
+    }
+  ],
+  "pipeline": {
+    "id": "effects.interpolation-30fps.v1",
+    "recipe_path": "effects/ressources/ABJURH/runs/abjurh-interpolation-gauss12-feather12-7b-lot10-20261013-v1/recipe.json",
+    "recipe_sha256": "DD131CF43659AC6BBEBDC7CDA14E7F2C9FA254CB2DAD2D8777B1DBD4C074E7C6",
+    "version": "effect-visual-treatment.v1"
+  },
+  "provenance": {
+    "command": [
+      "run_effect_visual_treatment.py",
+      "--resref",
+      "ABJURH",
+      "--interpolation-run",
+      "abjurh-interpolation-apollo30-left-7b-lot10-20261013-v1",
+      "--run-id",
+      "abjurh-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+      "--sigma-x4",
+      "1.2",
+      "--inner-feather-x4",
+      "12.0"
+    ],
+    "created_at_utc": "2026-10-13T20:09:14Z",
+    "generator": "pipeline/scripts/run_effect_visual_treatment.py",
+    "parents": [
+      "abjurh-spatial-seedvr7b-lab-lot10-20261013-v2"
+    ]
+  },
+  "result": {
+    "completed_at_utc": "2026-10-13T20:09:17Z",
+    "sealed": true,
+    "status": "completed"
+  },
+  "run_id": "abjurh-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+  "schema_version": 1
+}

@@ -95,6 +95,9 @@ def produce(resref: str, parent_run: str, run_id: str, sigma: float, feather: fl
     stored = {}
     records = []
     visible = {}
+    audit = source.get("duplicate_audit", {})
+    allowed_duplicates = {tuple(pair) for pair in audit.get("native_repeat_duplicates", audit.get("native_hold_duplicates", []))}
+    native_hold_duplicates = []
     empty = 0
     source_flux = target_flux = 0.0
     try:
@@ -139,7 +142,10 @@ def produce(resref: str, parent_run: str, run_id: str, sigma: float, feather: fl
             digest = visible_frame_digest(image, canvas, (crop[0], crop[1]))
             if digest is None: empty += 1
             elif digest in visible:
-                raise RuntimeError(f"doublon lumineux après traitement: {visible[digest]}, {frame['frame']}")
+                pair = (visible[digest], frame["frame"])
+                if pair not in allowed_duplicates:
+                    raise RuntimeError(f"doublon lumineux sans pause native après traitement: {pair}")
+                native_hold_duplicates.append(list(pair))
             else: visible[digest] = frame["frame"]
             records.append(record)
         final = copy.deepcopy(source)
@@ -149,7 +155,10 @@ def produce(resref: str, parent_run: str, run_id: str, sigma: float, feather: fl
                       "native_anchor_policy": "native phases and geometry preserved; RGB Gaussian + contour fade",
                       "duplicate_audit": {"method": "SHA-256 anchored RGBA pixels",
                                           "visible_phase_count": len(visible), "empty_phase_count": empty,
-                                          "exact_visible_duplicates": [], "stored_rgba_frame_count": len(stored),
+                                          "exact_visible_duplicates": native_hold_duplicates,
+                                          "native_hold_duplicates": native_hold_duplicates,
+                                          "native_repeat_duplicates": native_hold_duplicates,
+                                          "unexpected_visible_duplicates": [], "stored_rgba_frame_count": len(stored),
                                           "unique_rgba_frame_count": len(stored), "deduplicate_outputs": True},
                       "source_interpolation": inputs[-1],
                       "brightness_change_percent": 100 * (target_flux / source_flux - 1)})

@@ -1,0 +1,52 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "asset_ids": [
+    "effects:bam:SPNWCHRM"
+  ],
+  "domain": "effects",
+  "inputs": [
+    {
+      "bytes": 94693,
+      "path": "effects/ressources/SPNWCHRM/runs/spnwchrm-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/manifest.json",
+      "role": "parent-spatial-output",
+      "sha256": "971FC417F5B516F0CC5B6F88A7977B187D892BD6E841FF05F0E7D9BBC06B1E4F"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 108588,
+      "path": "effects/ressources/SPNWCHRM/runs/spnwchrm-interpolation-apollo30-left-7b-lot10-20261013-v1/02-interpolation/manifest.json",
+      "role": "interpolation-manifest",
+      "sha256": "4A2238EDFB8BBFEDA5608159B5AAFBDE5D695002240413860279556EE486A701"
+    }
+  ],
+  "pipeline": {
+    "id": "effects.interpolation-30fps.v1",
+    "recipe_path": "effects/ressources/SPNWCHRM/runs/spnwchrm-interpolation-apollo30-left-7b-lot10-20261013-v1/recipe.json",
+    "recipe_sha256": "9D856B1D6D910A566816551EECB5FA2767F0BD52D4ECA7CDDC93DE03FD4CC23A",
+    "version": "effect-interpolation-runner.v2"
+  },
+  "provenance": {
+    "command": [
+      "run_effect_interpolation.py",
+      "--resref",
+      "SPNWCHRM",
+      "--spatial-run",
+      "spnwchrm-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "--run-id",
+      "spnwchrm-interpolation-apollo30-left-7b-lot10-20261013-v1"
+    ],
+    "created_at_utc": "2026-10-13T20:07:23Z",
+    "generator": "pipeline/scripts/run_effect_interpolation.py",
+    "parents": [
+      "spnwchrm-spatial-seedvr7b-lab-lot10-20261013-v2"
+    ]
+  },
+  "result": {
+    "completed_at_utc": "2026-10-13T20:07:39Z",
+    "sealed": true,
+    "status": "completed"
+  },
+  "run_id": "spnwchrm-interpolation-apollo30-left-7b-lot10-20261013-v1",
+  "schema_version": 1
+}

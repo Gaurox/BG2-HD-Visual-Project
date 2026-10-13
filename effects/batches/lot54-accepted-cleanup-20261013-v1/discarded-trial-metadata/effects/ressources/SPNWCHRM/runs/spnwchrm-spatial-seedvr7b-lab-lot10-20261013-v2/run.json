@@ -1,0 +1,59 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "asset_ids": [
+    "effects:bam:SPNWCHRM"
+  ],
+  "domain": "effects",
+  "inputs": [
+    {
+      "bytes": 70873,
+      "path": "effects/ressources/SPNWCHRM/source.bam",
+      "role": "source-bam",
+      "sha256": "CDAF296926DB34E009A01EBD664274B341C029198F6C66C82C3178433006BA08"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 30965,
+      "path": "effects/ressources/SPNWCHRM/runs/spnwchrm-spatial-seedvr7b-lab-lot10-20261013-v2/00-frames-x1/manifest.json",
+      "role": "frames-manifest",
+      "sha256": "699FD1E6881D0B4975385F4D136CC8AD1F5F2B58E29C07DE62D3DE05879287C5"
+    },
+    {
+      "bytes": 94693,
+      "path": "effects/ressources/SPNWCHRM/runs/spnwchrm-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/manifest.json",
+      "role": "spatial-manifest",
+      "sha256": "971FC417F5B516F0CC5B6F88A7977B187D892BD6E841FF05F0E7D9BBC06B1E4F"
+    },
+    {
+      "bytes": 3097774,
+      "path": "effects/ressources/SPNWCHRM/runs/spnwchrm-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/preview/animation-x4-contact-sheet.png",
+      "role": "spatial-preview",
+      "sha256": "BFD524B89EF0DC0E0A0D39D77E1162D3DBC9E44ECAE559D734E4C9AD2470384D"
+    }
+  ],
+  "pipeline": {
+    "id": "effects.spatial-x4.v1",
+    "recipe_path": "effects/ressources/SPNWCHRM/runs/spnwchrm-spatial-seedvr7b-lab-lot10-20261013-v2/recipe.json",
+    "recipe_sha256": "15E1CC0AF7A07C8BE0859079248244B326C16638056D5373719C8322447A4C01",
+    "version": "effect-spatial-runner.v1"
+  },
+  "provenance": {
+    "command": [
+      "run_effect_spatial.py",
+      "--resref",
+      "SPNWCHRM",
+      "--run-id",
+      "spnwchrm-spatial-seedvr7b-lab-lot10-20261013-v2"
+    ],
+    "created_at_utc": "2026-10-13T19:58:44Z",
+    "generator": "pipeline/scripts/run_effect_spatial.py"
+  },
+  "result": {
+    "completed_at_utc": "2026-10-13T20:00:52Z",
+    "sealed": true,
+    "status": "completed"
+  },
+  "run_id": "spnwchrm-spatial-seedvr7b-lab-lot10-20261013-v2",
+  "schema_version": 1
+}

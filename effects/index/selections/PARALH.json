@@ -1,0 +1,120 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:PARALH",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 23,
+    "source": {
+      "interpolation_run": "paralh-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "interpolation_run_descriptor_sha256": "4CC6DAE184C3C5A7CC19F75D6D532E946854BBBDD44BDF176510408FECE75C09",
+      "source_bam_sha256": "b2d3825586f0387a6797b18aad6bd4e25b2a452964adbc3194fcf4d2324a70f4",
+      "spatial_manifest_sha256": "E41F0317B2D8BCE00A146C70BCE18B60BEC0B0C548B078F8925CE0078A8641EA",
+      "spatial_run": "paralh-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "spatial_run_descriptor_sha256": "3A399DF2C4ED5B0CCCE303CF12FD33DB6466B9ABCAC2EC8BDC8B472638B7DBD4"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22
+      ],
+      "phase_count": 24,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        22
+      ]
+    }
+  },
+  "decision_date": "2026-10-13",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1094,
+    "path": "effects/index/qa-decisions/PARALH/2026-10-13-accepted-70959b5a438f.json",
+    "sha256": "70959B5A438FAB121F6DB8ED6D6C342F44F18D05FC14C7E7EE52DEE2FFF89E30"
+  },
+  "resref": "PARALH",
+  "run_descriptor": {
+    "bytes": 2392,
+    "path": "effects/ressources/PARALH/runs/paralh-interpolation-gauss12-feather12-lot54-20261013-v1/run.json",
+    "sha256": "4CC6DAE184C3C5A7CC19F75D6D532E946854BBBDD44BDF176510408FECE75C09"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 18265,
+      "path": "effects/ressources/PARALH/packs/paralh-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/manifest.json",
+      "sha256": "42CE44B911A9EDB2E2D71F918ECA84A8A8BE736E28016EC692BF832CAC99FB16"
+    },
+    "registry": {
+      "bytes": 392,
+      "path": "effects/ressources/PARALH/packs/paralh-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/EffectAnimations-X4.registry",
+      "sha256": "F06D796CE263619F7EA8AF2B746B7574BC737D3D95C3156E3326F8EF8D3C7168"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "paralh-interpolation-gauss12-feather12-lot54-20261013-v1",
+  "source": {
+    "bytes": 19598,
+    "path": "effects/ressources/PARALH/source.bam",
+    "sha256": "B2D3825586F0387A6797B18AAD6BD4E25B2A452964ADBC3194FCF4D2324A70F4"
+  }
+}

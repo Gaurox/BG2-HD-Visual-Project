@@ -1,0 +1,132 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPSDIMPA",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 29,
+    "source": {
+      "interpolation_run": "spsdimpa-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "interpolation_run_descriptor_sha256": "B36289996B63BF6BCAB3779FB03DC44383A14025A3669EB67128F0A341A26F9D",
+      "source_bam_sha256": "59675c82d7d952f99361898bab944948e0df8913ada7e8db52309c66ba982740",
+      "spatial_manifest_sha256": "758C3DA8F5339B32EBE0B726F109068306AEBCDE16700030501D658CD6655A85",
+      "spatial_run": "spsdimpa-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "spatial_run_descriptor_sha256": "4869DA65A7B0D25EF775C1B5AF415790D1CA2989D290FC0968E7B020F8E195A3"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28
+      ],
+      "phase_count": 30,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        28
+      ]
+    }
+  },
+  "decision_date": "2026-10-13",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1108,
+    "path": "effects/index/qa-decisions/SPSDIMPA/2026-10-13-accepted-611f4c934f72.json",
+    "sha256": "611F4C934F729D550B7823AC9FCEF35C78386EB01B8F19E5E48EE5124C5B8B15"
+  },
+  "resref": "SPSDIMPA",
+  "run_descriptor": {
+    "bytes": 2424,
+    "path": "effects/ressources/SPSDIMPA/runs/spsdimpa-interpolation-gauss12-feather12-lot54-20261013-v1/run.json",
+    "sha256": "B36289996B63BF6BCAB3779FB03DC44383A14025A3669EB67128F0A341A26F9D"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 22937,
+      "path": "effects/ressources/SPSDIMPA/packs/spsdimpa-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/manifest.json",
+      "sha256": "CEC8AD94E8613CF809BD1987027C9E5FDFBACC659EAD0AC9D5F84A368D3F96E1"
+    },
+    "registry": {
+      "bytes": 476,
+      "path": "effects/ressources/SPSDIMPA/packs/spsdimpa-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/EffectAnimations-X4.registry",
+      "sha256": "0A9BF20BC333F534E4F76B733AACC74979BD883A350B991997A0169CD619BA59"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spsdimpa-interpolation-gauss12-feather12-lot54-20261013-v1",
+  "source": {
+    "bytes": 80673,
+    "path": "effects/ressources/SPSDIMPA/source.bam",
+    "sha256": "59675C82D7D952F99361898BAB944948E0DF8913ADA7E8DB52309C66BA982740"
+  }
+}

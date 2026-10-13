@@ -29,6 +29,13 @@ struct TimelineInfo {
 // identical to the established area-animation compositor.
 using EngineTextureApi = area_animation_x4::EngineTextureApi;
 
+struct TextureCacheStats {
+  std::size_t capacity{};
+  std::size_t residentTextures{};
+  std::uint64_t requests{}, hits{}, reuses{}, allocationFailures{}, uploadFailures{};
+};
+[[nodiscard]] TextureCacheStats texture_cache_stats() noexcept;
+
 // Loads EffectAnimations-X4.registry and every declared raw RGBA frame before
 // installing the effect-owner hooks. A malformed or incomplete pack is
 // rejected as a whole; callers then retain the native BAM path.

@@ -1,0 +1,40 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "asset_ids": [
+    "effects:bam:SPPLANAR"
+  ],
+  "domain": "effects",
+  "inputs": [
+    {
+      "bytes": 269716,
+      "path": "effects/ressources/SPPLANAR/source.bam",
+      "role": "source-bam",
+      "sha256": "85EEF381FB76DD17F0CFBFA6862E726E460FBBC8989E0F50B40CEE068613A41C"
+    }
+  ],
+  "outputs": [],
+  "pipeline": {
+    "id": "effects.spatial-x4.v1",
+    "recipe_path": "effects/ressources/SPPLANAR/runs/spplanar-spatial-seedvr7b-lab-lot10-20261013-v1/recipe.json",
+    "recipe_sha256": "17ACD05F54D79F99A76B4C12B4C161F2F73526D4E1A5C4DBB8F7490A52D3FE38",
+    "version": "effect-spatial-runner.v1"
+  },
+  "provenance": {
+    "command": [
+      "run_effect_spatial.py",
+      "--resref",
+      "SPPLANAR",
+      "--run-id",
+      "spplanar-spatial-seedvr7b-lab-lot10-20261013-v1"
+    ],
+    "created_at_utc": "2026-10-13T19:53:06Z",
+    "generator": "pipeline/scripts/run_effect_spatial.py"
+  },
+  "result": {
+    "notes": "Command '['C:\\\\Users\\\\Adrien\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python311\\\\python.exe', 'G:\\\\AI\\\\BG2_Upscale\\\\pipeline\\\\scripts\\\\upscale_animation_frames.py', 'G:\\\\AI\\\\BG2_Upscale\\\\effects\\\\ressources\\\\SPPLANAR\\\\runs\\\\spplanar-spatial-seedvr7b-lab-lot10-20261013-v1\\\\00-frames-x1\\\\rgb', 'G:\\\\AI\\\\BG2_Upscale\\\\effects\\\\ressources\\\\SPPLANAR\\\\runs\\\\spplanar-spatial-seedvr7b-lab-lot10-20261013-v1\\\\00-frames-x1\\\\alpha', 'G:\\\\AI\\\\BG2_Upscale\\\\effects\\\\ressources\\\\SPPLANAR\\\\runs\\\\spplanar-spatial-seedvr7b-lab-lot10-20261013-v1\\\\01-spatial-x4', '--frame-manifest', 'G:\\\\AI\\\\BG2_Upscale\\\\effects\\\\ressources\\\\SPPLANAR\\\\runs\\\\spplanar-spatial-seedvr7b-lab-lot10-20261013-v1\\\\00-frames-x1\\\\manifest.json', '--scale', '4', '--workflow', 'G:\\\\AI\\\\BG2_Upscale\\\\pipeline\\\\recipes\\\\effects-lot10-seedvr7b-compare-20261013-v1\\\\SeedVR-Image-7B-x4.api.json', '--server', 'http://127.0.0.1:8188', '--pad', '32', '--poll-seconds', '2.0', '--timeout-seconds', '1800.0', '--upload-folder', 'BG2_Upscale/effect-runs', '--color-correction-method', 'lab']' returned non-zero exit status 1.",
+    "sealed": false,
+    "status": "failed"
+  },
+  "run_id": "spplanar-spatial-seedvr7b-lab-lot10-20261013-v1",
+  "schema_version": 1
+}

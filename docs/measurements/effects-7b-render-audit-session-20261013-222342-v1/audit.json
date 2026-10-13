@@ -1,0 +1,313 @@
+{
+  "schema": "bg2-effects-render-audit-v1",
+  "session_start": "[2026-10-13 22:23:42.126] [info] Infinity Engine Enhancer initializing...",
+  "last_log_entry": "[2026-10-13 22:24:36.377] [info] Area-animation cache budget simulation: area=AR3000, reason=periodic, frameCapacity=362, cpuBudgetBytes=201326592, gpuBudgetBytes=268435456, gpuEntryLimit=192, requests=4526, distinctFrames=197, predictedFrameReadBytes=23604864, predictedUploadBytes=23604864, cpuRequests=197, cpuHits=0, cpuMisses=197, cpuEvictions=0, cpuUncacheableRequests=0, cpuResidentEntries=197, cpuResidentBytes=23604864, cpuPeakResidentBytes=23604864, gpuHits=4329, gpuMisses=197, gpuEvictions=5, gpuUncacheableRequests=0, gpuResidentEntries=192, gpuResidentBytes=23150592, gpuPeakResidentBytes=23150592",
+  "global_start_line": 32026,
+  "full_log_snapshot_sha256": "0B2BCA22A1899823B48D5EFB15673802E0149C2786C8E431345C051CFE8BD6EB",
+  "session_snapshot_sha256": "661E0AD9299401D5197C16EC40E5B969B20191E90EA18EB0F0D2BADEF8150E7D",
+  "files": {
+    "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition\\InfinityEngine-Enhancer.dll": "3BFD4F1B1C21C4D1E126F06E0DC5857B7A53C8E130A98F9DD8C99D514D4AEA88",
+    "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition\\InfinityEngine-Enhancer.ini": "5859F49562E89F71CC1A9B9DDBAC4F77B9B5AB95E5983D88E51C09E480042ABA",
+    "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition\\override\\fpDraw.glsl": "C50A43EBD580EE840EDABAF6B96B9DF80589A7D793F27A85D1766BC17977BA20",
+    "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition\\override\\fpSprite.glsl": "CF5C2795E37EE31D908801312971B8FA1ED5BE3A87902A7A44F186A013610A73",
+    "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition\\override\\fpSELECT.glsl": "F733B8970A3B1C3FB85F335C5BC3F2DC91A113DE22C6CF0B2CFBD2ACE79B84A5",
+    "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition\\iee-assets\\effects\\manifest.json": "D3878796EBF60BDFFFF463C6BF885F8FA028189F4948096B0373D2FEDC78F2F2",
+    "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition\\iee-assets\\effects\\EffectAnimations-X4.registry": "4F6B48804034ACD17DC300C543DA2947989CAC668B6F531704C92E68B7904311"
+  },
+  "effects": [
+    {
+      "resref": "BDETHER",
+      "installed_backings_verified": 63,
+      "payload_mismatches": [],
+      "spatial_run": "bdether-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "target_fps": [
+        30,
+        1
+      ],
+      "stages": [
+        {
+          "global_line": 32517,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 22:23:55.875] [info] Effect animation x4 diagnostic: resref=BDETHER, stage=registry-resolved, registeredCellReads=1, registryResolved=1, registryFallback=0, timelineResolved=0, x4Bound=0, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=75x90; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "global_line": 32518,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 22:23:55.875] [info] Effect animation x4 diagnostic: resref=BDETHER, stage=timeline-resolved, registeredCellReads=1, registryResolved=1, registryFallback=0, timelineResolved=1, x4Bound=0, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=75x90; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "global_line": 32520,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 22:23:55.875] [info] Effect animation x4 diagnostic: resref=BDETHER, stage=x4-bound, registeredCellReads=1, registryResolved=1, registryFallback=0, timelineResolved=1, x4Bound=1, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=75x90; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "global_line": 32528,
+          "stage": "native-occlusion-bound",
+          "text": "[2026-10-13 22:23:56.143] [info] Effect animation x4 diagnostic: resref=BDETHER, stage=native-occlusion-bound, registeredCellReads=17, registryResolved=17, registryFallback=0, timelineResolved=17, x4Bound=17, bindFallback=0, sequence=0, nativeFrame=5, timelinePhase=10, logical=121x145; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ],
+      "x4_observed": true,
+      "timeline_observed": true
+    },
+    {
+      "resref": "BDSPCLAR",
+      "installed_backings_verified": 53,
+      "payload_mismatches": [],
+      "spatial_run": "bdspclar-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "target_fps": [
+        30,
+        1
+      ],
+      "stages": [
+        {
+          "global_line": 32591,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 22:24:00.612] [info] Effect animation x4 diagnostic: resref=BDSPCLAR, stage=registry-resolved, registeredCellReads=125, registryResolved=125, registryFallback=0, timelineResolved=124, x4Bound=124, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=114x97; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "global_line": 32592,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 22:24:00.612] [info] Effect animation x4 diagnostic: resref=BDSPCLAR, stage=timeline-resolved, registeredCellReads=125, registryResolved=125, registryFallback=0, timelineResolved=125, x4Bound=124, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=114x97; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "global_line": 32593,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 22:24:00.612] [info] Effect animation x4 diagnostic: resref=BDSPCLAR, stage=x4-bound, registeredCellReads=125, registryResolved=125, registryFallback=0, timelineResolved=125, x4Bound=125, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=114x97; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "global_line": 32597,
+          "stage": "native-occlusion-bound",
+          "text": "[2026-10-13 22:24:00.679] [info] Effect animation x4 diagnostic: resref=BDSPCLAR, stage=native-occlusion-bound, registeredCellReads=129, registryResolved=129, registryFallback=0, timelineResolved=129, x4Bound=129, bindFallback=0, sequence=0, nativeFrame=2, timelinePhase=4, logical=112x91; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ],
+      "x4_observed": true,
+      "timeline_observed": true
+    },
+    {
+      "resref": "EXALTAH",
+      "installed_backings_verified": 53,
+      "payload_mismatches": [],
+      "spatial_run": "exaltah-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "target_fps": [
+        30,
+        1
+      ],
+      "stages": [
+        {
+          "global_line": 32712,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 22:24:08.566] [info] Effect animation x4 diagnostic: resref=EXALTAH, stage=registry-resolved, registeredCellReads=229, registryResolved=229, registryFallback=0, timelineResolved=228, x4Bound=228, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=96x90; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "global_line": 32713,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 22:24:08.566] [info] Effect animation x4 diagnostic: resref=EXALTAH, stage=timeline-resolved, registeredCellReads=229, registryResolved=229, registryFallback=0, timelineResolved=229, x4Bound=228, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=96x90; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "global_line": 32714,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 22:24:08.566] [info] Effect animation x4 diagnostic: resref=EXALTAH, stage=x4-bound, registeredCellReads=229, registryResolved=229, registryFallback=0, timelineResolved=229, x4Bound=229, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=96x90; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ],
+      "x4_observed": true,
+      "timeline_observed": true
+    },
+    {
+      "resref": "GLDUSTH",
+      "installed_backings_verified": 55,
+      "payload_mismatches": [],
+      "spatial_run": "gldusth-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "target_fps": [
+        30,
+        1
+      ],
+      "stages": [],
+      "x4_observed": false,
+      "timeline_observed": false
+    },
+    {
+      "resref": "SPNWCHRM",
+      "installed_backings_verified": 119,
+      "payload_mismatches": [],
+      "spatial_run": "spnwchrm-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "target_fps": [
+        30,
+        1
+      ],
+      "stages": [
+        {
+          "global_line": 32768,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 22:24:13.372] [info] Effect animation x4 diagnostic: resref=SPNWCHRM, stage=registry-resolved, registeredCellReads=517, registryResolved=517, registryFallback=0, timelineResolved=516, x4Bound=516, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=26x25; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "global_line": 32769,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 22:24:13.372] [info] Effect animation x4 diagnostic: resref=SPNWCHRM, stage=timeline-resolved, registeredCellReads=517, registryResolved=517, registryFallback=0, timelineResolved=517, x4Bound=516, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=26x25; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "global_line": 32770,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 22:24:13.373] [info] Effect animation x4 diagnostic: resref=SPNWCHRM, stage=x4-bound, registeredCellReads=517, registryResolved=517, registryFallback=0, timelineResolved=517, x4Bound=517, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=26x25; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ],
+      "x4_observed": true,
+      "timeline_observed": true
+    },
+    {
+      "resref": "SPPLANAR",
+      "installed_backings_verified": 89,
+      "payload_mismatches": [],
+      "spatial_run": "spplanar-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "target_fps": [
+        30,
+        1
+      ],
+      "stages": [
+        {
+          "global_line": 32855,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 22:24:18.375] [info] Effect animation x4 diagnostic: resref=SPPLANAR, stage=registry-resolved, registeredCellReads=861, registryResolved=861, registryFallback=0, timelineResolved=860, x4Bound=860, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=134x99; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "global_line": 32856,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 22:24:18.375] [info] Effect animation x4 diagnostic: resref=SPPLANAR, stage=timeline-resolved, registeredCellReads=861, registryResolved=861, registryFallback=0, timelineResolved=861, x4Bound=860, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=134x99; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "global_line": 32857,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 22:24:18.375] [info] Effect animation x4 diagnostic: resref=SPPLANAR, stage=x4-bound, registeredCellReads=861, registryResolved=861, registryFallback=0, timelineResolved=861, x4Bound=861, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=134x99; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "global_line": 32896,
+          "stage": "native-occlusion-bound",
+          "text": "[2026-10-13 22:24:20.246] [info] Effect animation x4 diagnostic: resref=SPPLANAR, stage=native-occlusion-bound, registeredCellReads=973, registryResolved=973, registryFallback=0, timelineResolved=973, x4Bound=973, bindFallback=0, sequence=0, nativeFrame=29, timelinePhase=58, logical=220x150; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ],
+      "x4_observed": true,
+      "timeline_observed": true
+    },
+    {
+      "resref": "ABJURH",
+      "installed_backings_verified": 23,
+      "payload_mismatches": [],
+      "spatial_run": "abjurh-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "target_fps": [
+        30,
+        1
+      ],
+      "stages": [
+        {
+          "global_line": 32950,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 22:24:26.047] [info] Effect animation x4 diagnostic: resref=ABJURH, stage=registry-resolved, registeredCellReads=1037, registryResolved=1037, registryFallback=0, timelineResolved=1036, x4Bound=1036, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=104x120; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "global_line": 32951,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 22:24:26.047] [info] Effect animation x4 diagnostic: resref=ABJURH, stage=timeline-resolved, registeredCellReads=1037, registryResolved=1037, registryFallback=0, timelineResolved=1037, x4Bound=1036, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=104x120; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "global_line": 32952,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 22:24:26.047] [info] Effect animation x4 diagnostic: resref=ABJURH, stage=x4-bound, registeredCellReads=1037, registryResolved=1037, registryFallback=0, timelineResolved=1037, x4Bound=1037, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=104x120; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ],
+      "x4_observed": true,
+      "timeline_observed": true
+    },
+    {
+      "resref": "SPGFLSH1",
+      "installed_backings_verified": 23,
+      "payload_mismatches": [],
+      "spatial_run": "spgflsh1-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "target_fps": [
+        30,
+        1
+      ],
+      "stages": [],
+      "x4_observed": false,
+      "timeline_observed": false
+    },
+    {
+      "resref": "COLDH",
+      "installed_backings_verified": 31,
+      "payload_mismatches": [],
+      "spatial_run": "coldh-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "target_fps": [
+        30,
+        1
+      ],
+      "stages": [],
+      "x4_observed": false,
+      "timeline_observed": false
+    },
+    {
+      "resref": "SPCCMDSI",
+      "installed_backings_verified": 39,
+      "payload_mismatches": [],
+      "spatial_run": "spccmdsi-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "target_fps": [
+        30,
+        1
+      ],
+      "stages": [
+        {
+          "global_line": 33020,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 22:24:33.708] [info] Effect animation x4 diagnostic: resref=SPCCMDSI, stage=registry-resolved, registeredCellReads=1081, registryResolved=1081, registryFallback=0, timelineResolved=1080, x4Bound=1080, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=105x111; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "global_line": 33021,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 22:24:33.708] [info] Effect animation x4 diagnostic: resref=SPCCMDSI, stage=timeline-resolved, registeredCellReads=1081, registryResolved=1081, registryFallback=0, timelineResolved=1081, x4Bound=1080, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=105x111; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "global_line": 33022,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 22:24:33.708] [info] Effect animation x4 diagnostic: resref=SPCCMDSI, stage=x4-bound, registeredCellReads=1081, registryResolved=1081, registryFallback=0, timelineResolved=1081, x4Bound=1081, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=105x111; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ],
+      "x4_observed": true,
+      "timeline_observed": true
+    }
+  ],
+  "warnings": [
+    "[2026-10-13 22:23:44.524] [warning] RenderTexture prologue is detoured (likely EEex); recovered at reference RVA 0x4257C0 by verifying the un-patched pattern tail"
+  ],
+  "character_animation_ids_hd": [
+    "0x6000",
+    "0x6010",
+    "0x6100",
+    "0x6110",
+    "0x6200",
+    "0x6210"
+  ],
+  "last_effect_diagnostic": "[2026-10-13 22:24:33.708] [info] Effect animation x4 diagnostic: resref=SPCCMDSI, stage=x4-bound, registeredCellReads=1081, registryResolved=1081, registryFallback=0, timelineResolved=1081, x4Bound=1081, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=105x111; x4Bound confirms the 4x backing texture was bound for the native draw geometry",
+  "runtime": {
+    "effect_texture_storage": "RGBA8 uncompressed",
+    "effect_sampler": "LINEAR; base level only",
+    "custom_catmullrom_profiles_enabled": false,
+    "fullframe_fxaa": false,
+    "fullframe_ssaa2x": false,
+    "occlusion_bound_observed_for": [
+      "BDETHER",
+      "BDSPCLAR",
+      "SPPLANAR"
+    ],
+    "native_fpSprite_halo": "present in installed shader; per-effect final shader route and uniforms not logged; actual contribution not established"
+  },
+  "baked_treatment": {
+    "rgb_gaussian_sigma_x4": 1.2,
+    "inner_feather_x4": 12,
+    "rgb_encoding": "premultiplied",
+    "alpha_origin": "native binary mask nearest enlarged x4; native-left temporal alpha"
+  },
+  "limits": [
+    "stages log once per asset; cumulative counters stop at last diagnostic",
+    "x4/30 timing contract is not a measurement of every presented phase",
+    "no GPU capture or screen-pixel comparison; perceptual compression cause unresolved",
+    "global compressed uploads include other texture domains; not evidence of compressed effect replacements"
+  ]
+}

@@ -91,6 +91,9 @@ occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans
 | Diagnostics | stages et mesures de chaque slot bornés par ressource | format de preuve runtime versionné |
 | Ajout d'un effet | pack mono-resref immuable puis composition cumulative | format de registre hétérogène requis |
 | Composition v1/v2 | versions homogènes seulement ; v1 natif et v2 30 FPS non mélangés | registre avec cadence par ressource validé |
+| Lot54 retenu 2026-10-13 | 54 BAM SeedVR2 3B/LAB x4 → Apollo30 native-left → gauss1.2/feather12 RGB prémultiplié ; [QA explicite](../effects/batches/lot54-accepted-cleanup-20261013-v1/acceptance.json), 10 essais 7B remplacés par 3B ; sélection/production/installation distinctes, aucune release déduite | demande de nouvelle recette ou de nouvel asset |
+| Filtre effects x4 | NEAREST min/mag, mip0 ; backing direct et sortie masquage décor ; [installation](../engine/InfinityEngine-Enhancer/installations/effects-nearest-20261013-v1/result.json) ; personnages NearestRGB-SilhouetteAlphaAA conservés | essai d'affichage explicitement demandé |
+| Cache GPU effects | LRU64 slots moteur ; slot privé réutilisé, pression récupérée ; [preuve GPU](measurements/character-stable-cache64-20261013-v1/checks.json) : 720 frames exactes, allocation Character disponible après chaque frame avec 400 slots occupés | autre allocateur ou nouvelle limite mémoire |
 
 ## Icônes
 
@@ -112,7 +115,7 @@ occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans
 | Suivi | quatre autorités indépendantes : génération courante, décisions QA immuables, reçu d'installation, candidats release |
 | Pérennité QA | une acceptation reste acquise tant que les octets concernés et le contrat runtime ne changent pas ; réouverture explicite uniquement |
 | Legacy | conserver les `source/`, jobs, runs et catalogues existants ; aucun déplacement/réécriture d'artefact scellé |
-| Filtrage QA | `NEAREST`; `LINEAR` est seulement un A/B d'affichage |
+| Filtrage QA / défaut courant | **NearestRGB-SilhouetteAlphaAA** : RGB intérieur nearest + AA alpha de silhouette, 4 taps ; autorité [`../sprite/display-default.json`](../sprite/display-default.json), réglages [`../sprite/DISPLAY_DEFAULT.md`](../sprite/DISPLAY_DEFAULT.md). `CreatureSpriteFilter=Nearest` seul ne prouve pas le mode effectif ; ShaderSuite/CreatureHD actifs requis |
 | Affichage retenu 2026-10-13 | **Nearest RGB intérieur + antialiasing alpha de silhouette, 4 taps**, validé ingame par l'utilisateur puis intégré au shader commun et installé depuis les sorties standard du projet ; [source/installation et contrôles](measurements/sprite-display-nearest-silhouette-preferred-20261013-v1/project-integration-20261013-v1.json), 23 sorties GPU identiques à la référence approuvée. Branches Linear adouci, Mitchell et AA adapté au zoom retirées ; archives de référence immuables conservées. Aucun sprite retraité, aucune QA exhaustive ni promotion release déduite |
 | Variantes | pipeline xN cumulatif ; AA/xBR4 direct restent archivés |
 | `.work/` | cache supprimable, jamais source |

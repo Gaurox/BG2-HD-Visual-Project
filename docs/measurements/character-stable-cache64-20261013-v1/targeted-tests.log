@@ -1,0 +1,57 @@
+Start testing: Oct 13 21:34 Paris, Madrid (heure d’été)
+----------------------------------------------------------
+6/10 Testing: iee_sprite_minification_tests
+6/10 Test: iee_sprite_minification_tests
+Command: "G:/AI/BG2_Upscale/build/iee-character-stable-effect-cache64-20261013-v1/Release/iee_sprite_minification_tests.exe"
+Directory: G:/AI/BG2_Upscale/build/iee-character-stable-effect-cache64-20261013-v1
+"iee_sprite_minification_tests" start time: Oct 13 21:34 Paris, Madrid (heure d’été)
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.06 sec
+----------------------------------------------------------
+Test Passed.
+"iee_sprite_minification_tests" end time: Oct 13 21:34 Paris, Madrid (heure d’été)
+"iee_sprite_minification_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/10 Testing: iee_effect_animation_x4_registry_tests
+8/10 Test: iee_effect_animation_x4_registry_tests
+Command: "G:/AI/BG2_Upscale/build/iee-character-stable-effect-cache64-20261013-v1/Release/iee_effect_animation_x4_registry_tests.exe"
+Directory: G:/AI/BG2_Upscale/engine/InfinityEngine-Enhancer/source-patchee
+"iee_effect_animation_x4_registry_tests" start time: Oct 13 21:34 Paris, Madrid (heure d’été)
+Output:
+----------------------------------------------------------
+[2026-10-13 21:34:58.508] [info] Prepared effect animation x4 runtime pack: resources=1, frames=6, rawBytes=1572864, gpuTextureCapacity=64
+[2026-10-13 21:34:58.522] [info] Prepared effect animation x4 runtime pack: resources=1, frames=12, rawBytes=3145728, gpuTextureCapacity=64
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"iee_effect_animation_x4_registry_tests" end time: Oct 13 21:34 Paris, Madrid (heure d’été)
+"iee_effect_animation_x4_registry_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/10 Testing: iee_effect_texture_cache_tests
+9/10 Test: iee_effect_texture_cache_tests
+Command: "G:/AI/BG2_Upscale/build/iee-character-stable-effect-cache64-20261013-v1/Release/iee_effect_texture_cache_tests.exe"
+Directory: G:/AI/BG2_Upscale/build/iee-character-stable-effect-cache64-20261013-v1
+"iee_effect_texture_cache_tests" start time: Oct 13 21:34 Paris, Madrid (heure d’été)
+Output:
+----------------------------------------------------------
+[2026-10-13 21:34:59.047] [info] Prepared effect animation x4 runtime pack: resources=1, frames=720, rawBytes=184320, gpuTextureCapacity=64
+[2026-10-13 21:34:59.053] [info] OpenGL initialized (source patching=ready, ARB shaders=ready, texture upload=ready, compressed texture upload=ready)
+[2026-10-13 21:34:59.056] [info] Effect animation x4 GPU cache reusing owned slots: capacity=64, resident=64; native Character/UI texture slots remain available
+[2026-10-13 21:34:59.120] [info] Prepared effect animation x4 runtime pack: resources=1, frames=720, rawBytes=184320, gpuTextureCapacity=64
+[2026-10-13 21:34:59.120] [info] Effect animation x4 GPU cache reusing owned slots: capacity=64, resident=1; native Character/UI texture slots remain available
+[2026-10-13 21:34:59.120] [warning] Effect animation x4 texture creation failed; delegating to original BAM; gpuCacheResident=1, gpuCacheCapacity=64, allocationFailures=1, uploadFailures=1
+720 distinct effect frames: exact GPU pixels, cache <=64; Character allocation succeeds on every frame with 400 occupied slots; LRU hit/reload, allocation pressure and upload recovery passed
+<end of output>
+Test time =   0.69 sec
+----------------------------------------------------------
+Test Passed.
+"iee_effect_texture_cache_tests" end time: Oct 13 21:34 Paris, Madrid (heure d’été)
+"iee_effect_texture_cache_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 13 21:34 Paris, Madrid (heure d’été)

@@ -1,0 +1,480 @@
+{
+  "kind": "effects-model-quality-comparison",
+  "date": "2026-10-13",
+  "assets_count": 10,
+  "source_frames": 290,
+  "scope": "separate 7B trials; no production registration or installation",
+  "baseline_batch": "effects/batches/lot54-seedvr3b-apollo30-20261013-v1",
+  "recipe": {
+    "model": "seedvr2_7b_int8_convrot.safetensors",
+    "scale": 4,
+    "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+    "pad_x1": 32,
+    "color_correction": "lab",
+    "temporal": "Apollo8 15->30 one-shot native-left alpha dedup",
+    "sigma_x4": 1.2,
+    "inner_feather_x4": 12,
+    "encoding": "premultiplied",
+    "scale_override": 4
+  },
+  "assets": [
+    {
+      "resref": "BDETHER",
+      "group": "Anneaux et sceaux",
+      "frames": 32,
+      "cycle_slots": 32,
+      "unique_frames": 32,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        135,
+        164
+      ],
+      "raw_x4_bytes": 34885056,
+      "source": "effects/ressources/BDETHER/source.bam",
+      "canonical_sha256": "110223DCD804D1C969AFE352B77CFF25BE8A30BB8928DBB56AD5DF2C88F01EE4",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:BDETHER",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 12
+          }
+        }
+      ],
+      "spatial_run": "bdether-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "apollo_run": "bdether-interpolation-apollo30-left-7b-lot10-20261013-v1",
+      "treatment_run": "bdether-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+      "pack": "effects/ressources/BDETHER/packs/bdether-seedvr7b-apollo30-gauss12-feather12-lot10-20261013-v1",
+      "baseline_3b": {
+        "spatial_run": "bdether-spatial-seedvr3b-lab-lot54-20261013-v1",
+        "apollo_run": "bdether-interpolation-apollo30-left-lot54-20261013-v1",
+        "treatment_run": "bdether-interpolation-gauss12-feather12-lot54-20261013-v1",
+        "pack": "effects/ressources/BDETHER/packs/bdether-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+      }
+    },
+    {
+      "resref": "BDSPCLAR",
+      "group": "Etoiles et particules",
+      "frames": 27,
+      "cycle_slots": 27,
+      "unique_frames": 27,
+      "blank_frames": 1,
+      "max_frame_size_x1": [
+        130,
+        100
+      ],
+      "raw_x4_bytes": 15724864,
+      "source": "effects/ressources/BDSPCLAR/source.bam",
+      "canonical_sha256": "E265E87FF9C567C5FF56D0E44DC5284AD9817C4D4760ACC18636FB7036F77159",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:BDSPCLAR",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 4,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "bdspclar-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "apollo_run": "bdspclar-interpolation-apollo30-left-7b-lot10-20261013-v1",
+      "treatment_run": "bdspclar-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+      "pack": "effects/ressources/BDSPCLAR/packs/bdspclar-seedvr7b-apollo30-gauss12-feather12-lot10-20261013-v1",
+      "baseline_3b": {
+        "spatial_run": "bdspclar-spatial-seedvr3b-lab-lot54-20261013-v1",
+        "apollo_run": "bdspclar-interpolation-apollo30-left-lot54-20261013-v1",
+        "treatment_run": "bdspclar-interpolation-gauss12-feather12-lot54-20261013-v1",
+        "pack": "effects/ressources/BDSPCLAR/packs/bdspclar-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+      }
+    },
+    {
+      "resref": "EXALTAH",
+      "group": "Etoiles et particules",
+      "frames": 27,
+      "cycle_slots": 100,
+      "unique_frames": 27,
+      "blank_frames": 1,
+      "max_frame_size_x1": [
+        111,
+        95
+      ],
+      "raw_x4_bytes": 12706496,
+      "source": "effects/ressources/EXALTAH/source.bam",
+      "canonical_sha256": "48BFB60AF95702B57B7E403614623238AD996F1AD33A43334425F5E0107335B4",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:EXALTAH",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 4,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "exaltah-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "apollo_run": "exaltah-interpolation-apollo30-left-7b-lot10-20261013-v1",
+      "treatment_run": "exaltah-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+      "pack": "effects/ressources/EXALTAH/packs/exaltah-seedvr7b-apollo30-gauss12-feather12-lot10-20261013-v1",
+      "baseline_3b": {
+        "spatial_run": "exaltah-spatial-seedvr3b-lab-lot54-20261013-v1",
+        "apollo_run": "exaltah-interpolation-apollo30-left-lot54-20261013-v1",
+        "treatment_run": "exaltah-interpolation-gauss12-feather12-lot54-20261013-v1",
+        "pack": "effects/ressources/EXALTAH/packs/exaltah-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+      }
+    },
+    {
+      "resref": "GLDUSTH",
+      "group": "Etoiles et particules",
+      "frames": 39,
+      "cycle_slots": 40,
+      "unique_frames": 28,
+      "blank_frames": 1,
+      "max_frame_size_x1": [
+        83,
+        92
+      ],
+      "raw_x4_bytes": 14955200,
+      "source": "effects/ressources/GLDUSTH/source.bam",
+      "canonical_sha256": "F43A4239E0A1C8B57CEC14E8F0AC128FE136EDB04F4F9A3258834119396BB085",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:GLDUSTH",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "gldusth-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "apollo_run": "gldusth-interpolation-apollo30-left-7b-lot10-20261013-v1",
+      "treatment_run": "gldusth-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+      "pack": "effects/ressources/GLDUSTH/packs/gldusth-seedvr7b-apollo30-gauss12-feather12-lot10-20261013-v1",
+      "baseline_3b": {
+        "spatial_run": "gldusth-spatial-seedvr3b-lab-lot54-20261013-v1",
+        "apollo_run": "gldusth-interpolation-apollo30-left-lot54-20261013-v1",
+        "treatment_run": "gldusth-interpolation-gauss12-feather12-lot54-20261013-v1",
+        "pack": "effects/ressources/GLDUSTH/packs/gldusth-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+      }
+    },
+    {
+      "resref": "SPNWCHRM",
+      "group": "Etoiles et particules",
+      "frames": 60,
+      "cycle_slots": 60,
+      "unique_frames": 60,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        56,
+        94
+      ],
+      "raw_x4_bytes": 11007488,
+      "source": "effects/ressources/SPNWCHRM/source.bam",
+      "canonical_sha256": "833B76165CA93E70F620743331D33B2F21885469459F6FE4924151F584D552ED",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:CDUNHVIS",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        },
+        {
+          "key": "effect:vvc:SPFRIEND",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        },
+        {
+          "key": "effect:vvc:SPNWCHRM",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "spnwchrm-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "apollo_run": "spnwchrm-interpolation-apollo30-left-7b-lot10-20261013-v1",
+      "treatment_run": "spnwchrm-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+      "pack": "effects/ressources/SPNWCHRM/packs/spnwchrm-seedvr7b-apollo30-gauss12-feather12-lot10-20261013-v1",
+      "baseline_3b": {
+        "spatial_run": "spnwchrm-spatial-seedvr3b-lab-lot54-20261013-v1",
+        "apollo_run": "spnwchrm-interpolation-apollo30-left-lot54-20261013-v1",
+        "treatment_run": "spnwchrm-interpolation-gauss12-feather12-lot54-20261013-v1",
+        "pack": "effects/ressources/SPNWCHRM/packs/spnwchrm-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+      }
+    },
+    {
+      "resref": "SPPLANAR",
+      "group": "Etoiles et particules",
+      "frames": 45,
+      "cycle_slots": 45,
+      "unique_frames": 45,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        220,
+        174
+      ],
+      "raw_x4_bytes": 58351936,
+      "source": "effects/ressources/SPPLANAR/source.bam",
+      "canonical_sha256": "E0BA6F78049722B8BE52FE5D3FFBC5AC12797570C191EC9FC7BC69983CA6D2EF",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SPPLANAR",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "spplanar-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "apollo_run": "spplanar-interpolation-apollo30-left-7b-lot10-20261013-v1",
+      "treatment_run": "spplanar-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+      "pack": "effects/ressources/SPPLANAR/packs/spplanar-seedvr7b-apollo30-gauss12-feather12-lot10-20261013-v1",
+      "baseline_3b": {
+        "spatial_run": "spplanar-spatial-seedvr3b-lab-lot54-20261013-v1",
+        "apollo_run": "spplanar-interpolation-apollo30-left-lot54-20261013-v1",
+        "treatment_run": "spplanar-interpolation-gauss12-feather12-lot54-20261013-v1",
+        "pack": "effects/ressources/SPPLANAR/packs/spplanar-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+      }
+    },
+    {
+      "resref": "ABJURH",
+      "group": "Flashes et halos",
+      "frames": 12,
+      "cycle_slots": 12,
+      "unique_frames": 12,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        104,
+        156
+      ],
+      "raw_x4_bytes": 7454848,
+      "source": "effects/ressources/ABJURH/source.bam",
+      "canonical_sha256": "F5CEB3712CED0CC0CD3D265229D1677253BB6829E91103BB222B371E7E4E49F5",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:ABJURH",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 4,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "abjurh-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "apollo_run": "abjurh-interpolation-apollo30-left-7b-lot10-20261013-v1",
+      "treatment_run": "abjurh-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+      "pack": "effects/ressources/ABJURH/packs/abjurh-seedvr7b-apollo30-gauss12-feather12-lot10-20261013-v1",
+      "baseline_3b": {
+        "spatial_run": "abjurh-spatial-seedvr3b-lab-lot54-20261013-v1",
+        "apollo_run": "abjurh-interpolation-apollo30-left-lot54-20261013-v1",
+        "treatment_run": "abjurh-interpolation-gauss12-feather12-lot54-20261013-v1",
+        "pack": "effects/ressources/ABJURH/packs/abjurh-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+      }
+    },
+    {
+      "resref": "SPGFLSH1",
+      "group": "Flashes et halos",
+      "frames": 12,
+      "cycle_slots": 12,
+      "unique_frames": 12,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        104,
+        156
+      ],
+      "raw_x4_bytes": 7454848,
+      "source": "effects/ressources/SPGFLSH1/source.bam",
+      "canonical_sha256": "BB537D685F74F80CD7A4516513BAF9A7E0E22D1B438216DEF536EC8E31069930",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SPGFLSH1",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "spgflsh1-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "apollo_run": "spgflsh1-interpolation-apollo30-left-7b-lot10-20261013-v1",
+      "treatment_run": "spgflsh1-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+      "pack": "effects/ressources/SPGFLSH1/packs/spgflsh1-seedvr7b-apollo30-gauss12-feather12-lot10-20261013-v1",
+      "baseline_3b": {
+        "spatial_run": "spgflsh1-spatial-seedvr3b-lab-lot54-20261013-v1",
+        "apollo_run": "spgflsh1-interpolation-apollo30-left-lot54-20261013-v1",
+        "treatment_run": "spgflsh1-interpolation-gauss12-feather12-lot54-20261013-v1",
+        "pack": "effects/ressources/SPGFLSH1/packs/spgflsh1-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+      }
+    },
+    {
+      "resref": "COLDH",
+      "group": "Flashes et halos",
+      "frames": 16,
+      "cycle_slots": 16,
+      "unique_frames": 16,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        88,
+        90
+      ],
+      "raw_x4_bytes": 6435520,
+      "source": "effects/ressources/COLDH/source.bam",
+      "canonical_sha256": "5BEA819EBD1C1E52BAA56FD28A986368EB92E3D57FE1D4D86F8458434970D831",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:COLDH",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 4,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 12
+          }
+        }
+      ],
+      "spatial_run": "coldh-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "apollo_run": "coldh-interpolation-apollo30-left-7b-lot10-20261013-v1",
+      "treatment_run": "coldh-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+      "pack": "effects/ressources/COLDH/packs/coldh-seedvr7b-apollo30-gauss12-feather12-lot10-20261013-v1",
+      "baseline_3b": {
+        "spatial_run": "coldh-spatial-seedvr3b-lab-lot54-20261013-v1",
+        "apollo_run": "coldh-interpolation-apollo30-left-lot54-20261013-v1",
+        "treatment_run": "coldh-interpolation-gauss12-feather12-lot54-20261013-v1",
+        "pack": "effects/ressources/COLDH/packs/coldh-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+      }
+    },
+    {
+      "resref": "SPCCMDSI",
+      "group": "Flashes et halos",
+      "frames": 20,
+      "cycle_slots": 20,
+      "unique_frames": 20,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        151,
+        167
+      ],
+      "raw_x4_bytes": 21728256,
+      "source": "effects/ressources/SPCCMDSI/source.bam",
+      "canonical_sha256": "BB7142FE2BE8D1982F580CA3211FF7A28703B9F13B83849353AA1A654CA58297",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:ICCCMDSI",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 392
+          }
+        }
+      ],
+      "spatial_run": "spccmdsi-spatial-seedvr7b-lab-lot10-20261013-v2",
+      "apollo_run": "spccmdsi-interpolation-apollo30-left-7b-lot10-20261013-v1",
+      "treatment_run": "spccmdsi-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+      "pack": "effects/ressources/SPCCMDSI/packs/spccmdsi-seedvr7b-apollo30-gauss12-feather12-lot10-20261013-v1",
+      "baseline_3b": {
+        "spatial_run": "spccmdsi-spatial-seedvr3b-lab-lot54-20261013-v1",
+        "apollo_run": "spccmdsi-interpolation-apollo30-left-lot54-20261013-v1",
+        "treatment_run": "spccmdsi-interpolation-gauss12-feather12-lot54-20261013-v1",
+        "pack": "effects/ressources/SPCCMDSI/packs/spccmdsi-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+      }
+    }
+  ]
+}

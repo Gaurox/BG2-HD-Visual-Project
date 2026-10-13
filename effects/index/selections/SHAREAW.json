@@ -1,0 +1,96 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SHAREAW",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 11,
+    "source": {
+      "interpolation_run": "shareaw-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "interpolation_run_descriptor_sha256": "B9BFFE9D3193CFF45C7BAEC7D2CE4BC3DEB676D45FC5DD9D948A5EE4ACD91E96",
+      "source_bam_sha256": "9973556be1bfb16e9c25eab62f2e9312b496cedc27e17e27b754df0425a370da",
+      "spatial_manifest_sha256": "9F3387BC3861AB7C7A3951C254CBA599DF5E37F554CE90BD716AF6EDAB6B87D4",
+      "spatial_run": "shareaw-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "spatial_run_descriptor_sha256": "9C74591F2077AE89BA8C55E4F78F918E87F6D1D9CE348BE8B9E3BDAFF9DCBE7A"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10
+      ],
+      "phase_count": 12,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        10
+      ]
+    }
+  },
+  "decision_date": "2026-10-13",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1101,
+    "path": "effects/index/qa-decisions/SHAREAW/2026-10-13-accepted-4911e04f8137.json",
+    "sha256": "4911E04F81374F2C57A589D1D4A96C463DCA492E18D014776895EF9F5AEDC28D"
+  },
+  "resref": "SHAREAW",
+  "run_descriptor": {
+    "bytes": 2408,
+    "path": "effects/ressources/SHAREAW/runs/shareaw-interpolation-gauss12-feather12-lot54-20261013-v1/run.json",
+    "sha256": "B9BFFE9D3193CFF45C7BAEC7D2CE4BC3DEB676D45FC5DD9D948A5EE4ACD91E96"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 9479,
+      "path": "effects/ressources/SHAREAW/packs/shareaw-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/manifest.json",
+      "sha256": "0A7A7FE79E74E8D4D3D20B96A3E53374C2A74620DA51A8C37DADFA7B74737CC2"
+    },
+    "registry": {
+      "bytes": 224,
+      "path": "effects/ressources/SHAREAW/packs/shareaw-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/EffectAnimations-X4.registry",
+      "sha256": "3C245553119083E4E5CC512DC44F6407943991EA6689BEB09E79C63B1A89E7FE"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "shareaw-interpolation-gauss12-feather12-lot54-20261013-v1",
+  "source": {
+    "bytes": 12691,
+    "path": "effects/ressources/SHAREAW/source.bam",
+    "sha256": "9973556BE1BFB16E9C25EAB62F2E9312B496CEDC27E17E27B754DF0425A370DA"
+  }
+}

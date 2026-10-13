@@ -433,6 +433,13 @@ if(BUILD_TESTING)
         add_test(NAME iee_effect_animation_x4_registry_tests
             COMMAND iee_effect_animation_x4_registry_tests
             WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+        add_executable(iee_effect_texture_cache_tests
+            tests/effect_texture_cache_tests.cpp
+            src/iee/effect_animation_x4_registry.cpp
+            src/iee/game/opengl_types.cpp)
+        target_link_libraries(iee_effect_texture_cache_tests PRIVATE iee_common opengl32 gdi32 user32)
+        iee_configure_target(iee_effect_texture_cache_tests)
+        add_test(NAME iee_effect_texture_cache_tests COMMAND iee_effect_texture_cache_tests)
     endif()
 
     if(WIN32)

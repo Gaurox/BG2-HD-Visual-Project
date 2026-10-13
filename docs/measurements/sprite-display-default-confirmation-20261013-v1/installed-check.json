@@ -1,0 +1,180 @@
+{
+  "schema": "bg2-sprite-display-default-installed-check-v1",
+  "checked_at_utc": "2026-10-13T19:21:52.757758+00:00",
+  "status": "passed",
+  "mode": "NearestRGB-SilhouetteAlphaAA",
+  "canonical": "sprite/display-default.json",
+  "game_root": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition",
+  "installed_ini_sha256": "5859F49562E89F71CC1A9B9DDBAC4F77B9B5AB95E5983D88E51C09E480042ABA",
+  "installed_configuration": [
+    {
+      "section": "Shaders",
+      "key": "EnableCreatureSpriteUpscaleTest",
+      "actual": "true",
+      "expected": true,
+      "passed": true
+    },
+    {
+      "section": "Shaders",
+      "key": "EnableCreatureSpriteLinearFiltering",
+      "actual": "false",
+      "expected": false,
+      "passed": true
+    },
+    {
+      "section": "Shaders",
+      "key": "CreatureSpriteFilter",
+      "actual": "Nearest",
+      "expected": "Nearest",
+      "passed": true
+    },
+    {
+      "section": "Shaders",
+      "key": "CreatureSpriteFilterAnimation",
+      "actual": "0x0",
+      "expected": "0x0",
+      "passed": true
+    },
+    {
+      "section": "ShaderSuite",
+      "key": "Enabled",
+      "actual": "true",
+      "expected": true,
+      "passed": true
+    },
+    {
+      "section": "ShaderSuite.CreatureHD",
+      "key": "Enabled",
+      "actual": "true",
+      "expected": true,
+      "passed": true
+    },
+    {
+      "section": "ShaderSuite.CreatureHD",
+      "key": "ColorSpace",
+      "actual": "Stored",
+      "expected": "Stored",
+      "passed": true
+    },
+    {
+      "section": "ShaderSuite.CreatureHD",
+      "key": "Sharpen",
+      "actual": "0",
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "section": "ShaderSuite.CreatureHD",
+      "key": "Gamma",
+      "actual": "1",
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "section": "ShaderSuite.CreatureHD",
+      "key": "Contrast",
+      "actual": "1",
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "section": "ShaderSuite.CreatureHD",
+      "key": "Brightness",
+      "actual": "0",
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "section": "ShaderSuite.CreatureHD",
+      "key": "Saturation",
+      "actual": "1",
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "section": "ShaderSuite.CreatureHD",
+      "key": "HueDegrees",
+      "actual": "0",
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "section": "ShaderSuite.CreatureHD",
+      "key": "OutlineMode",
+      "actual": "Native",
+      "expected": "Native",
+      "passed": true
+    },
+    {
+      "section": "ShaderSuite.CreatureHD",
+      "key": "OutlineSize",
+      "actual": "2",
+      "expected": 2,
+      "passed": true
+    },
+    {
+      "section": "ShaderSuite.CreatureHD",
+      "key": "SelectedOutlineSize",
+      "actual": "3.5",
+      "expected": 3.5,
+      "passed": true
+    },
+    {
+      "section": "ShaderSuite.fpSprite",
+      "key": "Enabled",
+      "actual": "false",
+      "expected": false,
+      "passed": true
+    },
+    {
+      "section": "ShaderSuite.fpSELECT",
+      "key": "Enabled",
+      "actual": "false",
+      "expected": false,
+      "passed": true
+    },
+    {
+      "section": "Rendering",
+      "key": "EnableFullFrameFXAA",
+      "actual": "false",
+      "expected": false,
+      "passed": true
+    },
+    {
+      "section": "Rendering",
+      "key": "EnableFullFrameSSAA2x",
+      "actual": "false",
+      "expected": false,
+      "passed": true
+    }
+  ],
+  "shaders": [
+    {
+      "name": "fpDraw.glsl",
+      "project": "C50A43EBD580EE840EDABAF6B96B9DF80589A7D793F27A85D1766BC17977BA20",
+      "installed": "C50A43EBD580EE840EDABAF6B96B9DF80589A7D793F27A85D1766BC17977BA20",
+      "expected": "C50A43EBD580EE840EDABAF6B96B9DF80589A7D793F27A85D1766BC17977BA20",
+      "passed": true
+    },
+    {
+      "name": "fpSprite.glsl",
+      "project": "CF5C2795E37EE31D908801312971B8FA1ED5BE3A87902A7A44F186A013610A73",
+      "installed": "CF5C2795E37EE31D908801312971B8FA1ED5BE3A87902A7A44F186A013610A73",
+      "expected": "CF5C2795E37EE31D908801312971B8FA1ED5BE3A87902A7A44F186A013610A73",
+      "passed": true
+    },
+    {
+      "name": "fpSELECT.glsl",
+      "project": "F733B8970A3B1C3FB85F335C5BC3F2DC91A113DE22C6CF0B2CFBD2ACE79B84A5",
+      "installed": "F733B8970A3B1C3FB85F335C5BC3F2DC91A113DE22C6CF0B2CFBD2ACE79B84A5",
+      "expected": "F733B8970A3B1C3FB85F335C5BC3F2DC91A113DE22C6CF0B2CFBD2ACE79B84A5",
+      "passed": true
+    }
+  ],
+  "sample_default_profile_passed": true,
+  "gpu_checks_passed": 23,
+  "gpu_pixels_identical_to_validated_project_reference": true,
+  "gpu_report": "gpu-verification.json",
+  "installation_action": "already-matches-validated-candidate; no replacement needed",
+  "new_ingame_QA_claimed": false
+}

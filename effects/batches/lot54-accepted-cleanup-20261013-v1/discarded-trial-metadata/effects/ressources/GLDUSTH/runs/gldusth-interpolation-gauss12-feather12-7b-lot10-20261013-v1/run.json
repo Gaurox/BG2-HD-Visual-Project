@@ -1,0 +1,68 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "asset_ids": [
+    "effects:bam:GLDUSTH"
+  ],
+  "domain": "effects",
+  "inputs": [
+    {
+      "bytes": 62263,
+      "path": "effects/ressources/GLDUSTH/runs/gldusth-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/manifest.json",
+      "role": "parent-spatial-output",
+      "sha256": "3FD42C8585ABE4B11365DA8DB5C2D5A0CF6AF9E57F0C8C2C914436B92EF62AD5"
+    },
+    {
+      "bytes": 1737,
+      "path": "effects/ressources/GLDUSTH/runs/gldusth-interpolation-apollo30-left-7b-lot10-20261013-v1/run.json",
+      "role": "source-interpolation-descriptor",
+      "sha256": "83825BE84FF63D59CDCC8C6BF62D3D7AE25A57E4075DDC7E295F552025E6F272"
+    },
+    {
+      "bytes": 72808,
+      "path": "effects/ressources/GLDUSTH/runs/gldusth-interpolation-apollo30-left-7b-lot10-20261013-v1/02-interpolation/manifest.json",
+      "role": "source-interpolation-manifest",
+      "sha256": "6F1800982BFF05CB962D2485C7C9C871669F3660153561A4FE37D83F3E05404D"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 93566,
+      "path": "effects/ressources/GLDUSTH/runs/gldusth-interpolation-gauss12-feather12-7b-lot10-20261013-v1/02-interpolation/manifest.json",
+      "role": "interpolation-manifest",
+      "sha256": "C64A3D251A763389EA38F5C97AF45D6E4534FE052A61C5EE3E3DDBE4CB8E5A2B"
+    }
+  ],
+  "pipeline": {
+    "id": "effects.interpolation-30fps.v1",
+    "recipe_path": "effects/ressources/GLDUSTH/runs/gldusth-interpolation-gauss12-feather12-7b-lot10-20261013-v1/recipe.json",
+    "recipe_sha256": "09AFE5C00ED74124C0F41BDC0D430DFD5B6991B776A62AA9FAD6772F139FE879",
+    "version": "effect-visual-treatment.v1"
+  },
+  "provenance": {
+    "command": [
+      "run_effect_visual_treatment.py",
+      "--resref",
+      "GLDUSTH",
+      "--interpolation-run",
+      "gldusth-interpolation-apollo30-left-7b-lot10-20261013-v1",
+      "--run-id",
+      "gldusth-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+      "--sigma-x4",
+      "1.2",
+      "--inner-feather-x4",
+      "12.0"
+    ],
+    "created_at_utc": "2026-10-13T20:07:17Z",
+    "generator": "pipeline/scripts/run_effect_visual_treatment.py",
+    "parents": [
+      "gldusth-spatial-seedvr7b-lab-lot10-20261013-v2"
+    ]
+  },
+  "result": {
+    "completed_at_utc": "2026-10-13T20:07:21Z",
+    "sealed": true,
+    "status": "completed"
+  },
+  "run_id": "gldusth-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+  "schema_version": 1
+}

@@ -1,0 +1,2315 @@
+{
+  "kind": "effects-batch-proposal",
+  "date": "2026-10-13",
+  "scope": "production-installation-and-user-ingame-review",
+  "assets_count": 54,
+  "groups": {
+    "Flashes et halos": [
+      "ABJURH",
+      "OHRSHFIE",
+      "SPGFLSH1",
+      "BDFAVSPI",
+      "BDRSPIRI",
+      "SPRAISEI",
+      "COLDH",
+      "FIREH",
+      "MMAGICH",
+      "SPSHKIMP",
+      "FDAWNX",
+      "GRNDGLOW",
+      "SPCCMDSI",
+      "SPUNHOLY",
+      "SPDISPMA",
+      "SPHEALIN",
+      "SPHOLLYW",
+      "BDSPLOCK"
+    ],
+    "Auras et buffs lumineux": [
+      "CSHIELDH",
+      "CURSEH",
+      "SPBLESHI",
+      "GARMORH",
+      "SARMORH",
+      "SPARMORI",
+      "PARALH",
+      "SPDHRMNY",
+      "SPCHMPSI",
+      "SPSTRENI",
+      "SPSTRONE",
+      "SPPOWATK",
+      "SPSDIMPA",
+      "SPTRUSEE",
+      "SPUSEANY",
+      "SPFDEATH"
+    ],
+    "Anneaux et sceaux": [
+      "ASUMM1X",
+      "BDSHSUM",
+      "MSUMM1X",
+      "SPFRACTI",
+      "BDSPWARD",
+      "SPROTECT",
+      "SPFLSRIN",
+      "SPSETTIH",
+      "OHRDARK",
+      "SPPOWWRD",
+      "BDETHER",
+      "SHAREAW"
+    ],
+    "Etoiles et particules": [
+      "BDSPCLAR",
+      "EXALTAH",
+      "GLDUSTH",
+      "OHRMJAR",
+      "SPNWCHRM",
+      "SPHLYBLS",
+      "SPPLANAR",
+      "SPSPMAZE"
+    ]
+  },
+  "candidate_recipe": "seedvr2-3b-int8-lab-x4 + apollo8-rgb-left-alpha-one-shot-dedup + gaussian12-innerfeather12; parameters to adapt per asset after visual review",
+  "assets": [
+    {
+      "resref": "ABJURH",
+      "group": "Flashes et halos",
+      "frames": 12,
+      "cycle_slots": 12,
+      "unique_frames": 12,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        104,
+        156
+      ],
+      "raw_x4_bytes": 7454848,
+      "source": "effects/ressources/ABJURH/source.bam",
+      "canonical_sha256": "F5CEB3712CED0CC0CD3D265229D1677253BB6829E91103BB222B371E7E4E49F5",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:ABJURH",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 4,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "abjurh-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "abjurh-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "abjurh-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/ABJURH/packs/abjurh-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "OHRSHFIE",
+      "group": "Flashes et halos",
+      "frames": 12,
+      "cycle_slots": 12,
+      "unique_frames": 12,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        104,
+        156
+      ],
+      "raw_x4_bytes": 7454848,
+      "source": "effects/ressources/OHRSHFIE/source.bam",
+      "canonical_sha256": "121C345EC84592CAA4E636F60CCEBB563C308D04C7A9238B24709E062CC7D19A",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:OHRSHFIE",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "ohrshfie-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "ohrshfie-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "ohrshfie-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/OHRSHFIE/packs/ohrshfie-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPGFLSH1",
+      "group": "Flashes et halos",
+      "frames": 12,
+      "cycle_slots": 12,
+      "unique_frames": 12,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        104,
+        156
+      ],
+      "raw_x4_bytes": 7454848,
+      "source": "effects/ressources/SPGFLSH1/source.bam",
+      "canonical_sha256": "BB537D685F74F80CD7A4516513BAF9A7E0E22D1B438216DEF536EC8E31069930",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SPGFLSH1",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "spgflsh1-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "spgflsh1-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "spgflsh1-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPGFLSH1/packs/spgflsh1-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "BDFAVSPI",
+      "group": "Flashes et halos",
+      "frames": 21,
+      "cycle_slots": 40,
+      "unique_frames": 21,
+      "blank_frames": 1,
+      "max_frame_size_x1": [
+        100,
+        103
+      ],
+      "raw_x4_bytes": 9972160,
+      "source": "effects/ressources/BDFAVSPI/source.bam",
+      "canonical_sha256": "7364024AA1967CC396253BA485C55CBF136267BDA60B8471895760A58C58909E",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:BDFAVSPI",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 548,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "bdfavspi-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "bdfavspi-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "bdfavspi-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/BDFAVSPI/packs/bdfavspi-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "BDRSPIRI",
+      "group": "Flashes et halos",
+      "frames": 31,
+      "cycle_slots": 50,
+      "unique_frames": 31,
+      "blank_frames": 1,
+      "max_frame_size_x1": [
+        102,
+        106
+      ],
+      "raw_x4_bytes": 13979840,
+      "source": "effects/ressources/BDRSPIRI/source.bam",
+      "canonical_sha256": "F1833CBA6FA6F2ECB12F0D60CBF6DE89DC6CD036813F5A29910F145A85500CB8",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:BDRSPIRI",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 4,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "bdrspiri-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "bdrspiri-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "bdrspiri-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/BDRSPIRI/packs/bdrspiri-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPRAISEI",
+      "group": "Flashes et halos",
+      "frames": 31,
+      "cycle_slots": 50,
+      "unique_frames": 31,
+      "blank_frames": 1,
+      "max_frame_size_x1": [
+        102,
+        106
+      ],
+      "raw_x4_bytes": 13979840,
+      "source": "effects/ressources/SPRAISEI/source.bam",
+      "canonical_sha256": "C534F359473D60451C7FEAD6F4AF7D92D21AAC160894543AE6C127D47179FCF2",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:ICRAISEI",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "spraisei-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "spraisei-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "spraisei-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPRAISEI/packs/spraisei-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "COLDH",
+      "group": "Flashes et halos",
+      "frames": 16,
+      "cycle_slots": 16,
+      "unique_frames": 16,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        88,
+        90
+      ],
+      "raw_x4_bytes": 6435520,
+      "source": "effects/ressources/COLDH/source.bam",
+      "canonical_sha256": "5BEA819EBD1C1E52BAA56FD28A986368EB92E3D57FE1D4D86F8458434970D831",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:COLDH",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 4,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 12
+          }
+        }
+      ],
+      "spatial_run": "coldh-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "coldh-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "coldh-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/COLDH/packs/coldh-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "FIREH",
+      "group": "Flashes et halos",
+      "frames": 16,
+      "cycle_slots": 16,
+      "unique_frames": 16,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        94,
+        93
+      ],
+      "raw_x4_bytes": 5313280,
+      "source": "effects/ressources/FIREH/source.bam",
+      "canonical_sha256": "688A53F14913608B1D0255E1A1D961FDDCF66D8AAC000100986282DAE07C129F",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:FIREH",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 4,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 12
+          }
+        }
+      ],
+      "spatial_run": "fireh-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "fireh-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "fireh-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/FIREH/packs/fireh-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "MMAGICH",
+      "group": "Flashes et halos",
+      "frames": 20,
+      "cycle_slots": 20,
+      "unique_frames": 20,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        63,
+        66
+      ],
+      "raw_x4_bytes": 3591104,
+      "source": "effects/ressources/MMAGICH/source.bam",
+      "canonical_sha256": "8B0E7B7695BEC144D8BAEBD2AF55D2D0E8C45EF2EDA7FCF790E68ADFA1C92CB9",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:ICMAGICH",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        },
+        {
+          "key": "effect:vvc:SPBOLTGL",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "mmagich-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "mmagich-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "mmagich-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/MMAGICH/packs/mmagich-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPSHKIMP",
+      "group": "Flashes et halos",
+      "frames": 6,
+      "cycle_slots": 12,
+      "unique_frames": 6,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        35,
+        64
+      ],
+      "raw_x4_bytes": 545728,
+      "source": "effects/ressources/SPSHKIMP/source.bam",
+      "canonical_sha256": "D441C658B26D60696DD2AAA46ABC371A315DCB5D74F26FCA7AF68F81111456C6",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SPSHKIMP",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 12
+          }
+        }
+      ],
+      "spatial_run": "spshkimp-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "spshkimp-interpolation-apollo30-left-lot54-20261013-v2",
+      "treatment_run": "spshkimp-interpolation-gauss12-feather12-lot54-20261013-v2",
+      "pack": "effects/ressources/SPSHKIMP/packs/spshkimp-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "FDAWNX",
+      "group": "Flashes et halos",
+      "frames": 39,
+      "cycle_slots": 39,
+      "unique_frames": 39,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        169,
+        169
+      ],
+      "raw_x4_bytes": 48023232,
+      "source": "effects/ressources/FDAWNX/source.bam",
+      "canonical_sha256": "D346EA5A1EBB0B486A6CE91C1B9787F61E264C631E01AAE6E6F0826DE3C26EB6",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vef:FDAWNX",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 74,
+            "vef": [
+              {
+                "continuous": 0,
+                "controller": "effect:vef:FDAWNX",
+                "loop_ticks": 0,
+                "start_ticks": 0
+              }
+            ]
+          }
+        },
+        {
+          "key": "effect:vvc:FDAWNX",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 74
+          }
+        },
+        {
+          "key": "projectile:FDAWN",
+          "relation": "explosion-animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 74,
+            "vef": [
+              {
+                "continuous": 0,
+                "controller": "effect:vef:FDAWNX",
+                "loop_ticks": 0,
+                "start_ticks": 0
+              }
+            ]
+          }
+        }
+      ],
+      "spatial_run": "fdawnx-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "fdawnx-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "fdawnx-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/FDAWNX/packs/fdawnx-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "GRNDGLOW",
+      "group": "Flashes et halos",
+      "frames": 20,
+      "cycle_slots": 20,
+      "unique_frames": 20,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        181,
+        125
+      ],
+      "raw_x4_bytes": 9161216,
+      "source": "effects/ressources/GRNDGLOW/source.bam",
+      "canonical_sha256": "179A934B4A1E052A826ACBCA9A6563D551EEA88BAB433EBFF6E5150A81F676E4",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:FIRECOLD",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 392
+          }
+        }
+      ],
+      "spatial_run": "grndglow-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "grndglow-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "grndglow-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/GRNDGLOW/packs/grndglow-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPCCMDSI",
+      "group": "Flashes et halos",
+      "frames": 20,
+      "cycle_slots": 20,
+      "unique_frames": 20,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        151,
+        167
+      ],
+      "raw_x4_bytes": 21728256,
+      "source": "effects/ressources/SPCCMDSI/source.bam",
+      "canonical_sha256": "BB7142FE2BE8D1982F580CA3211FF7A28703B9F13B83849353AA1A654CA58297",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:ICCCMDSI",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 392
+          }
+        }
+      ],
+      "spatial_run": "spccmdsi-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "spccmdsi-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "spccmdsi-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPCCMDSI/packs/spccmdsi-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPUNHOLY",
+      "group": "Flashes et halos",
+      "frames": 50,
+      "cycle_slots": 50,
+      "unique_frames": 50,
+      "blank_frames": 3,
+      "max_frame_size_x1": [
+        210,
+        154
+      ],
+      "raw_x4_bytes": 23108736,
+      "source": "effects/ressources/SPUNHOLY/source.bam",
+      "canonical_sha256": "81124A65C83A2724B1FD7A2D961D63A6191AE77071858D292A8E60F82902DC23",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SPUNHOLY",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 136
+          }
+        },
+        {
+          "key": "projectile:UNLYAREA",
+          "relation": "explosion-animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 136
+          }
+        }
+      ],
+      "spatial_run": "spunholy-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "spunholy-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "spunholy-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPUNHOLY/packs/spunholy-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPDISPMA",
+      "group": "Flashes et halos",
+      "frames": 41,
+      "cycle_slots": 41,
+      "unique_frames": 41,
+      "blank_frames": 1,
+      "max_frame_size_x1": [
+        90,
+        51
+      ],
+      "raw_x4_bytes": 7284416,
+      "source": "effects/ressources/SPDISPMA/source.bam",
+      "canonical_sha256": "3DAC9F06EF0B8B73DFAA33AF3815EC23438E1ED313073999E281C5CC79E6C0B2",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SPDISPM2",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 76
+          }
+        },
+        {
+          "key": "effect:vvc:SPDISPMA",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 12
+          }
+        }
+      ],
+      "spatial_run": "spdispma-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "spdispma-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "spdispma-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPDISPMA/packs/spdispma-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPHEALIN",
+      "group": "Flashes et halos",
+      "frames": 41,
+      "cycle_slots": 41,
+      "unique_frames": 41,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        90,
+        85
+      ],
+      "raw_x4_bytes": 10707968,
+      "source": "effects/ressources/SPHEALIN/source.bam",
+      "canonical_sha256": "87A4E3648F91DC5AB816371C975F330B2C39DCBB8EAB27E1D30E9B0450D45846",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SPHEALIN",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        },
+        {
+          "key": "effect:vvc:SPRMCURS",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "sphealin-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "sphealin-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "sphealin-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPHEALIN/packs/sphealin-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPHOLLYW",
+      "group": "Flashes et halos",
+      "frames": 100,
+      "cycle_slots": 50,
+      "unique_frames": 50,
+      "blank_frames": 4,
+      "max_frame_size_x1": [
+        135,
+        101
+      ],
+      "raw_x4_bytes": 25064192,
+      "source": "effects/ressources/SPHOLLYW/source.bam",
+      "canonical_sha256": "E40E512D413A752F14642BDF2B82A66309919FA0B5F7389CCF1FCB540AFD2CCE",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SPHOLY",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 136
+          }
+        },
+        {
+          "key": "projectile:HOLYAREA",
+          "relation": "explosion-animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 136
+          }
+        }
+      ],
+      "spatial_run": "sphollyw-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "sphollyw-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "sphollyw-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPHOLLYW/packs/sphollyw-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "BDSPLOCK",
+      "group": "Flashes et halos",
+      "frames": 21,
+      "cycle_slots": 40,
+      "unique_frames": 21,
+      "blank_frames": 1,
+      "max_frame_size_x1": [
+        113,
+        123
+      ],
+      "raw_x4_bytes": 13989504,
+      "source": "effects/ressources/BDSPLOCK/source.bam",
+      "canonical_sha256": "5514C6F98B970881F249E80B24CE566A23EB53851607241E40F7305336A83951",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:BDSPLOCK",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 4,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "bdsplock-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "bdsplock-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "bdsplock-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/BDSPLOCK/packs/bdsplock-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "CSHIELDH",
+      "group": "Auras et buffs lumineux",
+      "frames": 20,
+      "cycle_slots": 20,
+      "unique_frames": 20,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        147,
+        111
+      ],
+      "raw_x4_bytes": 11453504,
+      "source": "effects/ressources/CSHIELDH/source.bam",
+      "canonical_sha256": "9A3E296DE13D3A7CE0B9839E5B4B9B01A38339AF480618BB3E176826785B1094",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:CSHIELDH",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 4,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "cshieldh-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "cshieldh-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "cshieldh-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/CSHIELDH/packs/cshieldh-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "CURSEH",
+      "group": "Auras et buffs lumineux",
+      "frames": 17,
+      "cycle_slots": 50,
+      "unique_frames": 17,
+      "blank_frames": 1,
+      "max_frame_size_x1": [
+        84,
+        80
+      ],
+      "raw_x4_bytes": 4456960,
+      "source": "effects/ressources/CURSEH/source.bam",
+      "canonical_sha256": "AE6F1501EB2AE3770E7219AD364416F2B2F29ADAA3F8ED3E36A0EAA277961028",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:CURSEH",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "curseh-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "curseh-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "curseh-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/CURSEH/packs/curseh-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPBLESHI",
+      "group": "Auras et buffs lumineux",
+      "frames": 17,
+      "cycle_slots": 50,
+      "unique_frames": 17,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        67,
+        70
+      ],
+      "raw_x4_bytes": 2750784,
+      "source": "effects/ressources/SPBLESHI/source.bam",
+      "canonical_sha256": "A1AD7B1DA9576D665C011C4A367381270AB2FC963E2DC3AE12E8EB61BE6977C4",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:ICBLESAI",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        },
+        {
+          "key": "effect:vvc:ICGLYPTI",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "spbleshi-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "spbleshi-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "spbleshi-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPBLESHI/packs/spbleshi-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "GARMORH",
+      "group": "Auras et buffs lumineux",
+      "frames": 16,
+      "cycle_slots": 50,
+      "unique_frames": 16,
+      "blank_frames": 1,
+      "max_frame_size_x1": [
+        87,
+        130
+      ],
+      "raw_x4_bytes": 6139264,
+      "source": "effects/ressources/GARMORH/source.bam",
+      "canonical_sha256": "C09AAA1E14E5F7BC085D9218C6B70B7F063A47788BAB22C16E49F4059C48D633",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:1WDGARMR",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 12
+          }
+        }
+      ],
+      "spatial_run": "garmorh-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "garmorh-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "garmorh-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/GARMORH/packs/garmorh-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SARMORH",
+      "group": "Auras et buffs lumineux",
+      "frames": 16,
+      "cycle_slots": 50,
+      "unique_frames": 16,
+      "blank_frames": 1,
+      "max_frame_size_x1": [
+        92,
+        119
+      ],
+      "raw_x4_bytes": 6618624,
+      "source": "effects/ressources/SARMORH/source.bam",
+      "canonical_sha256": "3269C61E264E9DCA8C8639541BBDA5AD7AD4BD098F69C32C742F115C63177A10",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:1WDSARMR",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 12
+          }
+        }
+      ],
+      "spatial_run": "sarmorh-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "sarmorh-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "sarmorh-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SARMORH/packs/sarmorh-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPARMORI",
+      "group": "Auras et buffs lumineux",
+      "frames": 16,
+      "cycle_slots": 20,
+      "unique_frames": 16,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        93,
+        143
+      ],
+      "raw_x4_bytes": 7929664,
+      "source": "effects/ressources/SPARMORI/source.bam",
+      "canonical_sha256": "27E171F72232BC3A04BCA4FC71AE12F1E9A89BC090755B4651802A7945FE3CEB",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:ICARMOR",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "sparmori-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "sparmori-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "sparmori-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPARMORI/packs/sparmori-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "PARALH",
+      "group": "Auras et buffs lumineux",
+      "frames": 12,
+      "cycle_slots": 12,
+      "unique_frames": 12,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        77,
+        87
+      ],
+      "raw_x4_bytes": 3214016,
+      "source": "effects/ressources/PARALH/source.bam",
+      "canonical_sha256": "9700CDAE746DC6B0028A457756976EE7765CC21DD27DDBFADFEA1F87878765FD",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:PARALH",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 4,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "paralh-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "paralh-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "paralh-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/PARALH/packs/paralh-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPDHRMNY",
+      "group": "Auras et buffs lumineux",
+      "frames": 12,
+      "cycle_slots": 12,
+      "unique_frames": 12,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        109,
+        111
+      ],
+      "raw_x4_bytes": 5728000,
+      "source": "effects/ressources/SPDHRMNY/source.bam",
+      "canonical_sha256": "FA988601A4F0483B78D4AC3C982D7B9AA66906F7CA0FA5A9182A08DDCF58A035",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SPDHRMNY",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "spdhrmny-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "spdhrmny-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "spdhrmny-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPDHRMNY/packs/spdhrmny-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPCHMPSI",
+      "group": "Auras et buffs lumineux",
+      "frames": 20,
+      "cycle_slots": 40,
+      "unique_frames": 20,
+      "blank_frames": 1,
+      "max_frame_size_x1": [
+        79,
+        84
+      ],
+      "raw_x4_bytes": 6009024,
+      "source": "effects/ressources/SPCHMPSI/source.bam",
+      "canonical_sha256": "2D2D062283FC724A1DD04E804CA8D1284BCB9963293EEB7B7C9A666220340E34",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:ICCHMPSI",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 392
+          }
+        }
+      ],
+      "spatial_run": "spchmpsi-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "spchmpsi-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "spchmpsi-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPCHMPSI/packs/spchmpsi-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPSTRENI",
+      "group": "Auras et buffs lumineux",
+      "frames": 21,
+      "cycle_slots": 40,
+      "unique_frames": 21,
+      "blank_frames": 1,
+      "max_frame_size_x1": [
+        85,
+        88
+      ],
+      "raw_x4_bytes": 7466176,
+      "source": "effects/ressources/SPSTRENI/source.bam",
+      "canonical_sha256": "062FD6873530DDEADB87489B322DC451720ABBB47ECF9EE73552CC6661BC6FE3",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:ICSTRENI",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 392
+          }
+        }
+      ],
+      "spatial_run": "spstreni-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "spstreni-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "spstreni-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPSTRENI/packs/spstreni-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPSTRONE",
+      "group": "Auras et buffs lumineux",
+      "frames": 21,
+      "cycle_slots": 40,
+      "unique_frames": 21,
+      "blank_frames": 1,
+      "max_frame_size_x1": [
+        81,
+        88
+      ],
+      "raw_x4_bytes": 6963520,
+      "source": "effects/ressources/SPSTRONE/source.bam",
+      "canonical_sha256": "B1DE14BFE6AC39C9F75CB5D6C4612C1B1B03D5E1B55DDE303CAD1830F2B37A98",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:ICSTRONE",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 392
+          }
+        }
+      ],
+      "spatial_run": "spstrone-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "spstrone-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "spstrone-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPSTRONE/packs/spstrone-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPPOWATK",
+      "group": "Auras et buffs lumineux",
+      "frames": 29,
+      "cycle_slots": 29,
+      "unique_frames": 29,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        102,
+        91
+      ],
+      "raw_x4_bytes": 12267200,
+      "source": "effects/ressources/SPPOWATK/source.bam",
+      "canonical_sha256": "7ADB05ECFE896CFFC418B892618B3A7A53939E84DC80EB5351D21794961F6EE1",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SPPOWATK",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "sppowatk-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "sppowatk-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "sppowatk-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPPOWATK/packs/sppowatk-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPSDIMPA",
+      "group": "Auras et buffs lumineux",
+      "frames": 15,
+      "cycle_slots": 15,
+      "unique_frames": 15,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        196,
+        130
+      ],
+      "raw_x4_bytes": 16874560,
+      "source": "effects/ressources/SPSDIMPA/source.bam",
+      "canonical_sha256": "F21993A920E6918C5A4CA21F7E89F09A2BA3729E3BD631619E3FAE97B8F09AB1",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SPSDIMPA",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 12
+          }
+        }
+      ],
+      "spatial_run": "spsdimpa-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "spsdimpa-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "spsdimpa-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPSDIMPA/packs/spsdimpa-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPTRUSEE",
+      "group": "Auras et buffs lumineux",
+      "frames": 42,
+      "cycle_slots": 60,
+      "unique_frames": 42,
+      "blank_frames": 1,
+      "max_frame_size_x1": [
+        117,
+        64
+      ],
+      "raw_x4_bytes": 15832960,
+      "source": "effects/ressources/SPTRUSEE/source.bam",
+      "canonical_sha256": "285A06781B305C7DAAF29475C5B0E50F62E50E3C450FDF2E6013E180202864EC",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SPTRUSEE",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 12
+          }
+        }
+      ],
+      "spatial_run": "sptrusee-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "sptrusee-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "sptrusee-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPTRUSEE/packs/sptrusee-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPUSEANY",
+      "group": "Auras et buffs lumineux",
+      "frames": 27,
+      "cycle_slots": 27,
+      "unique_frames": 27,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        109,
+        116
+      ],
+      "raw_x4_bytes": 13905408,
+      "source": "effects/ressources/SPUSEANY/source.bam",
+      "canonical_sha256": "71F7D6DC0EFC1E619ADD65B30682E740040D5822037D1D8D15948364D98F69F5",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SPUSEANY",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "spuseany-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "spuseany-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "spuseany-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPUSEANY/packs/spuseany-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPFDEATH",
+      "group": "Auras et buffs lumineux",
+      "frames": 30,
+      "cycle_slots": 30,
+      "unique_frames": 30,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        64,
+        98
+      ],
+      "raw_x4_bytes": 8587392,
+      "source": "effects/ressources/SPFDEATH/source.bam",
+      "canonical_sha256": "5A947430CF3CDC112F8F50615D94321498F9C06C8562D681B8F0F22BCBBA39D2",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SPDEATH3",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 72
+          }
+        },
+        {
+          "key": "effect:vvc:SPFINGER",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "spfdeath-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "spfdeath-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "spfdeath-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPFDEATH/packs/spfdeath-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "ASUMM1X",
+      "group": "Anneaux et sceaux",
+      "frames": 30,
+      "cycle_slots": 30,
+      "unique_frames": 30,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        134,
+        122
+      ],
+      "raw_x4_bytes": 28115520,
+      "source": "effects/ressources/ASUMM1X/source.bam",
+      "canonical_sha256": "DA32499896E0B14939B4892CB7402E275C63747F6AE998187EA2D27C09899A63",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:ASUMM1X",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "asumm1x-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "asumm1x-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "asumm1x-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/ASUMM1X/packs/asumm1x-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "BDSHSUM",
+      "group": "Anneaux et sceaux",
+      "frames": 30,
+      "cycle_slots": 30,
+      "unique_frames": 30,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        134,
+        122
+      ],
+      "raw_x4_bytes": 28115520,
+      "source": "effects/ressources/BDSHSUM/source.bam",
+      "canonical_sha256": "6C414B980C745B86E0AA9E4D5A47E36988AA3B2E456434345B797883409D6B58",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:BDSHSUM",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 4,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "bdshsum-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "bdshsum-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "bdshsum-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/BDSHSUM/packs/bdshsum-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "MSUMM1X",
+      "group": "Anneaux et sceaux",
+      "frames": 30,
+      "cycle_slots": 30,
+      "unique_frames": 30,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        141,
+        122
+      ],
+      "raw_x4_bytes": 30478912,
+      "source": "effects/ressources/MSUMM1X/source.bam",
+      "canonical_sha256": "499383A7AF954F521634F1AAA593A30C2F087B297563B85EC2D978C62C1AC5D6",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:MSUMM1X",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 4,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "msumm1x-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "msumm1x-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "msumm1x-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/MSUMM1X/packs/msumm1x-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPFRACTI",
+      "group": "Anneaux et sceaux",
+      "frames": 37,
+      "cycle_slots": 40,
+      "unique_frames": 37,
+      "blank_frames": 1,
+      "max_frame_size_x1": [
+        139,
+        115
+      ],
+      "raw_x4_bytes": 19235456,
+      "source": "effects/ressources/SPFRACTI/source.bam",
+      "canonical_sha256": "4D3D28C60146F7092C9E538485CF807E64C8B00F22EBD91447D4D4F0BCEEBEC4",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:ICFRACTI",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 392
+          }
+        }
+      ],
+      "spatial_run": "spfracti-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "spfracti-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "spfracti-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPFRACTI/packs/spfracti-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "BDSPWARD",
+      "group": "Anneaux et sceaux",
+      "frames": 25,
+      "cycle_slots": 50,
+      "unique_frames": 25,
+      "blank_frames": 1,
+      "max_frame_size_x1": [
+        133,
+        150
+      ],
+      "raw_x4_bytes": 20831552,
+      "source": "effects/ressources/BDSPWARD/source.bam",
+      "canonical_sha256": "6AFCA92C502E34E6FA20467D8446AADECC62069F67723E799E6FAFF52335D8DE",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:BDSPWARD",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 4,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "bdspward-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "bdspward-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "bdspward-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/BDSPWARD/packs/bdspward-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPROTECT",
+      "group": "Anneaux et sceaux",
+      "frames": 25,
+      "cycle_slots": 50,
+      "unique_frames": 25,
+      "blank_frames": 1,
+      "max_frame_size_x1": [
+        133,
+        150
+      ],
+      "raw_x4_bytes": 20831552,
+      "source": "effects/ressources/SPROTECT/source.bam",
+      "canonical_sha256": "BC68A1D14DF5D011A864127E5D8046D3247A38B698790F371BCC191CB69E2EE7",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SPROTECT",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "sprotect-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "sprotect-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "sprotect-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPROTECT/packs/sprotect-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPFLSRIN",
+      "group": "Anneaux et sceaux",
+      "frames": 30,
+      "cycle_slots": 30,
+      "unique_frames": 30,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        98,
+        70
+      ],
+      "raw_x4_bytes": 9026944,
+      "source": "effects/ressources/SPFLSRIN/source.bam",
+      "canonical_sha256": "F8F0ED22B7B54CF78DAC0545DAA2F5D85634582B9C5649C74C40E78C07D19066",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SPFLSRIN",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 392
+          }
+        }
+      ],
+      "spatial_run": "spflsrin-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "spflsrin-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "spflsrin-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPFLSRIN/packs/spflsrin-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPSETTIH",
+      "group": "Anneaux et sceaux",
+      "frames": 27,
+      "cycle_slots": 27,
+      "unique_frames": 27,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        151,
+        112
+      ],
+      "raw_x4_bytes": 16824768,
+      "source": "effects/ressources/SPSETTIH/source.bam",
+      "canonical_sha256": "30C9F4E795F38FC38E85CB9802F64E7AB7D91B63D10AA8E714AD60731B1ACE09",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SPSETTIH",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        },
+        {
+          "key": "projectile:TRAPTIME",
+          "relation": "explosion-animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "spsettih-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "spsettih-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "spsettih-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPSETTIH/packs/spsettih-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "OHRDARK",
+      "group": "Anneaux et sceaux",
+      "frames": 31,
+      "cycle_slots": 31,
+      "unique_frames": 31,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        125,
+        114
+      ],
+      "raw_x4_bytes": 26011904,
+      "source": "effects/ressources/OHRDARK/source.bam",
+      "canonical_sha256": "04E3D0B18678472CDB357A7BBB82789D52074C8DD6963A50AB25D4AB3BA2D569",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:OHRDARK",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "ohrdark-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "ohrdark-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "ohrdark-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/OHRDARK/packs/ohrdark-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPPOWWRD",
+      "group": "Anneaux et sceaux",
+      "frames": 31,
+      "cycle_slots": 31,
+      "unique_frames": 31,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        125,
+        114
+      ],
+      "raw_x4_bytes": 26011904,
+      "source": "effects/ressources/SPPOWWRD/source.bam",
+      "canonical_sha256": "73F2388B403ED4B11A18446007D9658B04CF8BD2BD302CA28C592AE4092BB57B",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SPPOWWRD",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "sppowwrd-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "sppowwrd-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "sppowwrd-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPPOWWRD/packs/sppowwrd-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "BDETHER",
+      "group": "Anneaux et sceaux",
+      "frames": 32,
+      "cycle_slots": 32,
+      "unique_frames": 32,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        135,
+        164
+      ],
+      "raw_x4_bytes": 34885056,
+      "source": "effects/ressources/BDETHER/source.bam",
+      "canonical_sha256": "110223DCD804D1C969AFE352B77CFF25BE8A30BB8928DBB56AD5DF2C88F01EE4",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:BDETHER",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 12
+          }
+        }
+      ],
+      "spatial_run": "bdether-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "bdether-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "bdether-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/BDETHER/packs/bdether-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SHAREAW",
+      "group": "Anneaux et sceaux",
+      "frames": 6,
+      "cycle_slots": 6,
+      "unique_frames": 6,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        125,
+        82
+      ],
+      "raw_x4_bytes": 1876352,
+      "source": "effects/ressources/SHAREAW/source.bam",
+      "canonical_sha256": "A3DD6055BB50AD44119355904184BADD26F44A4E5177DB6009A7644C5DB6278E",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SHAREAW",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 12
+          }
+        },
+        {
+          "key": "projectile:SPARICNP",
+          "relation": "explosion-animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 12
+          }
+        },
+        {
+          "key": "projectile:SPARICPA",
+          "relation": "explosion-animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 12
+          }
+        },
+        {
+          "key": "projectile:SPKLARIC",
+          "relation": "explosion-animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 12
+          }
+        }
+      ],
+      "spatial_run": "shareaw-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "shareaw-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "shareaw-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SHAREAW/packs/shareaw-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "BDSPCLAR",
+      "group": "Etoiles et particules",
+      "frames": 27,
+      "cycle_slots": 27,
+      "unique_frames": 27,
+      "blank_frames": 1,
+      "max_frame_size_x1": [
+        130,
+        100
+      ],
+      "raw_x4_bytes": 15724864,
+      "source": "effects/ressources/BDSPCLAR/source.bam",
+      "canonical_sha256": "E265E87FF9C567C5FF56D0E44DC5284AD9817C4D4760ACC18636FB7036F77159",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:BDSPCLAR",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 4,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "bdspclar-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "bdspclar-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "bdspclar-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/BDSPCLAR/packs/bdspclar-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "EXALTAH",
+      "group": "Etoiles et particules",
+      "frames": 27,
+      "cycle_slots": 100,
+      "unique_frames": 27,
+      "blank_frames": 1,
+      "max_frame_size_x1": [
+        111,
+        95
+      ],
+      "raw_x4_bytes": 12706496,
+      "source": "effects/ressources/EXALTAH/source.bam",
+      "canonical_sha256": "48BFB60AF95702B57B7E403614623238AD996F1AD33A43334425F5E0107335B4",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:EXALTAH",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 4,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "exaltah-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "exaltah-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "exaltah-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/EXALTAH/packs/exaltah-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "GLDUSTH",
+      "group": "Etoiles et particules",
+      "frames": 39,
+      "cycle_slots": 40,
+      "unique_frames": 28,
+      "blank_frames": 1,
+      "max_frame_size_x1": [
+        83,
+        92
+      ],
+      "raw_x4_bytes": 14955200,
+      "source": "effects/ressources/GLDUSTH/source.bam",
+      "canonical_sha256": "F43A4239E0A1C8B57CEC14E8F0AC128FE136EDB04F4F9A3258834119396BB085",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:GLDUSTH",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "gldusth-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "gldusth-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "gldusth-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/GLDUSTH/packs/gldusth-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "OHRMJAR",
+      "group": "Etoiles et particules",
+      "frames": 60,
+      "cycle_slots": 60,
+      "unique_frames": 60,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        56,
+        94
+      ],
+      "raw_x4_bytes": 11007488,
+      "source": "effects/ressources/OHRMJAR/source.bam",
+      "canonical_sha256": "0EA8065ACB1B8D7D9D9503AF958F07AB402F48F5F2D6EFD10F0445CA882047FC",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:OHRMJAR",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "ohrmjar-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "ohrmjar-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "ohrmjar-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/OHRMJAR/packs/ohrmjar-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPNWCHRM",
+      "group": "Etoiles et particules",
+      "frames": 60,
+      "cycle_slots": 60,
+      "unique_frames": 60,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        56,
+        94
+      ],
+      "raw_x4_bytes": 11007488,
+      "source": "effects/ressources/SPNWCHRM/source.bam",
+      "canonical_sha256": "833B76165CA93E70F620743331D33B2F21885469459F6FE4924151F584D552ED",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:CDUNHVIS",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        },
+        {
+          "key": "effect:vvc:SPFRIEND",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        },
+        {
+          "key": "effect:vvc:SPNWCHRM",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 520,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "spnwchrm-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "spnwchrm-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "spnwchrm-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPNWCHRM/packs/spnwchrm-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPHLYBLS",
+      "group": "Etoiles et particules",
+      "frames": 88,
+      "cycle_slots": 88,
+      "unique_frames": 88,
+      "blank_frames": 2,
+      "max_frame_size_x1": [
+        128,
+        127
+      ],
+      "raw_x4_bytes": 23420736,
+      "source": "effects/ressources/SPHLYBLS/source.bam",
+      "canonical_sha256": "ABE2B8B1D3131DEEDF7DCFE17B5DAF1B905DF185516C69FAFC1E627BADC939A1",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SPHLYBLS",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 12
+          }
+        }
+      ],
+      "spatial_run": "sphlybls-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "sphlybls-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "sphlybls-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPHLYBLS/packs/sphlybls-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPPLANAR",
+      "group": "Etoiles et particules",
+      "frames": 45,
+      "cycle_slots": 45,
+      "unique_frames": 45,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        220,
+        174
+      ],
+      "raw_x4_bytes": 58351936,
+      "source": "effects/ressources/SPPLANAR/source.bam",
+      "canonical_sha256": "E0BA6F78049722B8BE52FE5D3FFBC5AC12797570C191EC9FC7BC69983CA6D2EF",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SPPLANAR",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "spplanar-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "spplanar-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "spplanar-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPPLANAR/packs/spplanar-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    },
+    {
+      "resref": "SPSPMAZE",
+      "group": "Etoiles et particules",
+      "frames": 75,
+      "cycle_slots": 75,
+      "unique_frames": 75,
+      "blank_frames": 0,
+      "max_frame_size_x1": [
+        90,
+        141
+      ],
+      "raw_x4_bytes": 51837312,
+      "source": "effects/ressources/SPSPMAZE/source.bam",
+      "canonical_sha256": "3792F56E959CD13B8BB29D67F28A185B662333B00BB6E9429675103A34EC5386",
+      "spatial_state": "not-started",
+      "qa_state": "not-assessed",
+      "consumers": [
+        {
+          "key": "effect:vvc:SPSPMAZE",
+          "relation": "animation",
+          "fps": "15",
+          "blend": "1",
+          "palette": "",
+          "flags": {
+            "color": 0,
+            "continuous": 0,
+            "display": 8,
+            "duration": 4294967295,
+            "sequence": 8
+          }
+        }
+      ],
+      "spatial_run": "spspmaze-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "apollo_run": "spspmaze-interpolation-apollo30-left-lot54-20261013-v1",
+      "treatment_run": "spspmaze-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "pack": "effects/ressources/SPSPMAZE/packs/spspmaze-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1"
+    }
+  ],
+  "selection_notes": [
+    "54 new effects selected by native visual review from 94 technically eligible BAMs.",
+    "All BAMs have demonstrated 15 FPS blended VVC/VEF consumers; indirect projectile impact/explosion consumers retained; no direct projectile animation with unknown timing.",
+    "One-shot last-pose hold; preserve cycle slots and native blank holds; inner feather must suit asset dimensions.",
+    "One sealed run and one runtime pack per BAM; no aggregate installation or QA implied."
+  ],
+  "summary": {
+    "frames": 1595,
+    "cycle_slots": 1968,
+    "unique_frames": 1534,
+    "raw_x4_MiB": 794.1
+  },
+  "recipe": {
+    "spatial": "seedvr2-3b-int8-lab-x4",
+    "temporal": "apollo8-rgb-left-alpha-one-shot-dedup",
+    "sigma_x4": 1.2,
+    "inner_feather_x4": 12
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "asset_ids": [
+    "effects:bam:COLDH"
+  ],
+  "domain": "effects",
+  "inputs": [
+    {
+      "bytes": 38975,
+      "path": "effects/ressources/COLDH/source.bam",
+      "role": "source-bam",
+      "sha256": "F3658B79AFBFF8481DD9C8483BAB27A304E1663C48ADB8D3B5CE1BA8BBC1A5F6"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 8869,
+      "path": "effects/ressources/COLDH/runs/coldh-spatial-seedvr7b-lab-lot10-20261013-v2/00-frames-x1/manifest.json",
+      "role": "frames-manifest",
+      "sha256": "34C10B35A621B655135F91EC6B8248EF7786EA26356F4C4F336F2EF715526730"
+    },
+    {
+      "bytes": 26777,
+      "path": "effects/ressources/COLDH/runs/coldh-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/manifest.json",
+      "role": "spatial-manifest",
+      "sha256": "9B95EE19067D28F56236CEF1B1E4BDBFA7EEC1833EB77F2772283476CD406286"
+    },
+    {
+      "bytes": 1622049,
+      "path": "effects/ressources/COLDH/runs/coldh-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/preview/animation-x4-contact-sheet.png",
+      "role": "spatial-preview",
+      "sha256": "F72313922022CE8C6AE0BF9BA3570E5B42923B760D26ED55402BB3281F9F7E85"
+    }
+  ],
+  "pipeline": {
+    "id": "effects.spatial-x4.v1",
+    "recipe_path": "effects/ressources/COLDH/runs/coldh-spatial-seedvr7b-lab-lot10-20261013-v2/recipe.json",
+    "recipe_sha256": "15E1CC0AF7A07C8BE0859079248244B326C16638056D5373719C8322447A4C01",
+    "version": "effect-spatial-runner.v1"
+  },
+  "provenance": {
+    "command": [
+      "run_effect_spatial.py",
+      "--resref",
+      "COLDH",
+      "--run-id",
+      "coldh-spatial-seedvr7b-lab-lot10-20261013-v2"
+    ],
+    "created_at_utc": "2026-10-13T20:03:56Z",
+    "generator": "pipeline/scripts/run_effect_spatial.py"
+  },
+  "result": {
+    "completed_at_utc": "2026-10-13T20:04:32Z",
+    "sealed": true,
+    "status": "completed"
+  },
+  "run_id": "coldh-spatial-seedvr7b-lab-lot10-20261013-v2",
+  "schema_version": 1
+}

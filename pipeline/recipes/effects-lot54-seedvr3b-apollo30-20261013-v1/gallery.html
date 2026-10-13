@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>54 effets — contrôle animé</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#111116;color:#eeeef4;font:16px system-ui,sans-serif}main{max-width:1440px;margin:auto;padding:24px}h1{font-size:26px;font-weight:500;margin:0 0 8px}p{color:#bcbcc9}button{font:inherit;color:inherit;background:#30303b;border:1px solid #5b5b68;border-radius:6px;padding:10px 18px;cursor:pointer}button:focus-visible{outline:2px solid #8bc4ff}header{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:18px 0}.sheet{display:block;width:100%;margin:auto;background:#000}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px}figure{margin:0;cursor:zoom-in}figure video{width:100%;height:190px;object-fit:contain;background:#000}figcaption{padding:8px 0;font:15px ui-monospace,monospace}dialog{background:#16161d;color:inherit;border:1px solid #777;max-width:min(96vw,1000px);width:900px}dialog::backdrop{background:#000b}dialog video{width:100%;max-height:75vh;background:#000}a{color:#a8caff}
+</style></head><body><main>
+<h1>54 effets · x4 · 30 FPS</h1><p>Planche animée des 54 effets. Les vues individuelles agrandissables sont plus bas.</p>
+<header><button id="toggle" type="button">Pause</button><button id="restart" type="button">Rejouer les 54 effets</button><a href="../CLUA.md">Commandes CLUA</a></header>
+<video class="sheet" src="lot54-animated-30fps.mp4" poster="lot54-poster.png" autoplay loop muted playsinline controls></video>
+<div class="grid"><!-- EFFECTS --></div>
+<dialog id="detail"><header><strong id="name"></strong><button id="close" type="button">Fermer</button></header><video id="large" controls loop muted playsinline></video></dialog>
+<script>
+const tiles=[document.querySelector('.sheet'),...document.querySelectorAll('.grid video')],toggle=document.getElementById('toggle');let paused=false;
+toggle.onclick=()=>{paused=!paused;tiles.forEach(v=>paused?v.pause():v.play());toggle.textContent=paused?'Lire':'Pause'};
+document.getElementById('restart').onclick=()=>{tiles.forEach(v=>{v.currentTime=0;v.play()});paused=false;toggle.textContent='Pause'};
+const dialog=document.getElementById('detail'),large=document.getElementById('large');
+document.querySelectorAll('figure').forEach(f=>{f.tabIndex=0;const open=()=>{document.getElementById('name').textContent=f.querySelector('figcaption').textContent;large.src=f.querySelector('video').src;dialog.showModal();large.play()};f.onclick=open;f.onkeydown=e=>{if(e.key==='Enter')open()}});
+document.getElementById('close').onclick=()=>dialog.close();dialog.onclose=()=>large.pause();
+</script></main></body></html>

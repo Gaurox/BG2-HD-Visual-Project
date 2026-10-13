@@ -25,11 +25,17 @@ constexpr std::array<char, 8> kRegistryMagic{{'I', 'E', 'E', 'E', 'F', 'X', '4',
 constexpr std::uint32_t kRegistryVersion = 1;
 constexpr std::uint32_t kTimelineRegistryVersion = 2;
 constexpr std::uint32_t kScale = 4;
+// Effects share the engine's 512 descriptor slots with native sprites, UI,
+// area animations and transient Character composites. Never retain one slot
+// per timeline frame: a short series of spells used to exhaust that table.
+constexpr std::size_t kTextureCacheLimit = 64;
 constexpr std::uint32_t kMaxResources = 512;
 constexpr std::uint32_t kMaxFramesPerResource = 4096;
 constexpr std::uint32_t kMaxCyclesPerResource = 256;
 constexpr std::uint32_t kMaxCycleSlots = 65536;
-constexpr std::uint64_t kMaxRawBytes = 512ull * 1024ull * 1024ull;
+// The 54-effect 30 FPS production batch plus the installed effects fits below
+// this bounded limit. Geometry, frame and resource limits remain independent.
+constexpr std::uint64_t kMaxRawBytes = 2048ull * 1024ull * 1024ull;
 
 struct Frame {
   int logicalWidth{};
@@ -58,6 +64,7 @@ struct Resource {
 struct TextureCacheEntry {
   FrameHandle handle{};
   int textureId{};
+  std::uint64_t lastUse{};
 };
 
 class BinaryReader {
@@ -94,6 +101,8 @@ std::mutex g_mutex;
 std::atomic<bool> g_ready{false};
 std::vector<Resource> g_resources;
 std::vector<TextureCacheEntry> g_textureCache;
+std::uint64_t g_textureUseCounter{};
+TextureCacheStats g_textureCacheStats{.capacity = kTextureCacheLimit};
 #ifdef _WIN32
 HGLRC g_textureContext{};
 #endif
@@ -163,6 +172,8 @@ void invalidate_texture_cache_locked() noexcept {
   // already releases them in the driver; retaining their integers could bind an
   // unrelated texture in the replacement context.
   g_textureCache.clear();
+  g_textureUseCounter = 0;
+  g_textureCacheStats = {.capacity = kTextureCacheLimit};
 }
 
 bool upload_frame_locked(const Frame& frame, int textureId, const EngineTextureApi& api,
@@ -222,9 +233,9 @@ bool upload_frame_locked(const Frame& frame, int textureId, const EngineTextureA
   gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_WRAP_T,
                      static_cast<int>(game::gl::CLAMP_TO_EDGE));
   gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MIN_FILTER,
-                     static_cast<int>(game::gl::LINEAR));
+                     static_cast<int>(game::gl::NEAREST));
   gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAG_FILTER,
-                     static_cast<int>(game::gl::LINEAR));
+                     static_cast<int>(game::gl::NEAREST));
   gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAX_LEVEL, 0);
   int actualWidth = 0;
   int actualHeight = 0;
@@ -242,23 +253,55 @@ bool bind_frame_texture_locked(FrameHandle handle, const EngineTextureApi& api,
       handle.frameIndex >= g_resources[handle.resourceIndex].frames.size()) {
     return false;
   }
+  ++g_textureCacheStats.requests;
   const auto existing = std::find_if(
       g_textureCache.begin(), g_textureCache.end(),
       [&](const TextureCacheEntry& entry) { return entry.handle == handle; });
   if (existing != g_textureCache.end()) {
+    ++g_textureCacheStats.hits;
+    existing->lastUse = ++g_textureUseCounter;
     api.DrawBindTexture(existing->textureId);
     return true;
   }
 
-  const int textureId = api.DrawGenTexture(static_cast<int>(game::gl::LINEAR), 0, 0, 0);
-  if (textureId <= 0) return false;
+  int textureId = 0;
+  std::size_t entryIndex = g_textureCache.size();
+  if (g_textureCache.size() < kTextureCacheLimit) {
+    textureId = api.DrawGenTexture(static_cast<int>(game::gl::NEAREST), 0, 0, 0);
+    if (textureId <= 0) ++g_textureCacheStats.allocationFailures;
+  }
+  if (textureId > 0) {
+    g_textureCache.push_back({.handle = handle, .textureId = textureId});
+  } else {
+    // Reuse an owned LRU descriptor, as the established area-animation cache
+    // does. Also recover from native slot pressure before reaching our cap.
+    // Binding switches through the engine API preserve its deferred draws.
+    for (std::size_t index = 0; index < g_textureCache.size(); ++index) {
+      if (g_textureCache[index].textureId == previousTextureId) continue;
+      if (entryIndex == g_textureCache.size() ||
+          g_textureCache[index].lastUse < g_textureCache[entryIndex].lastUse) {
+        entryIndex = index;
+      }
+    }
+    if (entryIndex == g_textureCache.size()) return false;
+    textureId = g_textureCache[entryIndex].textureId;
+    ++g_textureCacheStats.reuses;
+    if (g_textureCacheStats.reuses == 1) {
+      LOG_INFO("Effect animation x4 GPU cache reusing owned slots: capacity={}, resident={}; "
+               "native Character/UI texture slots remain available",
+               kTextureCacheLimit, g_textureCache.size());
+    }
+  }
   const auto& frame = g_resources[handle.resourceIndex].frames[handle.frameIndex];
   if (!upload_frame_locked(frame, textureId, api, previousTextureId)) {
+    ++g_textureCacheStats.uploadFailures;
     api.DrawDeleteTexture(textureId);
+    g_textureCache.erase(g_textureCache.begin() + entryIndex);
     api.DrawBindTexture(previousTextureId);
     return false;
   }
-  g_textureCache.push_back({.handle = handle, .textureId = textureId});
+  g_textureCache[entryIndex].handle = handle;
+  g_textureCache[entryIndex].lastUse = ++g_textureUseCounter;
   api.DrawBindTexture(textureId);
   LOG_DEBUG("Effect animation x4 texture {}: {} frame {:03}, logical {}x{}, physical {}x{}",
             textureId, g_resources[handle.resourceIndex].displayName, handle.frameIndex,
@@ -387,12 +430,13 @@ bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
     g_rendererFailureLogged = false;
     g_uploadFailureLogged = false;
     g_ready.store(true, std::memory_order_release);
-    LOG_INFO("Prepared effect animation x4 runtime pack: resources={}, frames={}, rawBytes={}",
+    LOG_INFO("Prepared effect animation x4 runtime pack: resources={}, frames={}, rawBytes={}, "
+             "gpuTextureCapacity={}, filter=NEAREST",
              g_resources.size(), [&] {
                std::size_t frames = 0;
                for (const auto& resource : g_resources) frames += resource.frames.size();
                return frames;
-             }(), totalRawBytes);
+             }(), totalRawBytes, kTextureCacheLimit);
     return true;
   } catch (const std::exception& error) {
     LOG_WARN("Effect animation x4 runtime pack disabled: {}", error.what());
@@ -419,6 +463,17 @@ void release() noexcept {
 }
 
 bool ready() noexcept { return g_ready.load(std::memory_order_acquire); }
+
+TextureCacheStats texture_cache_stats() noexcept {
+  try {
+    std::lock_guard lock(g_mutex);
+    auto stats = g_textureCacheStats;
+    stats.residentTextures = g_textureCache.size();
+    return stats;
+  } catch (...) {
+    return {.capacity = kTextureCacheLimit};
+  }
+}
 
 bool contains_resource(const std::array<char, 8>& resref) noexcept {
   if (!g_ready.load(std::memory_order_acquire)) return false;
@@ -592,7 +647,10 @@ bool bind_frame_texture(FrameHandle handle, const EngineTextureApi& api,
         !bind_frame_texture_locked(handle, api, previousTextureId)) {
       if (!g_uploadFailureLogged) {
         g_uploadFailureLogged = true;
-        LOG_WARN("Effect animation x4 texture creation failed; delegating to original BAM");
+        LOG_WARN("Effect animation x4 texture creation failed; delegating to original BAM; "
+                 "gpuCacheResident={}, gpuCacheCapacity={}, allocationFailures={}, uploadFailures={}",
+                 g_textureCache.size(), kTextureCacheLimit,
+                 g_textureCacheStats.allocationFailures, g_textureCacheStats.uploadFailures);
       }
       previousTextureId = 0;
       return false;

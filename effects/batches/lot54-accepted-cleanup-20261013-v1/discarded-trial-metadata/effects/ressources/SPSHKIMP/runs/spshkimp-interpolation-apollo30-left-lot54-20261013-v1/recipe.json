@@ -1,0 +1,34 @@
+{
+  "alpha_policy": "left deterministic temporal phase from enlarged spatial source alpha",
+  "deduplicate_outputs": true,
+  "native_anchor_policy": "exact spatial RGB on native phases and native holds; one-shot endpoint held",
+  "pipeline_id": "effects.interpolation-30fps.v1",
+  "recipe_id": "apollo8-rgb-left-alpha-one-shot-dedup",
+  "rgb_policy": "Topaz Apollo receives x4 RGB only; source alpha is never model-generated",
+  "scale": 4,
+  "schema": "bg2-upscale-effect-interpolation-recipe-v1",
+  "timing": {
+    "loop_closed": false,
+    "native_fps": [
+      15,
+      1
+    ],
+    "target_fps": [
+      30,
+      1
+    ]
+  },
+  "tools": [
+    {
+      "path": "pipeline/scripts/run_effect_interpolation.py",
+      "sha256": "9FC5692093998485961D8CDE5E2D6D0182729682340CA86F768B0A4595760955"
+    }
+  ],
+  "topaz": {
+    "device": "-2",
+    "ffmpeg": "C:\\Program Files\\Topaz Labs LLC\\Topaz Video AI\\ffmpeg.exe",
+    "model": "apo-8",
+    "replace_duplicate_threshold": -0.01,
+    "version": "ffmpeg version 7.1.git Copyright (c) 2000-2025 the FFmpeg developers"
+  }
+}

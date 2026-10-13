@@ -1,0 +1,120 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:ABJURH",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 23,
+    "source": {
+      "interpolation_run": "abjurh-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "interpolation_run_descriptor_sha256": "7A80A93160DE7694A96185926F83EF93D13ADCCDB19FCF24557F48F42C67D254",
+      "source_bam_sha256": "5e02e317a9b20524117dccffbff6126f88c6ab0bc40db025cc1a8ed3c43424df",
+      "spatial_manifest_sha256": "700B5C45B382EF77F1BB5A43422411BE34CC937ACC115F7FB2A4CAC397D9E694",
+      "spatial_run": "abjurh-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "spatial_run_descriptor_sha256": "807BE7D18FAE9D63277372C9CBC9BD04D4917933DCD04F31A976FC52F023DFF6"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22
+      ],
+      "phase_count": 24,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        22
+      ]
+    }
+  },
+  "decision_date": "2026-10-13",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1094,
+    "path": "effects/index/qa-decisions/ABJURH/2026-10-13-accepted-e35e96e264a3.json",
+    "sha256": "E35E96E264A3498ECCAA4F4FC1CBB31FF473DF5744C0EA33A7B83FB546CE94BF"
+  },
+  "resref": "ABJURH",
+  "run_descriptor": {
+    "bytes": 2392,
+    "path": "effects/ressources/ABJURH/runs/abjurh-interpolation-gauss12-feather12-lot54-20261013-v1/run.json",
+    "sha256": "7A80A93160DE7694A96185926F83EF93D13ADCCDB19FCF24557F48F42C67D254"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 18302,
+      "path": "effects/ressources/ABJURH/packs/abjurh-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/manifest.json",
+      "sha256": "7769ED198EF95E087DA571F77BF95232E33F87497B8F7DD91586A793C844C329"
+    },
+    "registry": {
+      "bytes": 392,
+      "path": "effects/ressources/ABJURH/packs/abjurh-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/EffectAnimations-X4.registry",
+      "sha256": "71D8BB2A5303782EC2DAA22673B376670F1CA5D0C3122B3E930C807B571452C9"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "abjurh-interpolation-gauss12-feather12-lot54-20261013-v1",
+  "source": {
+    "bytes": 37106,
+    "path": "effects/ressources/ABJURH/source.bam",
+    "sha256": "5E02E317A9B20524117DCCFFBFF6126F88C6AB0BC40DB025CC1A8ED3C43424DF"
+  }
+}

@@ -1,0 +1,1016 @@
+{
+  "schema": "bg2-runtime-session-fallback-audit-v1",
+  "created_at_utc": "2026-10-13T19:27:59.614586+00:00",
+  "scope": "last session only; registered effects from the 54-asset CLUA list",
+  "source_log": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition\\InfinityEngine-Enhancer.log",
+  "source_snapshot_bytes": 9125402,
+  "source_snapshot_sha256": "5BA553A33E0D623FE39619BCBAC7BC3C1444696495E406CA5247D86063E9D5BB",
+  "session_start_source_line": 29682,
+  "session_end_source_line": 30872,
+  "session_start": "[2026-10-13 21:22:35.552] [info] Infinity Engine Enhancer initializing...",
+  "session_last_line": "[2026-10-13 21:24:42.073] [info] Map page B1: generation=0, pages=27, prepared=0, hits=0, misses=0, consumed=0, rejected=0, failures=0, reservedBytes=0, peakBytes=0, crcMs=0.000, copyMs=0.000, renderWorkerWaits=0",
+  "session_snapshot": "last-session.log",
+  "session_sha256": "5B2778832AE83F9DE833E1C17209E2144B7BA1379DBAB7B88ED7973DF8FFFB3A",
+  "classification_counts": {
+    "x4-observed-no-fallback-reported": 10,
+    "native-fallback-no-x4-observed": 2,
+    "x4-then-native-fallback": 1,
+    "not-observed": 41
+  },
+  "character_native_fallbacks": [
+    {
+      "source_line": 30784,
+      "snapshot_line": 1103,
+      "text": "[2026-10-13 21:24:25.204] [warning] Creature sprite xBR2x composite transient replacement failed; native composite retained"
+    },
+    {
+      "source_line": 30785,
+      "snapshot_line": 1104,
+      "text": "[2026-10-13 21:24:25.204] [warning] Registered character animation 0x6010 reached no compatible owner-scoped composite (target Realize=1, captured layers=1, foreign Realize=0, unregistered layers=0, incomplete=false); native BAM rendering remains active"
+    },
+    {
+      "source_line": 30786,
+      "snapshot_line": 1105,
+      "text": "[2026-10-13 21:24:25.237] [warning] Registered character animation 0x6210 reached no compatible owner-scoped composite (target Realize=2, captured layers=2, foreign Realize=0, unregistered layers=0, incomplete=false); native BAM rendering remains active"
+    },
+    {
+      "source_line": 30787,
+      "snapshot_line": 1106,
+      "text": "[2026-10-13 21:24:25.304] [warning] Registered character animation 0x6110 reached no compatible owner-scoped composite (target Realize=4, captured layers=4, foreign Realize=0, unregistered layers=0, incomplete=false); native BAM rendering remains active"
+    },
+    {
+      "source_line": 30825,
+      "snapshot_line": 1144,
+      "text": "[2026-10-13 21:24:33.841] [warning] Registered character animation 0x6000 reached no compatible owner-scoped composite (target Realize=3, captured layers=3, foreign Realize=0, unregistered layers=0, incomplete=false); native BAM rendering remains active"
+    }
+  ],
+  "effects": [
+    {
+      "bam": "ABJURH",
+      "vvc": "ABJURH",
+      "status": "x4-observed-no-fallback-reported",
+      "stages": {
+        "registry-resolved": 1,
+        "timeline-resolved": 1,
+        "x4-bound": 1,
+        "native-occlusion-bound": 1
+      },
+      "events": [
+        {
+          "source_line": 30362,
+          "snapshot_line": 681,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 21:23:27.816] [info] Effect animation x4 diagnostic: resref=ABJURH, stage=registry-resolved, registeredCellReads=1, registryResolved=1, registryFallback=0, timelineResolved=0, x4Bound=0, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=104x120; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30363,
+          "snapshot_line": 682,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 21:23:27.816] [info] Effect animation x4 diagnostic: resref=ABJURH, stage=timeline-resolved, registeredCellReads=1, registryResolved=1, registryFallback=0, timelineResolved=1, x4Bound=0, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=104x120; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30365,
+          "snapshot_line": 684,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 21:23:27.817] [info] Effect animation x4 diagnostic: resref=ABJURH, stage=x4-bound, registeredCellReads=1, registryResolved=1, registryFallback=0, timelineResolved=1, x4Bound=1, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=104x120; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30371,
+          "snapshot_line": 690,
+          "stage": "native-occlusion-bound",
+          "text": "[2026-10-13 21:23:27.950] [info] Effect animation x4 diagnostic: resref=ABJURH, stage=native-occlusion-bound, registeredCellReads=9, registryResolved=9, registryFallback=0, timelineResolved=9, x4Bound=9, bindFallback=0, sequence=0, nativeFrame=3, timelinePhase=6, logical=104x154; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ]
+    },
+    {
+      "bam": "OHRSHFIE",
+      "vvc": "OHRSHFIE",
+      "status": "x4-observed-no-fallback-reported",
+      "stages": {
+        "registry-resolved": 1,
+        "timeline-resolved": 1,
+        "x4-bound": 1,
+        "native-occlusion-bound": 1
+      },
+      "events": [
+        {
+          "source_line": 30408,
+          "snapshot_line": 727,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 21:23:31.891] [info] Effect animation x4 diagnostic: resref=OHRSHFIE, stage=registry-resolved, registeredCellReads=45, registryResolved=45, registryFallback=0, timelineResolved=44, x4Bound=44, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=104x120; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30409,
+          "snapshot_line": 728,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 21:23:31.891] [info] Effect animation x4 diagnostic: resref=OHRSHFIE, stage=timeline-resolved, registeredCellReads=45, registryResolved=45, registryFallback=0, timelineResolved=45, x4Bound=44, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=104x120; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30410,
+          "snapshot_line": 729,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 21:23:31.891] [info] Effect animation x4 diagnostic: resref=OHRSHFIE, stage=x4-bound, registeredCellReads=45, registryResolved=45, registryFallback=0, timelineResolved=45, x4Bound=45, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=104x120; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30415,
+          "snapshot_line": 734,
+          "stage": "native-occlusion-bound",
+          "text": "[2026-10-13 21:23:32.026] [info] Effect animation x4 diagnostic: resref=OHRSHFIE, stage=native-occlusion-bound, registeredCellReads=53, registryResolved=53, registryFallback=0, timelineResolved=53, x4Bound=53, bindFallback=0, sequence=0, nativeFrame=3, timelinePhase=6, logical=104x154; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ]
+    },
+    {
+      "bam": "SPGFLSH1",
+      "vvc": "SPGFLSH1",
+      "status": "x4-observed-no-fallback-reported",
+      "stages": {
+        "registry-resolved": 1,
+        "timeline-resolved": 1,
+        "x4-bound": 1,
+        "native-occlusion-bound": 1
+      },
+      "events": [
+        {
+          "source_line": 30449,
+          "snapshot_line": 768,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 21:23:36.160] [info] Effect animation x4 diagnostic: resref=SPGFLSH1, stage=registry-resolved, registeredCellReads=89, registryResolved=89, registryFallback=0, timelineResolved=88, x4Bound=88, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=50x53; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30450,
+          "snapshot_line": 769,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 21:23:36.160] [info] Effect animation x4 diagnostic: resref=SPGFLSH1, stage=timeline-resolved, registeredCellReads=89, registryResolved=89, registryFallback=0, timelineResolved=89, x4Bound=88, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=50x53; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30451,
+          "snapshot_line": 770,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 21:23:36.160] [info] Effect animation x4 diagnostic: resref=SPGFLSH1, stage=x4-bound, registeredCellReads=89, registryResolved=89, registryFallback=0, timelineResolved=89, x4Bound=89, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=50x53; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30458,
+          "snapshot_line": 777,
+          "stage": "native-occlusion-bound",
+          "text": "[2026-10-13 21:23:36.495] [info] Effect animation x4 diagnostic: resref=SPGFLSH1, stage=native-occlusion-bound, registeredCellReads=109, registryResolved=109, registryFallback=0, timelineResolved=109, x4Bound=109, bindFallback=0, sequence=0, nativeFrame=6, timelinePhase=12, logical=92x152; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ]
+    },
+    {
+      "bam": "BDFAVSPI",
+      "vvc": "BDFAVSPI",
+      "status": "x4-observed-no-fallback-reported",
+      "stages": {
+        "registry-resolved": 1,
+        "timeline-resolved": 1,
+        "x4-bound": 1
+      },
+      "events": [
+        {
+          "source_line": 30478,
+          "snapshot_line": 797,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 21:23:40.362] [info] Effect animation x4 diagnostic: resref=BDFAVSPI, stage=registry-resolved, registeredCellReads=133, registryResolved=133, registryFallback=0, timelineResolved=132, x4Bound=132, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=63x66; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30479,
+          "snapshot_line": 798,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 21:23:40.362] [info] Effect animation x4 diagnostic: resref=BDFAVSPI, stage=timeline-resolved, registeredCellReads=133, registryResolved=133, registryFallback=0, timelineResolved=133, x4Bound=132, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=63x66; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30480,
+          "snapshot_line": 799,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 21:23:40.362] [info] Effect animation x4 diagnostic: resref=BDFAVSPI, stage=x4-bound, registeredCellReads=133, registryResolved=133, registryFallback=0, timelineResolved=133, x4Bound=133, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=63x66; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ]
+    },
+    {
+      "bam": "BDRSPIRI",
+      "vvc": "BDRSPIRI",
+      "status": "x4-observed-no-fallback-reported",
+      "stages": {
+        "registry-resolved": 1,
+        "timeline-resolved": 1,
+        "x4-bound": 1
+      },
+      "events": [
+        {
+          "source_line": 30523,
+          "snapshot_line": 842,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 21:23:45.166] [info] Effect animation x4 diagnostic: resref=BDRSPIRI, stage=registry-resolved, registeredCellReads=289, registryResolved=289, registryFallback=0, timelineResolved=288, x4Bound=288, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=85x86; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30524,
+          "snapshot_line": 843,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 21:23:45.166] [info] Effect animation x4 diagnostic: resref=BDRSPIRI, stage=timeline-resolved, registeredCellReads=289, registryResolved=289, registryFallback=0, timelineResolved=289, x4Bound=288, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=85x86; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30525,
+          "snapshot_line": 844,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 21:23:45.166] [info] Effect animation x4 diagnostic: resref=BDRSPIRI, stage=x4-bound, registeredCellReads=289, registryResolved=289, registryFallback=0, timelineResolved=289, x4Bound=289, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=85x86; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ]
+    },
+    {
+      "bam": "SPRAISEI",
+      "vvc": "ICRAISEI",
+      "status": "x4-observed-no-fallback-reported",
+      "stages": {
+        "registry-resolved": 1,
+        "timeline-resolved": 1,
+        "x4-bound": 1
+      },
+      "events": [
+        {
+          "source_line": 30556,
+          "snapshot_line": 875,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 21:23:49.769] [info] Effect animation x4 diagnostic: resref=SPRAISEI, stage=registry-resolved, registeredCellReads=485, registryResolved=485, registryFallback=0, timelineResolved=484, x4Bound=484, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=85x86; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30557,
+          "snapshot_line": 876,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 21:23:49.769] [info] Effect animation x4 diagnostic: resref=SPRAISEI, stage=timeline-resolved, registeredCellReads=485, registryResolved=485, registryFallback=0, timelineResolved=485, x4Bound=484, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=85x86; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30558,
+          "snapshot_line": 877,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 21:23:49.770] [info] Effect animation x4 diagnostic: resref=SPRAISEI, stage=x4-bound, registeredCellReads=485, registryResolved=485, registryFallback=0, timelineResolved=485, x4Bound=485, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=85x86; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ]
+    },
+    {
+      "bam": "COLDH",
+      "vvc": "COLDH",
+      "status": "x4-observed-no-fallback-reported",
+      "stages": {
+        "registry-resolved": 1,
+        "timeline-resolved": 1,
+        "x4-bound": 1,
+        "native-occlusion-bound": 1
+      },
+      "events": [
+        {
+          "source_line": 30600,
+          "snapshot_line": 919,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 21:23:55.504] [info] Effect animation x4 diagnostic: resref=COLDH, stage=registry-resolved, registeredCellReads=681, registryResolved=681, registryFallback=0, timelineResolved=680, x4Bound=680, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=74x73; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30601,
+          "snapshot_line": 920,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 21:23:55.504] [info] Effect animation x4 diagnostic: resref=COLDH, stage=timeline-resolved, registeredCellReads=681, registryResolved=681, registryFallback=0, timelineResolved=681, x4Bound=680, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=74x73; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30602,
+          "snapshot_line": 921,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 21:23:55.504] [info] Effect animation x4 diagnostic: resref=COLDH, stage=x4-bound, registeredCellReads=681, registryResolved=681, registryFallback=0, timelineResolved=681, x4Bound=681, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=74x73; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30603,
+          "snapshot_line": 922,
+          "stage": "native-occlusion-bound",
+          "text": "[2026-10-13 21:23:55.504] [info] Effect animation x4 diagnostic: resref=COLDH, stage=native-occlusion-bound, registeredCellReads=681, registryResolved=681, registryFallback=0, timelineResolved=681, x4Bound=681, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=74x73; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ]
+    },
+    {
+      "bam": "FIREH",
+      "vvc": "FIREH",
+      "status": "x4-observed-no-fallback-reported",
+      "stages": {
+        "registry-resolved": 1,
+        "timeline-resolved": 1,
+        "x4-bound": 1,
+        "native-occlusion-bound": 1
+      },
+      "events": [
+        {
+          "source_line": 30627,
+          "snapshot_line": 946,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 21:24:00.772] [info] Effect animation x4 diagnostic: resref=FIREH, stage=registry-resolved, registeredCellReads=741, registryResolved=741, registryFallback=0, timelineResolved=740, x4Bound=740, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=80x82; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30628,
+          "snapshot_line": 947,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 21:24:00.772] [info] Effect animation x4 diagnostic: resref=FIREH, stage=timeline-resolved, registeredCellReads=741, registryResolved=741, registryFallback=0, timelineResolved=741, x4Bound=740, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=80x82; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30629,
+          "snapshot_line": 948,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 21:24:00.772] [info] Effect animation x4 diagnostic: resref=FIREH, stage=x4-bound, registeredCellReads=741, registryResolved=741, registryFallback=0, timelineResolved=741, x4Bound=741, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=80x82; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30630,
+          "snapshot_line": 949,
+          "stage": "native-occlusion-bound",
+          "text": "[2026-10-13 21:24:00.839] [info] Effect animation x4 diagnostic: resref=FIREH, stage=native-occlusion-bound, registeredCellReads=745, registryResolved=745, registryFallback=0, timelineResolved=745, x4Bound=745, bindFallback=0, sequence=0, nativeFrame=2, timelinePhase=4, logical=90x93; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ]
+    },
+    {
+      "bam": "MMAGICH",
+      "vvc": "ICMAGICH",
+      "status": "x4-observed-no-fallback-reported",
+      "stages": {
+        "registry-resolved": 1,
+        "timeline-resolved": 1,
+        "x4-bound": 1
+      },
+      "events": [
+        {
+          "source_line": 30654,
+          "snapshot_line": 973,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 21:24:06.040] [info] Effect animation x4 diagnostic: resref=MMAGICH, stage=registry-resolved, registeredCellReads=801, registryResolved=801, registryFallback=0, timelineResolved=800, x4Bound=800, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=41x46; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30655,
+          "snapshot_line": 974,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 21:24:06.040] [info] Effect animation x4 diagnostic: resref=MMAGICH, stage=timeline-resolved, registeredCellReads=801, registryResolved=801, registryFallback=0, timelineResolved=801, x4Bound=800, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=41x46; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30656,
+          "snapshot_line": 975,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 21:24:06.040] [info] Effect animation x4 diagnostic: resref=MMAGICH, stage=x4-bound, registeredCellReads=801, registryResolved=801, registryFallback=0, timelineResolved=801, x4Bound=801, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=41x46; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ]
+    },
+    {
+      "bam": "SPSHKIMP",
+      "vvc": "SPSHKIMP",
+      "status": "x4-observed-no-fallback-reported",
+      "stages": {
+        "registry-resolved": 1,
+        "timeline-resolved": 1,
+        "x4-bound": 1
+      },
+      "events": [
+        {
+          "source_line": 30679,
+          "snapshot_line": 998,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 21:24:11.108] [info] Effect animation x4 diagnostic: resref=SPSHKIMP, stage=registry-resolved, registeredCellReads=877, registryResolved=877, registryFallback=0, timelineResolved=876, x4Bound=876, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=25x36; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30680,
+          "snapshot_line": 999,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 21:24:11.108] [info] Effect animation x4 diagnostic: resref=SPSHKIMP, stage=timeline-resolved, registeredCellReads=877, registryResolved=877, registryFallback=0, timelineResolved=877, x4Bound=876, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=25x36; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30681,
+          "snapshot_line": 1000,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 21:24:11.108] [info] Effect animation x4 diagnostic: resref=SPSHKIMP, stage=x4-bound, registeredCellReads=877, registryResolved=877, registryFallback=0, timelineResolved=877, x4Bound=877, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=25x36; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ]
+    },
+    {
+      "bam": "FDAWNX",
+      "vvc": "FDAWNX",
+      "status": "native-fallback-no-x4-observed",
+      "stages": {
+        "registry-fallback-slot": 39,
+        "registry-fallback": 1
+      },
+      "events": [
+        {
+          "source_line": 30704,
+          "snapshot_line": 1023,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:15.400] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=0, logical=31x76"
+        },
+        {
+          "source_line": 30705,
+          "snapshot_line": 1024,
+          "stage": "registry-fallback",
+          "text": "[2026-10-13 21:24:15.400] [info] Effect animation x4 diagnostic: resref=FDAWNX, stage=registry-fallback, registeredCellReads=921, registryResolved=920, registryFallback=1, timelineResolved=920, x4Bound=920, bindFallback=0, sequence=0, nativeFrame=0, timelinePhase=-1, logical=31x76; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30706,
+          "snapshot_line": 1025,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:15.432] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=1, logical=84x107"
+        },
+        {
+          "source_line": 30707,
+          "snapshot_line": 1026,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:15.499] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=2, logical=109x124"
+        },
+        {
+          "source_line": 30708,
+          "snapshot_line": 1027,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:15.566] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=3, logical=119x134"
+        },
+        {
+          "source_line": 30709,
+          "snapshot_line": 1028,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:15.632] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=4, logical=123x142"
+        },
+        {
+          "source_line": 30710,
+          "snapshot_line": 1029,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:15.699] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=5, logical=128x149"
+        },
+        {
+          "source_line": 30711,
+          "snapshot_line": 1030,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:15.765] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=6, logical=132x156"
+        },
+        {
+          "source_line": 30712,
+          "snapshot_line": 1031,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:15.832] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=7, logical=135x162"
+        },
+        {
+          "source_line": 30713,
+          "snapshot_line": 1032,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:15.899] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=8, logical=140x170"
+        },
+        {
+          "source_line": 30714,
+          "snapshot_line": 1033,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:15.966] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=9, logical=143x177"
+        },
+        {
+          "source_line": 30715,
+          "snapshot_line": 1034,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:16.032] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=10, logical=143x181"
+        },
+        {
+          "source_line": 30717,
+          "snapshot_line": 1036,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:16.099] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=11, logical=146x188"
+        },
+        {
+          "source_line": 30718,
+          "snapshot_line": 1037,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:16.166] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=12, logical=149x195"
+        },
+        {
+          "source_line": 30719,
+          "snapshot_line": 1038,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:16.232] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=13, logical=153x201"
+        },
+        {
+          "source_line": 30720,
+          "snapshot_line": 1039,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:16.299] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=14, logical=157x208"
+        },
+        {
+          "source_line": 30721,
+          "snapshot_line": 1040,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:16.366] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=15, logical=160x215"
+        },
+        {
+          "source_line": 30722,
+          "snapshot_line": 1041,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:16.432] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=16, logical=163x221"
+        },
+        {
+          "source_line": 30723,
+          "snapshot_line": 1042,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:16.499] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=17, logical=167x227"
+        },
+        {
+          "source_line": 30724,
+          "snapshot_line": 1043,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:16.566] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=18, logical=167x232"
+        },
+        {
+          "source_line": 30725,
+          "snapshot_line": 1044,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:16.632] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=19, logical=169x239"
+        },
+        {
+          "source_line": 30726,
+          "snapshot_line": 1045,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:16.699] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=20, logical=167x242"
+        },
+        {
+          "source_line": 30727,
+          "snapshot_line": 1046,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:16.766] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=21, logical=167x247"
+        },
+        {
+          "source_line": 30728,
+          "snapshot_line": 1047,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:16.833] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=22, logical=163x251"
+        },
+        {
+          "source_line": 30729,
+          "snapshot_line": 1048,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:16.899] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=23, logical=160x255"
+        },
+        {
+          "source_line": 30730,
+          "snapshot_line": 1049,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:16.965] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=24, logical=157x258"
+        },
+        {
+          "source_line": 30731,
+          "snapshot_line": 1050,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:17.032] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=25, logical=153x261"
+        },
+        {
+          "source_line": 30732,
+          "snapshot_line": 1051,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:17.099] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=26, logical=149x265"
+        },
+        {
+          "source_line": 30733,
+          "snapshot_line": 1052,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:17.165] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=27, logical=146x268"
+        },
+        {
+          "source_line": 30734,
+          "snapshot_line": 1053,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:17.232] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=28, logical=143x271"
+        },
+        {
+          "source_line": 30735,
+          "snapshot_line": 1054,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:17.299] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=29, logical=143x278"
+        },
+        {
+          "source_line": 30736,
+          "snapshot_line": 1055,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:17.365] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=30, logical=140x280"
+        },
+        {
+          "source_line": 30737,
+          "snapshot_line": 1056,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:17.432] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=31, logical=135x282"
+        },
+        {
+          "source_line": 30738,
+          "snapshot_line": 1057,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:17.499] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=32, logical=132x286"
+        },
+        {
+          "source_line": 30739,
+          "snapshot_line": 1058,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:17.565] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=33, logical=128x289"
+        },
+        {
+          "source_line": 30740,
+          "snapshot_line": 1059,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:17.632] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=34, logical=123x292"
+        },
+        {
+          "source_line": 30741,
+          "snapshot_line": 1060,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:17.699] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=35, logical=119x294"
+        },
+        {
+          "source_line": 30742,
+          "snapshot_line": 1061,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:17.765] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=36, logical=109x294"
+        },
+        {
+          "source_line": 30743,
+          "snapshot_line": 1062,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:17.835] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=37, logical=84x287"
+        },
+        {
+          "source_line": 30744,
+          "snapshot_line": 1063,
+          "stage": "registry-fallback-slot",
+          "text": "[2026-10-13 21:24:17.900] [info] Effect animation x4 geometry diagnostic: resref=FDAWNX, stage=registry-fallback-slot, sequence=0, nativeFrame=38, logical=31x266"
+        }
+      ]
+    },
+    {
+      "bam": "GRNDGLOW",
+      "vvc": "FIRECOLD",
+      "status": "x4-then-native-fallback",
+      "stages": {
+        "registry-resolved": 1,
+        "timeline-resolved": 1,
+        "x4-bound": 1,
+        "bind-fallback": 1
+      },
+      "events": [
+        {
+          "source_line": 30771,
+          "snapshot_line": 1090,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 21:24:24.370] [info] Effect animation x4 diagnostic: resref=GRNDGLOW, stage=registry-resolved, registeredCellReads=1075, registryResolved=921, registryFallback=154, timelineResolved=920, x4Bound=920, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=-1, logical=17x12; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30772,
+          "snapshot_line": 1091,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 21:24:24.370] [info] Effect animation x4 diagnostic: resref=GRNDGLOW, stage=timeline-resolved, registeredCellReads=1075, registryResolved=921, registryFallback=154, timelineResolved=921, x4Bound=920, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=17x12; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30773,
+          "snapshot_line": 1092,
+          "stage": "x4-bound",
+          "text": "[2026-10-13 21:24:24.370] [info] Effect animation x4 diagnostic: resref=GRNDGLOW, stage=x4-bound, registeredCellReads=1075, registryResolved=921, registryFallback=154, timelineResolved=921, x4Bound=921, bindFallback=0, sequence=0, nativeFrame=1, timelinePhase=2, logical=17x12; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30789,
+          "snapshot_line": 1108,
+          "stage": "bind-fallback",
+          "text": "[2026-10-13 21:24:25.337] [info] Effect animation x4 diagnostic: resref=GRNDGLOW, stage=bind-fallback, registeredCellReads=1133, registryResolved=979, registryFallback=154, timelineResolved=979, x4Bound=978, bindFallback=1, sequence=0, nativeFrame=15, timelinePhase=31, logical=140x87; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ]
+    },
+    {
+      "bam": "SPCCMDSI",
+      "vvc": "ICCCMDSI",
+      "status": "native-fallback-no-x4-observed",
+      "stages": {
+        "registry-resolved": 1,
+        "timeline-resolved": 1,
+        "bind-fallback": 1
+      },
+      "events": [
+        {
+          "source_line": 30813,
+          "snapshot_line": 1132,
+          "stage": "registry-resolved",
+          "text": "[2026-10-13 21:24:30.172] [info] Effect animation x4 diagnostic: resref=SPCCMDSI, stage=registry-resolved, registeredCellReads=1151, registryResolved=997, registryFallback=154, timelineResolved=996, x4Bound=978, bindFallback=18, sequence=0, nativeFrame=1, timelinePhase=-1, logical=105x111; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30814,
+          "snapshot_line": 1133,
+          "stage": "timeline-resolved",
+          "text": "[2026-10-13 21:24:30.172] [info] Effect animation x4 diagnostic: resref=SPCCMDSI, stage=timeline-resolved, registeredCellReads=1151, registryResolved=997, registryFallback=154, timelineResolved=997, x4Bound=978, bindFallback=18, sequence=0, nativeFrame=1, timelinePhase=2, logical=105x111; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        },
+        {
+          "source_line": 30815,
+          "snapshot_line": 1134,
+          "stage": "bind-fallback",
+          "text": "[2026-10-13 21:24:30.172] [info] Effect animation x4 diagnostic: resref=SPCCMDSI, stage=bind-fallback, registeredCellReads=1151, registryResolved=997, registryFallback=154, timelineResolved=997, x4Bound=978, bindFallback=19, sequence=0, nativeFrame=1, timelinePhase=2, logical=105x111; x4Bound confirms the 4x backing texture was bound for the native draw geometry"
+        }
+      ]
+    },
+    {
+      "bam": "SPUNHOLY",
+      "vvc": "SPUNHOLY",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPDISPMA",
+      "vvc": "SPDISPMA",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPHEALIN",
+      "vvc": "SPHEALIN",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPHOLLYW",
+      "vvc": "SPHOLY",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "BDSPLOCK",
+      "vvc": "BDSPLOCK",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "CSHIELDH",
+      "vvc": "CSHIELDH",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "CURSEH",
+      "vvc": "CURSEH",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPBLESHI",
+      "vvc": "ICBLESAI",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "GARMORH",
+      "vvc": "1WDGARMR",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SARMORH",
+      "vvc": "1WDSARMR",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPARMORI",
+      "vvc": "ICARMOR",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "PARALH",
+      "vvc": "PARALH",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPDHRMNY",
+      "vvc": "SPDHRMNY",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPCHMPSI",
+      "vvc": "ICCHMPSI",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPSTRENI",
+      "vvc": "ICSTRENI",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPSTRONE",
+      "vvc": "ICSTRONE",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPPOWATK",
+      "vvc": "SPPOWATK",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPSDIMPA",
+      "vvc": "SPSDIMPA",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPTRUSEE",
+      "vvc": "SPTRUSEE",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPUSEANY",
+      "vvc": "SPUSEANY",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPFDEATH",
+      "vvc": "SPDEATH3",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "ASUMM1X",
+      "vvc": "ASUMM1X",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "BDSHSUM",
+      "vvc": "BDSHSUM",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "MSUMM1X",
+      "vvc": "MSUMM1X",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPFRACTI",
+      "vvc": "ICFRACTI",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "BDSPWARD",
+      "vvc": "BDSPWARD",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPROTECT",
+      "vvc": "SPROTECT",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPFLSRIN",
+      "vvc": "SPFLSRIN",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPSETTIH",
+      "vvc": "SPSETTIH",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "OHRDARK",
+      "vvc": "OHRDARK",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPPOWWRD",
+      "vvc": "SPPOWWRD",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "BDETHER",
+      "vvc": "BDETHER",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SHAREAW",
+      "vvc": "SHAREAW",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "BDSPCLAR",
+      "vvc": "BDSPCLAR",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "EXALTAH",
+      "vvc": "EXALTAH",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "GLDUSTH",
+      "vvc": "GLDUSTH",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "OHRMJAR",
+      "vvc": "OHRMJAR",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPNWCHRM",
+      "vvc": "SPNWCHRM",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPHLYBLS",
+      "vvc": "SPHLYBLS",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPPLANAR",
+      "vvc": "SPPLANAR",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    },
+    {
+      "bam": "SPSPMAZE",
+      "vvc": "SPSPMAZE",
+      "status": "not-observed",
+      "stages": {},
+      "events": []
+    }
+  ],
+  "limitations": [
+    "Diagnostics report each stage once per asset per session, not every rendered frame.",
+    "x4-bound demonstrates a bound replacement texture; it alone is not exhaustive visual QA.",
+    "No diagnostic is not proof that a CLUA command ran or that an effect was native.",
+    "Nearest and native/vanilla are separate concepts: native fallback bypasses the registered HD display profile."
+  ],
+  "cause_hypothesis": "Engine texture-table exhaustion: effect cache retains each distinct frame without eviction; engine descriptor count is 512. The log has no allocation-slot count at failure, so exact causality is not established.",
+  "fdawnx_geometry_example": {
+    "native_slot": 0,
+    "pack_logical_x1": [
+      31,
+      32
+    ],
+    "logged_draw_logical": [
+      31,
+      76
+    ],
+    "registered_slots_refused": 39
+  },
+  "previous_session_context": {
+    "start_source_line": 28036,
+    "start": "[2026-10-13 21:11:42.959] [info] Infinity Engine Enhancer initializing...",
+    "extra_observed_asset": "SPUNHOLY",
+    "extra_status": "native-fallback-no-x4-observed",
+    "same_character_and_effect_texture_failure_pattern": true
+  },
+  "installation_or_configuration_changes": false
+}

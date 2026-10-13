@@ -1,0 +1,120 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:OHRSHFIE",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 23,
+    "source": {
+      "interpolation_run": "ohrshfie-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "interpolation_run_descriptor_sha256": "22819C29B89D08D634A2F48D0DDEBB6D5238F9CD90020E0C674F80E61B92857A",
+      "source_bam_sha256": "feb37cdf1480969b5ecee168baa20c3cd6191055f69af5d3ac62f9e45ce9cf0c",
+      "spatial_manifest_sha256": "546F1180EF42B7724E904C109B651E9068078956C45A95716489A5D69A5F2691",
+      "spatial_run": "ohrshfie-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "spatial_run_descriptor_sha256": "42F7E2157AC42B85BCC59E269E7EA39AC2C35D0DC1B92BAD748D77ED0877C0F1"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22
+      ],
+      "phase_count": 24,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        22
+      ]
+    }
+  },
+  "decision_date": "2026-10-13",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1108,
+    "path": "effects/index/qa-decisions/OHRSHFIE/2026-10-13-accepted-078e31c24641.json",
+    "sha256": "078E31C24641BC236CC15C407EBE806B43AF80B973AE9214CBD17A5DD7D6625D"
+  },
+  "resref": "OHRSHFIE",
+  "run_descriptor": {
+    "bytes": 2424,
+    "path": "effects/ressources/OHRSHFIE/runs/ohrshfie-interpolation-gauss12-feather12-lot54-20261013-v1/run.json",
+    "sha256": "22819C29B89D08D634A2F48D0DDEBB6D5238F9CD90020E0C674F80E61B92857A"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 18446,
+      "path": "effects/ressources/OHRSHFIE/packs/ohrshfie-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/manifest.json",
+      "sha256": "31CB49E658FE6B26F94E4B201C1F5CC83952682A4681F82AFD845BBEAC887767"
+    },
+    "registry": {
+      "bytes": 392,
+      "path": "effects/ressources/OHRSHFIE/packs/ohrshfie-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/EffectAnimations-X4.registry",
+      "sha256": "10F5B79DF94FEB796F4A0AABFB896A09992D1FBF9E955AEF4A9BF001BEA4CFAC"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "ohrshfie-interpolation-gauss12-feather12-lot54-20261013-v1",
+  "source": {
+    "bytes": 37102,
+    "path": "effects/ressources/OHRSHFIE/source.bam",
+    "sha256": "FEB37CDF1480969B5ECEE168BAA20C3CD6191055F69AF5D3AC62F9E45CE9CF0C"
+  }
+}

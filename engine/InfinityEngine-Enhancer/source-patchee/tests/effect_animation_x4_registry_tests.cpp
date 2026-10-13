@@ -70,7 +70,17 @@ bool write_fixture(const std::filesystem::path& directory, bool timeline = false
 }
 }  // namespace
 
-int main() {
+int main(int argc, char** argv) {
+  if (argc == 2) {
+    const bool loaded = iee::effect_animation_x4::prepare(std::filesystem::path(argv[1]));
+    if (!loaded || !iee::effect_animation_x4::ready()) {
+      std::cerr << "external effect runtime pack rejected\n";
+      return 1;
+    }
+    std::cout << "external effect runtime pack prepared and ready\n";
+    iee::effect_animation_x4::release();
+    return 0;
+  }
   const auto root = std::filesystem::temp_directory_path() /
                     "iee-effect-animation-x4-registry-test";
   std::error_code error;

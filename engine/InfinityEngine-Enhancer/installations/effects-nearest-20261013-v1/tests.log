@@ -1,0 +1,56 @@
+Start testing: Oct 13 22:38 Paris, Madrid (heure d’été)
+----------------------------------------------------------
+2/10 Testing: iee_native_occlusion_feather_tests
+2/10 Test: iee_native_occlusion_feather_tests
+Command: "G:/AI/BG2_Upscale/build/iee-effects-nearest-20261013-v1/Release/iee_native_occlusion_feather_tests.exe"
+Directory: G:/AI/BG2_Upscale/build/iee-effects-nearest-20261013-v1
+"iee_native_occlusion_feather_tests" start time: Oct 13 22:38 Paris, Madrid (heure d’été)
+Output:
+----------------------------------------------------------
+coverage, BDFORCEW placement, AR0517 and planar scope: passed
+<end of output>
+Test time =   0.18 sec
+----------------------------------------------------------
+Test Passed.
+"iee_native_occlusion_feather_tests" end time: Oct 13 22:38 Paris, Madrid (heure d’été)
+"iee_native_occlusion_feather_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/10 Testing: iee_sprite_minification_tests
+6/10 Test: iee_sprite_minification_tests
+Command: "G:/AI/BG2_Upscale/build/iee-effects-nearest-20261013-v1/Release/iee_sprite_minification_tests.exe"
+Directory: G:/AI/BG2_Upscale/build/iee-effects-nearest-20261013-v1
+"iee_sprite_minification_tests" start time: Oct 13 22:38 Paris, Madrid (heure d’été)
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"iee_sprite_minification_tests" end time: Oct 13 22:38 Paris, Madrid (heure d’été)
+"iee_sprite_minification_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/10 Testing: iee_effect_texture_cache_tests
+9/10 Test: iee_effect_texture_cache_tests
+Command: "G:/AI/BG2_Upscale/build/iee-effects-nearest-20261013-v1/Release/iee_effect_texture_cache_tests.exe"
+Directory: G:/AI/BG2_Upscale/build/iee-effects-nearest-20261013-v1
+"iee_effect_texture_cache_tests" start time: Oct 13 22:38 Paris, Madrid (heure d’été)
+Output:
+----------------------------------------------------------
+[2026-10-13 22:38:20.784] [info] Prepared effect animation x4 runtime pack: resources=1, frames=720, rawBytes=184320, gpuTextureCapacity=64, filter=NEAREST
+[2026-10-13 22:38:20.795] [info] OpenGL initialized (source patching=ready, ARB shaders=ready, texture upload=ready, compressed texture upload=ready)
+[2026-10-13 22:38:20.798] [info] Effect animation x4 GPU cache reusing owned slots: capacity=64, resident=64; native Character/UI texture slots remain available
+[2026-10-13 22:38:20.846] [info] Prepared effect animation x4 runtime pack: resources=1, frames=720, rawBytes=184320, gpuTextureCapacity=64, filter=NEAREST
+[2026-10-13 22:38:20.847] [info] Effect animation x4 GPU cache reusing owned slots: capacity=64, resident=1; native Character/UI texture slots remain available
+[2026-10-13 22:38:20.847] [warning] Effect animation x4 texture creation failed; delegating to original BAM; gpuCacheResident=1, gpuCacheCapacity=64, allocationFailures=1, uploadFailures=1
+720 distinct effect frames: exact GPU pixels, NEAREST min/mag, no mips, cache <=64; Character allocation succeeds on every frame with 400 occupied slots; LRU hit/reload, allocation pressure and upload recovery passed
+<end of output>
+Test time =   0.58 sec
+----------------------------------------------------------
+Test Passed.
+"iee_effect_texture_cache_tests" end time: Oct 13 22:38 Paris, Madrid (heure d’été)
+"iee_effect_texture_cache_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 13 22:38 Paris, Madrid (heure d’été)

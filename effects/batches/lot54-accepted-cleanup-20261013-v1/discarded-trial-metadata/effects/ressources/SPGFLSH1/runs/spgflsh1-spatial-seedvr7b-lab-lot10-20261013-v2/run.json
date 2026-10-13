@@ -1,0 +1,59 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "asset_ids": [
+    "effects:bam:SPGFLSH1"
+  ],
+  "domain": "effects",
+  "inputs": [
+    {
+      "bytes": 37107,
+      "path": "effects/ressources/SPGFLSH1/source.bam",
+      "role": "source-bam",
+      "sha256": "F2254AF89E8E294674D25F6F8D1B51ABEE20060B2161C347CC623B3B0242BF47"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 6893,
+      "path": "effects/ressources/SPGFLSH1/runs/spgflsh1-spatial-seedvr7b-lab-lot10-20261013-v2/00-frames-x1/manifest.json",
+      "role": "frames-manifest",
+      "sha256": "79373A5BE9401F2889451509321AC060850D9D0B5077FFC2C232E7B446A9EB3F"
+    },
+    {
+      "bytes": 20697,
+      "path": "effects/ressources/SPGFLSH1/runs/spgflsh1-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/manifest.json",
+      "role": "spatial-manifest",
+      "sha256": "7BA9E05625EAF0A281B7D3F1490105701254B2DA45A5BAEFCBC0720982841E56"
+    },
+    {
+      "bytes": 2254361,
+      "path": "effects/ressources/SPGFLSH1/runs/spgflsh1-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/preview/animation-x4-contact-sheet.png",
+      "role": "spatial-preview",
+      "sha256": "B2F1F31053366835AABD2ED5ACF5DED0711A0B061BAA2DE3F6C009832DCA43AF"
+    }
+  ],
+  "pipeline": {
+    "id": "effects.spatial-x4.v1",
+    "recipe_path": "effects/ressources/SPGFLSH1/runs/spgflsh1-spatial-seedvr7b-lab-lot10-20261013-v2/recipe.json",
+    "recipe_sha256": "15E1CC0AF7A07C8BE0859079248244B326C16638056D5373719C8322447A4C01",
+    "version": "effect-spatial-runner.v1"
+  },
+  "provenance": {
+    "command": [
+      "run_effect_spatial.py",
+      "--resref",
+      "SPGFLSH1",
+      "--run-id",
+      "spgflsh1-spatial-seedvr7b-lab-lot10-20261013-v2"
+    ],
+    "created_at_utc": "2026-10-13T20:03:29Z",
+    "generator": "pipeline/scripts/run_effect_spatial.py"
+  },
+  "result": {
+    "completed_at_utc": "2026-10-13T20:03:56Z",
+    "sealed": true,
+    "status": "completed"
+  },
+  "run_id": "spgflsh1-spatial-seedvr7b-lab-lot10-20261013-v2",
+  "schema_version": 1
+}

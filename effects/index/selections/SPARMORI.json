@@ -1,0 +1,152 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPARMORI",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          15,
+          15,
+          15,
+          15
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 31,
+    "source": {
+      "interpolation_run": "sparmori-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "interpolation_run_descriptor_sha256": "2683A2BF015512EB2F7BF1DF06636ED496D5AAB1693D3865F267BE64B2F41CA5",
+      "source_bam_sha256": "af0de50ba964410676722cd78e3c4c25bebc61f1cc54517997afbefa2b8aa202",
+      "spatial_manifest_sha256": "4062F481B42028F21AE9B9C9FCC81D3E4A07A262E76D0460767D7494CCF57F61",
+      "spatial_run": "sparmori-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "spatial_run_descriptor_sha256": "9E06E652488415AC7BD82FA1C9D08510D75585499C8EED0A9650C690404B206D"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        30,
+        30,
+        30,
+        30
+      ],
+      "phase_count": 40,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30
+      ]
+    }
+  },
+  "decision_date": "2026-10-13",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1108,
+    "path": "effects/index/qa-decisions/SPARMORI/2026-10-13-accepted-a02121c4d164.json",
+    "sha256": "A02121C4D164CA089CA076B2F4FAC1788E1FC708D03455D3A84A87DA8FE4664F"
+  },
+  "resref": "SPARMORI",
+  "run_descriptor": {
+    "bytes": 2424,
+    "path": "effects/ressources/SPARMORI/runs/sparmori-interpolation-gauss12-feather12-lot54-20261013-v1/run.json",
+    "sha256": "2683A2BF015512EB2F7BF1DF06636ED496D5AAB1693D3865F267BE64B2F41CA5"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 24654,
+      "path": "effects/ressources/SPARMORI/packs/sparmori-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/manifest.json",
+      "sha256": "80A82E60EC94397969AE636D837BBB67C2BDC437A4EE3E464A3F24C75F4858B2"
+    },
+    "registry": {
+      "bytes": 552,
+      "path": "effects/ressources/SPARMORI/packs/sparmori-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/EffectAnimations-X4.registry",
+      "sha256": "A1D20A6AFF1525A3D7F3108B2629801736AFA6BF2A26E0ACDFC4405397B024BA"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "sparmori-interpolation-gauss12-feather12-lot54-20261013-v1",
+  "source": {
+    "bytes": 46514,
+    "path": "effects/ressources/SPARMORI/source.bam",
+    "sha256": "AF0DE50BA964410676722CD78E3C4C25BEBC61F1CC54517997AFBEFA2B8AA202"
+  }
+}

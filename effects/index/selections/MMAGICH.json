@@ -1,0 +1,152 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:MMAGICH",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 39,
+    "source": {
+      "interpolation_run": "mmagich-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "interpolation_run_descriptor_sha256": "7726FEBE699611F4C572A54A399531B19E431C8B52CCEFE4C1343DE5EC58C8DA",
+      "source_bam_sha256": "392a8644c4a1b18622326cee691631810bc606910cad80473b24a82901c1ea11",
+      "spatial_manifest_sha256": "82266FE840BC8E936FB20D02CD1FCDC7ADED1D3D1499543E98A5F18C61EF3D64",
+      "spatial_run": "mmagich-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "spatial_run_descriptor_sha256": "5862A91B4752D011B505803039B2327F158774EA8DE3EC703F3344D5CEA1882F"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        36,
+        38
+      ],
+      "phase_count": 40,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        38
+      ]
+    }
+  },
+  "decision_date": "2026-10-13",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1101,
+    "path": "effects/index/qa-decisions/MMAGICH/2026-10-13-accepted-84f6ea17e03b.json",
+    "sha256": "84F6EA17E03BB98DB5526F64CAEBEF24EBC52072CF72BE67380CA97342E583D0"
+  },
+  "resref": "MMAGICH",
+  "run_descriptor": {
+    "bytes": 2408,
+    "path": "effects/ressources/MMAGICH/runs/mmagich-interpolation-gauss12-feather12-lot54-20261013-v1/run.json",
+    "sha256": "7726FEBE699611F4C572A54A399531B19E431C8B52CCEFE4C1343DE5EC58C8DA"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 30160,
+      "path": "effects/ressources/MMAGICH/packs/mmagich-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/manifest.json",
+      "sha256": "A99E14024BCFDDE3E52C6783D10286E9BCFAB4AAA1D3D1349D0D11220C067D2C"
+    },
+    "registry": {
+      "bytes": 616,
+      "path": "effects/ressources/MMAGICH/packs/mmagich-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/EffectAnimations-X4.registry",
+      "sha256": "2750DB11FF2772F2B194BC8EA3A2C82268EC8FC8DAACB401BEED25954F49BDC1"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "mmagich-interpolation-gauss12-feather12-lot54-20261013-v1",
+  "source": {
+    "bytes": 38518,
+    "path": "effects/ressources/MMAGICH/source.bam",
+    "sha256": "392A8644C4A1B18622326CEE691631810BC606910CAD80473B24A82901C1EA11"
+  }
+}

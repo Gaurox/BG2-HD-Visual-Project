@@ -1,0 +1,59 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "asset_ids": [
+    "effects:bam:SPCCMDSI"
+  ],
+  "domain": "effects",
+  "inputs": [
+    {
+      "bytes": 112302,
+      "path": "effects/ressources/SPCCMDSI/source.bam",
+      "role": "source-bam",
+      "sha256": "28F597F1148939490A519EC040BA5571AC844A095E78308D5DCD6D1C4503F649"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 10940,
+      "path": "effects/ressources/SPCCMDSI/runs/spccmdsi-spatial-seedvr7b-lab-lot10-20261013-v2/00-frames-x1/manifest.json",
+      "role": "frames-manifest",
+      "sha256": "30BCF829EBDED93A29612AD627AA15C708604914E3B91EAF93B8EC2FC5412587"
+    },
+    {
+      "bytes": 33078,
+      "path": "effects/ressources/SPCCMDSI/runs/spccmdsi-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/manifest.json",
+      "role": "spatial-manifest",
+      "sha256": "E2F4113434DFE093A2A97C39EFD4D5171AFA57D96FF8C938BC6933261530DBAC"
+    },
+    {
+      "bytes": 6808014,
+      "path": "effects/ressources/SPCCMDSI/runs/spccmdsi-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/preview/animation-x4-contact-sheet.png",
+      "role": "spatial-preview",
+      "sha256": "D0BEF7048D7FAA3D760698F08C3BE10D046C81F00B058B44B25D16CE7D7867EF"
+    }
+  ],
+  "pipeline": {
+    "id": "effects.spatial-x4.v1",
+    "recipe_path": "effects/ressources/SPCCMDSI/runs/spccmdsi-spatial-seedvr7b-lab-lot10-20261013-v2/recipe.json",
+    "recipe_sha256": "15E1CC0AF7A07C8BE0859079248244B326C16638056D5373719C8322447A4C01",
+    "version": "effect-spatial-runner.v1"
+  },
+  "provenance": {
+    "command": [
+      "run_effect_spatial.py",
+      "--resref",
+      "SPCCMDSI",
+      "--run-id",
+      "spccmdsi-spatial-seedvr7b-lab-lot10-20261013-v2"
+    ],
+    "created_at_utc": "2026-10-13T20:04:32Z",
+    "generator": "pipeline/scripts/run_effect_spatial.py"
+  },
+  "result": {
+    "completed_at_utc": "2026-10-13T20:05:20Z",
+    "sealed": true,
+    "status": "completed"
+  },
+  "run_id": "spccmdsi-spatial-seedvr7b-lab-lot10-20261013-v2",
+  "schema_version": 1
+}

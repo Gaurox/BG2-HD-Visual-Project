@@ -1,0 +1,68 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "asset_ids": [
+    "effects:bam:BDETHER"
+  ],
+  "domain": "effects",
+  "inputs": [
+    {
+      "bytes": 51575,
+      "path": "effects/ressources/BDETHER/runs/bdether-spatial-seedvr7b-lab-lot10-20261013-v2/01-spatial-x4/manifest.json",
+      "role": "parent-spatial-output",
+      "sha256": "89338492A3A8B141FE01489AB28C56771640E4C91853F16E325DA5B70C131162"
+    },
+    {
+      "bytes": 1737,
+      "path": "effects/ressources/BDETHER/runs/bdether-interpolation-apollo30-left-7b-lot10-20261013-v1/run.json",
+      "role": "source-interpolation-descriptor",
+      "sha256": "A046A8D9C37747974C24544775BE1130C3625422DC4E125D60F4F0A49ADA6E60"
+    },
+    {
+      "bytes": 58927,
+      "path": "effects/ressources/BDETHER/runs/bdether-interpolation-apollo30-left-7b-lot10-20261013-v1/02-interpolation/manifest.json",
+      "role": "source-interpolation-manifest",
+      "sha256": "1435713D11968703ACD0F7E81404538017F8401FF1FCCC4DDB9B6C599A450D89"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 75799,
+      "path": "effects/ressources/BDETHER/runs/bdether-interpolation-gauss12-feather12-7b-lot10-20261013-v1/02-interpolation/manifest.json",
+      "role": "interpolation-manifest",
+      "sha256": "C817BE5B7AC6D73C98598C8F8B0EC3024C87E42C0F14F1A3BC55400AEA29FDA3"
+    }
+  ],
+  "pipeline": {
+    "id": "effects.interpolation-30fps.v1",
+    "recipe_path": "effects/ressources/BDETHER/runs/bdether-interpolation-gauss12-feather12-7b-lot10-20261013-v1/recipe.json",
+    "recipe_sha256": "E6B8237FB64140C285CEC6A3E7073131B2606DC5009F43903EF642B15CCCF22B",
+    "version": "effect-visual-treatment.v1"
+  },
+  "provenance": {
+    "command": [
+      "run_effect_visual_treatment.py",
+      "--resref",
+      "BDETHER",
+      "--interpolation-run",
+      "bdether-interpolation-apollo30-left-7b-lot10-20261013-v1",
+      "--run-id",
+      "bdether-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+      "--sigma-x4",
+      "1.2",
+      "--inner-feather-x4",
+      "12.0"
+    ],
+    "created_at_utc": "2026-10-13T20:05:50Z",
+    "generator": "pipeline/scripts/run_effect_visual_treatment.py",
+    "parents": [
+      "bdether-spatial-seedvr7b-lab-lot10-20261013-v2"
+    ]
+  },
+  "result": {
+    "completed_at_utc": "2026-10-13T20:06:08Z",
+    "sealed": true,
+    "status": "completed"
+  },
+  "run_id": "bdether-interpolation-gauss12-feather12-7b-lot10-20261013-v1",
+  "schema_version": 1
+}

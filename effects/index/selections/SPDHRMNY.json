@@ -1,0 +1,120 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPDHRMNY",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 23,
+    "source": {
+      "interpolation_run": "spdhrmny-interpolation-gauss12-feather12-lot54-20261013-v1",
+      "interpolation_run_descriptor_sha256": "F78C3A393643A36344E67431F2AE710A88C651EF8AA51C72952E38505E54E6C7",
+      "source_bam_sha256": "b498779527f672700e4e65c8fdc91cf1f5600bbe43665e79bfe5d5ba2c2e3185",
+      "spatial_manifest_sha256": "AD7A3FA688261981C7F6F4FE97535899AFC97D355D65685CD5917A90BE4C87A0",
+      "spatial_run": "spdhrmny-spatial-seedvr3b-lab-lot54-20261013-v1",
+      "spatial_run_descriptor_sha256": "DBF8E8A9403BD2C797D7841E9EFC95BF8843516723DF6DEAF75A87E7D0753FF5"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22
+      ],
+      "phase_count": 24,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        22
+      ]
+    }
+  },
+  "decision_date": "2026-10-13",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1108,
+    "path": "effects/index/qa-decisions/SPDHRMNY/2026-10-13-accepted-cbc809ab74e3.json",
+    "sha256": "CBC809AB74E3F01D91360A50F8A3E519B77F31907AB845331F3802A8C2275088"
+  },
+  "resref": "SPDHRMNY",
+  "run_descriptor": {
+    "bytes": 2424,
+    "path": "effects/ressources/SPDHRMNY/runs/spdhrmny-interpolation-gauss12-feather12-lot54-20261013-v1/run.json",
+    "sha256": "F78C3A393643A36344E67431F2AE710A88C651EF8AA51C72952E38505E54E6C7"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 18431,
+      "path": "effects/ressources/SPDHRMNY/packs/spdhrmny-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/manifest.json",
+      "sha256": "7AC6A89FB1F35C38C1030F235A0A406F5844C26DA1FC81A40B901285D5DED7A8"
+    },
+    "registry": {
+      "bytes": 392,
+      "path": "effects/ressources/SPDHRMNY/packs/spdhrmny-seedvr3b-apollo30-gauss12-feather12-lot54-20261013-v1/EffectAnimations-X4.registry",
+      "sha256": "3F9CF801AEA82DC6822AE67A4241B1FF6B93020ABD52109ED9CC9419DEAA0884"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spdhrmny-interpolation-gauss12-feather12-lot54-20261013-v1",
+  "source": {
+    "bytes": 36482,
+    "path": "effects/ressources/SPDHRMNY/source.bam",
+    "sha256": "B498779527F672700E4E65C8FDC91CF1F5600BBE43665E79BFE5D5BA2C2E3185"
+  }
+}

@@ -1,0 +1,24 @@
+<!doctype html><html lang="fr"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Effects — comparaison 3B / 7B</title>
+<style>
+body{margin:0;background:#101016;color:#eee;font:16px system-ui}main{max-width:1800px;margin:auto;padding:24px}
+h1{font-size:26px}p{color:#bcbcc9}button{background:#303048;color:white;border:1px solid #606079;border-radius:7px;padding:10px 18px;margin:0 8px 16px 0;cursor:pointer}
+#board{width:100%;display:block;background:black}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}
+figure{margin:0;background:#191922;padding:12px;border-radius:12px;cursor:zoom-in}figure video{width:100%;height:240px;object-fit:contain}figcaption{padding-top:8px}
+dialog{max-width:96vw;width:1400px;background:#101016;color:white;border:1px solid #777;border-radius:12px;overflow:auto}dialog::backdrop{background:#000c}dialog video{width:100%;max-height:82vh;object-fit:contain}
+dialog.native video{width:auto;max-height:none;max-width:none}
+@media(max-width:800px){main{padding:12px}.grid{grid-template-columns:1fr}}
+</style><main><h1>10 effets · SeedVR2 3B / 7B x4</h1><p>3B à gauche · 7B à droite. Même phase, même ancrage, même alpha et même traitement. Le jeu conserve la version 3B. Cliquez sur un effet pour l’agrandir.</p>
+<button id="toggle">Pause</button><button id="restart">Rejouer tout</button>
+<video id="board" src="comparison-animated-30fps.mp4" poster="comparison-poster.png" autoplay loop muted playsinline controls></video>
+<div class="grid"><!-- PAIRS --></div></main>
+<dialog id="detail"><button id="close">Fermer</button><button id="native">Taille réelle</button><h2 id="name"></h2><video id="large" loop muted playsinline controls></video></dialog>
+<script>
+const videos=[...document.querySelectorAll('main video')],toggle=document.querySelector('#toggle');
+toggle.onclick=()=>{const play=videos.every(v=>v.paused);videos.forEach(v=>play?v.play():v.pause());toggle.textContent=play?'Pause':'Lire'};
+document.querySelector('#restart').onclick=()=>{videos.forEach(v=>{v.currentTime=0;v.play()});toggle.textContent='Pause'};
+const detail=document.querySelector('#detail'),large=document.querySelector('#large');
+document.querySelectorAll('figure').forEach(f=>f.onclick=()=>{detail.classList.remove('native');document.querySelector('#native').textContent='Taille réelle';document.querySelector('#name').textContent=f.querySelector('figcaption').textContent;large.src=f.querySelector('video').src;detail.showModal();large.play()});
+document.querySelector('#native').onclick=()=>{const native=detail.classList.toggle('native');document.querySelector('#native').textContent=native?'Adapter à la fenêtre':'Taille réelle'};
+document.querySelector('#close').onclick=()=>detail.close();detail.onclose=()=>large.pause();
+</script></html>

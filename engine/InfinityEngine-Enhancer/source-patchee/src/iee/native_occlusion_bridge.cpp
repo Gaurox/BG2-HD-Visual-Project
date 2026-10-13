@@ -485,7 +485,8 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
       return false;
     }
 
-    const int generated = api.DrawGenTexture(static_cast<int>(game::gl::LINEAR), 0, 0, 0);
+    const int generated = api.DrawGenTexture(static_cast<int>(
+        transferEffectRgb ? game::gl::NEAREST : game::gl::LINEAR), 0, 0, 0);
     if (generated <= 0 || generated == replacementTextureId) {
       restoreReplacement(generated);
       return false;
@@ -515,8 +516,12 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
                     physicalWidth, physicalHeight, 0, game::gl::RGBA,
                     game::gl::UNSIGNED_BYTE, nullptr);
     const auto outputMode = registeredCreatureParent ? creatureParent->filterMode
-                                                    : core::CreatureSpriteFilterMode::Linear;
-    const auto outputFilter = outputMode == core::CreatureSpriteFilterMode::CatmullRom ||
+        : (transferEffectRgb ? core::CreatureSpriteFilterMode::Nearest
+                             : core::CreatureSpriteFilterMode::Linear);
+    // Effects use nearest on both direct and post-visibility backings. Creature
+    // outputs keep their validated shader-owned silhouette sampling contract.
+    const auto outputFilter = transferEffectRgb ||
+                              outputMode == core::CreatureSpriteFilterMode::CatmullRom ||
                               outputMode == core::CreatureSpriteFilterMode::Box || mips
                                   ? game::gl::NEAREST : game::gl::LINEAR;
     gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MIN_FILTER,
