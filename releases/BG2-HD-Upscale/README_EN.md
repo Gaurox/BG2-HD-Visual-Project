@@ -1,4 +1,4 @@
-# BG2 HD Upscale — user guide
+# BG2 HD Visual Project — user guide
 
 The sprite component includes 331 acquired creature animations in Q3m x2 /
 Nearest. The separate inventory component covers the human female fighter
@@ -43,7 +43,7 @@ receiving EEex `X-BIV1.0` records; it does not repair old saves that already con
 - To remove, uninstall optional components in reverse order, then Core through
   `Uninstall-BG2HD.exe`.
 
-The uninstaller either removes BG2HD while retaining EEex or performs a double-confirmed full
+The uninstaller either removes BG2 HD Visual Project while retaining EEex or performs a double-confirmed full
 vanilla restore. Removing Core directly through `setup-bg2hd.exe` always retains EEex. Never copy
 or rename executables manually; after Steam Verify, use the Repair flow in
 [`docs/STEAM_INTEGRATION.md`](docs/STEAM_INTEGRATION.md).

@@ -101,7 +101,7 @@ foreach ($entry in $content) {
 $lines = [System.Collections.Generic.List[string]]::new()
 $lines.Add('// Generated from manifests/components.json and manifests/content.json. Do not edit manually.')
 $lines.Add('BACKUP ~bg2hd/backup~')
-$lines.Add('AUTHOR ~BG2 Upscale Project~')
+$lines.Add('AUTHOR ~BG2 HD Visual Project~')
 $lines.Add("VERSION ~$($release.version)~")
 $lines.Add('AUTO_EVAL_STRINGS')
 $lines.Add('')

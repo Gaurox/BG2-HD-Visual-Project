@@ -1,4 +1,4 @@
-"""Static validation for the BG2 HD alpha payload.
+"""Static validation for the BG2 HD Visual Project alpha payload.
 
 This intentionally reads only the source files declared by content.json.  It
 does not use the development override and it does not decode image pixels.
@@ -240,5 +240,5 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except (OSError, ValueError, KeyError, struct.error) as exc:
-        print(f"BG2 HD asset validation failed: {exc}", file=sys.stderr)
+        print(f"BG2 HD Visual Project asset validation failed: {exc}", file=sys.stderr)
         raise SystemExit(1)

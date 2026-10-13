@@ -150,7 +150,7 @@ Require ($guardText.IndexOf('EEex_Debug_DisableExtraCreatureMarshalling', [Strin
 $releaseManifestPath = Join-Path $temporary 'bg2hd\manifests\release.json'
 $releaseManifest = Get-Content -LiteralPath $releaseManifestPath -Raw -Encoding utf8 | ConvertFrom-Json
 Write-Utf8NoBom (Join-Path $temporary 'BUILD-STATUS.txt') @(
-    'BG2 HD Windows in-place installer',
+    'BG2 HD Visual Project Windows in-place installer',
     "Version: $($releaseManifest.version)",
     'Variant: Windows in-place',
     'Distribution: LOCAL TEST ONLY. Do not publish or redistribute.',

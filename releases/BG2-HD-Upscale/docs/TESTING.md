@@ -45,7 +45,7 @@ new asset bytes still require an acquired QA decision before changing this contr
 
 On an otherwise clean, supported Steam install with the external prerequisite:
 
-- launch via Steam and via the BG2HD desktop shortcut;
+- launch via Steam and via the BG2 HD Visual Project desktop shortcut;
 - confirm that the x4 main-menu and game-selector components both install their
   renderer keys (`EnableBigLogoX4Test` and `EnableMainMenuX4Test`) as well as
   their declared atlas files;

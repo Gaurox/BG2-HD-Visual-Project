@@ -36,7 +36,7 @@ Generated TP2, package manifests, staging and archives are never hand-edited.
 - BG2EE Steam 2.7.3.0, Windows x64 only; unknown hashes fail closed.
 - Only the transactional Core helper publishes/restores `Baldur.exe` and `BaldurReal.exe`.
 - The renderer bundle must include the exact save-neutral `override/M_IEEE.lua`.
-- BG2HD does not redistribute EEex or InfinityLoader.
+- BG2 HD Visual Project does not redistribute EEex or InfinityLoader.
 - Normal uninstall retains EEex; full vanilla removal requires explicit confirmation.
 
 ## Accept validated content

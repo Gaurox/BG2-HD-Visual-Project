@@ -11,7 +11,7 @@ deja des blocs prives EEex `X-BIV1.0`.
    `BaldurReal.exe`.
 3. Avec Steam, commencer une nouvelle partie et creer un slot, par exemple
    `VANILLA-BASE`. Fermer completement le jeu.
-4. Extraire le contenu de l'archive BG2HD directement a la racine de ce jeu,
+4. Extraire le contenu de l'archive BG2 HD Visual Project directement a la racine de ce jeu,
    la ou se trouvent `Baldur.exe` et `chitin.key`.
 5. Lancer `Install-BG2HD.exe`. Si EEex est absent, installer ses deux
    composants dans ce meme dossier, puis installer le Core et le contenu HD.
@@ -39,7 +39,7 @@ le slot.
 ## Revenir vraiment en vanilla
 
 1. Lancer `Uninstall-BG2HD.exe` depuis la racine du jeu.
-2. Choisir le **retour vanilla complet**. Cette option retire BG2HD, les
+2. Choisir le **retour vanilla complet**. Cette option retire BG2 HD Visual Project, les
    composants EEex actifs, restaure l'executable officiel sous `Baldur.exe` et
    supprime le layout `BaldurReal.exe`.
 3. Ne pas renommer les executables a la main et ne pas utiliser directement
@@ -47,7 +47,7 @@ le slot.
 4. Verifier que `Baldur.exe` est officiel, que `BaldurReal.exe` a disparu et
    que Steam lance sans InfinityLoader.
 
-Si EEex etait present avant BG2HD ou si son origine est inconnue, le programme
+Si EEex etait present avant BG2 HD Visual Project ou si son origine est inconnue, le programme
 affiche un avertissement supplementaire : son retrait peut affecter d'autres
 mods qui en dependent.
 

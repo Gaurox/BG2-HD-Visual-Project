@@ -1,4 +1,4 @@
-# BG2 HD Upscale — guide utilisateur
+# BG2 HD Visual Project — guide utilisateur
 
 ## Statut et prérequis
 
@@ -43,7 +43,7 @@ recevoir les blocs EEex `X-BIV1.0`; il ne répare pas les anciennes sauvegardes 
 - Pour retirer : désinstaller les composants optionnels en ordre inverse, puis le Core via
   `Uninstall-BG2HD.exe`.
 
-Le désinstalleur propose soit de retirer BG2HD en conservant EEex, soit un retour vanilla complet
+Le désinstalleur propose soit de retirer BG2 HD Visual Project en conservant EEex, soit un retour vanilla complet
 avec double confirmation. La désinstallation directe du Core via `setup-bg2hd.exe` conserve
 toujours EEex. Ne jamais copier ou renommer manuellement les exécutables ; après Steam Verify,
 utiliser le flux Repair documenté dans [`docs/STEAM_INTEGRATION.md`](docs/STEAM_INTEGRATION.md).

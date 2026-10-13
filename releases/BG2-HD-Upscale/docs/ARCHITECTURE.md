@@ -39,7 +39,7 @@ guard are hash-checked; this is independent from texture upscaling.
 The bootstrap and helper are fail-closed: an unsupported game, missing Visual
 C++, partial or unknown EEex, unknown executable hash, open game process or
 foreign launcher layout prevents writes. EEex and InfinityLoader remain owned
-by EEex; BG2HD only validates them. A normal Core removal deliberately preserves
+by EEex; BG2 HD Visual Project only validates them. A normal Core removal deliberately preserves
 the EEex Steam shim. `Uninstall-BG2HD.exe` is a separate, confirmed full-vanilla
 flow: it calls the official EEex uninstaller, verifies components 0/1 are gone,
 then atomically restores `Baldur.exe`. Provenance is recorded when known and an
@@ -47,7 +47,7 @@ external or unknown EEex installation gets an additional warning.
 It never changes Steam account files, launch options, appmanifest files or
 `localconfig.vdf`.
 
-The renderer is owned by BG2HD in this local alpha. On uninstall it restores a
-pre-existing renderer file only when the installed file still has BG2HD's
+The renderer is owned by BG2 HD Visual Project in this local alpha. On uninstall it restores a
+pre-existing renderer file only when the installed file still has BG2 HD Visual Project's
 recorded hash; a file changed by another tool is preserved and causes a safe
 refusal. EEex and InfinityLoader remain external prerequisites.
