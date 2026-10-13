@@ -3,7 +3,7 @@
 ## Installation stopped or failed
 
 Do not start the game and do not manually edit `Baldur.exe`, `BaldurReal.exe`,
-`InfinityLoader.ini` or the BG2HD state files. Close Steam and rerun
+`InfinityLoader.ini` or the BG2 HD Visual Project state files. Close Steam and rerun
 `Install-BG2HD.exe`; it will verify the prerequisites before opening WeiDU.
 WeiDU and the Core helper will then either complete safely, roll back their
 recorded transaction or print a refusal reason.
@@ -23,9 +23,9 @@ the official EEex installer to repair it first. Restore a supported Steam build
 and close `Baldur.exe`/`InfinityLoader.exe` before retrying. Never bypass a
 hash check with a manually copied executable.
 
-## EEex dialog after removing BG2HD
+## EEex dialog after removing BG2 HD Visual Project
 
-Do not restore `Baldur.exe` by hand. The standard BG2HD removal now retains the
+Do not restore `Baldur.exe` by hand. The standard BG2 HD Visual Project removal now retains the
 verified EEex Steam shim specifically to avoid the "EEex not active" dialog.
 Use `Uninstall-BG2HD.exe` only if you deliberately want the full-vanilla option;
 it removes EEex components after confirmation and restores the original Steam
@@ -34,7 +34,7 @@ do not delete `BaldurReal.exe` or `InfinityLoader.ini` manually.
 
 ## Support bundle
 
-Provide: BG2EE store/version, BG2HD version, selected components, the final
+Provide: BG2EE store/version, BG2 HD Visual Project version, selected components, the final
 WeiDU output, relevant renderer-log lines and the exact refusal message. Remove
 Windows account names, absolute personal paths, saves, screenshots containing
 private data, Steam account files and tokens before sharing.

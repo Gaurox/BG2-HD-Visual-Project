@@ -216,13 +216,13 @@ function Install-EEex([object]$Archive) {
 
 function Start-BG2HDWeiDU() {
     $gamePackageRoot = Resolve-Absolute (Join-Path $PSScriptRoot '..\..')
-    Require ([IO.Path]::GetFullPath($gamePackageRoot).TrimEnd('\\') -eq [IO.Path]::GetFullPath($game).TrimEnd('\\')) 'Le paquet BG2HD doit etre extrait a la racine du jeu avant l installation.'
+    Require ([IO.Path]::GetFullPath($gamePackageRoot).TrimEnd('\\') -eq [IO.Path]::GetFullPath($game).TrimEnd('\\')) 'Le paquet BG2 HD Visual Project doit etre extrait a la racine du jeu avant l installation.'
     $setup = Join-Path $game 'setup-bg2hd.exe'
     Require (Test-Path -LiteralPath $setup -PathType Leaf) 'setup-bg2hd.exe absent de la racine du jeu.'
     Push-Location -LiteralPath $game
     try {
         & $setup @WeiDUArguments
-        if ($LASTEXITCODE -ne 0) { throw "WeiDU BG2HD termine avec le code $LASTEXITCODE." }
+        if ($LASTEXITCODE -ne 0) { throw "WeiDU BG2 HD Visual Project termine avec le code $LASTEXITCODE." }
     } finally {
         Pop-Location
     }
@@ -231,28 +231,28 @@ function Start-BG2HDWeiDU() {
 function Get-BG2HDLauncherStatus() {
     $stateTool = Join-Path $PSScriptRoot 'bg2hd-steam.ps1'
     $status = & powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File $stateTool -Action Status -GameRoot $game 2>&1 | Out-String
-    if ($LASTEXITCODE -ne 0) { throw "Controle de l etat BG2HD echoue : $status" }
+    if ($LASTEXITCODE -ne 0) { throw "Controle de l etat BG2 HD Visual Project echoue : $status" }
     return ($status | ConvertFrom-Json)
 }
 
 function Invoke-BG2HDUninstall() {
     $before = Get-BG2HDLauncherStatus
     if ($before.state.phase -eq 'eeex-retained') {
-        Write-Host 'BG2HD est deja retire ; EEex et le lancement Steam sont conserves.'
+        Write-Host 'BG2 HD Visual Project est deja retire ; EEex et le lancement Steam sont conserves.'
         return
     }
-    Require ($before.state.phase -in @('installed', 'failed')) 'Etat BG2HD installe absent : rien a retirer avant le choix EEex.'
+    Require ($before.state.phase -in @('installed', 'failed')) 'Etat BG2 HD Visual Project installe absent : rien a retirer avant le choix EEex.'
     $setup = Join-Path $game 'setup-bg2hd.exe'
     Require (Test-Path -LiteralPath $setup -PathType Leaf) 'setup-bg2hd.exe absent de la racine du jeu.'
     Push-Location -LiteralPath $game
     try {
         & $setup '--noautoupdate' '--uninstall' '0' '--no-exit-pause'
-        if ($LASTEXITCODE -ne 0) { throw "WeiDU BG2HD termine avec le code $LASTEXITCODE." }
+        if ($LASTEXITCODE -ne 0) { throw "WeiDU BG2 HD Visual Project termine avec le code $LASTEXITCODE." }
     } finally {
         Pop-Location
     }
     $statusObject = Get-BG2HDLauncherStatus
-    Require ($statusObject.state.phase -eq 'eeex-retained') 'BG2HD n a pas laisse le shim EEex attendu.'
+    Require ($statusObject.state.phase -eq 'eeex-retained') 'BG2 HD Visual Project n a pas laisse le shim EEex attendu.'
 }
 
 function Invoke-CompleteVanillaRestore() {
@@ -265,7 +265,7 @@ function Select-UninstallMode() {
     if ($NonInteractive) { throw 'Le choix du mode de desinstallation exige une confirmation interactive.' }
     Write-Host ''
     Write-Host 'Choisissez le mode de desinstallation :'
-    Write-Host '  1 - Retirer BG2HD et conserver EEex (Steam continue via InfinityLoader).'
+    Write-Host '  1 - Retirer BG2 HD Visual Project et conserver EEex (Steam continue via InfinityLoader).'
     Write-Host '  2 - Retour vanilla complet (retire aussi EEex et peut affecter d autres mods).'
     Write-Host '  A - Annuler'
     $choice = Read-Host 'Votre choix'
@@ -273,11 +273,11 @@ function Select-UninstallMode() {
         '^(1|garder|keep)$' { return 'keep-eeex' }
         '^(2|vanilla|complet)$' {
             if ($script:eeexOrigin -ne 'bg2hd-bootstrap') {
-                $originMessage = if ($script:eeexOrigin -eq 'pre-existing') { 'EEex etait deja installe avant BG2HD.' } else { 'L origine de cette installation EEex est inconnue (ancien paquet ou installation externe possible).' }
+                $originMessage = if ($script:eeexOrigin -eq 'pre-existing') { 'EEex etait deja installe avant BG2 HD Visual Project.' } else { 'L origine de cette installation EEex est inconnue (ancien paquet ou installation externe possible).' }
                 Write-Host "ATTENTION : $originMessage"
                 if (-not (Confirm 'Retirer quand meme EEex, ce qui peut affecter d autres mods')) { throw 'Retour vanilla annule par l utilisateur.' }
             }
-            if (-not (Confirm 'Confirmer le retrait de BG2HD et EEex pour revenir au vanilla complet')) { throw 'Retour vanilla annule par l utilisateur.' }
+            if (-not (Confirm 'Confirmer le retrait de BG2 HD Visual Project et EEex pour revenir au vanilla complet')) { throw 'Retour vanilla annule par l utilisateur.' }
             return 'full-vanilla'
         }
         default { throw 'Desinstallation annulee par l utilisateur.' }
@@ -320,7 +320,7 @@ if (-not $visualCxxAvailable) {
 $eeexNeedsInstall = $false
 switch ($eeexState) {
     'compatible' {
-        # A first BG2HD installation must remember whether EEex was already
+        # A first BG2 HD Visual Project installation must remember whether EEex was already
         # present.  Do not guess for installations made by an older package:
         # the full-vanilla path will warn in that deliberately conservative case.
         if ($Action -eq 'Install' -and $eeexOrigin -eq 'unknown') {
@@ -333,8 +333,8 @@ switch ($eeexState) {
     }
     'absent' { $eeexNeedsInstall = $true }
     'inactive' { $eeexNeedsInstall = $true }
-    'partial' { throw 'EEex est partiellement installe. Reparez-le avec son installeur officiel, puis relancez BG2HD.' }
-    'unknown_or_changed' { throw 'EEex ou InfinityLoader n est pas une version admise. Aucune ecriture BG2HD ne sera effectuee.' }
+    'partial' { throw 'EEex est partiellement installe. Reparez-le avec son installeur officiel, puis relancez BG2 HD Visual Project.' }
+    'unknown_or_changed' { throw 'EEex ou InfinityLoader n est pas une version admise. Aucune ecriture BG2 HD Visual Project ne sera effectuee.' }
     default { throw "Etat EEex inattendu : $eeexState." }
 }
 if ($eeexNeedsInstall) {
@@ -350,6 +350,6 @@ if ($eeexNeedsInstall) {
 }
 Start-BG2HDWeiDU
 $installedStatus = Get-BG2HDLauncherStatus
-Require ($installedStatus.state.phase -eq 'installed') 'BG2HD n a pas atteint l etat integre attendu.'
+Require ($installedStatus.state.phase -eq 'installed') 'BG2 HD Visual Project n a pas atteint l etat integre attendu.'
 Assert-FutureSaveCompatibility $game -Installed
-Write-Host 'BG2HD est installe dans le jeu Steam. Les futures sauvegardes restent neutres pour le moteur vanilla.'
+Write-Host 'BG2 HD Visual Project est installe dans le jeu Steam. Les futures sauvegardes restent neutres pour le moteur vanilla.'

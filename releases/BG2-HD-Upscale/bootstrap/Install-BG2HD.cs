@@ -11,7 +11,7 @@ internal static class Program
         string script = Path.Combine(root, "bg2hd", "tools", "Install-BG2HD.ps1");
         if (!File.Exists(script))
         {
-            Console.Error.WriteLine("BG2HD bootstrap script not found: " + script);
+            Console.Error.WriteLine("BG2 HD Visual Project bootstrap script not found: " + script);
             return 2;
         }
 

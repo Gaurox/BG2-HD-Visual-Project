@@ -91,13 +91,13 @@ try {
     Copy-Item -LiteralPath (Join-Path $release 'tools\Test-BG2HD-FutureSaveCompatibility.ps1') -Destination (Join-Path $temporary 'tools\Test-BG2HD-FutureSaveCompatibility.ps1')
     Copy-Item -LiteralPath (Join-Path $release 'tools\Test-BG2HD-AR0413Contract.ps1') -Destination (Join-Path $temporary 'tools\Test-BG2HD-AR0413Contract.ps1')
     Write-Utf8NoBom (Join-Path $temporary 'BUILD-STATUS.txt') @(
-        'BG2 HD local reproducible alpha build',
+        'BG2 HD Visual Project local reproducible alpha build',
         "Version: $($manifest.version)",
         'Distribution: LOCAL TEST ONLY. Do not publish or redistribute.',
-        'Launch: BG2HD installs in place; Steam launches through the verified InfinityLoader shim.',
+        'Launch: BG2 HD Visual Project installs in place; Steam launches through the verified InfinityLoader shim.',
         'Save compatibility: future save chains disable EEex X-BIV1.0 marshalling.',
-        'EEex: guided external prerequisite; never redistributed by BG2HD.',
-        'Renderer: bundled BG2HD local-alpha payload; clean lifecycle validation remains required.',
+        'EEex: guided external prerequisite; never redistributed by BG2 HD Visual Project.',
+        'Renderer: bundled BG2 HD Visual Project local-alpha payload; clean lifecycle validation remains required.',
         'Content: manifest-selected validated maps, UI, overlays, area animations, effects, Q3m creature sprites and scoped inventory paperdolls.'
     )
     $buildManifest = [ordered]@{

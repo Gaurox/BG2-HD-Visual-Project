@@ -1,4 +1,4 @@
-# Reprise agent IA — BG2 Upscale
+# Reprise agent IA — BG2 HD Visual Project
 
 > La documentation de ce dépôt est une mémoire de solutions, pas un workflow imposé.
 

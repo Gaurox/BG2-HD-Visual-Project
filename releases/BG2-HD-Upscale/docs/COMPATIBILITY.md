@@ -6,7 +6,7 @@
 | Platform | Windows x64 |
 | Steam app | 257350 |
 | Runtime | exact hashes in `runtime-compatibility.json` |
-| Launch | Steam Play or BG2HD shortcut |
+| Launch | Steam Play or BG2 HD Visual Project shortcut |
 | Content | exact entries in `content.json`, overlays in `overlay-sources.json` |
 | Animations | approved entries in `animation-release-candidates.json` |
 

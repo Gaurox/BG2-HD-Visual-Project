@@ -2,7 +2,7 @@
 
 ## Francais
 
-BG2 HD sera diffuse comme mod communautaire WeiDU gratuit et non commercial.
+BG2 HD Visual Project sera diffuse comme mod communautaire WeiDU gratuit et non commercial.
 Il necessitera une copie legitime de BG2EE compatible. Cette politique vise la
 diffusion des assets HD et de l'archive complete, dans la limite des droits
 detenus par le projet : conserver README, credits, licences, changelog et
@@ -28,7 +28,7 @@ des assets restent a etablir avant publication ; un credit seul ne suffit pas.
 
 ## English
 
-BG2 HD will be distributed as a free, non-commercial WeiDU community mod. It
+BG2 HD Visual Project will be distributed as a free, non-commercial WeiDU community mod. It
 requires a legitimate compatible BG2EE copy. The archive must remain intact
 with its README, credits, licences, changelog and checksums. This policy concerns
 HD assets and distribution of the complete archive, within the rights held by
