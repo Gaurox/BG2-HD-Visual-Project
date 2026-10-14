@@ -1,5 +1,6 @@
 #pragma once
 #include <stdexcept>
+#include <sstream>
 #include <type_traits>
 #include <utility>
 #include <MinHook.h>
@@ -31,7 +32,12 @@ namespace iee::core {
         void create(void *target, void *detour) {
             if (created_) return;
             const auto st = MH_CreateHook(target, detour, reinterpret_cast<void **>(&original_));
-            if (st != MH_OK) throw std::runtime_error("MH_CreateHook failed");
+            if (st != MH_OK) {
+                std::ostringstream message;
+                message << "MH_CreateHook failed: " << MH_StatusToString(st)
+                        << ", target=" << target << ", detour=" << detour;
+                throw std::runtime_error(message.str());
+            }
             target_ = target;
             created_ = true;
         }

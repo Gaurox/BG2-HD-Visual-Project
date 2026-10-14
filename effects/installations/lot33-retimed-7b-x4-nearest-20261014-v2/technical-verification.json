@@ -1,0 +1,20 @@
+{
+  "schema": "bg2-effects-retimed-technical-checks-v1",
+  "renderer_ctest_passed": [
+    "iee_tests",
+    "iee_sprite_minification_tests",
+    "iee_effect_animation_x4_registry_tests",
+    "iee_effect_texture_cache_tests",
+    "iee_hook_preallocation_tests",
+    "iee_startup_barrier_tests"
+  ],
+  "transaction_and_composition_unittests_passed": 19,
+  "strict_asset_checks": "effects/batches/lot33-retimed-20261014-v2/verification.json",
+  "runtime_loader_before_install": "effects/installations/lot33-retimed-7b-x4-nearest-20261014-v2/native-loader-all-phases.log",
+  "runtime_loader_after_install": "effects/installations/lot33-retimed-7b-x4-nearest-20261014-v2/installed-native-loader-all-phases.log",
+  "native_phase_contract_checks_each": 4974,
+  "installed_manifest_sha256": "3E4CEDFF5A024370EF630A9D28CDDE684AA5F0D9DBED2FC15CF06911DDC7DA1E",
+  "installed_dll_sha256": "4F36AC17F32396925F92E4C2F82BC6FE755BC19AC9203BA5F82AFF51995FDE62",
+  "character_profile_byte_identical": true,
+  "visual_qa": "pending-user-controlled-game"
+}

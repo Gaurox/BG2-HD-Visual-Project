@@ -1,0 +1,144 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPCALLLI",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 36,
+    "source": {
+      "interpolation_run": "spcallli-interpolation-apollo30-retimed-20261014-v2",
+      "interpolation_run_descriptor_sha256": "3E5F42632942EE06F938C4E3A9C84D13DBC3FA78C71EF6D3753FFB6417980F9F",
+      "source_bam_sha256": "6890848ddaa3ba24b4e23d56727ab865a0ef3ee20fc86b25fa32608addd2ec3c",
+      "spatial_manifest_sha256": "C028A645E3A4F56F88D6128C9CD068068CF9504BA5B70BC7BFF63A1AA0D01D23",
+      "spatial_run": "spcallli-spatial-seedvr7b-lab-lot33-20261014-v1",
+      "spatial_run_descriptor_sha256": "9A9FACDA7BC4DAD8E1A5BFD2C97317A73A8EE7D17A2B711F0B7BD69AE432C270"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34
+      ],
+      "phase_count": 36,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ]
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1549,
+    "path": "effects/index/qa-decisions/SPCALLLI/2026-10-15-accepted-da5036aab97d.json",
+    "sha256": "DA5036AAB97D66995CC6424E3D95E2DC942BD645BCD5CE790ABFA4A0FE6EB798"
+  },
+  "resref": "SPCALLLI",
+  "run_descriptor": {
+    "bytes": 2087,
+    "path": "effects/ressources/SPCALLLI/runs/spcallli-interpolation-apollo30-retimed-20261014-v2/run.json",
+    "sha256": "3E5F42632942EE06F938C4E3A9C84D13DBC3FA78C71EF6D3753FFB6417980F9F"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 25864,
+      "path": "effects/ressources/SPCALLLI/packs/spcallli-7b-x4-apollo30-retimed-20261014-v2/manifest.json",
+      "sha256": "6CA0E0F8213ADDF640C641AF9B1F3613800A25D9F8B047EFD7979F9D2ADB17A6"
+    },
+    "registry": {
+      "bytes": 568,
+      "path": "effects/ressources/SPCALLLI/packs/spcallli-7b-x4-apollo30-retimed-20261014-v2/EffectAnimations-X4.registry",
+      "sha256": "5813CC3B8631DA588F38DC0449B3BCCF28888E75679C212FA9927B102BE209A4"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spcallli-interpolation-apollo30-retimed-20261014-v2",
+  "source": {
+    "bytes": 19945,
+    "path": "effects/ressources/SPCALLLI/source.bam",
+    "sha256": "6890848DDAA3BA24B4E23D56727AB865A0EF3EE20FC86B25FA32608ADDD2EC3C"
+  }
+}

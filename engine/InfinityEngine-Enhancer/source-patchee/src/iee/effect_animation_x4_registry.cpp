@@ -33,9 +33,10 @@ constexpr std::uint32_t kMaxResources = 512;
 constexpr std::uint32_t kMaxFramesPerResource = 4096;
 constexpr std::uint32_t kMaxCyclesPerResource = 256;
 constexpr std::uint32_t kMaxCycleSlots = 65536;
-// The 54-effect 30 FPS production batch plus the installed effects fits below
-// this bounded limit. Geometry, frame and resource limits remain independent.
-constexpr std::uint64_t kMaxRawBytes = 2048ull * 1024ull * 1024ull;
+// The 97-effect pack (including the 33-effect 7B batch) needs 3.19 GiB.
+// Keep a bounded CPU payload limit, independent from the 64-slot GPU cache
+// and the geometry, frame and resource limits.
+constexpr std::uint64_t kMaxRawBytes = 4096ull * 1024ull * 1024ull;
 
 struct Frame {
   int logicalWidth{};
@@ -131,6 +132,19 @@ std::vector<std::byte> read_file(const std::filesystem::path& path,
 std::string resref_name(const std::array<char, 8>& resref) {
   const auto end = std::find(resref.begin(), resref.end(), '\0');
   return std::string(resref.begin(), end);
+}
+
+// Infinity resources are case-insensitive; VVCs commonly contain e.g. "SPsump".
+// Do not inspect padding after the first NUL in a runtime RESREF.
+bool same_resref(const std::array<char, 8>& left,
+                 const std::array<char, 8>& right) noexcept {
+  for (std::size_t i = 0; i < left.size(); ++i) {
+    const auto a = static_cast<unsigned char>(left[i]);
+    const auto b = static_cast<unsigned char>(right[i]);
+    if (a == 0 || b == 0) return a == b;
+    if (std::toupper(a) != std::toupper(b)) return false;
+  }
+  return true;
 }
 
 bool valid_resref(const std::array<char, 8>& resref) noexcept {
@@ -342,7 +356,7 @@ bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
         throw std::runtime_error("invalid effect resource descriptor");
       }
       if (std::any_of(loaded.begin(), loaded.end(), [&](const Resource& existing) {
-            return existing.resref == resource.resref;
+            return same_resref(existing.resref, resource.resref);
           })) {
         throw std::runtime_error("duplicate effect resource resref");
       }
@@ -481,7 +495,7 @@ bool contains_resource(const std::array<char, 8>& resref) noexcept {
     std::lock_guard lock(g_mutex);
     return g_ready.load(std::memory_order_acquire) &&
            std::any_of(g_resources.begin(), g_resources.end(),
-                       [&](const Resource& item) { return item.resref == resref; });
+                       [&](const Resource& item) { return same_resref(item.resref, resref); });
   } catch (...) {
     return false;
   }
@@ -493,7 +507,7 @@ bool mark_diagnostic_stage_once(const std::array<char, 8>& resref,
   try {
     std::lock_guard lock(g_mutex);
     const auto resource = std::find_if(g_resources.begin(), g_resources.end(),
-                                       [&](const Resource& item) { return item.resref == resref; });
+                                       [&](const Resource& item) { return same_resref(item.resref, resref); });
     if (resource == g_resources.end() || (resource->reportedDiagnosticStages & stage) != 0) {
       return false;
     }
@@ -510,7 +524,7 @@ bool mark_geometry_observation_once(const std::array<char, 8>& resref, int seque
   try {
     std::lock_guard lock(g_mutex);
     const auto resource = std::find_if(g_resources.begin(), g_resources.end(),
-                                       [&](const Resource& item) { return item.resref == resref; });
+                                       [&](const Resource& item) { return same_resref(item.resref, resref); });
     if (resource == g_resources.end() ||
         static_cast<std::size_t>(sequence) >= resource->observedSlots.size()) {
       return false;
@@ -537,7 +551,7 @@ bool resolve_frame(const std::array<char, 8>& resref, int sequence, int currentF
     std::lock_guard lock(g_mutex);
     if (!g_ready.load(std::memory_order_acquire)) return false;
     const auto resource = std::find_if(g_resources.begin(), g_resources.end(),
-                                       [&](const Resource& item) { return item.resref == resref; });
+                                       [&](const Resource& item) { return same_resref(item.resref, resref); });
     if (resource == g_resources.end() ||
         static_cast<std::size_t>(sequence) >= resource->cycles.size()) {
       return false;
@@ -564,7 +578,7 @@ bool timeline_info(const std::array<char, 8>& resref, int sequence,
     std::lock_guard lock(g_mutex);
     if (!g_ready.load(std::memory_order_acquire)) return false;
     const auto resource = std::find_if(g_resources.begin(), g_resources.end(),
-                                       [&](const Resource& item) { return item.resref == resref; });
+                                       [&](const Resource& item) { return same_resref(item.resref, resref); });
     if (resource == g_resources.end() ||
         static_cast<std::size_t>(sequence) >= resource->cycles.size() ||
         !resource->timeline.enabled ||
@@ -597,7 +611,7 @@ bool resolve_timeline_frame(const std::array<char, 8>& resref, int sequence,
     std::lock_guard lock(g_mutex);
     if (!g_ready.load(std::memory_order_acquire)) return false;
     const auto resource = std::find_if(g_resources.begin(), g_resources.end(),
-                                       [&](const Resource& item) { return item.resref == resref; });
+                                       [&](const Resource& item) { return same_resref(item.resref, resref); });
     if (resource == g_resources.end() || !resource->timeline.enabled ||
         static_cast<std::size_t>(sequence) >= resource->timeline.framesByCycle.size() ||
         phase >= resource->timeline.phaseCount) {

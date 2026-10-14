@@ -505,6 +505,8 @@ namespace iee::game {
     static_assert(offsetof(CInfGame, m_worldTime) == 0x3FA0);
     static_assert(offsetof(CInfGame, m_vcLocator) == 0x92C0);
     static_assert(offsetof(CInfinity, pTileSets) == 0x0);
+    static_assert(offsetof(CInfinity, bRefreshVRamRect) == 0x44);
+    static_assert(offsetof(CInfinity, bInitialized) == 0x48);
     static_assert(offsetof(CInfinity, nNewX) == 0x60);
     static_assert(offsetof(CInfinity, rViewPortNotZoomed) == 0x68);
     static_assert(offsetof(CInfinity, rViewPort) == 0x78);

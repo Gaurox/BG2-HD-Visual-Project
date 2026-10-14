@@ -26,6 +26,7 @@
 #include "iee/core/config.h"
 #include "iee/core/logger.h"
 #include "iee/core/sprite_p4_probe.h"
+#include "iee/core/startup_barrier.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/game/build_manifest.h"
 #include "iee/game/game_addrs.h"
@@ -121,6 +122,20 @@ static DWORD WINAPI InitThread(LPVOID) {
       return 1;
     }
     LOG_INFO("Selected build manifest: {}", ctx.manifest->buildId);
+
+    // MinHook needs executable trampoline memory near the game image. Large
+    // retained CPU packs can occupy that address range even with ample RAM.
+    // Resolve and reserve the core hooks now; they stay disabled until all
+    // assets are ready and install_all() completes the renderer setup.
+    if (!game::resolve_addresses(ctx.addrs, ctx.cfg, *ctx.manifest)) {
+      LOG_ERROR("Critical error: Failed to locate game functions");
+      return 1;
+    }
+    if (!game::resolve_draw_api(ctx.draw, ctx.addrs.RenderTexture, *ctx.manifest)) {
+      LOG_ERROR("Failed to resolve draw API functions");
+      return 1;
+    }
+    if (!hooks::prepare_core_hooks(ctx)) return 1;
 
     if (cfg.enableWaterEffect || cfg.enableDebugHotkeys) {
       // Decode retained CPU assets before any render hook can run. GL object
@@ -244,20 +259,10 @@ static DWORD WINAPI InitThread(LPVOID) {
       logSpriteProfile("fpSELECT", ctx.cfg.fpSelectShaderProfile);
     }
 
-    if (!game::resolve_addresses(ctx.addrs, ctx.cfg, *ctx.manifest)) {
-      LOG_ERROR("Critical error: Failed to locate game functions");
-      return 1;
-    }
-
     if (auto moduleInfo = core::get_module_span(nullptr)) {
       LOG_DEBUG("Base=0x{:X}  LoadArea=0x{:X}  RenderTexture=0x{:X}",
                 reinterpret_cast<std::uintptr_t>(moduleInfo->base), ctx.addrs.LoadArea,
                 ctx.addrs.RenderTexture);
-    }
-
-    if (!game::resolve_draw_api(ctx.draw, ctx.addrs.RenderTexture, *ctx.manifest)) {
-      LOG_ERROR("Failed to resolve draw API functions");
-      return 1;
     }
 
     if (g_lifecycle.load(std::memory_order_acquire) != LifecycleState::Starting) return 1;
@@ -333,6 +338,8 @@ extern "C" __declspec(dllexport) void __stdcall InitBindings(void* argSharedStat
     return;
   }
 
+  iee::core::StartupWaitHandle startup;
+  bool completed = false;
   {
     // Publish the worker handle while shutdown is excluded. Without this
     // handshake, ShutdownBindings can observe Starting plus a null handle and
@@ -341,10 +348,29 @@ extern "C" __declspec(dllexport) void __stdcall InitBindings(void* argSharedStat
     if (iee::g_lifecycle.load(std::memory_order_acquire) != iee::LifecycleState::Starting) return;
     if (HANDLE thread = CreateThread(nullptr, 0, iee::InitThread, nullptr, 0, nullptr)) {
       iee::g_initThread.store(thread, std::memory_order_release);
+      if (!startup.capture(thread)) {
+        // Rare duplicate-handle failure: the owner handle remains valid while
+        // publication is locked. InitThread never takes this mutex.
+        completed = WaitForSingleObject(thread, INFINITE) == WAIT_OBJECT_0;
+      }
     } else {
       iee::g_lifecycle.store(iee::LifecycleState::Failed, std::memory_order_release);
       OutputDebugStringA("InfinityEngine-Enhancer: Failed to create initialization thread");
     }
+  }
+  // EEex calls InitBindings outside DllMain. Do not resume the host's Lua/game
+  // startup while HD atlas textures would still use the vanilla tile path.
+  // The worker still owns all setup and teardown; wait without its ownership
+  // mutex so an explicit concurrent shutdown can safely join it as before.
+  if (startup.captured()) completed = startup.wait();
+  try {
+    if (completed && iee::g_lifecycle.load(std::memory_order_acquire) == iee::LifecycleState::Running) {
+      LOG_INFO("Renderer startup barrier released: hooks and CPU assets ready before host resumes");
+    } else {
+      LOG_ERROR("Renderer startup barrier completed without an active renderer");
+    }
+  } catch (...) {
+    OutputDebugStringA("InfinityEngine-Enhancer: startup barrier finished");
   }
 }
 

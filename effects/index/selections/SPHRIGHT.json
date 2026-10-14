@@ -1,0 +1,152 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPHRIGHT",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 40,
+    "source": {
+      "interpolation_run": "sphright-interpolation-apollo30-retimed-20261014-v2",
+      "interpolation_run_descriptor_sha256": "B7B72F0F31740C1357FA6B51D60C08B856F8050C689AA9919D9F5DC53924DA4F",
+      "source_bam_sha256": "f90094602018075439a66ac892ee0f87fa91bc8c07d18e76ad24e50fddff8125",
+      "spatial_manifest_sha256": "127F9ACF6F1488244A487748CDFFB698101ABAC5F6B998876EEB35F107C3FFD1",
+      "spatial_run": "sphright-spatial-seedvr7b-lab-lot33-20261014-v1",
+      "spatial_run_descriptor_sha256": "669B7CCC9C27E1881E47F26E9B0E10B7F6799E6726464093527B31EB57BF8070"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        36,
+        38
+      ],
+      "phase_count": 40,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39
+      ]
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1549,
+    "path": "effects/index/qa-decisions/SPHRIGHT/2026-10-15-accepted-beeec5753479.json",
+    "sha256": "BEEEC5753479AD8384DB59A291BC5FB2C91D3154B616DEC86460FE260DB4EBDD"
+  },
+  "resref": "SPHRIGHT",
+  "run_descriptor": {
+    "bytes": 2087,
+    "path": "effects/ressources/SPHRIGHT/runs/sphright-interpolation-apollo30-retimed-20261014-v2/run.json",
+    "sha256": "B7B72F0F31740C1357FA6B51D60C08B856F8050C689AA9919D9F5DC53924DA4F"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 28468,
+      "path": "effects/ressources/SPHRIGHT/packs/sphright-7b-x4-apollo30-retimed-20261014-v2/manifest.json",
+      "sha256": "AA505D85B0BE38F9FFCAB4C88DD79CC022DDA25B514D5C633A960AD577697B90"
+    },
+    "registry": {
+      "bytes": 624,
+      "path": "effects/ressources/SPHRIGHT/packs/sphright-7b-x4-apollo30-retimed-20261014-v2/EffectAnimations-X4.registry",
+      "sha256": "FCF9CB405E4E29444DA3BC7B7407671143C24E8F56243C1D880B371F8D4FAD13"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "sphright-interpolation-apollo30-retimed-20261014-v2",
+  "source": {
+    "bytes": 23178,
+    "path": "effects/ressources/SPHRIGHT/source.bam",
+    "sha256": "F90094602018075439A66AC892EE0F87FA91BC8C07D18E76AD24E50FDDFF8125"
+  }
+}

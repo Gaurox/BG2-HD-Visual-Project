@@ -8,8 +8,18 @@ Affichage par défaut des effets x4 (demande utilisateur 2026-10-13) : **NEAREST
 niveau 0 seul, sur texture directe et sortie du masquage décor. Défaut du chargeur natif,
 indépendant de la recette 3B/7B et du pack ; aucune activation INI nécessaire.
 Personnages : conserver [`NearestRGB-SilhouetteAlphaAA`](../sprite/DISPLAY_DEFAULT.md).
-Installation courante de ce filtre :
-[`effects-nearest-20261013-v1`](../engine/InfinityEngine-Enhancer/installations/effects-nearest-20261013-v1/result.json).
+Pack d'effets installé :
+[`lot33-retimed-7b-x4-nearest-20261014-v2`](installations/lot33-retimed-7b-x4-nearest-20261014-v2/installation.json).
+97 effets : 64 précédents byte-identiques +33 en7B x4/NEAREST/Apollo30 retimé ; 2202images RGB/RGBA distinctes, zéro doublon, durées natives conservées. SPSUMP128/128 sur64/15s.
+Recette : [`lot33-retimed`](../pipeline/recipes/effects-lot33-retimed-20261014-v2/README.md) ; 33BAM runtime avec padding transparent, pixels/ancrage monde natifs préservés ; reconnaissance RESREF insensible à la casse. 4974résolutions natives vérifiées sur candidat puis installation ; **33/33 acceptés explicitement par l'utilisateur le 2026-10-15**, [décisions et sélections exactes](batches/lot33-accepted-20261015-v1/acceptance.json).
+Réserve runtime distincte : SPIMPFR mesure ~29.83–29.86 changements/s en moyenne, mais cadence irrégulière 50/16.7ms et phases initiales0–1 absentes ; images produites distinctes, aucun fallback observé. [Preuve et périmètre de l'acceptation](batches/lot33-accepted-20261015-v1/README.md). Scheduler inchangé ; aucune cadence parfaitement régulière déduite de la validation visuelle.
+Incident initial2026-10-14 : [`échec LoadArea/MinHook`](installations/lot33-seedvr7b-apollo30-nearest-20261014-v1/runtime-failure-20261014-v1/README.md).
+RéparationMinHook : [`hooks-startup-repair`](../engine/InfinityEngine-Enhancer/installations/hooks-startup-repair-20261014-v1/README.md), tous hooks actifs et rendu x4 vérifié techniquement à23:05 ; retour visuel utilisateur : mosaïque initiale corrigée seulement après zoom.
+Le [`rafraîchissement initial`](../engine/InfinityEngine-Enhancer/installations/map-first-frame-refresh-20261014-v1/README.md) corrige ensuite le cache automatiquement ; il ne suffisait pas à empêcher l'image initiale native.
+Base du renderer courant : [`renderer-startup-barrier`](../engine/InfinityEngine-Enhancer/installations/renderer-startup-barrier-20261014-v1/verification-result.json), préservée dans la correctionretimed ci-dessus. Démarrage du host attendu jusqu'aux hooks/assets prêts ; premierLoadArea observé ensuite. Session23:22AR3000, zéroerreur ; utilisateur : affichage correct dès apparition sans zoom. NearestRGB-SilhouetteAlphaAA conservé octet pour octet ; aucune QA globale des33effets déduite de ce test.
+Renderer diagnostique courant : [`SPIMPFR presentation trace`](../engine/InfinityEngine-Enhancer/installations/spimpfr-presentation-trace-20261015-v1/installation.json), DLL seule +INI identique. Capture ciblée après draw final/masquage et retour du swap ; QPC/phase/backing/pause/fallback, publication différée après disparition. Analyse : `python -B pipeline/recipes/spimpfr-presentation-trace-20261015-v1/analyze.py`. Scheduler, effets97/33BAM, cartes et shaders personnages inchangés.
+Chargeur CPU borné à4Gio (packretimed3.51Gio), cache GPU64 inchangé ; profil personnages conservé octet pour octet.
+Référence du filtre : [`effects-nearest-20261013-v1`](../engine/InfinityEngine-Enhancer/installations/effects-nearest-20261013-v1/result.json).
 
 Lot54 accepté ingame en **3B x4 / Apollo30 / gauss1.2 / feather12 / nearest** :
 [`acceptance.json`](batches/lot54-accepted-cleanup-20261013-v1/acceptance.json).
@@ -132,6 +142,7 @@ fichier vide. `duplicate_audit` compare les pixels RGBA ancrés, ignore le RGB s
 refuse de sceller ce mode si des phases lumineuses sont identiques sans origine native démontrée.
 Les pauses et sous-séquences natives répétées restent exactes (`native_repeat_duplicates`),
 ainsi que la dernière pose one-shot ; `unexpected_visible_duplicates` doit rester vide.
+**Ce mode n'assure pas l'absence de doublons visibles.** Demande2026-10-14 sans doublons à durée constante : retirer les poses répétées avant Apollo et étaler les poses distinctes sur toutes les phases, sans maintien final ; exemple exécutable et contrôle RGB strict dans la [recette retimed](../pipeline/recipes/effects-lot33-retimed-20261014-v2/README.md).
 
 Adoucissement léger après interpolation :
 

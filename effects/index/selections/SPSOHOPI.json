@@ -1,0 +1,168 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPSOHOPI",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 48,
+    "source": {
+      "interpolation_run": "spsohopi-interpolation-apollo30-retimed-20261014-v2",
+      "interpolation_run_descriptor_sha256": "C4BC9BEDB10AFE06CEDDE0E2388556DF58CC5E3F3642F1CB302E5CD0FBE6E95C",
+      "source_bam_sha256": "e245c1bec5a5928fa922a62af5d92097d0635b17c6bcfd1cfbe401f85ca5b7a4",
+      "spatial_manifest_sha256": "DB6709C45899DD832D5275D0AF5688C63F85348C3976EE85ACC923DB922103C0",
+      "spatial_run": "spsohopi-spatial-seedvr7b-lab-lot33-20261014-v1",
+      "spatial_run_descriptor_sha256": "7393DB84050FC91A087ED7D700BFEDB9292F186BD263CABC44750E746BEAD501"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        36,
+        38,
+        40,
+        42,
+        44,
+        46
+      ],
+      "phase_count": 48,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ]
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1549,
+    "path": "effects/index/qa-decisions/SPSOHOPI/2026-10-15-accepted-cd547118a564.json",
+    "sha256": "CD547118A564D5C41F77854D5189F38DC7E007027D2A749A4AAB54A333CA93AC"
+  },
+  "resref": "SPSOHOPI",
+  "run_descriptor": {
+    "bytes": 2088,
+    "path": "effects/ressources/SPSOHOPI/runs/spsohopi-interpolation-apollo30-retimed-20261014-v2/run.json",
+    "sha256": "C4BC9BEDB10AFE06CEDDE0E2388556DF58CC5E3F3642F1CB302E5CD0FBE6E95C"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 34088,
+      "path": "effects/ressources/SPSOHOPI/packs/spsohopi-7b-x4-apollo30-retimed-20261014-v2/manifest.json",
+      "sha256": "6B2C6058412643E5FA005905865C49A626BB7C13625554495CDF342B067AE311"
+    },
+    "registry": {
+      "bytes": 736,
+      "path": "effects/ressources/SPSOHOPI/packs/spsohopi-7b-x4-apollo30-retimed-20261014-v2/EffectAnimations-X4.registry",
+      "sha256": "9927822380291335DFB244F93AAC197D227CA502BD6BF5BD70660365A2A21313"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spsohopi-interpolation-apollo30-retimed-20261014-v2",
+  "source": {
+    "bytes": 131996,
+    "path": "effects/ressources/SPSOHOPI/source.bam",
+    "sha256": "E245C1BEC5A5928FA922A62AF5D92097D0635B17C6BCFD1CFBE401F85CA5B7A4"
+  }
+}

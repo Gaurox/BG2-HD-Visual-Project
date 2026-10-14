@@ -1,0 +1,144 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SHAIR",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 36,
+    "source": {
+      "interpolation_run": "shair-interpolation-apollo30-retimed-20261014-v2",
+      "interpolation_run_descriptor_sha256": "A047B826CD9A075730F03C304A62BFA31AECA1EB89C5E23F82D5688927B4CC1D",
+      "source_bam_sha256": "37903205d1ba3d70bc0920eb9ff35b48451831b1be10809b20963712e319eb83",
+      "spatial_manifest_sha256": "894BB390BFBB4B1E3BE0E7547F292803BC93E3F49EBC043E816B9148BC1438D4",
+      "spatial_run": "shair-spatial-seedvr7b-lab-lot33-20261014-v1",
+      "spatial_run_descriptor_sha256": "D5E6EE9C872F60AB91B7D5D8A397851D02C046982AE88CA2D29DAB9361A66F60"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34
+      ],
+      "phase_count": 36,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ]
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1528,
+    "path": "effects/index/qa-decisions/SHAIR/2026-10-15-accepted-40148686e860.json",
+    "sha256": "40148686E8601F24C06872054B5242D63F9518A4D995697447019A1425CFEB93"
+  },
+  "resref": "SHAIR",
+  "run_descriptor": {
+    "bytes": 2042,
+    "path": "effects/ressources/SHAIR/runs/shair-interpolation-apollo30-retimed-20261014-v2/run.json",
+    "sha256": "A047B826CD9A075730F03C304A62BFA31AECA1EB89C5E23F82D5688927B4CC1D"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 25457,
+      "path": "effects/ressources/SHAIR/packs/shair-7b-x4-apollo30-retimed-20261014-v2/manifest.json",
+      "sha256": "3F69846050F2E3DF6311B709F6DA89F797E4E17DCB4C31F1B752BF9D2F873D12"
+    },
+    "registry": {
+      "bytes": 568,
+      "path": "effects/ressources/SHAIR/packs/shair-7b-x4-apollo30-retimed-20261014-v2/EffectAnimations-X4.registry",
+      "sha256": "95C7F98C6CE6854B7EBE54C6DE405CF4F8D2DE298E6597B621E90A0D843C8CD4"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "shair-interpolation-apollo30-retimed-20261014-v2",
+  "source": {
+    "bytes": 33938,
+    "path": "effects/ressources/SHAIR/source.bam",
+    "sha256": "37903205D1BA3D70BC0920EB9FF35B48451831B1BE10809B20963712E319EB83"
+  }
+}

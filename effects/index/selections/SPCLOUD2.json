@@ -1,0 +1,152 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPCLOUD2",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          9,
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 40,
+    "source": {
+      "interpolation_run": "spcloud2-interpolation-apollo30-retimed-20261014-v2",
+      "interpolation_run_descriptor_sha256": "EDF989D91556A47715E62ED7C30C44A28F9F8747848A42380CA4F8458F0D87FB",
+      "source_bam_sha256": "cd65189aad090ec3ae69f5537522725bf663244ad42161261190b6fc71c58989",
+      "spatial_manifest_sha256": "27D0E3D0D2AA131CF33016E84319FC35BB818FA087DF9BEECEDED221FE4CD897",
+      "spatial_run": "spcloud2-spatial-seedvr7b-lab-lot33-20261014-v1",
+      "spatial_run_descriptor_sha256": "16DB8DE4606B55DA8B732EEBDA860D0F5CC4DFDBC2A6FC734D5725316D9F5060"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        36,
+        38
+      ],
+      "phase_count": 40,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39
+      ]
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1549,
+    "path": "effects/index/qa-decisions/SPCLOUD2/2026-10-15-accepted-33e89430e165.json",
+    "sha256": "33E89430E1650BF793D70CFBC41D31CB3ED72BA1A6DE9E30D888EC550A3B9046"
+  },
+  "resref": "SPCLOUD2",
+  "run_descriptor": {
+    "bytes": 2087,
+    "path": "effects/ressources/SPCLOUD2/runs/spcloud2-interpolation-apollo30-retimed-20261014-v2/run.json",
+    "sha256": "EDF989D91556A47715E62ED7C30C44A28F9F8747848A42380CA4F8458F0D87FB"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 28527,
+      "path": "effects/ressources/SPCLOUD2/packs/spcloud2-7b-x4-apollo30-retimed-20261014-v2/manifest.json",
+      "sha256": "71E47FFE7257D97C92E9ED8C6093A4972A4D3D26BD9001A3934E3672B68810B6"
+    },
+    "registry": {
+      "bytes": 624,
+      "path": "effects/ressources/SPCLOUD2/packs/spcloud2-7b-x4-apollo30-retimed-20261014-v2/EffectAnimations-X4.registry",
+      "sha256": "EE21493FBB5E94863733ACD38BCEF34E4775B54645429EDDF36B1CC970DA2B35"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spcloud2-interpolation-apollo30-retimed-20261014-v2",
+  "source": {
+    "bytes": 47407,
+    "path": "effects/ressources/SPCLOUD2/source.bam",
+    "sha256": "CD65189AAD090EC3AE69F5537522725BF663244AD42161261190B6FC71C58989"
+  }
+}

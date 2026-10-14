@@ -15,6 +15,13 @@ Les décisions durables sont dans
   par défaut ; compilation et gates globales réservées à la finalisation explicite.
 - Travail restant : déplacer hors du worktree les données temporaires qui pénalisent encore Git.
 
+## EFFECT-FPS-001 — SPIMPFR : cadence moyenne30, alternance de durée des phases
+
+- État au 2026-10-15 : lot33 retimed accepté explicitement ; QA des assets acquise, réserve runtime conservée.
+- 4 captures SPIMPFR : 29.8327–29.8636 changements/s ; 116/118 phases présentées (début phase2), aucun fallback, mauvais backing ou saut intérieur. Sur460 durées :228≈33ms,118≈50ms,114≈16.7ms ; rythme3/1 rafraîchissements à60Hz.
+- Cause probable : `core/area_animation_timeline.cpp::select` recale `slotStartTicks` à chaque slot natif15FPS ; `calculate_phase` arrondit vers le bas, le seuil33.333ms peut retarder la phase intermédiaire d'un rafraîchissement. Scheduler non corrigé ; aucune nouvelle interpolation nécessaire pour ce symptôme.
+- Preuve : [`analysis.json`](../engine/InfinityEngine-Enhancer/installations/spimpfr-presentation-trace-20261015-v1/runtime-session-20261015T001816-v1/analysis.json) ; [diagnostic](recipes/spimpfr-presentation-trace-20261015-v1/README.md), [acceptation](../effects/batches/lot33-accepted-20261015-v1/acceptance.json). Mesure SPIMPFR seulement ; régularité des32 autres non déduite.
+
 ## MAP-PERF-001 — Chargement des cartes x4
 
 - Cause mesurée : attente synchrone dans `CResPVR::Demand` lors des accès de pages PVRZ.

@@ -1,0 +1,2240 @@
+{
+  "schema": "bg2-effects-batch-proposal-v1",
+  "date": "2026-10-14",
+  "status": "proposed-native-preview",
+  "assets_count": 33,
+  "groups": {
+    "Portails et vortex": [
+      "DDOORH",
+      "OHNPORTA",
+      "SPPORTAL",
+      "SPHLEFT",
+      "SPHRIGHT",
+      "SPWHIRL",
+      "SPSUMPLN"
+    ],
+    "Brumes et orbes": [
+      "OHRSGONE",
+      "SHACID",
+      "SHAIR",
+      "SPATTCK2",
+      "SPCLOUD2",
+      "SPCLOUD3",
+      "SPGREORB",
+      "SPDUSTY2",
+      "SPSUMP",
+      "SPSOLBRD"
+    ],
+    "Feu et éclairs": [
+      "OHDSTREE",
+      "SPBASERD",
+      "SPCALLLI",
+      "SPCOMTRV",
+      "SPDRGNBR",
+      "SPFIREPI",
+      "SPHOLYMT",
+      "SPIMPFR",
+      "SPRWRATI",
+      "SPSTRMVB"
+    ],
+    "Halos et éclats": [
+      "SPCL239",
+      "SPCRTWPN",
+      "SPGRWHRL",
+      "SPSOHOPI",
+      "SPSPAINI",
+      "SPSTRENH"
+    ]
+  },
+  "common_contract": {
+    "cycles": 1,
+    "native_fps": [
+      15,
+      1
+    ],
+    "playback": "one-shot",
+    "blend": "Blended",
+    "sources": "available",
+    "spatial_state": "not-started"
+  },
+  "summary": {
+    "native_frames": 1054,
+    "native_cycle_slots": 1101,
+    "target_phases_at_30fps": 2202
+  },
+  "assets": [
+    {
+      "resref": "DDOORH",
+      "group": "Portails et vortex",
+      "source": "effects/ressources/DDOORH/source.bam",
+      "source_sha256": "B3CFF3B86F652169EF899B8E6886A4C928D15AC55AD5DA5AB1A409AFAE38DE37",
+      "canonical_sha256": "A31D3A7C2D5C43EDA3C5D369AD2660BEA8F43E4D2A04E13AFA90C489DB47825E",
+      "native_frames": 20,
+      "cycle_slots": 20,
+      "unique_used_poses": 20,
+      "blank_used_poses": 0,
+      "sample_frame": 14,
+      "sample_size_x1": [
+        149,
+        153
+      ],
+      "sample_centre_x1": [
+        74,
+        72
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        149,
+        153
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:DDOORH",
+          "consumer_key": "effect:vvc:DDOORH",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "9B4693A6275E14500D9C007C4539C53F1D4A9A63ACD636BC134E252B0CC357ED",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 4, \"continuous\": 0, \"display\": 520, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "OHNPORTA",
+      "group": "Portails et vortex",
+      "source": "effects/ressources/OHNPORTA/source.bam",
+      "source_sha256": "C7D713E01C6F3981626AEB2BC31797B9D8A4DD91E9BFA158A1E32785F57E3129",
+      "canonical_sha256": "8EDCE92840F25E3F631D5BBA447A515389BEF2BFB922ADE0B98C8997ADA22427",
+      "native_frames": 38,
+      "cycle_slots": 38,
+      "unique_used_poses": 38,
+      "blank_used_poses": 0,
+      "sample_frame": 19,
+      "sample_size_x1": [
+        183,
+        144
+      ],
+      "sample_centre_x1": [
+        92,
+        74
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        183,
+        144
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:OHNPORTA",
+          "consumer_key": "effect:vvc:OHNPORTA",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "892C43DBE271BC4D74114DE27B7E9F2F5AD9767310377089CB8BC656C269F1FE",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SPPORTAL",
+      "group": "Portails et vortex",
+      "source": "effects/ressources/SPPORTAL/source.bam",
+      "source_sha256": "90FF0F284BDA26DAA93B7EC03D58F3D0B8DDF9E6D5477C84696C7D17D94FEB8E",
+      "canonical_sha256": "3BF0B359D2C2E2A34B553D8ABCBDAADD6EB1EC83797B71D206570EA15629C914",
+      "native_frames": 38,
+      "cycle_slots": 38,
+      "unique_used_poses": 38,
+      "blank_used_poses": 0,
+      "sample_frame": 19,
+      "sample_size_x1": [
+        183,
+        144
+      ],
+      "sample_centre_x1": [
+        92,
+        74
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        183,
+        144
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPPORTAL",
+          "consumer_key": "effect:vvc:SPPORTAL",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "C32675844C863A8CCB52FAB0472247559A5F52700A3C13D782AD8AB436474F8A",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SPHLEFT",
+      "group": "Portails et vortex",
+      "source": "effects/ressources/SPHLEFT/source.bam",
+      "source_sha256": "0E7B1247C424F0DFD064A256DADE928AD112720A412C26B5EF94F10CA6C5D2D6",
+      "canonical_sha256": "51285B328AC15BBDF8CDC096DA2310319B3188BFE38141E4DEA88CED438475EE",
+      "native_frames": 20,
+      "cycle_slots": 20,
+      "unique_used_poses": 20,
+      "blank_used_poses": 0,
+      "sample_frame": 9,
+      "sample_size_x1": [
+        150,
+        244
+      ],
+      "sample_centre_x1": [
+        150,
+        150
+      ],
+      "preview_crop_rgb": [
+        114,
+        84,
+        150,
+        161
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPHLEFT",
+          "consumer_key": "effect:vvc:SPH1HI01",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "9BC5234F554607187D5F6BB68CD5DF924DD11C8CF9207235D7001863D756521D",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SPHRIGHT",
+      "group": "Portails et vortex",
+      "source": "effects/ressources/SPHRIGHT/source.bam",
+      "source_sha256": "F90094602018075439A66AC892EE0F87FA91BC8C07D18E76AD24E50FDDFF8125",
+      "canonical_sha256": "647B7ABE7C92A009EE1FAE7E8AB668EEB441154E1240416E617CF60A30C344A8",
+      "native_frames": 20,
+      "cycle_slots": 20,
+      "unique_used_poses": 20,
+      "blank_used_poses": 0,
+      "sample_frame": 10,
+      "sample_size_x1": [
+        36,
+        77
+      ],
+      "sample_centre_x1": [
+        1,
+        65
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        36,
+        77
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPHRIGHT",
+          "consumer_key": "effect:vvc:SPHLHI02",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "FE50EB1D4DDE4955298C62C95228136F254C11C150E09CC263DAEF129719CCD8",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SPWHIRL",
+      "group": "Portails et vortex",
+      "source": "effects/ressources/SPWHIRL/source.bam",
+      "source_sha256": "5D8ABA3E55416DE55D4F9F0426C5CE65910A4C42D1BC0A5DC9427774DD60BBA3",
+      "canonical_sha256": "C8DEA8BC2C557F8E6362EDEC5C8AEA3ACA1FFC4460BFC65B1D3F00C8FBA90A1C",
+      "native_frames": 24,
+      "cycle_slots": 24,
+      "unique_used_poses": 24,
+      "blank_used_poses": 0,
+      "sample_frame": 17,
+      "sample_size_x1": [
+        220,
+        220
+      ],
+      "sample_centre_x1": [
+        110,
+        150
+      ],
+      "preview_crop_rgb": [
+        22,
+        18,
+        199,
+        212
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPWHIRL",
+          "consumer_key": "effect:vvc:SPWHIRL",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "ABC81664B475AA7076912ABF80A3B8BA8B18F20DFD80690DAE0E589B7C7D11DA",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SPSUMPLN",
+      "group": "Portails et vortex",
+      "source": "effects/ressources/SPSUMPLN/source.bam",
+      "source_sha256": "CA6B795F69036BC90030BB71AF3B545F7646F70EB7FEFBD8018E83BC2E372E37",
+      "canonical_sha256": "B6C987E14152E1EACD9439AE0223A978F047C77A839BF425638D01B6832A6924",
+      "native_frames": 16,
+      "cycle_slots": 16,
+      "unique_used_poses": 16,
+      "blank_used_poses": 0,
+      "sample_frame": 6,
+      "sample_size_x1": [
+        172,
+        239
+      ],
+      "sample_centre_x1": [
+        95,
+        168
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        172,
+        239
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPSUMPLN",
+          "consumer_key": "effect:vvc:SPSUMPLN",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "CA96495FD92B1F904CD7E0C40EEA9C0E5AF182BC9DE9CD8CEB21F7A39030ECC4",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "OHRSGONE",
+      "group": "Brumes et orbes",
+      "source": "effects/ressources/OHRSGONE/source.bam",
+      "source_sha256": "95B9ED64FC069E9E9E50DA6EB38B12D50231A6CB35311B8B5785FB60A4D48CCB",
+      "canonical_sha256": "E6EA43A1DB712D1516F24F3552DB4C4321F6DC0E62C67478A06D652957ECAED3",
+      "native_frames": 119,
+      "cycle_slots": 119,
+      "unique_used_poses": 99,
+      "blank_used_poses": 0,
+      "sample_frame": 91,
+      "sample_size_x1": [
+        181,
+        125
+      ],
+      "sample_centre_x1": [
+        91,
+        62
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        181,
+        125
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:OHRSGONE",
+          "consumer_key": "effect:vvc:OHRSGONE",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "EF6FDABBC8E47BE416415925DAAFBA0C679D584C9EA6A7C341C4AE59ED6D98B9",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "5;4294967295;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SHACID",
+      "group": "Brumes et orbes",
+      "source": "effects/ressources/SHACID/source.bam",
+      "source_sha256": "45BF47936DE0890A6954F57646990833511E216BD4F1928833A2687EF03224AC",
+      "canonical_sha256": "64041CAB8E985E5B02E6999F3981D36935BCD2A281678BD6583C3B529C97EE87",
+      "native_frames": 24,
+      "cycle_slots": 12,
+      "unique_used_poses": 12,
+      "blank_used_poses": 0,
+      "sample_frame": 19,
+      "sample_size_x1": [
+        38,
+        60
+      ],
+      "sample_centre_x1": [
+        19,
+        32
+      ],
+      "preview_crop_rgb": [
+        1,
+        1,
+        37,
+        57
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SHACID",
+          "consumer_key": "effect:vvc:POISON",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "9A10616A8D24D80088B3ACDA3E0EB01F5619D7337D5A05420A622FC814CCE444",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 136}"
+        },
+        {
+          "asset_key": "effects:bam:SHACID",
+          "consumer_key": "effect:vvc:SHACID",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "477AEF6FC64C4B41A91B025C4F736F1176B77157B4280A818181DF49E770CFA2",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 140}"
+        },
+        {
+          "asset_key": "effects:bam:SHACID",
+          "consumer_key": "effect:vvc:SHACID2",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "D38D8CE30B7241563AC23506528A28658DB3D18280070140345CAD0F8B54703A",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 204}"
+        }
+      ]
+    },
+    {
+      "resref": "SHAIR",
+      "group": "Brumes et orbes",
+      "source": "effects/ressources/SHAIR/source.bam",
+      "source_sha256": "37903205D1BA3D70BC0920EB9FF35B48451831B1BE10809B20963712E319EB83",
+      "canonical_sha256": "7A80DE589398410F8E0AF5BA65EC0948E3F57B25AB30E368F5849BC9054F1FA6",
+      "native_frames": 18,
+      "cycle_slots": 18,
+      "unique_used_poses": 18,
+      "blank_used_poses": 0,
+      "sample_frame": 7,
+      "sample_size_x1": [
+        46,
+        77
+      ],
+      "sample_centre_x1": [
+        23,
+        62
+      ],
+      "preview_crop_rgb": [
+        0,
+        1,
+        46,
+        68
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SHAIR",
+          "consumer_key": "effect:vvc:SHAIR",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "DA2759B37752B8854CFB1CF8D503DAED89CC8E79A26BBF58D34807A9A88BC065",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SPATTCK2",
+      "group": "Brumes et orbes",
+      "source": "effects/ressources/SPATTCK2/source.bam",
+      "source_sha256": "101BCD288B7B6B9C973529D37DCAED02F96BF44FBE2D2E2EDCE97083BBF1E083",
+      "canonical_sha256": "F814291B4BFF8E74E07E1BF6F3BCFD4B4E9B128AB50A232FEF2BA1D1C893B638",
+      "native_frames": 21,
+      "cycle_slots": 21,
+      "unique_used_poses": 21,
+      "blank_used_poses": 0,
+      "sample_frame": 16,
+      "sample_size_x1": [
+        18,
+        16
+      ],
+      "sample_centre_x1": [
+        10,
+        7
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        18,
+        16
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPATTCK2",
+          "consumer_key": "effect:vvc:SPATTCK2",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "94B012952C82F6C3FE51C26ADFC3BB2AD11FC61BC8E0A935E04659735B98F09C",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 12}"
+        }
+      ]
+    },
+    {
+      "resref": "SPCLOUD2",
+      "group": "Brumes et orbes",
+      "source": "effects/ressources/SPCLOUD2/source.bam",
+      "source_sha256": "CD65189AAD090EC3AE69F5537522725BF663244AD42161261190B6FC71C58989",
+      "canonical_sha256": "1DDA50C34CE4CCA55E9157DF91A537024DBCF5DEC377901C7EF1621A9BFA3C12",
+      "native_frames": 11,
+      "cycle_slots": 20,
+      "unique_used_poses": 11,
+      "blank_used_poses": 0,
+      "sample_frame": 9,
+      "sample_size_x1": [
+        121,
+        73
+      ],
+      "sample_centre_x1": [
+        63,
+        34
+      ],
+      "preview_crop_rgb": [
+        2,
+        3,
+        120,
+        71
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPCLOUD2",
+          "consumer_key": "effect:vvc:SPCLOUD2",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "ADD9C021F8C96C5389448C3EEC979D0CE18823442D257B87EF95D58A8BCF89B7",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SPCLOUD3",
+      "group": "Brumes et orbes",
+      "source": "effects/ressources/SPCLOUD3/source.bam",
+      "source_sha256": "869C0EBEC02473E2BE84ED4412C3957ABC4BEE967B7B8B0ECAD91F613694C7C6",
+      "canonical_sha256": "B32F7B6CE9A436E878A84D941584497AD786C2C9677F949A19FEBEBB81841E5E",
+      "native_frames": 11,
+      "cycle_slots": 20,
+      "unique_used_poses": 11,
+      "blank_used_poses": 0,
+      "sample_frame": 10,
+      "sample_size_x1": [
+        56,
+        37
+      ],
+      "sample_centre_x1": [
+        31,
+        15
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        55,
+        37
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPCLOUD3",
+          "consumer_key": "effect:vvc:SPCLOUD3",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "9599D8B39B2E38506DB0423211892710864D45F2FBFFD5B2490F9D49692DC39E",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SPGREORB",
+      "group": "Brumes et orbes",
+      "source": "effects/ressources/SPGREORB/source.bam",
+      "source_sha256": "025377C0C20B744D092354E341395A85EABBCD9F55415EB8C06418416BE73C55",
+      "canonical_sha256": "2ECF5607FB97449BB93AA4BF57577B5BA7B7E65E5DDE0FDD4643ABAC22D36079",
+      "native_frames": 16,
+      "cycle_slots": 16,
+      "unique_used_poses": 16,
+      "blank_used_poses": 0,
+      "sample_frame": 6,
+      "sample_size_x1": [
+        54,
+        53
+      ],
+      "sample_centre_x1": [
+        27,
+        27
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        54,
+        53
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPGREORB",
+          "consumer_key": "effect:vvc:SPGREORB",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "BD44E75AD2ADB6687AA716A9168C1002628A3751F478374116683ABFDFADB461",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SPDUSTY2",
+      "group": "Brumes et orbes",
+      "source": "effects/ressources/SPDUSTY2/source.bam",
+      "source_sha256": "8D031989BC3A48773C670A713DBC7A3B995CFF2ACAF58C392E4E5C5AFEAA6E52",
+      "canonical_sha256": "5282D65F9B23B64E573C80D6742B860811ED26BFE3EF6548725CAF032B8D18E3",
+      "native_frames": 31,
+      "cycle_slots": 31,
+      "unique_used_poses": 31,
+      "blank_used_poses": 0,
+      "sample_frame": 30,
+      "sample_size_x1": [
+        66,
+        68
+      ],
+      "sample_centre_x1": [
+        34,
+        20
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        66,
+        68
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPDUSTY2",
+          "consumer_key": "effect:vvc:SPDUSTY2",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "E61208F0FDA9645B92247C6423B26E3D41E7842CEC77A9CD8144926808F65522",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SPSUMP",
+      "group": "Brumes et orbes",
+      "source": "effects/ressources/SPSUMP/source.bam",
+      "source_sha256": "6EFA963F67AAC01CCD60DD74BD1FDF1AAAF3E3FAA059978D6B218968A5D0805A",
+      "canonical_sha256": "5EBD4AE4C5515CEDA26D3F157ECBE6FDE8868441C95AC6BB3A4BC9D5C3482695",
+      "native_frames": 32,
+      "cycle_slots": 64,
+      "unique_used_poses": 32,
+      "blank_used_poses": 0,
+      "sample_frame": 21,
+      "sample_size_x1": [
+        118,
+        128
+      ],
+      "sample_centre_x1": [
+        61,
+        103
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        118,
+        128
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPSUMP",
+          "consumer_key": "effect:vvc:SPSUMP",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "210B26E4FC33F6F78890367E59BC5DB46C01AFC20523A4BD1F0DEBF6658AD7F7",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SPSOLBRD",
+      "group": "Brumes et orbes",
+      "source": "effects/ressources/SPSOLBRD/source.bam",
+      "source_sha256": "98C22C7382CA36F2A531F83AAC5E653262998372E2CE65571CDB0AA61BC70D48",
+      "canonical_sha256": "EA21E2A0812F56ABC1AE7561885A76E4491A05BEEDB25683577FDFD4E42771A0",
+      "native_frames": 50,
+      "cycle_slots": 50,
+      "unique_used_poses": 50,
+      "blank_used_poses": 0,
+      "sample_frame": 19,
+      "sample_size_x1": [
+        165,
+        140
+      ],
+      "sample_centre_x1": [
+        98,
+        68
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        165,
+        140
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPSOLBRD",
+          "consumer_key": "effect:vvc:SPSOLBRD",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "8561A17747D54155B8C4837A17FB63CE811F7815A8A9827022112816D55B138C",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 520, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "OHDSTREE",
+      "group": "Feu et éclairs",
+      "source": "effects/ressources/OHDSTREE/source.bam",
+      "source_sha256": "DB6FA00B99662FDF6936089222F9C173A491D5C275E0EE543B4654B73F9E9289",
+      "canonical_sha256": "C9D20A5D4A1D80BDDCB02012B6D06E4F56AB8D998C1D7EBC94A688635DE5589C",
+      "native_frames": 45,
+      "cycle_slots": 45,
+      "unique_used_poses": 45,
+      "blank_used_poses": 0,
+      "sample_frame": 22,
+      "sample_size_x1": [
+        116,
+        78
+      ],
+      "sample_centre_x1": [
+        25,
+        40
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        116,
+        78
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:OHDSTREE",
+          "consumer_key": "effect:vvc:OHDSTREE",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "2422AA0367872CA560DC3C90E38D58DDC89E7D8743848ADF00A6FD5168CD819E",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 1032, \"duration\": 4294967295, \"sequence\": 12}"
+        }
+      ]
+    },
+    {
+      "resref": "SPBASERD",
+      "group": "Feu et éclairs",
+      "source": "effects/ressources/SPBASERD/source.bam",
+      "source_sha256": "D63B1E9C5DEB42B07C60EB7E467409E85D7EAA94325656901C454297069A8D40",
+      "canonical_sha256": "451DFE9FC513A081AEA8E5EE5AE5167229A5006A01DCC49BEE8DB5DF06345DB6",
+      "native_frames": 50,
+      "cycle_slots": 49,
+      "unique_used_poses": 49,
+      "blank_used_poses": 0,
+      "sample_frame": 38,
+      "sample_size_x1": [
+        135,
+        143
+      ],
+      "sample_centre_x1": [
+        58,
+        108
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        135,
+        143
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPBASERD",
+          "consumer_key": "effect:vvc:SPPOWRRD",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "2A2FBDA7B0A927575C800B649DE0AA8AA85FFE6F2C58E18C8FF52DE6A7DF75DD",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "2;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SPCALLLI",
+      "group": "Feu et éclairs",
+      "source": "effects/ressources/SPCALLLI/source.bam",
+      "source_sha256": "6890848DDAA3BA24B4E23D56727AB865A0EF3EE20FC86B25FA32608ADDD2EC3C",
+      "canonical_sha256": "0AC7A4F43DA661AB4CDF0137697201F49845EB17AC8222750EE828D563740F31",
+      "native_frames": 18,
+      "cycle_slots": 18,
+      "unique_used_poses": 18,
+      "blank_used_poses": 0,
+      "sample_frame": 4,
+      "sample_size_x1": [
+        36,
+        134
+      ],
+      "sample_centre_x1": [
+        16,
+        121
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        36,
+        134
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPCALLLI",
+          "consumer_key": "effect:vvc:AMCALL",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "CF560F385E19923F22025998E78CD049991AAD3E276F9A0CE1E8F8E849DFB981",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 72}"
+        },
+        {
+          "asset_key": "effects:bam:SPCALLLI",
+          "consumer_key": "effect:vvc:CALLLIGH",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "3E157348D3BFB48A26E15452369599DB2539F72754E1DAB657E4B9A53DE77108",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SPCOMTRV",
+      "group": "Feu et éclairs",
+      "source": "effects/ressources/SPCOMTRV/source.bam",
+      "source_sha256": "75AD2661C6C1A7F7C23393053159DD3579CE5BA5B81C360D8C54750F8AD57762",
+      "canonical_sha256": "3AC64B020B04F07408AD1EE5CE90EA58FCB39415EC5F7A2D79AC044DD1542826",
+      "native_frames": 7,
+      "cycle_slots": 7,
+      "unique_used_poses": 7,
+      "blank_used_poses": 0,
+      "sample_frame": 1,
+      "sample_size_x1": [
+        110,
+        139
+      ],
+      "sample_centre_x1": [
+        12,
+        132
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        110,
+        139
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPCOMTRV",
+          "consumer_key": "effect:vvc:SPCOMTRV",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "0C393777C29DD7CE77663F5B765571AD0C5BD4FEE5FB84C2FF10F7C6C9643A69",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SPDRGNBR",
+      "group": "Feu et éclairs",
+      "source": "effects/ressources/SPDRGNBR/source.bam",
+      "source_sha256": "75870DED1B6B2E488A902AA204F88915FBA62679E9FA3E18369F7D58C78DDBDA",
+      "canonical_sha256": "4A1B11B88A9C3BC0C43111FD6F6211CE5C979E0F2F3BFC05E14814EF546706F5",
+      "native_frames": 36,
+      "cycle_slots": 51,
+      "unique_used_poses": 36,
+      "blank_used_poses": 1,
+      "sample_frame": 30,
+      "sample_size_x1": [
+        138,
+        216
+      ],
+      "sample_centre_x1": [
+        71,
+        211
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        138,
+        216
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPDRGNBR",
+          "consumer_key": "effect:vvc:SPDRGNBR",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "37604F07C6ACADEDF81AA32F2B938F058CA4B789ABDE879B695DF5085810DDE0",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SPFIREPI",
+      "group": "Feu et éclairs",
+      "source": "effects/ressources/SPFIREPI/source.bam",
+      "source_sha256": "431FEC7A109F46A5C43BA68D39D693B341D794095CF85292A1E36E5567BD541A",
+      "canonical_sha256": "0E7D9CCB2E216E82DF826C958924E86D90FB33E116F09B9CB6AE46F82DB3F5D2",
+      "native_frames": 22,
+      "cycle_slots": 22,
+      "unique_used_poses": 22,
+      "blank_used_poses": 0,
+      "sample_frame": 8,
+      "sample_size_x1": [
+        99,
+        106
+      ],
+      "sample_centre_x1": [
+        34,
+        66
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        99,
+        106
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPFIREPI",
+          "consumer_key": "effect:vvc:SPFIREPI",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "903734425C6EA17A971E1D02FF21A6995E45AA887D9D7355A29211202C8CC4F0",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 10}"
+        },
+        {
+          "asset_key": "effects:bam:SPFIREPI",
+          "consumer_key": "projectile:ARROWEX",
+          "relation": "explosion-animation",
+          "via": "effect:vvc:SPFIREPI",
+          "source_sha256": "DD93A79D9C0E84313D2B1D86B32A5BCCCEBE789E2EF105C2EA1041596E4B1F1D",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 10}"
+        },
+        {
+          "asset_key": "effects:bam:SPFIREPI",
+          "consumer_key": "projectile:AXEEX",
+          "relation": "explosion-animation",
+          "via": "effect:vvc:SPFIREPI",
+          "source_sha256": "FC56D55CE4AF5F00C20BCF8BA8F36AED37C0AAF8F6B18C5543B6386891D4251B",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 10}"
+        },
+        {
+          "asset_key": "effects:bam:SPFIREPI",
+          "consumer_key": "projectile:BOLTEX",
+          "relation": "explosion-animation",
+          "via": "effect:vvc:SPFIREPI",
+          "source_sha256": "1DAF8097AF1DA30EF5116843C2C36F1BAF54B460FFCD90A5D6D99A961ABA5D34",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 10}"
+        },
+        {
+          "asset_key": "effects:bam:SPFIREPI",
+          "consumer_key": "projectile:BULLETEX",
+          "relation": "explosion-animation",
+          "via": "effect:vvc:SPFIREPI",
+          "source_sha256": "0B017084C9CEA9E74A1DA5AD4161875676663BA9A5612C0F432A49D65DFB0C6F",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 10}"
+        },
+        {
+          "asset_key": "effects:bam:SPFIREPI",
+          "consumer_key": "projectile:DAGGEREX",
+          "relation": "explosion-animation",
+          "via": "effect:vvc:SPFIREPI",
+          "source_sha256": "3D8EF45BA1ECA3127EBF03C6E7DF216DF5DC2A5CD1F69F6DF2F5332D73032D71",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 10}"
+        },
+        {
+          "asset_key": "effects:bam:SPFIREPI",
+          "consumer_key": "projectile:DARTEX",
+          "relation": "explosion-animation",
+          "via": "effect:vvc:SPFIREPI",
+          "source_sha256": "353BC29CB99F06D81AA158B7F6F07876DDB7C34A32704BFD6089E60DAF15A898",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 10}"
+        },
+        {
+          "asset_key": "effects:bam:SPFIREPI",
+          "consumer_key": "projectile:DBFIREBL",
+          "relation": "explosion-animation",
+          "via": "effect:vvc:SPFIREPI",
+          "source_sha256": "28EC2E0455F98A4B9A77A31ACAA40B1CD397E8C7EA15F25DED646E1A817EB5C7",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 10}"
+        },
+        {
+          "asset_key": "effects:bam:SPFIREPI",
+          "consumer_key": "projectile:DFIREBL",
+          "relation": "explosion-animation",
+          "via": "effect:vvc:SPFIREPI",
+          "source_sha256": "B0A0B8C65AFCAA4175A156342E5244E485EA2966DB61B55123DB03130931C807",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 10}"
+        },
+        {
+          "asset_key": "effects:bam:SPFIREPI",
+          "consumer_key": "projectile:FBFLAMES",
+          "relation": "explosion-animation",
+          "via": "effect:vvc:SPFIREPI",
+          "source_sha256": "6F37C3770419F401733BEC24202BAA13445ADA4995AAE72D7DC9ABDB75FDBBC9",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 10}"
+        },
+        {
+          "asset_key": "effects:bam:SPFIREPI",
+          "consumer_key": "projectile:FIREBALL",
+          "relation": "explosion-animation",
+          "via": "effect:vvc:SPFIREPI",
+          "source_sha256": "7A21847FDBDEDF8208CADC0B184E418849EFD92DABCF7ADF6258E3C7EF3400F9",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 10}"
+        },
+        {
+          "asset_key": "effects:bam:SPFIREPI",
+          "consumer_key": "projectile:FIREBLNS",
+          "relation": "explosion-animation",
+          "via": "effect:vvc:SPFIREPI",
+          "source_sha256": "A5AD30017083D6F6568FB1E298947FB6C392A1615F062124F4BC6B8291764695",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 10}"
+        },
+        {
+          "asset_key": "effects:bam:SPFIREPI",
+          "consumer_key": "projectile:FIRESTOR",
+          "relation": "explosion-animation",
+          "via": "effect:vvc:SPFIREPI",
+          "source_sha256": "8E1A8646D9F6E9CA5EA031D0A521D9B4DB7E85C63D0C3B1FB17424FF7B00F274",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 10}"
+        },
+        {
+          "asset_key": "effects:bam:SPFIREPI",
+          "consumer_key": "projectile:PFIRE2",
+          "relation": "explosion-animation",
+          "via": "effect:vvc:SPFIREPI",
+          "source_sha256": "62F957E4A8EE9144BA016D584AB2548182FB9E17C77023F45406EC4EE4F7BA7D",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 10}"
+        },
+        {
+          "asset_key": "effects:bam:SPFIREPI",
+          "consumer_key": "projectile:SAFEFIRE",
+          "relation": "explosion-animation",
+          "via": "effect:vvc:SPFIREPI",
+          "source_sha256": "1665A27CAF11FAB8DD397E9562867AEE70268A8AFAC6D0D6248706FB3FA7E4BF",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 10}"
+        },
+        {
+          "asset_key": "effects:bam:SPFIREPI",
+          "consumer_key": "projectile:SPEAREX",
+          "relation": "explosion-animation",
+          "via": "effect:vvc:SPFIREPI",
+          "source_sha256": "A68B198D967529083616498549B73965E22950B5DF80CEC9E41A99C60011C484",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 10}"
+        }
+      ]
+    },
+    {
+      "resref": "SPHOLYMT",
+      "group": "Feu et éclairs",
+      "source": "effects/ressources/SPHOLYMT/source.bam",
+      "source_sha256": "72C64DE63108E41EA98E7F5CBAEF8E5777AA4D54A3799A8E4A9289D301AC2DE7",
+      "canonical_sha256": "8E1F1924B7D280AE80542BCF8AF8F740EE1E64320C29B3BFB8F0857F941D9B52",
+      "native_frames": 10,
+      "cycle_slots": 10,
+      "unique_used_poses": 9,
+      "blank_used_poses": 0,
+      "sample_frame": 5,
+      "sample_size_x1": [
+        68,
+        227
+      ],
+      "sample_centre_x1": [
+        37,
+        110
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        68,
+        227
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPHOLYMT",
+          "consumer_key": "effect:vvc:SPHOLYMT",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "D38B66EBB5A66D731D43D600EB8320850A3682F2BC7CC7ED9A74C58591420346",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 12}"
+        }
+      ]
+    },
+    {
+      "resref": "SPIMPFR",
+      "group": "Feu et éclairs",
+      "source": "effects/ressources/SPIMPFR/source.bam",
+      "source_sha256": "AFAF2A45C7C74319C0663E32F7481E7612680D25745E0D2205CDEF9C42AFE0AB",
+      "canonical_sha256": "DAAFC924ED521EFF65B9410F1812986BF146426A88CD620EA91DBC923E7A4D3D",
+      "native_frames": 59,
+      "cycle_slots": 59,
+      "unique_used_poses": 35,
+      "blank_used_poses": 24,
+      "sample_frame": 40,
+      "sample_size_x1": [
+        94,
+        128
+      ],
+      "sample_centre_x1": [
+        50,
+        73
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        94,
+        128
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPIMPFR",
+          "consumer_key": "effect:vvc:SPIMPFR",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "1605B3C540DD899E6A534B2AD6F48F4E961C22907A5116AD0686A74CE06D23C0",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SPRWRATI",
+      "group": "Feu et éclairs",
+      "source": "effects/ressources/SPRWRATI/source.bam",
+      "source_sha256": "A73CE64A2B14C2D0B103E6A0285D024F117E8DF0A34DBD1E4908F2980618C438",
+      "canonical_sha256": "52FF13D041D2B65EB23CFE7AAD524C0680BE3F1E97E3EE52036D6DB87469F5A7",
+      "native_frames": 48,
+      "cycle_slots": 48,
+      "unique_used_poses": 43,
+      "blank_used_poses": 0,
+      "sample_frame": 26,
+      "sample_size_x1": [
+        76,
+        148
+      ],
+      "sample_centre_x1": [
+        39,
+        125
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        76,
+        148
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPRWRATI",
+          "consumer_key": "effect:vvc:ICWRATI",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "33EBD3D211F315EEC985B77CC1680ED9AC92EC0079F73E6C2F1AA12E99F227BF",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 520, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SPSTRMVB",
+      "group": "Feu et éclairs",
+      "source": "effects/ressources/SPSTRMVB/source.bam",
+      "source_sha256": "E8349A71224692F25F053DDE4612E292E62F9A0E6327A812B8B8A9050C00DEFE",
+      "canonical_sha256": "D38A4C303BAFB5448C112AE8B15FBF2D391D7A4096908562409C2BAB53C20C5C",
+      "native_frames": 30,
+      "cycle_slots": 30,
+      "unique_used_poses": 15,
+      "blank_used_poses": 1,
+      "sample_frame": 9,
+      "sample_size_x1": [
+        128,
+        128
+      ],
+      "sample_centre_x1": [
+        64,
+        64
+      ],
+      "preview_crop_rgb": [
+        9,
+        1,
+        115,
+        119
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPSTRMVB",
+          "consumer_key": "effect:vvc:SPSTRMVB",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "082C48953E9200B6D364128731C3409E57C835BB955E679FD568B6CEAB9390F9",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 12}"
+        }
+      ]
+    },
+    {
+      "resref": "SPCL239",
+      "group": "Halos et éclats",
+      "source": "effects/ressources/SPCL239/source.bam",
+      "source_sha256": "E40C1D57CEE69E516B19FDD5323DB1EEFA50DA81AEF0921A46F85C525D4BCDBF",
+      "canonical_sha256": "D490D6BC691EB4427815836ED25D05F6689C350F66ACB4FDF3C4264B286978BD",
+      "native_frames": 24,
+      "cycle_slots": 23,
+      "unique_used_poses": 23,
+      "blank_used_poses": 0,
+      "sample_frame": 7,
+      "sample_size_x1": [
+        177,
+        140
+      ],
+      "sample_centre_x1": [
+        85,
+        56
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        177,
+        140
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPCL239",
+          "consumer_key": "effect:vvc:SPCL239",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "090CC235EC2E05BA1D26FB2FF57DAE82B1461583591732351BFE9CF9B0B9A3AB",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "1;3;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 640, \"continuous\": 0, \"display\": 10, \"duration\": 30, \"sequence\": 12}"
+        }
+      ]
+    },
+    {
+      "resref": "SPCRTWPN",
+      "group": "Halos et éclats",
+      "source": "effects/ressources/SPCRTWPN/source.bam",
+      "source_sha256": "874B3FC4DEF749C839568FCD3CEFE200B9F0F81D8E3B720CA609AE9394059EB7",
+      "canonical_sha256": "0A94E050416F32B37AC9A1C86796C029B0670F974DBDE6B313CFFD208D7DDF1A",
+      "native_frames": 88,
+      "cycle_slots": 86,
+      "unique_used_poses": 86,
+      "blank_used_poses": 0,
+      "sample_frame": 61,
+      "sample_size_x1": [
+        84,
+        67
+      ],
+      "sample_centre_x1": [
+        29,
+        37
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        84,
+        67
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPCRTWPN",
+          "consumer_key": "effect:vvc:SPCRTWPN",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "466F242C2B8A8B5418402322B93E65D9225465B75381174472555239B18832C6",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SPGRWHRL",
+      "group": "Halos et éclats",
+      "source": "effects/ressources/SPGRWHRL/source.bam",
+      "source_sha256": "BDD7EE7FECAB7DBEC09648EE8F4C1B2F3AE08912114F99C2ADCC69D9A542EF09",
+      "canonical_sha256": "C7F6438546D19B2A9132AFA320539E0981CE428FE8387B525618F65CC5A3207E",
+      "native_frames": 24,
+      "cycle_slots": 23,
+      "unique_used_poses": 23,
+      "blank_used_poses": 0,
+      "sample_frame": 7,
+      "sample_size_x1": [
+        177,
+        140
+      ],
+      "sample_centre_x1": [
+        85,
+        56
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        177,
+        140
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPGRWHRL",
+          "consumer_key": "effect:vvc:SPGRWHRL",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "2361C46046796C3227273A67C1D7D39A99B9D73E03C38C68CA82B13EBB94E53F",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "1;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        },
+        {
+          "asset_key": "effects:bam:SPGRWHRL",
+          "consumer_key": "projectile:WILDZONE",
+          "relation": "explosion-animation",
+          "via": "effect:vvc:SPGRWHRL",
+          "source_sha256": "AC9D571F2AC90B2FFEF51330A31AA696C49232BCC38FEACAF0C058AD2AADDC88",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "1;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SPSOHOPI",
+      "group": "Halos et éclats",
+      "source": "effects/ressources/SPSOHOPI/source.bam",
+      "source_sha256": "E245C1BEC5A5928FA922A62AF5D92097D0635B17C6BCFD1CFBE401F85CA5B7A4",
+      "canonical_sha256": "64685A548703423F62E29899003829E2C8CB9A236341E134363E12C32B90AB33",
+      "native_frames": 24,
+      "cycle_slots": 24,
+      "unique_used_poses": 24,
+      "blank_used_poses": 0,
+      "sample_frame": 15,
+      "sample_size_x1": [
+        232,
+        156
+      ],
+      "sample_centre_x1": [
+        115,
+        89
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        232,
+        156
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPSOHOPI",
+          "consumer_key": "effect:vvc:OHBGLYPH",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "8EE90C078D83C1D6DBB1804F1F23DB4801AE60481E6F8B1460B899EBBBBC8C4C",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SPSPAINI",
+      "group": "Halos et éclats",
+      "source": "effects/ressources/SPSPAINI/source.bam",
+      "source_sha256": "E6A80FE78290D815D532CE110F0AE9104F0A538E843E0281F3B58A2514C28C89",
+      "canonical_sha256": "C9B4F6C9C35D0480F582CB6CF66A36261BD374A465F013C25BC5D099E6F97065",
+      "native_frames": 24,
+      "cycle_slots": 24,
+      "unique_used_poses": 24,
+      "blank_used_poses": 0,
+      "sample_frame": 15,
+      "sample_size_x1": [
+        267,
+        194
+      ],
+      "sample_centre_x1": [
+        133,
+        108
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        267,
+        194
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPSPAINI",
+          "consumer_key": "effect:vvc:ICSPAIN",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "AE6B85E9D2D613EBFBEFF296364549C42EE3007C6F182BCD943541A702BB88D1",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 520, \"duration\": 4294967295, \"sequence\": 8}"
+        },
+        {
+          "asset_key": "effects:bam:SPSPAINI",
+          "consumer_key": "projectile:ICEGLYP",
+          "relation": "explosion-animation",
+          "via": "effect:vvc:ICSPAIN",
+          "source_sha256": "2AFDE7C82CD8C3767EAD93554B13A1154A3B22397C6E2D27910826EE6531DCCB",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 520, \"duration\": 4294967295, \"sequence\": 8}"
+        },
+        {
+          "asset_key": "effects:bam:SPSPAINI",
+          "consumer_key": "projectile:OHSYMBOL",
+          "relation": "explosion-animation",
+          "via": "effect:vvc:ICSPAIN",
+          "source_sha256": "D931605F7BB677E29FF2E6B8A7ED46BFBD0B27BCFA13E8E2E47E80CBDA71C744",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 520, \"duration\": 4294967295, \"sequence\": 8}"
+        }
+      ]
+    },
+    {
+      "resref": "SPSTRENH",
+      "group": "Halos et éclats",
+      "source": "effects/ressources/SPSTRENH/source.bam",
+      "source_sha256": "C334694EF76ECD5A3A599FD29F8C9AD05E63D63A54FE347B7B357FBB9CB65182",
+      "canonical_sha256": "B51AC1C883CC42EAE08AF6EFA69E406230325F399C53608950331A0F5D77E315",
+      "native_frames": 36,
+      "cycle_slots": 35,
+      "unique_used_poses": 35,
+      "blank_used_poses": 0,
+      "sample_frame": 27,
+      "sample_size_x1": [
+        100,
+        142
+      ],
+      "sample_centre_x1": [
+        50,
+        75
+      ],
+      "preview_crop_rgb": [
+        0,
+        0,
+        100,
+        142
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "playback": "one-shot",
+      "blend": "Blended",
+      "source_state": "available",
+      "spatial_state": "not-started",
+      "consumers": [
+        {
+          "asset_key": "effects:bam:SPSTRENH",
+          "consumer_key": "effect:vvc:SPSTRENH",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "DEBAEABD82962AC9512EE8388D12B5F2A3C4A8CA6FD5EF6C92F50765238A3037",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "1",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 8, \"duration\": 4294967295, \"sequence\": 12}"
+        }
+      ]
+    }
+  ],
+  "sampling": "brightest used native pose by total RGB; native frame and centres retained; preview crop removes black padding for identification; NEAREST zoom only",
+  "recipe_hint": "reuse accepted 3B/LAB x4 + Apollo30 one-shot backbone; evaluate Gaussian/fade radius on fine rays before batch production",
+  "excluded_from_candidates": [
+    "SPCONTIN",
+    "SPPROTEC",
+    "SPSARMOR",
+    "TRSPEART",
+    "SPRAISED",
+    "SPMONSUM",
+    "SPMELBD2"
+  ],
+  "exclusion_reason": "figurative sprites, wings, shields, objects, birds or summoning object; distinct visual family",
+  "scope": "identification and representative native frames only; processing/QA/installation/release untouched"
+}

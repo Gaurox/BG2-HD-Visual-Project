@@ -1,0 +1,168 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPWHIRL",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 48,
+    "source": {
+      "interpolation_run": "spwhirl-interpolation-apollo30-retimed-20261014-v2",
+      "interpolation_run_descriptor_sha256": "1FDC956860D62A3D35A5E864A32E23800520DF0701FDF80908A5396B860AAB13",
+      "source_bam_sha256": "5d8aba3e55416de55d4f9f0426c5ce65910a4c42d1bc0a5dc9427774dd60bba3",
+      "spatial_manifest_sha256": "B2C5FF12DD5B9AC2FC9BB4E0DCBEDF52E1B9968576836F8D15D563819AF1332D",
+      "spatial_run": "spwhirl-spatial-seedvr7b-lab-lot33-20261014-v1",
+      "spatial_run_descriptor_sha256": "4C5FFBA1B00F45C15CCDEF90D7E0859D4EAA7C9AE2271FCC2F130BD527915005"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        36,
+        38,
+        40,
+        42,
+        44,
+        46
+      ],
+      "phase_count": 48,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ]
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1542,
+    "path": "effects/index/qa-decisions/SPWHIRL/2026-10-15-accepted-b00d0e5a2ea2.json",
+    "sha256": "B00D0E5A2EA2468100244DD9EF6DEC20EC877CFD3B2EF68C3C35EB95209D1B03"
+  },
+  "resref": "SPWHIRL",
+  "run_descriptor": {
+    "bytes": 2074,
+    "path": "effects/ressources/SPWHIRL/runs/spwhirl-interpolation-apollo30-retimed-20261014-v2/run.json",
+    "sha256": "1FDC956860D62A3D35A5E864A32E23800520DF0701FDF80908A5396B860AAB13"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 34047,
+      "path": "effects/ressources/SPWHIRL/packs/spwhirl-7b-x4-apollo30-retimed-20261014-v2/manifest.json",
+      "sha256": "54E499ACFFFF18B7594F675FB26CED336605A33E8802B62CBB65601EBFC952BB"
+    },
+    "registry": {
+      "bytes": 736,
+      "path": "effects/ressources/SPWHIRL/packs/spwhirl-7b-x4-apollo30-retimed-20261014-v2/EffectAnimations-X4.registry",
+      "sha256": "122500D8636787E6DB1E2006834AAAB320A17B2A812F9C4A4409BEE5A3FCD791"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spwhirl-interpolation-apollo30-retimed-20261014-v2",
+  "source": {
+    "bytes": 115448,
+    "path": "effects/ressources/SPWHIRL/source.bam",
+    "sha256": "5D8ABA3E55416DE55D4F9F0426C5CE65910A4C42D1BC0A5DC9427774DD60BBA3"
+  }
+}

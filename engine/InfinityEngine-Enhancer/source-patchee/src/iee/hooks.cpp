@@ -36,6 +36,7 @@
 #include "area_state.h"
 #include "iee/core/hooking.h"
 #include "iee/core/area_animation_timeline.h"
+#include "iee/core/effect_presentation_trace.h"
 #include "iee/core/config.h"
 #include "iee/core/logger.h"
 #include "iee/core/map_texture_telemetry.h"
@@ -51,6 +52,7 @@
 #include "iee/features/tile_render.h"
 #include "iee/frame_hook.h"
 #include "iee/game/active_area_runtime.h"
+#include "iee/game/area_redraw_runtime.h"
 #include "iee/game/game_types.h"
 #include "iee/game/renderer.h"
 #include "iee/game/resref_runtime.h"
@@ -109,6 +111,8 @@ using CResFileOpenFn = int (*)(void*, const void*, std::uint32_t, void*);
 // Intentionally explicit lifetime: a static smart-pointer destructor would
 // call MinHook from the Windows loader lock if the loader skipped ShutdownBindings.
 static core::HookInit* g_hookInit = nullptr;
+static std::atomic<bool> g_tileHooksReady{false};
+static std::atomic<std::uint64_t> g_mapRedrawGeneration{1};
 static core::Hook<LoadAreaFn> g_loadAreaHook;
 static core::Hook<RenderTextureFn> g_renderTextureHook;
 static core::Hook<DrawColorToneFn> g_drawColorToneHook;
@@ -169,6 +173,9 @@ thread_local int g_effectAnimationRenderDepth = 0;
 thread_local void* g_effectAnimationInstance = nullptr;
 thread_local void* g_effectAnimationCell = nullptr;
 thread_local int g_effectAnimationFinalRenderDepth = 0;
+thread_local bool g_spimpfrTraceActive = false;
+thread_local int g_spimpfrTraceSequence = -1;
+core::EffectPresentationTrace g_spimpfrPresentationTrace;
 struct ItemIconScope {
   void* cell{};
   bool spriteRoutingOwned{};
@@ -228,6 +235,7 @@ constexpr std::uint32_t kEffectDiagnosticX4Bound = 1u << 3;
 constexpr std::uint32_t kEffectDiagnosticBindFallback = 1u << 4;
 constexpr std::uint32_t kEffectDiagnosticOcclusionBound = 1u << 5;
 constexpr std::uint32_t kEffectDiagnosticOcclusionFallback = 1u << 6;
+constexpr std::uint32_t kEffectDiagnosticOwnerObserved = 1u << 7;
 EffectAnimationDiagnostics g_effectAnimationDiagnostics;
 
 [[nodiscard]] std::string effect_animation_resref_name(
@@ -1251,11 +1259,18 @@ bool read_area_animation_frame(void* gameStatic, ResolvedAreaAnimationFrame& res
   return true;
 }
 
+bool read_effect_resref(const void* address, std::array<char, 8>& resref) noexcept {
+  game::ResrefBuffer canonical{};
+  if (!game::read_runtime_resref(address, canonical)) return false;
+  std::copy_n(canonical.begin(), resref.size(), resref.begin());
+  return true;
+}
+
 bool read_registered_effect_resref(void* cell, std::array<char, 8>& resref) noexcept {
   if (!cell || !g_ctx || !g_ctx->manifest || !effect_animation_x4::ready()) return false;
   const auto& runtime = g_ctx->manifest->areaAnimations;
   return runtime.enabled &&
-      core::safe_read(static_cast<const std::byte*>(cell) + runtime.vidCellResref, resref) &&
+      read_effect_resref(static_cast<const std::byte*>(cell) + runtime.vidCellResref, resref) &&
       effect_animation_x4::contains_resource(resref);
 }
 
@@ -1269,8 +1284,8 @@ bool read_effect_animation_frame(void* cell, int logicalWidth, int logicalHeight
   std::array<char, 8> resref{};
   std::int16_t currentFrame = -1;
   std::int16_t currentSequence = -1;
-  if (!core::safe_read(reinterpret_cast<const void*>(cellBase + cellRuntime.vidCellResref),
-                       resref) ||
+  if (!read_effect_resref(reinterpret_cast<const void*>(cellBase + cellRuntime.vidCellResref),
+                                resref) ||
       !core::safe_read(reinterpret_cast<const void*>(cellBase + cellRuntime.vidCellCurrentFrame),
                        currentFrame) ||
       !core::safe_read(reinterpret_cast<const void*>(cellBase + cellRuntime.vidCellCurrentSequence),
@@ -1331,6 +1346,21 @@ void request_area_timeline_generation() noexcept {
 
 void request_effect_timeline_generation() noexcept {
   g_requestedEffectTimelineGeneration.fetch_add(1, std::memory_order_release);
+}
+
+bool observe_spimpfr_owner(void* instance, void* cell,
+                           const std::array<char, 8>& resref) noexcept {
+  constexpr std::array<char, 8> target{{'S','P','I','M','P','F','R','\0'}};
+  if (resref != target || !instance || !cell || !g_ctx || !g_ctx->manifest) return false;
+  const auto& runtime = g_ctx->manifest->areaAnimations;
+  std::int16_t slot = -1, sequence = -1;
+  (void)core::safe_read(static_cast<const std::byte*>(cell) + runtime.vidCellCurrentFrame, slot);
+  (void)core::safe_read(static_cast<const std::byte*>(cell) + runtime.vidCellCurrentSequence, sequence);
+  g_spimpfrTraceSequence = sequence;
+  g_spimpfrPresentationTrace.owner(reinterpret_cast<std::uintptr_t>(instance),
+      g_requestedEffectTimelineGeneration.load(std::memory_order_acquire), sequence,
+      slot, frame::frame_count());
+  return true;
 }
 
 void select_area_timeline_frame(void* instance, int worldActive,
@@ -1835,6 +1865,9 @@ bool prepare_effect_animation_composition_hooks(AppContext& ctx) noexcept {
           moduleBase + cellRuntime.glTextureState),
   };
   g_effectAnimationHooksEnabled = true;
+  LOG_INFO("SPIMPFR presentation trace enabled: post-occlusion draw + real swap return, "
+           "QPC timestamps, max8 occurrences/2048 swaps each; buffered until effect disappears; "
+           "no GPU readback, no interpolation or shader changes");
   return true;
 }
 
@@ -2683,6 +2716,9 @@ static void detour_projectile_bam_render(void* thisPtr, std::uintptr_t drawFlags
   }
   std::array<char, 8> resref{};
   const bool occlusionTarget = scoped && read_registered_effect_resref(cell, resref);
+  const bool previousTraceActive = g_spimpfrTraceActive;
+  const int previousTraceSequence = g_spimpfrTraceSequence;
+  g_spimpfrTraceActive = occlusionTarget && observe_spimpfr_owner(thisPtr, cell, resref);
   core::NativeOcclusionCorrelation nativeOcclusion{
       core::NativeOcclusionOwner::ProjectileBam,
       reinterpret_cast<std::uintptr_t>(thisPtr), pack_probe_subject(resref)};
@@ -2704,6 +2740,8 @@ static void detour_projectile_bam_render(void* thisPtr, std::uintptr_t drawFlags
     g_effectAnimationInstance = previousInstance;
     g_effectAnimationCell = previousCell;
   }
+  g_spimpfrTraceActive = previousTraceActive;
+  g_spimpfrTraceSequence = previousTraceSequence;
 }
 
 static void detour_vvc_vid_cell_render(void* thisPtr, void* gameArea, void* vidMode) {
@@ -2717,6 +2755,13 @@ static void detour_vvc_vid_cell_render(void* thisPtr, void* gameArea, void* vidM
   }
   std::array<char, 8> resref{};
   const bool occlusionTarget = scoped && read_registered_effect_resref(cell, resref);
+  const bool previousTraceActive = g_spimpfrTraceActive;
+  const int previousTraceSequence = g_spimpfrTraceSequence;
+  g_spimpfrTraceActive = occlusionTarget && observe_spimpfr_owner(thisPtr, cell, resref);
+  if (occlusionTarget) {
+    log_effect_animation_diagnostic_once(
+        resref, kEffectDiagnosticOwnerObserved, "owner-observed", -1, -1, -1, 0, 0);
+  }
   core::NativeOcclusionCorrelation nativeOcclusion{
       core::NativeOcclusionOwner::VvcEffect,
       reinterpret_cast<std::uintptr_t>(thisPtr), pack_probe_subject(resref)};
@@ -2739,6 +2784,8 @@ static void detour_vvc_vid_cell_render(void* thisPtr, void* gameArea, void* vidM
     g_effectAnimationInstance = previousInstance;
     g_effectAnimationCell = previousCell;
   }
+  g_spimpfrTraceActive = previousTraceActive;
+  g_spimpfrTraceSequence = previousTraceSequence;
 }
 
 static int detour_projectile_fx_render(void* thisPtr, void* sourceRect, int x, int y,
@@ -4065,7 +4112,24 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
       }
     }
   }
+  const bool traceDraw = g_spimpfrTraceActive && g_effectAnimationFinalRenderDepth > 0;
+  std::uint32_t traceTextureState = 0;
+  if (traceDraw && g_effectAnimationTextureApi.glTextureState) {
+    (void)core::safe_read(g_effectAnimationTextureApi.glTextureState, traceTextureState);
+  }
+  const auto traceDrawTicks = traceDraw ? frame::clock_ticks() : 0;
   original(visualX, y, sourceRect, logicalSize, clipRect, flags);
+  if (traceDraw) {
+    const bool hd = replacement == ReplacementKind::EffectAnimation;
+    g_spimpfrPresentationTrace.draw(
+        reinterpret_cast<std::uintptr_t>(g_effectAnimationInstance),
+        g_requestedEffectTimelineGeneration.load(std::memory_order_acquire),
+        g_spimpfrTraceSequence, frame::frame_count(), resolvedEffectAnimationFrame.slot,
+        resolvedEffectAnimationFrame.timelinePhase,
+        hd ? static_cast<int>(effectAnimationDrawFrame.frameIndex) : -1,
+        logicalWidth, logicalHeight, static_cast<int>((traceTextureState >> 21u) & 0x1FFu),
+        hd, hd && transientOcclusionTextureId > 0, traceDrawTicks);
+  }
   if (preserveCreatureHdFpDraw) {
     g_drawColorToneHook.original()(static_cast<int>(game::ShaderTone::Sprite));
   }
@@ -4138,6 +4202,7 @@ static void* detour_load_area(void* thisPtr, void* pAreaNameString, unsigned cha
       ctx.cfg.enablePerformanceLogging && QueryPerformanceCounter(&totalStart);
   try {
     area_animation_clock::request_area_generation();
+    g_mapRedrawGeneration.fetch_add(1, std::memory_order_acq_rel);
     request_area_timeline_generation();
     request_effect_timeline_generation();
     bridge::reset_area();
@@ -5022,6 +5087,32 @@ static void detour_game_area_render(void* thisPtr, void* vidMode) {
       LOG_WARN("Rendered-area owner recovery failed; retaining native rendering");
     }
   }
+  if (g_tileHooksReady.load(std::memory_order_acquire) && g_ctx && g_ctx->manifest &&
+      g_nativeAreaLoadDepth.load(std::memory_order_acquire) == 0) {
+    try {
+      static game::AreaRedrawRequest redraw;
+      // The engine may have cached the first map before our async startup
+      // completed. Invalidate it before the original area's first HD render.
+      // BG2EE 2.7.3 CInfinity::Render RVA 0x2A098E..0x2A09F1 consumes
+      // bRefreshVRamRect and calls the native cache refresh without zooming.
+      if (redraw.request(static_cast<game::CGameArea*>(thisPtr), *g_ctx->manifest,
+                         g_mapRedrawGeneration.load(std::memory_order_acquire),
+                         [](const auto* address, auto& value) { return core::safe_read(address, value); },
+                         [](auto* address, const auto& value) {
+                           if (!core::is_writable_non_executable_memory(address, sizeof(value))) return false;
+                           std::memcpy(address, &value, sizeof(value));
+                           return true;
+                         })) {
+        LOG_INFO("Map initial cache refresh requested before native render: area=0x{:X}, generation={}; zoom unchanged",
+                 reinterpret_cast<std::uintptr_t>(thisPtr),
+                 g_mapRedrawGeneration.load(std::memory_order_relaxed));
+      }
+    } catch (const std::exception& error) {
+      LOG_WARN("Map initial cache refresh deferred: {}", error.what());
+    } catch (...) {
+      LOG_WARN("Map initial cache refresh deferred");
+    }
+  }
   g_gameAreaRenderHook.original()(thisPtr, vidMode);
   // The GL renderer batches the native area's commands until DrawEndScaled.
   // Flush them while its map FBO is still current; otherwise those deferred
@@ -5030,7 +5121,23 @@ static void detour_game_area_render(void* thisPtr, void* vidMode) {
   bridge::render_world_overlay();
 }
 
+bool prepare_core_hooks(AppContext& ctx) {
+  try {
+    if (!g_hookInit) g_hookInit = new core::HookInit();
+    g_loadAreaHook.create(reinterpret_cast<void*>(ctx.addrs.LoadArea),
+                          reinterpret_cast<void*>(&detour_load_area));
+    g_renderTextureHook.create(reinterpret_cast<void*>(ctx.addrs.RenderTexture),
+                               reinterpret_cast<void*>(&detour_render_texture));
+    LOG_INFO("Core hook trampolines reserved before asset loading; hooks remain disabled");
+    return true;
+  } catch (const std::exception& error) {
+    LOG_ERROR("Core hook trampoline preparation failed: {}", error.what());
+    return false;
+  }
+}
+
 bool install_all(AppContext& ctx) {
+  g_tileHooksReady.store(false, std::memory_order_release);
   g_ctx = &ctx;
   g_route2TextureTable = nullptr;
   area::configure_texture_table(nullptr);
@@ -5779,6 +5886,7 @@ bool install_all(AppContext& ctx) {
     LOG_INFO("LoadArea hook enabled");
 
     g_renderTextureHook.enable();
+    g_tileHooksReady.store(true, std::memory_order_release);
     LOG_INFO("RenderTexture hook enabled");
 
     LOG_INFO("All hooks installed successfully");
@@ -5789,6 +5897,7 @@ bool install_all(AppContext& ctx) {
     return true;
   } catch (const std::exception& e) {
     LOG_ERROR("Exception during hook installation: {}", e.what());
+    g_tileHooksReady.store(false, std::memory_order_release);
     (void)g_gameAreaRenderHook.remove();
     g_drawFlushGl = nullptr;
     (void)g_drawColorToneHook.remove();
@@ -5915,6 +6024,7 @@ bool install_all(AppContext& ctx) {
 }
 
 void uninstall_all() noexcept {
+  g_tileHooksReady.store(false, std::memory_order_release);
   try {
     LOG_INFO("Uninstalling all hooks...");
   } catch (...) {
@@ -5995,6 +6105,7 @@ void uninstall_all() noexcept {
 }
 
 void prepare_for_shutdown() noexcept {
+  g_tileHooksReady.store(false, std::memory_order_release);
   // Quiesce engine entry points before dependent frame/GL hooks and shared
   // state are torn down. MinHook itself stays initialized until
   // uninstall_all(), after every MinHook-backed subsystem has removed its
@@ -6067,6 +6178,37 @@ void on_post_swap() noexcept {
     }
   } catch (...) {
     // Optional scheduling must never escape through the presentation ABI.
+  }
+}
+
+void on_effect_swap(unsigned long long epoch, long long ticks, bool success) noexcept {
+  try {
+    if (!g_ctx || !g_spimpfrPresentationTrace.count()) return;
+    const auto frequency = frame::clock_frequency();
+    g_spimpfrPresentationTrace.swap(epoch, ticks, frequency, read_world_active(), success);
+    if (!g_spimpfrPresentationTrace.ready_to_publish(ticks, frequency)) return;
+    for (std::size_t i = 0; i < g_spimpfrPresentationTrace.count(); ++i) {
+      auto& c = g_spimpfrPresentationTrace.capture(i);
+      if (c.published) continue;
+      LOG_INFO("SPIMPFR_PRESENT_BEGIN id={} instance=0x{:X} generation={} sequence={} "
+               "frequency={} rows={} overflow={} droppedOwners={} stage=swap-returned",
+               c.id, c.instance, c.generation, c.sequence, c.frequency, c.rowCount,
+               c.overflow, g_spimpfrPresentationTrace.dropped_owners());
+      for (std::size_t row = 0; row < c.rowCount; ++row) {
+        const auto& p = c.rows[row];
+        LOG_INFO("SPIMPFR_PRESENT_ROW id={} epoch={} qpc={} drawQpc={} active={} owner={} "
+                 "draws={} nativeSlot={} phase={} backing={} hd={} masked={} texture={} size={}x{} conflict={} swapOk={}",
+                 c.id, p.epoch, p.swapTicks, p.drawTicks, p.worldActive, p.ownerSeen,
+                 p.draws, p.nativeSlot, p.phase, p.backing, p.hd, p.masked, p.texture,
+                 p.width, p.height, p.conflictingDraws, p.swapOk);
+      }
+      LOG_INFO("SPIMPFR_PRESENT_END id={} rows={}; repeated presentation of one phase is "
+               "normal above30Hz or during pause; inspect QPC phase holds/skips/backing/fallback",
+               c.id, c.rowCount);
+      c.published = true;
+    }
+  } catch (...) {
+    // Diagnostic failure must never affect presentation or animation timing.
   }
 }
 }  // namespace iee::hooks

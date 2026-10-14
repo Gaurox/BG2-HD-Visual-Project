@@ -3,6 +3,9 @@
 #include "iee/water_route2_registry.h"
 
 namespace iee::hooks {
+// Reserve disabled engine trampolines while the near-image address space is
+// still available, before large CPU effect/water payloads are allocated.
+bool prepare_core_hooks(AppContext& ctx);
 bool install_all(AppContext& ctx);
 
 void uninstall_all() noexcept;
@@ -24,6 +27,10 @@ void on_frame_boundary(unsigned long long frame,
 // Render-thread callback after presentation and post-process restoration.
 // Experimental page prewarm runs here so no mid-draw binding is disturbed.
 void on_post_swap() noexcept;
+
+// Targeted buffered SPIMPFR trace; called only after the real SDL/GDI swap
+// returns, with the epoch captured before frame_tick increments it.
+void on_effect_swap(unsigned long long epoch, long long ticks, bool success) noexcept;
 
 bool is_active();
 std::optional<water_route2::Match> route2_water_overlay_match(

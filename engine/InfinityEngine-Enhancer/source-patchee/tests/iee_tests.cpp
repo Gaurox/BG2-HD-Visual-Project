@@ -47,6 +47,7 @@
 #include "iee/core/pvr_demand_telemetry.h"
 #include "iee/features/tile_render.h"
 #include "iee/game/active_area_runtime.h"
+#include "iee/game/area_redraw_runtime.h"
 #include "iee/game/area_texture.h"
 #include "iee/game/build_manifest.h"
 #include "iee/game/dds_texture.h"
@@ -763,6 +764,84 @@ void test_rendered_area_owner_recovery() {
               "An unreadable loaded flag must not pass the owner's round trip");
   expect_true(!resolve_rendered_area_owner(nullptr, manifest, read),
               "A null render target must fail closed");
+}
+
+void test_initial_map_redraw() {
+  using namespace iee::game;
+  const auto known = find_manifest_for_identity(2, 7, 3, 0, "Baldur's Gate II: Enhanced Edition");
+  if (!known) { expect_true(false, "Redraw test needs a supported manifest"); return; }
+  const auto& manifest = known->get();
+  CInfGame owner{};
+  CGameArea area{};
+  CResWED firstWed{}, secondWed{};
+  std::array<CGameArea*, 12> areas{};
+  areas[0] = &area;
+  std::memcpy(reinterpret_cast<std::byte*>(&owner) + manifest.offsets.infGameAreas,
+              &areas, sizeof(areas));
+  const std::uint8_t visible = 0;
+  std::memcpy(reinterpret_cast<std::byte*>(&owner) + manifest.offsets.infGameVisibleArea,
+              &visible, sizeof(visible));
+  area.m_pGame = &owner;
+  area.m_bAreaLoaded = 1;
+  area.m_pResWED = &firstWed;
+  area.m_cInfinity.m_pArea = &area;
+  area.m_cInfinity.pResWED = &firstWed;
+  area.m_cInfinity.bInitialized = 1;
+  const auto read = [&](const auto* address, auto& value) {
+    const auto at = reinterpret_cast<std::uintptr_t>(address);
+    const auto within = [&](const auto& object) {
+      const auto base = reinterpret_cast<std::uintptr_t>(&object);
+      return at >= base && at - base < sizeof(object) && sizeof(value) <= sizeof(object) - (at - base);
+    };
+    if (!within(owner) && !within(area)) return false;
+    std::memcpy(&value, address, sizeof(value));
+    return true;
+  };
+  bool allowWrite = true;
+  int writes = 0;
+  const auto write = [&](auto* address, const auto& value) {
+    if (!allowWrite || address != reinterpret_cast<std::byte*>(&area.m_cInfinity.bRefreshVRamRect))
+      return false;
+    ++writes;
+    std::memcpy(address, &value, sizeof(value));
+    return true;
+  };
+  AreaRedrawRequest redraw;
+  expect_true(redraw.request(&area, manifest, 1, read, write),
+              "First HD render must invalidate a native map cache created before hooks were ready");
+  expect_eq(area.m_cInfinity.bRefreshVRamRect, 1, "Request the native full-cache refresh");
+  area.m_cInfinity.bRefreshVRamRect = 0;  // Native CInfinity::Render consumes the flag.
+  expect_true(!redraw.request(&area, manifest, 1, read, write) && writes == 1,
+              "Steady frames must retain the engine cache instead of rebuilding it every frame");
+  expect_true(redraw.request(&area, manifest, 2, read, write),
+              "Reloading the same area and WED pointers must invalidate once for the new load");
+  area.m_cInfinity.bRefreshVRamRect = 0;
+  area.m_pResWED = &secondWed;
+  expect_true(!redraw.request(&area, manifest, 2, read, write),
+              "A WED transition must wait for the native renderer's WED to agree");
+  area.m_cInfinity.pResWED = &secondWed;
+  allowWrite = false;
+  expect_true(!redraw.request(&area, manifest, 2, read, write),
+              "Read-only native memory must be rejected without consuming the request");
+  allowWrite = true;
+  expect_true(redraw.request(&area, manifest, 2, read, write),
+              "A deferred refresh must retry after the native area becomes writable");
+  area.m_cInfinity.bInitialized = 0;
+  expect_true(!redraw.request(&area, manifest, 3, read, write),
+              "An uninitialized renderer must not be mutated");
+  area.m_cInfinity.bInitialized = 1;
+  area.m_cInfinity.m_pArea = nullptr;
+  expect_true(!redraw.request(&area, manifest, 3, read, write),
+              "The embedded renderer must point back to the exact active area");
+  area.m_cInfinity.m_pArea = &area;
+  area.m_bAreaLoaded = 0;
+  expect_true(!redraw.request(&area, manifest, 3, read, write),
+              "An area still loading must not consume the refresh");
+  area.m_bAreaLoaded = 1;
+  expect_true(redraw.request(&area, manifest, 3, read, write),
+              "A completed area must receive its previously deferred refresh");
+  expect_true(!redraw.request(nullptr, manifest, 4, read, write),
+              "Null render targets must fail closed");
 }
 
 void test_runtime_type_layouts() {
@@ -7525,6 +7604,7 @@ int main() {
   test_writable_non_executable_guards();
   test_manifest_loading();
   test_rendered_area_owner_recovery();
+  test_initial_map_redraw();
   test_runtime_type_layouts();
   test_file_format_layouts();
   test_eeex_doc_layout_maps();

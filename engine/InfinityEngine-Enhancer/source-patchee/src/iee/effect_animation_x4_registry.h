@@ -52,8 +52,8 @@ void release() noexcept;
                                                   int sequence,
                                                   int nativeFrame) noexcept;
 
-// Resolves one native CVidCell cycle slot. The match is exact on the eight-byte
-// resref, sequence, native frame and logical dimensions.
+// Resolves one native CVidCell cycle slot. RESREF matching is case-insensitive;
+// sequence, native frame and logical dimensions must match exactly.
 bool resolve_frame(const std::array<char, 8>& resref, int sequence, int currentFrame,
                    int logicalWidth, int logicalHeight, FrameHandle& out) noexcept;
 

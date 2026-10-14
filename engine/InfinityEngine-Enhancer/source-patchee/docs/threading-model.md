@@ -48,6 +48,18 @@ shutdown are treated as separate producers so ownership remains clear.
 
 ## Hook and Exception Rules
 
+Initialization reserves the disabled LoadArea/RenderTexture trampolines immediately after build
+identity and address validation, before large retained CPU assets occupy MinHook's near-image
+allocation window. Asset preparation still finishes before `install_all` enables any engine hook.
+Initialization failure removes these disabled hooks through the same explicit cleanup path.
+
+EEex's `InitBindings` export waits for its initialization worker before returning to host startup;
+the first `LoadArea` must run after HD hooks and retained CPU assets are ready. This wait runs
+outside `DllMain` and outside the worker-handle ownership mutex, using a duplicated synchronization
+handle so explicit shutdown can independently own/join the original handle. Initial native map
+caches are also invalidated once on the render thread per area/WED/load generation; the engine
+consumes `CInfinity::bRefreshVRamRect` without changing camera or zoom.
+
 No C++ exception may cross an engine, OpenGL, SDL, GDI, EEex, or DLL export boundary. Detours catch
 all exceptions only at those ABI boundaries, preserve the original engine call exactly once, and
 treat diagnostics as optional. Internal helpers use ordinary typed errors or return values and do

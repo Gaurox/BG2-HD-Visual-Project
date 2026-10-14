@@ -79,19 +79,23 @@ void frame_tick() {
 }
 
 void detour_sdl_swap(void* window) {
+  const auto presentedEpoch = frame_count();
   frame_tick();
   supersample::before_swap();
   post::apply_frame_fxaa();
   g_sdlSwapHook.original()(window);
+  hooks::on_effect_swap(presentedEpoch, clock_ticks(), true);
   supersample::after_swap();
   hooks::on_post_swap();
 }
 
 BOOL WINAPI detour_gdi_swap(HDC hdc) {
+  const auto presentedEpoch = frame_count();
   frame_tick();
   supersample::before_swap();
   post::apply_frame_fxaa();
   const BOOL result = g_gdiSwapHook.original()(hdc);
+  hooks::on_effect_swap(presentedEpoch, clock_ticks(), result != FALSE);
   supersample::after_swap();
   hooks::on_post_swap();
   return result;

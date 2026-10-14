@@ -1,0 +1,112 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPHOLYMT",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 20,
+    "source": {
+      "interpolation_run": "spholymt-interpolation-apollo30-retimed-20261014-v2",
+      "interpolation_run_descriptor_sha256": "5791D8D6BB39EF9C073963E7BDF2FADF138EA7AEC6213DF52B4E250308A48FFE",
+      "source_bam_sha256": "72c64de63108e41ea98e7f5cbaef8e5777aa4d54a3799a8e4a9289d301ac2de7",
+      "spatial_manifest_sha256": "F034E278C69A110C4DA6C4278672BF0B5050EBCED3D6190686AD3CA529C70F9A",
+      "spatial_run": "spholymt-spatial-seedvr7b-lab-lot33-20261014-v1",
+      "spatial_run_descriptor_sha256": "CFF4CA8B2E2F7D47FF9A48B086DF9C0332E64192A5D8B35CC10970CBB925EABB"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18
+      ],
+      "phase_count": 20,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ]
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1549,
+    "path": "effects/index/qa-decisions/SPHOLYMT/2026-10-15-accepted-0f971b9676f3.json",
+    "sha256": "0F971B9676F34C234B8B738F430354CC529949A0100B59EF86FCB249EAFD418B"
+  },
+  "resref": "SPHOLYMT",
+  "run_descriptor": {
+    "bytes": 2088,
+    "path": "effects/ressources/SPHOLYMT/runs/spholymt-interpolation-apollo30-retimed-20261014-v2/run.json",
+    "sha256": "5791D8D6BB39EF9C073963E7BDF2FADF138EA7AEC6213DF52B4E250308A48FFE"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 14954,
+      "path": "effects/ressources/SPHOLYMT/packs/spholymt-7b-x4-apollo30-retimed-20261014-v2/manifest.json",
+      "sha256": "4481F6FA741BA2F848B3E84040C1842EE0F5FA45045ACF66386A9A41EF61102B"
+    },
+    "registry": {
+      "bytes": 344,
+      "path": "effects/ressources/SPHOLYMT/packs/spholymt-7b-x4-apollo30-retimed-20261014-v2/EffectAnimations-X4.registry",
+      "sha256": "352E1F98232BEA093CD798EBE5BBF39CEF26300B1A07BE366689C081473668B8"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spholymt-interpolation-apollo30-retimed-20261014-v2",
+  "source": {
+    "bytes": 61551,
+    "path": "effects/ressources/SPHOLYMT/source.bam",
+    "sha256": "72C64DE63108E41EA98E7F5CBAEF8E5777AA4D54A3799A8E4A9289D301AC2DE7"
+  }
+}

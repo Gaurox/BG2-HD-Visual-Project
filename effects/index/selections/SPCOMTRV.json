@@ -1,0 +1,100 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPCOMTRV",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 14,
+    "source": {
+      "interpolation_run": "spcomtrv-interpolation-apollo30-retimed-20261014-v2",
+      "interpolation_run_descriptor_sha256": "F0F30087F59F6A15AFA4C313034450D06D20987CBDF42B738C603E079D8FFF8C",
+      "source_bam_sha256": "75ad2661c6c1a7f7c23393053159dd3579ce5ba5b81c360d8c54750f8ad57762",
+      "spatial_manifest_sha256": "972CABE0E3737A990475C4BA5F5555AB16AA9EFB0C4DEB8FC4BD251B7966A0A0",
+      "spatial_run": "spcomtrv-spatial-seedvr7b-lab-lot33-20261014-v1",
+      "spatial_run_descriptor_sha256": "8C3C8B106E52A1E8A6ACC21F7A90A5B01F4B389D17AD8CE918E87E38D51BED8C"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12
+      ],
+      "phase_count": 14,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1549,
+    "path": "effects/index/qa-decisions/SPCOMTRV/2026-10-15-accepted-10d4ed9b8896.json",
+    "sha256": "10D4ED9B88964AFEA2E833E909D3617171753D7CC6DF833A5D2448B05FAF9D0E"
+  },
+  "resref": "SPCOMTRV",
+  "run_descriptor": {
+    "bytes": 2088,
+    "path": "effects/ressources/SPCOMTRV/runs/spcomtrv-interpolation-apollo30-retimed-20261014-v2/run.json",
+    "sha256": "F0F30087F59F6A15AFA4C313034450D06D20987CBDF42B738C603E079D8FFF8C"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 10899,
+      "path": "effects/ressources/SPCOMTRV/packs/spcomtrv-7b-x4-apollo30-retimed-20261014-v2/manifest.json",
+      "sha256": "B9F63063C5406D5E2182DC301F11920159C82F4E3460064D6F9CED684AEE9F79"
+    },
+    "registry": {
+      "bytes": 260,
+      "path": "effects/ressources/SPCOMTRV/packs/spcomtrv-7b-x4-apollo30-retimed-20261014-v2/EffectAnimations-X4.registry",
+      "sha256": "7D75F90A4A7A86CF28C4A8828FB4C5206BEDE3BCFAD582F0B2AEA5C505BEB78F"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spcomtrv-interpolation-apollo30-retimed-20261014-v2",
+  "source": {
+    "bytes": 32914,
+    "path": "effects/ressources/SPCOMTRV/source.bam",
+    "sha256": "75AD2661C6C1A7F7C23393053159DD3579CE5BA5B81C360D8C54750F8AD57762"
+  }
+}

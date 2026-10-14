@@ -1,0 +1,160 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPFIREPI",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 44,
+    "source": {
+      "interpolation_run": "spfirepi-interpolation-apollo30-retimed-20261014-v2",
+      "interpolation_run_descriptor_sha256": "125AD8AB8778F92F01A863B44C0DA54F63A6826067C165A2FC1EE631F474ED91",
+      "source_bam_sha256": "431fec7a109f46a5c43ba68d39d693b341d794095cf85292a1e36e5567bd541a",
+      "spatial_manifest_sha256": "BE235C1657ADC015AAFA8864A922D6942310B72622A9D502D5C98077F2C2947E",
+      "spatial_run": "spfirepi-spatial-seedvr7b-lab-lot33-20261014-v1",
+      "spatial_run_descriptor_sha256": "6CE46DE1A059D4FCA5651D3CB76C7ABB40CAFAFE601DC3AB141732DD0AA7B18C"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        36,
+        38,
+        40,
+        42
+      ],
+      "phase_count": 44,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ]
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1549,
+    "path": "effects/index/qa-decisions/SPFIREPI/2026-10-15-accepted-0f1d2f7cdec4.json",
+    "sha256": "0F1D2F7CDEC4A2068C9D931D2012BCFDA8403150D0DC83C38C278F0B4EC25B68"
+  },
+  "resref": "SPFIREPI",
+  "run_descriptor": {
+    "bytes": 2088,
+    "path": "effects/ressources/SPFIREPI/runs/spfirepi-interpolation-apollo30-retimed-20261014-v2/run.json",
+    "sha256": "125AD8AB8778F92F01A863B44C0DA54F63A6826067C165A2FC1EE631F474ED91"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 31342,
+      "path": "effects/ressources/SPFIREPI/packs/spfirepi-7b-x4-apollo30-retimed-20261014-v2/manifest.json",
+      "sha256": "D82176053FAA15051E6D0136184FD598330B46DD3F5556CBA9C2EB8BC2B3E96D"
+    },
+    "registry": {
+      "bytes": 680,
+      "path": "effects/ressources/SPFIREPI/packs/spfirepi-7b-x4-apollo30-retimed-20261014-v2/EffectAnimations-X4.registry",
+      "sha256": "49C2BBB5754277DAF0692B7BDF6CA2AD4455F32856EA59C67FE41FD60AB6E268"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spfirepi-interpolation-apollo30-retimed-20261014-v2",
+  "source": {
+    "bytes": 54546,
+    "path": "effects/ressources/SPFIREPI/source.bam",
+    "sha256": "431FEC7A109F46A5C43BA68D39D693B341D794095CF85292A1E36E5567BD541A"
+  }
+}

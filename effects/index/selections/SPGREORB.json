@@ -1,0 +1,136 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPGREORB",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 32,
+    "source": {
+      "interpolation_run": "spgreorb-interpolation-apollo30-retimed-20261014-v2",
+      "interpolation_run_descriptor_sha256": "5628E377D00C659BC2B56DC6D7559D14226BFC913167C61EEE607CD7C517C36F",
+      "source_bam_sha256": "025377c0c20b744d092354e341395a85eabbcd9f55415eb8c06418416be73c55",
+      "spatial_manifest_sha256": "319160FF0E99589BB350C92D6C4852FD9F53F420A59DAAD3EDA72A74419FB30B",
+      "spatial_run": "spgreorb-spatial-seedvr7b-lab-lot33-20261014-v1",
+      "spatial_run_descriptor_sha256": "F45CEEDA6F56E28F245A9B4916F69492AEE8EC6960D43A0311A418D1A14A8387"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "phase_count": 32,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31
+      ]
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1549,
+    "path": "effects/index/qa-decisions/SPGREORB/2026-10-15-accepted-4d494bbaea79.json",
+    "sha256": "4D494BBAEA7914920757AECC27BDDD9256862505B4A8E99809E3058F747AF881"
+  },
+  "resref": "SPGREORB",
+  "run_descriptor": {
+    "bytes": 2087,
+    "path": "effects/ressources/SPGREORB/runs/spgreorb-interpolation-apollo30-retimed-20261014-v2/run.json",
+    "sha256": "5628E377D00C659BC2B56DC6D7559D14226BFC913167C61EEE607CD7C517C36F"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 23074,
+      "path": "effects/ressources/SPGREORB/packs/spgreorb-7b-x4-apollo30-retimed-20261014-v2/manifest.json",
+      "sha256": "76668341DA2B5B249B4E17997A4BEC139633750AD2064D6E825A2B2D667EFB4D"
+    },
+    "registry": {
+      "bytes": 512,
+      "path": "effects/ressources/SPGREORB/packs/spgreorb-7b-x4-apollo30-retimed-20261014-v2/EffectAnimations-X4.registry",
+      "sha256": "385467C28D01B00825408A049B1811C52F9B82D6D5888F80366AE6C987225813"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spgreorb-interpolation-apollo30-retimed-20261014-v2",
+  "source": {
+    "bytes": 18453,
+    "path": "effects/ressources/SPGREORB/source.bam",
+    "sha256": "025377C0C20B744D092354E341395A85EABBCD9F55415EB8C06418416BE73C55"
+  }
+}

@@ -1,0 +1,168 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPSPAINI",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 48,
+    "source": {
+      "interpolation_run": "spspaini-interpolation-apollo30-retimed-20261014-v2",
+      "interpolation_run_descriptor_sha256": "90AAFA0425B5F4E37E2ED6F098D51B2004812DB51F3E45DDC3C2A12AD6359F75",
+      "source_bam_sha256": "e6a80fe78290d815d532ce110f0ae9104f0a538e843e0281f3b58a2514c28c89",
+      "spatial_manifest_sha256": "A3474BC197BA049BFC022121FBB06E6CD1BE1D1F87395B0867C4294604596068",
+      "spatial_run": "spspaini-spatial-seedvr7b-lab-lot33-20261014-v1",
+      "spatial_run_descriptor_sha256": "205382132BCED1D42461993F29F35A60F98C4D66DA00423BF56A3EDE489F26FC"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        36,
+        38,
+        40,
+        42,
+        44,
+        46
+      ],
+      "phase_count": 48,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ]
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1549,
+    "path": "effects/index/qa-decisions/SPSPAINI/2026-10-15-accepted-e0a15a73f3ba.json",
+    "sha256": "E0A15A73F3BA8A2E4523DD98232366BD2F605C7B8757A2E95CE014C61F814A85"
+  },
+  "resref": "SPSPAINI",
+  "run_descriptor": {
+    "bytes": 2088,
+    "path": "effects/ressources/SPSPAINI/runs/spspaini-interpolation-apollo30-retimed-20261014-v2/run.json",
+    "sha256": "90AAFA0425B5F4E37E2ED6F098D51B2004812DB51F3E45DDC3C2A12AD6359F75"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 34122,
+      "path": "effects/ressources/SPSPAINI/packs/spspaini-7b-x4-apollo30-retimed-20261014-v2/manifest.json",
+      "sha256": "998F803A12A8102C5B9E775789129C64F956002867C7126D39D233B191FB4F69"
+    },
+    "registry": {
+      "bytes": 736,
+      "path": "effects/ressources/SPSPAINI/packs/spspaini-7b-x4-apollo30-retimed-20261014-v2/EffectAnimations-X4.registry",
+      "sha256": "6B1F15DF4EED4BCCF62C657AA944572B92F00568E90DDE5F296BC52E57369776"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spspaini-interpolation-apollo30-retimed-20261014-v2",
+  "source": {
+    "bytes": 155016,
+    "path": "effects/ressources/SPSPAINI/source.bam",
+    "sha256": "E6A80FE78290D815D532CE110F0AE9104F0A538E843E0281F3B58A2514C28C89"
+  }
+}

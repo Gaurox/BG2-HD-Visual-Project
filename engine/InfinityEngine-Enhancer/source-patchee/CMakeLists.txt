@@ -332,6 +332,11 @@ else()
 endif()
 
 if(BUILD_TESTING)
+    add_executable(iee_effect_presentation_trace_tests tests/effect_presentation_trace_tests.cpp)
+    target_include_directories(iee_effect_presentation_trace_tests PRIVATE "${CMAKE_SOURCE_DIR}/src")
+    iee_configure_target(iee_effect_presentation_trace_tests)
+    add_test(NAME iee_effect_presentation_trace_tests COMMAND iee_effect_presentation_trace_tests)
+
     add_executable(iee_area_animation_lighting_tests tests/area_animation_lighting_tests.cpp)
     target_include_directories(iee_area_animation_lighting_tests PRIVATE "${CMAKE_SOURCE_DIR}/src")
     iee_configure_target(iee_area_animation_lighting_tests)
@@ -442,6 +447,14 @@ if(BUILD_TESTING)
         add_test(NAME iee_effect_texture_cache_tests COMMAND iee_effect_texture_cache_tests)
     endif()
 
+    if(WIN32 AND TARGET minhook)
+        add_executable(iee_hook_preallocation_tests tests/hook_preallocation_tests.cpp)
+        target_include_directories(iee_hook_preallocation_tests PRIVATE "${CMAKE_SOURCE_DIR}/src")
+        target_link_libraries(iee_hook_preallocation_tests PRIVATE minhook)
+        iee_configure_target(iee_hook_preallocation_tests)
+        add_test(NAME iee_hook_preallocation_tests COMMAND iee_hook_preallocation_tests)
+    endif()
+
     if(WIN32)
         # Isolated regression test for DLL worker ownership. It deliberately
         # does not link the renderer or registry so lifecycle failures remain
@@ -453,5 +466,11 @@ if(BUILD_TESTING)
         target_compile_features(iee_bridge_worker_tests PRIVATE cxx_std_20)
         iee_configure_target(iee_bridge_worker_tests)
         add_test(NAME iee_bridge_worker_tests COMMAND iee_bridge_worker_tests)
+
+        add_executable(iee_startup_barrier_tests tests/startup_barrier_tests.cpp)
+        target_include_directories(iee_startup_barrier_tests PRIVATE "${CMAKE_SOURCE_DIR}/src")
+        iee_configure_target(iee_startup_barrier_tests)
+        add_test(NAME iee_startup_barrier_tests COMMAND iee_startup_barrier_tests)
+        set_tests_properties(iee_startup_barrier_tests PROPERTIES TIMEOUT 15)
     endif()
 endif()

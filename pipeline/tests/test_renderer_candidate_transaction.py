@@ -122,6 +122,53 @@ class RendererCandidateTransactionTests(unittest.TestCase):
             process_checker=lambda: [],
         )
 
+    def write_carrier_candidate(self) -> Path:
+        self.write_effect_pack(self.candidate, b"candidate-effect")
+        carrier = self.candidate / "override/SPMAGMIS.bam"
+        carrier.parent.mkdir()
+        carrier.write_bytes(b"BAM V1  " + bytes(24))
+        path = self.candidate / "iee-assets/effects/manifest.json"
+        manifest = json.loads(path.read_text(encoding="utf-8"))
+        manifest["resources"] = [{"resref": "SPMAGMIS"}]
+        manifest["runtime_bam_carriers"] = [{"resref": "SPMAGMIS", "asset": "override/SPMAGMIS.bam",
+            "sha256": transaction.sha256_file(carrier), "bytes": carrier.stat().st_size}]
+        path.write_text(json.dumps(manifest), encoding="utf-8")
+        return carrier
+
+    def test_effect_bam_carrier_shares_install_and_restore_transaction(self) -> None:
+        carrier = self.write_carrier_candidate()
+        expected = carrier.read_bytes()
+        target = self.game / "override/SPMAGMIS.bam"
+        target.parent.mkdir()
+        target.write_bytes(b"before-native-bam")
+        result = self.install()
+        self.assertEqual(target.read_bytes(), expected)
+        transaction.verify_transaction(result.receipt_path, self.game)
+        shutil.rmtree(self.candidate)
+        transaction.restore_from_receipt(result.receipt_path, game_root=self.game, process_checker=lambda: [])
+        self.assertEqual(target.read_bytes(), b"before-native-bam")
+
+    def test_modified_or_unlisted_bam_carrier_is_rejected_before_mutation(self) -> None:
+        carrier = self.write_carrier_candidate()
+        data = carrier.read_bytes()
+        carrier.write_bytes(data + b"changed")
+        with self.assertRaisesRegex(transaction.TransactionError, "hash mismatch"):
+            self.install()
+        self.assertFalse(self.backups.exists())
+        carrier.write_bytes(data)
+        (carrier.parent / "OTHER.bam").write_bytes(data)
+        with self.assertRaisesRegex(transaction.TransactionError, "inventory mismatch"):
+            self.install()
+        self.assertFalse(self.backups.exists())
+
+    def test_declared_missing_carrier_is_rejected(self) -> None:
+        carrier = self.write_carrier_candidate()
+        carrier.unlink()
+        carrier.parent.rmdir()
+        with self.assertRaisesRegex(transaction.TransactionError, "carriers are missing"):
+            self.install()
+        self.assertFalse(self.backups.exists())
+
     def test_install_and_source_independent_restore_are_exact(self) -> None:
         result = self.install()
         self.assertEqual(

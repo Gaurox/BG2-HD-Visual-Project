@@ -1,0 +1,820 @@
+{
+  "schema": "bg2-effects-timing-size-audit-v1",
+  "created_utc": "2026-10-14T21:33:53.341971+00:00",
+  "production_batch": "effects/batches/lot33-seedvr7b-apollo30-20261014-v1/batch.json",
+  "runtime_session_start_local": "2026-10-14 23:22:06.969",
+  "installed_manifest_sha256": "D466B0B27D153DE216B1A5E937F54ABC759107216B4BA90DE9C476B53AA05F46",
+  "resource_count": 33,
+  "installed_backings_checked": 1960,
+  "x4_and_timeline_bound_resources": 23,
+  "findings": {
+    "timing": "All 33 packs target 30/1, duration native_slots/15. Every one-shot holds the terminal pose. Native holds/repeats are retained; exact duplicates are not excluded by historical unexpected_duplicates=0. SPSUMP has 128 phases, 63 distinct RGBA images, 65 adjacent identical transitions.",
+    "geometry": "All 33 pack frames match decoded native BAM logical dimensions and centres; physical backing is exactly 4x. Installed manifests and all 1960 backing SHA256 values match. Renderer retains native draw arguments; no global x4 geometry enlargement.",
+    "runtime": "Only 23/33 resources have x4-bound and timeline-resolved in latest session. Nine absent resources have mixed/lowercase VVC BAM names while effect registry compares raw std::array<char,8> case-sensitively; this is a source-level lookup defect consistent with all nine absences. CVidCell raw names were not sampled live. Tenth absent resource SPSPAINI remains unexplained.",
+    "limits": "Configured timeline rate does not establish continuous observed display cadence; absent log diagnostics alone do not prove which native resource was actually drawn. No game controls used, no installation or production changes."
+  },
+  "assets": [
+    {
+      "resref": "DDOORH",
+      "native_frame_records": 20,
+      "native_cycle_slots": 20,
+      "target_phases": 40,
+      "unique_rgba_images": 39,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 1.3333333333333333,
+      "max_frame_dimensions_x1": [
+        158,
+        156
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "DDOORH",
+          "bam_resref_raw": "DDOORH"
+        }
+      ]
+    },
+    {
+      "resref": "OHNPORTA",
+      "native_frame_records": 38,
+      "native_cycle_slots": 38,
+      "target_phases": 76,
+      "unique_rgba_images": 75,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 2.533333333333333,
+      "max_frame_dimensions_x1": [
+        185,
+        155
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "native-occlusion-bound",
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "OHNPORTA",
+          "bam_resref_raw": "OHNPORTA"
+        }
+      ]
+    },
+    {
+      "resref": "SPPORTAL",
+      "native_frame_records": 38,
+      "native_cycle_slots": 38,
+      "target_phases": 76,
+      "unique_rgba_images": 75,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 2.533333333333333,
+      "max_frame_dimensions_x1": [
+        185,
+        155
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "native-occlusion-bound",
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPPORTAL",
+          "bam_resref_raw": "SPPORTAL"
+        }
+      ]
+    },
+    {
+      "resref": "SPHLEFT",
+      "native_frame_records": 20,
+      "native_cycle_slots": 20,
+      "target_phases": 40,
+      "unique_rgba_images": 39,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 1.3333333333333333,
+      "max_frame_dimensions_x1": [
+        150,
+        244
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPH1HI01",
+          "bam_resref_raw": "SPHLEFT"
+        }
+      ]
+    },
+    {
+      "resref": "SPHRIGHT",
+      "native_frame_records": 20,
+      "native_cycle_slots": 20,
+      "target_phases": 40,
+      "unique_rgba_images": 39,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 1.3333333333333333,
+      "max_frame_dimensions_x1": [
+        36,
+        77
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPHLHI02",
+          "bam_resref_raw": "SPHRIGHT"
+        }
+      ]
+    },
+    {
+      "resref": "SPWHIRL",
+      "native_frame_records": 24,
+      "native_cycle_slots": 24,
+      "target_phases": 48,
+      "unique_rgba_images": 47,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 1.6,
+      "max_frame_dimensions_x1": [
+        220,
+        220
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPWHIRL",
+          "bam_resref_raw": "SPwhirl"
+        }
+      ]
+    },
+    {
+      "resref": "SPSUMPLN",
+      "native_frame_records": 16,
+      "native_cycle_slots": 16,
+      "target_phases": 32,
+      "unique_rgba_images": 31,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 1.0666666666666667,
+      "max_frame_dimensions_x1": [
+        172,
+        240
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPSUMPLN",
+          "bam_resref_raw": "SPsumpln"
+        }
+      ]
+    },
+    {
+      "resref": "OHRSGONE",
+      "native_frame_records": 119,
+      "native_cycle_slots": 119,
+      "target_phases": 238,
+      "unique_rgba_images": 216,
+      "adjacent_identical_transitions": 3,
+      "duration_seconds": 7.933333333333334,
+      "max_frame_dimensions_x1": [
+        181,
+        144
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "native-occlusion-bound",
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "OHRSGONE",
+          "bam_resref_raw": "OHRSGONE"
+        }
+      ]
+    },
+    {
+      "resref": "SHACID",
+      "native_frame_records": 24,
+      "native_cycle_slots": 12,
+      "target_phases": 24,
+      "unique_rgba_images": 23,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 0.8,
+      "max_frame_dimensions_x1": [
+        48,
+        62
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "POISON",
+          "bam_resref_raw": "SHAcid"
+        },
+        {
+          "vvc": "SHACID",
+          "bam_resref_raw": "SHACID"
+        },
+        {
+          "vvc": "SHACID2",
+          "bam_resref_raw": "SHACID"
+        }
+      ]
+    },
+    {
+      "resref": "SHAIR",
+      "native_frame_records": 18,
+      "native_cycle_slots": 18,
+      "target_phases": 36,
+      "unique_rgba_images": 35,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 1.2,
+      "max_frame_dimensions_x1": [
+        51,
+        83
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "SHAIR",
+          "bam_resref_raw": "SHAIR"
+        }
+      ]
+    },
+    {
+      "resref": "SPATTCK2",
+      "native_frame_records": 21,
+      "native_cycle_slots": 21,
+      "target_phases": 42,
+      "unique_rgba_images": 41,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 1.4,
+      "max_frame_dimensions_x1": [
+        19,
+        22
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPATTCK2",
+          "bam_resref_raw": "SPATTCK2"
+        }
+      ]
+    },
+    {
+      "resref": "SPCLOUD2",
+      "native_frame_records": 11,
+      "native_cycle_slots": 20,
+      "target_phases": 40,
+      "unique_rgba_images": 30,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 1.3333333333333333,
+      "max_frame_dimensions_x1": [
+        121,
+        73
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPCLOUD2",
+          "bam_resref_raw": "SPCLOUD2"
+        }
+      ]
+    },
+    {
+      "resref": "SPCLOUD3",
+      "native_frame_records": 11,
+      "native_cycle_slots": 20,
+      "target_phases": 40,
+      "unique_rgba_images": 30,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 1.3333333333333333,
+      "max_frame_dimensions_x1": [
+        58,
+        38
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPCLOUD3",
+          "bam_resref_raw": "SPCLOUD3"
+        }
+      ]
+    },
+    {
+      "resref": "SPGREORB",
+      "native_frame_records": 16,
+      "native_cycle_slots": 16,
+      "target_phases": 32,
+      "unique_rgba_images": 31,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 1.0666666666666667,
+      "max_frame_dimensions_x1": [
+        54,
+        54
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPGREORB",
+          "bam_resref_raw": "SPGREORB"
+        }
+      ]
+    },
+    {
+      "resref": "SPDUSTY2",
+      "native_frame_records": 31,
+      "native_cycle_slots": 31,
+      "target_phases": 62,
+      "unique_rgba_images": 61,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 2.066666666666667,
+      "max_frame_dimensions_x1": [
+        66,
+        81
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "native-occlusion-bound",
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPDUSTY2",
+          "bam_resref_raw": "SPDUSTY2"
+        }
+      ]
+    },
+    {
+      "resref": "SPSUMP",
+      "native_frame_records": 32,
+      "native_cycle_slots": 64,
+      "target_phases": 128,
+      "unique_rgba_images": 63,
+      "adjacent_identical_transitions": 65,
+      "duration_seconds": 4.266666666666667,
+      "max_frame_dimensions_x1": [
+        118,
+        128
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPSUMP",
+          "bam_resref_raw": "SPsump"
+        }
+      ]
+    },
+    {
+      "resref": "SPSOLBRD",
+      "native_frame_records": 50,
+      "native_cycle_slots": 50,
+      "target_phases": 100,
+      "unique_rgba_images": 99,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 3.3333333333333335,
+      "max_frame_dimensions_x1": [
+        252,
+        187
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPSOLBRD",
+          "bam_resref_raw": "SPsolbrd"
+        }
+      ]
+    },
+    {
+      "resref": "OHDSTREE",
+      "native_frame_records": 45,
+      "native_cycle_slots": 45,
+      "target_phases": 90,
+      "unique_rgba_images": 89,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 3.0,
+      "max_frame_dimensions_x1": [
+        118,
+        78
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "OHDSTREE",
+          "bam_resref_raw": "OHDSTREE"
+        }
+      ]
+    },
+    {
+      "resref": "SPBASERD",
+      "native_frame_records": 50,
+      "native_cycle_slots": 49,
+      "target_phases": 98,
+      "unique_rgba_images": 97,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 3.2666666666666666,
+      "max_frame_dimensions_x1": [
+        135,
+        153
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPPOWRRD",
+          "bam_resref_raw": "SPBASERD"
+        }
+      ]
+    },
+    {
+      "resref": "SPCALLLI",
+      "native_frame_records": 18,
+      "native_cycle_slots": 18,
+      "target_phases": 36,
+      "unique_rgba_images": 35,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 1.2,
+      "max_frame_dimensions_x1": [
+        41,
+        155
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "AMCALL",
+          "bam_resref_raw": "SPCALLLI"
+        },
+        {
+          "vvc": "CALLLIGH",
+          "bam_resref_raw": "SPCALLLI"
+        }
+      ]
+    },
+    {
+      "resref": "SPCOMTRV",
+      "native_frame_records": 7,
+      "native_cycle_slots": 7,
+      "target_phases": 14,
+      "unique_rgba_images": 13,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 0.4666666666666667,
+      "max_frame_dimensions_x1": [
+        126,
+        163
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPCOMTRV",
+          "bam_resref_raw": "SPcomtrv"
+        }
+      ]
+    },
+    {
+      "resref": "SPDRGNBR",
+      "native_frame_records": 36,
+      "native_cycle_slots": 51,
+      "target_phases": 102,
+      "unique_rgba_images": 85,
+      "adjacent_identical_transitions": 2,
+      "duration_seconds": 3.4,
+      "max_frame_dimensions_x1": [
+        153,
+        235
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPDRGNBR",
+          "bam_resref_raw": "SPDRGNBR"
+        }
+      ]
+    },
+    {
+      "resref": "SPFIREPI",
+      "native_frame_records": 22,
+      "native_cycle_slots": 22,
+      "target_phases": 44,
+      "unique_rgba_images": 43,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 1.4666666666666666,
+      "max_frame_dimensions_x1": [
+        208,
+        217
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPFIREPI",
+          "bam_resref_raw": "spfirepi"
+        }
+      ]
+    },
+    {
+      "resref": "SPHOLYMT",
+      "native_frame_records": 10,
+      "native_cycle_slots": 10,
+      "target_phases": 20,
+      "unique_rgba_images": 18,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 0.6666666666666666,
+      "max_frame_dimensions_x1": [
+        68,
+        227
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPHOLYMT",
+          "bam_resref_raw": "SPHOLYMT"
+        }
+      ]
+    },
+    {
+      "resref": "SPIMPFR",
+      "native_frame_records": 59,
+      "native_cycle_slots": 59,
+      "target_phases": 118,
+      "unique_rgba_images": 68,
+      "adjacent_identical_transitions": 50,
+      "duration_seconds": 3.933333333333333,
+      "max_frame_dimensions_x1": [
+        94,
+        128
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPIMPFR",
+          "bam_resref_raw": "SPimpfr"
+        }
+      ]
+    },
+    {
+      "resref": "SPRWRATI",
+      "native_frame_records": 48,
+      "native_cycle_slots": 48,
+      "target_phases": 96,
+      "unique_rgba_images": 85,
+      "adjacent_identical_transitions": 11,
+      "duration_seconds": 3.2,
+      "max_frame_dimensions_x1": [
+        85,
+        148
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "ICWRATI",
+          "bam_resref_raw": "SPRWRATI"
+        }
+      ]
+    },
+    {
+      "resref": "SPSTRMVB",
+      "native_frame_records": 30,
+      "native_cycle_slots": 30,
+      "target_phases": 60,
+      "unique_rgba_images": 29,
+      "adjacent_identical_transitions": 31,
+      "duration_seconds": 2.0,
+      "max_frame_dimensions_x1": [
+        128,
+        128
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPSTRMVB",
+          "bam_resref_raw": "SPstrmvb"
+        }
+      ]
+    },
+    {
+      "resref": "SPCL239",
+      "native_frame_records": 24,
+      "native_cycle_slots": 23,
+      "target_phases": 46,
+      "unique_rgba_images": 45,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 1.5333333333333334,
+      "max_frame_dimensions_x1": [
+        190,
+        151
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPCL239",
+          "bam_resref_raw": "SPCL239"
+        }
+      ]
+    },
+    {
+      "resref": "SPCRTWPN",
+      "native_frame_records": 88,
+      "native_cycle_slots": 86,
+      "target_phases": 172,
+      "unique_rgba_images": 171,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 5.733333333333333,
+      "max_frame_dimensions_x1": [
+        156,
+        119
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPCRTWPN",
+          "bam_resref_raw": "SPCRTWPN"
+        }
+      ]
+    },
+    {
+      "resref": "SPGRWHRL",
+      "native_frame_records": 24,
+      "native_cycle_slots": 23,
+      "target_phases": 46,
+      "unique_rgba_images": 45,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 1.5333333333333334,
+      "max_frame_dimensions_x1": [
+        190,
+        151
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPGRWHRL",
+          "bam_resref_raw": "SPgrwhrl"
+        }
+      ]
+    },
+    {
+      "resref": "SPSOHOPI",
+      "native_frame_records": 24,
+      "native_cycle_slots": 24,
+      "target_phases": 48,
+      "unique_rgba_images": 47,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 1.6,
+      "max_frame_dimensions_x1": [
+        251,
+        215
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "native-occlusion-bound",
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "OHBGLYPH",
+          "bam_resref_raw": "SPSOHOPI"
+        }
+      ]
+    },
+    {
+      "resref": "SPSPAINI",
+      "native_frame_records": 24,
+      "native_cycle_slots": 24,
+      "target_phases": 48,
+      "unique_rgba_images": 47,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 1.6,
+      "max_frame_dimensions_x1": [
+        277,
+        248
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [],
+      "vvc_resrefs": [
+        {
+          "vvc": "ICSPAIN",
+          "bam_resref_raw": "SPSPAINI"
+        }
+      ]
+    },
+    {
+      "resref": "SPSTRENH",
+      "native_frame_records": 36,
+      "native_cycle_slots": 35,
+      "target_phases": 70,
+      "unique_rgba_images": 69,
+      "adjacent_identical_transitions": 1,
+      "duration_seconds": 2.3333333333333335,
+      "max_frame_dimensions_x1": [
+        102,
+        150
+      ],
+      "geometry_and_installed_bytes_verified": true,
+      "runtime_stages": [
+        "registry-resolved",
+        "timeline-resolved",
+        "x4-bound"
+      ],
+      "vvc_resrefs": [
+        {
+          "vvc": "SPSTRENH",
+          "bam_resref_raw": "SPSTRENH"
+        }
+      ]
+    }
+  ]
+}

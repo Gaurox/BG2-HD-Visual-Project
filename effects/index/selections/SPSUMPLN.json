@@ -1,0 +1,136 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPSUMPLN",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 32,
+    "source": {
+      "interpolation_run": "spsumpln-interpolation-apollo30-retimed-20261014-v2",
+      "interpolation_run_descriptor_sha256": "EE1809EE5DD76F1BD764BAB6EACC64ED1663645A27AD799393AA44B6B6952F3F",
+      "source_bam_sha256": "ca6b795f69036bc90030bb71af3b545f7646f70eb7fefbd8018e83bc2e372e37",
+      "spatial_manifest_sha256": "79164CBFA2634F458DEFA34985D1075FB39E1536B9DC50FA88BC1E8DDF5CAC5D",
+      "spatial_run": "spsumpln-spatial-seedvr7b-lab-lot33-20261014-v1",
+      "spatial_run_descriptor_sha256": "5215B6D8DC349B4EAC3B05FC8E19E86A6F620C80BB6B23C5E65FFDB06F860CB3"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "phase_count": 32,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31
+      ]
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1549,
+    "path": "effects/index/qa-decisions/SPSUMPLN/2026-10-15-accepted-147cbdeb842c.json",
+    "sha256": "147CBDEB842CE5CFE96140E0B0BA175243BF118F88D2F9759C52AB696EA35D57"
+  },
+  "resref": "SPSUMPLN",
+  "run_descriptor": {
+    "bytes": 2088,
+    "path": "effects/ressources/SPSUMPLN/runs/spsumpln-interpolation-apollo30-retimed-20261014-v2/run.json",
+    "sha256": "EE1809EE5DD76F1BD764BAB6EACC64ED1663645A27AD799393AA44B6B6952F3F"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 23202,
+      "path": "effects/ressources/SPSUMPLN/packs/spsumpln-7b-x4-apollo30-retimed-20261014-v2/manifest.json",
+      "sha256": "8090C916C70E14EA687F4646533C09C0F857E737C2966100C6979748E8F0E60C"
+    },
+    "registry": {
+      "bytes": 512,
+      "path": "effects/ressources/SPSUMPLN/packs/spsumpln-7b-x4-apollo30-retimed-20261014-v2/EffectAnimations-X4.registry",
+      "sha256": "C41C3CC4512E476F1E5F911D0B757B50D785B0537C726448BF58C3BBC834FCB7"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spsumpln-interpolation-apollo30-retimed-20261014-v2",
+  "source": {
+    "bytes": 161048,
+    "path": "effects/ressources/SPSUMPLN/source.bam",
+    "sha256": "CA6B795F69036BC90030BB71AF3B545F7646F70EB7FEFBD8018E83BC2E372E37"
+  }
+}

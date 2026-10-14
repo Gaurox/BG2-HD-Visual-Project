@@ -5,6 +5,8 @@ The transaction always owns ``InfinityEngine-Enhancer.dll`` and
 strictly validated x4 effect pack under ``iee-assets/effects``.  Every managed
 file is staged with its previous state before the receipt is published or the
 game is mutated, so restoration is independent from the original build tree.
+An effect pack may declare hash-bound ``override/<RESREF>.bam`` padding carriers;
+they are installed and restored in that same transaction.
 """
 
 from __future__ import annotations
@@ -44,6 +46,7 @@ EFFECT_PACK_SCHEMA = "bg2-upscale-effect-animation-runtime-pack-v1"
 EFFECT_REGISTRY_NAME = "EffectAnimations-X4.registry"
 EFFECT_REGISTRY_MAGIC = b"IEEEFX4\0"
 EFFECT_FRAME_NAME = re.compile(r"EFX4-[A-Z0-9_]{1,8}-frame[0-9]{3}\.rgba$")
+EFFECT_BAM_CARRIER_NAME = re.compile(r"override/[A-Z0-9_]{1,8}\.bam$")
 GAME_EXECUTABLES = ("BaldurReal.exe", "Baldur.exe")
 PROCESS_NAMES = {"baldur.exe", "baldurreal.exe", "infinityloader.exe"}
 PAYLOAD_DIRECTORY = "candidate"
@@ -237,7 +240,7 @@ def managed_path(root: Path, name: str, *, create_parents: bool = False) -> Path
 
     if name in MANAGED_FILES:
         relative = PurePosixPath(name)
-    elif is_effect_candidate_name(name):
+    elif is_effect_candidate_name(name) or EFFECT_BAM_CARRIER_NAME.fullmatch(name):
         relative = PurePosixPath(name)
     else:
         raise TransactionError(f"chemin géré invalide : {name}")
@@ -355,7 +358,7 @@ def collect_candidate_files(candidate_root: Path) -> tuple[list[CandidateFile], 
             raise TransactionError(f"collision de casse dans le candidat : {path.name}")
         by_lower[key] = path
     expected = {name.lower() for name in MANAGED_FILES}
-    allowed = expected | {"iee-assets"}
+    allowed = expected | {"iee-assets", "override"}
     if not expected.issubset(set(by_lower)) or not set(by_lower).issubset(allowed):
         missing = sorted(expected - set(by_lower))
         extra = sorted(set(by_lower) - allowed)
@@ -379,6 +382,39 @@ def collect_candidate_files(candidate_root: Path) -> tuple[list[CandidateFile], 
         if len(effect_entries) != 1 or effect_entries[0].name != "effects":
             raise TransactionError("inventaire iee-assets candidat divergent")
         files.extend(validate_effect_pack(effect_entries[0]))
+    carriers = by_lower.get("override")
+    if carriers is not None:
+        if (carriers.name != "override" or carriers.is_symlink() or not carriers.is_dir()
+                or effects_container is None):
+            raise TransactionError("BAM carriers require a matching candidate effect pack")
+        manifest = json.loads((effects_container / "effects/manifest.json").read_text(encoding="utf-8-sig"))
+        declared = manifest.get("runtime_bam_carriers")
+        if not isinstance(declared, list) or not declared:
+            raise TransactionError("BAM carrier manifest absent")
+        resources = {r["resref"] for r in manifest.get("resources", [])}
+        expected_carriers = set()
+        for carrier in declared:
+            if not isinstance(carrier, dict):
+                raise TransactionError("BAM carrier descriptor invalid")
+            name = carrier.get("asset", "")
+            if (not EFFECT_BAM_CARRIER_NAME.fullmatch(name) or name in expected_carriers
+                    or carrier.get("resref") not in resources
+                    or name != f"override/{carrier['resref']}.bam"):
+                raise TransactionError("BAM carrier identity mismatch")
+            path = source / name
+            snapshot = snapshot_file(path)
+            if snapshot.sha256 != carrier.get("sha256") or snapshot.bytes != carrier.get("bytes"):
+                raise TransactionError(f"BAM carrier hash mismatch: {name}")
+            if path.read_bytes()[:8] != b"BAM V1  ":
+                raise TransactionError(f"BAM V1 carrier required: {name}")
+            expected_carriers.add(name)
+            files.append(CandidateFile(name, path, snapshot))
+        if relative_regular_files(carriers) != {PurePosixPath(n).name for n in expected_carriers}:
+            raise TransactionError("BAM carrier inventory mismatch")
+    elif effects_container is not None:
+        manifest = json.loads((effects_container / "effects/manifest.json").read_text(encoding="utf-8-sig"))
+        if manifest.get("runtime_bam_carriers"):
+            raise TransactionError("Declared BAM carriers are missing from candidate")
     return files, source
 
 
@@ -499,6 +535,7 @@ def receipt_files(receipt: dict[str, object]) -> list[dict[str, object]]:
         or len(set(managed)) != len(managed)
         or any(
             name not in MANAGED_FILES and not is_effect_candidate_name(name)
+            and not EFFECT_BAM_CARRIER_NAME.fullmatch(name)
             for name in managed
         )
     ):

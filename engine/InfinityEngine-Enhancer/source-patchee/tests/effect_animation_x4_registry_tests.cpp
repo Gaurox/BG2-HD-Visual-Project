@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -71,13 +72,43 @@ bool write_fixture(const std::filesystem::path& directory, bool timeline = false
 }  // namespace
 
 int main(int argc, char** argv) {
-  if (argc == 2) {
+  if (argc == 2 || argc == 3) {
     const bool loaded = iee::effect_animation_x4::prepare(std::filesystem::path(argv[1]));
     if (!loaded || !iee::effect_animation_x4::ready()) {
       std::cerr << "external effect runtime pack rejected\n";
       return 1;
     }
     std::cout << "external effect runtime pack prepared and ready\n";
+    if (argc == 3) {
+      std::ifstream contracts(argv[2]);
+      std::string line;
+      std::size_t checked = 0;
+      if (!contracts) return 1;
+      while (std::getline(contracts, line)) {
+        if (line.empty()) continue;
+        std::istringstream row(line);
+        std::string name;
+        int slot = -1, width = 0, height = 0, phase = -1;
+        if (!(row >> name >> slot >> width >> height >> phase) || name.size() > 8) return 1;
+        std::array<char, 8> ref{};
+        std::copy(name.begin(), name.end(), ref.begin());
+        iee::effect_animation_x4::FrameHandle native{}, target{};
+        iee::effect_animation_x4::TimelineInfo timing{};
+        if (!iee::effect_animation_x4::contains_resource(ref) ||
+            !iee::effect_animation_x4::timeline_info(ref, 0, timing) ||
+            !timing.enabled || timing.targetFpsNumerator != 30 || timing.targetFpsDenominator != 1 ||
+            !iee::effect_animation_x4::resolve_frame(ref, 0, slot, width, height, native) ||
+            !iee::effect_animation_x4::resolve_timeline_frame(ref, 0, phase, width, height, target) ||
+            target.frameIndex != static_cast<std::size_t>(phase) ||
+            native.frameIndex != static_cast<std::size_t>(slot * 2)) {
+          std::cerr << "external effect contract failed: " << line << '\n';
+          return 1;
+        }
+        ++checked;
+      }
+      if (!checked) return 1;
+      std::cout << "external native-slot/30fps phase contracts checked: " << checked << '\n';
+    }
     iee::effect_animation_x4::release();
     return 0;
   }
@@ -95,11 +126,14 @@ int main(int argc, char** argv) {
   const bool resolved = loaded && iee::effect_animation_x4::ready() &&
                         iee::effect_animation_x4::contains_resource(kResref) &&
                         iee::effect_animation_x4::resolve_frame(kResref, 0, 5, 64, 64, frame);
+  constexpr std::array<char, 8> mixed{{'s', 'P', 'm', 'a', 'g', 'M', 'i', 's'}};
+  const bool mixedResolved = iee::effect_animation_x4::contains_resource(mixed) &&
+      iee::effect_animation_x4::resolve_frame(mixed, 0, 5, 64, 64, frame);
   const bool diagnosticGates =
       iee::effect_animation_x4::mark_diagnostic_stage_once(kResref, 1) &&
-      !iee::effect_animation_x4::mark_diagnostic_stage_once(kResref, 1) &&
+      !iee::effect_animation_x4::mark_diagnostic_stage_once(mixed, 1) &&
       iee::effect_animation_x4::mark_geometry_observation_once(kResref, 0, 5) &&
-      !iee::effect_animation_x4::mark_geometry_observation_once(kResref, 0, 5);
+      !iee::effect_animation_x4::mark_geometry_observation_once(mixed, 0, 5);
   const bool rejectedDimensions =
       !iee::effect_animation_x4::resolve_frame(kResref, 0, 5, 32, 64, frame);
   const bool rejectedFrame =
@@ -109,14 +143,14 @@ int main(int argc, char** argv) {
   const bool timelineWritten = write_fixture(root, true);
   iee::effect_animation_x4::TimelineInfo timing{};
   const bool timelineLoaded = timelineWritten && iee::effect_animation_x4::prepare(root) &&
-                              iee::effect_animation_x4::timeline_info(kResref, 0, timing) &&
+                              iee::effect_animation_x4::timeline_info(mixed, 0, timing) &&
                               timing.enabled && timing.nativeFpsNumerator == 15 &&
                               timing.targetFpsNumerator == 30 && timing.phaseCount == 12 &&
                               iee::effect_animation_x4::resolve_timeline_frame(
-                                  kResref, 0, 11, 64, 64, frame);
+                                  mixed, 0, 11, 64, 64, frame);
   iee::effect_animation_x4::release();
   std::filesystem::remove_all(root, error);
-  if (!resolved || !diagnosticGates || !rejectedDimensions || !rejectedFrame ||
+  if (!resolved || !mixedResolved || !diagnosticGates || !rejectedDimensions || !rejectedFrame ||
       !timelineLoaded) {
     std::cerr << "effect registry resolution contract failed\n";
     return 1;

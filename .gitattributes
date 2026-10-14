@@ -46,14 +46,17 @@ effects/batches/lot54-accepted-cleanup-20261013-v1/discarded-trial-metadata/** -
 docs/measurements/effects-*/**/*.json -text whitespace=cr-at-eol
 docs/measurements/effects-*/**/*.csv -text whitespace=cr-at-eol
 docs/measurements/sprite-display-default-confirmation-20261013-v1/*.json -text whitespace=cr-at-eol
-engine/InfinityEngine-Enhancer/installations/*/*.json -text whitespace=cr-at-eol
+engine/InfinityEngine-Enhancer/installations/**/*.json -text whitespace=cr-at-eol
 effects/batches/**/*.json -text whitespace=cr-at-eol
-effects/installations/*/*.json -text whitespace=cr-at-eol
+effects/batches/lot33-seedvr7b-apollo30-20261014-v1/processing-before.csv -text whitespace=cr-at-eol
+effects/batches/lot33-retimed-20261014-v2/runtime-contracts.tsv -text whitespace=cr-at-eol
+effects/installations/**/*.json -text whitespace=cr-at-eol
 docs/measurements/character-stable-cache64-20261013-v1/*.json -text whitespace=cr-at-eol
 docs/measurements/character-stable-cache64-20261013-v1/*.log -text whitespace=cr-at-eol
 docs/measurements/effects-*/*.log -text whitespace=cr-at-eol
 engine/InfinityEngine-Enhancer/installations/*/*.log -text whitespace=cr-at-eol
 pipeline/recipes/effects-lot10-seedvr7b-compare-20261013-v1/*.json -text whitespace=cr-at-eol
+pipeline/recipes/renderer-map-first-frame-refresh-20261014-v1/*.json -text whitespace=cr-at-eol
 
 # Tree QA pins raw runtime/installation receipt bytes; patches keep native context whitespace.
 pipeline/recipes/trees-seedvr-static-x4-20261011-v1/*.json -text whitespace=cr-at-eol
