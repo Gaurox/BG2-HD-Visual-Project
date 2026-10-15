@@ -10,6 +10,11 @@
 #include <string_view>
 
 namespace iee::game {
+// Validated native texture descriptor ABI; RVAs remain per-build below.
+struct TextureDescriptorLayout {
+  static constexpr std::size_t count = 512, stride = 0x28;
+  static constexpr std::size_t name = 0, width = 4, height = 8, deletePending = 0x0D;
+};
 enum class BranchInstructionKind : std::uint8_t {
   CallRel32,
   JmpRel32,
@@ -309,6 +314,18 @@ struct AreaAnimationRuntime {
 // packs. Projectile BAMs and VVC-backed CVEFVidCell instances provide distinct
 // owner scopes; both converge on the final CInfinity::FXRender boundary.
 struct EffectAnimationRuntime {
+  struct Streaming {
+    static constexpr std::uintptr_t vvcFlags = 0x78, vvcStart = 0xC0;
+    static constexpr std::uintptr_t vvcLoop = 0xC4, vvcCurrent = 0xC8;
+    std::uintptr_t cellConstruct{}, cellDestruct{}, vvcConfigure{}, vvcSequence{}, destroyGame{};
+    std::string_view cellConstructSignature{}, cellDestructSignature{}, vvcConfigureSignature{};
+    std::string_view vvcSequenceSignature{}, destroyGameSignature{};
+    [[nodiscard]] constexpr bool validate() const noexcept {
+      return cellConstruct && cellDestruct && vvcConfigure && vvcSequence && destroyGame &&
+          !cellConstructSignature.empty() && !cellDestructSignature.empty() &&
+          !vvcConfigureSignature.empty() && !vvcSequenceSignature.empty() && !destroyGameSignature.empty();
+    }
+  };
   bool enabled{};
   std::uintptr_t projectileBamRender{};
   std::uintptr_t projectileVidCell{};
@@ -318,6 +335,7 @@ struct EffectAnimationRuntime {
   std::string_view vvcVidCellRenderSignature{};
   std::uintptr_t infinityFxRender{};
   std::string_view infinityFxRenderSignature{};
+  Streaming streaming{};
 
   [[nodiscard]] constexpr bool validate() const noexcept {
     if (!enabled) return true;

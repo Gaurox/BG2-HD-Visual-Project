@@ -25,6 +25,22 @@ def sha256(path: Path) -> str:
 
 
 class ComposeEffectRuntimePacksTests(unittest.TestCase):
+    def test_streaming_catalog_capacity_is_independent_of_gpu_slots(self) -> None:
+        packs = []
+        for index in range(1000):
+            ref = f"F{index:07d}"
+            record = ref.encode("ascii") + struct.pack("<IIIIII", 1, 1, 512, 512, 1, 0)
+            packs.append(compose.InputPack(
+                root=ROOT / "synthetic" / ref,
+                manifest={"registry_sha256": "0" * 64}, manifest_sha256="0" * 64,
+                registry_version=1, resource_count=1, registry_records=record,
+                resources=({"resref": ref, "frame_count": 1},), frames=()))
+        registry, manifest, copies = compose.compose(packs)
+        self.assertEqual(compose.REGISTRY_HEADER.unpack_from(registry)[3], 1000)
+        self.assertEqual(len(manifest["resources"]), 1000)
+        self.assertEqual(copies, [])
+        self.assertLessEqual(1000, compose.MAX_RESOURCES)
+
     def setUp(self) -> None:
         self.temporary = tempfile.TemporaryDirectory()
         self.root = Path(self.temporary.name)

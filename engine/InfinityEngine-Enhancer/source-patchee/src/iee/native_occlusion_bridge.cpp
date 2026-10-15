@@ -15,14 +15,16 @@
 #include "iee/creature_sprite_filter.h"
 #include "iee/creature_sprite_minification.h"
 #include "iee/game/opengl_types.h"
+#include "iee/game/build_manifest.h"
+#include "iee/effect_animation_x4_registry.h"
 #include "iee/shader_probe.h"
 
 namespace iee::native_occlusion_bridge {
 namespace {
 using game::gl::OpenGLFunctions;
 
-constexpr std::size_t kEngineTextureDescriptorCount = 512;
-constexpr std::size_t kEngineTextureDescriptorStride = 0x28;
+constexpr std::size_t kEngineTextureDescriptorCount = game::TextureDescriptorLayout::count;
+constexpr std::size_t kEngineTextureDescriptorStride = game::TextureDescriptorLayout::stride;
 constexpr std::uint64_t kMaximumPhysicalScratchBytes = 64ull * 1024ull * 1024ull;
 constexpr unsigned kVertexShader = 0x8B31;
 constexpr unsigned kFragmentShader = 0x8B30;
@@ -438,6 +440,7 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
       api.DrawBindTexture(replacementTextureId);
       if (transient > 0 && transient != replacementTextureId) {
         api.DrawDeleteTexture(transient);
+        effect_animation_x4::retire_scratch(transient);
       }
     };
     if (state.unpackBuffer != 0) {
@@ -485,6 +488,19 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
       return false;
     }
 
+    struct EffectScratchReservation {
+      std::uint64_t bytes{};
+      ~EffectScratchReservation() { if (bytes) effect_animation_x4::cancel_scratch(bytes); }
+    } reservation;
+    if (transferEffectRgb) {
+      const auto scratchBytes = physicalBytes +
+          (physicalWorldTransfer ? physicalBytes : logicalPixels * 4ull);
+      if (!effect_animation_x4::reserve_scratch(scratchBytes, api.glTextureTable)) {
+        restoreReplacement(0); return false;
+      }
+      reservation.bytes = scratchBytes;
+    }
+
     const int generated = api.DrawGenTexture(static_cast<int>(
         transferEffectRgb ? game::gl::NEAREST : game::gl::LINEAR), 0, 0, 0);
     if (generated <= 0 || generated == replacementTextureId) {
@@ -492,6 +508,10 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
       return false;
     }
     transientTextureId = generated;
+    if (reservation.bytes) {
+      effect_animation_x4::track_scratch(generated, reservation.bytes, api.glTextureTable);
+      reservation.bytes = 0;
+    }
     EngineTextureDescriptor output{};
     if (!read_descriptor(api, generated, output) || output.glName == 0 ||
         output.deletePending != 0 || !clear_private_secondary(api, generated, output)) {
@@ -605,6 +625,7 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
     api.DrawBindTexture(replacementTextureId);
     if (!samplingReady) {
       api.DrawDeleteTexture(generated);
+      effect_animation_x4::retire_scratch(generated);
       transientTextureId = 0;
       return false;
     }
@@ -612,6 +633,7 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
     if (logical_texture_id(api) != generated) {
       api.DrawBindTexture(replacementTextureId);
       api.DrawDeleteTexture(generated);
+      effect_animation_x4::retire_scratch(generated);
       transientTextureId = 0;
       return false;
     }
@@ -632,12 +654,13 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
         if (mips) {
           api.DrawBindTexture(replacementTextureId);
           api.DrawDeleteTexture(generated);
+          effect_animation_x4::retire_scratch(generated);
           transientTextureId = 0;
           return false;
         }
       }
     }
-    if (!g_activeLogged) {
+    if (!g_activeLogged && !(transferEffectRgb && effect_animation_x4::streaming())) {
       g_activeLogged = true;
       LOG_INFO(
           "Native occlusion phase1 bridge active: logical mask {}x{}, x{} backing, "
@@ -651,6 +674,7 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
     if (api.DrawDeleteTexture && transientTextureId > 0 &&
         transientTextureId != replacementTextureId) {
       api.DrawDeleteTexture(transientTextureId);
+      effect_animation_x4::retire_scratch(transientTextureId);
     }
     transientTextureId = 0;
     LOG_WARN("Native occlusion phase1 bridge exception; failed closed: {}", error.what());
@@ -659,6 +683,7 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
     if (api.DrawDeleteTexture && transientTextureId > 0 &&
         transientTextureId != replacementTextureId) {
       api.DrawDeleteTexture(transientTextureId);
+      effect_animation_x4::retire_scratch(transientTextureId);
     }
     transientTextureId = 0;
     LOG_WARN("Native occlusion phase1 bridge exception; failed closed");
@@ -672,6 +697,7 @@ void finish_masked_texture(const EngineTextureApi& api, int nativeTextureId,
   if (api.DrawDeleteTexture && transientTextureId > 0 &&
       transientTextureId != nativeTextureId) {
     api.DrawDeleteTexture(transientTextureId);
+    effect_animation_x4::retire_scratch(transientTextureId);
   }
 }
 

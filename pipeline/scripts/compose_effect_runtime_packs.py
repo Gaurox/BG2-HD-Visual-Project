@@ -9,6 +9,7 @@ import re
 import shutil
 import struct
 import sys
+from collections import Counter
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -20,8 +21,9 @@ PACK_SCHEMA = "bg2-upscale-effect-animation-runtime-pack-v1"
 REGISTRY_MAGIC = b"IEEEFX4\0"
 REGISTRY_NAME = "EffectAnimations-X4.registry"
 REGISTRY_HEADER = struct.Struct("<8sIIII")
-FRAME_NAME = re.compile(r"EFX4-([A-Z0-9_]{1,8})-frame([0-9]{3})\.rgba$")
-MAX_RESOURCES = 512
+FRAME_NAME = re.compile(r"EFX4-([A-Z0-9_]{1,8})-frame([0-9]{3,4})\.rgba$")
+# Catalog capacity; resident CPU/GPU budgets belong to the streaming renderer.
+MAX_RESOURCES = 8192
 
 
 class PackError(RuntimeError):
@@ -161,7 +163,7 @@ def validate_pack(root: Path) -> InputPack:
             raise PackError(f"index de frame invalide : {root}")
         asset = frame.get("asset")
         match = FRAME_NAME.fullmatch(asset) if isinstance(asset, str) else None
-        if match is None or asset in expected_names or asset not in by_name:
+        if match is None or int(match.group(2)) >= 4096 or asset in expected_names or asset not in by_name:
             raise PackError(f"asset de frame invalide : {asset}")
         asset_path = by_name[asset]
         if (
@@ -179,10 +181,7 @@ def validate_pack(root: Path) -> InputPack:
     if unexpected:
         raise PackError(f"inventaire divergent : {sorted(unexpected)}")
     resources = normalize_resources(manifest, asset_resrefs, resource_count)
-    counts = {
-        resref: sum(frame["resref"] == resref for frame in normalized_frames)
-        for resref in asset_resrefs
-    }
+    counts = Counter(frame["resref"] for frame in normalized_frames)
     if any(
         type(resource.get("frame_count")) is not int
         or resource["frame_count"] != counts.get(resource["resref"])
@@ -206,7 +205,7 @@ def compose(packs: list[InputPack]) -> tuple[bytes, dict[str, Any], list[tuple[P
         raise PackError("au moins un pack source est requis")
     versions = {pack.registry_version for pack in packs}
     if len(versions) != 1:
-        raise PackError("les packs natifs v1 et 30 FPS v2 ne peuvent pas être mélangés")
+        raise PackError("les packs de versions v1/v2/v3 différentes ne peuvent pas être mélangés")
     resource_count = sum(pack.resource_count for pack in packs)
     if resource_count > MAX_RESOURCES:
         raise PackError(f"trop de ressources : {resource_count}")

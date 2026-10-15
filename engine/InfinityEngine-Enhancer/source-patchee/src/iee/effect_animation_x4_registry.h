@@ -6,12 +6,14 @@
 #include <filesystem>
 
 #include "iee/area_animation_x4_registry.h"
+#include "iee/core/effect_frame_cache.h"
 
 namespace iee::effect_animation_x4 {
 
 struct FrameHandle {
   std::size_t resourceIndex{};
   std::size_t frameIndex{};
+  std::uint64_t generation{};
 
   [[nodiscard]] constexpr bool operator==(const FrameHandle&) const noexcept = default;
 };
@@ -27,21 +29,83 @@ struct TimelineInfo {
 
 // Effects use an isolated registry and GPU cache, but the engine texture ABI is
 // identical to the established area-animation compositor.
-using EngineTextureApi = area_animation_x4::EngineTextureApi;
+struct EngineTextureApi {
+  using Base = area_animation_x4::EngineTextureApi;
+  using DrawGenTextureFn = Base::DrawGenTextureFn;
+  using DrawBindTextureFn = Base::DrawBindTextureFn;
+  using DrawDeleteTextureFn = Base::DrawDeleteTextureFn;
+  using TexImageFn = Base::TexImageFn;
+  using DrawGetRendererFn = Base::DrawGetRendererFn;
+  DrawGenTextureFn DrawGenTexture{};
+  DrawBindTextureFn DrawBindTexture{};
+  DrawDeleteTextureFn DrawDeleteTexture{};
+  TexImageFn TexImage{};
+  DrawGetRendererFn DrawGetRenderer{};
+  const std::uint32_t* glTextureState{};
+  // Native queue submission, not glFlush/glFinish. Required before mutation.
+  void (*DrawFlushGl)(){};
+  void (*DrawPushState)(){};
+  void (*DrawPopState)(){};
+  std::byte* glTextureTable{};
+};
+
+struct Options {
+  bool streaming{false}; // Explicit backend choice; legacy host callers stay eager.
+  core::EffectFrameCache::Limits cpu{};
+  std::uint64_t gpuBytes{288ull << 20};
+  std::uint64_t metadataBytes{16ull << 20};
+  std::uint64_t packBytes{512ull << 30};
+  std::uint32_t maxResources{8192};
+  std::uint32_t horizonMs{500};
+  bool trace{};
+};
 
 struct TextureCacheStats {
   std::size_t capacity{};
   std::size_t residentTextures{};
   std::uint64_t requests{}, hits{}, reuses{}, allocationFailures{}, uploadFailures{};
+  std::uint64_t residentBytes{}, peakBytes{}, budget{}, flushes{}, cpuMisses{}, pendingDeletes{};
+  std::uint64_t scratchBytes{}, scratchPeakBytes{}, scratchRefusals{};
+  std::uint64_t draws{}, drawMisses{}, firstSubmissions{}, firstSubmissionMisses{};
+  std::uint64_t hintToFirstSubmitNanoseconds{}, maximumHintToFirstSubmitNanoseconds{}, traceDropped{};
+  std::uint64_t uploads{}, uploadedBytes{}, uploadNanoseconds{}, maximumUploadNanoseconds{};
+  std::uint64_t horizonReductions{};
 };
 [[nodiscard]] TextureCacheStats texture_cache_stats() noexcept;
 
-// Loads EffectAnimations-X4.registry and every declared raw RGBA frame before
-// installing the effect-owner hooks. A malformed or incomplete pack is
-// rejected as a whole; callers then retain the native BAM path.
+// Eager loads every raw RGBA; streaming loads only metadata and quota-bound
+// bootstrap heads before installing owner hooks. Malformed metadata/bootstrap
+// rejects the pack; later missing backings are quarantined and counted as misses.
 bool prepare(const std::filesystem::path& assetsDirectory) noexcept;
+bool prepare(const std::filesystem::path& assetsDirectory, const Options& options) noexcept;
 void release() noexcept;
+[[nodiscard]] core::EffectFrameCache::Stats cpu_cache_stats() noexcept;
+[[nodiscard]] core::EffectFrameCache::State cpu_frame_state(FrameHandle handle) noexcept;
+// Native callbacks copy scalars only; address identities are never sent to workers.
+std::uint64_t begin_occurrence(std::uintptr_t owner) noexcept;
+std::uint64_t end_occurrence(std::uintptr_t owner) noexcept;
+void begin_session() noexcept;
+std::uint64_t occurrence_serial(std::uintptr_t owner) noexcept;
+void prefetch_resource(const std::array<char, 8>& resref) noexcept;
+void prefetch_window(std::uintptr_t owner, const std::array<char, 8>& resref,
+                     int sequence, std::uint32_t phase, bool once, bool paused) noexcept;
+// Called at a verified queue-empty boundary / before context destruction, GL thread only.
+void release_gpu(const EngineTextureApi& api) noexcept;
+void context_destroyed(std::uintptr_t context) noexcept;
+bool reserve_scratch(std::uint64_t bytes, const std::byte* textureTable) noexcept;
+void cancel_scratch(std::uint64_t bytes) noexcept;
+void track_scratch(int texture, std::uint64_t bytes, const std::byte* textureTable) noexcept;
+void retire_scratch(int texture) noexcept;
+void observe_gpu_retirements(const EngineTextureApi& api) noexcept;
+enum class DrawOutcome : std::uint8_t { Hd, CpuNotReady, StorageFailed, GpuRejected, MaskRejected };
+void note_draw(std::uintptr_t cell, FrameHandle handle, int slot, int phase,
+               std::uint64_t epoch, std::int64_t ticks, bool hd, bool masked,
+               int sequence, bool once, bool paused, DrawOutcome outcome) noexcept;
+void note_swap(std::uint64_t epoch, std::int64_t ticks, bool success, int worldActive) noexcept;
 [[nodiscard]] bool ready() noexcept;
+[[nodiscard]] bool streaming() noexcept;
+void queue_diagnostic(const std::array<char, 8>& resref, std::uint32_t stage,
+                      int sequence, int frame, int phase, int width, int height) noexcept;
 [[nodiscard]] bool contains_resource(const std::array<char, 8>& resref) noexcept;
 
 // Per-resource diagnostic gates. They keep renderer logs bounded while still
@@ -72,7 +136,7 @@ bool resolve_timeline_frame(const std::array<char, 8>& resref, int sequence,
 // descriptor and draw geometry. Returns false without changing the current
 // binding when any OpenGL or pack precondition fails.
 bool bind_frame_texture(FrameHandle handle, const EngineTextureApi& api,
-                        int& previousTextureId) noexcept;
+                        int& previousTextureId, DrawOutcome* outcome = nullptr) noexcept;
 void restore_texture(const EngineTextureApi& api, int previousTextureId) noexcept;
 
 }  // namespace iee::effect_animation_x4

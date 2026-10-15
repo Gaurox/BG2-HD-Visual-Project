@@ -189,7 +189,18 @@ static DWORD WINAPI InitThread(LPVOID) {
     }
     if (cfg.enableEffectAnimationX4) {
       const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
-      (void)effect_animation_x4::prepare(moduleDir / "iee-assets" / "effects");
+      effect_animation_x4::Options options;
+      options.streaming = cfg.enableEffectAnimationStreaming;
+      options.cpu.bytes = static_cast<std::uint64_t>(cfg.effectCpuCacheMiB) << 20;
+      options.cpu.inFlightBytes = static_cast<std::uint64_t>(cfg.effectInFlightMiB) << 20;
+      options.cpu.headBytes = static_cast<std::uint64_t>(cfg.effectHeadCacheMiB) << 20;
+      options.gpuBytes = static_cast<std::uint64_t>(cfg.effectGpuCacheMiB) << 20;
+      options.metadataBytes = static_cast<std::uint64_t>(cfg.effectMetadataMiB) << 20;
+      options.packBytes = static_cast<std::uint64_t>(cfg.effectPackGiB) << 30;
+      options.maxResources = cfg.effectMaxResources;
+      options.horizonMs = cfg.effectPrefetchMs;
+      options.trace = cfg.enableEffectStreamingTrace;
+      (void)effect_animation_x4::prepare(moduleDir / "iee-assets" / "effects", options);
     }
     if (cfg.creature_sprite_upscale_enabled()) {
       const auto moduleDir = ModuleDirectory(cfgPath.parent_path());

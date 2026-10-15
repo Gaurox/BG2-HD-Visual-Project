@@ -31,22 +31,39 @@ void AreaAnimationTimelineClock::begin_area(std::uint64_t generation) noexcept {
   droppedOccurrences_ = 0;
 }
 
+void AreaAnimationTimelineClock::forget(std::uint64_t serial) noexcept {
+  if (!serial) return;
+  for (auto& entry : occurrences_) if (entry.occupied && entry.occurrenceSerial == serial) {
+    entry = {}; entry.tombstone = true;
+  }
+}
+
 std::size_t AreaAnimationTimelineClock::find_or_create(
     const AreaAnimationTimelineSample& sample, bool& created) noexcept {
   created = false;
   const auto start = static_cast<std::size_t>(
-      hash_occurrence(sample.instance, sample.resref) % occurrences_.size());
+      (hash_occurrence(sample.instance, sample.resref) ^ sample.occurrenceSerial) % occurrences_.size());
+  auto freeIndex = kMissingIndex;
   for (std::size_t probe = 0; probe < occurrences_.size(); ++probe) {
     const auto index = (start + probe) % occurrences_.size();
     auto& occurrence = occurrences_[index];
     if (!occurrence.occupied) {
-      occurrence.occupied = true;
-      occurrence.instance = sample.instance;
-      occurrence.resref = sample.resref;
-      created = true;
-      return index;
+      if (freeIndex == kMissingIndex) freeIndex = index;
+      if (!occurrence.tombstone) break;
+      continue;
     }
-    if (occurrence.instance == sample.instance && occurrence.resref == sample.resref) return index;
+    if (occurrence.instance == sample.instance && occurrence.resref == sample.resref &&
+        occurrence.occurrenceSerial == sample.occurrenceSerial) return index;
+  }
+  if (freeIndex != kMissingIndex) {
+    auto& occurrence = occurrences_[freeIndex];
+    occurrence = {};
+    occurrence.occupied = true;
+    occurrence.instance = sample.instance;
+    occurrence.occurrenceSerial = sample.occurrenceSerial;
+    occurrence.resref = sample.resref;
+    created = true;
+    return freeIndex;
   }
   ++droppedOccurrences_;
   return kMissingIndex;

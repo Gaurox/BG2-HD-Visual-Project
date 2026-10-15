@@ -57,10 +57,17 @@ class ProcessLifetimeWorker {
     return true;
   }
 
-  [[nodiscard]] JoinResult join() noexcept {
+  [[nodiscard]] JoinResult join(bool cancelSynchronousIo = false) noexcept {
     if (!thread_) return JoinResult::NotStarted;
     if (GetThreadId(thread_) == GetCurrentThreadId()) return JoinResult::SelfJoinRejected;
-    if (WaitForSingleObject(thread_, INFINITE) != WAIT_OBJECT_0) return JoinResult::WaitFailed;
+    DWORD result = WAIT_FAILED;
+    do {
+      // Repeated cancellation closes the race where a reader starts its next
+      // synchronous ReadFile just after the first stop/cancel request.
+      if (cancelSynchronousIo) (void)CancelSynchronousIo(thread_);
+      result = WaitForSingleObject(thread_, cancelSynchronousIo ? 100 : INFINITE);
+    } while (result == WAIT_TIMEOUT);
+    if (result != WAIT_OBJECT_0) return JoinResult::WaitFailed;
     CloseHandle(std::exchange(thread_, nullptr));
     return JoinResult::Joined;
   }

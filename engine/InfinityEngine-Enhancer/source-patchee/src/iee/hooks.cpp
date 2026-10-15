@@ -81,6 +81,12 @@ using VvcVidCellRenderFn = void (*)(void*, void*, void*);
 // earlier clipping-polygons draw, which has no CVidCell identity left at
 // RenderTexture.
 using ProjectileFxRenderFn = int (*)(void*, void*, int, int, int, int, int);
+using EffectCellConstructFn = void* (*)(void*, std::uint64_t);
+using EffectCellDestructFn = void (*)(void*);
+using EffectVvcConfigureFn = std::uintptr_t (*)(void*, void*);
+using EffectVvcSequenceFn = std::uintptr_t (*)(void*, int);
+using EffectDestroyGameFn = void (*)(void*, unsigned char, unsigned char);
+using EffectDeleteContextFn = BOOL (WINAPI*)(HGLRC);
 using VidCellRenderTextureFn = void (*)(int, int, void*, std::uint64_t, void*, std::uint32_t);
 using ItemVidCellRenderFn = int (*)(void*, std::uintptr_t, std::uintptr_t, std::uintptr_t,
                                     std::uintptr_t, std::uintptr_t, std::uintptr_t,
@@ -121,6 +127,19 @@ static core::Hook<GameStaticRenderBamFn> g_gameStaticRenderBamHook;
 static core::Hook<ProjectileBamRenderFn> g_projectileBamRenderHook;
 static core::Hook<VvcVidCellRenderFn> g_vvcVidCellRenderHook;
 static core::Hook<ProjectileFxRenderFn> g_projectileFxRenderHook;
+static core::Hook<EffectCellConstructFn> g_effectCellConstructHook;
+static core::Hook<EffectCellDestructFn> g_effectCellDestructHook;
+static core::Hook<EffectVvcConfigureFn> g_effectVvcConfigureHook;
+static core::Hook<EffectVvcSequenceFn> g_effectVvcSequenceHook;
+static core::Hook<EffectDestroyGameFn> g_effectDestroyGameHook;
+static core::Hook<EffectDeleteContextFn> g_effectDeleteContextHook;
+static bool g_effectStreamHooksPrepared{};
+static void remove_effect_stream_hooks() noexcept {
+  (void)g_effectCellConstructHook.remove(); (void)g_effectCellDestructHook.remove();
+  (void)g_effectVvcConfigureHook.remove(); (void)g_effectVvcSequenceHook.remove();
+  (void)g_effectDestroyGameHook.remove(); (void)g_effectDeleteContextHook.remove();
+  g_effectStreamHooksPrepared = false;
+}
 static core::Hook<VidCellRenderTextureFn> g_vidCellRenderTextureHook;
 static core::Hook<ItemVidCellRenderFn> g_itemVidCellRenderHook;
 static core::Hook<ItemVidCellCommonRenderTextureFn> g_itemVidCellCommonRenderTextureHook;
@@ -252,6 +271,11 @@ void log_effect_animation_diagnostic_once(const std::array<char, 8>& resref,
                                           int sequence, int nativeFrame, int timelinePhase,
                                           int logicalWidth, int logicalHeight) noexcept {
   if (!effect_animation_x4::mark_diagnostic_stage_once(resref, stage)) return;
+  if (effect_animation_x4::streaming()) {
+    effect_animation_x4::queue_diagnostic(resref, stage, sequence, nativeFrame, timelinePhase,
+                                        logicalWidth, logicalHeight);
+    return;
+  }
   try {
     const auto snapshot = g_effectAnimationDiagnostics.snapshot();
     LOG_INFO(
@@ -273,6 +297,11 @@ void log_effect_animation_registry_fallback_slot_once(const std::array<char, 8>&
                                                        int logicalWidth,
                                                        int logicalHeight) noexcept {
   if (!effect_animation_x4::mark_geometry_observation_once(resref, sequence, nativeFrame)) return;
+  if (effect_animation_x4::streaming()) {
+    effect_animation_x4::queue_diagnostic(resref, 0x80000000u, sequence, nativeFrame, -1,
+                                        logicalWidth, logicalHeight);
+    return;
+  }
   try {
     LOG_INFO(
         "Effect animation x4 geometry diagnostic: resref={}, "
@@ -1342,6 +1371,7 @@ bool g_areaTimelineActivationLogged{};
 std::atomic<std::uint64_t> g_requestedEffectTimelineGeneration{1};
 std::uint64_t g_activeEffectTimelineGeneration{};
 core::AreaAnimationTimelineClock g_effectTimelineClock;
+std::mutex g_effectTimelineMutex;
 bool g_effectTimelineActivationLogged{};
 
 void request_area_timeline_generation() noexcept {
@@ -1349,6 +1379,7 @@ void request_area_timeline_generation() noexcept {
 }
 
 void request_effect_timeline_generation() noexcept {
+  effect_animation_x4::begin_session();
   g_requestedEffectTimelineGeneration.fetch_add(1, std::memory_order_release);
 }
 
@@ -1430,6 +1461,10 @@ void select_effect_timeline_frame(void* instance, int worldActive, int logicalWi
     if (frequency <= 0 || now <= 0 || epoch == 0) return;
     const auto generation =
         g_requestedEffectTimelineGeneration.load(std::memory_order_acquire);
+    const auto serial = effect_animation_x4::occurrence_serial(
+        reinterpret_cast<std::uintptr_t>(g_effectAnimationCell));
+    if (g_ctx && g_ctx->cfg.enableEffectAnimationStreaming && !serial) return;
+    std::unique_lock clockLock(g_effectTimelineMutex);
     if (generation != g_activeEffectTimelineGeneration) {
       g_effectTimelineClock.begin_area(generation);
       g_activeEffectTimelineGeneration = generation;
@@ -1448,7 +1483,9 @@ void select_effect_timeline_frame(void* instance, int worldActive, int logicalWi
          .targetFpsNumerator = resolved.timeline.targetFpsNumerator,
          .targetFpsDenominator = resolved.timeline.targetFpsDenominator,
          .timelinePhaseCount = resolved.timeline.phaseCount,
-         .roundToPresentation = true});
+         .roundToPresentation = true,
+         .occurrenceSerial = serial});
+    clockLock.unlock();
     if (!selection.valid) return;
     effect_animation_x4::FrameHandle timelineFrame{};
     if (!effect_animation_x4::resolve_timeline_frame(
@@ -1465,7 +1502,7 @@ void select_effect_timeline_frame(void* instance, int worldActive, int logicalWi
         logicalHeight);
     if (!g_effectTimelineActivationLogged) {
       g_effectTimelineActivationLogged = true;
-      LOG_INFO(
+      if (!effect_animation_x4::streaming()) LOG_INFO(
           "Effect TimedTimeline active: native={}/{}, target={}/{}, phases={}, "
           "QPC pause-aware scheduler with native fallback",
           resolved.timeline.nativeFpsNumerator, resolved.timeline.nativeFpsDenominator,
@@ -1853,6 +1890,10 @@ bool prepare_effect_animation_composition_hooks(AppContext& ctx) noexcept {
   }
   const auto moduleBase = reinterpret_cast<std::uintptr_t>(module->base);
   const auto& cellRuntime = ctx.manifest->areaAnimations;
+  const auto& flush = ctx.manifest->worldOverlay;
+  if (!flush.enabled || !ctx.draw.DrawPushState || !ctx.draw.DrawPopState ||
+      !matches_pattern_at_rva(*module, flush.drawFlushGl, flush.drawFlushGlSignature)) return false;
+  if (ctx.cfg.enableEffectAnimationStreaming && !g_effectStreamHooksPrepared) return false;
   g_effectAnimationTextureApi = {
       .DrawGenTexture =
           reinterpret_cast<effect_animation_x4::EngineTextureApi::DrawGenTextureFn>(
@@ -1868,6 +1909,10 @@ bool prepare_effect_animation_composition_hooks(AppContext& ctx) noexcept {
               moduleBase + cellRuntime.drawGetRenderer),
       .glTextureState = reinterpret_cast<const std::uint32_t*>(
           moduleBase + cellRuntime.glTextureState),
+      .DrawFlushGl = reinterpret_cast<void (*)()>(moduleBase + flush.drawFlushGl),
+      .DrawPushState = ctx.draw.DrawPushState,
+      .DrawPopState = ctx.draw.DrawPopState,
+      .glTextureTable = reinterpret_cast<std::byte*>(moduleBase + cellRuntime.glTextureTable),
   };
   g_effectAnimationHooksEnabled = true;
   LOG_INFO("SPIMPFR presentation trace enabled: post-occlusion draw + real swap return, "
@@ -2709,6 +2754,79 @@ static void detour_game_static_render_bam(void* thisPtr, void* gameArea, void* v
   }
 }
 
+static void retire_effect_cell(void* cell) noexcept {
+  const auto serial = effect_animation_x4::end_occurrence(reinterpret_cast<std::uintptr_t>(cell));
+  if (serial) { std::lock_guard lock(g_effectTimelineMutex); g_effectTimelineClock.forget(serial); }
+}
+
+static void* detour_effect_cell_construct(void* cell, std::uint64_t packedResref) {
+  std::array<char, 8> resref{};
+  (void)read_effect_resref(&packedResref, resref);
+  retire_effect_cell(cell);
+  effect_animation_x4::prefetch_resource(resref);
+  if (effect_animation_x4::contains_resource(resref))
+    (void)effect_animation_x4::begin_occurrence(reinterpret_cast<std::uintptr_t>(cell));
+  auto* result = g_effectCellConstructHook.original()(cell, packedResref);
+  return result;
+}
+
+static void detour_effect_cell_destruct(void* cell) {
+  retire_effect_cell(cell);
+  g_effectCellDestructHook.original()(cell);
+}
+
+static std::uintptr_t detour_effect_vvc_configure(void* owner, void* base) {
+  std::array<char, 8> resref{};
+  if (read_effect_resref(base, resref)) effect_animation_x4::prefetch_resource(resref);
+  return g_effectVvcConfigureHook.original()(owner, base);
+}
+
+static std::uintptr_t detour_effect_vvc_sequence(void* owner, int direction) {
+  const auto result = g_effectVvcSequenceHook.original()(owner, direction);
+  if (g_ctx && g_ctx->manifest && owner) {
+    void* cell = nullptr;
+    std::array<char, 8> ref{};
+    const auto& rt = g_ctx->manifest->areaAnimations;
+    if (core::safe_read(static_cast<const std::byte*>(owner) +
+        g_ctx->manifest->effectAnimations.vvcVidCell, cell) && cell &&
+        read_effect_resref(static_cast<const std::byte*>(cell) + rt.vidCellResref, ref)) {
+      std::int16_t sequence = -1, frame = -1;
+      if (core::safe_read(static_cast<const std::byte*>(cell) + rt.vidCellCurrentSequence, sequence) &&
+          core::safe_read(static_cast<const std::byte*>(cell) + rt.vidCellCurrentFrame, frame) && frame >= 0) {
+        std::uint32_t flags = 0;
+        std::int32_t start = 0, loop = 0, current = 0;
+        const auto* base = static_cast<const std::byte*>(owner);
+        const bool profileRead = core::safe_read(base + game::EffectAnimationRuntime::Streaming::vvcFlags, flags) &&
+            core::safe_read(base + game::EffectAnimationRuntime::Streaming::vvcStart, start) && core::safe_read(base + game::EffectAnimationRuntime::Streaming::vvcLoop, loop) &&
+            core::safe_read(base + game::EffectAnimationRuntime::Streaming::vvcCurrent, current);
+        const bool once = profileRead && core::effect_once_profile(flags, start, loop, current);
+        effect_animation_x4::TimelineInfo timing{};
+        auto phase = static_cast<std::uint32_t>(frame);
+        if (effect_animation_x4::timeline_info(ref, sequence, timing, once))
+          phase = static_cast<std::uint32_t>(static_cast<std::uint64_t>(frame) *
+              timing.targetFpsNumerator * timing.nativeFpsDenominator /
+              (static_cast<std::uint64_t>(timing.targetFpsDenominator) * timing.nativeFpsNumerator));
+        effect_animation_x4::prefetch_window(reinterpret_cast<std::uintptr_t>(cell), ref,
+            sequence, phase, once, read_world_active() <= 0);
+      }
+    }
+  }
+  return result;
+}
+
+static void detour_effect_destroy_game(void* game, unsigned char first, unsigned char second) {
+  request_effect_timeline_generation();
+  g_effectDestroyGameHook.original()(game, first, second);
+}
+
+static BOOL WINAPI detour_effect_delete_context(HGLRC context) {
+  if (game::gl::current_context() == context)
+    effect_animation_x4::release_gpu(g_effectAnimationTextureApi);
+  const auto result = g_effectDeleteContextHook.original()(context);
+  if (result) effect_animation_x4::context_destroyed(reinterpret_cast<std::uintptr_t>(context));
+  return result;
+}
+
 static void detour_projectile_bam_render(void* thisPtr, std::uintptr_t drawFlags,
                                          void* renderContext) {
   void* cell = nullptr;
@@ -2791,8 +2909,8 @@ static void detour_vvc_vid_cell_render(void* thisPtr, void* gameArea, void* vidM
   std::int32_t start = 0, loop = 0, current = 0;
   const auto* owner = static_cast<const std::byte*>(thisPtr);
   const bool profileRead = scoped && thisPtr &&
-      core::safe_read(owner + 0x78, flags) && core::safe_read(owner + 0xC0, start) &&
-      core::safe_read(owner + 0xC4, loop) && core::safe_read(owner + 0xC8, current);
+      core::safe_read(owner + game::EffectAnimationRuntime::Streaming::vvcFlags, flags) && core::safe_read(owner + game::EffectAnimationRuntime::Streaming::vvcStart, start) &&
+      core::safe_read(owner + game::EffectAnimationRuntime::Streaming::vvcLoop, loop) && core::safe_read(owner + game::EffectAnimationRuntime::Streaming::vvcCurrent, current);
   g_effectOnceProfile = profileRead && core::effect_once_profile(flags, start, loop, current);
   g_vvcVidCellRenderHook.original()(thisPtr, gameArea, vidMode);
   g_effectOnceProfile = previousOnceProfile;
@@ -3865,6 +3983,7 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
   area_animation_x4::FrameHandle areaAnimationDrawFrame{};
   effect_animation_x4::FrameHandle effectAnimationDrawFrame{};
   ResolvedEffectAnimationFrame resolvedEffectAnimationFrame{};
+  auto effectDrawOutcome = effect_animation_x4::DrawOutcome::GpuRejected;
   ReplacementKind replacement = ReplacementKind::None;
   auto* creatureScope = g_creatureSpriteScope;
   if (g_creatureSpriteHooksEnabled && creatureScope) {
@@ -3950,9 +4069,20 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
                                          resolvedEffectAnimationFrame)) {
     select_effect_timeline_frame(g_effectAnimationInstance, read_world_active(), logicalWidth,
                                  logicalHeight, resolvedEffectAnimationFrame);
+    const auto& timing = resolvedEffectAnimationFrame.timeline;
+    const auto phase = resolvedEffectAnimationFrame.timelinePhase >= 0
+        ? static_cast<std::uint32_t>(resolvedEffectAnimationFrame.timelinePhase)
+        : timing.enabled ? static_cast<std::uint32_t>(
+            static_cast<std::uint64_t>(resolvedEffectAnimationFrame.slot) * timing.targetFpsNumerator *
+            timing.nativeFpsDenominator / (static_cast<std::uint64_t>(timing.targetFpsDenominator) *
+                                         timing.nativeFpsNumerator))
+        : static_cast<std::uint32_t>(resolvedEffectAnimationFrame.slot);
+    effect_animation_x4::prefetch_window(reinterpret_cast<std::uintptr_t>(g_effectAnimationCell),
+        resolvedEffectAnimationFrame.resref, resolvedEffectAnimationFrame.sequence, phase,
+        resolvedEffectAnimationFrame.onceProfile, read_world_active() <= 0);
     effectAnimationDrawFrame = resolvedEffectAnimationFrame.handle;
     if (effect_animation_x4::bind_frame_texture(effectAnimationDrawFrame,
-                                                g_effectAnimationTextureApi, previousTextureId)) {
+                                                g_effectAnimationTextureApi, previousTextureId, &effectDrawOutcome)) {
       g_effectAnimationDiagnostics.x4Bound.fetch_add(1, std::memory_order_relaxed);
       log_effect_animation_diagnostic_once(
           resolvedEffectAnimationFrame.resref, kEffectDiagnosticX4Bound, "x4-bound",
@@ -4085,10 +4215,16 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
       // The engine's original FX texture already contains the native WED cut.
       // An unavailable/incompatible transfer must never expose unclipped light.
       effect_animation_x4::restore_texture(g_effectAnimationTextureApi, previousTextureId);
+      effectDrawOutcome = effect_animation_x4::DrawOutcome::MaskRejected;
       replacement = ReplacementKind::None;
       if (effect_animation_x4::mark_diagnostic_stage_once(
               resolvedEffectAnimationFrame.resref, kEffectDiagnosticOcclusionFallback)) {
-        LOG_WARN("Effect native occlusion fallback: resref={}, clipped native FX retained; "
+        if (effect_animation_x4::streaming()) {
+          effect_animation_x4::queue_diagnostic(resolvedEffectAnimationFrame.resref,
+              kEffectDiagnosticOcclusionFallback, resolvedEffectAnimationFrame.sequence,
+              resolvedEffectAnimationFrame.slot, resolvedEffectAnimationFrame.timelinePhase,
+              logicalWidth, logicalHeight);
+        } else LOG_WARN("Effect native occlusion fallback: resref={}, clipped native FX retained; "
                  "maskReady={}, maskChanged={}, maskBound={}, captured={}x{}, draw={}x{}",
                  effect_animation_resref_name(resolvedEffectAnimationFrame.resref),
                  transferReady, changed, maskBound, g_nativeOcclusionMaskCapture->width(),
@@ -4136,6 +4272,14 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
   }
   const auto traceDrawTicks = traceDraw ? frame::clock_ticks() : 0;
   original(visualX, y, sourceRect, logicalSize, clipRect, flags);
+  if (resolvedEffectAnimationFrame.resref[0] && g_effectAnimationCell) {
+    effect_animation_x4::note_draw(reinterpret_cast<std::uintptr_t>(g_effectAnimationCell),
+        resolvedEffectAnimationFrame.handle, resolvedEffectAnimationFrame.slot,
+        resolvedEffectAnimationFrame.timelinePhase, frame::frame_count(), frame::clock_ticks(),
+        replacement == ReplacementKind::EffectAnimation, transientOcclusionTextureId > 0,
+        resolvedEffectAnimationFrame.sequence, resolvedEffectAnimationFrame.onceProfile,
+        read_world_active() <= 0, effectDrawOutcome);
+  }
   if (traceDraw) {
     const bool hd = replacement == ReplacementKind::EffectAnimation;
     g_spimpfrPresentationTrace.draw(
@@ -5145,7 +5289,37 @@ bool prepare_core_hooks(AppContext& ctx) {
                           reinterpret_cast<void*>(&detour_load_area));
     g_renderTextureHook.create(reinterpret_cast<void*>(ctx.addrs.RenderTexture),
                                reinterpret_cast<void*>(&detour_render_texture));
-    LOG_INFO("Core hook trampolines reserved before asset loading; hooks remain disabled");
+    if (ctx.cfg.enableEffectAnimationX4 && ctx.cfg.enableEffectAnimationStreaming &&
+        ctx.manifest && ctx.manifest->effectAnimations.enabled) {
+      const auto module = core::get_module_span(nullptr);
+      if (!module) throw std::runtime_error("effect streaming module unavailable");
+      const auto& rt = ctx.manifest->effectAnimations.streaming;
+      if (!rt.validate()) throw std::runtime_error("effect streaming lifecycle is not manifested");
+      const std::array<std::pair<std::uintptr_t, std::string_view>, 5> entries{{
+          {rt.cellConstruct, rt.cellConstructSignature}, {rt.cellDestruct, rt.cellDestructSignature},
+          {rt.vvcConfigure, rt.vvcConfigureSignature}, {rt.vvcSequence, rt.vvcSequenceSignature},
+          {rt.destroyGame, rt.destroyGameSignature}}};
+      for (const auto& [rva, signature] : entries)
+        if (!matches_pattern_at_rva(*module, rva, signature))
+          throw std::runtime_error("effect streaming lifecycle signature mismatch");
+      const auto base = reinterpret_cast<std::uintptr_t>(module->base);
+      g_effectCellConstructHook.create(reinterpret_cast<void*>(base + rt.cellConstruct),
+          reinterpret_cast<void*>(&detour_effect_cell_construct));
+      g_effectCellDestructHook.create(reinterpret_cast<void*>(base + rt.cellDestruct),
+          reinterpret_cast<void*>(&detour_effect_cell_destruct));
+      g_effectVvcConfigureHook.create(reinterpret_cast<void*>(base + rt.vvcConfigure),
+          reinterpret_cast<void*>(&detour_effect_vvc_configure));
+      g_effectVvcSequenceHook.create(reinterpret_cast<void*>(base + rt.vvcSequence),
+          reinterpret_cast<void*>(&detour_effect_vvc_sequence));
+      g_effectDestroyGameHook.create(reinterpret_cast<void*>(base + rt.destroyGame),
+          reinterpret_cast<void*>(&detour_effect_destroy_game));
+      const auto deleteContext = GetProcAddress(GetModuleHandleW(L"opengl32.dll"), "wglDeleteContext");
+      if (!deleteContext) throw std::runtime_error("wglDeleteContext is unavailable");
+      g_effectDeleteContextHook.create(reinterpret_cast<void*>(deleteContext),
+          reinterpret_cast<void*>(&detour_effect_delete_context));
+      g_effectStreamHooksPrepared = true;
+    }
+    LOG_INFO("Core/effect lifecycle trampolines reserved before asset loading; hooks remain disabled");
     return true;
   } catch (const std::exception& error) {
     LOG_ERROR("Core hook trampoline preparation failed: {}", error.what());
@@ -5544,6 +5718,11 @@ bool install_all(AppContext& ctx) {
         }
         if (g_effectAnimationHooksEnabled) {
           const auto& effectRuntime = ctx.manifest->effectAnimations;
+          if (g_effectStreamHooksPrepared) {
+            g_effectCellConstructHook.enable(); g_effectCellDestructHook.enable();
+            g_effectVvcConfigureHook.enable(); g_effectVvcSequenceHook.enable();
+            g_effectDestroyGameHook.enable(); g_effectDeleteContextHook.enable();
+          }
           g_projectileFxRenderHook.create(
               reinterpret_cast<void*>(moduleBase + effectRuntime.infinityFxRender),
               reinterpret_cast<void*>(&detour_projectile_fx_render));
@@ -5674,6 +5853,7 @@ bool install_all(AppContext& ctx) {
         (void)g_multiNewRenderHook.remove();
         (void)g_monsterMultiRenderHook.remove();
         (void)g_projectileBamRenderHook.remove();
+        remove_effect_stream_hooks();
         (void)g_vvcVidCellRenderHook.remove();
         (void)g_projectileFxRenderHook.remove();
         (void)g_gameStaticRenderBamHook.remove();
@@ -5714,6 +5894,7 @@ bool install_all(AppContext& ctx) {
         (void)g_multiNewRenderHook.remove();
         (void)g_monsterMultiRenderHook.remove();
         (void)g_projectileBamRenderHook.remove();
+        remove_effect_stream_hooks();
         (void)g_vvcVidCellRenderHook.remove();
         (void)g_projectileFxRenderHook.remove();
         (void)g_gameStaticRenderBamHook.remove();
@@ -5926,6 +6107,7 @@ bool install_all(AppContext& ctx) {
     (void)g_multiNewRenderHook.remove();
     (void)g_monsterMultiRenderHook.remove();
     (void)g_projectileBamRenderHook.remove();
+    remove_effect_stream_hooks();
     (void)g_vvcVidCellRenderHook.remove();
     (void)g_projectileFxRenderHook.remove();
     (void)g_gameStaticRenderBamHook.remove();
@@ -5988,6 +6170,7 @@ bool install_all(AppContext& ctx) {
     (void)g_multiNewRenderHook.remove();
     (void)g_monsterMultiRenderHook.remove();
     (void)g_projectileBamRenderHook.remove();
+    remove_effect_stream_hooks();
     (void)g_vvcVidCellRenderHook.remove();
     (void)g_projectileFxRenderHook.remove();
     (void)g_gameStaticRenderBamHook.remove();
@@ -6058,6 +6241,7 @@ void uninstall_all() noexcept {
   (void)g_multiNewRenderHook.remove();
   (void)g_monsterMultiRenderHook.remove();
   (void)g_projectileBamRenderHook.remove();
+  remove_effect_stream_hooks();
   (void)g_vvcVidCellRenderHook.remove();
   (void)g_projectileFxRenderHook.remove();
   (void)g_gameStaticRenderBamHook.remove();
@@ -6139,6 +6323,10 @@ void prepare_for_shutdown() noexcept {
   (void)g_monsterQuadrantRenderHook.disable();
   (void)g_multiNewRenderHook.disable();
   (void)g_monsterMultiRenderHook.disable();
+  (void)g_effectCellConstructHook.disable(); (void)g_effectCellDestructHook.disable();
+  (void)g_effectVvcConfigureHook.disable(); (void)g_effectVvcSequenceHook.disable();
+  (void)g_effectDestroyGameHook.disable(); (void)g_effectDeleteContextHook.disable();
+  effect_animation_x4::release_gpu(g_effectAnimationTextureApi);
   (void)g_projectileBamRenderHook.disable();
   (void)g_vvcVidCellRenderHook.disable();
   (void)g_projectileFxRenderHook.disable();
@@ -6200,6 +6388,8 @@ void on_post_swap() noexcept {
 
 void on_effect_swap(unsigned long long epoch, long long ticks, bool success) noexcept {
   try {
+    effect_animation_x4::observe_gpu_retirements(g_effectAnimationTextureApi);
+    effect_animation_x4::note_swap(epoch, ticks, success, read_world_active());
     if (!g_ctx || !g_spimpfrPresentationTrace.count()) return;
     const auto frequency = frame::clock_frequency();
     g_spimpfrPresentationTrace.swap(epoch, ticks, frequency, read_world_active(), success);

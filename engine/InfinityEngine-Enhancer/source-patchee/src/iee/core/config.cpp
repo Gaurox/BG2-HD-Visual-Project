@@ -97,6 +97,14 @@ static std::optional<std::uint32_t> parse_u32(const std::string& s) {
 }
 
 static void normalize(EngineConfig& cfg) noexcept {
+  cfg.effectCpuCacheMiB = std::clamp(cfg.effectCpuCacheMiB, 32u, 8192u);
+  cfg.effectInFlightMiB = std::clamp(cfg.effectInFlightMiB, 1u, cfg.effectCpuCacheMiB);
+  cfg.effectHeadCacheMiB = std::min(cfg.effectHeadCacheMiB, cfg.effectCpuCacheMiB / 2);
+  cfg.effectGpuCacheMiB = std::clamp(cfg.effectGpuCacheMiB, 8u, 1024u);
+  cfg.effectMetadataMiB = std::clamp(cfg.effectMetadataMiB, 1u, 256u);
+  cfg.effectPackGiB = std::clamp(cfg.effectPackGiB, 1u, 4096u);
+  cfg.effectMaxResources = std::clamp(cfg.effectMaxResources, 1u, 65536u);
+  cfg.effectPrefetchMs = std::clamp(cfg.effectPrefetchMs, 0u, 2000u);
   cfg.waterOverlayStrength = route2_water_strength(cfg.waterOverlayStrength);
   if (!std::isfinite(cfg.maxAnisotropy)) cfg.maxAnisotropy = 8.0f;
   if (!std::isfinite(cfg.lodBias)) cfg.lodBias = -0.25f;
@@ -223,6 +231,18 @@ static void apply_kv(EngineConfig& cfg, ConfigParseState& state, const std::stri
       assign_bool(cfg.enableAreaAnimationX4);
     else if (iequals(key, "EnableEffectAnimationX4"))
       assign_bool(cfg.enableEffectAnimationX4);
+    else if (iequals(key, "EnableEffectAnimationStreaming"))
+      assign_bool(cfg.enableEffectAnimationStreaming);
+    else if (iequals(key, "EnableEffectStreamingTrace"))
+      assign_bool(cfg.enableEffectStreamingTrace);
+    else if (iequals(key, "EffectCpuCacheMiB")) { if (auto v = parse_u32(val)) cfg.effectCpuCacheMiB = *v; }
+    else if (iequals(key, "EffectInFlightMiB")) { if (auto v = parse_u32(val)) cfg.effectInFlightMiB = *v; }
+    else if (iequals(key, "EffectHeadCacheMiB")) { if (auto v = parse_u32(val)) cfg.effectHeadCacheMiB = *v; }
+    else if (iequals(key, "EffectGpuCacheMiB")) { if (auto v = parse_u32(val)) cfg.effectGpuCacheMiB = *v; }
+    else if (iequals(key, "EffectMetadataMiB")) { if (auto v = parse_u32(val)) cfg.effectMetadataMiB = *v; }
+    else if (iequals(key, "EffectPackGiB")) { if (auto v = parse_u32(val)) cfg.effectPackGiB = *v; }
+    else if (iequals(key, "EffectMaxResources")) { if (auto v = parse_u32(val)) cfg.effectMaxResources = *v; }
+    else if (iequals(key, "EffectPrefetchMs")) { if (auto v = parse_u32(val)) cfg.effectPrefetchMs = *v; }
     else if (iequals(key, "EnableNativeOcclusionProbe"))
       assign_bool(cfg.enableNativeOcclusionProbe);
     else if (iequals(key, "EnableNativeOcclusionBridge"))
@@ -432,6 +452,16 @@ bool ConfigManager::save(const std::filesystem::path& path, const EngineConfig& 
   write_bool(f, "EnableItemIconX2", cfg.enableItemIconX2);
   write_bool(f, "EnableAreaAnimationX4", cfg.enableAreaAnimationX4);
   write_bool(f, "EnableEffectAnimationX4", cfg.enableEffectAnimationX4);
+  write_bool(f, "EnableEffectAnimationStreaming", cfg.enableEffectAnimationStreaming);
+  write_bool(f, "EnableEffectStreamingTrace", cfg.enableEffectStreamingTrace);
+  f << "EffectCpuCacheMiB = " << cfg.effectCpuCacheMiB << "\n";
+  f << "EffectInFlightMiB = " << cfg.effectInFlightMiB << "\n";
+  f << "EffectHeadCacheMiB = " << cfg.effectHeadCacheMiB << "\n";
+  f << "EffectGpuCacheMiB = " << cfg.effectGpuCacheMiB << "\n";
+  f << "EffectMetadataMiB = " << cfg.effectMetadataMiB << "\n";
+  f << "EffectPackGiB = " << cfg.effectPackGiB << "\n";
+  f << "EffectMaxResources = " << cfg.effectMaxResources << "\n";
+  f << "EffectPrefetchMs = " << cfg.effectPrefetchMs << "\n";
   write_bool(f, "EnableNativeOcclusionProbe", cfg.enableNativeOcclusionProbe);
   write_bool(f, "EnableNativeOcclusionBridge", cfg.enableNativeOcclusionBridge);
   write_bool(f, "EnableCreatureSpriteUpscaleTest", cfg.enableCreatureSpriteUpscaleTest);

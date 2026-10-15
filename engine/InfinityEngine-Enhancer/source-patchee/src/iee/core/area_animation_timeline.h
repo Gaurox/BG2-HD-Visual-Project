@@ -21,6 +21,7 @@ struct AreaAnimationTimelineSample {
   std::uint32_t targetFpsDenominator{};
   std::uint32_t timelinePhaseCount{};
   bool roundToPresentation{};
+  std::uint64_t occurrenceSerial{}; // Effects only; zero retains legacy area identity.
 };
 
 struct AreaAnimationTimelineSelection {
@@ -38,6 +39,7 @@ class AreaAnimationTimelineClock {
   static constexpr std::size_t kMaximumOccurrences = 1024;
 
   void begin_area(std::uint64_t generation) noexcept;
+  void forget(std::uint64_t occurrenceSerial) noexcept;
   [[nodiscard]] AreaAnimationTimelineSelection select(
       const AreaAnimationTimelineSample& sample) noexcept;
   [[nodiscard]] std::uint64_t area_generation() const noexcept { return areaGeneration_; }
@@ -48,7 +50,9 @@ class AreaAnimationTimelineClock {
  private:
   struct OccurrenceState {
     bool occupied{};
+    bool tombstone{};
     std::uintptr_t instance{};
+    std::uint64_t occurrenceSerial{};
     std::array<char, 8> resref{};
     int sequence{-1};
     int nativeSlot{-1};

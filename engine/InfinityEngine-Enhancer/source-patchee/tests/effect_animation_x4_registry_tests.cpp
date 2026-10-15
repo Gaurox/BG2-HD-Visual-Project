@@ -7,6 +7,8 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <chrono>
+#include <thread>
 
 #include "iee/effect_animation_x4_registry.h"
 #include "iee/core/effect_playback_profile.h"
@@ -76,18 +78,76 @@ bool write_fixture(const std::filesystem::path& directory, bool timeline = false
   }
   return true;
 }
+bool streaming_contracts(const std::filesystem::path& root) {
+  using namespace iee::effect_animation_x4;
+  if (!write_fixture(root, true, true)) return false;
+  Options options; options.streaming = true;
+  if (!prepare(root, options)) return false;
+  auto stats = cpu_cache_stats();
+  FrameHandle loop{}, once{};
+  const bool profiles = resolve_timeline_frame(kResref, 0, 0, 64, 64, loop) &&
+      resolve_timeline_frame(kResref, 0, 0, 64, 64, once, true) &&
+      loop.frameIndex == 0 && once.frameIndex == 11 && loop.generation &&
+      loop.generation == once.generation;
+  if (!profiles || stats.reads != 4 || stats.readyBytes != 4 * 64 * 64 * 64) return false;
+  const auto oldSerial = occurrence_serial(0x1234);
+  if (!oldSerial || end_occurrence(0x1234) != oldSerial || occurrence_serial(0x1234) == oldSerial)
+    return false;
+  release();
+  // A table padded to 12 phases but only 2 native slots: window must wrap at 4.
+  if (!write_fixture(root, true)) return false;
+  auto path = root / "EffectAnimations-X4.registry";
+  std::ifstream input(path, std::ios::binary | std::ios::ate);
+  std::vector<std::byte> raw(static_cast<std::size_t>(input.tellg()));
+  input.seekg(0); input.read(reinterpret_cast<char*>(raw.data()), raw.size()); input.close();
+  constexpr std::size_t countOffset = 24 + 16 + 12 * 8;
+  raw[countOffset] = std::byte{2};
+  raw.erase(raw.begin() + countOffset + 4 + 2 * 4, raw.begin() + countOffset + 4 + 6 * 4);
+  { std::ofstream out(path, std::ios::binary); out.write(reinterpret_cast<const char*>(raw.data()), raw.size()); }
+  options.cpu.headBytes = 0;
+  if (!prepare(root, options)) return false;
+  prefetch_window(0x5678, kResref, 0, 3, false, false);
+  const auto end = std::chrono::steady_clock::now() + std::chrono::seconds(3);
+  while (cpu_cache_stats().reads < 4 && std::chrono::steady_clock::now() < end)
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+  stats = cpu_cache_stats();
+  release();
+  if (stats.reads != 4 || stats.pinnedBytes != 4 * 64 * 64 * 64) return false;
+  // >512 resources and >8GiB declared payload, without creating or reading RGBA.
+  std::vector<std::byte> registry;
+  registry.insert(registry.end(), reinterpret_cast<const std::byte*>(kMagic.data()),
+                   reinterpret_cast<const std::byte*>(kMagic.data()) + 8);
+  append_u32(registry, 1); append_u32(registry, 4);
+  append_u32(registry, 1000); append_u32(registry, 0);
+  for (unsigned i = 0; i < 1000; ++i) {
+    char ref[9]{}; std::snprintf(ref, sizeof(ref), "F%07u", i);
+    registry.insert(registry.end(), reinterpret_cast<const std::byte*>(ref),
+                     reinterpret_cast<const std::byte*>(ref) + 8);
+    for (auto value : {1u, 1u, 512u, 512u, 1u, 0u}) append_u32(registry, value);
+  }
+  { std::ofstream out(path, std::ios::binary); out.write(reinterpret_cast<const char*>(registry.data()), registry.size()); }
+  const bool scalable = prepare(root, options) && cpu_cache_stats().reads == 0 &&
+      contains_resource({'F','0','0','0','0','9','9','9'});
+  release();
+  return scalable && !prepare(root); // eager capacity remains its historical contract
+}
 }  // namespace
 
 int main(int argc, char** argv) {
-  if (argc == 2 || argc == 3) {
-    const bool loaded = iee::effect_animation_x4::prepare(std::filesystem::path(argv[1]));
+  const bool catalogueOnly = argc > 2 && std::string_view(argv[1]) == "--catalogue-only";
+  const int first = catalogueOnly ? 2 : 1;
+  if (argc == first + 1 || argc == first + 2) {
+    iee::effect_animation_x4::Options options;
+    options.streaming = catalogueOnly;
+    if (catalogueOnly) options.cpu.headBytes = 0;
+    const bool loaded = iee::effect_animation_x4::prepare(std::filesystem::path(argv[first]), options);
     if (!loaded || !iee::effect_animation_x4::ready()) {
       std::cerr << "external effect runtime pack rejected\n";
       return 1;
     }
     std::cout << "external effect runtime pack prepared and ready\n";
-    if (argc == 3) {
-      std::ifstream contracts(argv[2]);
+    if (argc == first + 2) {
+      std::ifstream contracts(argv[first + 1]);
       std::string line;
       std::size_t checked = 0;
       if (!contracts) return 1;
@@ -123,6 +183,8 @@ int main(int argc, char** argv) {
       if (!checked) return 1;
       std::cout << "external native-slot/30fps phase contracts checked: " << checked << '\n';
     }
+    if (catalogueOnly && iee::effect_animation_x4::cpu_cache_stats().reads != 0) return 1;
+    if (catalogueOnly) std::cout << "catalogue-only: zero RGBA reads\n";
     iee::effect_animation_x4::release();
     return 0;
   }
@@ -189,7 +251,10 @@ int main(int argc, char** argv) {
       !effect_once_profile(9, 0, 0, 1) && !effect_once_profile(73, 1, 0, 1) &&
       effect_once_profile(9, 1, 2, 1) && !effect_once_profile(9, 1, 2, 2) &&
       effect_once_profile(9, 1, 2, 3);
-  if (!resolved || !mixedResolved || !diagnosticGates || !rejectedDimensions || !rejectedFrame ||
+  const bool streaming = streaming_contracts(root);
+  iee::effect_animation_x4::release();
+  std::filesystem::remove_all(root, error);
+  if (!streaming || !resolved || !mixedResolved || !diagnosticGates || !rejectedDimensions || !rejectedFrame ||
       !timelineLoaded || !profileResolved || !ownerRouting || !malformedRejected) {
     std::cerr << "effect registry resolution contract failed\n";
     return 1;

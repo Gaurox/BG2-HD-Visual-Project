@@ -107,6 +107,7 @@ add_library(iee_common STATIC
     src/iee/core/area_animation_timeline.cpp
     src/iee/core/cache_budget_simulator.cpp
     src/iee/core/config.cpp
+    src/iee/core/effect_frame_cache.cpp
     src/iee/core/creature_sprite_filter_math.cpp
     src/iee/core/shader_suite_config.cpp
     src/iee/core/shader_suite_math.cpp
@@ -332,6 +333,10 @@ else()
 endif()
 
 if(BUILD_TESTING)
+    add_executable(iee_effect_frame_cache_tests tests/effect_frame_cache_tests.cpp)
+    target_link_libraries(iee_effect_frame_cache_tests PRIVATE iee_common)
+    iee_configure_target(iee_effect_frame_cache_tests)
+    add_test(NAME iee_effect_frame_cache_tests COMMAND iee_effect_frame_cache_tests)
     add_executable(iee_effect_presentation_trace_tests tests/effect_presentation_trace_tests.cpp)
     target_include_directories(iee_effect_presentation_trace_tests PRIVATE "${CMAKE_SOURCE_DIR}/src")
     iee_configure_target(iee_effect_presentation_trace_tests)

@@ -113,6 +113,17 @@ struct EngineConfig {
   // External spell/projectile pack. Each candidate is scoped by
   // CProjectileBAM and falls back to the native BAM on any mismatch.
   bool enableEffectAnimationX4 = false;
+  // Start-only backend selection. Packs and accepted pixel contracts are shared.
+  bool enableEffectAnimationStreaming = true;
+  std::uint32_t effectCpuCacheMiB = 768;
+  std::uint32_t effectInFlightMiB = 32;
+  std::uint32_t effectHeadCacheMiB = 256;
+  std::uint32_t effectGpuCacheMiB = 288;
+  std::uint32_t effectMetadataMiB = 16;
+  std::uint32_t effectPackGiB = 512;
+  std::uint32_t effectMaxResources = 8192;
+  std::uint32_t effectPrefetchMs = 500;
+  bool enableEffectStreamingTrace = false;
   // Read-only phase-0 diagnostic. Correlates the native WED clipping pass with
   // registry-backed xN draws; it never changes pixels or render state.
   bool enableNativeOcclusionProbe = false;

@@ -371,6 +371,18 @@ constexpr BuildManifest kKnownBuilds[] = {
             0x29DF60,
             "48 89 5C 24 08 57 48 83 EC 40 48 8B 05 ? ? ? ? 41 8B D9 41 8B F8 "
             "4C 8B D9 4C 8B 90 10 02 00 00 41 80 7A 19 00",
+            // EFFECT_STREAMING_ABI_BEGIN
+            {0x410E10, 0x411200, 0x254010, 0x2551F0, 0x272A20,
+             // Exact BG2EE 2.7.3 function starts, checked against PE unwind ranges.
+             // CVidCell ctor takes an eight-byte RESREF by value (RDX).
+             "48 89 5C 24 18 48 89 74 24 20 48 89 54 24 10 57 48 83 EC 30",
+             "48 89 6C 24 18 56 48 83 EC 20 33 ED 48 89 7C 24 38",
+             "40 53 55 56 57 41 54 48 83 EC 40 48 8B 05 ? ? ? ? 48 33 C4",
+             "48 89 5C 24 08 48 89 6C 24 10 48 89 74 24 18 48 89 7C 24 20 41 54 41 56 41 57",
+             // DestroyGame(this, unsigned char, unsigned char); EEex patches
+             // its last call, not this prologue. Do not detour DecodeProjectile.
+             "48 89 5C 24 10 48 89 74 24 18 48 89 7C 24 20 55 41 54 41 55 41 56 41 57"},
+            // EFFECT_STREAMING_ABI_END
         },
         {
             true,
