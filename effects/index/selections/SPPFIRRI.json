@@ -1,0 +1,192 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPPFIRRI",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "lookup_start": 12
+      }
+    ],
+    "frame_count": 48,
+    "source": {
+      "interpolation_run": "sppfirri-interpolation-apollo30-strict-lot64-20261015-v2",
+      "interpolation_run_descriptor_sha256": "3887DFBB0CACACC8C1E5CDBC782DA0B835C15D719A50D439DF06D29E069817E5",
+      "source_bam_sha256": "ae21cbc05fe2764c52999c3782734ee0fc3a5cf1d2fffa632fac3460a9f9db92",
+      "spatial_manifest_sha256": "8C7CA07F2A1AD001B528F739DC24F848406B38E886974FD439B8680160CEF3E9",
+      "spatial_run": "sppfirri-spatial-seedvr7b-lab-lot64-20261015-v1",
+      "spatial_run_descriptor_sha256": "AB77CCFD5A7162C542462E162BE291E1519903362735D39FB1F66DC0A9EABC1A"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        24,
+        24
+      ],
+      "alternate_profiles": [],
+      "cycle_profiles": [
+        "cycle000-once",
+        "cycle001-once"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22
+        ],
+        [
+          24,
+          26,
+          28,
+          30,
+          32,
+          34,
+          36,
+          38,
+          40,
+          42,
+          44,
+          46
+        ]
+      ],
+      "phase_count": 24,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        [
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond native slot count; no extra presented phase or duration"
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 945,
+    "path": "effects/index/qa-decisions/SPPFIRRI/2026-10-15-accepted-65058893d466.json",
+    "sha256": "65058893D4665B79377E14A2FB6F798570A719C3F8F5A6E1AF84D9C838E82635"
+  },
+  "resref": "SPPFIRRI",
+  "run_descriptor": {
+    "bytes": 2076,
+    "path": "effects/ressources/SPPFIRRI/runs/sppfirri-interpolation-apollo30-strict-lot64-20261015-v2/run.json",
+    "sha256": "3887DFBB0CACACC8C1E5CDBC782DA0B835C15D719A50D439DF06D29E069817E5"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 33275,
+      "path": "effects/ressources/SPPFIRRI/packs/sppfirri-7b-x4-apollo30-strict-lot64-20261015-v2/manifest.json",
+      "sha256": "0D91B64815A0681824BC0FB558E311A74BBC9B3FA6B5DC6E4F9AB1144290B551"
+    },
+    "registry": {
+      "bytes": 740,
+      "path": "effects/ressources/SPPFIRRI/packs/sppfirri-7b-x4-apollo30-strict-lot64-20261015-v2/EffectAnimations-X4.registry",
+      "sha256": "AC89D1420B821A592EEAD69DCB762B40047F644F206CA910D9E81CAD7B469A9B"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "sppfirri-interpolation-apollo30-strict-lot64-20261015-v2",
+  "source": {
+    "bytes": 43642,
+    "path": "effects/ressources/SPPFIRRI/source.bam",
+    "sha256": "AE21CBC05FE2764C52999C3782734EE0FC3A5CF1D2FFFA632FAC3460A9F9DB92"
+  }
+}

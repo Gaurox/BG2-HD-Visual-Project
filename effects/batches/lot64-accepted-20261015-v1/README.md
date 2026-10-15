@@ -1,0 +1,10 @@
+# Lot64 — acceptation utilisateur 2026-10-15
+
+- Décision après installation/tests utilisateur : « tout est validé. maj le suivi et committe ».
+- `acceptance.json` :64 décisions QA immuables + sélections exactes via `effect_workflow.accept_asset` ; productions issues de `lot64-seedvr7b-apollo30-strict-20261015-v3/batch.json` (run IDs v1/v2 intentionnels), SeedVR2 7B x4/LAB, Apollo30, NEAREST, Gaussian1.2/feather12, durée/taille monde natives.
+- Autorités courantes : `effects/index/qa-decisions/<RESREF>/*.json`, `effects/index/selections/<RESREF>.json`, `effects/index/processing.csv` ; QA=passed, spatial/interpolation=verified, selected_run=interpolation_run. `verification.json` :64/64 liens QA/sélection et préservation des autres lignes, installation/release indépendantes.
+- Contrat installé épinglé dans l'acceptation : `effects/installations/lot64-7b-x4-nearest30-20261015-v1/installation.json`, DLL46EB6983B201231B8004E6766F0F3055490374E3210C1F2BF2139566BE90E0FA ; manifeste0E57665F63A6003261AA673D3ABA848687A233C21AA59936DC9DB88CE160D89E. Registrev3,161 ressources cumulées ;64 nouveaux/226cycles/228profils/10014phases ; routage ponctuel/bouclé SPFLESHS/SPMETSWA. Packs unitairesv2 et registre composév3 partagent exactement les mêmes RGBA/sources/cycles ; le reçu épingle aussi les profils ponctuels et le renderer.
+- Personnages : NearestRGB-SilhouetteAlphaAA conservé octet pour octet ; GPU64, CPU8Gio ; contrôleurs VVC, cartes et fichiers installés non modifiés pendant cette acceptation.
+- Aucun doublon RGB/RGBA dans les cycles animés vérifiés ; le profil technique invisible SPCOMEXP/cycle001-once reste constant conformément à sa source. Durées globales et boucles conservées.
+- QA visuelle acquise par déclaration utilisateur. Aucune nouvelle mesure instrumentée du pacing ni réparation des premières phases SPIMPFR déduite ; la réserve de mesure reste distincte de cette acceptation.
+- Reçus de production/installation antérieurs immuables : leurs champs pending-user/qa_accepted=false décrivent leur création, complétés par cette décision. Aucun changement release, nettoyage ou push demandé.

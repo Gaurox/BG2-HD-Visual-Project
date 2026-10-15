@@ -1,0 +1,210 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPFLESHS",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 122,
+    "source": {
+      "interpolation_run": "spfleshs-interpolation-apollo30-strict-lot64-20261015-v2",
+      "interpolation_run_descriptor_sha256": "DE778DB7BAD7308F5907B69F1D577FF0D7B0679171EB762D70992B3DFDEC3EA0",
+      "source_bam_sha256": "30a1800eaa9c32e4ac84a224f02f7baceac3076328d0e344b94d83f65eb75e34",
+      "spatial_manifest_sha256": "9C8A9CE39349DB0BB25EA941D518A899F7C126FD59DF5F258A4C13FEC2C0A149",
+      "spatial_run": "spfleshs-spatial-seedvr7b-lab-lot64-20261015-v1",
+      "spatial_run_descriptor_sha256": "57BA5E423564BF2C6A592D9FFABF2903D22098909DEDC3DD9653C3F0A466D62E"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        62
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          63,
+          65,
+          67,
+          69,
+          71,
+          73,
+          75,
+          77,
+          79,
+          81,
+          83,
+          85,
+          87,
+          89,
+          91,
+          93,
+          95,
+          97,
+          99,
+          101,
+          103,
+          105,
+          107,
+          109,
+          111,
+          113,
+          115,
+          117,
+          119,
+          61
+        ]
+      ],
+      "phase_count": 62,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          115,
+          116,
+          117,
+          118,
+          119,
+          120,
+          61,
+          121
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond native slot count; no extra presented phase or duration"
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 945,
+    "path": "effects/index/qa-decisions/SPFLESHS/2026-10-15-accepted-a38b177f9695.json",
+    "sha256": "A38B177F969550913C87DB3DC46389CC8F9BB41CF934B3A367D455CE3626E74E"
+  },
+  "resref": "SPFLESHS",
+  "run_descriptor": {
+    "bytes": 2078,
+    "path": "effects/ressources/SPFLESHS/runs/spfleshs-interpolation-apollo30-strict-lot64-20261015-v2/run.json",
+    "sha256": "DE778DB7BAD7308F5907B69F1D577FF0D7B0679171EB762D70992B3DFDEC3EA0"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 80131,
+      "path": "effects/ressources/SPFLESHS/packs/spfleshs-7b-x4-apollo30-strict-lot64-20261015-v2/manifest.json",
+      "sha256": "627A42E0C15C60DA02C716978EF517C1E5E4D588416DB8A6D09F5E42F418ACF1"
+    },
+    "registry": {
+      "bytes": 1412,
+      "path": "effects/ressources/SPFLESHS/packs/spfleshs-7b-x4-apollo30-strict-lot64-20261015-v2/EffectAnimations-X4.registry",
+      "sha256": "1B3AB64E90BBC591377157C6349C0665402BC22C7B2245AF58319787F8E16670"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spfleshs-interpolation-apollo30-strict-lot64-20261015-v2",
+  "source": {
+    "bytes": 67392,
+    "path": "effects/ressources/SPFLESHS/source.bam",
+    "sha256": "30A1800EAA9C32E4AC84A224F02F7BACEAC3076328D0E344B94D83F65EB75E34"
+  }
+}

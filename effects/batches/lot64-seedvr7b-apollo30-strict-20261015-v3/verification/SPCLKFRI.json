@@ -1,0 +1,59 @@
+{
+  "resref": "SPCLKFRI",
+  "passed": true,
+  "native_cycles": 2,
+  "cycle_mode_variants": 2,
+  "phases": 96,
+  "cycles": [
+    {
+      "profile": "cycle000-once",
+      "cycle": 0,
+      "closed": false,
+      "source_slots": 32,
+      "output_phases": 64,
+      "duration": [
+        32,
+        15
+      ],
+      "unique_rgb": 64,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle001-once",
+      "cycle": 1,
+      "closed": false,
+      "source_slots": 16,
+      "output_phases": 32,
+      "duration": [
+        16,
+        15
+      ],
+      "unique_rgb": 32,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    }
+  ],
+  "native_pixels_palette_world_geometry_preserved": true,
+  "source_model": "seedvr2_7b_int8_convrot.safetensors",
+  "scale": 4,
+  "target_fps": [
+    30,
+    1
+  ],
+  "filter": "NEAREST",
+  "pack_manifest_sha256": "0610D3719E1D8F5F1B8C5FB8310F69BB26F46AC8A3AD7E26233486C978CFAA22",
+  "runtime_contract_rows": 192,
+  "native_input_keys_unique_before_apollo": true,
+  "raw_bytes": 66367616,
+  "visual_qa": "pending-user-review",
+  "installed": false
+}

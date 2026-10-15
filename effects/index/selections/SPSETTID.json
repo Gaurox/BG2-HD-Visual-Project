@@ -1,0 +1,188 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPSETTID",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22
+        ],
+        "lookup_start": 15
+      }
+    ],
+    "frame_count": 46,
+    "source": {
+      "interpolation_run": "spsettid-interpolation-apollo30-strict-lot64-20261015-v2",
+      "interpolation_run_descriptor_sha256": "4E9CCA441DB80D6DDE670EB756FECE03D89AC101814AFF0F23750B52A3674DAC",
+      "source_bam_sha256": "cdfee4c72461bea4ebc29a905bc6362ce6d634c825eb8d3d2cdb459fd7ae8405",
+      "spatial_manifest_sha256": "512D7A1A6306E86F4BBF4692F748CA5CAD9078651924600A069C1FEDDDB7D261",
+      "spatial_run": "spsettid-spatial-seedvr7b-lab-lot64-20261015-v1",
+      "spatial_run_descriptor_sha256": "B1C506A17D72B52B88D3B7D7FDEF06EB43092B1082C02DB277E6B707A323051E"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        30,
+        16
+      ],
+      "alternate_profiles": [],
+      "cycle_profiles": [
+        "cycle000-once",
+        "cycle001-once"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28
+        ],
+        [
+          30,
+          32,
+          34,
+          36,
+          38,
+          40,
+          42,
+          44
+        ]
+      ],
+      "phase_count": 30,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29
+        ],
+        [
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond native slot count; no extra presented phase or duration"
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 945,
+    "path": "effects/index/qa-decisions/SPSETTID/2026-10-15-accepted-23144bd25a85.json",
+    "sha256": "23144BD25A8585839E7EA80AD887225A7563A8D937693896C3E160A0AD16FA54"
+  },
+  "resref": "SPSETTID",
+  "run_descriptor": {
+    "bytes": 2077,
+    "path": "effects/ressources/SPSETTID/runs/spsettid-interpolation-apollo30-strict-lot64-20261015-v2/run.json",
+    "sha256": "4E9CCA441DB80D6DDE670EB756FECE03D89AC101814AFF0F23750B52A3674DAC"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 32003,
+      "path": "effects/ressources/SPSETTID/packs/spsettid-7b-x4-apollo30-strict-lot64-20261015-v2/manifest.json",
+      "sha256": "FD38A8C18B077681C9A8577D0BE13EC35455E1A6C37671A461F887D55A94FC64"
+    },
+    "registry": {
+      "bytes": 768,
+      "path": "effects/ressources/SPSETTID/packs/spsettid-7b-x4-apollo30-strict-lot64-20261015-v2/EffectAnimations-X4.registry",
+      "sha256": "4695FF7711C9B57233013A3EEE169AA852AE481B3267CAACB22AC21A28D71D68"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spsettid-interpolation-apollo30-strict-lot64-20261015-v2",
+  "source": {
+    "bytes": 57689,
+    "path": "effects/ressources/SPSETTID/source.bam",
+    "sha256": "CDFEE4C72461BEA4EBC29A905BC6362CE6D634C825EB8D3D2CDB459FD7AE8405"
+  }
+}

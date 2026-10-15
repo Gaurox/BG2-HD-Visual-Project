@@ -1,0 +1,216 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPSPEV",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          1,
+          1,
+          2,
+          2,
+          3,
+          3,
+          4,
+          4,
+          5,
+          5,
+          6,
+          6,
+          7,
+          7
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          8,
+          8,
+          9,
+          9,
+          10,
+          10,
+          11,
+          11,
+          12,
+          12,
+          13,
+          13,
+          14,
+          14,
+          15,
+          15
+        ],
+        "lookup_start": 14
+      }
+    ],
+    "frame_count": 60,
+    "source": {
+      "interpolation_run": "spspev-interpolation-apollo30-strict-lot64-20261015-v2",
+      "interpolation_run_descriptor_sha256": "909D499D9DA7D828933F91169911C9EB73118C7D871200229EB588B2AA509D7C",
+      "source_bam_sha256": "175d7cc482ba9d943015119fa945ca16e8c30a36eacb4755a3467e04a8f63311",
+      "spatial_manifest_sha256": "6434468B6EAD810EC0BE2FD105B1AAA507AFB05B887442D5CB402B516034D028",
+      "spatial_run": "spspev-spatial-seedvr7b-lab-lot64-20261015-v1",
+      "spatial_run_descriptor_sha256": "4FCDF68CFAC191D40CEFE682304C08B9ADB2EB92814485B458CE6DB60C9FDA7C"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        28,
+        32
+      ],
+      "alternate_profiles": [],
+      "cycle_profiles": [
+        "cycle000-once",
+        "cycle001-once"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26
+        ],
+        [
+          28,
+          30,
+          32,
+          34,
+          36,
+          38,
+          40,
+          42,
+          44,
+          46,
+          48,
+          50,
+          52,
+          54,
+          56,
+          58
+        ]
+      ],
+      "phase_count": 32,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27
+        ],
+        [
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond native slot count; no extra presented phase or duration"
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 931,
+    "path": "effects/index/qa-decisions/SPSPEV/2026-10-15-accepted-3ed97d3501a3.json",
+    "sha256": "3ED97D3501A346FDF74A69BFFCE58D7F7E4DFC0E5D02046E5B2387840E13574C"
+  },
+  "resref": "SPSPEV",
+  "run_descriptor": {
+    "bytes": 2047,
+    "path": "effects/ressources/SPSPEV/runs/spspev-interpolation-apollo30-strict-lot64-20261015-v2/run.json",
+    "sha256": "909D499D9DA7D828933F91169911C9EB73118C7D871200229EB588B2AA509D7C"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 40937,
+      "path": "effects/ressources/SPSPEV/packs/spspev-7b-x4-apollo30-strict-lot64-20261015-v2/manifest.json",
+      "sha256": "23A3905160FA58FED4F58F0284D977F67E579B7B5E0A8B35D270F557F8D28544"
+    },
+    "registry": {
+      "bytes": 924,
+      "path": "effects/ressources/SPSPEV/packs/spspev-7b-x4-apollo30-strict-lot64-20261015-v2/EffectAnimations-X4.registry",
+      "sha256": "E765E96EF9DF104283E7B255184EB55EAE684ADA7360F31AEC16B05E00B2FB5F"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spspev-interpolation-apollo30-strict-lot64-20261015-v2",
+  "source": {
+    "bytes": 109059,
+    "path": "effects/ressources/SPSPEV/source.bam",
+    "sha256": "175D7CC482BA9D943015119FA945CA16E8C30A36EACB4755A3467E04A8F63311"
+  }
+}

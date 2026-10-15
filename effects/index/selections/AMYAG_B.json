@@ -1,0 +1,220 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:AMYAG_B",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 68,
+    "source": {
+      "interpolation_run": "amyag_b-interpolation-apollo30-retimed-lot64-20261015-v1",
+      "interpolation_run_descriptor_sha256": "664AFF01E59DDBEA78D5CC65E21E81E42A923A3EF80CE4931D995B45284F467A",
+      "source_bam_sha256": "5589df8e84d0ac9455c925a5e1c08331c0b124fe8f6dc4642b40922428c2f31b",
+      "spatial_manifest_sha256": "75B4A8900120AD3F01ACB023A0F74AE1B4271E14920F15BEED3B308EC58ADBB2",
+      "spatial_run": "amyag_b-spatial-seedvr7b-lab-lot64-20261015-v1",
+      "spatial_run_descriptor_sha256": "A33D47B6C938885FA503B606249B8692B7ACA5EFEE3DCE361250B5F5C0E98F35"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        68
+      ],
+      "alternate_profiles": [],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30,
+          32,
+          34,
+          36,
+          38,
+          40,
+          42,
+          44,
+          46,
+          48,
+          50,
+          52,
+          54,
+          56,
+          58,
+          60,
+          62,
+          64,
+          66
+        ]
+      ],
+      "phase_count": 68,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond native slot count; no extra presented phase or duration"
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 941,
+    "path": "effects/index/qa-decisions/AMYAG_B/2026-10-15-accepted-a047f7081163.json",
+    "sha256": "A047F70811636EF816F1483EAD883B1F00E248E9041A739E75A2A8F35D455100"
+  },
+  "resref": "AMYAG_B",
+  "run_descriptor": {
+    "bytes": 2053,
+    "path": "effects/ressources/AMYAG_B/runs/amyag_b-interpolation-apollo30-retimed-lot64-20261015-v1/run.json",
+    "sha256": "664AFF01E59DDBEA78D5CC65E21E81E42A923A3EF80CE4931D995B45284F467A"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 46140,
+      "path": "effects/ressources/AMYAG_B/packs/amyag_b-7b-x4-apollo30-retimed-lot64-20261015-v1/manifest.json",
+      "sha256": "6EE16E24088091BD133B0D6AE4C9D5A748E13EFE57009EC1EF488EB01DF113E0"
+    },
+    "registry": {
+      "bytes": 1016,
+      "path": "effects/ressources/AMYAG_B/packs/amyag_b-7b-x4-apollo30-retimed-lot64-20261015-v1/EffectAnimations-X4.registry",
+      "sha256": "F2B3619613A04A4EF13FC6120B4D0AEABEAA9678DB56E8F6321552C654844A7C"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "amyag_b-interpolation-apollo30-retimed-lot64-20261015-v1",
+  "source": {
+    "bytes": 75624,
+    "path": "effects/ressources/AMYAG_B/source.bam",
+    "sha256": "5589DF8E84D0AC9455C925A5E1C08331C0B124FE8F6DC4642B40922428C2F31B"
+  }
+}

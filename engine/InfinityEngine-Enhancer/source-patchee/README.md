@@ -13,7 +13,7 @@ builds acceptés et les capacités par build viennent exclusivement de
 | Tuiles TIS/PVRZ xN | échelle lue dans le header TIS, puis table PVR, heuristique en dernier recours |
 | Liquides | masque WED, teinte auteur, textures DDS facultatives, shader `fpSEAM.glsl`, route2 via registre v2 compilé fail-closed |
 | Animations de zone | registres v1/v2/v3, TimedTimeline, packs par zone et variantes par occurrence |
-| Effets de sort x4 | registre multi-resref v1/v2, scopes projectile + VVC, fallback natif strict |
+| Effets de sort x4 | registre multi-resref v1/v2/v3 (profils ponctuels/bouclés), scopes projectile + VVC, fallback natif strict |
 | Sprites créature xN | chemin QA opt-in, baseline `NEAREST`, pour propriétaires/classes explicitement manifestés |
 | Suite shader CreatureHD | D6 opt-in : sharpen/flou RGB, couleurs et contours Dshaders sur textures catalogue x2/x4 |
 | Suite shader Sprites | D7 opt-in : portée propriétaire x1 ; créatures via trois `Render`, objets au sol via appel monde manifesté ; slot 5 `fpSprite`, slot 7 `fpSELECT` natif ; Catmull–Rom force `NEAREST` pour le draw puis restaure le sampler ; filtre HD toujours possédé par D1 |

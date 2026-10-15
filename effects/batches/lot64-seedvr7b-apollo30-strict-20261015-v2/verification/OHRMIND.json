@@ -1,0 +1,40 @@
+{
+  "resref": "OHRMIND",
+  "passed": true,
+  "native_cycles": 1,
+  "cycle_mode_variants": 1,
+  "phases": 60,
+  "cycles": [
+    {
+      "profile": "cycle000-loop",
+      "cycle": 0,
+      "closed": true,
+      "source_slots": 30,
+      "output_phases": 60,
+      "duration": [
+        30,
+        15
+      ],
+      "unique_rgb": 60,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    }
+  ],
+  "native_pixels_palette_world_geometry_preserved": true,
+  "source_model": "seedvr2_7b_int8_convrot.safetensors",
+  "scale": 4,
+  "target_fps": [
+    30,
+    1
+  ],
+  "filter": "NEAREST",
+  "pack_manifest_sha256": "FF4A60D3EF5D81FA7DA0A75302DC5FBD7B2DCEC611B865E56B483DF53F525666",
+  "runtime_contract_rows": 120,
+  "raw_bytes": 5958528,
+  "visual_qa": "pending-user-review",
+  "installed": false
+}

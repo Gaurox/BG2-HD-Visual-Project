@@ -460,7 +460,7 @@ def pack_binding(root: Path, resref: str, asset: Mapping[str, str], manifest_pat
         if source.get(name):
             pinned_file(root, source[name]["path"], source[name]["sha256"])
     registry = pack.get("registry")
-    if registry != "EffectAnimations-X4.registry" or pack.get("registry_version") not in {1, 2}:
+    if registry != "EffectAnimations-X4.registry" or pack.get("registry_version") not in {1, 2, 3}:
         raise WorkflowError("registre effects incompatible")
     registry_path = manifest_path.parent / registry
     if not registry_path.is_file() or sha256_file(registry_path) != str(pack.get("registry_sha256", "")).upper():

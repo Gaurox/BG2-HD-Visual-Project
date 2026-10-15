@@ -1,0 +1,156 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPCOMEXP",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          14
+        ],
+        "lookup_start": 14
+      }
+    ],
+    "frame_count": 29,
+    "source": {
+      "interpolation_run": "spcomexp-interpolation-apollo30-strict-lot64-20261015-v2",
+      "interpolation_run_descriptor_sha256": "CBB3948CD656700991C485F8E242B789038988B00211FF759A5FBA36982BEF56",
+      "source_bam_sha256": "4fd66cb40ff5ae2056078af310b53e2fad1852f3c400f34ffd5018d5b89bac1d",
+      "spatial_manifest_sha256": "91020ED819E288CF729284FC760856A2BC1D5EE71E1CF12060E0332282887ABD",
+      "spatial_run": "spcomexp-spatial-seedvr7b-lab-lot64-20261015-v1",
+      "spatial_run_descriptor_sha256": "424511CDEC4781A987C72752232212DE3C88951509EC94C52D1FE73A38D3DEEC"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        28,
+        2
+      ],
+      "alternate_profiles": [],
+      "cycle_profiles": [
+        "cycle000-once",
+        "cycle001-once"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26
+        ],
+        [
+          28
+        ]
+      ],
+      "phase_count": 28,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27
+        ],
+        [
+          28,
+          28
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond native slot count; no extra presented phase or duration"
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 945,
+    "path": "effects/index/qa-decisions/SPCOMEXP/2026-10-15-accepted-940868b31c38.json",
+    "sha256": "940868B31C383B23C3D1DB4A2ED11AA627D3A9F4D101DA68D6681636A8F4DC14"
+  },
+  "resref": "SPCOMEXP",
+  "run_descriptor": {
+    "bytes": 2077,
+    "path": "effects/ressources/SPCOMEXP/runs/spcomexp-interpolation-apollo30-strict-lot64-20261015-v2/run.json",
+    "sha256": "CBB3948CD656700991C485F8E242B789038988B00211FF759A5FBA36982BEF56"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 20983,
+      "path": "effects/ressources/SPCOMEXP/packs/spcomexp-7b-x4-apollo30-strict-lot64-20261015-v2/manifest.json",
+      "sha256": "917FB10FC1E63509F72BF0972CB620FDC464A640612212E6D4FAC389D88E4153"
+    },
+    "registry": {
+      "bytes": 584,
+      "path": "effects/ressources/SPCOMEXP/packs/spcomexp-7b-x4-apollo30-strict-lot64-20261015-v2/EffectAnimations-X4.registry",
+      "sha256": "BF924B7270A4C795254AE6E5BEE373FBCC4B4B9872F8E5A55AE89DEE36751E1B"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spcomexp-interpolation-apollo30-strict-lot64-20261015-v2",
+  "source": {
+    "bytes": 235576,
+    "path": "effects/ressources/SPCOMEXP/source.bam",
+    "sha256": "4FD66CB40FF5AE2056078AF310B53E2FAD1852F3C400F34FFD5018D5B89BAC1D"
+  }
+}

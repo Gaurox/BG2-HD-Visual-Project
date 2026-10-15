@@ -1,0 +1,41 @@
+{
+  "resref": "SPSARMOR",
+  "passed": true,
+  "native_cycles": 1,
+  "cycle_mode_variants": 1,
+  "phases": 120,
+  "cycles": [
+    {
+      "profile": "cycle000-once",
+      "cycle": 0,
+      "closed": false,
+      "source_slots": 60,
+      "output_phases": 120,
+      "duration": [
+        60,
+        15
+      ],
+      "unique_rgb": 120,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    }
+  ],
+  "native_pixels_palette_world_geometry_preserved": true,
+  "source_model": "seedvr2_7b_int8_convrot.safetensors",
+  "scale": 4,
+  "target_fps": [
+    30,
+    1
+  ],
+  "filter": "NEAREST",
+  "pack_manifest_sha256": "FFB5E8A229135D036D01F1AA5ED06C4C34F058218CEA1E46D0F71526E72D5B91",
+  "runtime_contract_rows": 240,
+  "native_input_keys_unique_before_apollo": true,
+  "raw_bytes": 112709376,
+  "visual_qa": "pending-user-review",
+  "installed": false
+}

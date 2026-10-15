@@ -1,0 +1,21 @@
+{
+  "executable_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57",
+  "constructor_instructions": [
+    "0025407F: mov eax, dword ptr [rbx + 0x18]",
+    "00254082: mov dword ptr [rdi + 0x78], eax",
+    "002540FE: mov eax, dword ptr [rbx + 0x60]",
+    "00254101: mov dword ptr [rdi + 0xc0], eax",
+    "00254107: mov eax, dword ptr [rbx + 0x64]",
+    "0025410A: mov dword ptr [rdi + 0xc4], eax",
+    "00254110: mov eax, dword ptr [rbx + 0x68]",
+    "00254113: mov dword ptr [rdi + 0xc8], eax"
+  ],
+  "offsets": {
+    "loopFlags": "0x78",
+    "start": "0xC0",
+    "loopSequence": "0xC4",
+    "currentSequence": "0xC8",
+    "continuousSequences": "0xCC"
+  },
+  "controllers_modified": false
+}

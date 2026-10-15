@@ -1,0 +1,5596 @@
+{
+  "schema": "bg2-effects-multicycle-verification-v1",
+  "passed": 64,
+  "failures": [],
+  "phases": 10014,
+  "cycle_mode_variants": 228,
+  "assets": [
+    {
+      "resref": "AMYAG_B",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 68,
+      "cycles": [
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 34,
+          "output_phases": 68,
+          "duration": [
+            34,
+            15
+          ],
+          "unique_rgb": 68,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "6EE16E24088091BD133B0D6AE4C9D5A748E13EFE57009EC1EF488EB01DF113E0",
+      "runtime_contract_rows": 136,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 40106112,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "AMYAG_F",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 68,
+      "cycles": [
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 34,
+          "output_phases": 68,
+          "duration": [
+            34,
+            15
+          ],
+          "unique_rgb": 68,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "287888E89C51842D18F721FCCF984D1B383BCBD7E168B4DBB57B67C31EA568D8",
+      "runtime_contract_rows": 136,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 38657408,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "BDETHREH",
+      "passed": true,
+      "native_cycles": 3,
+      "cycle_mode_variants": 3,
+      "phases": 300,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 45,
+          "output_phases": 90,
+          "duration": [
+            45,
+            15
+          ],
+          "unique_rgb": 90,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 50,
+          "output_phases": 100,
+          "duration": [
+            50,
+            15
+          ],
+          "unique_rgb": 100,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 55,
+          "output_phases": 110,
+          "duration": [
+            55,
+            15
+          ],
+          "unique_rgb": 110,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "C5A401AEB142681AF79641AF803B6E2670AA088CF7609F2F190E692EF18E8511",
+      "runtime_contract_rows": 600,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 122478336,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "BGLRYH",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 50,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 25,
+          "output_phases": 50,
+          "duration": [
+            25,
+            15
+          ],
+          "unique_rgb": 50,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "F1BDFE5FEBE92D4EAD74E7E1A0B5865A6AF2C3704B668698ED0785A690285EAB",
+      "runtime_contract_rows": 100,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 38190592,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "FLMSTRK",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 66,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 33,
+          "output_phases": 66,
+          "duration": [
+            33,
+            15
+          ],
+          "unique_rgb": 66,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "D5B2AF0619FF60AA1E46B4C53EC17A0AF8561BD077B94BDC60F27E5AE7E59C4F",
+      "runtime_contract_rows": 132,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 212921984,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "OHNVIS1",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 78,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 27,
+          "output_phases": 54,
+          "duration": [
+            27,
+            15
+          ],
+          "unique_rgb": 54,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 12,
+          "output_phases": 24,
+          "duration": [
+            12,
+            15
+          ],
+          "unique_rgb": 24,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "4EFD7D449B13607981122EBB483EC1F9D5E3D16D0EA7604B715756F0CB505BF2",
+      "runtime_contract_rows": 156,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 32149504,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "OHNVIS2",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 78,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 27,
+          "output_phases": 54,
+          "duration": [
+            27,
+            15
+          ],
+          "unique_rgb": 54,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 12,
+          "output_phases": 24,
+          "duration": [
+            12,
+            15
+          ],
+          "unique_rgb": 24,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "4CF05A55DC362F995F4D62C8560B3AC799A9FFDE10E13B1DE3F7E70575F932F2",
+      "runtime_contract_rows": 156,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 32149504,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "OHNVIS3",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 78,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 27,
+          "output_phases": 54,
+          "duration": [
+            27,
+            15
+          ],
+          "unique_rgb": 54,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 12,
+          "output_phases": 24,
+          "duration": [
+            12,
+            15
+          ],
+          "unique_rgb": 24,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "269E67E9D5CC222F9AC78E0565D7CEDDF4B6FBC61683D56DAF83E9B79464A8DA",
+      "runtime_contract_rows": 156,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 32149504,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "OHNVIS4",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 78,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 27,
+          "output_phases": 54,
+          "duration": [
+            27,
+            15
+          ],
+          "unique_rgb": 54,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 12,
+          "output_phases": 24,
+          "duration": [
+            12,
+            15
+          ],
+          "unique_rgb": 24,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "2ABA8264314E4F4D6C141AEED8A6263AAC8DEDF37D8DE37DB364A710FA0C0809",
+      "runtime_contract_rows": 156,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 32149504,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "OHNWAND1",
+      "passed": true,
+      "native_cycles": 3,
+      "cycle_mode_variants": 3,
+      "phases": 96,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-loop",
+          "cycle": 1,
+          "closed": true,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "11E2A5D75543D7C30BA57FA11D7B41F8FFB82EF87EF21C842BD89E80E859FA37",
+      "runtime_contract_rows": 192,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 20396288,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "OHRMIND",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 60,
+      "cycles": [
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 30,
+          "output_phases": 60,
+          "duration": [
+            30,
+            15
+          ],
+          "unique_rgb": 60,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "FF4A60D3EF5D81FA7DA0A75302DC5FBD7B2DCEC611B865E56B483DF53F525666",
+      "runtime_contract_rows": 120,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 5958528,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "OHRPOLY",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 180,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 45,
+          "output_phases": 90,
+          "duration": [
+            45,
+            15
+          ],
+          "unique_rgb": 90,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 45,
+          "output_phases": 90,
+          "duration": [
+            45,
+            15
+          ],
+          "unique_rgb": 90,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "E1528A1985D9208EB0DD7CE3457B4224DCD0997BECC04613F5D048AD5DD76FA8",
+      "runtime_contract_rows": 360,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 157200512,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPABJURA",
+      "passed": true,
+      "native_cycles": 10,
+      "cycle_mode_variants": 10,
+      "phases": 410,
+      "cycles": [
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 15,
+          "output_phases": 30,
+          "duration": [
+            15,
+            15
+          ],
+          "unique_rgb": 30,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-loop",
+          "cycle": 1,
+          "closed": true,
+          "source_slots": 15,
+          "output_phases": 30,
+          "duration": [
+            15,
+            15
+          ],
+          "unique_rgb": 30,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-loop",
+          "cycle": 2,
+          "closed": true,
+          "source_slots": 15,
+          "output_phases": 30,
+          "duration": [
+            15,
+            15
+          ],
+          "unique_rgb": 30,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-loop",
+          "cycle": 3,
+          "closed": true,
+          "source_slots": 15,
+          "output_phases": 30,
+          "duration": [
+            15,
+            15
+          ],
+          "unique_rgb": 30,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle004-loop",
+          "cycle": 4,
+          "closed": true,
+          "source_slots": 15,
+          "output_phases": 30,
+          "duration": [
+            15,
+            15
+          ],
+          "unique_rgb": 30,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle005-loop",
+          "cycle": 5,
+          "closed": true,
+          "source_slots": 26,
+          "output_phases": 52,
+          "duration": [
+            26,
+            15
+          ],
+          "unique_rgb": 52,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle006-loop",
+          "cycle": 6,
+          "closed": true,
+          "source_slots": 26,
+          "output_phases": 52,
+          "duration": [
+            26,
+            15
+          ],
+          "unique_rgb": 52,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle007-loop",
+          "cycle": 7,
+          "closed": true,
+          "source_slots": 26,
+          "output_phases": 52,
+          "duration": [
+            26,
+            15
+          ],
+          "unique_rgb": 52,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle008-loop",
+          "cycle": 8,
+          "closed": true,
+          "source_slots": 26,
+          "output_phases": 52,
+          "duration": [
+            26,
+            15
+          ],
+          "unique_rgb": 52,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle009-loop",
+          "cycle": 9,
+          "closed": true,
+          "source_slots": 26,
+          "output_phases": 52,
+          "duration": [
+            26,
+            15
+          ],
+          "unique_rgb": 52,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "CA6A1C7F7E02914408E5AF4E9CEA85FD2496358228E1E698A80475E14D40296D",
+      "runtime_contract_rows": 820,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 9039872,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPALTERA",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 118,
+      "cycles": [
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 30,
+          "output_phases": 60,
+          "duration": [
+            30,
+            15
+          ],
+          "unique_rgb": 60,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-loop",
+          "cycle": 1,
+          "closed": true,
+          "source_slots": 29,
+          "output_phases": 58,
+          "duration": [
+            29,
+            15
+          ],
+          "unique_rgb": 58,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "1E0DAD564F5499727967BE28CBBCD8458658BBA243E5502243D3326F61E65DEA",
+      "runtime_contract_rows": 236,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 7180288,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPATTCK1",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 100,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 41,
+          "output_phases": 82,
+          "duration": [
+            41,
+            15
+          ],
+          "unique_rgb": 82,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 9,
+          "output_phases": 18,
+          "duration": [
+            9,
+            15
+          ],
+          "unique_rgb": 18,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "87DC4B10FA7BF64EB1A4CE8D7C0B0EB11195077EA5F1CD4635E54E23636F7964",
+      "runtime_contract_rows": 200,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 78468480,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPAURAFB",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 40,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 14,
+          "output_phases": 28,
+          "duration": [
+            14,
+            15
+          ],
+          "unique_rgb": 28,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-loop",
+          "cycle": 1,
+          "closed": true,
+          "source_slots": 6,
+          "output_phases": 12,
+          "duration": [
+            6,
+            15
+          ],
+          "unique_rgb": 12,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "3FE1D6A4D00523350E208F9DD7B54083D1B33DC83842F878D91FD3B4697B56B9",
+      "runtime_contract_rows": 80,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 8582272,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPAURAFF",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 40,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 14,
+          "output_phases": 28,
+          "duration": [
+            14,
+            15
+          ],
+          "unique_rgb": 28,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-loop",
+          "cycle": 1,
+          "closed": true,
+          "source_slots": 6,
+          "output_phases": 12,
+          "duration": [
+            6,
+            15
+          ],
+          "unique_rgb": 12,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "0F1E23E0AE9F2B48AF190DC4558B17ADA98775A73B23EFAF626C454FC9B543B8",
+      "runtime_contract_rows": 80,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 12660096,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPBEHBLA",
+      "passed": true,
+      "native_cycles": 5,
+      "cycle_mode_variants": 5,
+      "phases": 200,
+      "cycles": [
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 20,
+          "output_phases": 40,
+          "duration": [
+            20,
+            15
+          ],
+          "unique_rgb": 40,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-loop",
+          "cycle": 1,
+          "closed": true,
+          "source_slots": 20,
+          "output_phases": 40,
+          "duration": [
+            20,
+            15
+          ],
+          "unique_rgb": 40,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-loop",
+          "cycle": 2,
+          "closed": true,
+          "source_slots": 20,
+          "output_phases": 40,
+          "duration": [
+            20,
+            15
+          ],
+          "unique_rgb": 40,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-loop",
+          "cycle": 3,
+          "closed": true,
+          "source_slots": 20,
+          "output_phases": 40,
+          "duration": [
+            20,
+            15
+          ],
+          "unique_rgb": 40,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle004-loop",
+          "cycle": 4,
+          "closed": true,
+          "source_slots": 20,
+          "output_phases": 40,
+          "duration": [
+            20,
+            15
+          ],
+          "unique_rgb": 40,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "0F054F04D1927C01F80E55C2A848FCF2AB1CF2D19615DC36C40C5F40C02BA89E",
+      "runtime_contract_rows": 400,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 52403200,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPBEHRAY",
+      "passed": true,
+      "native_cycles": 5,
+      "cycle_mode_variants": 5,
+      "phases": 100,
+      "cycles": [
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 10,
+          "output_phases": 20,
+          "duration": [
+            10,
+            15
+          ],
+          "unique_rgb": 20,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-loop",
+          "cycle": 1,
+          "closed": true,
+          "source_slots": 10,
+          "output_phases": 20,
+          "duration": [
+            10,
+            15
+          ],
+          "unique_rgb": 20,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-loop",
+          "cycle": 2,
+          "closed": true,
+          "source_slots": 10,
+          "output_phases": 20,
+          "duration": [
+            10,
+            15
+          ],
+          "unique_rgb": 20,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-loop",
+          "cycle": 3,
+          "closed": true,
+          "source_slots": 10,
+          "output_phases": 20,
+          "duration": [
+            10,
+            15
+          ],
+          "unique_rgb": 20,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle004-loop",
+          "cycle": 4,
+          "closed": true,
+          "source_slots": 10,
+          "output_phases": 20,
+          "duration": [
+            10,
+            15
+          ],
+          "unique_rgb": 20,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "2D23E6EE08C92D44DD7C735CEE5F80C29B19D7F5EB930826999AC4484B5C1B94",
+      "runtime_contract_rows": 200,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 10857472,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPCAGEMZ",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 168,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 42,
+          "output_phases": 84,
+          "duration": [
+            42,
+            15
+          ],
+          "unique_rgb": 84,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 42,
+          "output_phases": 84,
+          "duration": [
+            42,
+            15
+          ],
+          "unique_rgb": 84,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "F2819A3D999026734B496E95A71A968ACE1054AC14C2DDB27B6089F36511C884",
+      "runtime_contract_rows": 336,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 202234112,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPCAUSEW",
+      "passed": true,
+      "native_cycles": 3,
+      "cycle_mode_variants": 3,
+      "phases": 240,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 40,
+          "output_phases": 80,
+          "duration": [
+            40,
+            15
+          ],
+          "unique_rgb": 80,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 40,
+          "output_phases": 80,
+          "duration": [
+            40,
+            15
+          ],
+          "unique_rgb": 80,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 40,
+          "output_phases": 80,
+          "duration": [
+            40,
+            15
+          ],
+          "unique_rgb": 80,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "C3A5A271EAB5D1BC789D757EFDE220F75EABBDB7A4F22DE09627C6CA728A759E",
+      "runtime_contract_rows": 480,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 187472000,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPCHLGT1",
+      "passed": true,
+      "native_cycles": 9,
+      "cycle_mode_variants": 9,
+      "phases": 140,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-once",
+          "cycle": 3,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle004-once",
+          "cycle": 4,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle005-once",
+          "cycle": 5,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle006-once",
+          "cycle": 6,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle007-once",
+          "cycle": 7,
+          "closed": false,
+          "source_slots": 7,
+          "output_phases": 14,
+          "duration": [
+            7,
+            15
+          ],
+          "unique_rgb": 14,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle008-once",
+          "cycle": 8,
+          "closed": false,
+          "source_slots": 7,
+          "output_phases": 14,
+          "duration": [
+            7,
+            15
+          ],
+          "unique_rgb": 14,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "1C094FF8010380DCB7C4875846820737915C5CD200EE378926E89C91C15F661B",
+      "runtime_contract_rows": 280,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 20035072,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPCHLGT2",
+      "passed": true,
+      "native_cycles": 9,
+      "cycle_mode_variants": 9,
+      "phases": 140,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 9,
+          "output_phases": 18,
+          "duration": [
+            9,
+            15
+          ],
+          "unique_rgb": 18,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-once",
+          "cycle": 3,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle004-once",
+          "cycle": 4,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle005-once",
+          "cycle": 5,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle006-once",
+          "cycle": 6,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle007-once",
+          "cycle": 7,
+          "closed": false,
+          "source_slots": 7,
+          "output_phases": 14,
+          "duration": [
+            7,
+            15
+          ],
+          "unique_rgb": 14,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle008-once",
+          "cycle": 8,
+          "closed": false,
+          "source_slots": 6,
+          "output_phases": 12,
+          "duration": [
+            6,
+            15
+          ],
+          "unique_rgb": 12,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "4728AC2145341D465A95A133B96E42CE4C70AAA970FF235C8823CD8A27A31223",
+      "runtime_contract_rows": 280,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 10788096,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPCHLGT3",
+      "passed": true,
+      "native_cycles": 9,
+      "cycle_mode_variants": 9,
+      "phases": 132,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 7,
+          "output_phases": 14,
+          "duration": [
+            7,
+            15
+          ],
+          "unique_rgb": 14,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 7,
+          "output_phases": 14,
+          "duration": [
+            7,
+            15
+          ],
+          "unique_rgb": 14,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 7,
+          "output_phases": 14,
+          "duration": [
+            7,
+            15
+          ],
+          "unique_rgb": 14,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-once",
+          "cycle": 3,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle004-once",
+          "cycle": 4,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle005-once",
+          "cycle": 5,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle006-once",
+          "cycle": 6,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle007-once",
+          "cycle": 7,
+          "closed": false,
+          "source_slots": 7,
+          "output_phases": 14,
+          "duration": [
+            7,
+            15
+          ],
+          "unique_rgb": 14,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle008-once",
+          "cycle": 8,
+          "closed": false,
+          "source_slots": 6,
+          "output_phases": 12,
+          "duration": [
+            6,
+            15
+          ],
+          "unique_rgb": 12,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "B7F2598963F50A35D0BF6C1A6730862B8DCEA7A7A0BD252C7AD7B61CD8DDC009",
+      "runtime_contract_rows": 264,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 10112896,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPCL239X",
+      "passed": true,
+      "native_cycles": 4,
+      "cycle_mode_variants": 4,
+      "phases": 150,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 56,
+          "output_phases": 112,
+          "duration": [
+            56,
+            15
+          ],
+          "unique_rgb": 112,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 6,
+          "output_phases": 12,
+          "duration": [
+            6,
+            15
+          ],
+          "unique_rgb": 12,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 6,
+          "output_phases": 12,
+          "duration": [
+            6,
+            15
+          ],
+          "unique_rgb": 12,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-once",
+          "cycle": 3,
+          "closed": false,
+          "source_slots": 7,
+          "output_phases": 14,
+          "duration": [
+            7,
+            15
+          ],
+          "unique_rgb": 14,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "E50F34916CD685C4DEE629BF8F87D6A0B55D11AEF741466C0FEEF1642C56B1DB",
+      "runtime_contract_rows": 300,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 229286528,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPCLKFRI",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 96,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 32,
+          "output_phases": 64,
+          "duration": [
+            32,
+            15
+          ],
+          "unique_rgb": 64,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "0610D3719E1D8F5F1B8C5FB8310F69BB26F46AC8A3AD7E26233486C978CFAA22",
+      "runtime_contract_rows": 192,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 66367616,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPCLOUD1",
+      "passed": true,
+      "native_cycles": 6,
+      "cycle_mode_variants": 6,
+      "phases": 234,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 20,
+          "output_phases": 40,
+          "duration": [
+            20,
+            15
+          ],
+          "unique_rgb": 40,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 19,
+          "output_phases": 38,
+          "duration": [
+            19,
+            15
+          ],
+          "unique_rgb": 38,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 20,
+          "output_phases": 40,
+          "duration": [
+            20,
+            15
+          ],
+          "unique_rgb": 40,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-once",
+          "cycle": 3,
+          "closed": false,
+          "source_slots": 19,
+          "output_phases": 38,
+          "duration": [
+            19,
+            15
+          ],
+          "unique_rgb": 38,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle004-once",
+          "cycle": 4,
+          "closed": false,
+          "source_slots": 20,
+          "output_phases": 40,
+          "duration": [
+            20,
+            15
+          ],
+          "unique_rgb": 40,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle005-once",
+          "cycle": 5,
+          "closed": false,
+          "source_slots": 19,
+          "output_phases": 38,
+          "duration": [
+            19,
+            15
+          ],
+          "unique_rgb": 38,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "BADE3FB6A071234EDD711255BCA1F6FA4C8AC990DDB14DB541A3AF88DEE927C4",
+      "runtime_contract_rows": 468,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 88289408,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPCMWOUI",
+      "passed": true,
+      "native_cycles": 3,
+      "cycle_mode_variants": 3,
+      "phases": 240,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 40,
+          "output_phases": 80,
+          "duration": [
+            40,
+            15
+          ],
+          "unique_rgb": 80,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 40,
+          "output_phases": 80,
+          "duration": [
+            40,
+            15
+          ],
+          "unique_rgb": 80,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 40,
+          "output_phases": 80,
+          "duration": [
+            40,
+            15
+          ],
+          "unique_rgb": 80,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "52F970BD2B4621A0680D1BB1EA6874770AA8B8C686A9AC82C6AD3151E1C710AB",
+      "runtime_contract_rows": 480,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 488858496,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPCOMEND",
+      "passed": true,
+      "native_cycles": 9,
+      "cycle_mode_variants": 9,
+      "phases": 144,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-once",
+          "cycle": 3,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle004-once",
+          "cycle": 4,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle005-once",
+          "cycle": 5,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle006-once",
+          "cycle": 6,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle007-once",
+          "cycle": 7,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle008-once",
+          "cycle": 8,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "FE8DB0C10983B6A947D36F30B86FC8F68FC215C2518EAE8A632C64D2C5FF981B",
+      "runtime_contract_rows": 288,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 26092544,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPCOMEXP",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 30,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 14,
+          "output_phases": 28,
+          "duration": [
+            14,
+            15
+          ],
+          "unique_rgb": 28,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 1,
+          "output_phases": 2,
+          "duration": [
+            1,
+            15
+          ],
+          "unique_rgb": 1,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": true,
+          "transparent_native_cycle": true,
+          "empty_phases": [
+            0,
+            1
+          ],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "917FB10FC1E63509F72BF0972CB620FDC464A640612212E6D4FAC389D88E4153",
+      "runtime_contract_rows": 60,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 105652672,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPCOMSTT",
+      "passed": true,
+      "native_cycles": 9,
+      "cycle_mode_variants": 9,
+      "phases": 290,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-once",
+          "cycle": 3,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle004-once",
+          "cycle": 4,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle005-once",
+          "cycle": 5,
+          "closed": false,
+          "source_slots": 17,
+          "output_phases": 34,
+          "duration": [
+            17,
+            15
+          ],
+          "unique_rgb": 34,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle006-once",
+          "cycle": 6,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle007-once",
+          "cycle": 7,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle008-once",
+          "cycle": 8,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "E04B956B9E4613C583C76CA02D499A62FAC00F595C94A72FC0D60EEB8CA8CE93",
+      "runtime_contract_rows": 580,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 29332096,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPCONFUS",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 40,
+      "cycles": [
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 20,
+          "output_phases": 40,
+          "duration": [
+            20,
+            15
+          ],
+          "unique_rgb": 40,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "D5A8F67AF32A741A81024410D22A5630CD9E325BD9846CB9BEAC1D6D2ACB84D5",
+      "runtime_contract_rows": 80,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 6400000,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPCONTIN",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 154,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 77,
+          "output_phases": 154,
+          "duration": [
+            77,
+            15
+          ],
+          "unique_rgb": 154,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "8ABF1792A23483FBB33AF082A6F79C7B5FA4B7CB32F76556A6C88ADE27F1B7FC",
+      "runtime_contract_rows": 308,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 37080576,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPCSWOUI",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 160,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 40,
+          "output_phases": 80,
+          "duration": [
+            40,
+            15
+          ],
+          "unique_rgb": 80,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 40,
+          "output_phases": 80,
+          "duration": [
+            40,
+            15
+          ],
+          "unique_rgb": 80,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "727C15E96A90440E9939084BBA207A8B038A6A61F3DA33FB5B0623334AE44438",
+      "runtime_contract_rows": 320,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 192124800,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPDIVINA",
+      "passed": true,
+      "native_cycles": 10,
+      "cycle_mode_variants": 10,
+      "phases": 874,
+      "cycles": [
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 29,
+          "output_phases": 58,
+          "duration": [
+            29,
+            15
+          ],
+          "unique_rgb": 58,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-loop",
+          "cycle": 1,
+          "closed": true,
+          "source_slots": 29,
+          "output_phases": 58,
+          "duration": [
+            29,
+            15
+          ],
+          "unique_rgb": 58,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-loop",
+          "cycle": 2,
+          "closed": true,
+          "source_slots": 29,
+          "output_phases": 58,
+          "duration": [
+            29,
+            15
+          ],
+          "unique_rgb": 58,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-loop",
+          "cycle": 3,
+          "closed": true,
+          "source_slots": 29,
+          "output_phases": 58,
+          "duration": [
+            29,
+            15
+          ],
+          "unique_rgb": 58,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle004-loop",
+          "cycle": 4,
+          "closed": true,
+          "source_slots": 29,
+          "output_phases": 58,
+          "duration": [
+            29,
+            15
+          ],
+          "unique_rgb": 58,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [
+            8
+          ],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle005-loop",
+          "cycle": 5,
+          "closed": true,
+          "source_slots": 60,
+          "output_phases": 120,
+          "duration": [
+            60,
+            15
+          ],
+          "unique_rgb": 120,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle006-loop",
+          "cycle": 6,
+          "closed": true,
+          "source_slots": 58,
+          "output_phases": 116,
+          "duration": [
+            58,
+            15
+          ],
+          "unique_rgb": 116,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle007-loop",
+          "cycle": 7,
+          "closed": true,
+          "source_slots": 58,
+          "output_phases": 116,
+          "duration": [
+            58,
+            15
+          ],
+          "unique_rgb": 116,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle008-loop",
+          "cycle": 8,
+          "closed": true,
+          "source_slots": 58,
+          "output_phases": 116,
+          "duration": [
+            58,
+            15
+          ],
+          "unique_rgb": 116,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle009-loop",
+          "cycle": 9,
+          "closed": true,
+          "source_slots": 58,
+          "output_phases": 116,
+          "duration": [
+            58,
+            15
+          ],
+          "unique_rgb": 116,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "861D78F4426B0776D487484C8926CE5CCAD2EF2CE9152D58D0697E4DCEB3FB6E",
+      "runtime_contract_rows": 1748,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 21436416,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPENTAAI",
+      "passed": true,
+      "native_cycles": 3,
+      "cycle_mode_variants": 3,
+      "phases": 72,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 12,
+          "output_phases": 24,
+          "duration": [
+            12,
+            15
+          ],
+          "unique_rgb": 24,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 12,
+          "output_phases": 24,
+          "duration": [
+            12,
+            15
+          ],
+          "unique_rgb": 24,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 12,
+          "output_phases": 24,
+          "duration": [
+            12,
+            15
+          ],
+          "unique_rgb": 24,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "D4C1B2E6109B5A647827EC7C2732BB489448E06711EAF0295320B839CF597A62",
+      "runtime_contract_rows": 144,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 5078784,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPFIRESB",
+      "passed": true,
+      "native_cycles": 4,
+      "cycle_mode_variants": 4,
+      "phases": 152,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-loop",
+          "cycle": 2,
+          "closed": true,
+          "source_slots": 22,
+          "output_phases": 44,
+          "duration": [
+            22,
+            15
+          ],
+          "unique_rgb": 44,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-loop",
+          "cycle": 3,
+          "closed": true,
+          "source_slots": 22,
+          "output_phases": 44,
+          "duration": [
+            22,
+            15
+          ],
+          "unique_rgb": 44,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "70F01A1E43EB80D00772A3B8867DE407EE4B52645766C1E8EF76B1CB103B8B4E",
+      "runtime_contract_rows": 304,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 56148352,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPFIRESG",
+      "passed": true,
+      "native_cycles": 4,
+      "cycle_mode_variants": 4,
+      "phases": 152,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-loop",
+          "cycle": 2,
+          "closed": true,
+          "source_slots": 22,
+          "output_phases": 44,
+          "duration": [
+            22,
+            15
+          ],
+          "unique_rgb": 44,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-loop",
+          "cycle": 3,
+          "closed": true,
+          "source_slots": 22,
+          "output_phases": 44,
+          "duration": [
+            22,
+            15
+          ],
+          "unique_rgb": 44,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "24F6433C06FCF189B10588F6D81C58D17BE09F388E54A7C1D1FC10490200FA96",
+      "runtime_contract_rows": 304,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 56148352,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPFIRESR",
+      "passed": true,
+      "native_cycles": 4,
+      "cycle_mode_variants": 4,
+      "phases": 152,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-loop",
+          "cycle": 2,
+          "closed": true,
+          "source_slots": 22,
+          "output_phases": 44,
+          "duration": [
+            22,
+            15
+          ],
+          "unique_rgb": 44,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-loop",
+          "cycle": 3,
+          "closed": true,
+          "source_slots": 22,
+          "output_phases": 44,
+          "duration": [
+            22,
+            15
+          ],
+          "unique_rgb": 44,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "41B77EE81A6B5407CB9BC6875838F52D0EC98B955AFD15D775D9DA103593DC56",
+      "runtime_contract_rows": 304,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 56148352,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPFIRETR",
+      "passed": true,
+      "native_cycles": 5,
+      "cycle_mode_variants": 5,
+      "phases": 100,
+      "cycles": [
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 11,
+          "output_phases": 22,
+          "duration": [
+            11,
+            15
+          ],
+          "unique_rgb": 22,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-loop",
+          "cycle": 1,
+          "closed": true,
+          "source_slots": 11,
+          "output_phases": 22,
+          "duration": [
+            11,
+            15
+          ],
+          "unique_rgb": 22,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-loop",
+          "cycle": 2,
+          "closed": true,
+          "source_slots": 11,
+          "output_phases": 22,
+          "duration": [
+            11,
+            15
+          ],
+          "unique_rgb": 22,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-loop",
+          "cycle": 3,
+          "closed": true,
+          "source_slots": 11,
+          "output_phases": 22,
+          "duration": [
+            11,
+            15
+          ],
+          "unique_rgb": 22,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle004-loop",
+          "cycle": 4,
+          "closed": true,
+          "source_slots": 6,
+          "output_phases": 12,
+          "duration": [
+            6,
+            15
+          ],
+          "unique_rgb": 12,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "DFA250DC96D42C5ABCB9A4CFD6E224863E3E106A2366480648A16F6367BEB2F3",
+      "runtime_contract_rows": 200,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 4303232,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPFLAMES",
+      "passed": true,
+      "native_cycles": 18,
+      "cycle_mode_variants": 18,
+      "phases": 360,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-once",
+          "cycle": 3,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle004-once",
+          "cycle": 4,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle005-once",
+          "cycle": 5,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle006-once",
+          "cycle": 6,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle007-once",
+          "cycle": 7,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle008-once",
+          "cycle": 8,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle009-once",
+          "cycle": 9,
+          "closed": false,
+          "source_slots": 4,
+          "output_phases": 8,
+          "duration": [
+            4,
+            15
+          ],
+          "unique_rgb": 8,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle010-once",
+          "cycle": 10,
+          "closed": false,
+          "source_slots": 4,
+          "output_phases": 8,
+          "duration": [
+            4,
+            15
+          ],
+          "unique_rgb": 8,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle011-once",
+          "cycle": 11,
+          "closed": false,
+          "source_slots": 4,
+          "output_phases": 8,
+          "duration": [
+            4,
+            15
+          ],
+          "unique_rgb": 8,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle012-once",
+          "cycle": 12,
+          "closed": false,
+          "source_slots": 4,
+          "output_phases": 8,
+          "duration": [
+            4,
+            15
+          ],
+          "unique_rgb": 8,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle013-once",
+          "cycle": 13,
+          "closed": false,
+          "source_slots": 4,
+          "output_phases": 8,
+          "duration": [
+            4,
+            15
+          ],
+          "unique_rgb": 8,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle014-once",
+          "cycle": 14,
+          "closed": false,
+          "source_slots": 4,
+          "output_phases": 8,
+          "duration": [
+            4,
+            15
+          ],
+          "unique_rgb": 8,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle015-once",
+          "cycle": 15,
+          "closed": false,
+          "source_slots": 4,
+          "output_phases": 8,
+          "duration": [
+            4,
+            15
+          ],
+          "unique_rgb": 8,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle016-once",
+          "cycle": 16,
+          "closed": false,
+          "source_slots": 4,
+          "output_phases": 8,
+          "duration": [
+            4,
+            15
+          ],
+          "unique_rgb": 8,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle017-once",
+          "cycle": 17,
+          "closed": false,
+          "source_slots": 4,
+          "output_phases": 8,
+          "duration": [
+            4,
+            15
+          ],
+          "unique_rgb": 8,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "0A6B4DC8B48E1366BB55DAA61F20112B3BA2C224EB717E2AC9DAB0D896ECA5F6",
+      "runtime_contract_rows": 720,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 173380928,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPFLAST2",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 32,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 7,
+          "output_phases": 14,
+          "duration": [
+            7,
+            15
+          ],
+          "unique_rgb": 14,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-loop",
+          "cycle": 1,
+          "closed": true,
+          "source_slots": 9,
+          "output_phases": 18,
+          "duration": [
+            9,
+            15
+          ],
+          "unique_rgb": 18,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "64F1205F344CB337228A1C90ECE5C1B3A546442E5132FBAAE3239EA2FFBE9426",
+      "runtime_contract_rows": 64,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 26795136,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPFLESHS",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 124,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 31,
+          "output_phases": 62,
+          "duration": [
+            31,
+            15
+          ],
+          "unique_rgb": 62,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 31,
+          "output_phases": 62,
+          "duration": [
+            31,
+            15
+          ],
+          "unique_rgb": 62,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "627A42E0C15C60DA02C716978EF517C1E5E4D588416DB8A6D09F5E42F418ACF1",
+      "runtime_contract_rows": 124,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 49007104,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPGSUNSR",
+      "passed": true,
+      "native_cycles": 4,
+      "cycle_mode_variants": 4,
+      "phases": 152,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-loop",
+          "cycle": 2,
+          "closed": true,
+          "source_slots": 22,
+          "output_phases": 44,
+          "duration": [
+            22,
+            15
+          ],
+          "unique_rgb": 44,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-loop",
+          "cycle": 3,
+          "closed": true,
+          "source_slots": 22,
+          "output_phases": 44,
+          "duration": [
+            22,
+            15
+          ],
+          "unique_rgb": 44,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "4DF9E929A7103A0C18B13C1497D3BE6AEF8FA19B1A4FB01C049073DBD2625876",
+      "runtime_contract_rows": 304,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 56148352,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPILLUS",
+      "passed": true,
+      "native_cycles": 10,
+      "cycle_mode_variants": 10,
+      "phases": 900,
+      "cycles": [
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 30,
+          "output_phases": 60,
+          "duration": [
+            30,
+            15
+          ],
+          "unique_rgb": 60,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-loop",
+          "cycle": 1,
+          "closed": true,
+          "source_slots": 30,
+          "output_phases": 60,
+          "duration": [
+            30,
+            15
+          ],
+          "unique_rgb": 60,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-loop",
+          "cycle": 2,
+          "closed": true,
+          "source_slots": 30,
+          "output_phases": 60,
+          "duration": [
+            30,
+            15
+          ],
+          "unique_rgb": 60,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-loop",
+          "cycle": 3,
+          "closed": true,
+          "source_slots": 30,
+          "output_phases": 60,
+          "duration": [
+            30,
+            15
+          ],
+          "unique_rgb": 60,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle004-loop",
+          "cycle": 4,
+          "closed": true,
+          "source_slots": 30,
+          "output_phases": 60,
+          "duration": [
+            30,
+            15
+          ],
+          "unique_rgb": 60,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle005-loop",
+          "cycle": 5,
+          "closed": true,
+          "source_slots": 60,
+          "output_phases": 120,
+          "duration": [
+            60,
+            15
+          ],
+          "unique_rgb": 120,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle006-loop",
+          "cycle": 6,
+          "closed": true,
+          "source_slots": 60,
+          "output_phases": 120,
+          "duration": [
+            60,
+            15
+          ],
+          "unique_rgb": 120,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle007-loop",
+          "cycle": 7,
+          "closed": true,
+          "source_slots": 60,
+          "output_phases": 120,
+          "duration": [
+            60,
+            15
+          ],
+          "unique_rgb": 120,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle008-loop",
+          "cycle": 8,
+          "closed": true,
+          "source_slots": 60,
+          "output_phases": 120,
+          "duration": [
+            60,
+            15
+          ],
+          "unique_rgb": 120,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle009-loop",
+          "cycle": 9,
+          "closed": true,
+          "source_slots": 60,
+          "output_phases": 120,
+          "duration": [
+            60,
+            15
+          ],
+          "unique_rgb": 120,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "B45E1FC80DECB1E2C4EB578DD7E2E8AFB9C220AEDB4F139E144E4B998059CB11",
+      "runtime_contract_rows": 1800,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 28468480,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPMAGGLO",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 60,
+      "cycles": [
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 30,
+          "output_phases": 60,
+          "duration": [
+            30,
+            15
+          ],
+          "unique_rgb": 60,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "8D60A3990B267F0E789E84F48DEA2C76E25FEE37A4B205EA2017B15F4607359F",
+      "runtime_contract_rows": 120,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 61447680,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPMELBD2",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 100,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 50,
+          "output_phases": 100,
+          "duration": [
+            50,
+            15
+          ],
+          "unique_rgb": 100,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "C934798BD4A9E87304FF2F5FEE8B23C1BC284DABBCC62D3A7EB5785AAFD5F672",
+      "runtime_contract_rows": 200,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 180656768,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPMETSWA",
+      "passed": true,
+      "native_cycles": 5,
+      "cycle_mode_variants": 6,
+      "phases": 180,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 15,
+          "output_phases": 30,
+          "duration": [
+            15,
+            15
+          ],
+          "unique_rgb": 30,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 15,
+          "output_phases": 30,
+          "duration": [
+            15,
+            15
+          ],
+          "unique_rgb": 30,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 15,
+          "output_phases": 30,
+          "duration": [
+            15,
+            15
+          ],
+          "unique_rgb": 30,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 15,
+          "output_phases": 30,
+          "duration": [
+            15,
+            15
+          ],
+          "unique_rgb": 30,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-once",
+          "cycle": 3,
+          "closed": false,
+          "source_slots": 15,
+          "output_phases": 30,
+          "duration": [
+            15,
+            15
+          ],
+          "unique_rgb": 30,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle004-once",
+          "cycle": 4,
+          "closed": false,
+          "source_slots": 15,
+          "output_phases": 30,
+          "duration": [
+            15,
+            15
+          ],
+          "unique_rgb": 30,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "01B67BA7F8FA4BC3F8D2CB869F511EAAE976E841158476F7736620FCC41DA070",
+      "runtime_contract_rows": 300,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 7738752,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPMONSUM",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 82,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 41,
+          "output_phases": 82,
+          "duration": [
+            41,
+            15
+          ],
+          "unique_rgb": 82,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "045993ADA539DA6A0B8EC2D99FBB18C93EF083CEFD1D557D170955585648A256",
+      "runtime_contract_rows": 164,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 33163648,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPNECRO1",
+      "passed": true,
+      "native_cycles": 5,
+      "cycle_mode_variants": 5,
+      "phases": 310,
+      "cycles": [
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 31,
+          "output_phases": 62,
+          "duration": [
+            31,
+            15
+          ],
+          "unique_rgb": 62,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-loop",
+          "cycle": 1,
+          "closed": true,
+          "source_slots": 31,
+          "output_phases": 62,
+          "duration": [
+            31,
+            15
+          ],
+          "unique_rgb": 62,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-loop",
+          "cycle": 2,
+          "closed": true,
+          "source_slots": 31,
+          "output_phases": 62,
+          "duration": [
+            31,
+            15
+          ],
+          "unique_rgb": 62,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-loop",
+          "cycle": 3,
+          "closed": true,
+          "source_slots": 31,
+          "output_phases": 62,
+          "duration": [
+            31,
+            15
+          ],
+          "unique_rgb": 62,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle004-loop",
+          "cycle": 4,
+          "closed": true,
+          "source_slots": 31,
+          "output_phases": 62,
+          "duration": [
+            31,
+            15
+          ],
+          "unique_rgb": 62,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "1D294A645B4F409A2E3ADB6E903201055F198BF2946E7C43EDFC0CB5B1E18B0B",
+      "runtime_contract_rows": 620,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 10909696,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPPFIRRI",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 48,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 12,
+          "output_phases": 24,
+          "duration": [
+            12,
+            15
+          ],
+          "unique_rgb": 24,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 12,
+          "output_phases": 24,
+          "duration": [
+            12,
+            15
+          ],
+          "unique_rgb": 24,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "0D91B64815A0681824BC0FB558E311A74BBC9B3FA6B5DC6E4F9AB1144290B551",
+      "runtime_contract_rows": 96,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 11809792,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPPOLYMP",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 180,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 45,
+          "output_phases": 90,
+          "duration": [
+            45,
+            15
+          ],
+          "unique_rgb": 90,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 45,
+          "output_phases": 90,
+          "duration": [
+            45,
+            15
+          ],
+          "unique_rgb": 90,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "8D0041E1653FF6B8B0B3FCF781E636E920F7BB616AFFDAC292AFA270D04BDCE0",
+      "runtime_contract_rows": 360,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 157200512,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPPROTEC",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 60,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 30,
+          "output_phases": 60,
+          "duration": [
+            30,
+            15
+          ],
+          "unique_rgb": 60,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "07AA6E807795ED4C2FFC7BA698B1D416395E51B63B2762A3AF963F0990F7AF20",
+      "runtime_contract_rows": 120,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 6310400,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPRESIST",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 144,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 36,
+          "output_phases": 72,
+          "duration": [
+            36,
+            15
+          ],
+          "unique_rgb": 72,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 36,
+          "output_phases": 72,
+          "duration": [
+            36,
+            15
+          ],
+          "unique_rgb": 72,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "FF2AD1F05249027042E94A3041F0EC890EA9D698C76BAA7DBF9F366ACD8A1D55",
+      "runtime_contract_rows": 288,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 39744896,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPSARMOR",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 120,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 60,
+          "output_phases": 120,
+          "duration": [
+            60,
+            15
+          ],
+          "unique_rgb": 120,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "FFB5E8A229135D036D01F1AA5ED06C4C34F058218CEA1E46D0F71526E72D5B91",
+      "runtime_contract_rows": 240,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 112709376,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPSETSCD",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 48,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "2832605B416C7D50BF5006C079BB438098872DD026314D64071A412B176AE8DF",
+      "runtime_contract_rows": 96,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 6199424,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPSETTID",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 46,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 15,
+          "output_phases": 30,
+          "duration": [
+            15,
+            15
+          ],
+          "unique_rgb": 30,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 8,
+          "output_phases": 16,
+          "duration": [
+            8,
+            15
+          ],
+          "unique_rgb": 16,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "FD38A8C18B077681C9A8577D0BE13EC35455E1A6C37671A461F887D55A94FC64",
+      "runtime_contract_rows": 92,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 37177856,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPSPEV",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 60,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 14,
+          "output_phases": 28,
+          "duration": [
+            14,
+            15
+          ],
+          "unique_rgb": 28,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "23A3905160FA58FED4F58F0284D977F67E579B7B5E0A8B35D270F557F8D28544",
+      "runtime_contract_rows": 120,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 54350592,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPSTRMVA",
+      "passed": true,
+      "native_cycles": 4,
+      "cycle_mode_variants": 4,
+      "phases": 180,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 15,
+          "output_phases": 30,
+          "duration": [
+            15,
+            15
+          ],
+          "unique_rgb": 30,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 15,
+          "output_phases": 30,
+          "duration": [
+            15,
+            15
+          ],
+          "unique_rgb": 30,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [
+            0
+          ],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 30,
+          "output_phases": 60,
+          "duration": [
+            30,
+            15
+          ],
+          "unique_rgb": 60,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-once",
+          "cycle": 3,
+          "closed": false,
+          "source_slots": 30,
+          "output_phases": 60,
+          "duration": [
+            30,
+            15
+          ],
+          "unique_rgb": 60,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [
+            0
+          ],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "722EA16D84613BE91BD7872B6D446592AE953114662A8FE1F7B63587A5C8C8B3",
+      "runtime_contract_rows": 360,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 115451456,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPSUMMON",
+      "passed": true,
+      "native_cycles": 3,
+      "cycle_mode_variants": 3,
+      "phases": 424,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 82,
+          "output_phases": 164,
+          "duration": [
+            82,
+            15
+          ],
+          "unique_rgb": 164,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 48,
+          "output_phases": 96,
+          "duration": [
+            48,
+            15
+          ],
+          "unique_rgb": 96,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 82,
+          "output_phases": 164,
+          "duration": [
+            82,
+            15
+          ],
+          "unique_rgb": 164,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "060D1C1834B162AE8C46E5619154EF80FB19644CB5372A18C227E6964A443CEF",
+      "runtime_contract_rows": 848,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 305694720,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPSUNRAY",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 52,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-loop",
+          "cycle": 1,
+          "closed": true,
+          "source_slots": 10,
+          "output_phases": 20,
+          "duration": [
+            10,
+            15
+          ],
+          "unique_rgb": 20,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "AA6D0D8087EB2B4AAFF87309EC55DD72F18197AB021A0FA20992D491E1BAF201",
+      "runtime_contract_rows": 104,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 32295552,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPTURNI2",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 80,
+      "cycles": [
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 40,
+          "output_phases": 80,
+          "duration": [
+            40,
+            15
+          ],
+          "unique_rgb": 80,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "8CDB2E5D68664339A7D3FF73A7966D985E8FADEDDCD95224198BDC9EA94D0FCD",
+      "runtime_contract_rows": 160,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 19864320,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPWRDFLD",
+      "passed": true,
+      "native_cycles": 3,
+      "cycle_mode_variants": 3,
+      "phases": 186,
+      "cycles": [
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 31,
+          "output_phases": 62,
+          "duration": [
+            31,
+            15
+          ],
+          "unique_rgb": 62,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 31,
+          "output_phases": 62,
+          "duration": [
+            31,
+            15
+          ],
+          "unique_rgb": 62,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 31,
+          "output_phases": 62,
+          "duration": [
+            31,
+            15
+          ],
+          "unique_rgb": 62,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "09A862F1E24A2DEA49BA3AD6F486DF712CE75E995D9AF10C7726C04BCBBBCDFD",
+      "runtime_contract_rows": 372,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 46926080,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "STEAM3",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 18,
+      "cycles": [
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 9,
+          "output_phases": 18,
+          "duration": [
+            9,
+            15
+          ],
+          "unique_rgb": 18,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "C5AB084BD0967EE92CB03F5E233DB57ADCF328B984283E3E25362710B5862D59",
+      "runtime_contract_rows": 36,
+      "native_input_keys_unique_before_apollo": true,
+      "raw_bytes": 19170432,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    }
+  ],
+  "visual_qa": "pending-user-review",
+  "installed": false
+}

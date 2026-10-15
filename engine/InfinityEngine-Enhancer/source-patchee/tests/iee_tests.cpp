@@ -4694,6 +4694,48 @@ void test_area_animation_timeline_clock() {
   expect_true(!unknownPause.valid,
               "A missing pause signal should fail closed to the native registry frame");
 
+  // Slightly short 60 Hz refresh must give 2/2 swaps, never 3/1.
+  iee::core::AreaAnimationTimelineClock effectClock;
+  effectClock.begin_area(1);
+  for (int refresh = 0; refresh < 240; ++refresh) {
+    const auto selection = effectClock.select({.instance = 0x8765, .resref = portl1a,
+        .sequence = 0, .nativeSlot = (refresh / 4) % 6,
+        .presentationEpoch = static_cast<std::uint64_t>(refresh + 1),
+        .clockTicks = refresh * 16600LL, .ticksPerSecond = 1000000, .worldActive = 1,
+        .nativeFpsNumerator = 15, .nativeFpsDenominator = 1,
+        .targetFpsNumerator = 30, .targetFpsDenominator = 1,
+        .timelinePhaseCount = 12, .roundToPresentation = true});
+    expect_true(selection.valid && selection.phase == static_cast<std::uint32_t>((refresh / 2) % 12),
+                "Effects must present each 30 fps phase for two short 60 Hz swaps");
+  }
+  for (const int swapsPerPhase : {1, 4}) {
+    iee::core::AreaAnimationTimelineClock cadenceClock;
+    cadenceClock.begin_area(1);
+    for (int refresh = 0; refresh < 240; ++refresh) {
+      const auto selection = cadenceClock.select({.instance = 0x8766, .resref = portl1a,
+          .sequence = 0, .nativeSlot = (refresh / (2 * swapsPerPhase)) % 6,
+          .presentationEpoch = static_cast<std::uint64_t>(refresh + 1),
+          .clockTicks = refresh * (33200LL / swapsPerPhase), .ticksPerSecond = 1000000, .worldActive = 1,
+          .nativeFpsNumerator = 15, .nativeFpsDenominator = 1,
+          .targetFpsNumerator = 30, .targetFpsDenominator = 1,
+          .timelinePhaseCount = 12, .roundToPresentation = true});
+      expect_true(selection.valid && selection.phase == static_cast<std::uint32_t>((refresh / swapsPerPhase) % 12),
+                  "Effect phase cadence must also be regular at 30 and 120 Hz");
+    }
+  }
+  iee::core::AreaAnimationTimelineClock pauseClock;
+  const auto pauseSample = [&](int epoch, long long ticks, int active) {
+    return pauseClock.select({.instance = 0x8767, .resref = portl1a, .sequence = 0, .nativeSlot = 0,
+        .presentationEpoch = static_cast<std::uint64_t>(epoch), .clockTicks = ticks,
+        .ticksPerSecond = 1000000, .worldActive = active,
+        .nativeFpsNumerator = 15, .nativeFpsDenominator = 1,
+        .targetFpsNumerator = 30, .targetFpsDenominator = 1,
+        .timelinePhaseCount = 12, .roundToPresentation = true});
+  };
+  pauseSample(1, 0, 1); pauseSample(2, 16600, 1);
+  expect_true(pauseSample(3, 33200, 1).phase == 1 && pauseSample(4, 33300, 0).phase == 1 &&
+      pauseSample(5, 600000, 0).phase == 1 && pauseSample(6, 600100, 1).phase == 1,
+      "Rounded intermediate phase must remain frozen through pause and resume");
   iee::core::AreaAnimationTimelineClock twentyFpsClock;
   twentyFpsClock.begin_area(1);
   constexpr std::array<std::uint32_t, 6> expectedAnchors{{0, 1, 2, 4, 5, 6}};

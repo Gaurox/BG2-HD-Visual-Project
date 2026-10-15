@@ -1,0 +1,91 @@
+{
+  "schema": "bg2-effects-multicycle-verification-v1",
+  "passed": 2,
+  "failures": [],
+  "phases": 136,
+  "cycle_mode_variants": 2,
+  "assets": [
+    {
+      "resref": "AMYAG_B",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 68,
+      "cycles": [
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 34,
+          "output_phases": 68,
+          "duration": [
+            34,
+            15
+          ],
+          "unique_rgb": 68,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "6EE16E24088091BD133B0D6AE4C9D5A748E13EFE57009EC1EF488EB01DF113E0",
+      "runtime_contract_rows": 136,
+      "raw_bytes": 40106112,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "AMYAG_F",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 68,
+      "cycles": [
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 34,
+          "output_phases": 68,
+          "duration": [
+            34,
+            15
+          ],
+          "unique_rgb": 68,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "287888E89C51842D18F721FCCF984D1B383BCBD7E168B4DBB57B67C31EA568D8",
+      "runtime_contract_rows": 136,
+      "raw_bytes": 38657408,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    }
+  ],
+  "visual_qa": "pending-user-review",
+  "installed": false
+}

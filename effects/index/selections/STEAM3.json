@@ -1,0 +1,120 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:STEAM3",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 18,
+    "source": {
+      "interpolation_run": "steam3-interpolation-apollo30-strict-lot64-20261015-v2",
+      "interpolation_run_descriptor_sha256": "2BBAB6CF5F4BF7EA4AA65825D043C0D4DCA59E75EDB1B8E79CBECAD0CC22CAD3",
+      "source_bam_sha256": "6f88307cf80de4588522ca32aefd161c5564ac4918d33a20be0b6101efa44354",
+      "spatial_manifest_sha256": "202236269D76FFC1B8C9414BE6F3F5F70A0D73FF1D9E91DE5BE2D7570506DA09",
+      "spatial_run": "steam3-spatial-seedvr7b-lab-lot64-20261015-v1",
+      "spatial_run_descriptor_sha256": "01E7D806DEA5DF7832CAA694A5E339479DAAA288A82E3F1D9DD6787EF74BE24A"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        18
+      ],
+      "alternate_profiles": [],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16
+        ]
+      ],
+      "phase_count": 18,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond native slot count; no extra presented phase or duration"
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 931,
+    "path": "effects/index/qa-decisions/STEAM3/2026-10-15-accepted-4377e4139844.json",
+    "sha256": "4377E4139844546A390C64796B0FC19D109D569566B5ED2A91D5C06BB16B946C"
+  },
+  "resref": "STEAM3",
+  "run_descriptor": {
+    "bytes": 2047,
+    "path": "effects/ressources/STEAM3/runs/steam3-interpolation-apollo30-strict-lot64-20261015-v2/run.json",
+    "sha256": "2BBAB6CF5F4BF7EA4AA65825D043C0D4DCA59E75EDB1B8E79CBECAD0CC22CAD3"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 13418,
+      "path": "effects/ressources/STEAM3/packs/steam3-7b-x4-apollo30-strict-lot64-20261015-v2/manifest.json",
+      "sha256": "C5AB084BD0967EE92CB03F5E233DB57ADCF328B984283E3E25362710B5862D59"
+    },
+    "registry": {
+      "bytes": 316,
+      "path": "effects/ressources/STEAM3/packs/steam3-7b-x4-apollo30-strict-lot64-20261015-v2/EffectAnimations-X4.registry",
+      "sha256": "D62DA7DE42D8BFB9B08FBEE55445AD34A0B5A811CDE2C262D0605A015FB533D4"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "steam3-interpolation-apollo30-strict-lot64-20261015-v2",
+  "source": {
+    "bytes": 59123,
+    "path": "effects/ressources/STEAM3/source.bam",
+    "sha256": "6F88307CF80DE4588522CA32AEFD161C5564AC4918D33A20BE0B6101EFA44354"
+  }
+}

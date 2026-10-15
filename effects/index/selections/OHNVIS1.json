@@ -1,0 +1,252 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:OHNVIS1",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38
+        ],
+        "lookup_start": 27
+      }
+    ],
+    "frame_count": 78,
+    "source": {
+      "interpolation_run": "ohnvis1-interpolation-apollo30-strict-lot64-20261015-v2",
+      "interpolation_run_descriptor_sha256": "D1E9070D72DB594F7953896FA9C3C260B3083B9A4DC5DF96C2E30ED5FA210D1D",
+      "source_bam_sha256": "97f3743f9aeffe1024dc5c7568a4fe3d9447bd383e36dc1f35c3af985d66eb53",
+      "spatial_manifest_sha256": "D21DBF93888BCF45F433E153A21B0361E6F2F3A175F99BBE714B65159F2E39D4",
+      "spatial_run": "ohnvis1-spatial-seedvr7b-lab-lot64-20261015-v1",
+      "spatial_run_descriptor_sha256": "6ADA4F23079EC592BD8ADCC78684D1D4DE6B3F1BC6A377D8D57AB7422D935E86"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        54,
+        24
+      ],
+      "alternate_profiles": [],
+      "cycle_profiles": [
+        "cycle000-once",
+        "cycle001-once"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30,
+          32,
+          34,
+          36,
+          38,
+          40,
+          42,
+          44,
+          46,
+          48,
+          50,
+          52
+        ],
+        [
+          54,
+          56,
+          58,
+          60,
+          62,
+          64,
+          66,
+          68,
+          70,
+          72,
+          74,
+          76
+        ]
+      ],
+      "phase_count": 54,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53
+        ],
+        [
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond native slot count; no extra presented phase or duration"
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 938,
+    "path": "effects/index/qa-decisions/OHNVIS1/2026-10-15-accepted-5064fae4eb32.json",
+    "sha256": "5064FAE4EB32AA05BA42B46D7ED0F966E45193EA4F78CFF637B722DA3442B415"
+  },
+  "resref": "OHNVIS1",
+  "run_descriptor": {
+    "bytes": 2062,
+    "path": "effects/ressources/OHNVIS1/runs/ohnvis1-interpolation-apollo30-strict-lot64-20261015-v2/run.json",
+    "sha256": "D1E9070D72DB594F7953896FA9C3C260B3083B9A4DC5DF96C2E30ED5FA210D1D"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 52689,
+      "path": "effects/ressources/OHNVIS1/packs/ohnvis1-7b-x4-apollo30-strict-lot64-20261015-v2/manifest.json",
+      "sha256": "4EFD7D449B13607981122EBB483EC1F9D5E3D16D0EA7604B715756F0CB505BF2"
+    },
+    "registry": {
+      "bytes": 1280,
+      "path": "effects/ressources/OHNVIS1/packs/ohnvis1-7b-x4-apollo30-strict-lot64-20261015-v2/EffectAnimations-X4.registry",
+      "sha256": "710ED813D2D27B32D8B0944536FBD23F136A7D1A864020A0A82229501AF58D54"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "ohnvis1-interpolation-apollo30-strict-lot64-20261015-v2",
+  "source": {
+    "bytes": 81178,
+    "path": "effects/ressources/OHNVIS1/source.bam",
+    "sha256": "97F3743F9AEFFE1024DC5C7568A4FE3D9447BD383E36DC1F35C3AF985D66EB53"
+  }
+}

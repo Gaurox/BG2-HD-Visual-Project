@@ -1,0 +1,1009 @@
+{
+  "count": 64,
+  "total_resources": 161,
+  "carriers": 97,
+  "registry_version": 3,
+  "model": "seedvr2_7b_int8_convrot.safetensors",
+  "scale": 4,
+  "filter": "NEAREST",
+  "target_fps": [
+    30,
+    1
+  ],
+  "native_world_geometry_and_durations_preserved": true,
+  "existing_resources_unchanged": 97,
+  "profile_sha256": {
+    "InfinityEngine-Enhancer.ini": "5859F49562E89F71CC1A9B9DDBAC4F77B9B5AB95E5983D88E51C09E480042ABA",
+    "override/fpDraw.glsl": "C50A43EBD580EE840EDABAF6B96B9DF80589A7D793F27A85D1766BC17977BA20",
+    "override/fpSprite.glsl": "CF5C2795E37EE31D908801312971B8FA1ED5BE3A87902A7A44F186A013610A73",
+    "override/fpSELECT.glsl": "F733B8970A3B1C3FB85F335C5BC3F2DC91A113DE22C6CF0B2CFBD2ACE79B84A5",
+    "iee-assets/creature-sprites/CreatureSprites-XN.catalog": "2AD7838CB4157B3B3226DBF3635D59ED17CE028E209F33615499A7E1700B289C"
+  },
+  "raw_bytes": 8208516864,
+  "gpu_cache_slots": 64,
+  "dll_sha256": "46EB6983B201231B8004E6766F0F3055490374E3210C1F2BF2139566BE90E0FA",
+  "manifest_sha256": "0E57665F63A6003261AA673D3ABA848687A233C21AA59936DC9DB88CE160D89E",
+  "contracts": 33548,
+  "resources": [
+    {
+      "resref": "SPMAGMIS",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 24
+    },
+    {
+      "resref": "SPMINDAT",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 120
+    },
+    {
+      "resref": "SPFEAREF",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 180
+    },
+    {
+      "resref": "PRAYERB",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 200
+    },
+    {
+      "resref": "PRAYERG",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 200
+    },
+    {
+      "resref": "SPPRAYRI",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 200
+    },
+    {
+      "resref": "1WDCCDAM",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 80
+    },
+    {
+      "resref": "1WDCLDAM",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 80
+    },
+    {
+      "resref": "1WDCMDAM",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 80
+    },
+    {
+      "resref": "1WDCSDAM",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 80
+    },
+    {
+      "resref": "ABJURH",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 48
+    },
+    {
+      "resref": "OHRSHFIE",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 48
+    },
+    {
+      "resref": "SPGFLSH1",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 48
+    },
+    {
+      "resref": "BDFAVSPI",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 160
+    },
+    {
+      "resref": "BDRSPIRI",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 200
+    },
+    {
+      "resref": "SPRAISEI",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 200
+    },
+    {
+      "resref": "COLDH",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 64
+    },
+    {
+      "resref": "FIREH",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 64
+    },
+    {
+      "resref": "MMAGICH",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 80
+    },
+    {
+      "resref": "SPSHKIMP",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 48
+    },
+    {
+      "resref": "FDAWNX",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 156
+    },
+    {
+      "resref": "GRNDGLOW",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 80
+    },
+    {
+      "resref": "SPCCMDSI",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 80
+    },
+    {
+      "resref": "SPUNHOLY",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 200
+    },
+    {
+      "resref": "SPDISPMA",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 164
+    },
+    {
+      "resref": "SPHEALIN",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 164
+    },
+    {
+      "resref": "SPHOLLYW",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 200
+    },
+    {
+      "resref": "BDSPLOCK",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 160
+    },
+    {
+      "resref": "CSHIELDH",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 80
+    },
+    {
+      "resref": "CURSEH",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 200
+    },
+    {
+      "resref": "SPBLESHI",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 200
+    },
+    {
+      "resref": "GARMORH",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 200
+    },
+    {
+      "resref": "SARMORH",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 200
+    },
+    {
+      "resref": "SPARMORI",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 80
+    },
+    {
+      "resref": "PARALH",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 48
+    },
+    {
+      "resref": "SPDHRMNY",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 48
+    },
+    {
+      "resref": "SPCHMPSI",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 160
+    },
+    {
+      "resref": "SPSTRENI",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 160
+    },
+    {
+      "resref": "SPSTRONE",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 160
+    },
+    {
+      "resref": "SPPOWATK",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 116
+    },
+    {
+      "resref": "SPSDIMPA",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 60
+    },
+    {
+      "resref": "SPTRUSEE",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 240
+    },
+    {
+      "resref": "SPUSEANY",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 108
+    },
+    {
+      "resref": "SPFDEATH",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 120
+    },
+    {
+      "resref": "ASUMM1X",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 120
+    },
+    {
+      "resref": "BDSHSUM",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 120
+    },
+    {
+      "resref": "MSUMM1X",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 120
+    },
+    {
+      "resref": "SPFRACTI",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 160
+    },
+    {
+      "resref": "BDSPWARD",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 200
+    },
+    {
+      "resref": "SPROTECT",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 200
+    },
+    {
+      "resref": "SPFLSRIN",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 120
+    },
+    {
+      "resref": "SPSETTIH",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 108
+    },
+    {
+      "resref": "OHRDARK",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 124
+    },
+    {
+      "resref": "SPPOWWRD",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 124
+    },
+    {
+      "resref": "BDETHER",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 128
+    },
+    {
+      "resref": "SHAREAW",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 24
+    },
+    {
+      "resref": "BDSPCLAR",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 108
+    },
+    {
+      "resref": "EXALTAH",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 400
+    },
+    {
+      "resref": "GLDUSTH",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 160
+    },
+    {
+      "resref": "OHRMJAR",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 240
+    },
+    {
+      "resref": "SPNWCHRM",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 240
+    },
+    {
+      "resref": "SPHLYBLS",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 352
+    },
+    {
+      "resref": "SPPLANAR",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 180
+    },
+    {
+      "resref": "SPSPMAZE",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 300
+    },
+    {
+      "resref": "DDOORH",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 80
+    },
+    {
+      "resref": "OHNPORTA",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 152
+    },
+    {
+      "resref": "SPPORTAL",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 152
+    },
+    {
+      "resref": "SPHLEFT",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 80
+    },
+    {
+      "resref": "SPHRIGHT",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 80
+    },
+    {
+      "resref": "SPWHIRL",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 96
+    },
+    {
+      "resref": "SPSUMPLN",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 64
+    },
+    {
+      "resref": "OHRSGONE",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 476
+    },
+    {
+      "resref": "SHACID",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 48
+    },
+    {
+      "resref": "SHAIR",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 72
+    },
+    {
+      "resref": "SPATTCK2",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 84
+    },
+    {
+      "resref": "SPCLOUD2",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 80
+    },
+    {
+      "resref": "SPCLOUD3",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 80
+    },
+    {
+      "resref": "SPGREORB",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 64
+    },
+    {
+      "resref": "SPDUSTY2",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 124
+    },
+    {
+      "resref": "SPSUMP",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 256
+    },
+    {
+      "resref": "SPSOLBRD",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 200
+    },
+    {
+      "resref": "OHDSTREE",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 180
+    },
+    {
+      "resref": "SPBASERD",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 196
+    },
+    {
+      "resref": "SPCALLLI",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 72
+    },
+    {
+      "resref": "SPCOMTRV",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 28
+    },
+    {
+      "resref": "SPDRGNBR",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 204
+    },
+    {
+      "resref": "SPFIREPI",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 88
+    },
+    {
+      "resref": "SPHOLYMT",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 40
+    },
+    {
+      "resref": "SPIMPFR",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 236
+    },
+    {
+      "resref": "SPRWRATI",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 192
+    },
+    {
+      "resref": "SPSTRMVB",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 120
+    },
+    {
+      "resref": "SPCL239",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 92
+    },
+    {
+      "resref": "SPCRTWPN",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 344
+    },
+    {
+      "resref": "SPGRWHRL",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 92
+    },
+    {
+      "resref": "SPSOHOPI",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 96
+    },
+    {
+      "resref": "SPSPAINI",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 96
+    },
+    {
+      "resref": "SPSTRENH",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 140
+    },
+    {
+      "resref": "AMYAG_B",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 136
+    },
+    {
+      "resref": "AMYAG_F",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 136
+    },
+    {
+      "resref": "BDETHREH",
+      "native_cycles": 3,
+      "once_alternates": 0,
+      "contracts": 600
+    },
+    {
+      "resref": "BGLRYH",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 100
+    },
+    {
+      "resref": "FLMSTRK",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 132
+    },
+    {
+      "resref": "OHNVIS1",
+      "native_cycles": 2,
+      "once_alternates": 0,
+      "contracts": 156
+    },
+    {
+      "resref": "OHNVIS2",
+      "native_cycles": 2,
+      "once_alternates": 0,
+      "contracts": 156
+    },
+    {
+      "resref": "OHNVIS3",
+      "native_cycles": 2,
+      "once_alternates": 0,
+      "contracts": 156
+    },
+    {
+      "resref": "OHNVIS4",
+      "native_cycles": 2,
+      "once_alternates": 0,
+      "contracts": 156
+    },
+    {
+      "resref": "OHNWAND1",
+      "native_cycles": 3,
+      "once_alternates": 0,
+      "contracts": 192
+    },
+    {
+      "resref": "OHRMIND",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 120
+    },
+    {
+      "resref": "OHRPOLY",
+      "native_cycles": 2,
+      "once_alternates": 0,
+      "contracts": 360
+    },
+    {
+      "resref": "SPABJURA",
+      "native_cycles": 10,
+      "once_alternates": 0,
+      "contracts": 820
+    },
+    {
+      "resref": "SPALTERA",
+      "native_cycles": 2,
+      "once_alternates": 0,
+      "contracts": 236
+    },
+    {
+      "resref": "SPATTCK1",
+      "native_cycles": 2,
+      "once_alternates": 0,
+      "contracts": 200
+    },
+    {
+      "resref": "SPAURAFB",
+      "native_cycles": 2,
+      "once_alternates": 0,
+      "contracts": 80
+    },
+    {
+      "resref": "SPAURAFF",
+      "native_cycles": 2,
+      "once_alternates": 0,
+      "contracts": 80
+    },
+    {
+      "resref": "SPBEHBLA",
+      "native_cycles": 5,
+      "once_alternates": 0,
+      "contracts": 400
+    },
+    {
+      "resref": "SPBEHRAY",
+      "native_cycles": 5,
+      "once_alternates": 0,
+      "contracts": 200
+    },
+    {
+      "resref": "SPCAGEMZ",
+      "native_cycles": 2,
+      "once_alternates": 0,
+      "contracts": 336
+    },
+    {
+      "resref": "SPCAUSEW",
+      "native_cycles": 3,
+      "once_alternates": 0,
+      "contracts": 480
+    },
+    {
+      "resref": "SPCHLGT1",
+      "native_cycles": 9,
+      "once_alternates": 0,
+      "contracts": 280
+    },
+    {
+      "resref": "SPCHLGT2",
+      "native_cycles": 9,
+      "once_alternates": 0,
+      "contracts": 280
+    },
+    {
+      "resref": "SPCHLGT3",
+      "native_cycles": 9,
+      "once_alternates": 0,
+      "contracts": 264
+    },
+    {
+      "resref": "SPCL239X",
+      "native_cycles": 4,
+      "once_alternates": 0,
+      "contracts": 300
+    },
+    {
+      "resref": "SPCLKFRI",
+      "native_cycles": 2,
+      "once_alternates": 0,
+      "contracts": 192
+    },
+    {
+      "resref": "SPCLOUD1",
+      "native_cycles": 6,
+      "once_alternates": 0,
+      "contracts": 468
+    },
+    {
+      "resref": "SPCMWOUI",
+      "native_cycles": 3,
+      "once_alternates": 0,
+      "contracts": 480
+    },
+    {
+      "resref": "SPCOMEND",
+      "native_cycles": 9,
+      "once_alternates": 0,
+      "contracts": 288
+    },
+    {
+      "resref": "SPCOMEXP",
+      "native_cycles": 2,
+      "once_alternates": 0,
+      "contracts": 60
+    },
+    {
+      "resref": "SPCOMSTT",
+      "native_cycles": 9,
+      "once_alternates": 0,
+      "contracts": 580
+    },
+    {
+      "resref": "SPCONFUS",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 80
+    },
+    {
+      "resref": "SPCONTIN",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 308
+    },
+    {
+      "resref": "SPCSWOUI",
+      "native_cycles": 2,
+      "once_alternates": 0,
+      "contracts": 320
+    },
+    {
+      "resref": "SPDIVINA",
+      "native_cycles": 10,
+      "once_alternates": 0,
+      "contracts": 1748
+    },
+    {
+      "resref": "SPENTAAI",
+      "native_cycles": 3,
+      "once_alternates": 0,
+      "contracts": 144
+    },
+    {
+      "resref": "SPFIRESB",
+      "native_cycles": 4,
+      "once_alternates": 0,
+      "contracts": 304
+    },
+    {
+      "resref": "SPFIRESG",
+      "native_cycles": 4,
+      "once_alternates": 0,
+      "contracts": 304
+    },
+    {
+      "resref": "SPFIRESR",
+      "native_cycles": 4,
+      "once_alternates": 0,
+      "contracts": 304
+    },
+    {
+      "resref": "SPFIRETR",
+      "native_cycles": 5,
+      "once_alternates": 0,
+      "contracts": 200
+    },
+    {
+      "resref": "SPFLAMES",
+      "native_cycles": 18,
+      "once_alternates": 0,
+      "contracts": 720
+    },
+    {
+      "resref": "SPFLAST2",
+      "native_cycles": 2,
+      "once_alternates": 0,
+      "contracts": 64
+    },
+    {
+      "resref": "SPFLESHS",
+      "native_cycles": 1,
+      "once_alternates": 1,
+      "contracts": 248
+    },
+    {
+      "resref": "SPGSUNSR",
+      "native_cycles": 4,
+      "once_alternates": 0,
+      "contracts": 304
+    },
+    {
+      "resref": "SPILLUS",
+      "native_cycles": 10,
+      "once_alternates": 0,
+      "contracts": 1800
+    },
+    {
+      "resref": "SPMAGGLO",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 120
+    },
+    {
+      "resref": "SPMELBD2",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 200
+    },
+    {
+      "resref": "SPMETSWA",
+      "native_cycles": 5,
+      "once_alternates": 1,
+      "contracts": 360
+    },
+    {
+      "resref": "SPMONSUM",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 164
+    },
+    {
+      "resref": "SPNECRO1",
+      "native_cycles": 5,
+      "once_alternates": 0,
+      "contracts": 620
+    },
+    {
+      "resref": "SPPFIRRI",
+      "native_cycles": 2,
+      "once_alternates": 0,
+      "contracts": 96
+    },
+    {
+      "resref": "SPPOLYMP",
+      "native_cycles": 2,
+      "once_alternates": 0,
+      "contracts": 360
+    },
+    {
+      "resref": "SPPROTEC",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 120
+    },
+    {
+      "resref": "SPRESIST",
+      "native_cycles": 2,
+      "once_alternates": 0,
+      "contracts": 288
+    },
+    {
+      "resref": "SPSARMOR",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 240
+    },
+    {
+      "resref": "SPSETSCD",
+      "native_cycles": 2,
+      "once_alternates": 0,
+      "contracts": 96
+    },
+    {
+      "resref": "SPSETTID",
+      "native_cycles": 2,
+      "once_alternates": 0,
+      "contracts": 92
+    },
+    {
+      "resref": "SPSPEV",
+      "native_cycles": 2,
+      "once_alternates": 0,
+      "contracts": 120
+    },
+    {
+      "resref": "SPSTRMVA",
+      "native_cycles": 4,
+      "once_alternates": 0,
+      "contracts": 360
+    },
+    {
+      "resref": "SPSUMMON",
+      "native_cycles": 3,
+      "once_alternates": 0,
+      "contracts": 848
+    },
+    {
+      "resref": "SPSUNRAY",
+      "native_cycles": 2,
+      "once_alternates": 0,
+      "contracts": 104
+    },
+    {
+      "resref": "SPTURNI2",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 160
+    },
+    {
+      "resref": "SPWRDFLD",
+      "native_cycles": 3,
+      "once_alternates": 0,
+      "contracts": 372
+    },
+    {
+      "resref": "STEAM3",
+      "native_cycles": 1,
+      "once_alternates": 0,
+      "contracts": 36
+    }
+  ],
+  "alternate_profiles": {
+    "SPFLESHS": 1,
+    "SPMETSWA": 1
+  },
+  "visual_qa": "pending-user-controlled-game",
+  "renderer_final_tests": "ctest.log: 7/7 PASS; Python installer/composer: 19/19 PASS",
+  "status": "installed-offline-verified",
+  "receipt": "effects/installations/lot64-7b-x4-nearest30-20261015-v1/backups/20261015T052407748694Z-e71cddd5/renderer-install-receipt.json",
+  "character_profile": "NearestRGB-SilhouetteAlphaAA",
+  "character_files_byte_identical": true,
+  "maps_and_vvc_controllers_changed": false,
+  "game_launched_by_agent": false,
+  "qa_accepted": false,
+  "release_changed": false
+}

@@ -1,0 +1,184 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:BGLRYH",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 50,
+    "source": {
+      "interpolation_run": "bglryh-interpolation-apollo30-retimed-lot64-20261015-v1",
+      "interpolation_run_descriptor_sha256": "299B686DF4FFA26553459BF4A7641F820CB20E7F63050672F6C5B93E445A3052",
+      "source_bam_sha256": "ebdd426400a1798061f0f7c2d8372a8bd18d59d80860f1c7fa63d676f457236b",
+      "spatial_manifest_sha256": "6D7F526D0F97D18CFC054C36C99DA4B493A07C39AE07C2842875DE0B8AB76E11",
+      "spatial_run": "bglryh-spatial-seedvr7b-lab-lot64-20261015-v1",
+      "spatial_run_descriptor_sha256": "49E693880B5D97F7638918E93B2F939DC67B0BE2CB5CE46FC46AF25A817C9BD3"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        50
+      ],
+      "alternate_profiles": [],
+      "cycle_profiles": [
+        "cycle000-once"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30,
+          32,
+          34,
+          36,
+          38,
+          40,
+          42,
+          44,
+          46,
+          48
+        ]
+      ],
+      "phase_count": 50,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond native slot count; no extra presented phase or duration"
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 934,
+    "path": "effects/index/qa-decisions/BGLRYH/2026-10-15-accepted-f10d6141db09.json",
+    "sha256": "F10D6141DB0946F266EE03FF4CCAE47F51AA4416CA8CC5DE750554D4B815C90E"
+  },
+  "resref": "BGLRYH",
+  "run_descriptor": {
+    "bytes": 2038,
+    "path": "effects/ressources/BGLRYH/runs/bglryh-interpolation-apollo30-retimed-lot64-20261015-v1/run.json",
+    "sha256": "299B686DF4FFA26553459BF4A7641F820CB20E7F63050672F6C5B93E445A3052"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 34234,
+      "path": "effects/ressources/BGLRYH/packs/bglryh-7b-x4-apollo30-retimed-lot64-20261015-v1/manifest.json",
+      "sha256": "F1BDFE5FEBE92D4EAD74E7E1A0B5865A6AF2C3704B668698ED0785A690285EAB"
+    },
+    "registry": {
+      "bytes": 764,
+      "path": "effects/ressources/BGLRYH/packs/bglryh-7b-x4-apollo30-retimed-lot64-20261015-v1/EffectAnimations-X4.registry",
+      "sha256": "162A4F984C1188A23BA0EBA2E5B894A3843A0791359137EAF1CAC21206BDF14F"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "bglryh-interpolation-apollo30-retimed-lot64-20261015-v1",
+  "source": {
+    "bytes": 70311,
+    "path": "effects/ressources/BGLRYH/source.bam",
+    "sha256": "EBDD426400A1798061F0F7C2D8372A8BD18D59D80860F1C7FA63D676F457236B"
+  }
+}

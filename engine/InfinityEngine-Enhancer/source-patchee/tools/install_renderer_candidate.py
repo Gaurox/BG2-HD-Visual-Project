@@ -300,7 +300,7 @@ def validate_effect_pack(effect_root: Path) -> list[CandidateFile]:
         or manifest.get("scale") != 4
         or manifest.get("registry") != EFFECT_REGISTRY_NAME
         or manifest.get("registry_magic") != "IEEEFX4"
-        or manifest.get("registry_version") not in {1, 2}
+        or manifest.get("registry_version") not in {1, 2, 3}
     ):
         raise TransactionError("manifest du pack d'effets incompatible")
     registry_path = by_name.get(EFFECT_REGISTRY_NAME)

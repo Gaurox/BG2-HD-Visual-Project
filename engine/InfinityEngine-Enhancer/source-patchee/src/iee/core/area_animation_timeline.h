@@ -20,6 +20,7 @@ struct AreaAnimationTimelineSample {
   std::uint32_t targetFpsNumerator{};
   std::uint32_t targetFpsDenominator{};
   std::uint32_t timelinePhaseCount{};
+  bool roundToPresentation{};
 };
 
 struct AreaAnimationTimelineSelection {
@@ -63,7 +64,7 @@ class AreaAnimationTimelineClock {
                                            bool& created) noexcept;
   [[nodiscard]] static std::uint32_t calculate_phase(
       const AreaAnimationTimelineSample& sample, std::int64_t slotStartTicks,
-      std::int64_t effectiveTicks) noexcept;
+      std::int64_t effectiveTicks, std::int64_t presentationStepTicks = 0) noexcept;
 
   std::uint64_t areaGeneration_{};
   std::array<OccurrenceState, kMaximumOccurrences> occurrences_{};

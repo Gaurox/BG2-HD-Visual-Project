@@ -8,17 +8,21 @@ Affichage par défaut des effets x4 (demande utilisateur 2026-10-13) : **NEAREST
 niveau 0 seul, sur texture directe et sortie du masquage décor. Défaut du chargeur natif,
 indépendant de la recette 3B/7B et du pack ; aucune activation INI nécessaire.
 Personnages : conserver [`NearestRGB-SilhouetteAlphaAA`](../sprite/DISPLAY_DEFAULT.md).
-Pack d'effets installé :
+Pack actif : [`lot64-7b-x4-nearest30-20261015-v1`](installations/lot64-7b-x4-nearest30-20261015-v1/installation.json).
+161 ressources : 97 précédentes (RGBA/cycles identiques) +64 nouveaux effets7B x4/NEAREST/Apollo30 ; 226cycles natifs,228profils de ce lot. Taille monde/durée natives conservées ; 97carriers BAM (33anciens+64nouveaux), aucun VVC modifié.
+Registrev3 : variantes ponctuelles SPFLESHS/SPMETSWA routées depuis l'owner natif ; CPU8Gio pour8208516864octets, GPU64. 33548contrats natifs toutes phases/modes sur candidat puis installation ; personnages NearestRGB-SilhouetteAlphaAA identiques par SHA256. Correction d'arrondi des seuils au rafraîchissement, essais30/60/120Hz et pause/reprise ; QA ingame64 acceptée explicitement le2026-10-15 ([décision](batches/lot64-accepted-20261015-v1/acceptance.json)) ; mesure fine de cadence réelle distincte, non déduite de la validation visuelle. [Recette](../pipeline/recipes/effects-lot64-install-20261015-v1/README.md), [CLUA et variantes](installations/lot64-7b-x4-nearest30-20261015-v1/CLUA.md).
+
+Installation précédente du lot33 :
 [`lot33-retimed-7b-x4-nearest-20261014-v2`](installations/lot33-retimed-7b-x4-nearest-20261014-v2/installation.json).
 97 effets : 64 précédents byte-identiques +33 en7B x4/NEAREST/Apollo30 retimé ; 2202images RGB/RGBA distinctes, zéro doublon, durées natives conservées. SPSUMP128/128 sur64/15s.
 Recette : [`lot33-retimed`](../pipeline/recipes/effects-lot33-retimed-20261014-v2/README.md) ; 33BAM runtime avec padding transparent, pixels/ancrage monde natifs préservés ; reconnaissance RESREF insensible à la casse. 4974résolutions natives vérifiées sur candidat puis installation ; **33/33 acceptés explicitement par l'utilisateur le 2026-10-15**, [décisions et sélections exactes](batches/lot33-accepted-20261015-v1/acceptance.json).
-Réserve runtime distincte : SPIMPFR mesure ~29.83–29.86 changements/s en moyenne, mais cadence irrégulière 50/16.7ms et phases initiales0–1 absentes ; images produites distinctes, aucun fallback observé. [Preuve et périmètre de l'acceptation](batches/lot33-accepted-20261015-v1/README.md). Scheduler inchangé ; aucune cadence parfaitement régulière déduite de la validation visuelle.
+Réserve runtime distincte : SPIMPFR mesure ~29.83–29.86 changements/s en moyenne, mais cadence irrégulière 50/16.7ms et phases initiales0–1 absentes ; images produites distinctes, aucun fallback observé. [Preuve et périmètre de l'acceptation](batches/lot33-accepted-20261015-v1/README.md). Lors de cette validation du lot33, scheduler inchangé ; correctif offline installé avec lot64 ci-dessus, nouvelle mesure ingame attendue.
 Incident initial2026-10-14 : [`échec LoadArea/MinHook`](installations/lot33-seedvr7b-apollo30-nearest-20261014-v1/runtime-failure-20261014-v1/README.md).
 RéparationMinHook : [`hooks-startup-repair`](../engine/InfinityEngine-Enhancer/installations/hooks-startup-repair-20261014-v1/README.md), tous hooks actifs et rendu x4 vérifié techniquement à23:05 ; retour visuel utilisateur : mosaïque initiale corrigée seulement après zoom.
 Le [`rafraîchissement initial`](../engine/InfinityEngine-Enhancer/installations/map-first-frame-refresh-20261014-v1/README.md) corrige ensuite le cache automatiquement ; il ne suffisait pas à empêcher l'image initiale native.
 Base du renderer courant : [`renderer-startup-barrier`](../engine/InfinityEngine-Enhancer/installations/renderer-startup-barrier-20261014-v1/verification-result.json), préservée dans la correctionretimed ci-dessus. Démarrage du host attendu jusqu'aux hooks/assets prêts ; premierLoadArea observé ensuite. Session23:22AR3000, zéroerreur ; utilisateur : affichage correct dès apparition sans zoom. NearestRGB-SilhouetteAlphaAA conservé octet pour octet ; aucune QA globale des33effets déduite de ce test.
-Renderer diagnostique courant : [`SPIMPFR presentation trace`](../engine/InfinityEngine-Enhancer/installations/spimpfr-presentation-trace-20261015-v1/installation.json), DLL seule +INI identique. Capture ciblée après draw final/masquage et retour du swap ; QPC/phase/backing/pause/fallback, publication différée après disparition. Analyse : `python -B pipeline/recipes/spimpfr-presentation-trace-20261015-v1/analyze.py`. Scheduler, effets97/33BAM, cartes et shaders personnages inchangés.
-Chargeur CPU borné à4Gio (packretimed3.51Gio), cache GPU64 inchangé ; profil personnages conservé octet pour octet.
+Renderer diagnostique précédent, trace SPIMPFR conservée : [`SPIMPFR presentation trace`](../engine/InfinityEngine-Enhancer/installations/spimpfr-presentation-trace-20261015-v1/installation.json), DLL seule +INI identique. Capture ciblée après draw final/masquage et retour du swap ; QPC/phase/backing/pause/fallback, publication différée après disparition. Analyse : `python -B pipeline/recipes/spimpfr-presentation-trace-20261015-v1/analyze.py`. Scheduler, effets97/33BAM, cartes et shaders personnages inchangés.
+Historique lot33 : plafond CPU4Gio ; installation lot64 ci-dessus portée à8Gio, cache GPU64 et profil personnages conservés.
 Référence du filtre : [`effects-nearest-20261013-v1`](../engine/InfinityEngine-Enhancer/installations/effects-nearest-20261013-v1/result.json).
 
 Lot54 accepté ingame en **3B x4 / Apollo30 / gauss1.2 / feather12 / nearest** :
@@ -27,6 +31,11 @@ Installation 54x3B + 10 effets précédents conservés :
 [`lot54-accepted-3b-nearest`](installations/lot54-accepted-3b-nearest-20261013-v1/result.json).
 Essais 7B non retenus retirés ; métadonnées et comparatifs finaux conservés dans
 [`lot54-accepted-cleanup`](batches/lot54-accepted-cleanup-20261013-v1/README.md).
+
+Lot64 produit et accepté ingame en **7B x4 / NEAREST / Apollo30 par cycle** :
+[`production et vérifications`](batches/lot64-seedvr7b-apollo30-strict-20261015-v3/production.json),
+[`planche animée et choix des cycles`](batches/lot64-seedvr7b-apollo30-strict-20261015-v3/review/index.html).
+Lot64 installé par le reçu actif ci-dessus ; 64/64 acceptés explicitement ([suivi](batches/lot64-accepted-20261015-v1/README.md)), sélections courantes enregistrées ; release indépendante, profil personnages préservé.
 
 ## Quotidien — minimum utile
 

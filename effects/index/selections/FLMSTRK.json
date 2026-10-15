@@ -1,0 +1,216 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:FLMSTRK",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 66,
+    "source": {
+      "interpolation_run": "flmstrk-interpolation-apollo30-retimed-lot64-20261015-v1",
+      "interpolation_run_descriptor_sha256": "F53BB7F5C0F0A7A9E8BB8E4900D0AD914CBCBB56BDDA5AD4A935AAA02FA6F75D",
+      "source_bam_sha256": "13ead5e2f0fc77e619451b5f656945bef215ea4b6bcf50a492a3795195f75428",
+      "spatial_manifest_sha256": "3E882F4F1707F3869F498D7397966CA17C71379B4C1A006707B8CC25FBFCB0A6",
+      "spatial_run": "flmstrk-spatial-seedvr7b-lab-lot64-20261015-v1",
+      "spatial_run_descriptor_sha256": "3C67712C9E29D3AB8D240650CEB1C49206F5921A3153EFEC60EA3BC23C97C178"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        66
+      ],
+      "alternate_profiles": [],
+      "cycle_profiles": [
+        "cycle000-once"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30,
+          32,
+          34,
+          36,
+          38,
+          40,
+          42,
+          44,
+          46,
+          48,
+          50,
+          52,
+          54,
+          56,
+          58,
+          60,
+          62,
+          64
+        ]
+      ],
+      "phase_count": 66,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond native slot count; no extra presented phase or duration"
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 941,
+    "path": "effects/index/qa-decisions/FLMSTRK/2026-10-15-accepted-e46bd7e4b87d.json",
+    "sha256": "E46BD7E4B87DF7DA7DF4860A1FC11C6F8B03A1B527ADA768E2F301D37781414F"
+  },
+  "resref": "FLMSTRK",
+  "run_descriptor": {
+    "bytes": 2054,
+    "path": "effects/ressources/FLMSTRK/runs/flmstrk-interpolation-apollo30-retimed-lot64-20261015-v1/run.json",
+    "sha256": "F53BB7F5C0F0A7A9E8BB8E4900D0AD914CBCBB56BDDA5AD4A935AAA02FA6F75D"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 45059,
+      "path": "effects/ressources/FLMSTRK/packs/flmstrk-7b-x4-apollo30-retimed-lot64-20261015-v1/manifest.json",
+      "sha256": "D5B2AF0619FF60AA1E46B4C53EC17A0AF8561BD077B94BDC60F27E5AE7E59C4F"
+    },
+    "registry": {
+      "bytes": 988,
+      "path": "effects/ressources/FLMSTRK/packs/flmstrk-7b-x4-apollo30-retimed-lot64-20261015-v1/EffectAnimations-X4.registry",
+      "sha256": "80F1DE65E668F4FD390F5F1D603D4BF096EB77FE836CAC2BEA62DA8EE85723DE"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "flmstrk-interpolation-apollo30-retimed-lot64-20261015-v1",
+  "source": {
+    "bytes": 463953,
+    "path": "effects/ressources/FLMSTRK/source.bam",
+    "sha256": "13EAD5E2F0FC77E619451B5F656945BEF215EA4B6BCF50A492A3795195F75428"
+  }
+}

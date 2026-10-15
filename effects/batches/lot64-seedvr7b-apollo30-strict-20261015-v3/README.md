@@ -1,0 +1,13 @@
+# Lot64 — production terminée, contrôle utilisateur attendu
+
+- 64 effets SeedVR2 7B/LAB x4, NEAREST, Apollo30 ; 226 cycles natifs, 228 profils cycle/mode, 10014 phases produites. `production.json` lie les64 packs/runs/checks.
+- Durées rationnelles et géométrie monde natives conservées ; maintien de poses supprimé avant interpolation sur durée native ; aucun doublon visible adjacent ni endpoint de boucle émis deux fois.
+- `verification/*.json` : vérification indépendante, phase par phase ; `native-verification.json` : 19844 contrats séquence/slot/phase/backing/casse dans le chargeur C++ réel.
+- Profils constants/invisibles natifs et retours non consécutifs sur une pose explicitement recensés dans `production.json` ; aucune animation fabriquée pour un cycle technique transparent.
+- `review/index.html` : 64 effets animés et tous les cycles/profils sélectionnables ; WebP lossless. `review/lot64-animated-{1,2,3,4}.mp4` : quatre planches de16,30FPS exact,12s, dérivés de contrôle.
+- `review/full-animations.json` : 228 profils à résolution x4 entière, pixels RGB décodés identiques aux phases de production ; bouton par case vers `full.html` (zoom100% et NEAREST). `review/control-verification.json` : 64 cases, liens, profils, zéro répétition dans les cycles animés, PTS exacts1/30s sur chaque vidéo.
+- `installation-preserved-final.json` : renderer, effets déjà installés et profil personnages NearestRGB-SilhouetteAlphaAA identiques ; aucun contrôle du jeu ni installation de ce lot.
+- Production=produced dans `effects/index/processing.csv` ; aucune décision QA/selection/installation/release déduite. Recette : `pipeline/recipes/effects-lot64-seedvr7b-apollo30-strict-20261015-v3/README.md`.
+- Intégration ultérieure distincte : 64 packs =4435711808 octets RGBA ; avec les97 installés (3772805056), total8208516864 octets, supérieur au plafond CPU4Gio du renderer courant. Conserver le cache GPU64 et les réparations startup/cartes lors de l'adaptation ; ne pas simplement copier le cumul actuel. SPFLESHS et SPMETSWA possèdent chacun un profil ponctuel et un profil bouclé sur le même cycle : sélectionner selon le consommateur, `alternate_playback_profiles` ne remplace pas ce routage runtime. Aucune intégration de ces contraintes n'est prétendue par les probes mono-BAM.
+
+- État courant après tests utilisateur :64/64 acceptés explicitement le2026-10-15, `effects/batches/lot64-accepted-20261015-v1/acceptance.json` ; installationv3 et routage des profils ponctuels : `effects/installations/lot64-7b-x4-nearest30-20261015-v1/installation.json`. Les preuves ci-dessus restent à leur état de création.

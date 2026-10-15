@@ -1,0 +1,40 @@
+{
+  "resref": "BGLRYH",
+  "passed": true,
+  "native_cycles": 1,
+  "cycle_mode_variants": 1,
+  "phases": 50,
+  "cycles": [
+    {
+      "profile": "cycle000-once",
+      "cycle": 0,
+      "closed": false,
+      "source_slots": 25,
+      "output_phases": 50,
+      "duration": [
+        25,
+        15
+      ],
+      "unique_rgb": 50,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    }
+  ],
+  "native_pixels_palette_world_geometry_preserved": true,
+  "source_model": "seedvr2_7b_int8_convrot.safetensors",
+  "scale": 4,
+  "target_fps": [
+    30,
+    1
+  ],
+  "filter": "NEAREST",
+  "pack_manifest_sha256": "F1BDFE5FEBE92D4EAD74E7E1A0B5865A6AF2C3704B668698ED0785A690285EAB",
+  "runtime_contract_rows": 100,
+  "raw_bytes": 38190592,
+  "visual_qa": "pending-user-review",
+  "installed": false
+}

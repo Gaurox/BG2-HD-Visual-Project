@@ -24,6 +24,7 @@ namespace {
 constexpr std::array<char, 8> kRegistryMagic{{'I', 'E', 'E', 'E', 'F', 'X', '4', '\0'}};
 constexpr std::uint32_t kRegistryVersion = 1;
 constexpr std::uint32_t kTimelineRegistryVersion = 2;
+constexpr std::uint32_t kProfileRegistryVersion = 3;
 constexpr std::uint32_t kScale = 4;
 // Effects share the engine's 512 descriptor slots with native sprites, UI,
 // area animations and transient Character composites. Never retain one slot
@@ -33,10 +34,10 @@ constexpr std::uint32_t kMaxResources = 512;
 constexpr std::uint32_t kMaxFramesPerResource = 4096;
 constexpr std::uint32_t kMaxCyclesPerResource = 256;
 constexpr std::uint32_t kMaxCycleSlots = 65536;
-// The 97-effect pack (including the 33-effect 7B batch) needs 3.19 GiB.
+// The cumulative 161-effect pack needs 8,208,516,864 CPU bytes.
 // Keep a bounded CPU payload limit, independent from the 64-slot GPU cache
 // and the geometry, frame and resource limits.
-constexpr std::uint64_t kMaxRawBytes = 4096ull * 1024ull * 1024ull;
+constexpr std::uint64_t kMaxRawBytes = 8192ull * 1024ull * 1024ull;
 
 struct Frame {
   int logicalWidth{};
@@ -59,6 +60,7 @@ struct Resource {
     std::uint32_t targetFpsDenominator{};
     std::uint32_t phaseCount{};
     std::vector<std::vector<std::uint32_t>> framesByCycle;
+    std::vector<std::vector<std::uint32_t>> onceByCycle;
   } timeline;
 };
 
@@ -337,7 +339,7 @@ bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
     std::uint32_t reserved = 0;
     if (!reader.read(magic) || !reader.read(version) || !reader.read(scale) ||
         !reader.read(resourceCount) || !reader.read(reserved) || magic != kRegistryMagic ||
-        (version != kRegistryVersion && version != kTimelineRegistryVersion) || scale != kScale ||
+        (version != kRegistryVersion && version != kTimelineRegistryVersion && version != kProfileRegistryVersion) || scale != kScale ||
         reserved != 0 || resourceCount == 0 ||
         resourceCount > kMaxResources) {
       throw std::runtime_error("invalid EffectAnimations-X4.registry header");
@@ -394,7 +396,7 @@ bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
         resource.observedSlots.emplace_back(slotCount, std::uint8_t{0});
         resource.cycles.push_back(std::move(slots));
       }
-      if (version == kTimelineRegistryVersion) {
+      if (version >= kTimelineRegistryVersion) {
         auto& timeline = resource.timeline;
         if (!reader.read(timeline.nativeFpsNumerator) ||
             !reader.read(timeline.nativeFpsDenominator) ||
@@ -418,6 +420,23 @@ bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
             }
           }
           timeline.framesByCycle.push_back(std::move(phases));
+        }
+        if (version >= kProfileRegistryVersion) {
+          std::uint32_t count = 0;
+          if (!reader.read(count) || count > cycleCount) throw std::runtime_error("invalid once profile count");
+          timeline.onceByCycle.resize(cycleCount);
+          for (std::uint32_t i = 0; i < count; ++i) {
+            std::uint32_t cycle = 0, phases = 0;
+            if (!reader.read(cycle) || !reader.read(phases) || cycle >= cycleCount ||
+                !timeline.onceByCycle[cycle].empty() ||
+                phases != resource.cycles[cycle].size() * 2 || phases > timeline.phaseCount)
+              throw std::runtime_error("invalid once profile descriptor");
+            auto& table = timeline.onceByCycle[cycle];
+            table.resize(phases);
+            for (auto& frame : table) {
+              if (!reader.read(frame) || frame >= frameCount) throw std::runtime_error("invalid once profile frame");
+            }
+          }
         }
         timeline.enabled = true;
       }
@@ -541,7 +560,7 @@ bool mark_geometry_observation_once(const std::array<char, 8>& resref, int seque
 }
 
 bool resolve_frame(const std::array<char, 8>& resref, int sequence, int currentFrame,
-                   int logicalWidth, int logicalHeight, FrameHandle& out) noexcept {
+                   int logicalWidth, int logicalHeight, FrameHandle& out, bool onceProfile) noexcept {
   out = {};
   if (!g_ready.load(std::memory_order_acquire) || sequence < 0 || currentFrame < 0 ||
       logicalWidth <= 0 || logicalHeight <= 0) {
@@ -558,7 +577,11 @@ bool resolve_frame(const std::array<char, 8>& resref, int sequence, int currentF
     }
     const auto& cycle = resource->cycles[static_cast<std::size_t>(sequence)];
     if (static_cast<std::size_t>(currentFrame) >= cycle.size()) return false;
-    const auto frameIndex = cycle[static_cast<std::size_t>(currentFrame)];
+    auto frameIndex = cycle[static_cast<std::size_t>(currentFrame)];
+    if (onceProfile && static_cast<std::size_t>(sequence) < resource->timeline.onceByCycle.size()) {
+      const auto& table = resource->timeline.onceByCycle[sequence];
+      if (!table.empty()) frameIndex = table[static_cast<std::size_t>(currentFrame) * 2];
+    }
     if (frameIndex >= resource->frames.size()) return false;
     const auto& frame = resource->frames[frameIndex];
     if (frame.logicalWidth != logicalWidth || frame.logicalHeight != logicalHeight) return false;
@@ -571,7 +594,7 @@ bool resolve_frame(const std::array<char, 8>& resref, int sequence, int currentF
 }
 
 bool timeline_info(const std::array<char, 8>& resref, int sequence,
-                   TimelineInfo& out) noexcept {
+                   TimelineInfo& out, bool onceProfile) noexcept {
   out = {};
   if (!g_ready.load(std::memory_order_acquire) || sequence < 0) return false;
   try {
@@ -591,7 +614,10 @@ bool timeline_info(const std::array<char, 8>& resref, int sequence,
         .nativeFpsDenominator = resource->timeline.nativeFpsDenominator,
         .targetFpsNumerator = resource->timeline.targetFpsNumerator,
         .targetFpsDenominator = resource->timeline.targetFpsDenominator,
-        .phaseCount = resource->timeline.phaseCount,
+        .phaseCount = onceProfile && static_cast<std::size_t>(sequence) < resource->timeline.onceByCycle.size() &&
+                              !resource->timeline.onceByCycle[sequence].empty()
+                          ? static_cast<std::uint32_t>(resource->timeline.onceByCycle[sequence].size())
+                          : resource->timeline.phaseCount,
     };
     return true;
   } catch (...) {
@@ -601,7 +627,7 @@ bool timeline_info(const std::array<char, 8>& resref, int sequence,
 
 bool resolve_timeline_frame(const std::array<char, 8>& resref, int sequence,
                             std::uint32_t phase, int logicalWidth,
-                            int logicalHeight, FrameHandle& out) noexcept {
+                            int logicalHeight, FrameHandle& out, bool onceProfile) noexcept {
   out = {};
   if (!g_ready.load(std::memory_order_acquire) || sequence < 0 || logicalWidth <= 0 ||
       logicalHeight <= 0) {
@@ -617,7 +643,10 @@ bool resolve_timeline_frame(const std::array<char, 8>& resref, int sequence,
         phase >= resource->timeline.phaseCount) {
       return false;
     }
-    const auto& phases = resource->timeline.framesByCycle[static_cast<std::size_t>(sequence)];
+    const auto& phases = onceProfile && static_cast<std::size_t>(sequence) < resource->timeline.onceByCycle.size() &&
+                                  !resource->timeline.onceByCycle[sequence].empty()
+                             ? resource->timeline.onceByCycle[sequence]
+                             : resource->timeline.framesByCycle[static_cast<std::size_t>(sequence)];
     if (phase >= phases.size()) return false;
     const auto frameIndex = phases[phase];
     if (frameIndex >= resource->frames.size()) return false;

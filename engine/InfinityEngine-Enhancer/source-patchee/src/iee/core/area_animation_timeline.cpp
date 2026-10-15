@@ -54,7 +54,7 @@ std::size_t AreaAnimationTimelineClock::find_or_create(
 
 std::uint32_t AreaAnimationTimelineClock::calculate_phase(
     const AreaAnimationTimelineSample& sample, std::int64_t slotStartTicks,
-    std::int64_t effectiveTicks) noexcept {
+    std::int64_t effectiveTicks, std::int64_t presentationStepTicks) noexcept {
   const long double nativeRate =
       static_cast<long double>(sample.nativeFpsNumerator) /
       static_cast<long double>(sample.nativeFpsDenominator);
@@ -65,6 +65,14 @@ std::uint32_t AreaAnimationTimelineClock::calculate_phase(
       static_cast<long double>(sample.ticksPerSecond) / nativeRate;
   long double elapsedTicks =
       static_cast<long double>(std::max<std::int64_t>(0, effectiveTicks - slotStartTicks));
+  // Effects round the intermediate threshold to the nearest observed refresh.
+  // Without this, 33.2 ms at 60 Hz misses 33.333 ms and produces 50/16 ms holds.
+  // Area animations retain their historical scheduling. A hitch cannot add more
+  // than one quarter of a target phase, or escape the native slot below.
+  if (sample.roundToPresentation && presentationStepTicks > 0) {
+    elapsedTicks += std::min<long double>(presentationStepTicks / 2.0L,
+        static_cast<long double>(sample.ticksPerSecond) / targetRate / 4.0L);
+  }
   // A stale same-slot observation after culling or a hitch must hold the last
   // phase owned by that native slot, never spill into the next slot's timeline.
   elapsedTicks = std::min(elapsedTicks, std::max<long double>(0.0L, slotDurationTicks - 1.0L));
@@ -126,7 +134,13 @@ AreaAnimationTimelineSelection AreaAnimationTimelineClock::select(
     occurrence.paused = false;
   }
 
-  occurrence.lastPhase = calculate_phase(sample, occurrence.slotStartTicks, effectiveTicks);
+  if (!occurrence.paused || !sample.roundToPresentation) {
+    const auto phase = calculate_phase(sample, occurrence.slotStartTicks, effectiveTicks,
+        std::max<std::int64_t>(0, sample.clockTicks - occurrence.lastClockTicks));
+    // An early rounded intermediate phase must not move backwards on pause,
+    // resume or an unusually short subsequent refresh in the same native slot.
+    occurrence.lastPhase = sample.roundToPresentation ? std::max(occurrence.lastPhase, phase) : phase;
+  }
   occurrence.lastEpoch = sample.presentationEpoch;
   occurrence.lastClockTicks = sample.clockTicks;
   return {.valid = true,

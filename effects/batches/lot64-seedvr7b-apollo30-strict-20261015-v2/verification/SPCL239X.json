@@ -1,0 +1,94 @@
+{
+  "resref": "SPCL239X",
+  "passed": true,
+  "native_cycles": 4,
+  "cycle_mode_variants": 4,
+  "phases": 150,
+  "cycles": [
+    {
+      "profile": "cycle000-once",
+      "cycle": 0,
+      "closed": false,
+      "source_slots": 56,
+      "output_phases": 112,
+      "duration": [
+        56,
+        15
+      ],
+      "unique_rgb": 112,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle001-once",
+      "cycle": 1,
+      "closed": false,
+      "source_slots": 6,
+      "output_phases": 12,
+      "duration": [
+        6,
+        15
+      ],
+      "unique_rgb": 12,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle002-once",
+      "cycle": 2,
+      "closed": false,
+      "source_slots": 6,
+      "output_phases": 12,
+      "duration": [
+        6,
+        15
+      ],
+      "unique_rgb": 12,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle003-once",
+      "cycle": 3,
+      "closed": false,
+      "source_slots": 7,
+      "output_phases": 14,
+      "duration": [
+        7,
+        15
+      ],
+      "unique_rgb": 14,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    }
+  ],
+  "native_pixels_palette_world_geometry_preserved": true,
+  "source_model": "seedvr2_7b_int8_convrot.safetensors",
+  "scale": 4,
+  "target_fps": [
+    30,
+    1
+  ],
+  "filter": "NEAREST",
+  "pack_manifest_sha256": "E50F34916CD685C4DEE629BF8F87D6A0B55D11AEF741466C0FEEF1642C56B1DB",
+  "runtime_contract_rows": 300,
+  "raw_bytes": 229286528,
+  "visual_qa": "pending-user-review",
+  "installed": false
+}

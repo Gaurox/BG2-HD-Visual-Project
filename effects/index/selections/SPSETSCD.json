@@ -1,0 +1,192 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPSETSCD",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "lookup_start": 16
+      }
+    ],
+    "frame_count": 48,
+    "source": {
+      "interpolation_run": "spsetscd-interpolation-apollo30-strict-lot64-20261015-v2",
+      "interpolation_run_descriptor_sha256": "DB98F4FBDE106A4EC62A114998ABA2662686B3684EA3FBA9753AFDDB5BAD2F19",
+      "source_bam_sha256": "e09333b0bd34880bff5b16fee37abdafea6426de9a450beee2f068be3d7fb0d0",
+      "spatial_manifest_sha256": "F2CF4AEAF79D9B5319683CA9182403FD51DC6938C0D8521A24673846AB230E7B",
+      "spatial_run": "spsetscd-spatial-seedvr7b-lab-lot64-20261015-v1",
+      "spatial_run_descriptor_sha256": "DF056E81FC6927CFB83956BC64BB024212FC52813039931D74173FACB8F7BC15"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        32,
+        16
+      ],
+      "alternate_profiles": [],
+      "cycle_profiles": [
+        "cycle000-once",
+        "cycle001-once"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30
+        ],
+        [
+          32,
+          34,
+          36,
+          38,
+          40,
+          42,
+          44,
+          46
+        ]
+      ],
+      "phase_count": 32,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31
+        ],
+        [
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond native slot count; no extra presented phase or duration"
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 945,
+    "path": "effects/index/qa-decisions/SPSETSCD/2026-10-15-accepted-2a0650c5006e.json",
+    "sha256": "2A0650C5006EEF377BA27F0FDE4005832109BA3CC77654DA14EFC6B1B09EE844"
+  },
+  "resref": "SPSETSCD",
+  "run_descriptor": {
+    "bytes": 2076,
+    "path": "effects/ressources/SPSETSCD/runs/spsetscd-interpolation-apollo30-strict-lot64-20261015-v2/run.json",
+    "sha256": "DB98F4FBDE106A4EC62A114998ABA2662686B3684EA3FBA9753AFDDB5BAD2F19"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 33253,
+      "path": "effects/ressources/SPSETSCD/packs/spsetscd-7b-x4-apollo30-strict-lot64-20261015-v2/manifest.json",
+      "sha256": "2832605B416C7D50BF5006C079BB438098872DD026314D64071A412B176AE8DF"
+    },
+    "registry": {
+      "bytes": 804,
+      "path": "effects/ressources/SPSETSCD/packs/spsetscd-7b-x4-apollo30-strict-lot64-20261015-v2/EffectAnimations-X4.registry",
+      "sha256": "12FD17FBABD3DAC3675FBCDF3217D88A65BABEACD303296A5FEA9AC9BEF961AD"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spsetscd-interpolation-apollo30-strict-lot64-20261015-v2",
+  "source": {
+    "bytes": 18401,
+    "path": "effects/ressources/SPSETSCD/source.bam",
+    "sha256": "E09333B0BD34880BFF5B16FEE37ABDAFEA6426DE9A450BEEE2F068BE3D7FB0D0"
+  }
+}

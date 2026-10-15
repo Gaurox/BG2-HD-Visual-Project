@@ -55,16 +55,18 @@ void release() noexcept;
 // Resolves one native CVidCell cycle slot. RESREF matching is case-insensitive;
 // sequence, native frame and logical dimensions must match exactly.
 bool resolve_frame(const std::array<char, 8>& resref, int sequence, int currentFrame,
-                   int logicalWidth, int logicalHeight, FrameHandle& out) noexcept;
+                   int logicalWidth, int logicalHeight, FrameHandle& out, bool onceProfile = false) noexcept;
 
-// Registry v2 packs retain the native BAM slots for fallback and add a
-// QPC-scheduled timeline. The timeline resolver rejects any mismatch exactly
+// Registry v2/v3 packs retain the native BAM slots for fallback and add a
+// QPC-scheduled timeline. v3 adds optional once-profile tables per cycle;
+// the VVC owner chooses the mode without changing native BAM/VVC controls.
+// The timeline resolver rejects any mismatch exactly
 // like the native resolver, leaving the engine's original draw untouched.
 bool timeline_info(const std::array<char, 8>& resref, int sequence,
-                   TimelineInfo& out) noexcept;
+                   TimelineInfo& out, bool onceProfile = false) noexcept;
 bool resolve_timeline_frame(const std::array<char, 8>& resref, int sequence,
                             std::uint32_t phase, int logicalWidth,
-                            int logicalHeight, FrameHandle& out) noexcept;
+                            int logicalHeight, FrameHandle& out, bool onceProfile = false) noexcept;
 
 // Binds a x4 backing texture while preserving the engine's original x1 texture
 // descriptor and draw geometry. Returns false without changing the current

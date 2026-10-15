@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "iee/effect_animation_x4_registry.h"
+#include "iee/core/effect_playback_profile.h"
 
 namespace {
 constexpr std::array<char, 8> kMagic{{'I', 'E', 'E', 'E', 'F', 'X', '4', '\0'}};
@@ -20,7 +21,7 @@ void append_u32(std::vector<std::byte>& bytes, std::uint32_t value) {
   }
 }
 
-bool write_fixture(const std::filesystem::path& directory, bool timeline = false) {
+bool write_fixture(const std::filesystem::path& directory, bool timeline = false, bool profiles = false) {
   std::error_code error;
   std::filesystem::create_directories(directory, error);
   if (error) return false;
@@ -28,7 +29,7 @@ bool write_fixture(const std::filesystem::path& directory, bool timeline = false
   std::vector<std::byte> registry;
   registry.insert(registry.end(), reinterpret_cast<const std::byte*>(kMagic.data()),
                   reinterpret_cast<const std::byte*>(kMagic.data()) + kMagic.size());
-  append_u32(registry, timeline ? 2 : 1);  // version
+  append_u32(registry, profiles ? 3 : (timeline ? 2 : 1));  // version
   append_u32(registry, 4);  // scale
   append_u32(registry, 1);  // resource count
   append_u32(registry, 0);  // reserved
@@ -54,6 +55,12 @@ bool write_fixture(const std::filesystem::path& directory, bool timeline = false
     for (std::uint32_t phase = 0; phase < 12; ++phase) append_u32(registry, phase);
   }
 
+  if (profiles) {
+    append_u32(registry, 1); // one alternate cycle
+    append_u32(registry, 0); // cycle zero
+    append_u32(registry, 12);
+    for (std::uint32_t phase = 0; phase < 12; ++phase) append_u32(registry, 11 - phase);
+  }
   std::ofstream registryStream(directory / "EffectAnimations-X4.registry", std::ios::binary);
   registryStream.write(reinterpret_cast<const char*>(registry.data()),
                        static_cast<std::streamsize>(registry.size()));
@@ -90,17 +97,24 @@ int main(int argc, char** argv) {
         std::string name;
         int slot = -1, width = 0, height = 0, phase = -1;
         if (!(row >> name >> slot >> width >> height >> phase) || name.size() > 8) return 1;
+        int sequence = 0, expectedNative = slot * 2, expectedTarget = phase;
+        row >> std::ws;
+        if (!row.eof() && !(row >> sequence >> expectedNative >> expectedTarget)) return 1;
+        int once = 0;
+        row >> std::ws;
+        if (!row.eof() && (!(row >> once) || (once != 0 && once != 1))) return 1;
+        if (sequence < 0 || expectedNative < 0 || expectedTarget < 0) return 1;
         std::array<char, 8> ref{};
         std::copy(name.begin(), name.end(), ref.begin());
         iee::effect_animation_x4::FrameHandle native{}, target{};
         iee::effect_animation_x4::TimelineInfo timing{};
         if (!iee::effect_animation_x4::contains_resource(ref) ||
-            !iee::effect_animation_x4::timeline_info(ref, 0, timing) ||
+            !iee::effect_animation_x4::timeline_info(ref, sequence, timing, once != 0) ||
             !timing.enabled || timing.targetFpsNumerator != 30 || timing.targetFpsDenominator != 1 ||
-            !iee::effect_animation_x4::resolve_frame(ref, 0, slot, width, height, native) ||
-            !iee::effect_animation_x4::resolve_timeline_frame(ref, 0, phase, width, height, target) ||
-            target.frameIndex != static_cast<std::size_t>(phase) ||
-            native.frameIndex != static_cast<std::size_t>(slot * 2)) {
+            !iee::effect_animation_x4::resolve_frame(ref, sequence, slot, width, height, native, once != 0) ||
+            !iee::effect_animation_x4::resolve_timeline_frame(ref, sequence, phase, width, height, target, once != 0) ||
+            target.frameIndex != static_cast<std::size_t>(expectedTarget) ||
+            native.frameIndex != static_cast<std::size_t>(expectedNative)) {
           std::cerr << "external effect contract failed: " << line << '\n';
           return 1;
         }
@@ -150,8 +164,33 @@ int main(int argc, char** argv) {
                                   mixed, 0, 11, 64, 64, frame);
   iee::effect_animation_x4::release();
   std::filesystem::remove_all(root, error);
+  const bool profileWritten = write_fixture(root, true, true);
+  const bool profileLoaded = profileWritten && iee::effect_animation_x4::prepare(root);
+  const bool profileResolved = profileLoaded &&
+      iee::effect_animation_x4::resolve_timeline_frame(mixed, 0, 0, 64, 64, frame, true) && frame.frameIndex == 11 &&
+      iee::effect_animation_x4::resolve_frame(mixed, 0, 5, 64, 64, frame, true) && frame.frameIndex == 1 &&
+      iee::effect_animation_x4::resolve_timeline_frame(mixed, 0, 0, 64, 64, frame) && frame.frameIndex == 0;
+  iee::effect_animation_x4::release();
+  std::filesystem::remove_all(root, error);
+  const bool malformedWritten = write_fixture(root, true, true);
+  bool malformedRejected = false;
+  if (malformedWritten) {
+    std::fstream bad(root / "EffectAnimations-X4.registry", std::ios::binary | std::ios::in | std::ios::out);
+    bad.seekp(-4, std::ios::end);
+    const std::uint32_t invalidBacking = 99;
+    bad.write(reinterpret_cast<const char*>(&invalidBacking), sizeof(invalidBacking));
+    bad.close();
+    malformedRejected = !iee::effect_animation_x4::prepare(root) && !iee::effect_animation_x4::ready();
+  }
+  iee::effect_animation_x4::release();
+  std::filesystem::remove_all(root, error);
+  using iee::core::effect_once_profile;
+  const bool ownerRouting = effect_once_profile(8, 0, 0, 1) &&
+      !effect_once_profile(9, 0, 0, 1) && !effect_once_profile(73, 1, 0, 1) &&
+      effect_once_profile(9, 1, 2, 1) && !effect_once_profile(9, 1, 2, 2) &&
+      effect_once_profile(9, 1, 2, 3);
   if (!resolved || !mixedResolved || !diagnosticGates || !rejectedDimensions || !rejectedFrame ||
-      !timelineLoaded) {
+      !timelineLoaded || !profileResolved || !ownerRouting || !malformedRejected) {
     std::cerr << "effect registry resolution contract failed\n";
     return 1;
   }

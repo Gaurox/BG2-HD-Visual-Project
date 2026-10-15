@@ -36,6 +36,7 @@
 #include "area_state.h"
 #include "iee/core/hooking.h"
 #include "iee/core/area_animation_timeline.h"
+#include "iee/core/effect_playback_profile.h"
 #include "iee/core/effect_presentation_trace.h"
 #include "iee/core/config.h"
 #include "iee/core/logger.h"
@@ -172,6 +173,7 @@ static bool g_areaLightingHooksEnabled = false;
 thread_local int g_effectAnimationRenderDepth = 0;
 thread_local void* g_effectAnimationInstance = nullptr;
 thread_local void* g_effectAnimationCell = nullptr;
+thread_local bool g_effectOnceProfile = false;
 thread_local int g_effectAnimationFinalRenderDepth = 0;
 thread_local bool g_spimpfrTraceActive = false;
 thread_local int g_spimpfrTraceSequence = -1;
@@ -766,6 +768,7 @@ struct ResolvedAreaAnimationFrame {
 };
 
 struct ResolvedEffectAnimationFrame {
+  bool onceProfile{};
   effect_animation_x4::FrameHandle handle{};
   effect_animation_x4::TimelineInfo timeline{};
   std::array<char, 8> resref{};
@@ -1293,7 +1296,7 @@ bool read_effect_animation_frame(void* cell, int logicalWidth, int logicalHeight
     return false;
   }
   if (!effect_animation_x4::resolve_frame(resref, currentSequence, currentFrame, logicalWidth,
-                                          logicalHeight, resolved.handle)) {
+                                          logicalHeight, resolved.handle, g_effectOnceProfile)) {
     if (effect_animation_x4::contains_resource(resref)) {
       g_effectAnimationDiagnostics.registeredCellReads.fetch_add(1, std::memory_order_relaxed);
       g_effectAnimationDiagnostics.registryFallback.fetch_add(1, std::memory_order_relaxed);
@@ -1313,7 +1316,8 @@ bool read_effect_animation_frame(void* cell, int logicalWidth, int logicalHeight
   resolved.resref = resref;
   resolved.sequence = currentSequence;
   resolved.slot = currentFrame;
-  (void)effect_animation_x4::timeline_info(resref, currentSequence, resolved.timeline);
+  resolved.onceProfile = g_effectOnceProfile;
+  (void)effect_animation_x4::timeline_info(resref, currentSequence, resolved.timeline, resolved.onceProfile);
   return true;
 }
 
@@ -1443,12 +1447,13 @@ void select_effect_timeline_frame(void* instance, int worldActive, int logicalWi
          .nativeFpsDenominator = resolved.timeline.nativeFpsDenominator,
          .targetFpsNumerator = resolved.timeline.targetFpsNumerator,
          .targetFpsDenominator = resolved.timeline.targetFpsDenominator,
-         .timelinePhaseCount = resolved.timeline.phaseCount});
+         .timelinePhaseCount = resolved.timeline.phaseCount,
+         .roundToPresentation = true});
     if (!selection.valid) return;
     effect_animation_x4::FrameHandle timelineFrame{};
     if (!effect_animation_x4::resolve_timeline_frame(
             resolved.resref, resolved.sequence, selection.phase, logicalWidth, logicalHeight,
-            timelineFrame)) {
+            timelineFrame, resolved.onceProfile)) {
       return;
     }
     resolved.handle = timelineFrame;
@@ -2734,7 +2739,10 @@ static void detour_projectile_bam_render(void* thisPtr, std::uintptr_t drawFlags
     g_effectAnimationInstance = thisPtr;
     g_effectAnimationCell = cell;
   }
+  const bool previousOnceProfile = g_effectOnceProfile;
+  g_effectOnceProfile = false;
   g_projectileBamRenderHook.original()(thisPtr, drawFlags, renderContext);
+  g_effectOnceProfile = previousOnceProfile;
   if (scoped) {
     --g_effectAnimationRenderDepth;
     g_effectAnimationInstance = previousInstance;
@@ -2778,7 +2786,16 @@ static void detour_vvc_vid_cell_render(void* thisPtr, void* gameArea, void* vidM
     g_effectAnimationInstance = thisPtr;
     g_effectAnimationCell = cell;
   }
+  const bool previousOnceProfile = g_effectOnceProfile;
+  std::uint32_t flags = 0;
+  std::int32_t start = 0, loop = 0, current = 0;
+  const auto* owner = static_cast<const std::byte*>(thisPtr);
+  const bool profileRead = scoped && thisPtr &&
+      core::safe_read(owner + 0x78, flags) && core::safe_read(owner + 0xC0, start) &&
+      core::safe_read(owner + 0xC4, loop) && core::safe_read(owner + 0xC8, current);
+  g_effectOnceProfile = profileRead && core::effect_once_profile(flags, start, loop, current);
   g_vvcVidCellRenderHook.original()(thisPtr, gameArea, vidMode);
+  g_effectOnceProfile = previousOnceProfile;
   if (scoped) {
     --g_effectAnimationRenderDepth;
     g_effectAnimationInstance = previousInstance;

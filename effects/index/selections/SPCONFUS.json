@@ -1,0 +1,164 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPCONFUS",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          27,
+          30,
+          33,
+          36,
+          39,
+          42,
+          45,
+          48,
+          51,
+          54,
+          57
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 40,
+    "source": {
+      "interpolation_run": "spconfus-interpolation-apollo30-strict-lot64-20261015-v2",
+      "interpolation_run_descriptor_sha256": "9CAA3C1871C52FA57897E5E4FC700C362B400384BCBC6E6BA21C3053EE4D1425",
+      "source_bam_sha256": "0b0e72d00301aaff636048596624604784afae37838104c9bfb66763d928d9bc",
+      "spatial_manifest_sha256": "5E5BE60EA8588EBD3B2A38A70C98CA878AFF08E8E56D099C0D6D9DBD236A3E09",
+      "spatial_run": "spconfus-spatial-seedvr7b-lab-lot64-20261015-v1",
+      "spatial_run_descriptor_sha256": "966A724044A41D499B53B83E5EB098D5FFEC8D179F2974CD039B9DF9F7B2558A"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        40
+      ],
+      "alternate_profiles": [],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30,
+          32,
+          34,
+          36,
+          38
+        ]
+      ],
+      "phase_count": 40,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond native slot count; no extra presented phase or duration"
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 945,
+    "path": "effects/index/qa-decisions/SPCONFUS/2026-10-15-accepted-bd4d66a1691d.json",
+    "sha256": "BD4D66A1691D60D09D92BBC52135CFD29E4B8873A9D057D3C7BF7B4FCB402DAB"
+  },
+  "resref": "SPCONFUS",
+  "run_descriptor": {
+    "bytes": 2077,
+    "path": "effects/ressources/SPCONFUS/runs/spconfus-interpolation-apollo30-strict-lot64-20261015-v2/run.json",
+    "sha256": "9CAA3C1871C52FA57897E5E4FC700C362B400384BCBC6E6BA21C3053EE4D1425"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 27875,
+      "path": "effects/ressources/SPCONFUS/packs/spconfus-7b-x4-apollo30-strict-lot64-20261015-v2/manifest.json",
+      "sha256": "D5A8F67AF32A741A81024410D22A5630CD9E325BD9846CB9BEAC1D6D2ACB84D5"
+    },
+    "registry": {
+      "bytes": 624,
+      "path": "effects/ressources/SPCONFUS/packs/spconfus-7b-x4-apollo30-strict-lot64-20261015-v2/EffectAnimations-X4.registry",
+      "sha256": "052924767D7F1C3CDBFEDD9F9D8AC671E6F63517E3D94FF289A91733563A5C09"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spconfus-interpolation-apollo30-strict-lot64-20261015-v2",
+  "source": {
+    "bytes": 22522,
+    "path": "effects/ressources/SPCONFUS/source.bam",
+    "sha256": "0B0E72D00301AAFF636048596624604784AFAE37838104C9BFB66763D928D9BC"
+  }
+}

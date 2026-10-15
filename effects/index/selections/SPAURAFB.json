@@ -1,0 +1,176 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPAURAFB",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "lookup_start": 14
+      }
+    ],
+    "frame_count": 40,
+    "source": {
+      "interpolation_run": "spaurafb-interpolation-apollo30-retimed-lot64-20261015-v1",
+      "interpolation_run_descriptor_sha256": "FA87C8DE59C6CF41048209157F0F7AD0937DE56580A3DA5AA9D4D85D99399408",
+      "source_bam_sha256": "4612c0647fd53e097db7e74c234c3947de862057279ab87b9f6043185ecffdb2",
+      "spatial_manifest_sha256": "8AC20B3DDAB4D3E74C5B804151E8F3899B8FCC47731DE77C7D9AC72FBB6C168E",
+      "spatial_run": "spaurafb-spatial-seedvr7b-lab-lot64-20261015-v1",
+      "spatial_run_descriptor_sha256": "5B65A4B0B350B3CA65874E3A40AE1CABBACFAB232C90E868DD17F30D8115FEEA"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        28,
+        12
+      ],
+      "alternate_profiles": [],
+      "cycle_profiles": [
+        "cycle000-once",
+        "cycle001-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26
+        ],
+        [
+          28,
+          30,
+          32,
+          34,
+          36,
+          38
+        ]
+      ],
+      "phase_count": 28,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27
+        ],
+        [
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond native slot count; no extra presented phase or duration"
+    }
+  },
+  "decision_date": "2026-10-15",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 948,
+    "path": "effects/index/qa-decisions/SPAURAFB/2026-10-15-accepted-6f8f39c91876.json",
+    "sha256": "6F8F39C91876FCDD23B79F07EF33C21262A71F16684F6C256D13900EC544017B"
+  },
+  "resref": "SPAURAFB",
+  "run_descriptor": {
+    "bytes": 2067,
+    "path": "effects/ressources/SPAURAFB/runs/spaurafb-interpolation-apollo30-retimed-lot64-20261015-v1/run.json",
+    "sha256": "FA87C8DE59C6CF41048209157F0F7AD0937DE56580A3DA5AA9D4D85D99399408"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 28060,
+      "path": "effects/ressources/SPAURAFB/packs/spaurafb-7b-x4-apollo30-retimed-lot64-20261015-v1/manifest.json",
+      "sha256": "3FE1D6A4D00523350E208F9DD7B54083D1B33DC83842F878D91FD3B4697B56B9"
+    },
+    "registry": {
+      "bytes": 692,
+      "path": "effects/ressources/SPAURAFB/packs/spaurafb-7b-x4-apollo30-retimed-lot64-20261015-v1/EffectAnimations-X4.registry",
+      "sha256": "C576A59187B515A33B3B367B74C37DF3192A126D8D8BE48841BD4576DFAF2F8C"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spaurafb-interpolation-apollo30-retimed-lot64-20261015-v1",
+  "source": {
+    "bytes": 24690,
+    "path": "effects/ressources/SPAURAFB/source.bam",
+    "sha256": "4612C0647FD53E097DB7E74C234C3947DE862057279AB87B9F6043185ECFFDB2"
+  }
+}

@@ -128,7 +128,7 @@ def validate_pack(root: Path) -> InputPack:
         or manifest.get("scale") != 4
         or manifest.get("registry") != REGISTRY_NAME
         or manifest.get("registry_magic") != "IEEEFX4"
-        or manifest.get("registry_version") not in {1, 2}
+        or manifest.get("registry_version") not in {1, 2, 3}
     ):
         raise PackError(f"manifest incompatible : {root}")
     registry = registry_path.read_bytes()
