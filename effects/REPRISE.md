@@ -1,10 +1,30 @@
 # Reprise effects — 2026-10-17
 
-## État final accepté
+## Travail courant
+
+- **Lot26 terminé et accepté ingame2026-10-17**. Utilisateur : « ok les 09 et 26 sont visibles avec le décalage et le 12 est corrigé. tout est validé, mets à jour le suivi et committe. » Autorité finale : `effects/batches/lot26-accepted-20261017-v1/{acceptance,verification}.json` ;26décisions QA immuables/26sélections/CSV vérifiés. Versions :8SDF sans retrait +OHRFEAR facefill +17v2.09/26Z26V09/Z26V26visibles avecX=64 ;12Z26T12corrigé, [CLUA finales](batches/lot26-accepted-20261017-v1/CLUA.md).253RESREF/245productions cumulées ; manifest actif `44A63CBDDC7609D9C89921C0BEBE148A577847AB28D2B400DB8AEDF91C34E924`. Alias SPIPLARI/X26PLAA et encodages normaux liés à la décision, sans production SPIPLARI artificielle. Autres lignes/installation/release conservées ; reçus historiques en attente immuables, validation ultérieure portée par cette nouvelle décision. Aucune mesure de cadence supplémentaire déduite.
+
+### Dernières opérations avant acceptation
+
+- Retour utilisateur lot26 :09/26 invisibles,12 trou au visage. Logs session17:49–17:53 : tous trois x4-bound ;09 bref fallback initial puis HD, zéro échec stockage. Placement/masquage des pièges étroits reste une hypothèse ; tests X=64 ajoutés Z26V09/Z26V26, originaux conservés. **OHRFEAR corrigé/installé** : petits trous source centraux comblés avant feather12,90phases/3s, extérieur/RGB existants identiques ; `effects/batches/ohrfear-face-fill-20261017-v1/`, recette `effects-lot26-face-visibility-20261017-v1/repair.py`. Reçu actif `effects/installations/lot26-face-visibility-20261017-v1/installation.json`, manifest `44A63CBDDC7609D9C89921C0BEBE148A577847AB28D2B400DB8AEDF91C34E924` ; registre/DLL/INI/personnages et252autres ressources conservés.70888contrats passent ; aucune QA acquise. Rapport `effects/research/lot26-09-12-26-20261017-v1/REPORT.md`. Retest12 même Z26T12 ;09/26 contrôles décalés.
+
+- Demande suivante : annuler le retrait de pixels, installer tout le lot26 pour test. **Installé** : `effects/installations/lot26-sdf-no-inset-20261017-v1/{installation,transaction}.json`, `CLUA.md`26tests, `CLUA-tous-profils.md`60profils. Production active `effects/batches/lot26-sdf-no-inset-20261017-v1/` : huit dérivés SDF exacts du comparatif8787/inset0,404phases ;18autres v2 inchangés. Anciennes preuves/essais conservés.253RESREF/32927backings,245productions cumulées ;225anciennes ressources et30229backings identiques.70888contrats natifs passent candidat+installation ; seuls nouveaux fichiers +manifest/registry et INI `EffectMetadataMiB16→32` (besoin17224952octets). DLL/personnages inchangés, jeu/InfinityLoader fermés pendant copie. Manifest actif `52C359F55AC06916D040E5516BF027BF0E1A4B9521F64173E7698C7156F1C451`. Alpha droit/premultiplié routé selon consommateurs ; SPIPLARI canonique et X26PLAA normal ajoutés, références ICINHIT/ICINTRAV seules adaptées. QA ingame26 en attente ;58acquis préservés ; aucune release modifiée.
+
+### Essais précédents du lot26
+
+- Nouveau test demandé après retour « c’est mieux » sur SDF : retrait intérieur0/1/2px x4 avant intégration de couverture ; `effects/batches/lot8-sdf-inset-preview-20261017-v1/`, galerie8788 (témoin8787 conservé). 8effets/404phases par variante ; RGB/timings conservés, A2≤A1≤A0, SHA témoin0 exact. Érosion sensible des traits fins : TRSPEART perd1phase dès1px, TRAPGR masse73%/49%. Aperçu seul, pas de modification de production/installation/QA.
+
+- Retour utilisateur suivant : SplineFit1 n’a pas suffisamment lissé ; recherche des formules validées, notamment Ankheg. **Solution acquise Ankheg = SDF borné**, et non spline (rejetée pour pixels flottants). Aperçu adapté aux8 : `effects/batches/lot8-sdf-ankheg-preview-20261017-v1/` / `summary.json`, `result.json`, galerie8787. 404phases, sigma4/biais±2 équivalents x4, topologie FG8/BG4 protégée sur grillex2, couverture8×8, RGB existant conservé +extrusion des nouveaux bords. Aucun run/pack/QA/install actuel remplacé ; validation de l’Ankheg ne vaut pas acceptation des8effets.
+
+- Retouche suivante explicitement demandée : SplineFit1 sur SPHEART/SPHANDAT/SPRAISED/GLPHWRDT/SKLT/SPTRAPBB/TRAPGR/TRSPEART. v3 active : 8nouveaux dérivés/404phases ; RGB droits/carrier/centres/durées conservés ; 18autres v2 inchangés. Tolérance1pixel x4, SS4, sans fondu. Comparatifs avant/après dans galerie8786. Preuves `spline-verification.json`, `scope-verification.json` ; recette `pipeline/recipes/effects-lot8-splinefit1-20261017-v1/`. QA en attente.
+
+- Production26 de base : `effects/batches/lot26-seedvr7b-apollo30-20261017-v2/` (2620phases/60profils), puis surcharges v3 des8 ci-dessus. v2 : 19fins/figuratifs feather0 (1570phases à couverture native exacte), 7diffus feather12. v3 : 8 de ces19 reçoivent ensuite SplineFit1 ; les11autres fins et7diffus restent v2. Aucune nouvelle inférence ni installation/release. Le lot58 accepté reste intact.
+
+## État précédent accepté
 
 - Utilisateur : « ok tout est validé. maj le suivi et committe. puis raffiche moi le prochain lot que tu avais préparé ». **58/58 effets acceptés ingame**, 4variantes alpha normales et correctif moteur des bandes blanches validés. Autorités : `effects/batches/lot58-accepted-20261017-v1/{acceptance,verification}.json`, 58décisions immuables `effects/index/qa-decisions/`, 58sélections exactes `effects/index/selections/`, CSV mis à jour.
 - Contrat installé accepté : manifest `0471FAEDCAA40E3D682A7EA2AC733CBEE085C703A08507FC82645B7E91A43E8F`, DLL `FEA4B2B153653461D465B67EB9CC5A762CC97785E511EEBBF5C776348268C246` ; 219productions/225RESREF. Nuages normaux X58WFOG/CLK/CLS/DFOG : dérivés alpha acceptés séparément ; packs mono-BAM/PRO originaux conservés comme sélections principales. Reçus historiques conservés ; aucune nouvelle installation/release/mesure de cadence déduite.
-- Suite : lot26 conservé, à réafficher ; **aucune production lancée**. `effects/batches/lot26-material-organic-summons-proposal-20261017-v1/preview/native.png`.
+- État à ce commit : lot26 conservé, à réafficher ; aucune production encore lancée à cet instant (nouvelle demande et production26 ci-dessus). `effects/batches/lot26-material-organic-summons-proposal-20261017-v1/preview/native.png`.
 
 ## Historique de la reprise (états au moment des opérations)
 

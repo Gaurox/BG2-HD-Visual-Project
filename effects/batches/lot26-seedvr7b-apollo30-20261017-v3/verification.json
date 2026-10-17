@@ -1,0 +1,1648 @@
+{
+  "passed": 26,
+  "failures": [],
+  "splinefit1_assets": 8,
+  "other_productions_unchanged": 18,
+  "assets": [
+    {
+      "resref": "OHBENVLP",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 140,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 9,
+          "output_phases": 18,
+          "duration": [
+            9,
+            15
+          ],
+          "unique_rgb": 18,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 61,
+          "output_phases": 122,
+          "duration": [
+            61,
+            15
+          ],
+          "unique_rgb": 122,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "3F279E7D7F38045EB4DD7450BF47611A82019233AF1EBA9E3CE753CDE967F6CF",
+      "runtime_contract_rows": 280,
+      "native_input_keys_unique_before_apollo": true,
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_rate_basis": "VVC field",
+      "straight_alpha_companions_verified": true,
+      "native_palette_normal_alpha_exact": true,
+      "raw_bytes": 42538240,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPHEART",
+      "passed": true,
+      "phases": 30,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "alpha_method": "SplineFit1 / fit_error1 x4 / SS4 / inner0",
+      "straight_rgb_byte_identical": true,
+      "premultiplied_consistency_max_error": 1,
+      "geometry_centres_carrier_timing_byte_identical": true,
+      "alpha_never_increased": true,
+      "transparent_holes_preserved": true,
+      "changed_alpha_pixels": 73997,
+      "partial_alpha_pixels": 107102,
+      "min_alpha_mass_retained": 0.7678055630854492,
+      "mean_alpha_mass_retained": 0.9348384011240074,
+      "pack_manifest_sha256": "9BAB304329C4BE4495B704C98953BE0B7CBA352C085569D103E9C5D05AF65D7A",
+      "cycle_mode_variants": 1,
+      "raw_bytes": 4304896,
+      "qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPINSECT",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 4,
+      "phases": 280,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 56,
+          "output_phases": 112,
+          "duration": [
+            56,
+            15
+          ],
+          "unique_rgb": 112,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 56,
+          "output_phases": 112,
+          "duration": [
+            56,
+            15
+          ],
+          "unique_rgb": 112,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 14,
+          "output_phases": 28,
+          "duration": [
+            14,
+            15
+          ],
+          "unique_rgb": 28,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-loop",
+          "cycle": 1,
+          "closed": true,
+          "source_slots": 14,
+          "output_phases": 28,
+          "duration": [
+            14,
+            15
+          ],
+          "unique_rgb": 28,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "43AD9FE0CC5A6555F15A7428AEC0B6D5C14AE3561E4F3F8A414B7F6139636DEF",
+      "runtime_contract_rows": 280,
+      "native_input_keys_unique_before_apollo": true,
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime measurement pending",
+      "straight_alpha_companions_verified": true,
+      "native_palette_normal_alpha_exact": true,
+      "raw_bytes": 135346816,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPIPLAAI",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 64,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 16,
+          "output_phases": 32,
+          "duration": [
+            16,
+            15
+          ],
+          "unique_rgb": 32,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "6C06FDE6EA959DE7A13614BCBD7C69BE2BF9693305F37C54ADEEA37871AAE6BB",
+      "runtime_contract_rows": 64,
+      "native_input_keys_unique_before_apollo": true,
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_rate_basis": "VVC field",
+      "straight_alpha_companions_verified": true,
+      "native_palette_normal_alpha_exact": true,
+      "raw_bytes": 34180096,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPIPLAUI",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 48,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 12,
+          "output_phases": 24,
+          "duration": [
+            12,
+            15
+          ],
+          "unique_rgb": 24,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 12,
+          "output_phases": 24,
+          "duration": [
+            12,
+            15
+          ],
+          "unique_rgb": 24,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "CA9AAC97C989187795FB58530948DC67CA376400463A0E768CB2DFD062C56F00",
+      "runtime_contract_rows": 48,
+      "native_input_keys_unique_before_apollo": true,
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime measurement pending",
+      "straight_alpha_companions_verified": true,
+      "native_palette_normal_alpha_exact": true,
+      "raw_bytes": 25796224,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPMELBD1",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 100,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 50,
+          "output_phases": 100,
+          "duration": [
+            50,
+            15
+          ],
+          "unique_rgb": 100,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "6A4E0A50A35528CD5FCC91B1D242811114EE2CA52F3DB01F0DEF39DC51F74D5E",
+      "runtime_contract_rows": 200,
+      "native_input_keys_unique_before_apollo": true,
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_rate_basis": "VVC field",
+      "straight_alpha_companions_verified": true,
+      "native_palette_normal_alpha_exact": true,
+      "raw_bytes": 175015552,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "TRGOOYAA",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 140,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 9,
+          "output_phases": 18,
+          "duration": [
+            9,
+            15
+          ],
+          "unique_rgb": 18,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 61,
+          "output_phases": 122,
+          "duration": [
+            61,
+            15
+          ],
+          "unique_rgb": 122,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "FAD322832107A981C4DB9BD3BBA4E43CDE9CFB307FFC09ED4E28BA8E6462CA56",
+      "runtime_contract_rows": 280,
+      "native_input_keys_unique_before_apollo": true,
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_rate_basis": "VVC field",
+      "straight_alpha_companions_verified": true,
+      "native_palette_normal_alpha_exact": true,
+      "raw_bytes": 42538240,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "TRGOOYBB",
+      "passed": true,
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 140,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 9,
+          "output_phases": 18,
+          "duration": [
+            9,
+            15
+          ],
+          "unique_rgb": 18,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 61,
+          "output_phases": 122,
+          "duration": [
+            61,
+            15
+          ],
+          "unique_rgb": 122,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "390A02BC9C4A404D9B8220B3029B9F9A4FDD8937177DE8718500FAC426D33306",
+      "runtime_contract_rows": 280,
+      "native_input_keys_unique_before_apollo": true,
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_rate_basis": "VVC field",
+      "straight_alpha_companions_verified": true,
+      "native_palette_normal_alpha_exact": true,
+      "raw_bytes": 30133248,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "TRVENTAA",
+      "passed": true,
+      "native_cycles": 3,
+      "cycle_mode_variants": 3,
+      "phases": 60,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 14,
+          "output_phases": 28,
+          "duration": [
+            14,
+            15
+          ],
+          "unique_rgb": 28,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 7,
+          "output_phases": 14,
+          "duration": [
+            7,
+            15
+          ],
+          "unique_rgb": 14,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 9,
+          "output_phases": 18,
+          "duration": [
+            9,
+            15
+          ],
+          "unique_rgb": 18,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "5034703AD0FEF271D82EE8CB425327A7A4FB40DE74193FDD679498E71CDEEE87",
+      "runtime_contract_rows": 120,
+      "native_input_keys_unique_before_apollo": true,
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_rate_basis": "VVC field",
+      "straight_alpha_companions_verified": true,
+      "native_palette_normal_alpha_exact": true,
+      "raw_bytes": 1277952,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "TRVENTBB",
+      "passed": true,
+      "native_cycles": 3,
+      "cycle_mode_variants": 3,
+      "phases": 60,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 14,
+          "output_phases": 28,
+          "duration": [
+            14,
+            15
+          ],
+          "unique_rgb": 28,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 7,
+          "output_phases": 14,
+          "duration": [
+            7,
+            15
+          ],
+          "unique_rgb": 14,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 9,
+          "output_phases": 18,
+          "duration": [
+            9,
+            15
+          ],
+          "unique_rgb": 18,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "D92B81CF740459A4D8CFF8F9FADD1C4E69D08C8C1F43D0C59A505EE98540249F",
+      "runtime_contract_rows": 120,
+      "native_input_keys_unique_before_apollo": true,
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_rate_basis": "VVC field",
+      "straight_alpha_companions_verified": true,
+      "native_palette_normal_alpha_exact": true,
+      "raw_bytes": 5398656,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "WRITHING",
+      "passed": true,
+      "native_cycles": 6,
+      "cycle_mode_variants": 12,
+      "phases": 420,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 1,
+          "output_phases": 2,
+          "duration": [
+            1,
+            15
+          ],
+          "unique_rgb": 1,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": true,
+          "transparent_native_cycle": true,
+          "empty_phases": [
+            0,
+            1
+          ],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 1,
+          "output_phases": 2,
+          "duration": [
+            1,
+            15
+          ],
+          "unique_rgb": 1,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": true,
+          "transparent_native_cycle": true,
+          "empty_phases": [
+            0,
+            1
+          ],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 22,
+          "output_phases": 44,
+          "duration": [
+            22,
+            15
+          ],
+          "unique_rgb": 44,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-loop",
+          "cycle": 1,
+          "closed": true,
+          "source_slots": 22,
+          "output_phases": 44,
+          "duration": [
+            22,
+            15
+          ],
+          "unique_rgb": 44,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 26,
+          "output_phases": 52,
+          "duration": [
+            26,
+            15
+          ],
+          "unique_rgb": 52,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-loop",
+          "cycle": 2,
+          "closed": true,
+          "source_slots": 26,
+          "output_phases": 52,
+          "duration": [
+            26,
+            15
+          ],
+          "unique_rgb": 52,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-once",
+          "cycle": 3,
+          "closed": false,
+          "source_slots": 14,
+          "output_phases": 28,
+          "duration": [
+            14,
+            15
+          ],
+          "unique_rgb": 28,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle003-loop",
+          "cycle": 3,
+          "closed": true,
+          "source_slots": 14,
+          "output_phases": 28,
+          "duration": [
+            14,
+            15
+          ],
+          "unique_rgb": 28,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle004-once",
+          "cycle": 4,
+          "closed": false,
+          "source_slots": 22,
+          "output_phases": 44,
+          "duration": [
+            22,
+            15
+          ],
+          "unique_rgb": 44,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle004-loop",
+          "cycle": 4,
+          "closed": true,
+          "source_slots": 22,
+          "output_phases": 44,
+          "duration": [
+            22,
+            15
+          ],
+          "unique_rgb": 44,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle005-once",
+          "cycle": 5,
+          "closed": false,
+          "source_slots": 20,
+          "output_phases": 40,
+          "duration": [
+            20,
+            15
+          ],
+          "unique_rgb": 40,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle005-loop",
+          "cycle": 5,
+          "closed": true,
+          "source_slots": 20,
+          "output_phases": 40,
+          "duration": [
+            20,
+            15
+          ],
+          "unique_rgb": 40,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "DB3B540FA99D918EF86C883A18B43CE39E7B04A9D398317DC8BF369AAC815A60",
+      "runtime_contract_rows": 420,
+      "native_input_keys_unique_before_apollo": true,
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime measurement pending",
+      "straight_alpha_companions_verified": true,
+      "native_palette_normal_alpha_exact": true,
+      "raw_bytes": 218616000,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "OHRFEAR",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 90,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 45,
+          "output_phases": 90,
+          "duration": [
+            45,
+            15
+          ],
+          "unique_rgb": 90,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "644E68FCE52DF974BD8E2E5FF343173E79DA1584E2A170103669CE5BE74EB5D5",
+      "runtime_contract_rows": 180,
+      "native_input_keys_unique_before_apollo": true,
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_rate_basis": "VVC field",
+      "straight_alpha_companions_verified": true,
+      "native_palette_normal_alpha_exact": true,
+      "raw_bytes": 57600000,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPANISUM",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 98,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 49,
+          "output_phases": 98,
+          "duration": [
+            49,
+            15
+          ],
+          "unique_rgb": 98,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "960D05DE5E1464C4CD9AA118DE0F4E653E4490D52BE654EB273C298A9569844F",
+      "runtime_contract_rows": 196,
+      "native_input_keys_unique_before_apollo": true,
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_rate_basis": "VVC field",
+      "straight_alpha_companions_verified": true,
+      "native_palette_normal_alpha_exact": true,
+      "raw_bytes": 45037568,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPHANDAT",
+      "passed": true,
+      "phases": 84,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "alpha_method": "SplineFit1 / fit_error1 x4 / SS4 / inner0",
+      "straight_rgb_byte_identical": true,
+      "premultiplied_consistency_max_error": 1,
+      "geometry_centres_carrier_timing_byte_identical": true,
+      "alpha_never_increased": true,
+      "transparent_holes_preserved": true,
+      "changed_alpha_pixels": 67870,
+      "partial_alpha_pixels": 103292,
+      "min_alpha_mass_retained": 0.44227887534997434,
+      "mean_alpha_mass_retained": 0.957638515595947,
+      "pack_manifest_sha256": "40DDF9B0A98E9413AB4B48370009937F31A76553C74AA6E276B1B7C0687B29A2",
+      "cycle_mode_variants": 1,
+      "raw_bytes": 5037056,
+      "qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPPROIMG",
+      "passed": true,
+      "native_cycles": 3,
+      "cycle_mode_variants": 3,
+      "phases": 90,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 32,
+          "output_phases": 64,
+          "duration": [
+            32,
+            15
+          ],
+          "unique_rgb": 64,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 3,
+          "output_phases": 6,
+          "duration": [
+            3,
+            15
+          ],
+          "unique_rgb": 1,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": true,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 10,
+          "output_phases": 20,
+          "duration": [
+            10,
+            15
+          ],
+          "unique_rgb": 20,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "5041D5BD7F98E12BDB6B9BFC210EE93B604CC992D3A30B25B82628FA4FEAA551",
+      "runtime_contract_rows": 180,
+      "native_input_keys_unique_before_apollo": true,
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_rate_basis": "VVC field",
+      "straight_alpha_companions_verified": true,
+      "native_palette_normal_alpha_exact": true,
+      "raw_bytes": 29318784,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPRAISED",
+      "passed": true,
+      "phases": 122,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "alpha_method": "SplineFit1 / fit_error1 x4 / SS4 / inner0",
+      "straight_rgb_byte_identical": true,
+      "premultiplied_consistency_max_error": 1,
+      "geometry_centres_carrier_timing_byte_identical": true,
+      "alpha_never_increased": true,
+      "transparent_holes_preserved": true,
+      "changed_alpha_pixels": 141615,
+      "partial_alpha_pixels": 193765,
+      "min_alpha_mass_retained": 0.9583508933341248,
+      "mean_alpha_mass_retained": 0.9865645675056878,
+      "pack_manifest_sha256": "FD94F9DFF14AB1E2122E7E10DB5165179ABFFA1E5CAC0EF077C358868C1FF49B",
+      "cycle_mode_variants": 1,
+      "raw_bytes": 20788992,
+      "qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPSUMGTE",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 200,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 100,
+          "output_phases": 200,
+          "duration": [
+            100,
+            15
+          ],
+          "unique_rgb": 200,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "697F7E5AEB81B65DA94AE50ED2E591C8D2692D8140E9AC5DC23B5FCC87998B88",
+      "runtime_contract_rows": 400,
+      "native_input_keys_unique_before_apollo": true,
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_rate_basis": "VVC field",
+      "straight_alpha_companions_verified": true,
+      "native_palette_normal_alpha_exact": true,
+      "raw_bytes": 469467392,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "GLPHWRDT",
+      "passed": true,
+      "phases": 36,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "alpha_method": "SplineFit1 / fit_error1 x4 / SS4 / inner0",
+      "straight_rgb_byte_identical": true,
+      "premultiplied_consistency_max_error": 1,
+      "geometry_centres_carrier_timing_byte_identical": true,
+      "alpha_never_increased": true,
+      "transparent_holes_preserved": true,
+      "changed_alpha_pixels": 15416,
+      "partial_alpha_pixels": 31803,
+      "min_alpha_mass_retained": 0.9762039146644573,
+      "mean_alpha_mass_retained": 0.9844111494642471,
+      "pack_manifest_sha256": "4167506CE7A01C9F11ED61ACDBE78F04EB563FA4F8D0B85CA5BFD6685F211AA4",
+      "cycle_mode_variants": 2,
+      "raw_bytes": 1253376,
+      "qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SKLT",
+      "passed": true,
+      "phases": 36,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "alpha_method": "SplineFit1 / fit_error1 x4 / SS4 / inner0",
+      "straight_rgb_byte_identical": true,
+      "premultiplied_consistency_max_error": 1,
+      "geometry_centres_carrier_timing_byte_identical": true,
+      "alpha_never_increased": true,
+      "transparent_holes_preserved": true,
+      "changed_alpha_pixels": 9156,
+      "partial_alpha_pixels": 11705,
+      "min_alpha_mass_retained": 0.9575187427912342,
+      "mean_alpha_mass_retained": 0.9706307812626799,
+      "pack_manifest_sha256": "4A82F02B63E6FD489E4B2848B607BBFBAB1084788BDEE4364168C8B7D81FB5AA",
+      "cycle_mode_variants": 2,
+      "raw_bytes": 1253376,
+      "qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPBLBBTM",
+      "passed": true,
+      "native_cycles": 3,
+      "cycle_mode_variants": 3,
+      "phases": 72,
+      "cycles": [
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 12,
+          "output_phases": 24,
+          "duration": [
+            12,
+            15
+          ],
+          "unique_rgb": 24,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 12,
+          "output_phases": 24,
+          "duration": [
+            12,
+            15
+          ],
+          "unique_rgb": 24,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 12,
+          "output_phases": 24,
+          "duration": [
+            12,
+            15
+          ],
+          "unique_rgb": 24,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "5027D06C7306BE8C171F07B96322950B370FA493CA5A8FC264E387680346F265",
+      "runtime_contract_rows": 144,
+      "native_input_keys_unique_before_apollo": true,
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_rate_basis": "VVC field",
+      "straight_alpha_companions_verified": true,
+      "native_palette_normal_alpha_exact": true,
+      "raw_bytes": 30862336,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPBLBTOP",
+      "passed": true,
+      "native_cycles": 3,
+      "cycle_mode_variants": 3,
+      "phases": 72,
+      "cycles": [
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 12,
+          "output_phases": 24,
+          "duration": [
+            12,
+            15
+          ],
+          "unique_rgb": 24,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 12,
+          "output_phases": 24,
+          "duration": [
+            12,
+            15
+          ],
+          "unique_rgb": 24,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 12,
+          "output_phases": 24,
+          "duration": [
+            12,
+            15
+          ],
+          "unique_rgb": 24,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "AA6D9794B935484044A1155C4399C091076F7359287C87AE24AF2DD487E00EED",
+      "runtime_contract_rows": 144,
+      "native_input_keys_unique_before_apollo": true,
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_rate_basis": "VVC field",
+      "straight_alpha_companions_verified": true,
+      "native_palette_normal_alpha_exact": true,
+      "raw_bytes": 28265216,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPGLBBLD",
+      "passed": true,
+      "native_cycles": 3,
+      "cycle_mode_variants": 3,
+      "phases": 72,
+      "cycles": [
+        {
+          "profile": "cycle000-loop",
+          "cycle": 0,
+          "closed": true,
+          "source_slots": 12,
+          "output_phases": 24,
+          "duration": [
+            12,
+            15
+          ],
+          "unique_rgb": 24,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle001-once",
+          "cycle": 1,
+          "closed": false,
+          "source_slots": 12,
+          "output_phases": 24,
+          "duration": [
+            12,
+            15
+          ],
+          "unique_rgb": 24,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        },
+        {
+          "profile": "cycle002-once",
+          "cycle": 2,
+          "closed": false,
+          "source_slots": 12,
+          "output_phases": 24,
+          "duration": [
+            12,
+            15
+          ],
+          "unique_rgb": 24,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "B14878DFF66D749A239F8B3B9B71D574DD79B28915DC44519501363EFF213207",
+      "runtime_contract_rows": 144,
+      "native_input_keys_unique_before_apollo": true,
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_rate_basis": "VVC field",
+      "straight_alpha_companions_verified": true,
+      "native_palette_normal_alpha_exact": true,
+      "raw_bytes": 38452800,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPSTONES",
+      "passed": true,
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 70,
+      "cycles": [
+        {
+          "profile": "cycle000-once",
+          "cycle": 0,
+          "closed": false,
+          "source_slots": 35,
+          "output_phases": 70,
+          "duration": [
+            35,
+            15
+          ],
+          "unique_rgb": 70,
+          "nonconsecutive_pose_revisits": 0,
+          "visible_adjacent_duplicates": 0,
+          "constant_native_cycle": false,
+          "transparent_native_cycle": false,
+          "empty_phases": [],
+          "loop_seam_duplicate": false
+        }
+      ],
+      "native_pixels_palette_world_geometry_preserved": true,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "filter": "NEAREST",
+      "pack_manifest_sha256": "E72BF46F5DAB1251DA6CF09099E06DCA06D257DC436330556467A6AA1E091715",
+      "runtime_contract_rows": 140,
+      "native_input_keys_unique_before_apollo": true,
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_rate_basis": "VVC field",
+      "straight_alpha_companions_verified": true,
+      "native_palette_normal_alpha_exact": true,
+      "raw_bytes": 42429568,
+      "visual_qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "SPTRAPBB",
+      "passed": true,
+      "phases": 60,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "alpha_method": "SplineFit1 / fit_error1 x4 / SS4 / inner0",
+      "straight_rgb_byte_identical": true,
+      "premultiplied_consistency_max_error": 1,
+      "geometry_centres_carrier_timing_byte_identical": true,
+      "alpha_never_increased": true,
+      "transparent_holes_preserved": true,
+      "changed_alpha_pixels": 36729,
+      "partial_alpha_pixels": 58724,
+      "min_alpha_mass_retained": 0.946078431372549,
+      "mean_alpha_mass_retained": 0.9764519906006495,
+      "pack_manifest_sha256": "EFA68DF09CF3A2EB2447BA6BF5407D0633DB164489606D209416273F0D13E2AC",
+      "cycle_mode_variants": 1,
+      "raw_bytes": 3456000,
+      "qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "TRAPGR",
+      "passed": true,
+      "phases": 4,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "alpha_method": "SplineFit1 / fit_error1 x4 / SS4 / inner0",
+      "straight_rgb_byte_identical": true,
+      "premultiplied_consistency_max_error": 1,
+      "geometry_centres_carrier_timing_byte_identical": true,
+      "alpha_never_increased": true,
+      "transparent_holes_preserved": true,
+      "changed_alpha_pixels": 4160,
+      "partial_alpha_pixels": 3864,
+      "min_alpha_mass_retained": 0.946078431372549,
+      "mean_alpha_mass_retained": 0.946078431372549,
+      "pack_manifest_sha256": "DD966C807B0E1E7892B39C74F1DA33026CF6F8F91E81A3DAC2E07902705C545B",
+      "cycle_mode_variants": 2,
+      "raw_bytes": 82944,
+      "qa": "pending-user-review",
+      "installed": false
+    },
+    {
+      "resref": "TRSPEART",
+      "passed": true,
+      "phases": 32,
+      "source_model": "seedvr2_7b_int8_convrot.safetensors",
+      "scale": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "alpha_method": "SplineFit1 / fit_error1 x4 / SS4 / inner0",
+      "straight_rgb_byte_identical": true,
+      "premultiplied_consistency_max_error": 1,
+      "geometry_centres_carrier_timing_byte_identical": true,
+      "alpha_never_increased": true,
+      "transparent_holes_preserved": true,
+      "changed_alpha_pixels": 16138,
+      "partial_alpha_pixels": 27324,
+      "min_alpha_mass_retained": 0.6354901960784314,
+      "mean_alpha_mass_retained": 0.9277987925522266,
+      "pack_manifest_sha256": "3986EF3506FF07A5D2616538BCDC461C42ED98273753875EA355789375E183EE",
+      "cycle_mode_variants": 1,
+      "raw_bytes": 1834880,
+      "qa": "pending-user-review",
+      "installed": false
+    }
+  ],
+  "phases": 2620,
+  "cycle_mode_variants": 60,
+  "qa": "pending-user-review",
+  "installed": false
+}

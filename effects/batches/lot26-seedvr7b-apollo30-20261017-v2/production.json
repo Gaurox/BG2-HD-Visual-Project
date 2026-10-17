@@ -1,0 +1,350 @@
+{
+  "schema": "bg2-effects-batch-production-result-v1",
+  "status": "completed",
+  "refinement": "19 fine/figurative assets retain native alpha coverage (feather0); 7 diffuse effects retain feather12; existing SeedVR/Apollo RGB reused without new neural inference.",
+  "completed_utc": "2026-10-17T14:51:02Z",
+  "assets_count": 26,
+  "resref_count_with_aliases": 27,
+  "aliases": {
+    "SPIPLAAI": [
+      "SPIPLARI"
+    ]
+  },
+  "source_frames": 1258,
+  "native_cycles": 47,
+  "spatial_model": "seedvr2_7b_int8_convrot.safetensors",
+  "scale": 4,
+  "interpolation_model": "apo-8",
+  "target_fps": [
+    30,
+    1
+  ],
+  "filter": "NEAREST",
+  "native_duplicate_audit": {
+    "assets": 26,
+    "cycles": 47,
+    "cycles_with_duplicate_native_poses": 11,
+    "assets_with_duplicate_native_poses": 6,
+    "repeated_native_slots": 122,
+    "constant_native_cycles": 3
+  },
+  "output_phases_all_independent_profiles": 2620,
+  "output_profiles": 60,
+  "runtime_pack_raw_bytes": 1490286208,
+  "native_duration_rationals_preserved": true,
+  "unexpected_visible_duplicates": 0,
+  "constant_native_cycles_policy": "Native constant/transparent content retained; no invented motion; TRAPGR static.",
+  "alpha_contracts": {
+    "path": "effects/batches/lot26-seedvr7b-apollo30-20261017-v2/alpha-contracts.json",
+    "sha256": "7CE37EA0072757BBDD50BF1799D5E0F25FFF9AF34415996DA6F8BA036D4C406E",
+    "bytes": 34135
+  },
+  "alpha_coverage_verification": {
+    "path": "effects/batches/lot26-seedvr7b-apollo30-20261017-v2/alpha-coverage-verification.json",
+    "sha256": "E5EE486A1428B21282F5405E49AEF268FC246E1FE1970FE5374BD9A1958FCE21",
+    "bytes": 3132
+  },
+  "normal_alpha": "Native palette A1..254; A0/255 opaque compatibility; transparent index authoritative; nearest x4, native temporal fractions, per-asset feather0 for fine silhouettes /12 diffuse. Straight companions separate from premultiplied compatibility primary.",
+  "native_timing_basis": {
+    "vvc": "15 FPS source VVC field",
+    "projectiles": "15 FPS compatibility default; not an ingame cadence measurement"
+  },
+  "integration_limits": [
+    "Normal consumers must use straight native-palette companions; Blended uses premultiplied outputs.",
+    "PRO playback/rate and owner coverage require runtime confirmation.",
+    "SPIPLARI reuses SPIPLAAI production; alias routing remains an installation task."
+  ],
+  "review": "review/index.html",
+  "review_sha256": "867001302AF1DF34E77E9E1621FEB4BD5EF6D2BCD827473EC40D771337218CD5",
+  "qa": "pending-user-review",
+  "installed": false,
+  "release_changed": false,
+  "assets": [
+    {
+      "resref": "OHBENVLP",
+      "spatial_run": "ohbenvlp-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "ohbenvlp-apollo30-retimed-strict-20261017-v1",
+      "pack": "effects/ressources/OHBENVLP/packs/ohbenvlp-7b-x4-apollo30-20261017-v1",
+      "pack_manifest_sha256": "3F279E7D7F38045EB4DD7450BF47611A82019233AF1EBA9E3CE753CDE967F6CF",
+      "verification": "verification/OHBENVLP.json",
+      "phases": 140,
+      "profiles": 2,
+      "raw_bytes": 42538240
+    },
+    {
+      "resref": "SPHEART",
+      "spatial_run": "spheart-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spheart-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPHEART/packs/spheart-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "D8B95E29BCD45F7E01661BC421F4D3B8DFD991ED348AB9F2B2DBB71CE9DF3081",
+      "verification": "verification/SPHEART.json",
+      "phases": 30,
+      "profiles": 1,
+      "raw_bytes": 4304896
+    },
+    {
+      "resref": "SPINSECT",
+      "spatial_run": "spinsect-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spinsect-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPINSECT/packs/spinsect-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "43AD9FE0CC5A6555F15A7428AEC0B6D5C14AE3561E4F3F8A414B7F6139636DEF",
+      "verification": "verification/SPINSECT.json",
+      "phases": 280,
+      "profiles": 4,
+      "raw_bytes": 135346816
+    },
+    {
+      "resref": "SPIPLAAI",
+      "spatial_run": "spiplaai-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spiplaai-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPIPLAAI/packs/spiplaai-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "6C06FDE6EA959DE7A13614BCBD7C69BE2BF9693305F37C54ADEEA37871AAE6BB",
+      "verification": "verification/SPIPLAAI.json",
+      "phases": 64,
+      "profiles": 2,
+      "raw_bytes": 34180096
+    },
+    {
+      "resref": "SPIPLAUI",
+      "spatial_run": "spiplaui-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spiplaui-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPIPLAUI/packs/spiplaui-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "CA9AAC97C989187795FB58530948DC67CA376400463A0E768CB2DFD062C56F00",
+      "verification": "verification/SPIPLAUI.json",
+      "phases": 48,
+      "profiles": 2,
+      "raw_bytes": 25796224
+    },
+    {
+      "resref": "SPMELBD1",
+      "spatial_run": "spmelbd1-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spmelbd1-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPMELBD1/packs/spmelbd1-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "6A4E0A50A35528CD5FCC91B1D242811114EE2CA52F3DB01F0DEF39DC51F74D5E",
+      "verification": "verification/SPMELBD1.json",
+      "phases": 100,
+      "profiles": 1,
+      "raw_bytes": 175015552
+    },
+    {
+      "resref": "TRGOOYAA",
+      "spatial_run": "trgooyaa-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "trgooyaa-apollo30-retimed-strict-20261017-v1",
+      "pack": "effects/ressources/TRGOOYAA/packs/trgooyaa-7b-x4-apollo30-20261017-v1",
+      "pack_manifest_sha256": "FAD322832107A981C4DB9BD3BBA4E43CDE9CFB307FFC09ED4E28BA8E6462CA56",
+      "verification": "verification/TRGOOYAA.json",
+      "phases": 140,
+      "profiles": 2,
+      "raw_bytes": 42538240
+    },
+    {
+      "resref": "TRGOOYBB",
+      "spatial_run": "trgooybb-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "trgooybb-apollo30-retimed-strict-20261017-v1",
+      "pack": "effects/ressources/TRGOOYBB/packs/trgooybb-7b-x4-apollo30-20261017-v1",
+      "pack_manifest_sha256": "390A02BC9C4A404D9B8220B3029B9F9A4FDD8937177DE8718500FAC426D33306",
+      "verification": "verification/TRGOOYBB.json",
+      "phases": 140,
+      "profiles": 2,
+      "raw_bytes": 30133248
+    },
+    {
+      "resref": "TRVENTAA",
+      "spatial_run": "trventaa-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "trventaa-apollo30-retimed-strict-20261017-v1",
+      "pack": "effects/ressources/TRVENTAA/packs/trventaa-7b-x4-apollo30-20261017-v1",
+      "pack_manifest_sha256": "5034703AD0FEF271D82EE8CB425327A7A4FB40DE74193FDD679498E71CDEEE87",
+      "verification": "verification/TRVENTAA.json",
+      "phases": 60,
+      "profiles": 3,
+      "raw_bytes": 1277952
+    },
+    {
+      "resref": "TRVENTBB",
+      "spatial_run": "trventbb-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "trventbb-apollo30-retimed-strict-20261017-v1",
+      "pack": "effects/ressources/TRVENTBB/packs/trventbb-7b-x4-apollo30-20261017-v1",
+      "pack_manifest_sha256": "D92B81CF740459A4D8CFF8F9FADD1C4E69D08C8C1F43D0C59A505EE98540249F",
+      "verification": "verification/TRVENTBB.json",
+      "phases": 60,
+      "profiles": 3,
+      "raw_bytes": 5398656
+    },
+    {
+      "resref": "WRITHING",
+      "spatial_run": "writhing-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "writhing-apollo30-retimed-strict-20261017-v1",
+      "pack": "effects/ressources/WRITHING/packs/writhing-7b-x4-apollo30-20261017-v1",
+      "pack_manifest_sha256": "DB3B540FA99D918EF86C883A18B43CE39E7B04A9D398317DC8BF369AAC815A60",
+      "verification": "verification/WRITHING.json",
+      "phases": 420,
+      "profiles": 12,
+      "raw_bytes": 218616000
+    },
+    {
+      "resref": "OHRFEAR",
+      "spatial_run": "ohrfear-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "ohrfear-apollo30-retimed-strict-20261017-v1",
+      "pack": "effects/ressources/OHRFEAR/packs/ohrfear-7b-x4-apollo30-20261017-v1",
+      "pack_manifest_sha256": "644E68FCE52DF974BD8E2E5FF343173E79DA1584E2A170103669CE5BE74EB5D5",
+      "verification": "verification/OHRFEAR.json",
+      "phases": 90,
+      "profiles": 1,
+      "raw_bytes": 57600000
+    },
+    {
+      "resref": "SPANISUM",
+      "spatial_run": "spanisum-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spanisum-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPANISUM/packs/spanisum-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "960D05DE5E1464C4CD9AA118DE0F4E653E4490D52BE654EB273C298A9569844F",
+      "verification": "verification/SPANISUM.json",
+      "phases": 98,
+      "profiles": 1,
+      "raw_bytes": 45037568
+    },
+    {
+      "resref": "SPHANDAT",
+      "spatial_run": "sphandat-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "sphandat-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPHANDAT/packs/sphandat-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "AC57D51F0F313FDB0AB9232473DF5ED8A946BC3CA9AC76C610C639FD4D734499",
+      "verification": "verification/SPHANDAT.json",
+      "phases": 84,
+      "profiles": 1,
+      "raw_bytes": 5037056
+    },
+    {
+      "resref": "SPPROIMG",
+      "spatial_run": "spproimg-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spproimg-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPPROIMG/packs/spproimg-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "5041D5BD7F98E12BDB6B9BFC210EE93B604CC992D3A30B25B82628FA4FEAA551",
+      "verification": "verification/SPPROIMG.json",
+      "phases": 90,
+      "profiles": 3,
+      "raw_bytes": 29318784
+    },
+    {
+      "resref": "SPRAISED",
+      "spatial_run": "spraised-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spraised-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPRAISED/packs/spraised-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "7F5D1727C68E4CECBD692ACF8D09CA0A19BDFA8B0A525C8B4DAD203EE5DA2A4F",
+      "verification": "verification/SPRAISED.json",
+      "phases": 122,
+      "profiles": 1,
+      "raw_bytes": 20788992
+    },
+    {
+      "resref": "SPSUMGTE",
+      "spatial_run": "spsumgte-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spsumgte-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPSUMGTE/packs/spsumgte-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "697F7E5AEB81B65DA94AE50ED2E591C8D2692D8140E9AC5DC23B5FCC87998B88",
+      "verification": "verification/SPSUMGTE.json",
+      "phases": 200,
+      "profiles": 1,
+      "raw_bytes": 469467392
+    },
+    {
+      "resref": "GLPHWRDT",
+      "spatial_run": "glphwrdt-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "glphwrdt-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/GLPHWRDT/packs/glphwrdt-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "4EB92B2A22330F599BC0DE206D62A1081000850F680CFF6B69A0C8940404560A",
+      "verification": "verification/GLPHWRDT.json",
+      "phases": 36,
+      "profiles": 2,
+      "raw_bytes": 1253376
+    },
+    {
+      "resref": "SKLT",
+      "spatial_run": "sklt-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "sklt-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SKLT/packs/sklt-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "E6B36B7F1A4FBE88E1714477756CC262B3C86E1E666053E5E838FA6218527FAC",
+      "verification": "verification/SKLT.json",
+      "phases": 36,
+      "profiles": 2,
+      "raw_bytes": 1253376
+    },
+    {
+      "resref": "SPBLBBTM",
+      "spatial_run": "spblbbtm-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spblbbtm-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPBLBBTM/packs/spblbbtm-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "5027D06C7306BE8C171F07B96322950B370FA493CA5A8FC264E387680346F265",
+      "verification": "verification/SPBLBBTM.json",
+      "phases": 72,
+      "profiles": 3,
+      "raw_bytes": 30862336
+    },
+    {
+      "resref": "SPBLBTOP",
+      "spatial_run": "spblbtop-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spblbtop-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPBLBTOP/packs/spblbtop-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "AA6D9794B935484044A1155C4399C091076F7359287C87AE24AF2DD487E00EED",
+      "verification": "verification/SPBLBTOP.json",
+      "phases": 72,
+      "profiles": 3,
+      "raw_bytes": 28265216
+    },
+    {
+      "resref": "SPGLBBLD",
+      "spatial_run": "spglbbld-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spglbbld-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPGLBBLD/packs/spglbbld-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "B14878DFF66D749A239F8B3B9B71D574DD79B28915DC44519501363EFF213207",
+      "verification": "verification/SPGLBBLD.json",
+      "phases": 72,
+      "profiles": 3,
+      "raw_bytes": 38452800
+    },
+    {
+      "resref": "SPSTONES",
+      "spatial_run": "spstones-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spstones-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPSTONES/packs/spstones-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "E72BF46F5DAB1251DA6CF09099E06DCA06D257DC436330556467A6AA1E091715",
+      "verification": "verification/SPSTONES.json",
+      "phases": 70,
+      "profiles": 1,
+      "raw_bytes": 42429568
+    },
+    {
+      "resref": "SPTRAPBB",
+      "spatial_run": "sptrapbb-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "sptrapbb-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPTRAPBB/packs/sptrapbb-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "C6A4BF1539D7432D6F01844923E1AE122908F79A8EB38612D9C3230125465686",
+      "verification": "verification/SPTRAPBB.json",
+      "phases": 60,
+      "profiles": 1,
+      "raw_bytes": 3456000
+    },
+    {
+      "resref": "TRAPGR",
+      "spatial_run": "trapgr-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "trapgr-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/TRAPGR/packs/trapgr-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "7F5C14F0518BA4ADC3BD1DB4AF177D8F54B185D7E1C64EBC068C8B99A24E783B",
+      "verification": "verification/TRAPGR.json",
+      "phases": 4,
+      "profiles": 2,
+      "raw_bytes": 82944
+    },
+    {
+      "resref": "TRSPEART",
+      "spatial_run": "trspeart-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "trspeart-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/TRSPEART/packs/trspeart-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "B0FC27AA1BCF2B366C469A03D3784BA3E5B6A2472636E1971ECD83166027250D",
+      "verification": "verification/TRSPEART.json",
+      "phases": 32,
+      "profiles": 1,
+      "raw_bytes": 1834880
+    }
+  ]
+}

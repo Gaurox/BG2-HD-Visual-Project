@@ -1,0 +1,150 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:TRSPEART",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 32,
+    "source": {
+      "interpolation_run": "trspeart-apollo30-sdf-20261017-v1",
+      "interpolation_run_descriptor_sha256": "D5DB0CEC2D715EB5A3C032502907EB711CF0D955E039E341902F4873B205C853",
+      "source_bam_sha256": "3d0db3bdb98775bdae78025fa65748e2944cd232e81c195f8011918a51c9ed97",
+      "spatial_manifest_sha256": "F7847A31BE5FFA46788CFAC67086831623C0BDC136509BD92AEF2A47CDE591E4",
+      "spatial_run": "trspeart-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "6CD1012DA2A57DD297B69778199C21BEB5C8BA3AEB2B0BBE2E6B977C1278BDAF"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        32
+      ],
+      "alternate_profiles": [],
+      "cycle_profiles": [
+        "cycle000-once"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30
+        ]
+      ],
+      "native_rate_basis": "VVC field",
+      "phase_count": 32,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 971,
+    "path": "effects/index/qa-decisions/TRSPEART/2026-10-17-accepted-048586b521a0.json",
+    "sha256": "048586B521A0EAEB6344C28C4C5FC988813630E78FDBBB642D267616DB8E9003"
+  },
+  "resref": "TRSPEART",
+  "run_descriptor": {
+    "bytes": 2190,
+    "path": "effects/ressources/TRSPEART/runs/trspeart-apollo30-sdf-20261017-v1/run.json",
+    "sha256": "D5DB0CEC2D715EB5A3C032502907EB711CF0D955E039E341902F4873B205C853"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 22008,
+      "path": "effects/ressources/TRSPEART/packs/trspeart-7b-x4-apollo30-sdf-20261017-v1/manifest.json",
+      "sha256": "C48E9C386F5A3FBAC875529133E47859B4376568D7EA35DA17C1528AB97ADCE7"
+    },
+    "registry": {
+      "bytes": 512,
+      "path": "effects/ressources/TRSPEART/packs/trspeart-7b-x4-apollo30-sdf-20261017-v1/EffectAnimations-X4.registry",
+      "sha256": "3118D3A2582EB488F799F30BB50C713FE14FAC361ED953ED54B36FBE5D13C545"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "trspeart-apollo30-sdf-20261017-v1",
+  "source": {
+    "bytes": 2644,
+    "path": "effects/ressources/TRSPEART/source.bam",
+    "sha256": "3D0DB3BDB98775BDAE78025FA65748E2944CD232E81C195F8011918A51C9ED97"
+  }
+}

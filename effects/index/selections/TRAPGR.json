@@ -1,0 +1,92 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:TRAPGR",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 1,
+    "source": {
+      "interpolation_run": "trapgr-apollo30-sdf-20261017-v1",
+      "interpolation_run_descriptor_sha256": "A13EDFE331350802B2E0AE433686801F2AD00523D2AC9A334B4E00EB4CE6C5A6",
+      "source_bam_sha256": "360e8e1dd5f1f943f3b2f97e0e7f1c15c187186db1e1ee126e7f779e04f53d40",
+      "spatial_manifest_sha256": "EC9B14C2BCF6C2DB511A75CB104E7406552DB2AF9E28E44A76295D90149192AD",
+      "spatial_run": "trapgr-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "B6F38BAD7BB609B29C18A7FF24B9D174D4B1E590DCBAB15F7B5C372BCA8CD0EF"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        2
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 2,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          0
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 957,
+    "path": "effects/index/qa-decisions/TRAPGR/2026-10-17-accepted-565c36b292ad.json",
+    "sha256": "565C36B292ADC0A8E2F63CCE15A7AF10AE0785424721A98741BD6C613F9017C4"
+  },
+  "resref": "TRAPGR",
+  "run_descriptor": {
+    "bytes": 2153,
+    "path": "effects/ressources/TRAPGR/runs/trapgr-apollo30-sdf-20261017-v1/run.json",
+    "sha256": "A13EDFE331350802B2E0AE433686801F2AD00523D2AC9A334B4E00EB4CE6C5A6"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 2637,
+      "path": "effects/ressources/TRAPGR/packs/trapgr-7b-x4-apollo30-sdf-20261017-v1/manifest.json",
+      "sha256": "D66A4F33721927FC65FD80963523BB53158AF88BB4CBA218B69277603B53A089"
+    },
+    "registry": {
+      "bytes": 84,
+      "path": "effects/ressources/TRAPGR/packs/trapgr-7b-x4-apollo30-sdf-20261017-v1/EffectAnimations-X4.registry",
+      "sha256": "0687CA9E546907C3880D6FEEB69AE08B1A5AF54D05F5325DBB2C7C6BBFE3F10E"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "trapgr-apollo30-sdf-20261017-v1",
+  "source": {
+    "bytes": 459,
+    "path": "effects/ressources/TRAPGR/source.bam",
+    "sha256": "360E8E1DD5F1F943F3B2F97E0E7F1C15C187186DB1E1EE126E7F779E04F53D40"
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPIPLAAI",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 62,
+    "source": {
+      "interpolation_run": "spiplaai-apollo30-retimed-strict-20261017-v2",
+      "interpolation_run_descriptor_sha256": "030B86F897D110787D25F9D663C5CD19A9B1621B7B5457A1A49385F5BADDE9E1",
+      "source_bam_sha256": "5ce9cf15e26185fe27274e263778b4e7677176c9c48c980c6a3563fca70f857b",
+      "spatial_manifest_sha256": "13564A9408750456EDD5C2A38E2BEE698CB73C4ACFB403FA4D69C832E67DF000",
+      "spatial_run": "spiplaai-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "1C3126A9EAA1402B04BF6609EA61E23158F3C1DA434D0D4BA375C0D29972555F"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        32
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          33,
+          35,
+          37,
+          39,
+          41,
+          43,
+          45,
+          47,
+          49,
+          51,
+          53,
+          55,
+          57,
+          59,
+          31
+        ]
+      ],
+      "native_rate_basis": "VVC field",
+      "phase_count": 32,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          31,
+          61
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 989,
+    "path": "effects/index/qa-decisions/SPIPLAAI/2026-10-17-accepted-cac17e8f5e22.json",
+    "sha256": "CAC17E8F5E229F1F186CD6F97FB50756F941471FA883A84B5A6B9657569D5E91"
+  },
+  "resref": "SPIPLAAI",
+  "run_descriptor": {
+    "bytes": 1978,
+    "path": "effects/ressources/SPIPLAAI/runs/spiplaai-apollo30-retimed-strict-20261017-v2/run.json",
+    "sha256": "030B86F897D110787D25F9D663C5CD19A9B1621B7B5457A1A49385F5BADDE9E1"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 41079,
+      "path": "effects/ressources/SPIPLAAI/packs/spiplaai-7b-x4-apollo30-20261017-v2/manifest.json",
+      "sha256": "6C06FDE6EA959DE7A13614BCBD7C69BE2BF9693305F37C54ADEEA37871AAE6BB"
+    },
+    "registry": {
+      "bytes": 752,
+      "path": "effects/ressources/SPIPLAAI/packs/spiplaai-7b-x4-apollo30-20261017-v2/EffectAnimations-X4.registry",
+      "sha256": "CB0E9E95F9E9A58343E7AAC12D12EA2A1AC8A1E4D1B4537BA2DEF13DEA22FB00"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spiplaai-apollo30-retimed-strict-20261017-v2",
+  "source": {
+    "bytes": 34825,
+    "path": "effects/ressources/SPIPLAAI/source.bam",
+    "sha256": "5CE9CF15E26185FE27274E263778B4E7677176C9C48C980C6A3563FCA70F857B"
+  }
+}

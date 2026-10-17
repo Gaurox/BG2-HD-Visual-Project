@@ -1,0 +1,110 @@
+{
+  "assets": [
+    {
+      "ordinal": 12,
+      "asset_key": "effects:bam:OHRFEAR",
+      "resref": "OHRFEAR",
+      "group": "apparitions-conjurations",
+      "source": "effects/ressources/OHRFEAR/source.bam",
+      "source_sha256": "153A2A2F4246545BAA984C2CD3FAE3340827B65D8299CB799E807EFFB593AB4A",
+      "canonical_sha256": "97CC56F0849AC1F1C3584568C2E12A001BA44EDB1C32C856F9345639DDB21D52",
+      "reuse_aliases": [],
+      "source_frames": 45,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44
+          ]
+        }
+      ],
+      "max_frame_x1": [
+        100,
+        100
+      ],
+      "native_fps": [
+        15
+      ],
+      "playback": "one-shot",
+      "static": false,
+      "raw_x4_bytes_at_native_records": 28800000,
+      "consumers": [
+        {
+          "asset_key": "effects:bam:OHRFEAR",
+          "consumer_key": "effect:vvc:OHRFEAR",
+          "relation": "animation",
+          "via": "",
+          "source_sha256": "559BC97B3EE7FE32DF9DDE72EC79CA492B409BCFEABE5553607848E071D8BF18",
+          "owner_route": "vvc",
+          "native_fps": "15",
+          "loop": "0",
+          "cycles": "0;0;0",
+          "orientations": "1",
+          "mirror": "",
+          "blend": "0",
+          "palette": "",
+          "color_enabled": "",
+          "colors": "",
+          "flags_json": "{\"color\": 0, \"continuous\": 0, \"display\": 0, \"duration\": 4294967295, \"sequence\": 12}"
+        }
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "spatial_run": "ohrfear-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "ohrfear-apollo30-facefill-20261017-v1",
+      "pack": "effects/ressources/OHRFEAR/packs/ohrfear-7b-x4-apollo30-facefill-20261017-v1",
+      "inner_feather_x4": 12
+    }
+  ],
+  "parent_run": "ohrfear-apollo30-retimed-strict-20261017-v1",
+  "authorization": "User: remove transparency in middle of face, effect12 OHRFEAR"
+}

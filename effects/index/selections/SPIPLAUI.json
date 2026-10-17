@@ -1,0 +1,136 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPIPLAUI",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 46,
+    "source": {
+      "interpolation_run": "spiplaui-apollo30-retimed-strict-20261017-v2",
+      "interpolation_run_descriptor_sha256": "ED7C6727A375E7AE2DF2BE717FDB156A1451C35805F2E14765FA02DA522D9152",
+      "source_bam_sha256": "6ecf033d36ec68b65eea5f71c84cd556c4ae7268b96fd57a965c8ef06ce9914b",
+      "spatial_manifest_sha256": "B9DD334F5A0EB5D800A452B47F0D28D389F6326766AF2AEF320BBD631C36E9D2",
+      "spatial_run": "spiplaui-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "76E7EB12D0F052E8CF661922EA0D751FBE47B9CD2DF55B1F71A957752FFA7734"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        24
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          25,
+          27,
+          29,
+          31,
+          33,
+          35,
+          37,
+          39,
+          41,
+          43,
+          23
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 24,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          23,
+          45
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 989,
+    "path": "effects/index/qa-decisions/SPIPLAUI/2026-10-17-accepted-e8bfcfe09699.json",
+    "sha256": "E8BFCFE0969942B92A93DD7139AA181ED33A1BA876076E6E04018415D2E8ADC5"
+  },
+  "resref": "SPIPLAUI",
+  "run_descriptor": {
+    "bytes": 1978,
+    "path": "effects/ressources/SPIPLAUI/runs/spiplaui-apollo30-retimed-strict-20261017-v2/run.json",
+    "sha256": "ED7C6727A375E7AE2DF2BE717FDB156A1451C35805F2E14765FA02DA522D9152"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 31024,
+      "path": "effects/ressources/SPIPLAUI/packs/spiplaui-7b-x4-apollo30-20261017-v2/manifest.json",
+      "sha256": "CA9AAC97C989187795FB58530948DC67CA376400463A0E768CB2DFD062C56F00"
+    },
+    "registry": {
+      "bytes": 576,
+      "path": "effects/ressources/SPIPLAUI/packs/spiplaui-7b-x4-apollo30-20261017-v2/EffectAnimations-X4.registry",
+      "sha256": "62349FF5CD24922A75995814B60CB9F0AAD1E0D71725B004519C53DF0854D849"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spiplaui-apollo30-retimed-strict-20261017-v2",
+  "source": {
+    "bytes": 20591,
+    "path": "effects/ressources/SPIPLAUI/source.bam",
+    "sha256": "6ECF033D36EC68B65EEA5F71C84CD556C4AE7268B96FD57A965C8EF06CE9914B"
+  }
+}

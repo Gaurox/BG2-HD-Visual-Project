@@ -1,0 +1,904 @@
+{
+  "accepted": [
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/OHBENVLP/2026-10-17-accepted-473709dab772.json",
+      "release_mutation": false,
+      "resref": "OHBENVLP",
+      "selected_run": "ohbenvlp-apollo30-retimed-strict-20261017-v1",
+      "selection": "effects/index/selections/OHBENVLP.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/SPHEART/2026-10-17-accepted-2f0ff6b3296f.json",
+      "release_mutation": false,
+      "resref": "SPHEART",
+      "selected_run": "spheart-apollo30-sdf-20261017-v1",
+      "selection": "effects/index/selections/SPHEART.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/SPINSECT/2026-10-17-accepted-225506db57e0.json",
+      "release_mutation": false,
+      "resref": "SPINSECT",
+      "selected_run": "spinsect-apollo30-retimed-strict-20261017-v2",
+      "selection": "effects/index/selections/SPINSECT.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/SPIPLAAI/2026-10-17-accepted-cac17e8f5e22.json",
+      "release_mutation": false,
+      "resref": "SPIPLAAI",
+      "selected_run": "spiplaai-apollo30-retimed-strict-20261017-v2",
+      "selection": "effects/index/selections/SPIPLAAI.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/SPIPLAUI/2026-10-17-accepted-e8bfcfe09699.json",
+      "release_mutation": false,
+      "resref": "SPIPLAUI",
+      "selected_run": "spiplaui-apollo30-retimed-strict-20261017-v2",
+      "selection": "effects/index/selections/SPIPLAUI.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/SPMELBD1/2026-10-17-accepted-562d4d3488a7.json",
+      "release_mutation": false,
+      "resref": "SPMELBD1",
+      "selected_run": "spmelbd1-apollo30-retimed-strict-20261017-v2",
+      "selection": "effects/index/selections/SPMELBD1.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/TRGOOYAA/2026-10-17-accepted-631ffcc84c4e.json",
+      "release_mutation": false,
+      "resref": "TRGOOYAA",
+      "selected_run": "trgooyaa-apollo30-retimed-strict-20261017-v1",
+      "selection": "effects/index/selections/TRGOOYAA.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/TRGOOYBB/2026-10-17-accepted-63ea5e1793b7.json",
+      "release_mutation": false,
+      "resref": "TRGOOYBB",
+      "selected_run": "trgooybb-apollo30-retimed-strict-20261017-v1",
+      "selection": "effects/index/selections/TRGOOYBB.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/TRVENTAA/2026-10-17-accepted-bee87424f51d.json",
+      "release_mutation": false,
+      "resref": "TRVENTAA",
+      "selected_run": "trventaa-apollo30-retimed-strict-20261017-v1",
+      "selection": "effects/index/selections/TRVENTAA.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/TRVENTBB/2026-10-17-accepted-2ca2c3ca709f.json",
+      "release_mutation": false,
+      "resref": "TRVENTBB",
+      "selected_run": "trventbb-apollo30-retimed-strict-20261017-v1",
+      "selection": "effects/index/selections/TRVENTBB.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/WRITHING/2026-10-17-accepted-05af5365ef0a.json",
+      "release_mutation": false,
+      "resref": "WRITHING",
+      "selected_run": "writhing-apollo30-retimed-strict-20261017-v1",
+      "selection": "effects/index/selections/WRITHING.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/OHRFEAR/2026-10-17-accepted-03fdd20ff151.json",
+      "release_mutation": false,
+      "resref": "OHRFEAR",
+      "selected_run": "ohrfear-apollo30-facefill-20261017-v1",
+      "selection": "effects/index/selections/OHRFEAR.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/SPANISUM/2026-10-17-accepted-3bc833891c3b.json",
+      "release_mutation": false,
+      "resref": "SPANISUM",
+      "selected_run": "spanisum-apollo30-retimed-strict-20261017-v2",
+      "selection": "effects/index/selections/SPANISUM.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/SPHANDAT/2026-10-17-accepted-3fcd1cecc16e.json",
+      "release_mutation": false,
+      "resref": "SPHANDAT",
+      "selected_run": "sphandat-apollo30-sdf-20261017-v1",
+      "selection": "effects/index/selections/SPHANDAT.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/SPPROIMG/2026-10-17-accepted-31191590a508.json",
+      "release_mutation": false,
+      "resref": "SPPROIMG",
+      "selected_run": "spproimg-apollo30-retimed-strict-20261017-v2",
+      "selection": "effects/index/selections/SPPROIMG.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/SPRAISED/2026-10-17-accepted-14397f1709b9.json",
+      "release_mutation": false,
+      "resref": "SPRAISED",
+      "selected_run": "spraised-apollo30-sdf-20261017-v1",
+      "selection": "effects/index/selections/SPRAISED.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/SPSUMGTE/2026-10-17-accepted-df04d1d8a44e.json",
+      "release_mutation": false,
+      "resref": "SPSUMGTE",
+      "selected_run": "spsumgte-apollo30-retimed-strict-20261017-v2",
+      "selection": "effects/index/selections/SPSUMGTE.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/GLPHWRDT/2026-10-17-accepted-6708de2d7f0a.json",
+      "release_mutation": false,
+      "resref": "GLPHWRDT",
+      "selected_run": "glphwrdt-apollo30-sdf-20261017-v1",
+      "selection": "effects/index/selections/GLPHWRDT.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/SKLT/2026-10-17-accepted-08b2463830fd.json",
+      "release_mutation": false,
+      "resref": "SKLT",
+      "selected_run": "sklt-apollo30-sdf-20261017-v1",
+      "selection": "effects/index/selections/SKLT.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/SPBLBBTM/2026-10-17-accepted-2d3bce17474a.json",
+      "release_mutation": false,
+      "resref": "SPBLBBTM",
+      "selected_run": "spblbbtm-apollo30-retimed-strict-20261017-v2",
+      "selection": "effects/index/selections/SPBLBBTM.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/SPBLBTOP/2026-10-17-accepted-aebf9d56736c.json",
+      "release_mutation": false,
+      "resref": "SPBLBTOP",
+      "selected_run": "spblbtop-apollo30-retimed-strict-20261017-v2",
+      "selection": "effects/index/selections/SPBLBTOP.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/SPGLBBLD/2026-10-17-accepted-be906111336b.json",
+      "release_mutation": false,
+      "resref": "SPGLBBLD",
+      "selected_run": "spglbbld-apollo30-retimed-strict-20261017-v2",
+      "selection": "effects/index/selections/SPGLBBLD.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/SPSTONES/2026-10-17-accepted-d2509ae25515.json",
+      "release_mutation": false,
+      "resref": "SPSTONES",
+      "selected_run": "spstones-apollo30-retimed-strict-20261017-v2",
+      "selection": "effects/index/selections/SPSTONES.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/SPTRAPBB/2026-10-17-accepted-bb66f8582d61.json",
+      "release_mutation": false,
+      "resref": "SPTRAPBB",
+      "selected_run": "sptrapbb-apollo30-sdf-20261017-v1",
+      "selection": "effects/index/selections/SPTRAPBB.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/TRAPGR/2026-10-17-accepted-565c36b292ad.json",
+      "release_mutation": false,
+      "resref": "TRAPGR",
+      "selected_run": "trapgr-apollo30-sdf-20261017-v1",
+      "selection": "effects/index/selections/TRAPGR.json",
+      "write": true
+    },
+    {
+      "command": "accept",
+      "mode": "x4",
+      "qa_evidence": "effects/index/qa-decisions/TRSPEART/2026-10-17-accepted-048586b521a0.json",
+      "release_mutation": false,
+      "resref": "TRSPEART",
+      "selected_run": "trspeart-apollo30-sdf-20261017-v1",
+      "selection": "effects/index/selections/TRSPEART.json",
+      "write": true
+    }
+  ],
+  "accepted_controllers": {
+    "ICINHIT": {
+      "asset": "override/ICINHIT.vvc",
+      "bam": "X26PLAA",
+      "bytes": 492,
+      "purpose": "native normal consumer; reference-only routing to straight alias",
+      "sha256": "9F9F1568C6632059208861E64FCBCDE38CE0FD73983336219C2FEDE17910EB8E"
+    },
+    "ICINTRAV": {
+      "asset": "override/ICINTRAV.vvc",
+      "bam": "X26PLAA",
+      "bytes": 492,
+      "purpose": "native normal consumer; reference-only routing to straight alias",
+      "sha256": "88E1974BCA089F81B99CDB4641DFDB1B3154103211C840FF239B7DD87ABC09D8"
+    },
+    "Z26T12": {
+      "asset": "override/Z26T12.vvc",
+      "bam": "OHRFEAR",
+      "bytes": 492,
+      "purpose": "lot26 primary visual test, matching review profile",
+      "sha256": "784543AF8B248E4BB45B32B6E8AAD2F9D1FFC0932CD703E32B94B243FC5997BF"
+    },
+    "Z26V09": {
+      "asset": "override/Z26V09.vvc",
+      "bam": "TRVENTAA",
+      "bytes": 492,
+      "purpose": "offset-only test 64 units away from actor; original Z26T retained",
+      "sha256": "B40C505562936DD17D9132CB805DD5E837DFC13AEECC911CE1E4375680810243"
+    },
+    "Z26V26": {
+      "asset": "override/Z26V26.vvc",
+      "bam": "TRSPEART",
+      "bytes": 492,
+      "purpose": "offset-only test 64 units away from actor; original Z26T retained",
+      "sha256": "0221552C0FEF00AEE874E4EB2B1854C0DA2B36FA40849374B277C2B732386918"
+    }
+  },
+  "accepted_count": 26,
+  "accepted_runtime_variants": [
+    {
+      "backings": 140,
+      "interpolation_manifest": {
+        "bytes": 196819,
+        "path": "effects/ressources/OHBENVLP/runs/ohbenvlp-apollo30-retimed-strict-20261017-v1/02-interpolation/manifest.json",
+        "sha256": "AB4E49DF70F01C04ED5C3D407100D2811A372621B522F9D3119BAD210A68AA79"
+      },
+      "interpolation_run": "ohbenvlp-apollo30-retimed-strict-20261017-v1",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "OHBENVLP",
+      "rgb_encoding": "straight",
+      "run": {
+        "bytes": 1980,
+        "path": "effects/ressources/OHBENVLP/runs/ohbenvlp-apollo30-retimed-strict-20261017-v1/run.json",
+        "sha256": "822F25B8ADC68345E5749BFD07988156B37A202BCD986BA7385C54237FE23802"
+      },
+      "runtime_resref": "OHBENVLP"
+    },
+    {
+      "backings": 30,
+      "interpolation_manifest": {
+        "bytes": 44323,
+        "path": "effects/ressources/SPHEART/runs/spheart-apollo30-sdf-20261017-v1/02-interpolation/manifest.json",
+        "sha256": "A974AC74FC24D2E203AD1A4B840F2856C1946A7988829598E9D432FC4B242898"
+      },
+      "interpolation_run": "spheart-apollo30-sdf-20261017-v1",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "SPHEART",
+      "rgb_encoding": "straight",
+      "run": {
+        "bytes": 2172,
+        "path": "effects/ressources/SPHEART/runs/spheart-apollo30-sdf-20261017-v1/run.json",
+        "sha256": "F7B757909ED4EE6D862EF32F9D8B66B3FCD19E73253D9E5A92850A082D504E09"
+      },
+      "runtime_resref": "SPHEART"
+    },
+    {
+      "backings": 276,
+      "interpolation_manifest": {
+        "bytes": 390677,
+        "path": "effects/ressources/SPINSECT/runs/spinsect-apollo30-retimed-strict-20261017-v2/02-interpolation/manifest.json",
+        "sha256": "78E9FA823019B3D83342AC5D7E830155D7F54A6FDDC0B93CCC6195807140A134"
+      },
+      "interpolation_run": "spinsect-apollo30-retimed-strict-20261017-v2",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "SPINSECT",
+      "rgb_encoding": "premultiplied",
+      "run": {
+        "bytes": 1980,
+        "path": "effects/ressources/SPINSECT/runs/spinsect-apollo30-retimed-strict-20261017-v2/run.json",
+        "sha256": "86C7A11FD630AF41E1644128FA3F9ED43AB613F7C898CC488305671A177A7A9D"
+      },
+      "runtime_resref": "SPINSECT"
+    },
+    {
+      "backings": 62,
+      "interpolation_manifest": {
+        "bytes": 94291,
+        "path": "effects/ressources/SPIPLAAI/runs/spiplaai-apollo30-retimed-strict-20261017-v2/02-interpolation/manifest.json",
+        "sha256": "90406AF765B06990466B43DF64579672E05470F471726EAB2594452F94D0B6B5"
+      },
+      "interpolation_run": "spiplaai-apollo30-retimed-strict-20261017-v2",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "SPIPLAAI",
+      "rgb_encoding": "premultiplied",
+      "run": {
+        "bytes": 1978,
+        "path": "effects/ressources/SPIPLAAI/runs/spiplaai-apollo30-retimed-strict-20261017-v2/run.json",
+        "sha256": "030B86F897D110787D25F9D663C5CD19A9B1621B7B5457A1A49385F5BADDE9E1"
+      },
+      "runtime_resref": "SPIPLAAI"
+    },
+    {
+      "backings": 62,
+      "interpolation_manifest": {
+        "bytes": 94291,
+        "path": "effects/ressources/SPIPLAAI/runs/spiplaai-apollo30-retimed-strict-20261017-v2/02-interpolation/manifest.json",
+        "sha256": "90406AF765B06990466B43DF64579672E05470F471726EAB2594452F94D0B6B5"
+      },
+      "interpolation_run": "spiplaai-apollo30-retimed-strict-20261017-v2",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "SPIPLAAI",
+      "rgb_encoding": "premultiplied",
+      "run": {
+        "bytes": 1978,
+        "path": "effects/ressources/SPIPLAAI/runs/spiplaai-apollo30-retimed-strict-20261017-v2/run.json",
+        "sha256": "030B86F897D110787D25F9D663C5CD19A9B1621B7B5457A1A49385F5BADDE9E1"
+      },
+      "runtime_resref": "SPIPLARI"
+    },
+    {
+      "backings": 62,
+      "interpolation_manifest": {
+        "bytes": 94291,
+        "path": "effects/ressources/SPIPLAAI/runs/spiplaai-apollo30-retimed-strict-20261017-v2/02-interpolation/manifest.json",
+        "sha256": "90406AF765B06990466B43DF64579672E05470F471726EAB2594452F94D0B6B5"
+      },
+      "interpolation_run": "spiplaai-apollo30-retimed-strict-20261017-v2",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "SPIPLAAI",
+      "rgb_encoding": "straight",
+      "run": {
+        "bytes": 1978,
+        "path": "effects/ressources/SPIPLAAI/runs/spiplaai-apollo30-retimed-strict-20261017-v2/run.json",
+        "sha256": "030B86F897D110787D25F9D663C5CD19A9B1621B7B5457A1A49385F5BADDE9E1"
+      },
+      "runtime_resref": "X26PLAA"
+    },
+    {
+      "backings": 46,
+      "interpolation_manifest": {
+        "bytes": 70719,
+        "path": "effects/ressources/SPIPLAUI/runs/spiplaui-apollo30-retimed-strict-20261017-v2/02-interpolation/manifest.json",
+        "sha256": "2098A0FD642ECFE45C744AFAA55D1CECDC997E4C15C2631FE1DAE7C525B39CA5"
+      },
+      "interpolation_run": "spiplaui-apollo30-retimed-strict-20261017-v2",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "SPIPLAUI",
+      "rgb_encoding": "premultiplied",
+      "run": {
+        "bytes": 1978,
+        "path": "effects/ressources/SPIPLAUI/runs/spiplaui-apollo30-retimed-strict-20261017-v2/run.json",
+        "sha256": "ED7C6727A375E7AE2DF2BE717FDB156A1451C35805F2E14765FA02DA522D9152"
+      },
+      "runtime_resref": "SPIPLAUI"
+    },
+    {
+      "backings": 100,
+      "interpolation_manifest": {
+        "bytes": 141096,
+        "path": "effects/ressources/SPMELBD1/runs/spmelbd1-apollo30-retimed-strict-20261017-v2/02-interpolation/manifest.json",
+        "sha256": "FB1AD8F44B06B7CD7DC43A58F6B561FBF8E261906D51519C4163AD2A0C248654"
+      },
+      "interpolation_run": "spmelbd1-apollo30-retimed-strict-20261017-v2",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "SPMELBD1",
+      "rgb_encoding": "straight",
+      "run": {
+        "bytes": 1980,
+        "path": "effects/ressources/SPMELBD1/runs/spmelbd1-apollo30-retimed-strict-20261017-v2/run.json",
+        "sha256": "495A50E6F6876D7DBA236DE4A03E26170A5FB5FA846291DBB3DA368875135506"
+      },
+      "runtime_resref": "SPMELBD1"
+    },
+    {
+      "backings": 140,
+      "interpolation_manifest": {
+        "bytes": 196819,
+        "path": "effects/ressources/TRGOOYAA/runs/trgooyaa-apollo30-retimed-strict-20261017-v1/02-interpolation/manifest.json",
+        "sha256": "06BE48909D3FFAAE4F017B5BA7047C69CD26C73432B9AF8771EE4716CBFAEEC5"
+      },
+      "interpolation_run": "trgooyaa-apollo30-retimed-strict-20261017-v1",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "TRGOOYAA",
+      "rgb_encoding": "straight",
+      "run": {
+        "bytes": 1980,
+        "path": "effects/ressources/TRGOOYAA/runs/trgooyaa-apollo30-retimed-strict-20261017-v1/run.json",
+        "sha256": "55A1F6DB67338781DD3BAEBB595D0E26B19B3E6E313F9726669EBD03E023FEAD"
+      },
+      "runtime_resref": "TRGOOYAA"
+    },
+    {
+      "backings": 140,
+      "interpolation_manifest": {
+        "bytes": 196811,
+        "path": "effects/ressources/TRGOOYBB/runs/trgooybb-apollo30-retimed-strict-20261017-v1/02-interpolation/manifest.json",
+        "sha256": "0C4BCC6C6CA81E90F2C9FD1D3AB678ED4C1698BD97C21D65981B8EEF753D11F6"
+      },
+      "interpolation_run": "trgooybb-apollo30-retimed-strict-20261017-v1",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "TRGOOYBB",
+      "rgb_encoding": "straight",
+      "run": {
+        "bytes": 1980,
+        "path": "effects/ressources/TRGOOYBB/runs/trgooybb-apollo30-retimed-strict-20261017-v1/run.json",
+        "sha256": "5382A6A5A75DCF5B48D83A5D0ECB1F18B2D98BEB82128F5153367CC52D86DAA0"
+      },
+      "runtime_resref": "TRGOOYBB"
+    },
+    {
+      "backings": 60,
+      "interpolation_manifest": {
+        "bytes": 87490,
+        "path": "effects/ressources/TRVENTAA/runs/trventaa-apollo30-retimed-strict-20261017-v1/02-interpolation/manifest.json",
+        "sha256": "E42E3DAFF5511F4243D444C762E090CA98D15A9FA9EE0DEB3E8063FD746107D3"
+      },
+      "interpolation_run": "trventaa-apollo30-retimed-strict-20261017-v1",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "TRVENTAA",
+      "rgb_encoding": "premultiplied",
+      "run": {
+        "bytes": 1978,
+        "path": "effects/ressources/TRVENTAA/runs/trventaa-apollo30-retimed-strict-20261017-v1/run.json",
+        "sha256": "4973B16E20C96A3405A5D6AE1A5DD8084AA3F86CA0E68FD7C89B38D960071964"
+      },
+      "runtime_resref": "TRVENTAA"
+    },
+    {
+      "backings": 60,
+      "interpolation_manifest": {
+        "bytes": 87694,
+        "path": "effects/ressources/TRVENTBB/runs/trventbb-apollo30-retimed-strict-20261017-v1/02-interpolation/manifest.json",
+        "sha256": "3729D93ABD5588B1A03A0D5C6D7EB68ADB521CE3CB9C98BBD196FDC9155D4A11"
+      },
+      "interpolation_run": "trventbb-apollo30-retimed-strict-20261017-v1",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "TRVENTBB",
+      "rgb_encoding": "straight",
+      "run": {
+        "bytes": 1977,
+        "path": "effects/ressources/TRVENTBB/runs/trventbb-apollo30-retimed-strict-20261017-v1/run.json",
+        "sha256": "59529798C43219868406C0464A3CD67C2015126CF1131CA45C0F8085E29B8101"
+      },
+      "runtime_resref": "TRVENTBB"
+    },
+    {
+      "backings": 401,
+      "interpolation_manifest": {
+        "bytes": 591945,
+        "path": "effects/ressources/WRITHING/runs/writhing-apollo30-retimed-strict-20261017-v1/02-interpolation/manifest.json",
+        "sha256": "224A3B7A9D9D72D5798A1CBED77585FFB48A2DB5BAB88881C7B0244E0A015609"
+      },
+      "interpolation_run": "writhing-apollo30-retimed-strict-20261017-v1",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "WRITHING",
+      "rgb_encoding": "premultiplied",
+      "run": {
+        "bytes": 1979,
+        "path": "effects/ressources/WRITHING/runs/writhing-apollo30-retimed-strict-20261017-v1/run.json",
+        "sha256": "E391EB35A037A3FEF3EA9A4033E0C45298EB377154C4E97811922DA3C056D248"
+      },
+      "runtime_resref": "WRITHING"
+    },
+    {
+      "backings": 90,
+      "interpolation_manifest": {
+        "bytes": 128976,
+        "path": "effects/ressources/OHRFEAR/runs/ohrfear-apollo30-facefill-20261017-v1/02-interpolation/manifest.json",
+        "sha256": "E87B6B4A1F4C4349F47D3CF0B9A8C568EA893310B245849E5CBAC0D0D2E62B50"
+      },
+      "interpolation_run": "ohrfear-apollo30-facefill-20261017-v1",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "OHRFEAR",
+      "rgb_encoding": "straight",
+      "run": {
+        "bytes": 2189,
+        "path": "effects/ressources/OHRFEAR/runs/ohrfear-apollo30-facefill-20261017-v1/run.json",
+        "sha256": "B21F5DE9F556D3D26C29DBF6550F18DEBF298D16C0C765953023963287EF5A2A"
+      },
+      "runtime_resref": "OHRFEAR"
+    },
+    {
+      "backings": 98,
+      "interpolation_manifest": {
+        "bytes": 138090,
+        "path": "effects/ressources/SPANISUM/runs/spanisum-apollo30-retimed-strict-20261017-v2/02-interpolation/manifest.json",
+        "sha256": "2820FDC1C80FD45AC40B06F944A9B7EE8F1AA587ECC3935FF12DF2B8936D982A"
+      },
+      "interpolation_run": "spanisum-apollo30-retimed-strict-20261017-v2",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "SPANISUM",
+      "rgb_encoding": "straight",
+      "run": {
+        "bytes": 1979,
+        "path": "effects/ressources/SPANISUM/runs/spanisum-apollo30-retimed-strict-20261017-v2/run.json",
+        "sha256": "F45F431A50D58B4AD6B0EA8FFA930671F542FABEB3EC0468F729836985946F3F"
+      },
+      "runtime_resref": "SPANISUM"
+    },
+    {
+      "backings": 84,
+      "interpolation_manifest": {
+        "bytes": 118750,
+        "path": "effects/ressources/SPHANDAT/runs/sphandat-apollo30-sdf-20261017-v1/02-interpolation/manifest.json",
+        "sha256": "AC636704D4145E592D2225C5775FA00059D78B036092510E004657250A7E7E5D"
+      },
+      "interpolation_run": "sphandat-apollo30-sdf-20261017-v1",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "SPHANDAT",
+      "rgb_encoding": "straight",
+      "run": {
+        "bytes": 2191,
+        "path": "effects/ressources/SPHANDAT/runs/sphandat-apollo30-sdf-20261017-v1/run.json",
+        "sha256": "EE1EA024F11F56D0931F9F268E8A06E5EC87A43D10644ABD8E63F342F59AF041"
+      },
+      "runtime_resref": "SPHANDAT"
+    },
+    {
+      "backings": 84,
+      "interpolation_manifest": {
+        "bytes": 128980,
+        "path": "effects/ressources/SPPROIMG/runs/spproimg-apollo30-retimed-strict-20261017-v2/02-interpolation/manifest.json",
+        "sha256": "9CAC778BDB20074E4671B7164D1E1AAC1160339B5069B4FD70B04DD7479DADD8"
+      },
+      "interpolation_run": "spproimg-apollo30-retimed-strict-20261017-v2",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "SPPROIMG",
+      "rgb_encoding": "premultiplied",
+      "run": {
+        "bytes": 1979,
+        "path": "effects/ressources/SPPROIMG/runs/spproimg-apollo30-retimed-strict-20261017-v2/run.json",
+        "sha256": "8364486D4005058DA17FE2A20B5E4631EC41478053C9AD449654ACA8CABD5485"
+      },
+      "runtime_resref": "SPPROIMG"
+    },
+    {
+      "backings": 122,
+      "interpolation_manifest": {
+        "bytes": 170751,
+        "path": "effects/ressources/SPRAISED/runs/spraised-apollo30-sdf-20261017-v1/02-interpolation/manifest.json",
+        "sha256": "0F505E78F9D431300267DDE77F421812C29CE40BD4CA61C1A45F6E4B77751E49"
+      },
+      "interpolation_run": "spraised-apollo30-sdf-20261017-v1",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "SPRAISED",
+      "rgb_encoding": "premultiplied",
+      "run": {
+        "bytes": 2192,
+        "path": "effects/ressources/SPRAISED/runs/spraised-apollo30-sdf-20261017-v1/run.json",
+        "sha256": "3215D834E84BC5C0BEB93119BF0CE6D5139EA4005CDF268236F732B7A3A50548"
+      },
+      "runtime_resref": "SPRAISED"
+    },
+    {
+      "backings": 200,
+      "interpolation_manifest": {
+        "bytes": 278301,
+        "path": "effects/ressources/SPSUMGTE/runs/spsumgte-apollo30-retimed-strict-20261017-v2/02-interpolation/manifest.json",
+        "sha256": "507EA0060EC38D50E9939898FBF8AA3749C29059181FCDBDD7C06F50A9C09098"
+      },
+      "interpolation_run": "spsumgte-apollo30-retimed-strict-20261017-v2",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "SPSUMGTE",
+      "rgb_encoding": "straight",
+      "run": {
+        "bytes": 1980,
+        "path": "effects/ressources/SPSUMGTE/runs/spsumgte-apollo30-retimed-strict-20261017-v2/run.json",
+        "sha256": "D3D59B5A7425CB1B1DE3D96D1FF427ECA75447A1A696746CD05A301E61768A77"
+      },
+      "runtime_resref": "SPSUMGTE"
+    },
+    {
+      "backings": 34,
+      "interpolation_manifest": {
+        "bytes": 53613,
+        "path": "effects/ressources/GLPHWRDT/runs/glphwrdt-apollo30-sdf-20261017-v1/02-interpolation/manifest.json",
+        "sha256": "0B4C86C78879F2600E6411E5AD1F054A251439B8C6339C21326470C39A416B2C"
+      },
+      "interpolation_run": "glphwrdt-apollo30-sdf-20261017-v1",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "GLPHWRDT",
+      "rgb_encoding": "premultiplied",
+      "run": {
+        "bytes": 2188,
+        "path": "effects/ressources/GLPHWRDT/runs/glphwrdt-apollo30-sdf-20261017-v1/run.json",
+        "sha256": "BE14F071BB87E9706C72FE2DCA9F098A6661BC9074C7B600DB79D22905663F81"
+      },
+      "runtime_resref": "GLPHWRDT"
+    },
+    {
+      "backings": 34,
+      "interpolation_manifest": {
+        "bytes": 54073,
+        "path": "effects/ressources/SKLT/runs/sklt-apollo30-sdf-20261017-v1/02-interpolation/manifest.json",
+        "sha256": "4D8B2AC7DC2BBC3251B3449DE9E18443F4A047B057F9CE3F80234CB8E8BBD50A"
+      },
+      "interpolation_run": "sklt-apollo30-sdf-20261017-v1",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "SKLT",
+      "rgb_encoding": "premultiplied",
+      "run": {
+        "bytes": 2120,
+        "path": "effects/ressources/SKLT/runs/sklt-apollo30-sdf-20261017-v1/run.json",
+        "sha256": "CB34D59FC1B1A6B9559F19794CB3CA81E33AB5B772057A16C4D8C8801A57ABEE"
+      },
+      "runtime_resref": "SKLT"
+    },
+    {
+      "backings": 70,
+      "interpolation_manifest": {
+        "bytes": 103719,
+        "path": "effects/ressources/SPBLBBTM/runs/spblbbtm-apollo30-retimed-strict-20261017-v2/02-interpolation/manifest.json",
+        "sha256": "AFAE631444D0F5BE05779715220F9B6965AB85CDAEBB037B7C1DF494E772D07D"
+      },
+      "interpolation_run": "spblbbtm-apollo30-retimed-strict-20261017-v2",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "SPBLBBTM",
+      "rgb_encoding": "straight",
+      "run": {
+        "bytes": 1979,
+        "path": "effects/ressources/SPBLBBTM/runs/spblbbtm-apollo30-retimed-strict-20261017-v2/run.json",
+        "sha256": "33E42800AC4BDC74D4CCA440A0B98E33F41F7FE4CA4987B8A3CDC4F1D925902E"
+      },
+      "runtime_resref": "SPBLBBTM"
+    },
+    {
+      "backings": 70,
+      "interpolation_manifest": {
+        "bytes": 103779,
+        "path": "effects/ressources/SPBLBTOP/runs/spblbtop-apollo30-retimed-strict-20261017-v2/02-interpolation/manifest.json",
+        "sha256": "B593803D837CCAE2B0CC90F8F8BD19AA1C544A1E371864786D459291448D7024"
+      },
+      "interpolation_run": "spblbtop-apollo30-retimed-strict-20261017-v2",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "SPBLBTOP",
+      "rgb_encoding": "straight",
+      "run": {
+        "bytes": 1979,
+        "path": "effects/ressources/SPBLBTOP/runs/spblbtop-apollo30-retimed-strict-20261017-v2/run.json",
+        "sha256": "06595F96A56D652966E132F81C07EC51348631B7CDCC64F0A5425CB785685563"
+      },
+      "runtime_resref": "SPBLBTOP"
+    },
+    {
+      "backings": 70,
+      "interpolation_manifest": {
+        "bytes": 103701,
+        "path": "effects/ressources/SPGLBBLD/runs/spglbbld-apollo30-retimed-strict-20261017-v2/02-interpolation/manifest.json",
+        "sha256": "384BF722DD08CDC9971239F2A751A799913D025CAA55EC0C7C06E88CE87CCFC8"
+      },
+      "interpolation_run": "spglbbld-apollo30-retimed-strict-20261017-v2",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "SPGLBBLD",
+      "rgb_encoding": "straight",
+      "run": {
+        "bytes": 1979,
+        "path": "effects/ressources/SPGLBBLD/runs/spglbbld-apollo30-retimed-strict-20261017-v2/run.json",
+        "sha256": "6204E9B0DF5F1B23252264931E79AD3A81C691A1082B802059352A57A64DA7F2"
+      },
+      "runtime_resref": "SPGLBBLD"
+    },
+    {
+      "backings": 70,
+      "interpolation_manifest": {
+        "bytes": 100187,
+        "path": "effects/ressources/SPSTONES/runs/spstones-apollo30-retimed-strict-20261017-v2/02-interpolation/manifest.json",
+        "sha256": "5B31BF7E01822B71A2DE79FF48041F403C5B1816865D439135B9041EF2D769CB"
+      },
+      "interpolation_run": "spstones-apollo30-retimed-strict-20261017-v2",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "SPSTONES",
+      "rgb_encoding": "straight",
+      "run": {
+        "bytes": 1981,
+        "path": "effects/ressources/SPSTONES/runs/spstones-apollo30-retimed-strict-20261017-v2/run.json",
+        "sha256": "DA49E7F665E0E277486A72B46493F078235D1EAEA013E66B37B6F58D8477EC54"
+      },
+      "runtime_resref": "SPSTONES"
+    },
+    {
+      "backings": 60,
+      "interpolation_manifest": {
+        "bytes": 85693,
+        "path": "effects/ressources/SPTRAPBB/runs/sptrapbb-apollo30-sdf-20261017-v1/02-interpolation/manifest.json",
+        "sha256": "75BA24FA89BBF38CC1922EA32486B159802B896A7EAF6F444FD1920ADD06E877"
+      },
+      "interpolation_run": "sptrapbb-apollo30-sdf-20261017-v1",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "SPTRAPBB",
+      "rgb_encoding": "straight",
+      "run": {
+        "bytes": 2189,
+        "path": "effects/ressources/SPTRAPBB/runs/sptrapbb-apollo30-sdf-20261017-v1/run.json",
+        "sha256": "0AF42E29EC538DEDF5DD3ED4FC6C0C1E21BD1A6626E58B5F47F0FF85170A93A5"
+      },
+      "runtime_resref": "SPTRAPBB"
+    },
+    {
+      "backings": 1,
+      "interpolation_manifest": {
+        "bytes": 10504,
+        "path": "effects/ressources/TRAPGR/runs/trapgr-apollo30-sdf-20261017-v1/02-interpolation/manifest.json",
+        "sha256": "CD6D2EEEC5843131730B7AF74F410AE754A8B14512FDD4FEEC796BE712EC453A"
+      },
+      "interpolation_run": "trapgr-apollo30-sdf-20261017-v1",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "TRAPGR",
+      "rgb_encoding": "premultiplied",
+      "run": {
+        "bytes": 2153,
+        "path": "effects/ressources/TRAPGR/runs/trapgr-apollo30-sdf-20261017-v1/run.json",
+        "sha256": "A13EDFE331350802B2E0AE433686801F2AD00523D2AC9A334B4E00EB4CE6C5A6"
+      },
+      "runtime_resref": "TRAPGR"
+    },
+    {
+      "backings": 32,
+      "interpolation_manifest": {
+        "bytes": 47562,
+        "path": "effects/ressources/TRSPEART/runs/trspeart-apollo30-sdf-20261017-v1/02-interpolation/manifest.json",
+        "sha256": "3D11981968E8B2E05284966F0A069EBD78A9F0EE0261A895B8A01864E1F7C317"
+      },
+      "interpolation_run": "trspeart-apollo30-sdf-20261017-v1",
+      "normal_or_alias_contract_accepted": true,
+      "production_bam": "TRSPEART",
+      "rgb_encoding": "premultiplied",
+      "run": {
+        "bytes": 2190,
+        "path": "effects/ressources/TRSPEART/runs/trspeart-apollo30-sdf-20261017-v1/run.json",
+        "sha256": "D5DB0CEC2D715EB5A3C032502907EB711CF0D955E039E341902F4873B205C853"
+      },
+      "runtime_resref": "TRSPEART"
+    }
+  ],
+  "base_installation": {
+    "bytes": 1411,
+    "path": "effects/installations/lot26-sdf-no-inset-20261017-v1/installation.json",
+    "sha256": "253AD3B11C4F103862500E405927F21E8BEC091209288C996D56F0011F55CFBB"
+  },
+  "decision_date": "2026-10-17",
+  "face_fill_accepted": true,
+  "face_installation": {
+    "bytes": 413,
+    "path": "effects/installations/lot26-face-visibility-20261017-v1/installation.json",
+    "sha256": "870A4676611883C4928CAA99C480A5CFBEAE8098B6BCD3E5F5BE918683BF6577"
+  },
+  "face_production": {
+    "bytes": 11720,
+    "path": "effects/batches/ohrfear-face-fill-20261017-v1/production.json",
+    "sha256": "7C60C19AD7A12009667A138AC1F671A1FE1569173FD36FE96A97D916F665751B"
+  },
+  "historical_installation_receipts_immutable": true,
+  "ingame_qa": "explicit-user-validation-of-installed-lot26-with-face-fix-and-offset-tests",
+  "installed_files_changed": false,
+  "installed_manifest_sha256": "44A63CBDDC7609D9C89921C0BEBE148A577847AB28D2B400DB8AEDF91C34E924",
+  "installed_registry_sha256": "90C07579020FDE0414BC9D50BE329EF77B5A0A6BA65DD430C92754ED1BA50B06",
+  "measured_presentation_cadence": "no-new-instrumented-measurement-inferred",
+  "offset_visibility_tests_accepted": [
+    "Z26V09",
+    "Z26V26"
+  ],
+  "preserved_runtime_profile": {
+    "InfinityEngine-Enhancer.dll": {
+      "bytes": 3426816,
+      "sha256": "FEA4B2B153653461D465B67EB9CC5A762CC97785E511EEBBF5C776348268C246"
+    },
+    "InfinityEngine-Enhancer.ini": {
+      "bytes": 6566,
+      "sha256": "AB4A3C300C08EC88A137806C4F9C6590C908E67A93028DC4387F68FFAD6D8B0D"
+    },
+    "iee-assets/creature-sprites/CreatureSprites-XN.catalog": {
+      "bytes": 3719092,
+      "sha256": "2AD7838CB4157B3B3226DBF3635D59ED17CE028E209F33615499A7E1700B289C"
+    },
+    "override/fpDraw.glsl": {
+      "bytes": 23863,
+      "sha256": "C50A43EBD580EE840EDABAF6B96B9DF80589A7D793F27A85D1766BC17977BA20"
+    },
+    "override/fpSELECT.glsl": {
+      "bytes": 25127,
+      "sha256": "F733B8970A3B1C3FB85F335C5BC3F2DC91A113DE22C6CF0B2CFBD2ACE79B84A5"
+    },
+    "override/fpSprite.glsl": {
+      "bytes": 24906,
+      "sha256": "CF5C2795E37EE31D908801312971B8FA1ED5BE3A87902A7A44F186A013610A73"
+    }
+  },
+  "production": {
+    "bytes": 26860,
+    "path": "effects/batches/lot26-sdf-no-inset-20261017-v1/production.json",
+    "sha256": "73B4A4111F7866F48CCA0863326B1B2B506A11B7FC5D1E6D4F65EC770CBD126A"
+  },
+  "release_mutation": false,
+  "runtime_contract": {
+    "duplicate_native_poses_removed_duration_preserved": true,
+    "filter": "NEAREST",
+    "metadata_mib": 32,
+    "model": "seedvr2_7b_int8_convrot.safetensors",
+    "native_contracts_verified_at_installation": 70888,
+    "production_assets": 245,
+    "registry_version": 3,
+    "runtime_resources": 253,
+    "scale": 4,
+    "target_fps": [
+      30,
+      1
+    ]
+  },
+  "schema": "bg2-effects-batch-user-acceptance-v1",
+  "sdf_assets": [
+    "GLPHWRDT",
+    "SKLT",
+    "SPHANDAT",
+    "SPHEART",
+    "SPRAISED",
+    "SPTRAPBB",
+    "TRAPGR",
+    "TRSPEART"
+  ],
+  "sdf_inset_x4": 0,
+  "source_alias": {
+    "SPIPLARI": {
+      "accepted_runtime_reuse": true,
+      "canonical": "SPIPLAAI",
+      "separate_production_or_qa_row_inferred": false
+    }
+  },
+  "status": "accepted",
+  "user_decision": "ok les 09 et 26 sont visibles avec le décalage et le 12 est corrigé. tout est validé, mets à jour le suivi et committe.",
+  "visibility_finding": "User confirms09/26 visible when moved away from actor; original textures not empty. No new renderer or native-consumer correction inferred."
+}

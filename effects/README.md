@@ -1,6 +1,12 @@
 # Effets BG2EE
 
-Reprise courante : [58 acceptés, correctifs validés, lot26 proposé](REPRISE.md) — décision utilisateur du2026-10-17.
+Reprise courante : [lot26 accepté ingame, 58 précédents conservés](REPRISE.md) — décision utilisateur du2026-10-17.
+
+**26/26 acceptés ingame** : [décision et sélections finales](batches/lot26-accepted-20261017-v1/README.md). SeedVR7B x4/Apollo30 : huit masques SDF sans retrait, OHRFEAR visage corrigé,17autres v2 conservés ; alpha normal séparé du mode lumineux. [26CLUA validées](batches/lot26-accepted-20261017-v1/CLUA.md),09/26avec décalage.
+
+Contrat actif accepté : [trou central OHRFEAR12 comblé +tests09/26 décalés](installations/lot26-face-visibility-20261017-v1/README.md). OHRFEAR seul dérivé des18v2 ;252autres ressources/registre/DLL/INI/personnages inchangés.09/26visibles avec Z26V09/Z26V26 selon utilisateur ;12corrigé et lot complet validé. Les reçus historiques restent immuables ; [acceptation ultérieure](batches/lot26-accepted-20261017-v1/acceptance.json).
+
+Base d’installation du lot26 : [SDF sans retrait](installations/lot26-sdf-no-inset-20261017-v1/README.md),245productions/253RESREF runtime ;225anciennes ressources/30229backings préservés. Métadonnées17224952octets, seul budget INI16→32Mio ; DLL et profil personnages inchangés.70888contrats natifs passent candidat+installation. [60profils](installations/lot26-sdf-no-inset-20261017-v1/CLUA-tous-profils.md). Comparatif retenu : [SDF Ankheg8787](batches/lot8-sdf-ankheg-preview-20261017-v1/README.md) ; essai retrait1/2px non retenu.
 
 ## Portée et autorités
 
@@ -10,7 +16,7 @@ Affichage par défaut des effets x4 (demande utilisateur 2026-10-13) : **NEAREST
 niveau 0 seul, sur texture directe et sortie du masquage décor. Défaut du chargeur natif,
 indépendant de la recette 3B/7B et du pack ; aucune activation INI nécessaire.
 Personnages : conserver [`NearestRGB-SilhouetteAlphaAA`](../sprite/DISPLAY_DEFAULT.md).
-Base installée : [`lot58-7b-x4-nearest30-20261017-v1`](installations/lot58-7b-x4-nearest30-20261017-v1/installation.json). État actif : [delta alpha](installations/cloud-palettealpha-20261017-v1/installation.json), 225RESREF ; [acceptation ingame58 +4variantes normales +correctif moteur](batches/lot58-accepted-20261017-v1/acceptance.json).
+Base précédente conservée : [`lot58-7b-x4-nearest30-20261017-v1`](installations/lot58-7b-x4-nearest30-20261017-v1/installation.json), puis [delta alpha](installations/cloud-palettealpha-20261017-v1/installation.json), 225RESREF ; [acceptation ingame58 +4variantes normales +correctif moteur](batches/lot58-accepted-20261017-v1/acceptance.json).
 219 assets :161 précédents conservés +58 nouveaux SeedVR7B x4/NEAREST/Apollo30 ;221 RESREF runtime dont2 alias RGB droit pour consommateurs VVC non-Blended. DLL streaming, INI et profil personnages identiques par SHA256 ; métadonnées15470842octets sous16Mio. 157carriers BAM ;397VVC de test isolés +2références BAM de contrôleurs normaux adaptées. 59264résolutions natives toutes phases/modes vérifiées sur candidat et installation ; copie/sauvegarde/cibles hashées par la transaction. **58/58 acceptés explicitement le2026-10-17**, sélections et décisions QA enregistrées. Cadence native PRO15FPS par défaut de compatibilité ; validation visuelle distincte d’une mesure instrumentée. Release indépendante. [CLUA58](installations/lot58-7b-x4-nearest30-20261017-v1/CLUA.md), [397profils](installations/lot58-7b-x4-nearest30-20261017-v1/CLUA-tous-profils.md), [recette](../pipeline/recipes/effects-lot58-install-20261017-v1/README.md).
 
 Renderer courant après cette installation : [`correctif bandes blanches / état GL post-flush`](../engine/InfinityEngine-Enhancer/installations/effects-gl-flush-state-20261017-v1/README.md), DLL seule remplacée2026-10-17, INI et pack actifs inchangés. Régression WGL : blanc avant/rouge attendu après, LRU/libération/réduction mémoire passent ;720images et59264contrats catalogue vérifiés. Correctif validé ingame explicitement le2026-10-17 ; [décision liée à la DLL installée](batches/lot58-accepted-20261017-v1/acceptance.json).

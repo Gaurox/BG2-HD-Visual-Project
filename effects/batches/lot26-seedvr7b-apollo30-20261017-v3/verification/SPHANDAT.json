@@ -1,0 +1,26 @@
+{
+  "resref": "SPHANDAT",
+  "passed": true,
+  "phases": 84,
+  "source_model": "seedvr2_7b_int8_convrot.safetensors",
+  "scale": 4,
+  "target_fps": [
+    30,
+    1
+  ],
+  "alpha_method": "SplineFit1 / fit_error1 x4 / SS4 / inner0",
+  "straight_rgb_byte_identical": true,
+  "premultiplied_consistency_max_error": 1,
+  "geometry_centres_carrier_timing_byte_identical": true,
+  "alpha_never_increased": true,
+  "transparent_holes_preserved": true,
+  "changed_alpha_pixels": 67870,
+  "partial_alpha_pixels": 103292,
+  "min_alpha_mass_retained": 0.44227887534997434,
+  "mean_alpha_mass_retained": 0.957638515595947,
+  "pack_manifest_sha256": "40DDF9B0A98E9413AB4B48370009937F31A76553C74AA6E276B1B7C0687B29A2",
+  "cycle_mode_variants": 1,
+  "raw_bytes": 5037056,
+  "qa": "pending-user-review",
+  "installed": false
+}

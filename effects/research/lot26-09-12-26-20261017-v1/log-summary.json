@@ -1,0 +1,25 @@
+{
+  "session_first_line": "[2026-10-17 17:49:24.740] [info] Infinity Engine Enhancer initializing...",
+  "session_last_line": "[2026-10-17 17:53:34.219] [info] Map page B1: generation=0, pages=27, prepared=0, hits=0, misses=0, consumed=0, rejected=0, failures=0, reservedBytes=0, peakBytes=0, crcMs=0.000, copyMs=0.000, renderWorkerWaits=0",
+  "warnings_errors": [
+    "[2026-10-17 17:49:24.802] [warning] RenderTexture prologue is detoured (likely EEex); recovered at reference RVA 0x4257C0 by verifying the un-patched pattern tail"
+  ],
+  "effect_diagnostics": [
+    "[2026-10-17 17:50:57.428] [info] EFX_STREAM_DIAGNOSTIC resref=TRVENTAA stage=0x80 sequence=-1 slot=-1 phase=-1 logical=0x0",
+    "[2026-10-17 17:50:57.428] [info] EFX_STREAM_DIAGNOSTIC resref=TRVENTAA stage=0x1 sequence=2 slot=1 phase=-1 logical=13x26",
+    "[2026-10-17 17:50:57.428] [info] EFX_STREAM_DIAGNOSTIC resref=TRVENTAA stage=0x4 sequence=2 slot=1 phase=2 logical=13x26",
+    "[2026-10-17 17:50:57.428] [info] EFX_STREAM_DIAGNOSTIC resref=TRVENTAA stage=0x10 sequence=2 slot=1 phase=2 logical=13x26",
+    "[2026-10-17 17:50:57.428] [info] EFX_STREAM_DIAGNOSTIC resref=TRVENTAA stage=0x8 sequence=2 slot=1 phase=2 logical=13x26",
+    "[2026-10-17 17:51:33.991] [info] EFX_STREAM_DIAGNOSTIC resref=OHRFEAR stage=0x80 sequence=-1 slot=-1 phase=-1 logical=0x0",
+    "[2026-10-17 17:51:33.991] [info] EFX_STREAM_DIAGNOSTIC resref=OHRFEAR stage=0x1 sequence=0 slot=1 phase=-1 logical=100x100",
+    "[2026-10-17 17:51:33.991] [info] EFX_STREAM_DIAGNOSTIC resref=OHRFEAR stage=0x4 sequence=0 slot=1 phase=2 logical=100x100",
+    "[2026-10-17 17:51:33.991] [info] EFX_STREAM_DIAGNOSTIC resref=OHRFEAR stage=0x8 sequence=0 slot=1 phase=2 logical=100x100",
+    "[2026-10-17 17:53:22.631] [info] EFX_STREAM_DIAGNOSTIC resref=TRSPEART stage=0x80 sequence=-1 slot=-1 phase=-1 logical=0x0",
+    "[2026-10-17 17:53:22.631] [info] EFX_STREAM_DIAGNOSTIC resref=TRSPEART stage=0x1 sequence=0 slot=1 phase=-1 logical=5x60",
+    "[2026-10-17 17:53:22.631] [info] EFX_STREAM_DIAGNOSTIC resref=TRSPEART stage=0x4 sequence=0 slot=1 phase=2 logical=5x60",
+    "[2026-10-17 17:53:22.631] [info] EFX_STREAM_DIAGNOSTIC resref=TRSPEART stage=0x8 sequence=0 slot=1 phase=2 logical=5x60"
+  ],
+  "last_cpu": "[2026-10-17 17:53:32.635] [info] Effect streaming CPU: bytes=803617088/805306368, peak=805306304, ready=803617088, inFlight=0, pinned=0, heads=268431552, queue=0, readers=0, owners=0, reads=3032, hits=1790, misses=6, failures=0, cancelled=0, evictions=1561, admissionFailures=0, readNs=18900192300, maxReadNs=30648200, coalesced=63140, queueNs=1525724019200, openNs=17436328800, storageReadNs=885942100, publicationNs=1096700, retired=0, deadlineMisses=6, minReadyLeadNs=-10912600, expiredIntents=0",
+  "last_gpu": "[2026-10-17 17:53:32.635] [info] Effect streaming GPU: bytes=3329024/301989888, peak=163123200, slots=64/64, pending=0, scratch=2340288, scratchPeak=3077952, scratchRefusals=0, flushes=1726, cpuMisses=6, draws=4303, drawMisses=6, firstSubmitMisses=6/31, leadNs=1359384000, maxLeadNs=50464400, traceDropped=0, uploads=1790, uploadedBytes=1178361600, uploadCpuNs=1530428700, maxUploadCpuNs=10167000, horizonReductions=0",
+  "interpretation": "x4 bound for all3; one TRVENTAA initial bind-fallback, no storage failure; narrow trap visibility/actor overlap hypothesis requires offset test"
+}

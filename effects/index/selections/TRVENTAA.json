@@ -1,0 +1,230 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:TRVENTAA",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80
+        ],
+        "lookup_start": 14
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89
+        ],
+        "lookup_start": 21
+      }
+    ],
+    "frame_count": 60,
+    "source": {
+      "interpolation_run": "trventaa-apollo30-retimed-strict-20261017-v1",
+      "interpolation_run_descriptor_sha256": "4973B16E20C96A3405A5D6AE1A5DD8084AA3F86CA0E68FD7C89B38D960071964",
+      "source_bam_sha256": "8f9c2a1fbb598d49aef105e16cbeef10678dabdef0edba270e40e5ac7302568d",
+      "spatial_manifest_sha256": "D81CA94D0570ABE2CB169B6C30F07860727D979C1296E9820CAEE841525F1845",
+      "spatial_run": "trventaa-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "3D0D840C8D8570F2E95BDE716EB2B5F3D0BDCC8AD44F408F17CC32BA4A8EE0E4"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        28,
+        14,
+        18
+      ],
+      "alternate_profiles": [],
+      "cycle_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26
+        ],
+        [
+          28,
+          30,
+          32,
+          34,
+          36,
+          38,
+          40
+        ],
+        [
+          42,
+          44,
+          46,
+          48,
+          50,
+          52,
+          54,
+          56,
+          58
+        ]
+      ],
+      "native_rate_basis": "VVC field",
+      "phase_count": 28,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27
+        ],
+        [
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41
+        ],
+        [
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 989,
+    "path": "effects/index/qa-decisions/TRVENTAA/2026-10-17-accepted-bee87424f51d.json",
+    "sha256": "BEE87424F51DBB198BE143ECC20BE16BE71EA95299C24C932383BB4D649AC4F6"
+  },
+  "resref": "TRVENTAA",
+  "run_descriptor": {
+    "bytes": 1978,
+    "path": "effects/ressources/TRVENTAA/runs/trventaa-apollo30-retimed-strict-20261017-v1/run.json",
+    "sha256": "4973B16E20C96A3405A5D6AE1A5DD8084AA3F86CA0E68FD7C89B38D960071964"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 40642,
+      "path": "effects/ressources/TRVENTAA/packs/trventaa-7b-x4-apollo30-20261017-v1/manifest.json",
+      "sha256": "5034703AD0FEF271D82EE8CB425327A7A4FB40DE74193FDD679498E71CDEEE87"
+    },
+    "registry": {
+      "bytes": 1008,
+      "path": "effects/ressources/TRVENTAA/packs/trventaa-7b-x4-apollo30-20261017-v1/EffectAnimations-X4.registry",
+      "sha256": "9118C549FD7E85EE058225E2E42433B0712ED663C08CEFB8F710896B03AC2972"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "trventaa-apollo30-retimed-strict-20261017-v1",
+  "source": {
+    "bytes": 5950,
+    "path": "effects/ressources/TRVENTAA/source.bam",
+    "sha256": "8F9C2A1FBB598D49AEF105E16CBEEF10678DABDEF0EDBA270E40E5AC7302568D"
+  }
+}

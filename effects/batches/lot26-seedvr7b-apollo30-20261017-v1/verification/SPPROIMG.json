@@ -1,0 +1,84 @@
+{
+  "resref": "SPPROIMG",
+  "passed": true,
+  "native_cycles": 3,
+  "cycle_mode_variants": 3,
+  "phases": 90,
+  "cycles": [
+    {
+      "profile": "cycle000-once",
+      "cycle": 0,
+      "closed": false,
+      "source_slots": 32,
+      "output_phases": 64,
+      "duration": [
+        32,
+        15
+      ],
+      "unique_rgb": 64,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle001-once",
+      "cycle": 1,
+      "closed": false,
+      "source_slots": 3,
+      "output_phases": 6,
+      "duration": [
+        3,
+        15
+      ],
+      "unique_rgb": 1,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": true,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle002-once",
+      "cycle": 2,
+      "closed": false,
+      "source_slots": 10,
+      "output_phases": 20,
+      "duration": [
+        10,
+        15
+      ],
+      "unique_rgb": 20,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    }
+  ],
+  "native_pixels_palette_world_geometry_preserved": true,
+  "source_model": "seedvr2_7b_int8_convrot.safetensors",
+  "scale": 4,
+  "target_fps": [
+    30,
+    1
+  ],
+  "filter": "NEAREST",
+  "pack_manifest_sha256": "0F217FF13C46A25EEC64140A0A8E2DC924A583C3EC04897712C10A1FB2A71236",
+  "runtime_contract_rows": 180,
+  "native_input_keys_unique_before_apollo": true,
+  "native_fps": [
+    15,
+    1
+  ],
+  "native_rate_basis": "VVC field",
+  "straight_alpha_companions_verified": true,
+  "native_palette_normal_alpha_exact": true,
+  "raw_bytes": 29318784,
+  "visual_qa": "pending-user-review",
+  "installed": false
+}

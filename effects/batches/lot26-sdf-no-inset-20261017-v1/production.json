@@ -1,0 +1,641 @@
+{
+  "status": "completed",
+  "count": 26,
+  "sdf_without_inset": [
+    "GLPHWRDT",
+    "SKLT",
+    "SPHANDAT",
+    "SPHEART",
+    "SPRAISED",
+    "SPTRAPBB",
+    "TRAPGR",
+    "TRSPEART"
+  ],
+  "sdf_phases": 404,
+  "other_assets_v2_unchanged": 18,
+  "qa": "pending-ingame-user-test",
+  "installed": false,
+  "assets": [
+    {
+      "resref": "OHBENVLP",
+      "passed": true,
+      "spatial_run": "ohbenvlp-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "ohbenvlp-apollo30-retimed-strict-20261017-v1",
+      "pack": "effects/ressources/OHBENVLP/packs/ohbenvlp-7b-x4-apollo30-20261017-v1",
+      "pack_manifest_sha256": "3F279E7D7F38045EB4DD7450BF47611A82019233AF1EBA9E3CE753CDE967F6CF",
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 140,
+      "backings": 140,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/OHBENVLP/runs/ohbenvlp-apollo30-retimed-strict-20261017-v1/runtime-carrier/OHBENVLP.bam",
+        "sha256": "AA2E62A4DFE4C525E8BF06953DA900C5B5F55CAB0846AD47097C23C118D410E6",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 42538240
+    },
+    {
+      "resref": "SPHEART",
+      "passed": true,
+      "spatial_run": "spheart-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spheart-apollo30-sdf-20261017-v1",
+      "pack": "effects/ressources/SPHEART/packs/spheart-7b-x4-apollo30-sdf-20261017-v1",
+      "pack_manifest_sha256": "D4C850F7F562D4C4FC7E35EC9FEC2BA239A420E8B84E289206AE75DA50FD8D46",
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 30,
+      "backings": 30,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPHEART/runs/spheart-apollo30-sdf-20261017-v1/runtime-carrier/SPHEART.bam",
+        "sha256": "FB9C60A0164F4231498F6EE4A2392F42738858CBC00FA757AABC2A7E6D8CFFC5",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 4304896
+    },
+    {
+      "resref": "SPINSECT",
+      "passed": true,
+      "spatial_run": "spinsect-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spinsect-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPINSECT/packs/spinsect-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "43AD9FE0CC5A6555F15A7428AEC0B6D5C14AE3561E4F3F8A414B7F6139636DEF",
+      "native_cycles": 2,
+      "cycle_mode_variants": 4,
+      "phases": 280,
+      "backings": 276,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPINSECT/runs/spinsect-apollo30-retimed-strict-20261017-v2/runtime-carrier/SPINSECT.bam",
+        "sha256": "65489A8D316E72C3AD7ABB0A1FC84A7B129360CAD514A9F382C8BDF22383D0D5",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 135346816
+    },
+    {
+      "resref": "SPIPLAAI",
+      "passed": true,
+      "spatial_run": "spiplaai-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spiplaai-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPIPLAAI/packs/spiplaai-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "6C06FDE6EA959DE7A13614BCBD7C69BE2BF9693305F37C54ADEEA37871AAE6BB",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 64,
+      "backings": 62,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPIPLAAI/runs/spiplaai-apollo30-retimed-strict-20261017-v2/runtime-carrier/SPIPLAAI.bam",
+        "sha256": "3C37215BC9AE30E947267765BCBD8788627BAA5422AC5F8D367DC74B997B420D",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 34180096
+    },
+    {
+      "resref": "SPIPLAUI",
+      "passed": true,
+      "spatial_run": "spiplaui-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spiplaui-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPIPLAUI/packs/spiplaui-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "CA9AAC97C989187795FB58530948DC67CA376400463A0E768CB2DFD062C56F00",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 48,
+      "backings": 46,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPIPLAUI/runs/spiplaui-apollo30-retimed-strict-20261017-v2/runtime-carrier/SPIPLAUI.bam",
+        "sha256": "74693F7D868D34654C1DFC5824FD0ECE65B6F0CA086145C2A1EDB1E625DD12F4",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 25796224
+    },
+    {
+      "resref": "SPMELBD1",
+      "passed": true,
+      "spatial_run": "spmelbd1-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spmelbd1-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPMELBD1/packs/spmelbd1-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "6A4E0A50A35528CD5FCC91B1D242811114EE2CA52F3DB01F0DEF39DC51F74D5E",
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 100,
+      "backings": 100,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPMELBD1/runs/spmelbd1-apollo30-retimed-strict-20261017-v2/runtime-carrier/SPMELBD1.bam",
+        "sha256": "A51102903F8B1AF9C93991F460FC200306840BB904A95A05FCCF3E79B1A7E112",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 175015552
+    },
+    {
+      "resref": "TRGOOYAA",
+      "passed": true,
+      "spatial_run": "trgooyaa-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "trgooyaa-apollo30-retimed-strict-20261017-v1",
+      "pack": "effects/ressources/TRGOOYAA/packs/trgooyaa-7b-x4-apollo30-20261017-v1",
+      "pack_manifest_sha256": "FAD322832107A981C4DB9BD3BBA4E43CDE9CFB307FFC09ED4E28BA8E6462CA56",
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 140,
+      "backings": 140,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/TRGOOYAA/runs/trgooyaa-apollo30-retimed-strict-20261017-v1/runtime-carrier/TRGOOYAA.bam",
+        "sha256": "C50E218F771C0E765933247C086F61C2A819288DD749B2C377E47B25CBEFF62D",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 42538240
+    },
+    {
+      "resref": "TRGOOYBB",
+      "passed": true,
+      "spatial_run": "trgooybb-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "trgooybb-apollo30-retimed-strict-20261017-v1",
+      "pack": "effects/ressources/TRGOOYBB/packs/trgooybb-7b-x4-apollo30-20261017-v1",
+      "pack_manifest_sha256": "390A02BC9C4A404D9B8220B3029B9F9A4FDD8937177DE8718500FAC426D33306",
+      "native_cycles": 2,
+      "cycle_mode_variants": 2,
+      "phases": 140,
+      "backings": 140,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/TRGOOYBB/runs/trgooybb-apollo30-retimed-strict-20261017-v1/runtime-carrier/TRGOOYBB.bam",
+        "sha256": "888A25C0B502BF08A1206D0B3523D6E5EE90ACB6EE731973DC18572E568E1E9B",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 30133248
+    },
+    {
+      "resref": "TRVENTAA",
+      "passed": true,
+      "spatial_run": "trventaa-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "trventaa-apollo30-retimed-strict-20261017-v1",
+      "pack": "effects/ressources/TRVENTAA/packs/trventaa-7b-x4-apollo30-20261017-v1",
+      "pack_manifest_sha256": "5034703AD0FEF271D82EE8CB425327A7A4FB40DE74193FDD679498E71CDEEE87",
+      "native_cycles": 3,
+      "cycle_mode_variants": 3,
+      "phases": 60,
+      "backings": 60,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/TRVENTAA/runs/trventaa-apollo30-retimed-strict-20261017-v1/runtime-carrier/TRVENTAA.bam",
+        "sha256": "F61FE0B9F17C392C964DB0FE675ED747684D58AB6BBFB271A8C82460DB32323C",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1277952
+    },
+    {
+      "resref": "TRVENTBB",
+      "passed": true,
+      "spatial_run": "trventbb-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "trventbb-apollo30-retimed-strict-20261017-v1",
+      "pack": "effects/ressources/TRVENTBB/packs/trventbb-7b-x4-apollo30-20261017-v1",
+      "pack_manifest_sha256": "D92B81CF740459A4D8CFF8F9FADD1C4E69D08C8C1F43D0C59A505EE98540249F",
+      "native_cycles": 3,
+      "cycle_mode_variants": 3,
+      "phases": 60,
+      "backings": 60,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/TRVENTBB/runs/trventbb-apollo30-retimed-strict-20261017-v1/runtime-carrier/TRVENTBB.bam",
+        "sha256": "56C6BC54607966675EC3C90375938679B46E619E416275F5277193EC23C93F80",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 5398656
+    },
+    {
+      "resref": "WRITHING",
+      "passed": true,
+      "spatial_run": "writhing-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "writhing-apollo30-retimed-strict-20261017-v1",
+      "pack": "effects/ressources/WRITHING/packs/writhing-7b-x4-apollo30-20261017-v1",
+      "pack_manifest_sha256": "DB3B540FA99D918EF86C883A18B43CE39E7B04A9D398317DC8BF369AAC815A60",
+      "native_cycles": 6,
+      "cycle_mode_variants": 12,
+      "phases": 420,
+      "backings": 401,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once",
+        "cycle005-once"
+      ],
+      "transparent_control_cycles": [
+        "cycle000-once",
+        "cycle000-loop"
+      ],
+      "runtime_carrier": {
+        "path": "effects/ressources/WRITHING/runs/writhing-apollo30-retimed-strict-20261017-v1/runtime-carrier/WRITHING.bam",
+        "sha256": "45B39C0D58FF2BFEDD37C913E65956F0E4A1BC75C1340D66E645D89D02ECE78C",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 218616000
+    },
+    {
+      "resref": "OHRFEAR",
+      "passed": true,
+      "spatial_run": "ohrfear-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "ohrfear-apollo30-retimed-strict-20261017-v1",
+      "pack": "effects/ressources/OHRFEAR/packs/ohrfear-7b-x4-apollo30-20261017-v1",
+      "pack_manifest_sha256": "644E68FCE52DF974BD8E2E5FF343173E79DA1584E2A170103669CE5BE74EB5D5",
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 90,
+      "backings": 90,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/OHRFEAR/runs/ohrfear-apollo30-retimed-strict-20261017-v1/runtime-carrier/OHRFEAR.bam",
+        "sha256": "0BAAA214EBA7A7F06427BE90A8CEE9BCFD229E2E5A3A3E05FEA85814EF51A46C",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 57600000
+    },
+    {
+      "resref": "SPANISUM",
+      "passed": true,
+      "spatial_run": "spanisum-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spanisum-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPANISUM/packs/spanisum-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "960D05DE5E1464C4CD9AA118DE0F4E653E4490D52BE654EB273C298A9569844F",
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 98,
+      "backings": 98,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPANISUM/runs/spanisum-apollo30-retimed-strict-20261017-v2/runtime-carrier/SPANISUM.bam",
+        "sha256": "9898F95348B42CFC8D5C330D006BEAA36F334E0D599AFB0DA7BB48689AC0554E",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 45037568
+    },
+    {
+      "resref": "SPHANDAT",
+      "passed": true,
+      "spatial_run": "sphandat-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "sphandat-apollo30-sdf-20261017-v1",
+      "pack": "effects/ressources/SPHANDAT/packs/sphandat-7b-x4-apollo30-sdf-20261017-v1",
+      "pack_manifest_sha256": "451E1B07F634D7CC6663F0860D7B04E60C3F13EF799D24B8A19969D0679739D2",
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 84,
+      "backings": 84,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPHANDAT/runs/sphandat-apollo30-sdf-20261017-v1/runtime-carrier/SPHANDAT.bam",
+        "sha256": "7C86DE32655C58479763387C305E9D1FD4B80CFA81FE8B9754AFA0379A569A79",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 5037056
+    },
+    {
+      "resref": "SPPROIMG",
+      "passed": true,
+      "spatial_run": "spproimg-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spproimg-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPPROIMG/packs/spproimg-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "5041D5BD7F98E12BDB6B9BFC210EE93B604CC992D3A30B25B82628FA4FEAA551",
+      "native_cycles": 3,
+      "cycle_mode_variants": 3,
+      "phases": 90,
+      "backings": 84,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPPROIMG/runs/spproimg-apollo30-retimed-strict-20261017-v2/runtime-carrier/SPPROIMG.bam",
+        "sha256": "5013C1A28C63DEAAAB25136E195A690D62D0990053C77E2A94592C8D2F353649",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 29318784
+    },
+    {
+      "resref": "SPRAISED",
+      "passed": true,
+      "spatial_run": "spraised-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spraised-apollo30-sdf-20261017-v1",
+      "pack": "effects/ressources/SPRAISED/packs/spraised-7b-x4-apollo30-sdf-20261017-v1",
+      "pack_manifest_sha256": "9FE00CB633DA2BDB17534A34BC45AF46D3B6D3BD7182F8ADFBBECC6B01264E80",
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 122,
+      "backings": 122,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPRAISED/runs/spraised-apollo30-sdf-20261017-v1/runtime-carrier/SPRAISED.bam",
+        "sha256": "36A96AE62F05F2061DAFE07F63563EE26C7DFDDA25EB67F21BA862A80A3670EF",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 20788992
+    },
+    {
+      "resref": "SPSUMGTE",
+      "passed": true,
+      "spatial_run": "spsumgte-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spsumgte-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPSUMGTE/packs/spsumgte-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "697F7E5AEB81B65DA94AE50ED2E591C8D2692D8140E9AC5DC23B5FCC87998B88",
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 200,
+      "backings": 200,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPSUMGTE/runs/spsumgte-apollo30-retimed-strict-20261017-v2/runtime-carrier/SPSUMGTE.bam",
+        "sha256": "808A5B91340B74194C5267D8827997AE000363EC61779A5D2CA0CA74ED4ECDCC",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 469467392
+    },
+    {
+      "resref": "GLPHWRDT",
+      "passed": true,
+      "spatial_run": "glphwrdt-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "glphwrdt-apollo30-sdf-20261017-v1",
+      "pack": "effects/ressources/GLPHWRDT/packs/glphwrdt-7b-x4-apollo30-sdf-20261017-v1",
+      "pack_manifest_sha256": "C16351F2448FD06FCB218160CB5530352F2DC684A44B83CCD1441DEE54A6D457",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 36,
+      "backings": 34,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/GLPHWRDT/runs/glphwrdt-apollo30-sdf-20261017-v1/runtime-carrier/GLPHWRDT.bam",
+        "sha256": "41D7D953E30B3977F5D9289CAB7C3C740F2A9D27594D6B554DEA050C5B188773",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1253376
+    },
+    {
+      "resref": "SKLT",
+      "passed": true,
+      "spatial_run": "sklt-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "sklt-apollo30-sdf-20261017-v1",
+      "pack": "effects/ressources/SKLT/packs/sklt-7b-x4-apollo30-sdf-20261017-v1",
+      "pack_manifest_sha256": "2EBF18B43D4581E783BA6EC6143559BF486E0C833AB68100F9CD0A5F8D76D514",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 36,
+      "backings": 34,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SKLT/runs/sklt-apollo30-sdf-20261017-v1/runtime-carrier/SKLT.bam",
+        "sha256": "324EE6E922E43E362B749763D02CC4B0F5ED8B1946715F98C21DA40E60F93767",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1253376
+    },
+    {
+      "resref": "SPBLBBTM",
+      "passed": true,
+      "spatial_run": "spblbbtm-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spblbbtm-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPBLBBTM/packs/spblbbtm-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "5027D06C7306BE8C171F07B96322950B370FA493CA5A8FC264E387680346F265",
+      "native_cycles": 3,
+      "cycle_mode_variants": 3,
+      "phases": 72,
+      "backings": 70,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPBLBBTM/runs/spblbbtm-apollo30-retimed-strict-20261017-v2/runtime-carrier/SPBLBBTM.bam",
+        "sha256": "0E94C0D198C946792D6005572F8B5C379BE940BF20D61CF8736F4BBA54C85AC1",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 30862336
+    },
+    {
+      "resref": "SPBLBTOP",
+      "passed": true,
+      "spatial_run": "spblbtop-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spblbtop-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPBLBTOP/packs/spblbtop-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "AA6D9794B935484044A1155C4399C091076F7359287C87AE24AF2DD487E00EED",
+      "native_cycles": 3,
+      "cycle_mode_variants": 3,
+      "phases": 72,
+      "backings": 70,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPBLBTOP/runs/spblbtop-apollo30-retimed-strict-20261017-v2/runtime-carrier/SPBLBTOP.bam",
+        "sha256": "799E06ADB06F25088A15E9DC135FB541AD423DE79C24E9A2895458A1C893DC90",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 28265216
+    },
+    {
+      "resref": "SPGLBBLD",
+      "passed": true,
+      "spatial_run": "spglbbld-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spglbbld-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPGLBBLD/packs/spglbbld-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "B14878DFF66D749A239F8B3B9B71D574DD79B28915DC44519501363EFF213207",
+      "native_cycles": 3,
+      "cycle_mode_variants": 3,
+      "phases": 72,
+      "backings": 70,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPGLBBLD/runs/spglbbld-apollo30-retimed-strict-20261017-v2/runtime-carrier/SPGLBBLD.bam",
+        "sha256": "EC68B75687CE6A3B13A04CCCC66F8E54584476E046AA77BDDCA59AD16ABA1385",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 38452800
+    },
+    {
+      "resref": "SPSTONES",
+      "passed": true,
+      "spatial_run": "spstones-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spstones-apollo30-retimed-strict-20261017-v2",
+      "pack": "effects/ressources/SPSTONES/packs/spstones-7b-x4-apollo30-20261017-v2",
+      "pack_manifest_sha256": "E72BF46F5DAB1251DA6CF09099E06DCA06D257DC436330556467A6AA1E091715",
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 70,
+      "backings": 70,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPSTONES/runs/spstones-apollo30-retimed-strict-20261017-v2/runtime-carrier/SPSTONES.bam",
+        "sha256": "D191E85B17AAC122B2CF50490D05DF7AB51B2DA831CC987C73852C706A8D16FF",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 42429568
+    },
+    {
+      "resref": "SPTRAPBB",
+      "passed": true,
+      "spatial_run": "sptrapbb-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "sptrapbb-apollo30-sdf-20261017-v1",
+      "pack": "effects/ressources/SPTRAPBB/packs/sptrapbb-7b-x4-apollo30-sdf-20261017-v1",
+      "pack_manifest_sha256": "4191B459DCCA07954C1CB8C09110649DF678A080D7DE699A5F01AE84151B1ABE",
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 60,
+      "backings": 60,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPTRAPBB/runs/sptrapbb-apollo30-sdf-20261017-v1/runtime-carrier/SPTRAPBB.bam",
+        "sha256": "BC98315D208CDD3E86158137C45FE950B9912AFA30DD2AA4BCE1AEDA2CF0EA26",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 3456000
+    },
+    {
+      "resref": "TRAPGR",
+      "passed": true,
+      "spatial_run": "trapgr-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "trapgr-apollo30-sdf-20261017-v1",
+      "pack": "effects/ressources/TRAPGR/packs/trapgr-7b-x4-apollo30-sdf-20261017-v1",
+      "pack_manifest_sha256": "D66A4F33721927FC65FD80963523BB53158AF88BB4CBA218B69277603B53A089",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 4,
+      "backings": 1,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/TRAPGR/runs/trapgr-apollo30-sdf-20261017-v1/runtime-carrier/TRAPGR.bam",
+        "sha256": "7C0C3E89719413143C747CC424E23769D5F453F75B68FAF3A3DCB6A6F308F361",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 82944
+    },
+    {
+      "resref": "TRSPEART",
+      "passed": true,
+      "spatial_run": "trspeart-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "trspeart-apollo30-sdf-20261017-v1",
+      "pack": "effects/ressources/TRSPEART/packs/trspeart-7b-x4-apollo30-sdf-20261017-v1",
+      "pack_manifest_sha256": "C48E9C386F5A3FBAC875529133E47859B4376568D7EA35DA17C1528AB97ADCE7",
+      "native_cycles": 1,
+      "cycle_mode_variants": 1,
+      "phases": 32,
+      "backings": 32,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/TRSPEART/runs/trspeart-apollo30-sdf-20261017-v1/runtime-carrier/TRSPEART.bam",
+        "sha256": "B3190E297916884556A3624B7772C9E8AC7738D3A67F9A5692C5D60577CDAC00",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1834880
+    }
+  ]
+}

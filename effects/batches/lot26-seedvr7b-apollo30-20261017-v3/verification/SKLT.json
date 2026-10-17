@@ -1,0 +1,26 @@
+{
+  "resref": "SKLT",
+  "passed": true,
+  "phases": 36,
+  "source_model": "seedvr2_7b_int8_convrot.safetensors",
+  "scale": 4,
+  "target_fps": [
+    30,
+    1
+  ],
+  "alpha_method": "SplineFit1 / fit_error1 x4 / SS4 / inner0",
+  "straight_rgb_byte_identical": true,
+  "premultiplied_consistency_max_error": 1,
+  "geometry_centres_carrier_timing_byte_identical": true,
+  "alpha_never_increased": true,
+  "transparent_holes_preserved": true,
+  "changed_alpha_pixels": 9156,
+  "partial_alpha_pixels": 11705,
+  "min_alpha_mass_retained": 0.9575187427912342,
+  "mean_alpha_mass_retained": 0.9706307812626799,
+  "pack_manifest_sha256": "4A82F02B63E6FD489E4B2848B607BBFBAB1084788BDEE4364168C8B7D81FB5AA",
+  "cycle_mode_variants": 2,
+  "raw_bytes": 1253376,
+  "qa": "pending-user-review",
+  "installed": false
+}
