@@ -1,0 +1,16 @@
+{
+  "utc": "2026-10-17T13:13:41.564735+00:00",
+  "command": [
+    "build/iee-effects-gl-flush-state-20261017-v1/Release/iee_effect_texture_cache_tests.exe"
+  ],
+  "returncode": 1,
+  "expected_returncode": 1,
+  "expected_result": true,
+  "log": "engine/InfinityEngine-Enhancer/installations/effects-gl-flush-state-20261017-v1/regression-before-fix.log",
+  "source_sha256": {
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/effect_animation_x4_registry.cpp": "DC0737C7BF90B807213FD4B411ABC2E41B3030C2645941BB989483EE39961C36",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/scoped_effect_gl_state.h": "BC34EB0CD71035F437017C09219C87B615F425ED257270FDAB886F2964CBCFA9",
+    "engine/InfinityEngine-Enhancer/source-patchee/tests/effect_texture_cache_tests.cpp": "FA26BAF1EFF0DE81D1DB9EFDF9F3FC4C1351EE3C13264637844796D53684A05B"
+  },
+  "game_executed": false
+}

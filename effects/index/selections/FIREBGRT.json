@@ -1,0 +1,197 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:FIREBGRT",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "lookup_start": 12
+      }
+    ],
+    "frame_count": 91,
+    "source": {
+      "interpolation_run": "firebgrt-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "93F875BF1756514E516AFFF094339E77CE536EA58915A7D47ACD58B2D395AE3C",
+      "source_bam_sha256": "7b00715b834970bc0bdbe3922cb4a841ef81e6475948748ba427aee158fafbb9",
+      "spatial_manifest_sha256": "F5D9244DC4FA22E5C89C39650A106C2C2B60C28FDBFB8E3058D11DBED94F9BB1",
+      "spatial_run": "firebgrt-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "6D4EAA9D29C1739071A86F34916AE65B4DE4933B6E2E11766A3740E46E735D85"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        24,
+        24
+      ],
+      "alternate_profiles": [
+        "cycle000-once",
+        "cycle001-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          25,
+          27,
+          29,
+          31,
+          33,
+          35,
+          37,
+          39,
+          41,
+          43,
+          23
+        ],
+        [
+          0,
+          70,
+          72,
+          74,
+          76,
+          78,
+          80,
+          82,
+          84,
+          86,
+          88,
+          68
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 24,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          23,
+          45
+        ],
+        [
+          0,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          68,
+          90
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 969,
+    "path": "effects/index/qa-decisions/FIREBGRT/2026-10-17-accepted-f2846a6c7e7e.json",
+    "sha256": "F2846A6C7E7E664CBB4C95FDE8887EE3C4461BA8A7FBE0709D79C9FF4D623B98"
+  },
+  "resref": "FIREBGRT",
+  "run_descriptor": {
+    "bytes": 1966,
+    "path": "effects/ressources/FIREBGRT/runs/firebgrt-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "93F875BF1756514E516AFFF094339E77CE536EA58915A7D47ACD58B2D395AE3C"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 59539,
+      "path": "effects/ressources/FIREBGRT/packs/firebgrt-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "F66099F420B2EE636F5F0A46FC70A58DC786EDF83998A81CD5109D70DD603B74"
+    },
+    "registry": {
+      "bytes": 1084,
+      "path": "effects/ressources/FIREBGRT/packs/firebgrt-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "4904FA4E4CCE9561F6A14E524C9FA9C06896D26ECC16F6405B69FE749A9DF885"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "firebgrt-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 24831,
+    "path": "effects/ressources/FIREBGRT/source.bam",
+    "sha256": "7B00715B834970BC0BDBE3922CB4A841EF81E6475948748BA427AEE158FAFBB9"
+  }
+}

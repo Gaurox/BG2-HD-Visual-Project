@@ -1,0 +1,138 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPFLAST1",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 34,
+    "source": {
+      "interpolation_run": "spflast1-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "D554551462EE9057F15C43FB724A296EA432B28E6623320A10B78D9D72FE7F0E",
+      "source_bam_sha256": "f88a570aa6bc64c6b7d5005c749b6c8e55c0574368166e0cb87abc4f84c025c0",
+      "spatial_manifest_sha256": "E1B9E8B7AEC5520E19C24A028694DD8254965E732F770B1B56D0CBED435323E4",
+      "spatial_run": "spflast1-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "81847D1E4C5443D5C70E6EA64526EABAE6C3A47682C91493E4FF37F2C232CE6C"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        34
+      ],
+      "alternate_profiles": [],
+      "cycle_profiles": [
+        "cycle000-once"
+      ],
+      "native_fps": [
+        8,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          4,
+          8,
+          12,
+          15,
+          19,
+          23,
+          27,
+          30
+        ]
+      ],
+      "native_rate_basis": "VVC field",
+      "phase_count": 34,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 969,
+    "path": "effects/index/qa-decisions/SPFLAST1/2026-10-17-accepted-3b142fbf9090.json",
+    "sha256": "3B142FBF90908BEC6055512EE99D7185493709F3A32EAA169B79B5D2D4E984AA"
+  },
+  "resref": "SPFLAST1",
+  "run_descriptor": {
+    "bytes": 1965,
+    "path": "effects/ressources/SPFLAST1/runs/spflast1-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "D554551462EE9057F15C43FB724A296EA432B28E6623320A10B78D9D72FE7F0E"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 23568,
+      "path": "effects/ressources/SPFLAST1/packs/spflast1-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "2078E44E4132CD9722BE8A7F26D0D8AEB6C09F689E88439706CBC500DB94C15D"
+    },
+    "registry": {
+      "bytes": 508,
+      "path": "effects/ressources/SPFLAST1/packs/spflast1-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "FBE614F78F77290A93DCC2252A61BFE3ECC5BD5EFA3542A049B73283E99EFD69"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spflast1-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 29681,
+    "path": "effects/ressources/SPFLAST1/source.bam",
+    "sha256": "F88A570AA6BC64C6B7D5005C749B6C8E55C0574368166E0CB87ABC4F84C025C0"
+  }
+}

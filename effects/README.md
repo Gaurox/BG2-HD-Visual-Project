@@ -1,5 +1,7 @@
 # Effets BG2EE
 
+Reprise courante : [58 acceptés, correctifs validés, lot26 proposé](REPRISE.md) — décision utilisateur du2026-10-17.
+
 ## Portée et autorités
 
 Un asset de production est un BAM visuel : `effects:bam:<RESREF>`. Les VVC/VEF restent des contrôleurs et consommateurs ; un BAM partagé n'est traité qu'une fois.
@@ -8,7 +10,14 @@ Affichage par défaut des effets x4 (demande utilisateur 2026-10-13) : **NEAREST
 niveau 0 seul, sur texture directe et sortie du masquage décor. Défaut du chargeur natif,
 indépendant de la recette 3B/7B et du pack ; aucune activation INI nécessaire.
 Personnages : conserver [`NearestRGB-SilhouetteAlphaAA`](../sprite/DISPLAY_DEFAULT.md).
-Pack actif : [`lot64-7b-x4-nearest30-20261015-v1`](installations/lot64-7b-x4-nearest30-20261015-v1/installation.json).
+Base installée : [`lot58-7b-x4-nearest30-20261017-v1`](installations/lot58-7b-x4-nearest30-20261017-v1/installation.json). État actif : [delta alpha](installations/cloud-palettealpha-20261017-v1/installation.json), 225RESREF ; [acceptation ingame58 +4variantes normales +correctif moteur](batches/lot58-accepted-20261017-v1/acceptance.json).
+219 assets :161 précédents conservés +58 nouveaux SeedVR7B x4/NEAREST/Apollo30 ;221 RESREF runtime dont2 alias RGB droit pour consommateurs VVC non-Blended. DLL streaming, INI et profil personnages identiques par SHA256 ; métadonnées15470842octets sous16Mio. 157carriers BAM ;397VVC de test isolés +2références BAM de contrôleurs normaux adaptées. 59264résolutions natives toutes phases/modes vérifiées sur candidat et installation ; copie/sauvegarde/cibles hashées par la transaction. **58/58 acceptés explicitement le2026-10-17**, sélections et décisions QA enregistrées. Cadence native PRO15FPS par défaut de compatibilité ; validation visuelle distincte d’une mesure instrumentée. Release indépendante. [CLUA58](installations/lot58-7b-x4-nearest30-20261017-v1/CLUA.md), [397profils](installations/lot58-7b-x4-nearest30-20261017-v1/CLUA-tous-profils.md), [recette](../pipeline/recipes/effects-lot58-install-20261017-v1/README.md).
+
+Renderer courant après cette installation : [`correctif bandes blanches / état GL post-flush`](../engine/InfinityEngine-Enhancer/installations/effects-gl-flush-state-20261017-v1/README.md), DLL seule remplacée2026-10-17, INI et pack actifs inchangés. Régression WGL : blanc avant/rouge attendu après, LRU/libération/réduction mémoire passent ;720images et59264contrats catalogue vérifiés. Correctif validé ingame explicitement le2026-10-17 ; [décision liée à la DLL installée](batches/lot58-accepted-20261017-v1/acceptance.json).
+
+Correctif actif suivant : [`alpha natif des4nuages en VVC normal`](installations/cloud-palettealpha-20261017-v1/README.md), installé2026-10-17.3064phases RGB conservées, alpha palette restauré ;4alias normaux ajoutés,46VVC Z58 reroutés, mêmes commandes. Les221ressources d'origine des sorts restent identiques ; runtime225RESREF,65392contrats natifs vérifiés, métadonnées16351068octets sous16Mio ; DLL/INI inchangés. Quatre variantes normales validées ingame explicitement le2026-10-17 ; runs/manifestes/routage liés à la [décision finale](batches/lot58-accepted-20261017-v1/acceptance.json).
+
+Installation précédente : [`lot64-7b-x4-nearest30-20261015-v1`](installations/lot64-7b-x4-nearest30-20261015-v1/installation.json).
 161 ressources : 97 précédentes (RGBA/cycles identiques) +64 nouveaux effets7B x4/NEAREST/Apollo30 ; 226cycles natifs,228profils de ce lot. Taille monde/durée natives conservées ; 97carriers BAM (33anciens+64nouveaux), aucun VVC modifié.
 Registrev3 : variantes ponctuelles SPFLESHS/SPMETSWA routées depuis l'owner natif ; CPU8Gio pour8208516864octets, GPU64. 33548contrats natifs toutes phases/modes sur candidat puis installation ; personnages NearestRGB-SilhouetteAlphaAA identiques par SHA256. Correction d'arrondi des seuils au rafraîchissement, essais30/60/120Hz et pause/reprise ; QA ingame64 acceptée explicitement le2026-10-15 ([décision](batches/lot64-accepted-20261015-v1/acceptance.json)) ; mesure fine de cadence réelle distincte, non déduite de la validation visuelle. [Recette](../pipeline/recipes/effects-lot64-install-20261015-v1/README.md), [CLUA et variantes](installations/lot64-7b-x4-nearest30-20261015-v1/CLUA.md).
 

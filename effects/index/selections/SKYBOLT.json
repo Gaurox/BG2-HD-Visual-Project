@@ -1,0 +1,112 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SKYBOLT",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 22,
+    "source": {
+      "interpolation_run": "skybolt-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "6ABFE865DFB51F652F5FABA6499FA25C8C01969DF66705C1A55BCF0120859D80",
+      "source_bam_sha256": "cc3f75d03b11a68250811ee5b34d04a4edde69896ba09ffdedd228084a4910d4",
+      "spatial_manifest_sha256": "44A1BE045ABB4A60A98CBDBF7BD647502250934214EE247A4E806CECCD5D13CF",
+      "spatial_run": "skybolt-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "4E9C56FF8F81A8994B6A95384913CD0A007F0FA42228AD8C32A2779C5F50ED32"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          13,
+          15,
+          17,
+          19,
+          11
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 12,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          11,
+          21
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 962,
+    "path": "effects/index/qa-decisions/SKYBOLT/2026-10-17-accepted-7236fa54e5f7.json",
+    "sha256": "7236FA54E5F7A08CA69562807792D6DEDE19493291E43AF75D5E9D8056C70E01"
+  },
+  "resref": "SKYBOLT",
+  "run_descriptor": {
+    "bytes": 1950,
+    "path": "effects/ressources/SKYBOLT/runs/skybolt-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "6ABFE865DFB51F652F5FABA6499FA25C8C01969DF66705C1A55BCF0120859D80"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 15864,
+      "path": "effects/ressources/SKYBOLT/packs/skybolt-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "9D362A858D5626CD19A9F6642089620F2580E3F1E3657925C73E8996F530CE8B"
+    },
+    "registry": {
+      "bytes": 312,
+      "path": "effects/ressources/SKYBOLT/packs/skybolt-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "21EF9185E77A9DFA35C4719111E55606F30A60E4F03D64906ECE6F4D4FB8C2D3"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "skybolt-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 87634,
+    "path": "effects/ressources/SKYBOLT/source.bam",
+    "sha256": "CC3F75D03B11A68250811EE5B34D04A4EDDE69896BA09FFDEDD228084A4910D4"
+  }
+}

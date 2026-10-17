@@ -1,0 +1,198 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:CGILLUSI",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "lookup_start": 3
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        "lookup_start": 9
+      }
+    ],
+    "frame_count": 78,
+    "source": {
+      "interpolation_run": "cgillusi-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "F5BEE5AD776C0B88C57C219AECEFCA434ED740B02F06334BD8FA334F3A7690A5",
+      "source_bam_sha256": "65ea62c84d9e006d0336a4f1060860244c02040e6eb4000b41a66ee9c32ce124",
+      "spatial_manifest_sha256": "FE5057C88D1B9D72D228B9380C2421EEC74D720537DBA680BEC8CFB9B04C43B0",
+      "spatial_run": "cgillusi-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "C3BC370CA042ABA1D566EE47F1C53607E7E6D44F3C2A3138CDB43C64BA58C6F5"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        6,
+        12,
+        24
+      ],
+      "alternate_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop",
+        "cycle002-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          7,
+          5
+        ],
+        [
+          10,
+          23,
+          25,
+          27,
+          29,
+          21
+        ],
+        [
+          32,
+          57,
+          59,
+          61,
+          63,
+          65,
+          67,
+          69,
+          71,
+          73,
+          75,
+          55
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 24,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          6,
+          7,
+          8,
+          5,
+          9
+        ],
+        [
+          10,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          21,
+          31
+        ],
+        [
+          32,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          55,
+          77
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 969,
+    "path": "effects/index/qa-decisions/CGILLUSI/2026-10-17-accepted-68f5c6a22c03.json",
+    "sha256": "68F5C6A22C0322A7A983446A9445350CD8DFD854789685AA984217E1F6877632"
+  },
+  "resref": "CGILLUSI",
+  "run_descriptor": {
+    "bytes": 1965,
+    "path": "effects/ressources/CGILLUSI/runs/cgillusi-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "F5BEE5AD776C0B88C57C219AECEFCA434ED740B02F06334BD8FA334F3A7690A5"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 51464,
+      "path": "effects/ressources/CGILLUSI/packs/cgillusi-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "341042D1014F6C8DDFE9AFE90AFDFAA9777DF46E5282BC2A5EAE06BB3299ECBF"
+    },
+    "registry": {
+      "bytes": 1068,
+      "path": "effects/ressources/CGILLUSI/packs/cgillusi-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "224D559CD3BDBF352AAC9C836D8A6E4F015C9CBA950DCEF8C60F3A79844D59FA"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "cgillusi-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 18867,
+    "path": "effects/ressources/CGILLUSI/source.bam",
+    "sha256": "65EA62C84D9E006D0336A4F1060860244C02040E6EB4000B41A66EE9C32CE124"
+  }
+}

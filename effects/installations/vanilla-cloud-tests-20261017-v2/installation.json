@@ -1,0 +1,133 @@
+{
+  "schema": "bg2-vanilla-cloud-z58-tests-v2",
+  "status": "installed",
+  "game_root": "G:\\AI\\BG2_Vanilla_23534562",
+  "created_at_utc": "2026-10-17T13:40:11.175223+00:00",
+  "preserved": {
+    "Baldur.exe": {
+      "bytes": 7202696,
+      "sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+    },
+    "chitin.key": {
+      "bytes": 881765,
+      "sha256": "1818FFEBB2424992FB39FB13509E7F629AC819B08A553C2DD4AC25F2E40A979F"
+    },
+    "engine.lua": {
+      "bytes": 112,
+      "sha256": "2370C2EE0235A48AB4F9E00BD7CD6D2AA968E7C304C77C4DC316632BDAF4E6D8"
+    },
+    "override/BDWOFOGA.vvc": {
+      "bytes": 492,
+      "sha256": "4FAA46653D72FA8A33A93C29C3C687F8B41B8FF93085DBD8CC967A0A6957806E"
+    },
+    "override/SPCLOUDK.vvc": {
+      "bytes": 492,
+      "sha256": "3AC7A885C43412AA4A1466E9B3C4C04831E66ABF24E445C99A72C47A52D8423D"
+    },
+    "override/SPCLOUDS.vvc": {
+      "bytes": 492,
+      "sha256": "0CB3E0F7E1CED8D7779D7F743D609EEE4B9194CC2BBDA7E4A9C756803448283C"
+    },
+    "override/SPDFOGA.vvc": {
+      "bytes": 492,
+      "sha256": "E260DAA1A6AC2ADDE08D72C51AD88CB60485493776AC44260D341115260E1079"
+    }
+  },
+  "files": [
+    {
+      "bam": "BDWOFOGA",
+      "path": "override/Z580269.vvc",
+      "donor": "Z580269",
+      "cycle": 4,
+      "native_cycle_slots": 82,
+      "loop": true,
+      "display_flags": 0,
+      "sha256": "4FAA46653D72FA8A33A93C29C3C687F8B41B8FF93085DBD8CC967A0A6957806E",
+      "bytes": 492,
+      "before_present": false,
+      "native_bif": "data/PATCH26.BIF",
+      "native_bam_sha256": "4DE37E50A1D24B7FC6084F2023F66D1911CE2CCD79636677D26D42F76CCADBDD",
+      "clua": "C:Eval('CreateVisualEffectObject(\"Z580269\",Player1)',0)"
+    },
+    {
+      "bam": "SPCLOUDK",
+      "path": "override/Z580278.vvc",
+      "donor": "Z580278",
+      "cycle": 2,
+      "native_cycle_slots": 33,
+      "loop": false,
+      "display_flags": 0,
+      "sha256": "3AC7A885C43412AA4A1466E9B3C4C04831E66ABF24E445C99A72C47A52D8423D",
+      "bytes": 492,
+      "before_present": false,
+      "native_bif": "data/PATCH26.BIF",
+      "native_bam_sha256": "78F391FE0C0CBDFA6467AA0C3C908185336AF05D6C9FECDBD8CD96971EF43CB1",
+      "clua": "C:Eval('CreateVisualEffectObject(\"Z580278\",Player1)',0)"
+    },
+    {
+      "bam": "SPCLOUDS",
+      "path": "override/Z580290.vvc",
+      "donor": "Z580290",
+      "cycle": 2,
+      "native_cycle_slots": 33,
+      "loop": false,
+      "display_flags": 0,
+      "sha256": "0CB3E0F7E1CED8D7779D7F743D609EEE4B9194CC2BBDA7E4A9C756803448283C",
+      "bytes": 492,
+      "before_present": false,
+      "native_bif": "data/PATCH26.BIF",
+      "native_bam_sha256": "100AA6FE3C7434966D958DA5073B0AB80BE7F1CF550450E516D175A9940CD0CF",
+      "clua": "C:Eval('CreateVisualEffectObject(\"Z580290\",Player1)',0)"
+    },
+    {
+      "bam": "SPDFOGA",
+      "path": "override/Z580300.vvc",
+      "donor": "Z580300",
+      "cycle": 1,
+      "native_cycle_slots": 66,
+      "loop": false,
+      "display_flags": 0,
+      "sha256": "E260DAA1A6AC2ADDE08D72C51AD88CB60485493776AC44260D341115260E1079",
+      "bytes": 492,
+      "before_present": false,
+      "native_bif": "data/PATCH26.BIF",
+      "native_bam_sha256": "EEA803E66032AB321C6B7564754814C65537712EBCBD14DC4E53B66DA7B188D1",
+      "clua": "C:Eval('CreateVisualEffectObject(\"Z580300\",Player1)',0)"
+    },
+    {
+      "bam": "SPHORWIA",
+      "path": "override/Z580310.vvc",
+      "donor": "Z580310",
+      "cycle": 2,
+      "native_cycle_slots": 34,
+      "loop": false,
+      "display_flags": 8,
+      "sha256": "91D9C1377D45DCFD351854691856B1DBFAEA859A87440CF830C28316DDD38715",
+      "bytes": 492,
+      "before_present": false,
+      "native_bif": "data/PATCH26.BIF",
+      "native_bam_sha256": "406B0C8360184F52856BAFDA23394842BDEB38F688C47445D744FB44921363D3",
+      "clua": "C:Eval('CreateVisualEffectObject(\"Z580310\",Player1)',0)"
+    },
+    {
+      "bam": "SPHORWIL",
+      "path": "override/Z580315.vvc",
+      "donor": "Z580315",
+      "cycle": 0,
+      "native_cycle_slots": 90,
+      "loop": true,
+      "display_flags": 8,
+      "sha256": "9AAB22B7E826BA927230152D278B1B9DFD59471B6E009B1A3F1D95C1D45D1075",
+      "bytes": 492,
+      "before_present": false,
+      "native_bif": "data/SPELAnim.bif",
+      "native_bam_sha256": "CD8ABCD867F5684928080F00E30032736DB800286436A061977A6595597D8FD1",
+      "clua": "C:Eval('CreateVisualEffectObject(\"Z580315\",Player1)',0)"
+    }
+  ],
+  "native_assets_replaced": false,
+  "game_launched": false,
+  "visual_qa": "pending-user",
+  "installed_at_utc": "2026-10-17T13:40:19.245178+00:00",
+  "game_and_infinityloader_stopped": true
+}

@@ -1,0 +1,134 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:MINORGLB",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 24,
+    "source": {
+      "interpolation_run": "minorglb-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "0E1CC2D3D340AC68878D8ADB1FEF04A2969961296B281CD60CEFFA583474BE47",
+      "source_bam_sha256": "7355bc6d242ece20cf330198b28f4a5a74c57c9fd23937660930d3c91c5f3d86",
+      "spatial_manifest_sha256": "3E942BD4E62FCDC4C37F8FD69962AD5BAEB7FD694EE701594096B7E60A15A9EF",
+      "spatial_run": "minorglb-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "A455A2AB1E3B212D154272A0DA151047CC726BF8E9C4460A50812109FEAE8431"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        24
+      ],
+      "alternate_profiles": [],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22
+        ]
+      ],
+      "native_rate_basis": "VVC field",
+      "phase_count": 24,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 969,
+    "path": "effects/index/qa-decisions/MINORGLB/2026-10-17-accepted-5228705cdbad.json",
+    "sha256": "5228705CDBADCA70EC9DF21E7545B91B78CA7E3DB71F1DC9E0C9EC2BBAD3C27F"
+  },
+  "resref": "MINORGLB",
+  "run_descriptor": {
+    "bytes": 1965,
+    "path": "effects/ressources/MINORGLB/runs/minorglb-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "0E1CC2D3D340AC68878D8ADB1FEF04A2969961296B281CD60CEFFA583474BE47"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 17350,
+      "path": "effects/ressources/MINORGLB/packs/minorglb-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "91CB5CEB4EA0063D0B8094AA4E9D87E94630E58A93DC0AE9250A29CDFC4CF38A"
+    },
+    "registry": {
+      "bytes": 400,
+      "path": "effects/ressources/MINORGLB/packs/minorglb-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "9C96622A95FD7DB96455F9B9EA3F7E47895E0B64511DE440332D26FBA9FA9DA0"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "minorglb-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 120803,
+    "path": "effects/ressources/MINORGLB/source.bam",
+    "sha256": "7355BC6D242ECE20CF330198B28F4A5A74C57C9FD23937660930D3C91C5F3D86"
+  }
+}

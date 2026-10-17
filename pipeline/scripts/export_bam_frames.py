@@ -1,7 +1,8 @@
 """Export a BAM V1 into aligned PNG frames for temporal-interpolation tests.
 
-The files in ``rgba/`` preserve the original pixels and binary alpha.  ``rgb/``
-and ``alpha/`` are supplied for image models that cannot accept alpha.  Frames
+The files in ``rgba/`` preserve original RGB and binary alpha by default;
+``--alpha-policy native-palette`` opts into graded normal-alpha palettes.
+``rgb/`` and ``alpha/`` are supplied for image models that cannot accept alpha. Frames
 are placed on one shared canvas around their BAM centre coordinates, so motion
 is not lost by independently cropping every frame.
 """
@@ -20,7 +21,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
-from bam_export import decode_bam
+from bam_export import decode_bam, native_palette_alpha
 
 
 SCHEMA = "bg2-upscale-animation-frames-x1-v1"
@@ -100,6 +101,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("source", type=Path, help="BAM V1 or BAMC source")
     parser.add_argument("output", type=Path, help="Empty destination folder")
+    parser.add_argument("--alpha-policy", choices=("binary-index", "native-palette"),
+                        default="binary-index", help="Explicit normal-alpha palette decoding; legacy binary default retained")
     args = parser.parse_args()
 
     if args.output.exists() and any(args.output.iterdir()):
@@ -109,6 +112,7 @@ def main() -> None:
     output = args.output.resolve()
     data = read_bam(source)
     frames, palette, transparent = decode_bam(data)
+    palette_alpha = native_palette_alpha(data, transparent) if args.alpha_policy == "native-palette" else None
     frame_count = len(frames)
     left = min(-centre_x for _, centre_x, _, _ in frames)
     top = min(-centre_y for _, _, centre_y, _ in frames)
@@ -127,7 +131,7 @@ def main() -> None:
         height, width = indices.shape
         x = -centre_x - left
         y = -centre_y - top
-        alpha = (indices != frame_transparent).astype(np.uint8) * 255
+        alpha = palette_alpha[indices] if palette_alpha is not None else (indices != frame_transparent).astype(np.uint8) * 255
         colour = palette[indices]
         canvas_rgba = np.zeros((canvas_size[1], canvas_size[0], 4), dtype=np.uint8)
         canvas_rgba[y:y + height, x:x + width, :3] = colour
@@ -164,6 +168,7 @@ def main() -> None:
         "format": "BAM V1",
         "frame_count": frame_count,
         "source_transparent_index": transparent,
+        "alpha_policy": args.alpha_policy,
         "aligned_canvas_size": list(canvas_size),
         "anchor_bounds": {"left": left, "top": top, "right": right, "bottom": bottom},
         "geometry_mode": "uniform" if len(geometries) == 1 else "per-frame",

@@ -1,0 +1,168 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:BGLRYT",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 78,
+    "source": {
+      "interpolation_run": "bglryt-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "6F71AA797627CF8C02A47DBE0889280CFCA5ECBF00D79706F739AE27308D4EAE",
+      "source_bam_sha256": "91d12d8ce8a09e08497fe2b39e32cea09d077e0b025f06ab95556dce6d533e52",
+      "spatial_manifest_sha256": "2451132F6D3A4C401CE775121B101A35E81FA7C6DAD7EC8F15526EA562C23462",
+      "spatial_run": "bglryt-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "77C732695417AFA748EB87C693BD3C293145FA8AE88378178405A4C647FD98C4"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        40
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          41,
+          43,
+          45,
+          47,
+          49,
+          51,
+          53,
+          55,
+          57,
+          59,
+          61,
+          63,
+          65,
+          67,
+          69,
+          71,
+          73,
+          75,
+          39
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 40,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          39,
+          77
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 955,
+    "path": "effects/index/qa-decisions/BGLRYT/2026-10-17-accepted-27a9b6fd38ef.json",
+    "sha256": "27A9B6FD38EF85C7C112AAFBCC7F78E6F02CD71747E1ED52C7EADABD8E6B71C2"
+  },
+  "resref": "BGLRYT",
+  "run_descriptor": {
+    "bytes": 1936,
+    "path": "effects/ressources/BGLRYT/runs/bglryt-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "6F71AA797627CF8C02A47DBE0889280CFCA5ECBF00D79706F739AE27308D4EAE"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 50803,
+      "path": "effects/ressources/BGLRYT/packs/bglryt-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "F22B4516740A2606DBFCC6601D65A4EA9FF06B8C114F4FAC32EDBD8F8989C06B"
+    },
+    "registry": {
+      "bytes": 928,
+      "path": "effects/ressources/BGLRYT/packs/bglryt-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "84ABCB984DC9CB4D763F85D40EB2224487BFA99AF5C7DCD54F31CAFF7B34381C"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "bglryt-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 94088,
+    "path": "effects/ressources/BGLRYT/source.bam",
+    "sha256": "91D12D8CE8A09E08497FE2B39E32CEA09D077E0B025F06AB95556DCE6D533E52"
+  }
+}

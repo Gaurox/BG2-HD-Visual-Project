@@ -9,6 +9,7 @@
 #include <fstream>
 #include <limits>
 #include <mutex>
+#include <optional>
 #include <stdexcept>
 #include <string>
 #include <type_traits>
@@ -394,12 +395,20 @@ bool bind_frame_texture_locked(FrameHandle handle, const EngineTextureApi& api,
   metric.bytes = bytes;
   // This boundary precedes the original CVidCell DrawBegin. A native flush
   // submits queued commands before any descriptor dimensions/storage mutate.
-  game::ScopedEffectGlState glState;
-  if (!glState.valid()) return false;
+  std::optional<game::ScopedEffectGlState> glState(std::in_place);
+  if (!glState->valid()) return false;
   bool flushed = false;
   const auto flush = [&] {
-    if (!flushed) flushed = flush_native_locked(api);
-    return flushed;
+    if (!flushed) {
+      // Restore temporary allocation state BEFORE native submission. The flush
+      // updates the engine's applied-state cache (program/blend/scissor/etc.),
+      // which DrawPush/PopState does not save. Preserve the resulting GL state;
+      // restoring a pre-flush snapshot would silently desynchronize that cache.
+      glState.reset();
+      flushed = flush_native_locked(api);
+      if (flushed) glState.emplace();
+    }
+    return flushed && glState->valid();
   };
   auto residentBytes = [&] {
     std::uint64_t total = 0;
@@ -1153,8 +1162,9 @@ void release_gpu(const EngineTextureApi& api) noexcept {
   if (!g_textureContext || game::gl::current_context() != g_textureContext) return;
 #endif
   if (!api.DrawDeleteTexture || g_textureCache.empty()) return;
+  if (!flush_native_locked(api)) return;
   game::ScopedEffectGlState state;
-  if (!state.valid() || !flush_native_locked(api)) return;
+  if (!state.valid()) return;
   for (auto& entry : g_textureCache) {
     if (!entry.pendingDelete) api.DrawDeleteTexture(entry.textureId);
     entry.pendingDelete = true; entry.valid = false;

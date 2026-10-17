@@ -1,0 +1,136 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPBHANDI",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 46,
+    "source": {
+      "interpolation_run": "spbhandi-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "D9D5C0A9E1F53C203A178BAEEAAF7034CCEE27035665B0A2237B415BA2D98C0A",
+      "source_bam_sha256": "80f7859b631a5078d4cc73a2d889f54227e2d16d81cbbee55a29efd803cfd5cb",
+      "spatial_manifest_sha256": "C4FD8D73929FF63D5D501CD144B3A27BEA19846F9450AA73984FAF91922069E0",
+      "spatial_run": "spbhandi-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "BD35104007C6A371DD3B294E1A367FE4338116FC5560F99B96D3891E662F38AD"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        24
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          25,
+          27,
+          29,
+          31,
+          33,
+          35,
+          37,
+          39,
+          41,
+          43,
+          23
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 24,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          23,
+          45
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 969,
+    "path": "effects/index/qa-decisions/SPBHANDI/2026-10-17-accepted-d46541db4c18.json",
+    "sha256": "D46541DB4C18822FD8D1808041FF44BEF54FF6E1511310DF4660FF25B71CAFAB"
+  },
+  "resref": "SPBHANDI",
+  "run_descriptor": {
+    "bytes": 1964,
+    "path": "effects/ressources/SPBHANDI/runs/spbhandi-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "D9D5C0A9E1F53C203A178BAEEAAF7034CCEE27035665B0A2237B415BA2D98C0A"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 30961,
+      "path": "effects/ressources/SPBHANDI/packs/spbhandi-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "ADFE6CD3B2479B292C84ED9C6F74EE002806BEF00B21B0AB642F700AE1E1D42E"
+    },
+    "registry": {
+      "bytes": 576,
+      "path": "effects/ressources/SPBHANDI/packs/spbhandi-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "80B65FE864FA76AA272E688823C6FFF7088E88F166F2A042C4532026F0F21D16"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spbhandi-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 9714,
+    "path": "effects/ressources/SPBHANDI/source.bam",
+    "sha256": "80F7859B631A5078D4CC73A2D889F54227E2D16D81CBBEE55A29EFD803CFD5CB"
+  }
+}

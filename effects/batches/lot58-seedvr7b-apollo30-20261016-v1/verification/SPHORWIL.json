@@ -1,0 +1,65 @@
+{
+  "resref": "SPHORWIL",
+  "passed": true,
+  "native_cycles": 1,
+  "cycle_mode_variants": 2,
+  "phases": 360,
+  "cycles": [
+    {
+      "profile": "cycle000-once",
+      "cycle": 0,
+      "closed": false,
+      "source_slots": 90,
+      "output_phases": 180,
+      "duration": [
+        90,
+        15
+      ],
+      "unique_rgb": 180,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle000-loop",
+      "cycle": 0,
+      "closed": true,
+      "source_slots": 90,
+      "output_phases": 180,
+      "duration": [
+        90,
+        15
+      ],
+      "unique_rgb": 180,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    }
+  ],
+  "native_pixels_palette_world_geometry_preserved": true,
+  "source_model": "seedvr2_7b_int8_convrot.safetensors",
+  "scale": 4,
+  "target_fps": [
+    30,
+    1
+  ],
+  "filter": "NEAREST",
+  "pack_manifest_sha256": "468BFC2C01193CC614B66A1E5EB7284AA92118B25279260447FF92E666080C65",
+  "runtime_contract_rows": 360,
+  "native_input_keys_unique_before_apollo": true,
+  "native_fps": [
+    15,
+    1
+  ],
+  "native_rate_basis": "15 FPS compatibility default; runtime measurement pending",
+  "straight_alpha_companions_verified": true,
+  "raw_bytes": 171602240,
+  "visual_qa": "pending-user-review",
+  "installed": false
+}

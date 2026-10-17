@@ -1,0 +1,152 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPGLYPTI",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 62,
+    "source": {
+      "interpolation_run": "spglypti-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "0AC89F93126515819669280C78486341A285863175632B4372A850125335E2E6",
+      "source_bam_sha256": "3552d340b50ca1cf06e5de79c1c0d5ccde61d38b4a22dd8d87b939a33722af08",
+      "spatial_manifest_sha256": "EA2FB46EC852A86BD45D06B023EC03B9B6F2CAF0C07BDC8CABEEF5DDDD3A0884",
+      "spatial_run": "spglypti-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "C9FF3540D4EE286B3236252BDC1149ED2CEC5100E0973D46BA2F3BC4BBEC8723"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        32
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          33,
+          35,
+          37,
+          39,
+          41,
+          43,
+          45,
+          47,
+          49,
+          51,
+          53,
+          55,
+          57,
+          59,
+          31
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 32,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          31,
+          61
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 969,
+    "path": "effects/index/qa-decisions/SPGLYPTI/2026-10-17-accepted-5fc4bce403e2.json",
+    "sha256": "5FC4BCE403E28F6623F6774E3AF909EC6A886C3DD2DD65E405635A2718B26D83"
+  },
+  "resref": "SPGLYPTI",
+  "run_descriptor": {
+    "bytes": 1964,
+    "path": "effects/ressources/SPGLYPTI/runs/spglypti-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "0AC89F93126515819669280C78486341A285863175632B4372A850125335E2E6"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 41041,
+      "path": "effects/ressources/SPGLYPTI/packs/spglypti-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "6169136D18F310F94FCC50F32C514FAD176901DBCF1F7D9F4AA8CACBF552D5BA"
+    },
+    "registry": {
+      "bytes": 752,
+      "path": "effects/ressources/SPGLYPTI/packs/spglypti-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "8BBE0081773F10EDDC502468BD2673F6E7580D347560BE3846B80F26BE736977"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spglypti-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 12684,
+    "path": "effects/ressources/SPGLYPTI/source.bam",
+    "sha256": "3552D340B50CA1CF06E5DE79C1C0D5CCDE61D38B4A22DD8D87B939A33722AF08"
+  }
+}

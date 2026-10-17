@@ -29,8 +29,17 @@ struct Descriptor {
 };
 static_assert(sizeof(Descriptor) == 0x28);
 std::array<Descriptor, 512> descriptors{};
-struct Queued { int slot{}, frame{}; };
+struct Queued { int slot{}, frame{}; GLuint program{}; };
 std::vector<Queued> queued;
+GLuint appliedProgram{}, desiredProgram{};
+// Model the native applied-state cache: a repeated desired shader skips
+// glUseProgram. DrawPush/PopState preserves desired state, not this cache.
+void apply_program(GLuint program) {
+  if (program != appliedProgram) {
+    iee::game::gl::get_gl_functions().glUseProgram(program);
+    appliedProgram = program;
+  }
+}
 std::array<std::uint32_t, 16> savedStates{};
 std::size_t stateDepth{};
 bool queueCorrect{true};
@@ -41,6 +50,7 @@ void pop() { textureState = savedStates[--stateDepth]; boundSlot = static_cast<i
 void flush() {
   ++nativeFlushes;
   for (const auto& draw : queued) {
+    apply_program(draw.program);
     if (descriptors[draw.slot].width != static_cast<std::uint32_t>(logical_size(draw.frame)) ||
         descriptors[draw.slot].height != static_cast<std::uint32_t>(logical_size(draw.frame)))
       queueCorrect = false;
@@ -94,6 +104,49 @@ void image(int width, int height, const void* pixels, unsigned char) {
                GL_UNSIGNED_BYTE, pixels);
 }
 int renderer() { return 0; }
+GLuint program(const char* fragment) {
+  auto& gl = iee::game::gl::get_gl_functions();
+  const auto shader = [&](unsigned type, const char* source) {
+    const auto id = gl.glCreateShader(type);
+    gl.glShaderSource(id, 1, &source, nullptr); gl.glCompileShader(id);
+    int ok = 0; gl.glGetShaderiv(id, 0x8B81, &ok);
+    if (!ok) { gl.glDeleteShader(id); return 0u; }
+    return id;
+  };
+  const auto vertex = shader(0x8B31, "#version 120\nvoid main(){gl_Position=gl_Vertex;}");
+  const auto pixel = shader(0x8B30, fragment);
+  const auto id = gl.glCreateProgram();
+  if (vertex) gl.glAttachShader(id, vertex);
+  if (pixel) gl.glAttachShader(id, pixel);
+  gl.glLinkProgram(id);
+  int ok = 0; gl.glGetProgramiv(id, 0x8B82, &ok);
+  if (vertex) gl.glDeleteShader(vertex);
+  if (pixel) gl.glDeleteShader(pixel);
+  if (!vertex || !pixel || !ok) { gl.glDeleteProgram(id); return 0; }
+  return id;
+}
+bool verify_native_draw(GLuint red, const char* boundary) {
+  GLint actualProgram = 0;
+  glGetIntegerv(iee::game::gl::CURRENT_PROGRAM, &actualProgram);
+  // The next native batch wants the same shader as the last flushed batch.
+  // Its cache fast path must still produce red, never a stale white stripe.
+  apply_program(red);
+  glViewport(0, 0, 16, 16); glDisable(GL_SCISSOR_TEST); glDisable(GL_BLEND);
+  glClearColor(0, 0, 0, 1); glClear(GL_COLOR_BUFFER_BIT);
+  glBegin(GL_QUADS);
+  glVertex2f(-0.25f, -1); glVertex2f(0.25f, -1);
+  glVertex2f(0.25f, 1); glVertex2f(-0.25f, 1);
+  glEnd();
+  std::array<unsigned char, 4> pixel{};
+  glReadPixels(8, 8, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, pixel.data());
+  const auto error = glGetError();
+  const bool correct = static_cast<GLuint>(actualProgram) == appliedProgram &&
+      pixel[0] == 255 && pixel[1] == 0 && pixel[2] == 0 && error == GL_NO_ERROR;
+  std::cout << boundary << ": actualProgram=" << actualProgram << ", nativeCache=" << appliedProgram
+            << ", pixel=" << int(pixel[0]) << ',' << int(pixel[1]) << ',' << int(pixel[2])
+            << ", glError=" << error << '\n';
+  return correct;
+}
 void u32(std::ofstream& out, std::uint32_t value) {
   out.write(reinterpret_cast<const char*>(&value), 4);
 }
@@ -153,7 +206,7 @@ bool exercise(const std::filesystem::path& root) {
       if (actual[p] != frame % 251 || actual[p + 1] != frame / 251 ||
           actual[p + 2] != 0 || actual[p + 3] != 255) return false;
     }
-    queued.push_back({boundSlot, frame});
+    queued.push_back({boundSlot, frame, desiredProgram});
     iee::effect_animation_x4::restore_texture(api, previous);
     return boundSlot == 1;
   };
@@ -172,16 +225,25 @@ bool exercise(const std::filesystem::path& root) {
   if (stats.capacity != 64 || stats.residentTextures != 64 || stats.reuses != 656 ||
       stats.allocationFailures || stats.uploadFailures || peakSlots > 465) return false;
   // Recent cache hit; then an evicted old frame; both have exact original pixels.
-  if (!verifyFrame(719) || !verifyFrame(0)) return false;
+  const auto white = program("#version 120\nvoid main(){gl_FragColor=vec4(1.0);}");
+  const auto red = program("#version 120\nvoid main(){gl_FragColor=vec4(1,0,0,1);}");
+  if (!white || !red) return false;
+  apply_program(white); desiredProgram = red;
+  if (!verifyFrame(719) || !verifyFrame(0) || !verify_native_draw(red, "LRU upload")) return false;
   // Multiple effects in one native batch: old queued descriptors must be
   // consumed before the LRU reuses them, including different logical sizes.
   for (int i = 80; i < 160; ++i) if (!verifyFrame(i)) return false;
   flush(); bind(1);
   if (!queueCorrect || !nativeFlushes || stateDepth) return false;
   // Exercise recovery below capacity when native allocation is unavailable.
-  iee::effect_animation_x4::release_gpu(api); collect();
+  apply_program(white);
+  if (!verifyFrame(159)) return false;
+  iee::effect_animation_x4::release_gpu(api);
+  if (!verify_native_draw(red, "GPU release")) return false;
+  collect();
   iee::effect_animation_x4::release_gpu(api);
   iee::effect_animation_x4::release();
+  desiredProgram = 0; apply_program(0);
   if (!iee::effect_animation_x4::prepare(root) || !verifyFrame(0)) return false;
   denyAllocations = true;
   if (!verifyFrame(1)) return false;
@@ -201,12 +263,18 @@ bool exercise(const std::filesystem::path& root) {
   byteOptions.gpuBytes = 4096; // Byte pressure before the 64-descriptor limit.
   if (!iee::effect_animation_x4::prepare(root, byteOptions)) return false;
   for (int i = 0; i < 80; ++i) if (!verifyFrame(i)) return false;
+  apply_program(white); desiredProgram = red;
+  if (!verifyFrame(79)) return false; // Queue red while the hardware still uses white.
   if (!verifyFrame(719)) return false; // Requires shrinking several owned textures.
+  if (!verify_native_draw(red, "Byte-pressure upload")) return false;
   flush(); bind(1);
   if (!queueCorrect || iee::effect_animation_x4::texture_cache_stats().peakBytes > byteOptions.gpuBytes)
     return false;
   iee::effect_animation_x4::release_gpu(api); collect();
   iee::effect_animation_x4::release_gpu(api); iee::effect_animation_x4::release();
+  desiredProgram = 0; apply_program(0);
+  auto& gl = iee::game::gl::get_gl_functions();
+  gl.glDeleteProgram(white); gl.glDeleteProgram(red);
   byteOptions.streaming = true; byteOptions.cpu.bytes = 2048; byteOptions.cpu.inFlightBytes = 1024;
   byteOptions.cpu.headBytes = 512;
   if (!iee::effect_animation_x4::prepare(root, byteOptions)) return false;

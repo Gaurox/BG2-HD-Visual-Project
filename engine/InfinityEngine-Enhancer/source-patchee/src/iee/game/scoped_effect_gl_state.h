@@ -3,8 +3,10 @@
 #include "iee/game/opengl_types.h"
 
 namespace iee::game {
-// Preserve raw GL state around a native queue flush / texture allocation.
-// The caller additionally uses DrawPushState/PopState for the native DWORD.
+// Preserve raw GL state around texture allocation/upload. Never keep this
+// snapshot across a native queue flush: that flush updates the native applied-
+// state cache, while DrawPushState/PopState saves only desired logical state.
+// Restore this guard before flushing, then capture the resulting GL state.
 // No fence, readback, framebuffer switch or glFinish is used for synchronization.
 class ScopedEffectGlState {
  public:

@@ -1,0 +1,197 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:FIREBICT",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "lookup_start": 12
+      }
+    ],
+    "frame_count": 91,
+    "source": {
+      "interpolation_run": "firebict-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "721C063E5DDA9D67A5AB97A9D89A87A218687130D7EA21157204B26126660751",
+      "source_bam_sha256": "ee5dde2a3c034208899febd9a09cc450383eb18500b680ea4ec7e16068d48983",
+      "spatial_manifest_sha256": "C357941454A6AA565222589FC0C5792B5619291E8B6F7EF20EC4A28B71570BDE",
+      "spatial_run": "firebict-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "C1DCBCCC56EED468669B05E21EE582B2A854DE39723FB3F48B49C5EFE5E8CC69"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        24,
+        24
+      ],
+      "alternate_profiles": [
+        "cycle000-once",
+        "cycle001-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          25,
+          27,
+          29,
+          31,
+          33,
+          35,
+          37,
+          39,
+          41,
+          43,
+          23
+        ],
+        [
+          0,
+          70,
+          72,
+          74,
+          76,
+          78,
+          80,
+          82,
+          84,
+          86,
+          88,
+          68
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 24,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          23,
+          45
+        ],
+        [
+          0,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          68,
+          90
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 969,
+    "path": "effects/index/qa-decisions/FIREBICT/2026-10-17-accepted-f6024054a7fe.json",
+    "sha256": "F6024054A7FE5435A8CB63ED207CC4AF2EF48072A47361182C6F8CA247D2572B"
+  },
+  "resref": "FIREBICT",
+  "run_descriptor": {
+    "bytes": 1966,
+    "path": "effects/ressources/FIREBICT/runs/firebict-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "721C063E5DDA9D67A5AB97A9D89A87A218687130D7EA21157204B26126660751"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 59539,
+      "path": "effects/ressources/FIREBICT/packs/firebict-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "1E3CF550EA3AFDD2A43394881AE0DC85561E91A56ECE94E0444467951D2BA2B9"
+    },
+    "registry": {
+      "bytes": 1084,
+      "path": "effects/ressources/FIREBICT/packs/firebict-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "AE641C816153681F6A21C9FCAAAD8380B7C0FC481B519CB6E5DD3ADD91F7566E"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "firebict-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 24770,
+    "path": "effects/ressources/FIREBICT/source.bam",
+    "sha256": "EE5DDE2A3C034208899FEBD9A09CC450383EB18500B680EA4EC7E16068D48983"
+  }
+}

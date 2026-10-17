@@ -1,0 +1,197 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:FIREBAT",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "lookup_start": 12
+      }
+    ],
+    "frame_count": 91,
+    "source": {
+      "interpolation_run": "firebat-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "EC2286CD82BA3398D3011BDBDD8CBABA54C271D959261FB09980C65308D905A1",
+      "source_bam_sha256": "4aa73da568190875428fc532714ad7576c02a9ffe61fc1db65231ea19ba6db4d",
+      "spatial_manifest_sha256": "7AD977A480186148676F99F924D568A2247AD053F8B236E48A8260F1CB46B398",
+      "spatial_run": "firebat-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "6AC74E3134A6EB5F68AC035DBC98448712731B671BB10EFC181E1E8C8B0E7BFA"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        24,
+        24
+      ],
+      "alternate_profiles": [
+        "cycle000-once",
+        "cycle001-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          25,
+          27,
+          29,
+          31,
+          33,
+          35,
+          37,
+          39,
+          41,
+          43,
+          23
+        ],
+        [
+          0,
+          70,
+          72,
+          74,
+          76,
+          78,
+          80,
+          82,
+          84,
+          86,
+          88,
+          68
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 24,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          23,
+          45
+        ],
+        [
+          0,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          68,
+          90
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 962,
+    "path": "effects/index/qa-decisions/FIREBAT/2026-10-17-accepted-cbf7d6d3986e.json",
+    "sha256": "CBF7D6D3986E1532A31D07C31D7A446D34D8CB6324E2FA46F00B8F982530B9EB"
+  },
+  "resref": "FIREBAT",
+  "run_descriptor": {
+    "bytes": 1951,
+    "path": "effects/ressources/FIREBAT/runs/firebat-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "EC2286CD82BA3398D3011BDBDD8CBABA54C271D959261FB09980C65308D905A1"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 59263,
+      "path": "effects/ressources/FIREBAT/packs/firebat-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "723E9EE4FB367EBB19681256A545CC039132E4D99C5B2C1DAC0FD3340302CF7C"
+    },
+    "registry": {
+      "bytes": 1084,
+      "path": "effects/ressources/FIREBAT/packs/firebat-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "E2A76D2DFFFCD729B985B13ACD2DE053554DF9B1B599117ACC6C2917D375FF4E"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "firebat-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 24797,
+    "path": "effects/ressources/FIREBAT/source.bam",
+    "sha256": "4AA73DA568190875428FC532714AD7576C02A9FFE61FC1DB65231EA19BA6DB4D"
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPENBLD",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 10,
+    "source": {
+      "interpolation_run": "spenbld-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "C5694B0CA0F4889B77E2E3BAE71A5FC0C59CF9D9FD30DD840438A419A16C5B2C",
+      "source_bam_sha256": "62ae2f264fce9020669ba765d93aaffac80afa3259b01ddcd554ed38149a61eb",
+      "spatial_manifest_sha256": "594091F940DC2A38A59615BD379291D4BD7CB64616DCBD9ED9621B4797573C6A",
+      "spatial_run": "spenbld-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "343F2291A166FB35C1B6227714506722068FA815D369E51F01D2027DEC03F96C"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        6
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          7,
+          5
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 6,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          6,
+          7,
+          8,
+          5,
+          9
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 962,
+    "path": "effects/index/qa-decisions/SPENBLD/2026-10-17-accepted-9fb70916fa4e.json",
+    "sha256": "9FB70916FA4E119DFB6B1A64E211AADAAC7D831F7A603F8413532DE227F6A8B6"
+  },
+  "resref": "SPENBLD",
+  "run_descriptor": {
+    "bytes": 1947,
+    "path": "effects/ressources/SPENBLD/runs/spenbld-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "C5694B0CA0F4889B77E2E3BAE71A5FC0C59CF9D9FD30DD840438A419A16C5B2C"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 8236,
+      "path": "effects/ressources/SPENBLD/packs/spenbld-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "1B28D3B059CBBBE156785CA8E3EC9F34AFDACF96344AA4BEA695CC8AA1A96647"
+    },
+    "registry": {
+      "bytes": 180,
+      "path": "effects/ressources/SPENBLD/packs/spenbld-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "372CCEA5804FA19831952B0322D71D490F027C24BB32AE41F7EC4B454F274781"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spenbld-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 2544,
+    "path": "effects/ressources/SPENBLD/source.bam",
+    "sha256": "62AE2F264FCE9020669BA765D93AAFFAC80AFA3259B01DDCD554ED38149A61EB"
+  }
+}

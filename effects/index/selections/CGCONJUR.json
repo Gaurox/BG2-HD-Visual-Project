@@ -1,0 +1,198 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:CGCONJUR",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "lookup_start": 3
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        "lookup_start": 9
+      }
+    ],
+    "frame_count": 78,
+    "source": {
+      "interpolation_run": "cgconjur-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "2D58B91394E82CF7DF64CCB84E0B7336AAA63326280631D5592ADF9DD5D3CC64",
+      "source_bam_sha256": "7b313b5184f032f26fb55a10d6444ebf0dd161c5686ec92a64c3be954cf8e471",
+      "spatial_manifest_sha256": "33B40C44D07F455B28B4DF67AFAC1A6FB1EA8CF38E70E41D3C12759E2542AAF1",
+      "spatial_run": "cgconjur-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "6CCB52822FC9347C27AE02C64540ADDEB05015B4F175B6EE38832881166AFEC6"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        6,
+        12,
+        24
+      ],
+      "alternate_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop",
+        "cycle002-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          7,
+          5
+        ],
+        [
+          10,
+          23,
+          25,
+          27,
+          29,
+          21
+        ],
+        [
+          32,
+          57,
+          59,
+          61,
+          63,
+          65,
+          67,
+          69,
+          71,
+          73,
+          75,
+          55
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 24,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          6,
+          7,
+          8,
+          5,
+          9
+        ],
+        [
+          10,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          21,
+          31
+        ],
+        [
+          32,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          55,
+          77
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 969,
+    "path": "effects/index/qa-decisions/CGCONJUR/2026-10-17-accepted-2cec54414a01.json",
+    "sha256": "2CEC54414A01F452BD78AA3DA7073766809FA07B1B95C001B98DBB4357002B9B"
+  },
+  "resref": "CGCONJUR",
+  "run_descriptor": {
+    "bytes": 1965,
+    "path": "effects/ressources/CGCONJUR/runs/cgconjur-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "2D58B91394E82CF7DF64CCB84E0B7336AAA63326280631D5592ADF9DD5D3CC64"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 51422,
+      "path": "effects/ressources/CGCONJUR/packs/cgconjur-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "11FF5CC7F3E0A046FD61B923F03CBCAFF1AFF529A39C1C61910C3CACDC1C76A3"
+    },
+    "registry": {
+      "bytes": 1068,
+      "path": "effects/ressources/CGCONJUR/packs/cgconjur-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "6A5EA397D7BBFD861A74AB9A299AD248B4BCBA3E45DC4E72ABD200C7F4DA2D58"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "cgconjur-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 17169,
+    "path": "effects/ressources/CGCONJUR/source.bam",
+    "sha256": "7B313B5184F032F26FB55A10D6444EBF0DD161C5686EC92A64C3BE954CF8E471"
+  }
+}

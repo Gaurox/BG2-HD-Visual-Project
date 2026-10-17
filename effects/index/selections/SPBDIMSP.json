@@ -1,0 +1,136 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPBDIMSP",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 46,
+    "source": {
+      "interpolation_run": "spbdimsp-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "53C0BF1F8FDA45FE10242072DEB10F31746D9AA386541C53631FBA0A35EDF5E2",
+      "source_bam_sha256": "a1f803b1d76638812a0ad9db67e931e3397f4cccc52415d165928f0077f3a200",
+      "spatial_manifest_sha256": "323487DF1937747C807CD2F0594E165BA2323D99C1F4FA9DE4722BF59A75682B",
+      "spatial_run": "spbdimsp-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "130A72BA1510272CF06C51B839F83E6F2B50E65EF7CDBC7F933144FE6707DB29"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        24
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          25,
+          27,
+          29,
+          31,
+          33,
+          35,
+          37,
+          39,
+          41,
+          43,
+          23
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 24,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          23,
+          45
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 969,
+    "path": "effects/index/qa-decisions/SPBDIMSP/2026-10-17-accepted-da9acea61015.json",
+    "sha256": "DA9ACEA61015CF9C65722912C6367D57D429AAA4D8572A5C21A08D121FAC0C54"
+  },
+  "resref": "SPBDIMSP",
+  "run_descriptor": {
+    "bytes": 1965,
+    "path": "effects/ressources/SPBDIMSP/runs/spbdimsp-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "53C0BF1F8FDA45FE10242072DEB10F31746D9AA386541C53631FBA0A35EDF5E2"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 31015,
+      "path": "effects/ressources/SPBDIMSP/packs/spbdimsp-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "25406566961F19181090A1279C7D46C9A0C2262FC4CDC9B016A1FDE76F268524"
+    },
+    "registry": {
+      "bytes": 576,
+      "path": "effects/ressources/SPBDIMSP/packs/spbdimsp-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "2A429B6B1EE7954DB7FD9E89ABF8249C768E725A75905BA5A618162865CA1D83"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spbdimsp-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 33067,
+    "path": "effects/ressources/SPBDIMSP/source.bam",
+    "sha256": "A1F803B1D76638812A0AD9DB67E931E3397F4CCCC52415D165928F0077F3A200"
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:CGALTERA",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "lookup_start": 3
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        "lookup_start": 9
+      }
+    ],
+    "frame_count": 78,
+    "source": {
+      "interpolation_run": "cgaltera-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "CCDA42DFD8BBA950D169F03286ABE27A865F1D4A0BD114072D489822DB49BAD4",
+      "source_bam_sha256": "5f791fdcaac39cc76736d0e113c4017b4779990e2c91491ccc34b37b41635e28",
+      "spatial_manifest_sha256": "185538858B421BCB483C2DE6FB1AC90D209E35D5EE228D65576ADCBA3516E8EC",
+      "spatial_run": "cgaltera-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "4FFB6A103319A1CE582AC025516A1FEABCEEB7AC9C0062EF79D3AF9ADF6844D2"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        6,
+        12,
+        24
+      ],
+      "alternate_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop",
+        "cycle002-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          7,
+          5
+        ],
+        [
+          10,
+          23,
+          25,
+          27,
+          29,
+          21
+        ],
+        [
+          32,
+          57,
+          59,
+          61,
+          63,
+          65,
+          67,
+          69,
+          71,
+          73,
+          75,
+          55
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 24,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          6,
+          7,
+          8,
+          5,
+          9
+        ],
+        [
+          10,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          21,
+          31
+        ],
+        [
+          32,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          55,
+          77
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 969,
+    "path": "effects/index/qa-decisions/CGALTERA/2026-10-17-accepted-11f1513781e1.json",
+    "sha256": "11F1513781E13C93597EEB0689A9568F0AC278F0916227C78CCF251D2525C1E2"
+  },
+  "resref": "CGALTERA",
+  "run_descriptor": {
+    "bytes": 1965,
+    "path": "effects/ressources/CGALTERA/runs/cgaltera-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "CCDA42DFD8BBA950D169F03286ABE27A865F1D4A0BD114072D489822DB49BAD4"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 51500,
+      "path": "effects/ressources/CGALTERA/packs/cgaltera-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "32B3D1931FBF725D1A1F05A9A9D7610B0E6A4B63B329BA48F2B2845CFB23CD28"
+    },
+    "registry": {
+      "bytes": 1068,
+      "path": "effects/ressources/CGALTERA/packs/cgaltera-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "65E83F93ADD89D10A17F58972BEE16084E05F2E9C5F7ACC0E67D42F47958E976"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "cgaltera-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 31017,
+    "path": "effects/ressources/CGALTERA/source.bam",
+    "sha256": "5F791FDCAAC39CC76736D0E113C4017B4779990E2C91491CCC34B37B41635E28"
+  }
+}

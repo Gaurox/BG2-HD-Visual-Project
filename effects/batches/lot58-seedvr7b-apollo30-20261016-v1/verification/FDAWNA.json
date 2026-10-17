@@ -1,0 +1,65 @@
+{
+  "resref": "FDAWNA",
+  "passed": true,
+  "native_cycles": 1,
+  "cycle_mode_variants": 2,
+  "phases": 400,
+  "cycles": [
+    {
+      "profile": "cycle000-once",
+      "cycle": 0,
+      "closed": false,
+      "source_slots": 100,
+      "output_phases": 200,
+      "duration": [
+        100,
+        15
+      ],
+      "unique_rgb": 200,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle000-loop",
+      "cycle": 0,
+      "closed": true,
+      "source_slots": 100,
+      "output_phases": 200,
+      "duration": [
+        100,
+        15
+      ],
+      "unique_rgb": 200,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    }
+  ],
+  "native_pixels_palette_world_geometry_preserved": true,
+  "source_model": "seedvr2_7b_int8_convrot.safetensors",
+  "scale": 4,
+  "target_fps": [
+    30,
+    1
+  ],
+  "filter": "NEAREST",
+  "pack_manifest_sha256": "BC65CD8958E97E55ACED422EC7EAEE044F69FF9532017F57B36C9D6D8E6E7638",
+  "runtime_contract_rows": 400,
+  "native_input_keys_unique_before_apollo": true,
+  "native_fps": [
+    15,
+    1
+  ],
+  "native_rate_basis": "15 FPS compatibility default; runtime measurement pending",
+  "straight_alpha_companions_verified": true,
+  "raw_bytes": 36676864,
+  "visual_qa": "pending-user-review",
+  "installed": false
+}

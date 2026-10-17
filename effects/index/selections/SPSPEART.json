@@ -1,0 +1,360 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPSPEART",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "lookup_start": 11
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32
+        ],
+        "lookup_start": 22
+      },
+      {
+        "cycle": 3,
+        "frame_indices": [
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43
+        ],
+        "lookup_start": 33
+      },
+      {
+        "cycle": 4,
+        "frame_indices": [
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54
+        ],
+        "lookup_start": 44
+      }
+    ],
+    "frame_count": 210,
+    "source": {
+      "interpolation_run": "spspeart-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "EC8B6B86F061D6535C380212687BCF09BA31BD73BA920FC93C3BBB170E6B8CD2",
+      "source_bam_sha256": "12279fa1215dd44277d6752e5878adb833b8189af20e37b4a94ee902c6052769",
+      "spatial_manifest_sha256": "EC82CBE88B713745188A0A775B3555603903278333C4BCBF2E4402695C9ABA7B",
+      "spatial_run": "spspeart-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "1D1496488B7ADDD47830D6B5D8F84A54316F2F8FCD9CE08CDC1ABAA24A19C323"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        22,
+        22,
+        22,
+        22,
+        22
+      ],
+      "alternate_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop",
+        "cycle002-loop",
+        "cycle003-loop",
+        "cycle004-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          23,
+          25,
+          27,
+          29,
+          31,
+          33,
+          35,
+          37,
+          39,
+          21
+        ],
+        [
+          42,
+          65,
+          67,
+          69,
+          71,
+          73,
+          75,
+          77,
+          79,
+          81,
+          63
+        ],
+        [
+          84,
+          107,
+          109,
+          111,
+          113,
+          115,
+          117,
+          119,
+          121,
+          123,
+          105
+        ],
+        [
+          126,
+          149,
+          151,
+          153,
+          155,
+          157,
+          159,
+          161,
+          163,
+          165,
+          147
+        ],
+        [
+          168,
+          191,
+          193,
+          195,
+          197,
+          199,
+          201,
+          203,
+          205,
+          207,
+          189
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 22,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          21,
+          41
+        ],
+        [
+          42,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          63,
+          83
+        ],
+        [
+          84,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          115,
+          116,
+          117,
+          118,
+          119,
+          120,
+          121,
+          122,
+          123,
+          124,
+          105,
+          125
+        ],
+        [
+          126,
+          148,
+          149,
+          150,
+          151,
+          152,
+          153,
+          154,
+          155,
+          156,
+          157,
+          158,
+          159,
+          160,
+          161,
+          162,
+          163,
+          164,
+          165,
+          166,
+          147,
+          167
+        ],
+        [
+          168,
+          190,
+          191,
+          192,
+          193,
+          194,
+          195,
+          196,
+          197,
+          198,
+          199,
+          200,
+          201,
+          202,
+          203,
+          204,
+          205,
+          206,
+          207,
+          208,
+          189,
+          209
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 969,
+    "path": "effects/index/qa-decisions/SPSPEART/2026-10-17-accepted-9e301ecb58f4.json",
+    "sha256": "9E301ECB58F42A861DD2DBA304410F2DCB959DC8204FC067CDDBB248BEA3833B"
+  },
+  "resref": "SPSPEART",
+  "run_descriptor": {
+    "bytes": 1965,
+    "path": "effects/ressources/SPSPEART/runs/spspeart-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "EC8B6B86F061D6535C380212687BCF09BA31BD73BA920FC93C3BBB170E6B8CD2"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 134850,
+      "path": "effects/ressources/SPSPEART/packs/spspeart-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "06998EE36DB76C6F3E959E0916D2776D7CEDB3493B3607CD451EADCA65D023BB"
+    },
+    "registry": {
+      "bytes": 2420,
+      "path": "effects/ressources/SPSPEART/packs/spspeart-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "87F60F887F699FEA309C745A7F4C3F5D4981B065EB397A1D7AC04AB53AE7E92D"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spspeart-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 12275,
+    "path": "effects/ressources/SPSPEART/source.bam",
+    "sha256": "12279FA1215DD44277D6752E5878ADB833B8189AF20E37B4A94EE902C6052769"
+  }
+}

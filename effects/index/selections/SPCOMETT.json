@@ -1,0 +1,300 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPCOMETT",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "lookup_start": 8
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "lookup_start": 16
+      },
+      {
+        "cycle": 3,
+        "frame_indices": [
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31
+        ],
+        "lookup_start": 24
+      },
+      {
+        "cycle": 4,
+        "frame_indices": [
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39
+        ],
+        "lookup_start": 32
+      }
+    ],
+    "frame_count": 150,
+    "source": {
+      "interpolation_run": "spcomett-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "70C78BE63D9C9613BFFE72C75871722FFA1733F4797AD6D19C477E9F58C7FCC0",
+      "source_bam_sha256": "decae242d91f4642b3c56149025903601b4c0f3048cabd098bf4806f72f25e66",
+      "spatial_manifest_sha256": "888957705DC0844600F45C9CC5AD655741B06803C6B5F08A605F13FA0FC6E5CE",
+      "spatial_run": "spcomett-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "11FF2C23C49EEF7B5F1DED5A4E35B51DBC4EF1864E30E658B78EF3C538356FAF"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "alternate_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop",
+        "cycle002-loop",
+        "cycle003-loop",
+        "cycle004-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          17,
+          19,
+          21,
+          23,
+          25,
+          27,
+          15
+        ],
+        [
+          30,
+          47,
+          49,
+          51,
+          53,
+          55,
+          57,
+          45
+        ],
+        [
+          60,
+          77,
+          79,
+          81,
+          83,
+          85,
+          87,
+          75
+        ],
+        [
+          90,
+          107,
+          109,
+          111,
+          113,
+          115,
+          117,
+          105
+        ],
+        [
+          120,
+          137,
+          139,
+          141,
+          143,
+          145,
+          147,
+          135
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 16,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          15,
+          29
+        ],
+        [
+          30,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          45,
+          59
+        ],
+        [
+          60,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          75,
+          89
+        ],
+        [
+          90,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          115,
+          116,
+          117,
+          118,
+          105,
+          119
+        ],
+        [
+          120,
+          136,
+          137,
+          138,
+          139,
+          140,
+          141,
+          142,
+          143,
+          144,
+          145,
+          146,
+          147,
+          148,
+          135,
+          149
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 969,
+    "path": "effects/index/qa-decisions/SPCOMETT/2026-10-17-accepted-2a36c55baff4.json",
+    "sha256": "2A36C55BAFF49793C642E4F2A0214FD58A188F6076C55A7871CC8538364DCD48"
+  },
+  "resref": "SPCOMETT",
+  "run_descriptor": {
+    "bytes": 1965,
+    "path": "effects/ressources/SPCOMETT/runs/spcomett-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "70C78BE63D9C9613BFFE72C75871722FFA1733F4797AD6D19C477E9F58C7FCC0"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 97380,
+      "path": "effects/ressources/SPCOMETT/packs/spcomett-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "78F442DF7B07574B203CA2D83FF5CCFF60D5B1BB16B68A2074FEE7A47A164257"
+    },
+    "registry": {
+      "bytes": 1760,
+      "path": "effects/ressources/SPCOMETT/packs/spcomett-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "06A98352E3A262177CC062A8655C692AC3EE17EE1A12645E300BA492CA7CC3BB"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spcomett-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 24691,
+    "path": "effects/ressources/SPCOMETT/source.bam",
+    "sha256": "DECAE242D91F4642B3C56149025903601B4C0F3048CABD098BF4806F72F25E66"
+  }
+}

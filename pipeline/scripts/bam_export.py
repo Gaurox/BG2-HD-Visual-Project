@@ -20,6 +20,19 @@ from bg2lib import load_key, resolve_resource
 BAM_TYPE = 0x03E8
 
 
+def native_palette_alpha(data, transparent):
+    """Resource-palette alpha: 1..254 literal, 0/255 opaque compatibility.
+
+    Explicit opt-in for normal-alpha consumers; do not change legacy exports
+    or additive/premultiplied consumers merely because palette A is nonzero.
+    """
+    offset = struct.unpack_from("<I", data, 0x10)[0]
+    alpha = np.frombuffer(data, dtype=np.uint8, count=1024, offset=offset).reshape(256, 4)[:, 3].copy()
+    alpha[(alpha == 0) | (alpha == 255)] = 255
+    alpha[transparent] = 0
+    return alpha
+
+
 def load_bam(bif, entry):
     data, _ = resolve_resource(bif, entry[2])
     if data[0:4] == b"BAMC":

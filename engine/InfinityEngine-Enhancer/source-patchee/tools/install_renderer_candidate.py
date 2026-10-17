@@ -5,8 +5,9 @@ The transaction always owns ``InfinityEngine-Enhancer.dll`` and
 strictly validated x4 effect pack under ``iee-assets/effects``.  Every managed
 file is staged with its previous state before the receipt is published or the
 game is mutated, so restoration is independent from the original build tree.
-An effect pack may declare hash-bound ``override/<RESREF>.bam`` padding carriers;
-they are installed and restored in that same transaction.
+An effect pack may declare hash-bound ``override/<RESREF>.bam`` padding carriers
+and ``override/<RESREF>.vvc`` controllers referencing its BAMs. Both
+are installed and restored in that same transaction.
 """
 
 from __future__ import annotations
@@ -45,8 +46,9 @@ EFFECTS_PREFIX = f"{EFFECTS_DIRECTORY.as_posix()}/"
 EFFECT_PACK_SCHEMA = "bg2-upscale-effect-animation-runtime-pack-v1"
 EFFECT_REGISTRY_NAME = "EffectAnimations-X4.registry"
 EFFECT_REGISTRY_MAGIC = b"IEEEFX4\0"
-EFFECT_FRAME_NAME = re.compile(r"EFX4-[A-Z0-9_]{1,8}-frame[0-9]{3}\.rgba$")
+EFFECT_FRAME_NAME = re.compile(r"EFX4-[A-Z0-9_]{1,8}-frame[0-9]{3,4}\.rgba$")
 EFFECT_BAM_CARRIER_NAME = re.compile(r"override/[A-Z0-9_]{1,8}\.bam$")
+EFFECT_VVC_CONTROLLER_NAME = re.compile(r"override/[A-Z0-9_]{1,8}\.vvc$")
 GAME_EXECUTABLES = ("BaldurReal.exe", "Baldur.exe")
 PROCESS_NAMES = {"baldur.exe", "baldurreal.exe", "infinityloader.exe"}
 PAYLOAD_DIRECTORY = "candidate"
@@ -240,7 +242,8 @@ def managed_path(root: Path, name: str, *, create_parents: bool = False) -> Path
 
     if name in MANAGED_FILES:
         relative = PurePosixPath(name)
-    elif is_effect_candidate_name(name) or EFFECT_BAM_CARRIER_NAME.fullmatch(name):
+    elif (is_effect_candidate_name(name) or EFFECT_BAM_CARRIER_NAME.fullmatch(name)
+          or EFFECT_VVC_CONTROLLER_NAME.fullmatch(name)):
         relative = PurePosixPath(name)
     else:
         raise TransactionError(f"chemin géré invalide : {name}")
@@ -409,11 +412,28 @@ def collect_candidate_files(candidate_root: Path) -> tuple[list[CandidateFile], 
                 raise TransactionError(f"BAM V1 carrier required: {name}")
             expected_carriers.add(name)
             files.append(CandidateFile(name, path, snapshot))
+        for controller in manifest.get("runtime_vvc_controllers", []):
+            if not isinstance(controller, dict):
+                raise TransactionError("VVC controller descriptor invalid")
+            name = controller.get("asset", "")
+            if (not EFFECT_VVC_CONTROLLER_NAME.fullmatch(name) or name in expected_carriers
+                    or controller.get("bam") not in resources):
+                raise TransactionError("VVC controller identity mismatch")
+            path = source / name
+            snapshot = snapshot_file(path)
+            if snapshot.sha256 != controller.get("sha256") or snapshot.bytes != controller.get("bytes"):
+                raise TransactionError(f"VVC controller hash mismatch: {name}")
+            raw = path.read_bytes()
+            if (len(raw) != 0x1EC or raw[:8] != b"VVC V1.0"
+                    or raw[8:16].rstrip(b"\0").decode("ascii", errors="replace") != controller["bam"]):
+                raise TransactionError(f"VVC controller BAM mismatch: {name}")
+            expected_carriers.add(name)
+            files.append(CandidateFile(name, path, snapshot))
         if relative_regular_files(carriers) != {PurePosixPath(n).name for n in expected_carriers}:
             raise TransactionError("BAM carrier inventory mismatch")
     elif effects_container is not None:
         manifest = json.loads((effects_container / "effects/manifest.json").read_text(encoding="utf-8-sig"))
-        if manifest.get("runtime_bam_carriers"):
+        if manifest.get("runtime_bam_carriers") or manifest.get("runtime_vvc_controllers"):
             raise TransactionError("Declared BAM carriers are missing from candidate")
     return files, source
 
@@ -536,6 +556,7 @@ def receipt_files(receipt: dict[str, object]) -> list[dict[str, object]]:
         or any(
             name not in MANAGED_FILES and not is_effect_candidate_name(name)
             and not EFFECT_BAM_CARRIER_NAME.fullmatch(name)
+            and not EFFECT_VVC_CONTROLLER_NAME.fullmatch(name)
             for name in managed
         )
     ):

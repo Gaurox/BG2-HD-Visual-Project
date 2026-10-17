@@ -148,6 +148,52 @@ class RendererCandidateTransactionTests(unittest.TestCase):
         transaction.restore_from_receipt(result.receipt_path, game_root=self.game, process_checker=lambda: [])
         self.assertEqual(target.read_bytes(), b"before-native-bam")
 
+    def write_vvc_candidate(self) -> Path:
+        self.write_carrier_candidate()
+        vvc = self.candidate / "override/Z58001.vvc"
+        raw = bytearray(0x1EC)
+        raw[:8] = b"VVC V1.0"
+        raw[8:16] = b"SPMAGMIS"
+        vvc.write_bytes(raw)
+        path = self.candidate / "iee-assets/effects/manifest.json"
+        manifest = json.loads(path.read_text())
+        manifest['runtime_vvc_controllers'] = [{'asset': 'override/Z58001.vvc',
+            'bam': 'SPMAGMIS', 'bytes': len(raw), 'sha256': transaction.sha256_file(vvc)}]
+        path.write_text(json.dumps(manifest))
+        return vvc
+
+    def test_vvc_controller_install_restore_and_removal(self) -> None:
+        vvc = self.write_vvc_candidate()
+        expected = vvc.read_bytes()
+        result = self.install()
+        target = self.game / 'override/Z58001.vvc'
+        self.assertEqual(target.read_bytes(), expected)
+        transaction.verify_transaction(result.receipt_path, self.game)
+        shutil.rmtree(self.candidate)
+        transaction.restore_from_receipt(result.receipt_path, game_root=self.game, process_checker=lambda: [])
+        self.assertFalse(target.exists())
+
+    def test_vvc_wrong_bam_rejected_even_with_matching_hash(self) -> None:
+        vvc = self.write_vvc_candidate()
+        raw = bytearray(vvc.read_bytes()); raw[8:16] = b'OTHERBAM'; vvc.write_bytes(raw)
+        path = self.candidate / 'iee-assets/effects/manifest.json'
+        manifest = json.loads(path.read_text())
+        manifest['runtime_vvc_controllers'][0]['sha256'] = transaction.sha256_file(vvc)
+        path.write_text(json.dumps(manifest))
+        with self.assertRaisesRegex(transaction.TransactionError, 'BAM mismatch'):
+            transaction.collect_candidate_files(self.candidate)
+
+    def test_four_digit_effect_backing_name_is_transactional(self) -> None:
+        self.write_effect_pack(self.candidate, b'large-effect')
+        root = self.candidate / 'iee-assets/effects'
+        (root / 'EFX4-SPMAGMIS-frame000.rgba').rename(root / 'EFX4-SPMAGMIS-frame1000.rgba')
+        path = root / 'manifest.json'; manifest = json.loads(path.read_text())
+        manifest['frames'][0]['asset'] = 'EFX4-SPMAGMIS-frame1000.rgba'
+        path.write_text(json.dumps(manifest))
+        result = self.install()
+        transaction.verify_transaction(result.receipt_path, self.game)
+        self.assertTrue((self.game / 'iee-assets/effects/EFX4-SPMAGMIS-frame1000.rgba').is_file())
+
     def test_modified_or_unlisted_bam_carrier_is_rejected_before_mutation(self) -> None:
         carrier = self.write_carrier_candidate()
         data = carrier.read_bytes()

@@ -1,0 +1,108 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPCL236",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 18,
+    "source": {
+      "interpolation_run": "spcl236-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "B9EFD5F886D1D45A1018FAFBF9ADA1AB1AA63BF47C1018EDF2D4F1404E308C48",
+      "source_bam_sha256": "6ea6c105202352ca4b18c94f36b3d2a7e88fc30d677bee37024ec45586ba3c3d",
+      "spatial_manifest_sha256": "6E5C24F9D0D1CC2EA90B74DD60997FC6F5E1EDE8F059F29359DF64D72441337A",
+      "spatial_run": "spcl236-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "7196A2BBB9708CCE911CA5CF096FA97674AEBE34C3713ADC0BAD554ECA4F8A1A"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        10
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          11,
+          13,
+          15,
+          9
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 10,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          9,
+          17
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 962,
+    "path": "effects/index/qa-decisions/SPCL236/2026-10-17-accepted-9e14e2d98399.json",
+    "sha256": "9E14E2D98399EBD5EA21A37823C9D64DCA097A264434E5C6E86BCF29B230BCC1"
+  },
+  "resref": "SPCL236",
+  "run_descriptor": {
+    "bytes": 1948,
+    "path": "effects/ressources/SPCL236/runs/spcl236-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "B9EFD5F886D1D45A1018FAFBF9ADA1AB1AA63BF47C1018EDF2D4F1404E308C48"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 13267,
+      "path": "effects/ressources/SPCL236/packs/spcl236-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "8CFABFE1E21C0A9C4E881608D9F611E4A1782B9B917AB06EAD5E4387AEDA149D"
+    },
+    "registry": {
+      "bytes": 268,
+      "path": "effects/ressources/SPCL236/packs/spcl236-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "5638B87F50AAFE18AD787F1105CBB2E2CB3711E4DE475A245A615C95F14C5C7F"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spcl236-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 4393,
+    "path": "effects/ressources/SPCL236/source.bam",
+    "sha256": "6EA6C105202352CA4B18C94F36B3D2A7E88FC30D677BEE37024EC45586BA3C3D"
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPSETSH",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 46,
+    "source": {
+      "interpolation_run": "spsetsh-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "2A38FBAAC7D596FCEE5018A81E198BDF220DB38971AA6D98210CBB577CE25889",
+      "source_bam_sha256": "f851ff493bd4d068330679f63f152bfb4a9985283d72811490145c61985cf33d",
+      "spatial_manifest_sha256": "969D403972CD82BBB8770AA47F312C30E458674344230802170D0ADE6293FE2A",
+      "spatial_run": "spsetsh-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "8BDAD558872637DFAAB70B2957CD9DB5D58E7AD77FB6D625276E6609B21D6AA1"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        24
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          25,
+          27,
+          29,
+          31,
+          33,
+          35,
+          37,
+          39,
+          41,
+          43,
+          23
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 24,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          23,
+          45
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 962,
+    "path": "effects/index/qa-decisions/SPSETSH/2026-10-17-accepted-3a782a173fa4.json",
+    "sha256": "3A782A173FA497F84E799AB8242DBEDF76681E598937172C9B22051BB63B3302"
+  },
+  "resref": "SPSETSH",
+  "run_descriptor": {
+    "bytes": 1950,
+    "path": "effects/ressources/SPSETSH/runs/spsetsh-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "2A38FBAAC7D596FCEE5018A81E198BDF220DB38971AA6D98210CBB577CE25889"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 30887,
+      "path": "effects/ressources/SPSETSH/packs/spsetsh-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "AC36509E2721E261255F4C35179E7B5765A6739CA3C9F6D51B46D6AD742B7051"
+    },
+    "registry": {
+      "bytes": 576,
+      "path": "effects/ressources/SPSETSH/packs/spsetsh-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "754D65569E303412E027914EC048E363AAF82A6C4C89252BCF7ED5C7A1F2B4AE"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spsetsh-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 53432,
+    "path": "effects/ressources/SPSETSH/source.bam",
+    "sha256": "F851FF493BD4D068330679F63F152BFB4A9985283D72811490145C61985CF33D"
+  }
+}

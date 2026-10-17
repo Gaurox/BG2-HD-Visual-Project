@@ -1,0 +1,101 @@
+{
+  "resref": "SPBGBFST",
+  "passed": true,
+  "native_cycles": 4,
+  "cycle_mode_variants": 4,
+  "phases": 132,
+  "cycles": [
+    {
+      "profile": "cycle000-once",
+      "cycle": 0,
+      "closed": false,
+      "source_slots": 28,
+      "output_phases": 56,
+      "duration": [
+        28,
+        15
+      ],
+      "unique_rgb": 56,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle001-once",
+      "cycle": 1,
+      "closed": false,
+      "source_slots": 28,
+      "output_phases": 56,
+      "duration": [
+        28,
+        15
+      ],
+      "unique_rgb": 56,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle002-loop",
+      "cycle": 2,
+      "closed": true,
+      "source_slots": 1,
+      "output_phases": 2,
+      "duration": [
+        1,
+        15
+      ],
+      "unique_rgb": 1,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": true,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle003-once",
+      "cycle": 3,
+      "closed": false,
+      "source_slots": 9,
+      "output_phases": 18,
+      "duration": [
+        9,
+        15
+      ],
+      "unique_rgb": 18,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    }
+  ],
+  "native_pixels_palette_world_geometry_preserved": true,
+  "source_model": "seedvr2_7b_int8_convrot.safetensors",
+  "scale": 4,
+  "target_fps": [
+    30,
+    1
+  ],
+  "filter": "NEAREST",
+  "pack_manifest_sha256": "5331D7D05DD26C6B8D178980B40F5F0C109816BAD8B252A4870E0CF5EBB89B4C",
+  "runtime_contract_rows": 264,
+  "native_input_keys_unique_before_apollo": true,
+  "native_fps": [
+    15,
+    1
+  ],
+  "native_rate_basis": "VVC field",
+  "straight_alpha_companions_verified": true,
+  "raw_bytes": 171261696,
+  "visual_qa": "pending-user-review",
+  "installed": false
+}

@@ -1,0 +1,176 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:FIREBGRX",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 86,
+    "source": {
+      "interpolation_run": "firebgrx-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "1F583A16D0471BBD77668C371321D0930497B69EBF558730D9D2A28FA53C73AF",
+      "source_bam_sha256": "c9efdf5e92191338a6f76c16267df57368c78dc69f625c5f04d7d20d2c9f63af",
+      "spatial_manifest_sha256": "1758AD3E17DC0948230519D6E36A088D368D1D17DF0C7FBECCEF29F80B2FE6D4",
+      "spatial_run": "firebgrx-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "156003EACD71D9B28A8861C4E6E05A6636108F93CF653D8229DB4D288DCD3A1D"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        44
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          45,
+          47,
+          49,
+          51,
+          53,
+          55,
+          57,
+          59,
+          61,
+          63,
+          65,
+          67,
+          69,
+          71,
+          73,
+          75,
+          77,
+          79,
+          81,
+          83,
+          43
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 44,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          43,
+          85
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 969,
+    "path": "effects/index/qa-decisions/FIREBGRX/2026-10-17-accepted-7acb81c991f0.json",
+    "sha256": "7ACB81C991F05F021055DE9FA74DE9042F62C277B8B6BBB3B91C1BE997F13457"
+  },
+  "resref": "FIREBGRX",
+  "run_descriptor": {
+    "bytes": 1966,
+    "path": "effects/ressources/FIREBGRX/runs/firebgrx-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "1F583A16D0471BBD77668C371321D0930497B69EBF558730D9D2A28FA53C73AF"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 56378,
+      "path": "effects/ressources/FIREBGRX/packs/firebgrx-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "B2F5C6D207AD0998CB3C28DFB2E5B61EE2C0F85FF08CA6DFBA214CF5F7F8EA5A"
+    },
+    "registry": {
+      "bytes": 1016,
+      "path": "effects/ressources/FIREBGRX/packs/firebgrx-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "5FDF37DEB5976258433EEB790EAB1680567D381E0A2502B6A66BB07DE885DDC8"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "firebgrx-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 54762,
+    "path": "effects/ressources/FIREBGRX/source.bam",
+    "sha256": "C9EFDF5E92191338A6F76C16267DF57368C78DC69F625C5F04D7D20D2C9F63AF"
+  }
+}

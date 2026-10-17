@@ -1,0 +1,260 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPLIGHTB",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          24,
+          25,
+          26,
+          27,
+          28,
+          29
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "lookup_start": 6
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "lookup_start": 12
+      },
+      {
+        "cycle": 3,
+        "frame_indices": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 18
+      },
+      {
+        "cycle": 4,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 24
+      }
+    ],
+    "frame_count": 110,
+    "source": {
+      "interpolation_run": "splightb-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "31A0A092CBD759CCA46EE81EDFC3576714EFAAD8C4CDF1F2949F767BE54F05C5",
+      "source_bam_sha256": "a8ef072a3068237d9107e9876accaf6d1369cde57c60e9d520951ac1689a91d2",
+      "spatial_manifest_sha256": "58A1ABBF6CAAE1A7C54893B232A3CDB0AD19C7574F42A57403374EF5549E016F",
+      "spatial_run": "splightb-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "4B3B8B6F2D7DE355BCF2E879D570EEB733F2C281C60776136771146D81C14FAF"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12,
+        12,
+        12,
+        12,
+        12
+      ],
+      "alternate_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop",
+        "cycle002-loop",
+        "cycle003-loop",
+        "cycle004-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          13,
+          15,
+          17,
+          19,
+          11
+        ],
+        [
+          22,
+          35,
+          37,
+          39,
+          41,
+          33
+        ],
+        [
+          44,
+          57,
+          59,
+          61,
+          63,
+          55
+        ],
+        [
+          66,
+          79,
+          81,
+          83,
+          85,
+          77
+        ],
+        [
+          88,
+          101,
+          103,
+          105,
+          107,
+          99
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 12,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          11,
+          21
+        ],
+        [
+          22,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          33,
+          43
+        ],
+        [
+          44,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          55,
+          65
+        ],
+        [
+          66,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          77,
+          87
+        ],
+        [
+          88,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          99,
+          109
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 969,
+    "path": "effects/index/qa-decisions/SPLIGHTB/2026-10-17-accepted-a7e61c9a3470.json",
+    "sha256": "A7E61C9A347040078072F23894F3C43D9136C6295599C1545949B12C046201D7"
+  },
+  "resref": "SPLIGHTB",
+  "run_descriptor": {
+    "bytes": 1966,
+    "path": "effects/ressources/SPLIGHTB/runs/splightb-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "31A0A092CBD759CCA46EE81EDFC3576714EFAAD8C4CDF1F2949F767BE54F05C5"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 72236,
+      "path": "effects/ressources/SPLIGHTB/packs/splightb-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "0F54D4BBE21F08A68C93967AA0B10E706620B3EBBDFB38783091312EB9FE93D2"
+    },
+    "registry": {
+      "bytes": 1320,
+      "path": "effects/ressources/SPLIGHTB/packs/splightb-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "42F83E48F6555E080F9A13568F2CB55A854F6171A2F6DB0ECBE57AFE5FFEEBC0"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "splightb-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 48102,
+    "path": "effects/ressources/SPLIGHTB/source.bam",
+    "sha256": "A8EF072A3068237D9107E9876ACCAF6D1369CDE57C60E9D520951AC1689A91D2"
+  }
+}

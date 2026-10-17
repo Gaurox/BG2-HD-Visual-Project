@@ -1,0 +1,229 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPCHRORB",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          16,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34
+        ],
+        "lookup_start": 16
+      }
+    ],
+    "frame_count": 124,
+    "source": {
+      "interpolation_run": "spchrorb-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "224D025F840B2011CB7884F5961B13B02DF471F5089118BE84D1FC5F80B881F1",
+      "source_bam_sha256": "931d3ce77d593f24390cc211910e65a78183e8db3227d59fcdc9e4ae0332c34f",
+      "spatial_manifest_sha256": "BAF5044954549FD04C6ADED08921B6DC91CE902B2E03FDE9CFA6500F5F16A927",
+      "spatial_run": "spchrorb-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "A087A8945B5B3F133B79708C421EAA57105A14FD8A6BF04C2A182D338A5CD2B4"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        32,
+        32
+      ],
+      "alternate_profiles": [
+        "cycle000-once",
+        "cycle001-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          33,
+          35,
+          37,
+          39,
+          41,
+          43,
+          45,
+          47,
+          49,
+          51,
+          53,
+          55,
+          57,
+          59,
+          31
+        ],
+        [
+          62,
+          95,
+          97,
+          99,
+          101,
+          103,
+          105,
+          107,
+          109,
+          111,
+          113,
+          115,
+          117,
+          89,
+          120,
+          122
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 32,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          31,
+          61
+        ],
+        [
+          62,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          115,
+          116,
+          117,
+          118,
+          89,
+          119,
+          120,
+          121,
+          122,
+          123
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 969,
+    "path": "effects/index/qa-decisions/SPCHRORB/2026-10-17-accepted-eaddaea8b52f.json",
+    "sha256": "EADDAEA8B52F60287813E50492867F9B3514BCA181DE65A5681D16C824A1278B"
+  },
+  "resref": "SPCHRORB",
+  "run_descriptor": {
+    "bytes": 1965,
+    "path": "effects/ressources/SPCHRORB/runs/spchrorb-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "224D025F840B2011CB7884F5961B13B02DF471F5089118BE84D1FC5F80B881F1"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 80253,
+      "path": "effects/ressources/SPCHRORB/packs/spchrorb-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "7FF1C193C30386F118A8E516D8DF914E1A8744C6B933705E0C75285DD00EE07E"
+    },
+    "registry": {
+      "bytes": 1444,
+      "path": "effects/ressources/SPCHRORB/packs/spchrorb-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "447DB85ED04FA5ADAB617CE3A5EB066C4387D5C81EB5CC0DC84C3239CDF9BC6C"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spchrorb-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 12386,
+    "path": "effects/ressources/SPCHRORB/source.bam",
+    "sha256": "931D3CE77D593F24390CC211910E65A78183E8DB3227D59FCDC9E4AE0332C34F"
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:OHBGOLD",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 24,
+    "source": {
+      "interpolation_run": "ohbgold-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "C247C8DCC494373E16E1541097ACB4D8723B2259F04BE5119FB01090F4ED0426",
+      "source_bam_sha256": "48fd41d5ebf5c23924af6ca3b7ecc252058cd1ecb537de53710f62ac6e2e5b0b",
+      "spatial_manifest_sha256": "4998E1856E23C300D1D19AC02040A4172D98A3591B8F64FD231BBBBEA95A9BA0",
+      "spatial_run": "ohbgold-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "CDF72A5D87718D795443FFC5C331FFB51C6278B1156A27EE94CAB50C827E2418"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        24
+      ],
+      "alternate_profiles": [],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22
+        ]
+      ],
+      "native_rate_basis": "VVC field",
+      "phase_count": 24,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 962,
+    "path": "effects/index/qa-decisions/OHBGOLD/2026-10-17-accepted-76ec17354c8c.json",
+    "sha256": "76EC17354C8CBE5BAC398803A5ED18AA0445185B7D09235C75C3950F4DF5B41A"
+  },
+  "resref": "OHBGOLD",
+  "run_descriptor": {
+    "bytes": 1950,
+    "path": "effects/ressources/OHBGOLD/runs/ohbgold-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "C247C8DCC494373E16E1541097ACB4D8723B2259F04BE5119FB01090F4ED0426"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 17275,
+      "path": "effects/ressources/OHBGOLD/packs/ohbgold-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "E9E6292285BA011B913AE18FADD74C0B7A680A267D4421F156E42F13419FAF27"
+    },
+    "registry": {
+      "bytes": 400,
+      "path": "effects/ressources/OHBGOLD/packs/ohbgold-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "7F4606E96DA10978820DA1985F743FF01A5760BF96F97E71AFA48DF73626F38B"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "ohbgold-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 120703,
+    "path": "effects/ressources/OHBGOLD/source.bam",
+    "sha256": "48FD41D5EBF5C23924AF6CA3B7ECC252058CD1ECB537DE53710F62AC6E2E5B0B"
+  }
+}

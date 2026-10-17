@@ -1,0 +1,174 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPFIRSDI",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 44,
+    "source": {
+      "interpolation_run": "spfirsdi-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "6E52F3BABA8AD5CBB31DDA0A999933D26D3DB201B91F3BD615A92305E8C57BA6",
+      "source_bam_sha256": "549d32412a1e7d225ba72bd1674cd2095cadd7341cd6ac2eac522c6b5edbbb89",
+      "spatial_manifest_sha256": "0EAD33EB03DBCCBDE7B811709FC98EB9D34AB807437BA78CD6737369EC486DBB",
+      "spatial_run": "spfirsdi-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "2C982F27CDC3A7CBA4F1D575009914BC8E19215550931CA619B293EF26A92FAC"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        44
+      ],
+      "alternate_profiles": [],
+      "cycle_profiles": [
+        "cycle000-once"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30,
+          32,
+          34,
+          36,
+          38,
+          40,
+          42
+        ]
+      ],
+      "native_rate_basis": "VVC field",
+      "phase_count": 44,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 969,
+    "path": "effects/index/qa-decisions/SPFIRSDI/2026-10-17-accepted-a6d1971ee2c2.json",
+    "sha256": "A6D1971EE2C2B17952FE71E80F90A8DE8527FFAE5CE7903BD23187682EB9C9ED"
+  },
+  "resref": "SPFIRSDI",
+  "run_descriptor": {
+    "bytes": 1965,
+    "path": "effects/ressources/SPFIRSDI/runs/spfirsdi-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "6E52F3BABA8AD5CBB31DDA0A999933D26D3DB201B91F3BD615A92305E8C57BA6"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 30204,
+      "path": "effects/ressources/SPFIRSDI/packs/spfirsdi-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "D9DCAF4CB9F42185D401B877A540AB0E8205F635DC05DFC504410806052A86C2"
+    },
+    "registry": {
+      "bytes": 680,
+      "path": "effects/ressources/SPFIRSDI/packs/spfirsdi-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "2168A88DF218865E6A62A8B4AA6E3C2022924FB010BFEB4084E56CB8E615556F"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spfirsdi-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 77661,
+    "path": "effects/ressources/SPFIRSDI/source.bam",
+    "sha256": "549D32412A1E7D225BA72BD1674CD2095CADD7341CD6AC2EAC522C6B5EDBBB89"
+  }
+}

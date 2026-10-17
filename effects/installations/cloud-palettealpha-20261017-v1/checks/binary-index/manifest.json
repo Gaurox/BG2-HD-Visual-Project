@@ -1,0 +1,56 @@
+{
+  "schema": "bg2-upscale-animation-frames-x1-v1",
+  "created_utc": "2026-10-17T14:05:51.142012+00:00",
+  "source": "G:/AI/BG2_Upscale/effects/installations/cloud-palettealpha-20261017-v1/checks/palette-fixture.bam",
+  "source_sha256": "de0e7c86fabf5bde2b34e4c47463bb97972294833a8ff6bf40a47e2dce1fbe04",
+  "format": "BAM V1",
+  "frame_count": 1,
+  "source_transparent_index": 0,
+  "alpha_policy": "binary-index",
+  "aligned_canvas_size": [
+    2,
+    2
+  ],
+  "anchor_bounds": {
+    "left": 0,
+    "top": 0,
+    "right": 2,
+    "bottom": 2
+  },
+  "geometry_mode": "uniform",
+  "frames": [
+    {
+      "frame": 0,
+      "file": "frame_000.png",
+      "source_size": [
+        2,
+        2
+      ],
+      "centre": [
+        0,
+        0
+      ],
+      "canvas_offset": [
+        0,
+        0
+      ],
+      "rgb_sha256": "63b6f24c46af2efb69e492a672b77b852e73a3c0bfd020cb7921884512633487",
+      "alpha_sha256": "33b111c1dacfa5f9ceaf78c6eb87cc1d4e598052b7a64721e4b2b22799818d5a",
+      "rgba_sha256": "ad80879c7bf66eb8b1de37a7aeaffd7498bbfb5b5572e65325bc5226f56dc844"
+    }
+  ],
+  "cycles": [
+    {
+      "cycle": 0,
+      "lookup_start": 0,
+      "frame_indices": [
+        0
+      ]
+    }
+  ],
+  "notes": [
+    "Use rgb/ as input to an image-only interpolation model.",
+    "Keep alpha/ separate; rgba/ is the authoritative source export.",
+    "The BAM format does not store frames-per-second; preserve cycle duration at reconstruction."
+  ]
+}

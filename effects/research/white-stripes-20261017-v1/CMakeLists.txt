@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.20)
+project(effect_flush_coherence_probe LANGUAGES CXX)
+add_executable(effect_flush_coherence_probe flush_coherence_probe.cpp)
+target_compile_features(effect_flush_coherence_probe PRIVATE cxx_std_20)
+target_include_directories(effect_flush_coherence_probe PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../engine/InfinityEngine-Enhancer/source-patchee/src")
+target_compile_definitions(effect_flush_coherence_probe PRIVATE NOMINMAX WIN32_LEAN_AND_MEAN)
+target_link_libraries(effect_flush_coherence_probe PRIVATE opengl32 user32 gdi32)

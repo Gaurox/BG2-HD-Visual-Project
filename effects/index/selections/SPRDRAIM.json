@@ -1,0 +1,136 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPRDRAIM",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 46,
+    "source": {
+      "interpolation_run": "sprdraim-apollo30-retimed-strict-20261016-v1",
+      "interpolation_run_descriptor_sha256": "1F059568116FBA35CD7E33055309CDA00CC0BCD92DB24C1167D64E8A5B806A0E",
+      "source_bam_sha256": "8bbb088d96ea1f4f038bf99510a9b8f417670036120dd38c8b10f4f94b3fedb7",
+      "spatial_manifest_sha256": "1B29D83E6BF0F1C60677B8D717AA2B80CB25EB8E555EE189676D2A4F84435758",
+      "spatial_run": "sprdraim-seedvr7b-x4-20261016-v1",
+      "spatial_run_descriptor_sha256": "570748942B8194C047F912C11689626F382F2D1AA8B31830A3224EE0A2A895B9"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        24
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          25,
+          27,
+          29,
+          31,
+          33,
+          35,
+          37,
+          39,
+          41,
+          43,
+          23
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 24,
+      "render_profile_policy": "premultiplied default pack; straight-alpha companions retained in run; owner render mode routing requires integration review",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          23,
+          45
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-17",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 969,
+    "path": "effects/index/qa-decisions/SPRDRAIM/2026-10-17-accepted-f30258190d0d.json",
+    "sha256": "F30258190D0DF04472B119BBCEA69A98A162C6F2E742C4E7967FC2E04EC06F87"
+  },
+  "resref": "SPRDRAIM",
+  "run_descriptor": {
+    "bytes": 1965,
+    "path": "effects/ressources/SPRDRAIM/runs/sprdraim-apollo30-retimed-strict-20261016-v1/run.json",
+    "sha256": "1F059568116FBA35CD7E33055309CDA00CC0BCD92DB24C1167D64E8A5B806A0E"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 31015,
+      "path": "effects/ressources/SPRDRAIM/packs/sprdraim-7b-x4-apollo30-20261016-v1/manifest.json",
+      "sha256": "A3AB7C132F759BD58F7A5BEB281194B1B27C55D94D4735A8A6A44C23C1A42366"
+    },
+    "registry": {
+      "bytes": 576,
+      "path": "effects/ressources/SPRDRAIM/packs/sprdraim-7b-x4-apollo30-20261016-v1/EffectAnimations-X4.registry",
+      "sha256": "6C19F6E62B5EB6F763E4E652C1B05607DC2EBE9E809549C9E34860DE2E17048E"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "sprdraim-apollo30-retimed-strict-20261016-v1",
+  "source": {
+    "bytes": 32882,
+    "path": "effects/ressources/SPRDRAIM/source.bam",
+    "sha256": "8BBB088D96EA1F4F038BF99510A9B8F417670036120DD38C8B10F4F94B3FEDB7"
+  }
+}
