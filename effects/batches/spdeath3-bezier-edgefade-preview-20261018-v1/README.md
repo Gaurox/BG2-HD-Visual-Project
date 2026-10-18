@@ -1,0 +1,8 @@
+# SPDEATH3 — fondu du contour2026-10-18
+
+- Base Bézier précédente **validée visuellement par utilisateur** ; [`accepted-base.json`](accepted-base.json) limite la portée à ce comparatif, sans acceptation ingame ni du lot33. Nouvelle demande : flou gaussien/fondu des contours pour intégration aux décors.
+- [`Comparatif animé`](review/index.html) : témoin Bézier /fondu doux sigma2 /fondu diffus sigma4. [`Vue entière`](review/full-comparison.png), [`détail`](review/detail.png). Animation synchronisée,2profils once+loop62phases/2.066667s, fonds/alpha seul/curseur de phase.
+-124phases par variante, RGB du cœur et timing exacts. Filtre gaussien RGBA prémultiplié limité au bord, transition progressive vers cœur inchangé au-delà8px (doux) /16px (diffus). Aucune érosion imposée ; marge transparente supplémentaire16px x4 commune aux vues pour ne pas couper le fondu. Pas de nouvelle inférence/interpolation.
+- [`summary.json`](summary.json), [`result.json`](result.json) : cœur identique dans les deux encodages, aucune nouvelle phase vide, aucun fondu tronqué, prémultiplication vérifiée. Masse alpha varie de−0.024% à+0.297% (doux),+0.007% à+0.657% (diffus). Flux RGB prémultiplié : variation absolue maximale1.264%/1.525%.
+- Aperçu uniquement ; nouvelle intensité en attente de choix visuel. Installation actuelle/Z33T33 inchangée, aucune autorité de production/QA/install/release modifiée. Les raws256×416 comprennent une marge d'aperçu ; future installation doit adapter carrier/dimensions/centres sans déplacement monde.
+- [`Recette`](../../../pipeline/recipes/effects-spdeath3-edgefade-preview-20261018-v1/README.md) ; formule connue de fondu prémultiplié AM3000E, réutilisée pour le calcul raster seul.

@@ -1,0 +1,112 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPRING",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 22,
+    "source": {
+      "interpolation_run": "spring-apollo30-native-retimed-20261017-v1",
+      "interpolation_run_descriptor_sha256": "8CA51752DB6B65E0EE40EC50E0656F7534DDB62F4E022F4A5AEDCA359DE415B2",
+      "source_bam_sha256": "8e7a1711e6828ee45992d19619cb539125710fbd34a63f2a2f77e65828e40585",
+      "spatial_manifest_sha256": "1BF54D6DA7114FF52195ED69B76A26B0FE9E73DA14DCA70A8F235FFC3D79CCA9",
+      "spatial_run": "spring-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "7C5332230BB8859543F53C465F26F7EA1E9CE640FF61FC5067CC65E0221F18FD"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          13,
+          15,
+          17,
+          19,
+          11
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 12,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          11,
+          21
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-18",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 946,
+    "path": "effects/index/qa-decisions/SPRING/2026-10-18-accepted-24ea63307c90.json",
+    "sha256": "24EA63307C9085B9F8F4CFBA86D4BBA8987D030B7AAABB68FEBA71E766C148CF"
+  },
+  "resref": "SPRING",
+  "run_descriptor": {
+    "bytes": 1944,
+    "path": "effects/ressources/SPRING/runs/spring-apollo30-native-retimed-20261017-v1/run.json",
+    "sha256": "8CA51752DB6B65E0EE40EC50E0656F7534DDB62F4E022F4A5AEDCA359DE415B2"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 15738,
+      "path": "effects/ressources/SPRING/packs/spring-7b-x4-apollo30-native-20261017-v1/manifest.json",
+      "sha256": "51115BCBACFAE6B4DA89A897FD0BDD0FCCBE8701A181D7C0CA4AF581DAC52859"
+    },
+    "registry": {
+      "bytes": 312,
+      "path": "effects/ressources/SPRING/packs/spring-7b-x4-apollo30-native-20261017-v1/EffectAnimations-X4.registry",
+      "sha256": "EE9D217CF4CBC01B029CB88CE17380F57659DC4FEA4C3540AE4C125EACE8DFA5"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spring-apollo30-native-retimed-20261017-v1",
+  "source": {
+    "bytes": 3031,
+    "path": "effects/ressources/SPRING/source.bam",
+    "sha256": "8E7A1711E6828EE45992D19619CB539125710FBD34A63F2A2F77E65828E40585"
+  }
+}

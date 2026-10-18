@@ -1,0 +1,136 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPBOOM",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 46,
+    "source": {
+      "interpolation_run": "spboom-apollo30-native-retimed-20261017-v1",
+      "interpolation_run_descriptor_sha256": "D36105F354DF28CC57BA7D3B34823983E21BDF1B6CBC7CA499E723D5913C58C5",
+      "source_bam_sha256": "982b744717089a1b88ff33fd84711ed8cd0b47ac1ddfc8410bc5be8808b0872a",
+      "spatial_manifest_sha256": "274E36157A8BD0D43409636B554046FF76459D31EC143E86648F086F44D9DB86",
+      "spatial_run": "spboom-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "DB294624D05EA101D33134A5629B58B0AE54AFB006E0A3EE12074A163B481B39"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        24
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          25,
+          27,
+          29,
+          31,
+          33,
+          35,
+          37,
+          39,
+          41,
+          43,
+          23
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 24,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          23,
+          45
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-18",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 946,
+    "path": "effects/index/qa-decisions/SPBOOM/2026-10-18-accepted-8a0cfdd9c117.json",
+    "sha256": "8A0CFDD9C117DD7A51AA1C5C2747767CC0DB709FD71996F5C5B7304145D0AA98"
+  },
+  "resref": "SPBOOM",
+  "run_descriptor": {
+    "bytes": 1944,
+    "path": "effects/ressources/SPBOOM/runs/spboom-apollo30-native-retimed-20261017-v1/run.json",
+    "sha256": "D36105F354DF28CC57BA7D3B34823983E21BDF1B6CBC7CA499E723D5913C58C5"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 30714,
+      "path": "effects/ressources/SPBOOM/packs/spboom-7b-x4-apollo30-native-20261017-v1/manifest.json",
+      "sha256": "C130D1C29603A1A9AC23EECDCA78BBF8CB66CB3B98364C03E2DCB08E02C1736E"
+    },
+    "registry": {
+      "bytes": 576,
+      "path": "effects/ressources/SPBOOM/packs/spboom-7b-x4-apollo30-native-20261017-v1/EffectAnimations-X4.registry",
+      "sha256": "3861C03C670044D43931CBD64D42C2ACB373A16B0E654F1A2D038F900A7EF610"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spboom-apollo30-native-retimed-20261017-v1",
+  "source": {
+    "bytes": 11214,
+    "path": "effects/ressources/SPBOOM/source.bam",
+    "sha256": "982B744717089A1B88FF33FD84711ED8CD0B47AC1DDFC8410BC5BE8808B0872A"
+  }
+}

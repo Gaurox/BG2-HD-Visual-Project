@@ -1,0 +1,160 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SHWATER",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 70,
+    "source": {
+      "interpolation_run": "shwater-apollo30-native-retimed-20261017-v1",
+      "interpolation_run_descriptor_sha256": "CB010148BEA7AA5838FEF66E1E1ABD1DB3AC8CA9383531D7001A3DA830B7A628",
+      "source_bam_sha256": "0d2999695fd3077d5b64d1559c82e054bd23de53b1c5bd62b3a5b7222886917d",
+      "spatial_manifest_sha256": "4B79827D9196BBF43756258D3BF7ACDCDBAFC5EF8C3ED10324E26AA88A935488",
+      "spatial_run": "shwater-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "76004ACFAA28143ECFABB02D191CDFF46BDB472227070146FC820A1F77D732C8"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        36
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          37,
+          39,
+          41,
+          43,
+          45,
+          47,
+          49,
+          51,
+          53,
+          55,
+          57,
+          59,
+          61,
+          63,
+          65,
+          67,
+          35
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 36,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          35,
+          69
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-18",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 953,
+    "path": "effects/index/qa-decisions/SHWATER/2026-10-18-accepted-454de3503799.json",
+    "sha256": "454DE3503799FE029187A26DA5D75132295D780A4AEA176E9449B8326676C9BF"
+  },
+  "resref": "SHWATER",
+  "run_descriptor": {
+    "bytes": 1960,
+    "path": "effects/ressources/SHWATER/runs/shwater-apollo30-native-retimed-20261017-v1/run.json",
+    "sha256": "CB010148BEA7AA5838FEF66E1E1ABD1DB3AC8CA9383531D7001A3DA830B7A628"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 45867,
+      "path": "effects/ressources/SHWATER/packs/shwater-7b-x4-apollo30-native-20261017-v1/manifest.json",
+      "sha256": "1B8F7A9F31E78B15E73977D268ECBCCDD1380525BFF4C1EA926570F515A91E50"
+    },
+    "registry": {
+      "bytes": 840,
+      "path": "effects/ressources/SHWATER/packs/shwater-7b-x4-apollo30-native-20261017-v1/EffectAnimations-X4.registry",
+      "sha256": "5C0CB819110B6D6FBCCEAE8BDDB9F34125269DA3F15EF4520B77F4C33F54A916"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "shwater-apollo30-native-retimed-20261017-v1",
+  "source": {
+    "bytes": 16404,
+    "path": "effects/ressources/SHWATER/source.bam",
+    "sha256": "0D2999695FD3077D5B64D1559C82E054BD23DE53B1C5BD62B3A5B7222886917D"
+  }
+}

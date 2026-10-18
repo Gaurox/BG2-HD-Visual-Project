@@ -1,0 +1,380 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPCCOLDL",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "lookup_start": 12
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35
+        ],
+        "lookup_start": 24
+      },
+      {
+        "cycle": 3,
+        "frame_indices": [
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47
+        ],
+        "lookup_start": 36
+      },
+      {
+        "cycle": 4,
+        "frame_indices": [
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59
+        ],
+        "lookup_start": 48
+      }
+    ],
+    "frame_count": 230,
+    "source": {
+      "interpolation_run": "spccoldl-apollo30-native-retimed-20261017-v1",
+      "interpolation_run_descriptor_sha256": "091AB879AF6F022D9179522771B8E5CD6BF84A162E1CC2EB704C750E621342CE",
+      "source_bam_sha256": "ef55a7306d1f588c77f1da099a1605b4b172d6d9ccd34a008680b8372ad9fa19",
+      "spatial_manifest_sha256": "4DC3A1D4112F8C9628C09928811BDD8C5BF5BEDADC779CF4BCAA34616BC1B6C7",
+      "spatial_run": "spccoldl-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "C721A4239090EA2D8130A961DC503901A677558E2938525EA2A43D8B9BE72EDA"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        24,
+        24,
+        24,
+        24,
+        24
+      ],
+      "alternate_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop",
+        "cycle002-loop",
+        "cycle003-loop",
+        "cycle004-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          25,
+          27,
+          29,
+          31,
+          33,
+          35,
+          37,
+          39,
+          41,
+          43,
+          23
+        ],
+        [
+          46,
+          71,
+          73,
+          75,
+          77,
+          79,
+          81,
+          83,
+          85,
+          87,
+          89,
+          69
+        ],
+        [
+          92,
+          117,
+          119,
+          121,
+          123,
+          125,
+          127,
+          129,
+          131,
+          133,
+          135,
+          115
+        ],
+        [
+          138,
+          163,
+          165,
+          167,
+          169,
+          171,
+          173,
+          175,
+          177,
+          179,
+          181,
+          161
+        ],
+        [
+          184,
+          209,
+          211,
+          213,
+          215,
+          217,
+          219,
+          221,
+          223,
+          225,
+          227,
+          207
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 24,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          23,
+          45
+        ],
+        [
+          46,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          69,
+          91
+        ],
+        [
+          92,
+          116,
+          117,
+          118,
+          119,
+          120,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126,
+          127,
+          128,
+          129,
+          130,
+          131,
+          132,
+          133,
+          134,
+          135,
+          136,
+          115,
+          137
+        ],
+        [
+          138,
+          162,
+          163,
+          164,
+          165,
+          166,
+          167,
+          168,
+          169,
+          170,
+          171,
+          172,
+          173,
+          174,
+          175,
+          176,
+          177,
+          178,
+          179,
+          180,
+          181,
+          182,
+          161,
+          183
+        ],
+        [
+          184,
+          208,
+          209,
+          210,
+          211,
+          212,
+          213,
+          214,
+          215,
+          216,
+          217,
+          218,
+          219,
+          220,
+          221,
+          222,
+          223,
+          224,
+          225,
+          226,
+          227,
+          228,
+          207,
+          229
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-18",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 960,
+    "path": "effects/index/qa-decisions/SPCCOLDL/2026-10-18-accepted-8872174f7716.json",
+    "sha256": "8872174F77162706B08E3CE0CC4E093EAABCB4D30549770D27064ABA677E81F2"
+  },
+  "resref": "SPCCOLDL",
+  "run_descriptor": {
+    "bytes": 1976,
+    "path": "effects/ressources/SPCCOLDL/runs/spccoldl-apollo30-native-retimed-20261017-v1/run.json",
+    "sha256": "091AB879AF6F022D9179522771B8E5CD6BF84A162E1CC2EB704C750E621342CE"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 148018,
+      "path": "effects/ressources/SPCCOLDL/packs/spccoldl-7b-x4-apollo30-native-20261017-v1/manifest.json",
+      "sha256": "2CC2BF8E9C37D04E98288BCC9422C30A402F9CF174E66377A10E73F3047189D4"
+    },
+    "registry": {
+      "bytes": 2640,
+      "path": "effects/ressources/SPCCOLDL/packs/spccoldl-7b-x4-apollo30-native-20261017-v1/EffectAnimations-X4.registry",
+      "sha256": "8520E20028EFC5CE4B4E7F873FFB15E658BEEB1A6626774A9A96C184CD6E59C1"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spccoldl-apollo30-native-retimed-20261017-v1",
+  "source": {
+    "bytes": 78748,
+    "path": "effects/ressources/SPCCOLDL/source.bam",
+    "sha256": "EF55A7306D1F588C77F1DA099A1605B4B172D6D9CCD34A008680B8372AD9FA19"
+  }
+}

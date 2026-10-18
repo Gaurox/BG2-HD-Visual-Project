@@ -1,0 +1,184 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPCSPRA2",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 94,
+    "source": {
+      "interpolation_run": "spcspra2-apollo30-native-retimed-20261017-v1",
+      "interpolation_run_descriptor_sha256": "F3D4020E842C7C8DC51DB361FF97C3317E6C3B7093AC9E3FBB449B21D41E4CA8",
+      "source_bam_sha256": "20659c8bff45f84f8d85ffc8b88eab259722b27e58b2629cab331916ff5a58b6",
+      "spatial_manifest_sha256": "4AC4C96E94B3A3407DB1408123B1C6F48AA6788F538A9903EC541F49CB1DF41C",
+      "spatial_run": "spcspra2-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "6A36E7C166AFFF008E82F36613BFC8A247BFAA4CBB90DF4F064E6E646E1061F1"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        48
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          49,
+          51,
+          53,
+          55,
+          57,
+          59,
+          61,
+          63,
+          65,
+          67,
+          69,
+          71,
+          73,
+          75,
+          77,
+          79,
+          81,
+          83,
+          85,
+          87,
+          89,
+          91,
+          47
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 48,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          47,
+          93
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-18",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 960,
+    "path": "effects/index/qa-decisions/SPCSPRA2/2026-10-18-accepted-44cec1d699b9.json",
+    "sha256": "44CEC1D699B9D490D3B80F6570139F5E47D1BD52BC29ACBA5487920296101051"
+  },
+  "resref": "SPCSPRA2",
+  "run_descriptor": {
+    "bytes": 1975,
+    "path": "effects/ressources/SPCSPRA2/runs/spcspra2-apollo30-native-retimed-20261017-v1/run.json",
+    "sha256": "F3D4020E842C7C8DC51DB361FF97C3317E6C3B7093AC9E3FBB449B21D41E4CA8"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 61237,
+      "path": "effects/ressources/SPCSPRA2/packs/spcspra2-7b-x4-apollo30-native-20261017-v1/manifest.json",
+      "sha256": "651AD337949BAB90399B451A330695657F5739C006D833D7103A9D09B200CDDB"
+    },
+    "registry": {
+      "bytes": 1104,
+      "path": "effects/ressources/SPCSPRA2/packs/spcspra2-7b-x4-apollo30-native-20261017-v1/EffectAnimations-X4.registry",
+      "sha256": "0B2C1A7F60DD01D457987F42EC0101321B01BBD8625C9966EBA87E68833F7357"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spcspra2-apollo30-native-retimed-20261017-v1",
+  "source": {
+    "bytes": 19766,
+    "path": "effects/ressources/SPCSPRA2/source.bam",
+    "sha256": "20659C8BFF45F84F8D85FFC8B88EAB259722B27E58B2629CAB331916FF5A58B6"
+  }
+}

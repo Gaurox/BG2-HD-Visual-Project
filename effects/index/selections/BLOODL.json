@@ -1,0 +1,140 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:BLOODL",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 50,
+    "source": {
+      "interpolation_run": "bloodl-apollo30-native-retimed-20261017-v1",
+      "interpolation_run_descriptor_sha256": "97C944322496FC36DB9B96301DBE9FC96B58FDE431439839DFA56D15DEBC34C1",
+      "source_bam_sha256": "d961d83152b32b8650ba214aa81aba3c5f49d7689e8c2f252ef1f86b767cf5b2",
+      "spatial_manifest_sha256": "253ABBE58DD44612528D07D31E0D1FA0ABAFB0B070381ECC595C39F2EA9211F7",
+      "spatial_run": "bloodl-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "F7F4B9119D1A2A43FD4B4D01B4CA7C2B22F9931246F0C2E5B5229D897FDC2E82"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        26
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          27,
+          29,
+          31,
+          33,
+          35,
+          37,
+          39,
+          41,
+          43,
+          45,
+          47,
+          25
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 26,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          25,
+          49
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-18",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 946,
+    "path": "effects/index/qa-decisions/BLOODL/2026-10-18-accepted-9077db0b5d3a.json",
+    "sha256": "9077DB0B5D3A8C66EB74B84F792A776ACFCDB74BE9E6A5F017E8E1173D82D998"
+  },
+  "resref": "BLOODL",
+  "run_descriptor": {
+    "bytes": 1944,
+    "path": "effects/ressources/BLOODL/runs/bloodl-apollo30-native-retimed-20261017-v1/run.json",
+    "sha256": "97C944322496FC36DB9B96301DBE9FC96B58FDE431439839DFA56D15DEBC34C1"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 33151,
+      "path": "effects/ressources/BLOODL/packs/bloodl-7b-x4-apollo30-native-20261017-v1/manifest.json",
+      "sha256": "1D672500525DAA75E19571B2F3222E1EA44BB1C03DD22B7C77ABA179D5AC3E39"
+    },
+    "registry": {
+      "bytes": 620,
+      "path": "effects/ressources/BLOODL/packs/bloodl-7b-x4-apollo30-native-20261017-v1/EffectAnimations-X4.registry",
+      "sha256": "166124E2ABA5E3B96CFC63FFC825F2EB89A75B8FB6CBB8ED2B19852B05BE34EE"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "bloodl-apollo30-native-retimed-20261017-v1",
+  "source": {
+    "bytes": 2035,
+    "path": "effects/ressources/BLOODL/source.bam",
+    "sha256": "D961D83152B32B8650BA214AA81ABA3C5F49D7689E8C2F252EF1F86B767CF5B2"
+  }
+}

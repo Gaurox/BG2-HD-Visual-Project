@@ -1,0 +1,112 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SHAREA",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 22,
+    "source": {
+      "interpolation_run": "sharea-apollo30-native-retimed-20261017-v1",
+      "interpolation_run_descriptor_sha256": "4B4C4A09BCF1FD83E72F51A3ED1A69BA568D13E005814B59D93D447BE39DFE79",
+      "source_bam_sha256": "8b9c776da0bea3f6c557dc26d43bb8bb3fd0ccfe3a499bc7ffd43e186ece6711",
+      "spatial_manifest_sha256": "64ADE7FA960F1EAEBDE4D45128A722BD451C0DB341B0047EE535815ED5AE72CF",
+      "spatial_run": "sharea-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "8E0E5CB9FE7A9AF25DE938EC9CC5A192AD68D4AA26C19641EFC34C421E831E66"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          13,
+          15,
+          17,
+          19,
+          11
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 12,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          11,
+          21
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-18",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 946,
+    "path": "effects/index/qa-decisions/SHAREA/2026-10-18-accepted-69fa2c37dca3.json",
+    "sha256": "69FA2C37DCA3D2A232010C87751EB0A47C6F43811A64477908B63C9234FCDDAA"
+  },
+  "resref": "SHAREA",
+  "run_descriptor": {
+    "bytes": 1944,
+    "path": "effects/ressources/SHAREA/runs/sharea-apollo30-native-retimed-20261017-v1/run.json",
+    "sha256": "4B4C4A09BCF1FD83E72F51A3ED1A69BA568D13E005814B59D93D447BE39DFE79"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 15750,
+      "path": "effects/ressources/SHAREA/packs/sharea-7b-x4-apollo30-native-20261017-v1/manifest.json",
+      "sha256": "CEB68F66C95E947CE90BE1386396C6DF101DEE92C3554F03FAABD293E14ACD31"
+    },
+    "registry": {
+      "bytes": 312,
+      "path": "effects/ressources/SHAREA/packs/sharea-7b-x4-apollo30-native-20261017-v1/EffectAnimations-X4.registry",
+      "sha256": "FF57000ECA759B225F1D861AC2ECEDDE647CBF4962724D8D7829AAEF1FC95521"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "sharea-apollo30-native-retimed-20261017-v1",
+  "source": {
+    "bytes": 12888,
+    "path": "effects/ressources/SHAREA/source.bam",
+    "sha256": "8B9C776DA0BEA3F6C557DC26D43BB8BB3FD0CCFE3A499BC7FFD43E186ECE6711"
+  }
+}

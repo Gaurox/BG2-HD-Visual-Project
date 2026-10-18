@@ -1,0 +1,112 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPSMKJET",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 22,
+    "source": {
+      "interpolation_run": "spsmkjet-apollo30-native-retimed-20261017-v1",
+      "interpolation_run_descriptor_sha256": "2C845F4B52663EA810809AA752B62D5CF80C48C922A95AC0633A4FD031682E20",
+      "source_bam_sha256": "c7906827ae25477d8f8404bc0ee7a6a1055d8602a9c000241f2cfad8252d6da2",
+      "spatial_manifest_sha256": "DA834D7E8857F84C2FB67C3E6DC64F2483D80D5F82C2282E6CEA1195F962DD16",
+      "spatial_run": "spsmkjet-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "BD9E8A5C2A3B5D87FDE7CA9698822F612E6CA2EA5831C41756188B83E88777D8"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          13,
+          15,
+          17,
+          19,
+          11
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 12,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          11,
+          21
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-18",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 960,
+    "path": "effects/index/qa-decisions/SPSMKJET/2026-10-18-accepted-acadbfc5e622.json",
+    "sha256": "ACADBFC5E62201C4F3439410B427BA087D7B95FD3B7057492B412A6624C5D7D9"
+  },
+  "resref": "SPSMKJET",
+  "run_descriptor": {
+    "bytes": 1974,
+    "path": "effects/ressources/SPSMKJET/runs/spsmkjet-apollo30-native-retimed-20261017-v1/run.json",
+    "sha256": "2C845F4B52663EA810809AA752B62D5CF80C48C922A95AC0633A4FD031682E20"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 15880,
+      "path": "effects/ressources/SPSMKJET/packs/spsmkjet-7b-x4-apollo30-native-20261017-v1/manifest.json",
+      "sha256": "731AED9753D605593C30508B572C84CF4F11483F9C95635A98ED38348DF5A9EB"
+    },
+    "registry": {
+      "bytes": 312,
+      "path": "effects/ressources/SPSMKJET/packs/spsmkjet-7b-x4-apollo30-native-20261017-v1/EffectAnimations-X4.registry",
+      "sha256": "3FBA0DA39FA052ED4A5F8DEC9D55D514138225F7BF7885149A8831CCFD6BB375"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spsmkjet-apollo30-native-retimed-20261017-v1",
+  "source": {
+    "bytes": 1257,
+    "path": "effects/ressources/SPSMKJET/source.bam",
+    "sha256": "C7906827AE25477D8F8404BC0EE7A6A1055D8602A9C000241F2CFAD8252D6DA2"
+  }
+}

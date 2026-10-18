@@ -1,0 +1,294 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPHLYSM3",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29
+        ],
+        "lookup_start": 15
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44
+        ],
+        "lookup_start": 30
+      }
+    ],
+    "frame_count": 174,
+    "source": {
+      "interpolation_run": "sphlysm3-apollo30-native-retimed-20261017-v1",
+      "interpolation_run_descriptor_sha256": "73187CEE0939DDDF26DAA585F7013FC6C44C56B9AB5BDD1519006ABD0C6FF0E1",
+      "source_bam_sha256": "1928490d39c701ad7543da3144136f3b600a6d2f5ce766773df849352284dfd9",
+      "spatial_manifest_sha256": "FD5A9156146DA75CDB22D9DE26FBA47DF6AEBF561426DAD1005DFFA71B8EFBAC",
+      "spatial_run": "sphlysm3-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "D8F59732C3D9150ABA47CBB1040629603B8CAE682124501F3B26021AB6FFACC6"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        30,
+        30,
+        30
+      ],
+      "alternate_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop",
+        "cycle002-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          31,
+          33,
+          35,
+          37,
+          39,
+          41,
+          43,
+          45,
+          47,
+          49,
+          51,
+          53,
+          55,
+          29
+        ],
+        [
+          58,
+          89,
+          91,
+          93,
+          95,
+          97,
+          99,
+          101,
+          103,
+          105,
+          107,
+          109,
+          111,
+          113,
+          87
+        ],
+        [
+          116,
+          147,
+          149,
+          151,
+          153,
+          155,
+          157,
+          159,
+          161,
+          163,
+          165,
+          167,
+          169,
+          171,
+          145
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 30,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          29,
+          57
+        ],
+        [
+          58,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          87,
+          115
+        ],
+        [
+          116,
+          146,
+          147,
+          148,
+          149,
+          150,
+          151,
+          152,
+          153,
+          154,
+          155,
+          156,
+          157,
+          158,
+          159,
+          160,
+          161,
+          162,
+          163,
+          164,
+          165,
+          166,
+          167,
+          168,
+          169,
+          170,
+          171,
+          172,
+          145,
+          173
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-18",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 960,
+    "path": "effects/index/qa-decisions/SPHLYSM3/2026-10-18-accepted-7fd40002a39c.json",
+    "sha256": "7FD40002A39C0A5B010D0E1D821AEE65F9434DF31F3E5944081CE2BB3F8EEADE"
+  },
+  "resref": "SPHLYSM3",
+  "run_descriptor": {
+    "bytes": 1976,
+    "path": "effects/ressources/SPHLYSM3/runs/sphlysm3-apollo30-native-retimed-20261017-v1/run.json",
+    "sha256": "73187CEE0939DDDF26DAA585F7013FC6C44C56B9AB5BDD1519006ABD0C6FF0E1"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 112584,
+      "path": "effects/ressources/SPHLYSM3/packs/sphlysm3-7b-x4-apollo30-native-20261017-v1/manifest.json",
+      "sha256": "632CE1FF31E9A5101B97CD701A99FCD49B1D35A0BFF5055E5607D81C27DB15A9"
+    },
+    "registry": {
+      "bytes": 2004,
+      "path": "effects/ressources/SPHLYSM3/packs/sphlysm3-7b-x4-apollo30-native-20261017-v1/EffectAnimations-X4.registry",
+      "sha256": "9E263E7E6EAE3920295FFB978C2717A751EB3188A5EF65C630FEB1CA2DEA6E0A"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "sphlysm3-apollo30-native-retimed-20261017-v1",
+  "source": {
+    "bytes": 99009,
+    "path": "effects/ressources/SPHLYSM3/source.bam",
+    "sha256": "1928490D39C701AD7543DA3144136F3B600A6D2F5CE766773DF849352284DFD9"
+  }
+}

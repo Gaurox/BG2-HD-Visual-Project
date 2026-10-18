@@ -1,0 +1,140 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:BLOODM",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 50,
+    "source": {
+      "interpolation_run": "bloodm-apollo30-native-retimed-20261017-v1",
+      "interpolation_run_descriptor_sha256": "5F7ADAA2FCB97D1DF9EC54D07707F9BA26B2F49E1B585612DB2C44024E837FE3",
+      "source_bam_sha256": "48e557bf9147e4f25773734856417e86308c9136a0c2ffaf2c189f1d352c271d",
+      "spatial_manifest_sha256": "2D72B3837FAB26525DB08E70DBB0FB9DB2BF6905AC0B7F7BA36CA0756FC1A94D",
+      "spatial_run": "bloodm-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "88E848D8E748528C027B18E1D106B004FC4936870C3BFD37B028894E2EE34CE3"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        26
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          27,
+          29,
+          31,
+          33,
+          35,
+          37,
+          39,
+          41,
+          43,
+          45,
+          47,
+          25
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 26,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          25,
+          49
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-18",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 946,
+    "path": "effects/index/qa-decisions/BLOODM/2026-10-18-accepted-49e1e81aaff2.json",
+    "sha256": "49E1E81AAFF2BB159D42519C8950A83DD458824F74E437509D0FDAA5405DC078"
+  },
+  "resref": "BLOODM",
+  "run_descriptor": {
+    "bytes": 1944,
+    "path": "effects/ressources/BLOODM/runs/bloodm-apollo30-native-retimed-20261017-v1/run.json",
+    "sha256": "5F7ADAA2FCB97D1DF9EC54D07707F9BA26B2F49E1B585612DB2C44024E837FE3"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 33068,
+      "path": "effects/ressources/BLOODM/packs/bloodm-7b-x4-apollo30-native-20261017-v1/manifest.json",
+      "sha256": "29212CA6F5BB68956C2515A40386ACBC1BFE2943E4BF98873831FD38B4C837B1"
+    },
+    "registry": {
+      "bytes": 620,
+      "path": "effects/ressources/BLOODM/packs/bloodm-7b-x4-apollo30-native-20261017-v1/EffectAnimations-X4.registry",
+      "sha256": "3A0424D51595E71078B78DAC5FFAFF29D1F23711F414B76B99FBAA8D6E761214"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "bloodm-apollo30-native-retimed-20261017-v1",
+  "source": {
+    "bytes": 1729,
+    "path": "effects/ressources/BLOODM/source.bam",
+    "sha256": "48E557BF9147E4F25773734856417E86308C9136A0C2FFAF2C189F1D352C271D"
+  }
+}

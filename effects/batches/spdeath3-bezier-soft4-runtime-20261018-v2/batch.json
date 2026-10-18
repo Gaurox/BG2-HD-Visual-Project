@@ -1,0 +1,91 @@
+{
+  "assets": [
+    {
+      "ordinal": 33,
+      "resref": "SPDEATH3",
+      "asset_key": "effects:bam:SPDEATH3",
+      "group": "impacts-organiques",
+      "source": "effects/ressources/SPDEATH3/source.bam",
+      "source_sha256": "5060274A3A4F26EE5BE40568EC74D32E52EF14C366A2CD9D90163218D083E3E7",
+      "canonical_sha256": "2E972CEB85D33A78B8EF5330979AA5937D390063FD405423B24F3D8519968BFF",
+      "reuse_aliases": [],
+      "source_frames": 30,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            0
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 5243776,
+      "engine_literal_file_offset": "0x5ad430",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.20668287576402256,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "spdeath3-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spdeath3-bezier-soft4-20261018-v2",
+      "pack": "effects/ressources/SPDEATH3/packs/spdeath3-7b-bezier-soft4-apollo30-20261018-v2",
+      "max_frame_x1": [
+        48,
+        82
+      ]
+    }
+  ],
+  "parent_interpolation_run": "spdeath3-apollo30-native-retimed-20261017-v1",
+  "authorization": "User chose sigma4 and requested SPDEATH3-only installation and CLUA test",
+  "preview": {
+    "path": "effects/batches/spdeath3-bezier-edgefade-preview-20261018-v1/result.json",
+    "sha256": "0C02AAA53E358958D101560ABA25BF735F8D0ED9AC1BB06A5720290F3E24B8C4",
+    "bytes": 242749
+  }
+}

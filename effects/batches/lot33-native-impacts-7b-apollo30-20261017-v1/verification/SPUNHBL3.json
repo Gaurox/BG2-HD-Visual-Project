@@ -1,0 +1,138 @@
+{
+  "resref": "SPUNHBL3",
+  "passed": true,
+  "native_cycles": 3,
+  "cycle_mode_variants": 6,
+  "phases": 180,
+  "cycles": [
+    {
+      "profile": "cycle000-once",
+      "cycle": 0,
+      "closed": false,
+      "source_slots": 15,
+      "output_phases": 30,
+      "duration": [
+        15,
+        15
+      ],
+      "unique_rgb": 30,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle000-loop",
+      "cycle": 0,
+      "closed": true,
+      "source_slots": 15,
+      "output_phases": 30,
+      "duration": [
+        15,
+        15
+      ],
+      "unique_rgb": 30,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle001-once",
+      "cycle": 1,
+      "closed": false,
+      "source_slots": 15,
+      "output_phases": 30,
+      "duration": [
+        15,
+        15
+      ],
+      "unique_rgb": 30,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle001-loop",
+      "cycle": 1,
+      "closed": true,
+      "source_slots": 15,
+      "output_phases": 30,
+      "duration": [
+        15,
+        15
+      ],
+      "unique_rgb": 30,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle002-once",
+      "cycle": 2,
+      "closed": false,
+      "source_slots": 15,
+      "output_phases": 30,
+      "duration": [
+        15,
+        15
+      ],
+      "unique_rgb": 30,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle002-loop",
+      "cycle": 2,
+      "closed": true,
+      "source_slots": 15,
+      "output_phases": 30,
+      "duration": [
+        15,
+        15
+      ],
+      "unique_rgb": 30,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    }
+  ],
+  "native_pixels_palette_world_geometry_preserved": true,
+  "source_model": "seedvr2_7b_int8_convrot.safetensors",
+  "scale": 4,
+  "target_fps": [
+    30,
+    1
+  ],
+  "filter": "NEAREST",
+  "pack_manifest_sha256": "92E3FB3DAC999121DF70870E03E75F25BF8A986E2C29C9E4272D2F5B868C5115",
+  "runtime_contract_rows": 180,
+  "native_input_keys_unique_before_apollo": true,
+  "native_fps": [
+    15,
+    1
+  ],
+  "native_rate_basis": "15 FPS compatibility default; runtime measurement pending",
+  "straight_alpha_companions_verified": true,
+  "native_palette_normal_alpha_exact": true,
+  "raw_bytes": 167194880,
+  "visual_qa": "pending-user-review",
+  "installed": false
+}

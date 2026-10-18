@@ -1,0 +1,13 @@
+# Lot33 — impacts natifs SeedVR7B x4 / Apollo30
+
+- État : **33/33 produits et vérifiés**,36RESREF couverts ;5244phases/182profils,3179553984octets de backings dans les packs mono-BAM. `production.json`, `verification.json`, galerie complète ; QA/installation/release indépendantes.
+- Autorisation : lot complet33, SeedVR7B x4, interpolation30FPS ; retirer les doubles poses en conservant la durée native.
+- Sources : `../lot33-elemental-impacts-proposal-20261017-v1/batch.json` ;1107enregistrements/91cycles,112slots répétés sur9BAM. `native-duplicate-audit.json` conserve l’audit source.
+- SeedVR : workflow7B INT8/LAB x4, alpha source NEAREST séparé, source/carrier/palette/centres natifs conservés. Toutes les sorties dans `effects/ressources/<RESREF>/runs/` et packs mono-BAM.
+- Apollo8 : poses natives ancrées dédupliquées par cycle, entrée retimée sur durée native ; sortie30FPS, aucune concaténation de directions/cycles. Variantes once+loop indépendantes (owner natif non décrit par VVC/PRO), base15FPS de compatibilité ; pas de mesure ingame déduite.
+- Alpha :28fins feather0,5diffus feather12 (SPBOOM/SPRDRASI/SPHORPUF/SPRING/STNKCLDD) ; gaussRGB1.2 ; compagnons droits avec alpha palette natif séparés des primaires prémultipliés. Pas de retrait de pixels ni feather universel sur les particules fines.
+- Alias : BURNHAND réutilise SPBRNHND ; SPPRISM3/SPPRISMT réutilisent SPPRISM2 ; pas de nouvelle inférence sur les alias.
+- Reprises SPBURN/SPCHUNKS : Apollo échoue OpenCV ROI sur canevas RGB40×220 /48×48. Nouveaux runs `*-apollo30-native-padded-20261017-v2`, padding temporaire min128/multiples32, recadrage à la taille exacte après inférence. Anciens runs non scellés conservés ; alpha/centres/durée identiques,144/240phases vérifiées. `initial-plan.json` conserve le plan initial. SPCHUNKS spatial a aussi été relancé après contention du verrou, sans changement de recette.
+- Vérifications intégrées :unicité des poses avant Apollo, unicité RGB/RGBA après, rationnels de durée exacts, géométrie/carrier natifs et alpha normal reconstruits indépendamment. `checks/`, `verification/`, `contracts/` ;33succès, zéro doublon visible inattendu. Suivi33lignes en `produced`, autres lignes et colonnes QA/installation/release conservées.
+- Galerie RGBA lossless native/x4 sur damier/noir/terrain/clair : `review/index.html`, [serveur local8789](http://127.0.0.1:8789/?v=complete33),33cartes complètes. Couleurs de palette source, tint moteur non simulé ; teinte/blend/FPS réels à observer lors d’une installation distincte.
+- Recette : `pipeline/recipes/effects-lot33-native-impacts-20261017-v1/`. Les scripts d’installation des lots précédents ne font pas partie de cette demande.

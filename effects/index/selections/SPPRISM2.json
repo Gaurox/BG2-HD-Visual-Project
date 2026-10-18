@@ -1,0 +1,220 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPPRISM2",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          28,
+          27,
+          1
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 131,
+    "source": {
+      "interpolation_run": "spprism2-apollo30-native-retimed-20261017-v1",
+      "interpolation_run_descriptor_sha256": "73299D7DDC82353CA9687E9E6272D3D76E4EB2D5458936F4E876748371F9CE5C",
+      "source_bam_sha256": "77cbce6274b5cfccfcb1482943752ecd2a0b50e80db4bbe82f220286fce2ef16",
+      "spatial_manifest_sha256": "07BFB114FAFEEF6AF210F5A8D98F96597AA84D7C7E63417D7F87CA7C6A36E0C6",
+      "spatial_run": "spprism2-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "996FA38DD4FC968656F0B71762C809CF940E77296558CE8AB5BC02177A69E22B"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        66
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          67,
+          69,
+          71,
+          73,
+          75,
+          77,
+          79,
+          81,
+          83,
+          85,
+          87,
+          89,
+          91,
+          93,
+          95,
+          97,
+          99,
+          101,
+          103,
+          105,
+          107,
+          109,
+          111,
+          113,
+          115,
+          117,
+          119,
+          121,
+          123,
+          125,
+          127,
+          129
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 66,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          115,
+          116,
+          117,
+          118,
+          119,
+          120,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126,
+          127,
+          128,
+          129,
+          130
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-18",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 960,
+    "path": "effects/index/qa-decisions/SPPRISM2/2026-10-18-accepted-df03ea99e1e9.json",
+    "sha256": "DF03EA99E1E9D119DFBA560CBBFF4B9F6497D33E5F570A8DED220FAFEBCB7F9F"
+  },
+  "resref": "SPPRISM2",
+  "run_descriptor": {
+    "bytes": 1975,
+    "path": "effects/ressources/SPPRISM2/runs/spprism2-apollo30-native-retimed-20261017-v1/run.json",
+    "sha256": "73299D7DDC82353CA9687E9E6272D3D76E4EB2D5458936F4E876748371F9CE5C"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 84250,
+      "path": "effects/ressources/SPPRISM2/packs/spprism2-7b-x4-apollo30-native-20261017-v1/manifest.json",
+      "sha256": "8B7C187A2EB442428A750FB18BE62BA77101F3C544B094824E1DB2B5FCE26458"
+    },
+    "registry": {
+      "bytes": 1508,
+      "path": "effects/ressources/SPPRISM2/packs/spprism2-7b-x4-apollo30-native-20261017-v1/EffectAnimations-X4.registry",
+      "sha256": "60341E73721C846280B83B91388015EBF79D1E645B967A17EBE8301888DB7D57"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spprism2-apollo30-native-retimed-20261017-v1",
+  "source": {
+    "bytes": 11234,
+    "path": "effects/ressources/SPPRISM2/source.bam",
+    "sha256": "77CBCE6274B5CFCCFCB1482943752ECD2A0B50E80DB4BBE82F220286FCE2EF16"
+  }
+}

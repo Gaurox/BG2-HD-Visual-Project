@@ -1,0 +1,112 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:HLYMITE",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 22,
+    "source": {
+      "interpolation_run": "hlymite-apollo30-native-retimed-20261017-v1",
+      "interpolation_run_descriptor_sha256": "E6B9AA5FBA17819FE994A99A5D3F55E6C378E4CCC0AD738506DF1C0F4FE8B0C4",
+      "source_bam_sha256": "ece4f1a8c3e4fca7b2031e3ae8e7ab21db1f9113e2a1af1a04ff6dce9cf3667c",
+      "spatial_manifest_sha256": "005ED056FE49073AB4CC19B9D13D8E05ACD85CB0F890D7F708FE924CB0C5185F",
+      "spatial_run": "hlymite-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "999A4190B1A6064404EB1617762870954035A6A165478A0009EC0E3F6EBEE011"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          13,
+          15,
+          17,
+          19,
+          11
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 12,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          11,
+          21
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-18",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 953,
+    "path": "effects/index/qa-decisions/HLYMITE/2026-10-18-accepted-c23150848a58.json",
+    "sha256": "C23150848A58162D7BD86E8BD9B88A49087ED0769C067D08AC5CDB3B269CADA9"
+  },
+  "resref": "HLYMITE",
+  "run_descriptor": {
+    "bytes": 1960,
+    "path": "effects/ressources/HLYMITE/runs/hlymite-apollo30-native-retimed-20261017-v1/run.json",
+    "sha256": "E6B9AA5FBA17819FE994A99A5D3F55E6C378E4CCC0AD738506DF1C0F4FE8B0C4"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 15921,
+      "path": "effects/ressources/HLYMITE/packs/hlymite-7b-x4-apollo30-native-20261017-v1/manifest.json",
+      "sha256": "C0C6895A1D54DF8D9E8194027DC610D13BB3DBC3FE629B1C4FF87A34E0E16584"
+    },
+    "registry": {
+      "bytes": 312,
+      "path": "effects/ressources/HLYMITE/packs/hlymite-7b-x4-apollo30-native-20261017-v1/EffectAnimations-X4.registry",
+      "sha256": "980ACF51D414AA19F8370F1643A9CF56333FEF56630477E3B17BF30A14EA127F"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "hlymite-apollo30-native-retimed-20261017-v1",
+  "source": {
+    "bytes": 56755,
+    "path": "effects/ressources/HLYMITE/source.bam",
+    "sha256": "ECE4F1A8C3E4FCA7B2031E3AE8E7AB21DB1F9113E2A1AF1A04FF6DCE9CF3667C"
+  }
+}

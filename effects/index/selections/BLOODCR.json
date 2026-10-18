@@ -1,0 +1,136 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:BLOODCR",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          0,
+          1,
+          1,
+          2,
+          2,
+          3,
+          3,
+          4,
+          4,
+          5,
+          5
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 46,
+    "source": {
+      "interpolation_run": "bloodcr-apollo30-native-retimed-20261017-v1",
+      "interpolation_run_descriptor_sha256": "164607BCBAF6B0B763EEA025A4BC75B8F9D6072DDB41AFFB7B624DDC9AD64CB9",
+      "source_bam_sha256": "7c00a722c57c68f49c02478a1201a9acb66000c6d047b0d230b70ba0a0ee254d",
+      "spatial_manifest_sha256": "42EF616BD230C1D1374819D4BC735DB1129E70CC99E437530D0A6E45F9E2F64F",
+      "spatial_run": "bloodcr-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "91ED084FF1EF9FEAE831638B049758BEA93C3BFBC63162E117C07A058AF362C2"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        24
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          25,
+          27,
+          29,
+          31,
+          33,
+          35,
+          37,
+          39,
+          41,
+          23,
+          44
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 24,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          23,
+          43,
+          44,
+          45
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-18",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 953,
+    "path": "effects/index/qa-decisions/BLOODCR/2026-10-18-accepted-2068cc3792a5.json",
+    "sha256": "2068CC3792A506C9343D06EE5B98685106E6DDF5D0B971F67689839CCD2329AF"
+  },
+  "resref": "BLOODCR",
+  "run_descriptor": {
+    "bytes": 1959,
+    "path": "effects/ressources/BLOODCR/runs/bloodcr-apollo30-native-retimed-20261017-v1/run.json",
+    "sha256": "164607BCBAF6B0B763EEA025A4BC75B8F9D6072DDB41AFFB7B624DDC9AD64CB9"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 30817,
+      "path": "effects/ressources/BLOODCR/packs/bloodcr-7b-x4-apollo30-native-20261017-v1/manifest.json",
+      "sha256": "D52AD603B2F7EF358408ECCBDCF27BB0ECFFB36CE67CF772DC7CC347B48A3ABC"
+    },
+    "registry": {
+      "bytes": 576,
+      "path": "effects/ressources/BLOODCR/packs/bloodcr-7b-x4-apollo30-native-20261017-v1/EffectAnimations-X4.registry",
+      "sha256": "3AF1DB9C67FE9DFCD7F110E597F2FAFB23759EDF9DAFB007989B74759561B4E2"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "bloodcr-apollo30-native-retimed-20261017-v1",
+  "source": {
+    "bytes": 1679,
+    "path": "effects/ressources/BLOODCR/source.bam",
+    "sha256": "7C00A722C57C68F49C02478A1201A9ACB66000C6D047B0D230B70BA0A0EE254D"
+  }
+}

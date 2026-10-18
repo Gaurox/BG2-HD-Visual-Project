@@ -1,0 +1,792 @@
+{
+  "references": [
+    {
+      "resref": "HLYMITE",
+      "instruction": "0x1ca580",
+      "operation": "lea rdx, [rip + 0x3cecb9]",
+      "literal_rva": "0x599240",
+      "function": [
+        "0x1ca2c3",
+        "0x1ca9e8"
+      ],
+      "dump": "reference-001CA2C3.asm"
+    },
+    {
+      "resref": "SHEARTH",
+      "instruction": "0x1ca86b",
+      "operation": "lea rdx, [rip + 0x3cea06]",
+      "literal_rva": "0x599278",
+      "function": [
+        "0x1ca2c3",
+        "0x1ca9e8"
+      ],
+      "dump": "reference-001CA2C3.asm"
+    },
+    {
+      "resref": "SHWATER",
+      "instruction": "0x1ca894",
+      "operation": "lea rdx, [rip + 0x3ce9f5]",
+      "literal_rva": "0x599290",
+      "function": [
+        "0x1ca2c3",
+        "0x1ca9e8"
+      ],
+      "dump": "reference-001CA2C3.asm"
+    },
+    {
+      "resref": "SPBOOM",
+      "instruction": "0x1e8e90",
+      "operation": "lea rdx, [rip + 0x3b071d]",
+      "literal_rva": "0x5995b4",
+      "function": [
+        "0x1e8a20",
+        "0x1e979b"
+      ],
+      "dump": "reference-001E8A20.asm"
+    },
+    {
+      "resref": "SPBOOM",
+      "instruction": "0x1e90e8",
+      "operation": "lea rdx, [rip + 0x3b04c5]",
+      "literal_rva": "0x5995b4",
+      "function": [
+        "0x1e8a20",
+        "0x1e979b"
+      ],
+      "dump": "reference-001E8A20.asm"
+    },
+    {
+      "resref": "SPBRNHND",
+      "instruction": "0x22781c",
+      "operation": "lea rdx, [rip + 0x375245]",
+      "literal_rva": "0x59ca68",
+      "function": [
+        "0x227800",
+        "0x22792a"
+      ],
+      "dump": "reference-00227800.asm"
+    },
+    {
+      "resref": "SPBOOM",
+      "instruction": "0x227b2c",
+      "operation": "lea rdx, [rip + 0x371a81]",
+      "literal_rva": "0x5995b4",
+      "function": [
+        "0x227b10",
+        "0x227bee"
+      ],
+      "dump": "reference-00227B10.asm"
+    },
+    {
+      "resref": "SPBRNHND",
+      "instruction": "0x22c012",
+      "operation": "lea rdx, [rip + 0x370a4f]",
+      "literal_rva": "0x59ca68",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SPSMKJET",
+      "instruction": "0x22c1e6",
+      "operation": "lea rdx, [rip + 0x37067b]",
+      "literal_rva": "0x59c868",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "HLYMITE",
+      "instruction": "0x22c3e0",
+      "operation": "lea rdx, [rip + 0x36ce59]",
+      "literal_rva": "0x599240",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHEARTH",
+      "instruction": "0x22cc98",
+      "operation": "lea rdx, [rip + 0x36c5d9]",
+      "literal_rva": "0x599278",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHWATER",
+      "instruction": "0x22cd6a",
+      "operation": "lea rdx, [rip + 0x36c51f]",
+      "literal_rva": "0x599290",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHEARTH",
+      "instruction": "0x22cf0e",
+      "operation": "lea rdx, [rip + 0x36c363]",
+      "literal_rva": "0x599278",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHWATER",
+      "instruction": "0x22cfe0",
+      "operation": "lea rdx, [rip + 0x36c2a9]",
+      "literal_rva": "0x599290",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHEARTH",
+      "instruction": "0x22d184",
+      "operation": "lea rdx, [rip + 0x36c0ed]",
+      "literal_rva": "0x599278",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHWATER",
+      "instruction": "0x22d256",
+      "operation": "lea rdx, [rip + 0x36c033]",
+      "literal_rva": "0x599290",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHEARTH",
+      "instruction": "0x22d3fa",
+      "operation": "lea rdx, [rip + 0x36be77]",
+      "literal_rva": "0x599278",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHWATER",
+      "instruction": "0x22d4cc",
+      "operation": "lea rdx, [rip + 0x36bdbd]",
+      "literal_rva": "0x599290",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHEARTH",
+      "instruction": "0x22d670",
+      "operation": "lea rdx, [rip + 0x36bc01]",
+      "literal_rva": "0x599278",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHWATER",
+      "instruction": "0x22d742",
+      "operation": "lea rdx, [rip + 0x36bb47]",
+      "literal_rva": "0x599290",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHEARTH",
+      "instruction": "0x22d8e6",
+      "operation": "lea rdx, [rip + 0x36b98b]",
+      "literal_rva": "0x599278",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHWATER",
+      "instruction": "0x22da26",
+      "operation": "lea rdx, [rip + 0x36b863]",
+      "literal_rva": "0x599290",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHEARTH",
+      "instruction": "0x22dbc6",
+      "operation": "lea rdx, [rip + 0x36b6ab]",
+      "literal_rva": "0x599278",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHWATER",
+      "instruction": "0x22dc98",
+      "operation": "lea rdx, [rip + 0x36b5f1]",
+      "literal_rva": "0x599290",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHEARTH",
+      "instruction": "0x22de3c",
+      "operation": "lea rdx, [rip + 0x36b435]",
+      "literal_rva": "0x599278",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHWATER",
+      "instruction": "0x22df0e",
+      "operation": "lea rdx, [rip + 0x36b37b]",
+      "literal_rva": "0x599290",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "HLYMITE",
+      "instruction": "0x22e12f",
+      "operation": "lea rdx, [rip + 0x36b10a]",
+      "literal_rva": "0x599240",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SPSCORIC",
+      "instruction": "0x22e2ec",
+      "operation": "lea rdx, [rip + 0x36e6cd]",
+      "literal_rva": "0x59c9c0",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "HLYMITE",
+      "instruction": "0x22e3ed",
+      "operation": "lea rdx, [rip + 0x36ae4c]",
+      "literal_rva": "0x599240",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHAREA",
+      "instruction": "0x22e46f",
+      "operation": "lea rdx, [rip + 0x36e562]",
+      "literal_rva": "0x59c9d8",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHAREA",
+      "instruction": "0x22e4e0",
+      "operation": "lea rdx, [rip + 0x36e4f1]",
+      "literal_rva": "0x59c9d8",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHAREA",
+      "instruction": "0x22e551",
+      "operation": "lea rdx, [rip + 0x36e480]",
+      "literal_rva": "0x59c9d8",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHAREA",
+      "instruction": "0x22e5c2",
+      "operation": "lea rdx, [rip + 0x36e40f]",
+      "literal_rva": "0x59c9d8",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHAREA",
+      "instruction": "0x22e633",
+      "operation": "lea rdx, [rip + 0x36e39e]",
+      "literal_rva": "0x59c9d8",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHAREA",
+      "instruction": "0x22e6a4",
+      "operation": "lea rdx, [rip + 0x36e32d]",
+      "literal_rva": "0x59c9d8",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SHAREA",
+      "instruction": "0x22e715",
+      "operation": "lea rdx, [rip + 0x36e2bc]",
+      "literal_rva": "0x59c9d8",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SPGENHLA",
+      "instruction": "0x22e85e",
+      "operation": "lea rdx, [rip + 0x36e1c3]",
+      "literal_rva": "0x59ca28",
+      "function": [
+        "0x22bf00",
+        "0x22efbb"
+      ],
+      "dump": "reference-0022BF00.asm"
+    },
+    {
+      "resref": "SPBLOOD",
+      "instruction": "0x30ae18",
+      "operation": "lea rdx, [rip + 0x2a0501]",
+      "literal_rva": "0x5ab320",
+      "function": [
+        "0x30adcb",
+        "0x30b3f2"
+      ],
+      "dump": "reference-0030ADCB.asm"
+    },
+    {
+      "resref": "SPCHUNKS",
+      "instruction": "0x30aee5",
+      "operation": "lea rdx, [rip + 0x2a0414]",
+      "literal_rva": "0x5ab300",
+      "function": [
+        "0x30adcb",
+        "0x30b3f2"
+      ],
+      "dump": "reference-0030ADCB.asm"
+    },
+    {
+      "resref": "SPRDRASI",
+      "instruction": "0x30afa8",
+      "operation": "lea rdx, [rip + 0x2a0321]",
+      "literal_rva": "0x5ab2d0",
+      "function": [
+        "0x30adcb",
+        "0x30b3f2"
+      ],
+      "dump": "reference-0030ADCB.asm"
+    },
+    {
+      "resref": "SPRDRASI",
+      "instruction": "0x30b086",
+      "operation": "lea rdx, [rip + 0x2a0243]",
+      "literal_rva": "0x5ab2d0",
+      "function": [
+        "0x30adcb",
+        "0x30b3f2"
+      ],
+      "dump": "reference-0030ADCB.asm"
+    },
+    {
+      "resref": "SPRING",
+      "instruction": "0x30b137",
+      "operation": "lea rdx, [rip + 0x2a016a]",
+      "literal_rva": "0x5ab2a8",
+      "function": [
+        "0x30adcb",
+        "0x30b3f2"
+      ],
+      "dump": "reference-0030ADCB.asm"
+    },
+    {
+      "resref": "SPSMPUFF",
+      "instruction": "0x30b207",
+      "operation": "lea rdx, [rip + 0x2a011a]",
+      "literal_rva": "0x5ab328",
+      "function": [
+        "0x30adcb",
+        "0x30b3f2"
+      ],
+      "dump": "reference-0030ADCB.asm"
+    },
+    {
+      "resref": "SPICESTM",
+      "instruction": "0x30b2dd",
+      "operation": "lea rdx, [rip + 0x2a008c]",
+      "literal_rva": "0x5ab370",
+      "function": [
+        "0x30adcb",
+        "0x30b3f2"
+      ],
+      "dump": "reference-0030ADCB.asm"
+    },
+    {
+      "resref": "STNKCLDD",
+      "instruction": "0x30b34f",
+      "operation": "lea rdx, [rip + 0x29fffa]",
+      "literal_rva": "0x5ab350",
+      "function": [
+        "0x30adcb",
+        "0x30b3f2"
+      ],
+      "dump": "reference-0030ADCB.asm"
+    },
+    {
+      "resref": "SPHORPUF",
+      "instruction": "0x30b47c",
+      "operation": "lea rdx, [rip + 0x29fedd]",
+      "literal_rva": "0x5ab360",
+      "function": [
+        "0x30b45e",
+        "0x30bd43"
+      ],
+      "dump": "reference-0030B45E.asm"
+    },
+    {
+      "resref": "STNKCLDD",
+      "instruction": "0x30b514",
+      "operation": "lea rdx, [rip + 0x29fe35]",
+      "literal_rva": "0x5ab350",
+      "function": [
+        "0x30b45e",
+        "0x30bd43"
+      ],
+      "dump": "reference-0030B45E.asm"
+    },
+    {
+      "resref": "STNKCLDD",
+      "instruction": "0x30b5be",
+      "operation": "lea rdx, [rip + 0x29fd8b]",
+      "literal_rva": "0x5ab350",
+      "function": [
+        "0x30b45e",
+        "0x30bd43"
+      ],
+      "dump": "reference-0030B45E.asm"
+    },
+    {
+      "resref": "SPUNHBL3",
+      "instruction": "0x30b7ee",
+      "operation": "lea rdx, [rip + 0x29fbfb]",
+      "literal_rva": "0x5ab3f0",
+      "function": [
+        "0x30b45e",
+        "0x30bd43"
+      ],
+      "dump": "reference-0030B45E.asm"
+    },
+    {
+      "resref": "SPHLYSM3",
+      "instruction": "0x30b7f7",
+      "operation": "lea rdx, [rip + 0x29fbe2]",
+      "literal_rva": "0x5ab3e0",
+      "function": [
+        "0x30b45e",
+        "0x30bd43"
+      ],
+      "dump": "reference-0030B45E.asm"
+    },
+    {
+      "resref": "SPUNHBL2",
+      "instruction": "0x30b85e",
+      "operation": "lea rdx, [rip + 0x29fb6b]",
+      "literal_rva": "0x5ab3d0",
+      "function": [
+        "0x30b45e",
+        "0x30bd43"
+      ],
+      "dump": "reference-0030B45E.asm"
+    },
+    {
+      "resref": "SPHLYSM2",
+      "instruction": "0x30b867",
+      "operation": "lea rdx, [rip + 0x29fb52]",
+      "literal_rva": "0x5ab3c0",
+      "function": [
+        "0x30b45e",
+        "0x30bd43"
+      ],
+      "dump": "reference-0030B45E.asm"
+    },
+    {
+      "resref": "SPHORPUF",
+      "instruction": "0x30b882",
+      "operation": "lea rdx, [rip + 0x29fad7]",
+      "literal_rva": "0x5ab360",
+      "function": [
+        "0x30b45e",
+        "0x30bd43"
+      ],
+      "dump": "reference-0030B45E.asm"
+    },
+    {
+      "resref": "SPUNHBL2",
+      "instruction": "0x30b8e2",
+      "operation": "lea rdx, [rip + 0x29fae7]",
+      "literal_rva": "0x5ab3d0",
+      "function": [
+        "0x30b45e",
+        "0x30bd43"
+      ],
+      "dump": "reference-0030B45E.asm"
+    },
+    {
+      "resref": "SPHLYSM2",
+      "instruction": "0x30b8eb",
+      "operation": "lea rdx, [rip + 0x29face]",
+      "literal_rva": "0x5ab3c0",
+      "function": [
+        "0x30b45e",
+        "0x30bd43"
+      ],
+      "dump": "reference-0030B45E.asm"
+    },
+    {
+      "resref": "SPHORPUF",
+      "instruction": "0x30b906",
+      "operation": "lea rdx, [rip + 0x29fa53]",
+      "literal_rva": "0x5ab360",
+      "function": [
+        "0x30b45e",
+        "0x30bd43"
+      ],
+      "dump": "reference-0030B45E.asm"
+    },
+    {
+      "resref": "SPMETSWM",
+      "instruction": "0x30b98a",
+      "operation": "lea rdx, [rip + 0x29fa0f]",
+      "literal_rva": "0x5ab3a0",
+      "function": [
+        "0x30b45e",
+        "0x30bd43"
+      ],
+      "dump": "reference-0030B45E.asm"
+    },
+    {
+      "resref": "STNKCLDD",
+      "instruction": "0x30b9a1",
+      "operation": "lea rdx, [rip + 0x29f9a8]",
+      "literal_rva": "0x5ab350",
+      "function": [
+        "0x30b45e",
+        "0x30bd43"
+      ],
+      "dump": "reference-0030B45E.asm"
+    },
+    {
+      "resref": "SPPRISM3",
+      "instruction": "0x30bb26",
+      "operation": "lea rdx, [rip + 0x29f913]",
+      "literal_rva": "0x5ab440",
+      "function": [
+        "0x30b45e",
+        "0x30bd43"
+      ],
+      "dump": "reference-0030B45E.asm"
+    },
+    {
+      "resref": "SPCSPRA3",
+      "instruction": "0x30bb2f",
+      "operation": "lea rdx, [rip + 0x29f8fa]",
+      "literal_rva": "0x5ab430",
+      "function": [
+        "0x30b45e",
+        "0x30bd43"
+      ],
+      "dump": "reference-0030B45E.asm"
+    },
+    {
+      "resref": "SPPRISM2",
+      "instruction": "0x30bb38",
+      "operation": "lea rdx, [rip + 0x29f8e1]",
+      "literal_rva": "0x5ab420",
+      "function": [
+        "0x30b45e",
+        "0x30bd43"
+      ],
+      "dump": "reference-0030B45E.asm"
+    },
+    {
+      "resref": "SPCCOLDL",
+      "instruction": "0x30bb41",
+      "operation": "lea rdx, [rip + 0x29f8c8]",
+      "literal_rva": "0x5ab410",
+      "function": [
+        "0x30b45e",
+        "0x30bd43"
+      ],
+      "dump": "reference-0030B45E.asm"
+    },
+    {
+      "resref": "SPCSPRA2",
+      "instruction": "0x30bb4a",
+      "operation": "lea rdx, [rip + 0x29f8af]",
+      "literal_rva": "0x5ab400",
+      "function": [
+        "0x30b45e",
+        "0x30bd43"
+      ],
+      "dump": "reference-0030B45E.asm"
+    },
+    {
+      "resref": "SPBURN",
+      "instruction": "0x379763",
+      "operation": "lea rdx, [rip + 0x233ffa]",
+      "literal_rva": "0x5ad764",
+      "function": [
+        "0x3794d0",
+        "0x379eb1"
+      ],
+      "dump": "reference-003794D0.asm"
+    },
+    {
+      "resref": "SPSPARKS",
+      "instruction": "0x37996c",
+      "operation": "lea rdx, [rip + 0x233e0d]",
+      "literal_rva": "0x5ad780",
+      "function": [
+        "0x3794d0",
+        "0x379eb1"
+      ],
+      "dump": "reference-003794D0.asm"
+    },
+    {
+      "resref": "SPBURN",
+      "instruction": "0x379b9b",
+      "operation": "lea rdx, [rip + 0x233bc2]",
+      "literal_rva": "0x5ad764",
+      "function": [
+        "0x3794d0",
+        "0x379eb1"
+      ],
+      "dump": "reference-003794D0.asm"
+    },
+    {
+      "resref": "BLOODS",
+      "instruction": "0x379ccf",
+      "operation": "lea rdx, [rip + 0x233a5e]",
+      "literal_rva": "0x5ad734",
+      "function": [
+        "0x3794d0",
+        "0x379eb1"
+      ],
+      "dump": "reference-003794D0.asm"
+    },
+    {
+      "resref": "BLOODM",
+      "instruction": "0x379ce1",
+      "operation": "lea rdx, [rip + 0x233a54]",
+      "literal_rva": "0x5ad73c",
+      "function": [
+        "0x3794d0",
+        "0x379eb1"
+      ],
+      "dump": "reference-003794D0.asm"
+    },
+    {
+      "resref": "BLOODCR",
+      "instruction": "0x379d09",
+      "operation": "lea rdx, [rip + 0x233a40]",
+      "literal_rva": "0x5ad750",
+      "function": [
+        "0x3794d0",
+        "0x379eb1"
+      ],
+      "dump": "reference-003794D0.asm"
+    },
+    {
+      "resref": "BLOODL",
+      "instruction": "0x379d12",
+      "operation": "lea rdx, [rip + 0x233a2b]",
+      "literal_rva": "0x5ad744",
+      "function": [
+        "0x3794d0",
+        "0x379eb1"
+      ],
+      "dump": "reference-003794D0.asm"
+    },
+    {
+      "resref": "SPDEATH3",
+      "instruction": "0x3c07f5",
+      "operation": "lea r8, [rip + 0x1ee234]",
+      "literal_rva": "0x5aea30",
+      "function": [
+        "0x3bf880",
+        "0x3c1530"
+      ],
+      "dump": "reference-003BF880.asm"
+    }
+  ],
+  "blend_imports": {
+    "0x58a6e0": {
+      "dll": "OPENGL32.dll",
+      "name": "glBlendFunc"
+    }
+  },
+  "blend_calls": []
+}

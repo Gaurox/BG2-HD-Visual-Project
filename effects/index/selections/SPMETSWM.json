@@ -1,0 +1,294 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPMETSWM",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26
+        ],
+        "lookup_start": 12
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44
+        ],
+        "lookup_start": 27
+      }
+    ],
+    "frame_count": 174,
+    "source": {
+      "interpolation_run": "spmetswm-apollo30-native-retimed-20261017-v1",
+      "interpolation_run_descriptor_sha256": "E72ACD02AF1A4D2E76936ED9F41DE8A2228CD0ED869BF5E0697CB469C4C6A4EF",
+      "source_bam_sha256": "f24c4cd7c6450d27b67df1b25f80cac243859df948caccac035d07daf355e4f1",
+      "spatial_manifest_sha256": "220B7881C8C55FEA5C979EC6CC481176EA2A5488F865D0107CA14E9FDD392AEC",
+      "spatial_run": "spmetswm-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "3E5516F9625B42822D1D0A737D4E31AA5AED36EE8A7140A4B4D30C4AD7BEC43D"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        24,
+        30,
+        36
+      ],
+      "alternate_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop",
+        "cycle002-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          25,
+          27,
+          29,
+          31,
+          33,
+          35,
+          37,
+          39,
+          41,
+          43,
+          23
+        ],
+        [
+          46,
+          77,
+          79,
+          81,
+          83,
+          85,
+          87,
+          89,
+          91,
+          93,
+          95,
+          97,
+          99,
+          101,
+          75
+        ],
+        [
+          104,
+          141,
+          143,
+          145,
+          147,
+          149,
+          151,
+          153,
+          155,
+          157,
+          159,
+          161,
+          163,
+          165,
+          167,
+          169,
+          171,
+          139
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 36,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          23,
+          45
+        ],
+        [
+          46,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          75,
+          103
+        ],
+        [
+          104,
+          140,
+          141,
+          142,
+          143,
+          144,
+          145,
+          146,
+          147,
+          148,
+          149,
+          150,
+          151,
+          152,
+          153,
+          154,
+          155,
+          156,
+          157,
+          158,
+          159,
+          160,
+          161,
+          162,
+          163,
+          164,
+          165,
+          166,
+          167,
+          168,
+          169,
+          170,
+          171,
+          172,
+          139,
+          173
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-18",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 960,
+    "path": "effects/index/qa-decisions/SPMETSWM/2026-10-18-accepted-4178d351914d.json",
+    "sha256": "4178D351914D73560C01A02E2DDA854E11148C63664868268104991C60D0D370"
+  },
+  "resref": "SPMETSWM",
+  "run_descriptor": {
+    "bytes": 1976,
+    "path": "effects/ressources/SPMETSWM/runs/spmetswm-apollo30-native-retimed-20261017-v1/run.json",
+    "sha256": "E72ACD02AF1A4D2E76936ED9F41DE8A2228CD0ED869BF5E0697CB469C4C6A4EF"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 112761,
+      "path": "effects/ressources/SPMETSWM/packs/spmetswm-7b-x4-apollo30-native-20261017-v1/manifest.json",
+      "sha256": "015416FAA1AADB0BDD99C27647A13B2EEA4807B79F1A8F5CC9B57704503BAF1A"
+    },
+    "registry": {
+      "bytes": 2076,
+      "path": "effects/ressources/SPMETSWM/packs/spmetswm-7b-x4-apollo30-native-20261017-v1/EffectAnimations-X4.registry",
+      "sha256": "C72DFC3EE70402CAF5A9E3DC910F876FF063DAB29A49EBEF68EDB6D2FB8BAEF6"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spmetswm-apollo30-native-retimed-20261017-v1",
+  "source": {
+    "bytes": 187266,
+    "path": "effects/ressources/SPMETSWM/source.bam",
+    "sha256": "F24C4CD7C6450D27B67DF1B25F80CAC243859DF948CACCAC035D07DAF355E4F1"
+  }
+}

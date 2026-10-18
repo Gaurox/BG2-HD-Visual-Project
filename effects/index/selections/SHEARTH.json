@@ -1,0 +1,160 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SHEARTH",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 70,
+    "source": {
+      "interpolation_run": "shearth-apollo30-native-retimed-20261017-v1",
+      "interpolation_run_descriptor_sha256": "B05159F5EB8BFC617DD9279A269E97187D87C0788259D69CF6B55418FE2F56F8",
+      "source_bam_sha256": "495391342a51e054577d87382a6b021d82aefad68fb3f7592db0c903bec8cf0f",
+      "spatial_manifest_sha256": "21A98E3096239B06C9211B551210F286281CFA71CA687DC09839822927352081",
+      "spatial_run": "shearth-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "C105963F1ACC669DD8CE342F040FF7759C9265FCD8D05D386355BCA44BA33BA5"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        36
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          37,
+          39,
+          41,
+          43,
+          45,
+          47,
+          49,
+          51,
+          53,
+          55,
+          57,
+          59,
+          61,
+          63,
+          65,
+          67,
+          35
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 36,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          35,
+          69
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-18",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 953,
+    "path": "effects/index/qa-decisions/SHEARTH/2026-10-18-accepted-b5a80e1782f0.json",
+    "sha256": "B5A80E1782F023BB8703276F9AEB818AB86E1E2F87F599398D431866D0C9FFA0"
+  },
+  "resref": "SHEARTH",
+  "run_descriptor": {
+    "bytes": 1960,
+    "path": "effects/ressources/SHEARTH/runs/shearth-apollo30-native-retimed-20261017-v1/run.json",
+    "sha256": "B05159F5EB8BFC617DD9279A269E97187D87C0788259D69CF6B55418FE2F56F8"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 45875,
+      "path": "effects/ressources/SHEARTH/packs/shearth-7b-x4-apollo30-native-20261017-v1/manifest.json",
+      "sha256": "B1A02ECD5C15F5E71DD4CE430BC8AB02FC5F9D45398D43D2E71B8300608F89A9"
+    },
+    "registry": {
+      "bytes": 840,
+      "path": "effects/ressources/SHEARTH/packs/shearth-7b-x4-apollo30-native-20261017-v1/EffectAnimations-X4.registry",
+      "sha256": "345E92BF151D7FA6EEC7DFB39AF5B2CF9A332A0F3A123A366BF49FAEC3A9D9F8"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "shearth-apollo30-native-retimed-20261017-v1",
+  "source": {
+    "bytes": 17217,
+    "path": "effects/ressources/SHEARTH/source.bam",
+    "sha256": "495391342A51E054577D87382A6B021D82AEFAD68FB3F7592DB0C903BEC8CF0F"
+  }
+}

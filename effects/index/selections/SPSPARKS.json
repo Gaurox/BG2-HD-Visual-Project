@@ -1,0 +1,223 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPSPARKS",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 6
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "lookup_start": 12
+      },
+      {
+        "cycle": 3,
+        "frame_indices": [
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "lookup_start": 18
+      }
+    ],
+    "frame_count": 88,
+    "source": {
+      "interpolation_run": "spsparks-apollo30-native-retimed-20261017-v1",
+      "interpolation_run_descriptor_sha256": "BFB21CE493EF135AE8B62AA5B611FCD6E4854B79A7AF67F1ECEC8A576808DB77",
+      "source_bam_sha256": "7d08c36111fe03ce236fb757b3ed2d2afd6745258b3f4599d88ce9ad943268f7",
+      "spatial_manifest_sha256": "8920D57E9AF6D7E30809B17A9DC77B9C7AEE16FEF9C4DDBE51527323913D6FD8",
+      "spatial_run": "spsparks-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "2AF4CDCB705B812BDADED80CF032B8C7609A8F10FCE3DA749C15E51E372F9622"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12,
+        12,
+        12,
+        12
+      ],
+      "alternate_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop",
+        "cycle002-loop",
+        "cycle003-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          13,
+          15,
+          17,
+          19,
+          11
+        ],
+        [
+          22,
+          35,
+          37,
+          39,
+          41,
+          33
+        ],
+        [
+          44,
+          57,
+          59,
+          61,
+          63,
+          55
+        ],
+        [
+          66,
+          79,
+          81,
+          83,
+          85,
+          77
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 12,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          11,
+          21
+        ],
+        [
+          22,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          33,
+          43
+        ],
+        [
+          44,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          55,
+          65
+        ],
+        [
+          66,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          77,
+          87
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-18",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 960,
+    "path": "effects/index/qa-decisions/SPSPARKS/2026-10-18-accepted-5753b4117e29.json",
+    "sha256": "5753B4117E292EB8DCFBE40CDB29C6C9855CB9F911A4FAED66132A327DC1C1EC"
+  },
+  "resref": "SPSPARKS",
+  "run_descriptor": {
+    "bytes": 1975,
+    "path": "effects/ressources/SPSPARKS/runs/spsparks-apollo30-native-retimed-20261017-v1/run.json",
+    "sha256": "BFB21CE493EF135AE8B62AA5B611FCD6E4854B79A7AF67F1ECEC8A576808DB77"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 57829,
+      "path": "effects/ressources/SPSPARKS/packs/spsparks-7b-x4-apollo30-native-20261017-v1/manifest.json",
+      "sha256": "71A0ACA0AE8104E987157F6B2FAB58574F0E50F4B7D685CE84B137774406CC6C"
+    },
+    "registry": {
+      "bytes": 1068,
+      "path": "effects/ressources/SPSPARKS/packs/spsparks-7b-x4-apollo30-native-20261017-v1/EffectAnimations-X4.registry",
+      "sha256": "8D544D706360EF70D778C7540FFC23D3C185C8D404A3C1DC77FE12799246E36D"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spsparks-apollo30-native-retimed-20261017-v1",
+  "source": {
+    "bytes": 4392,
+    "path": "effects/ressources/SPSPARKS/source.bam",
+    "sha256": "7D08C36111FE03CE236FB757B3ED2D2AFD6745258B3F4599D88CE9AD943268F7"
+  }
+}

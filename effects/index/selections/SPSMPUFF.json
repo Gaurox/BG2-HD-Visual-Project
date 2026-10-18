@@ -1,0 +1,149 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPSMPUFF",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          11,
+          10,
+          9,
+          8,
+          7,
+          6
+        ],
+        "lookup_start": 6
+      }
+    ],
+    "frame_count": 44,
+    "source": {
+      "interpolation_run": "spsmpuff-apollo30-native-retimed-20261017-v1",
+      "interpolation_run_descriptor_sha256": "D86909D3612ABE0B4F7379BC0A429C2B00B45BF054E32BE79301E0AFD9A70125",
+      "source_bam_sha256": "1191a157bd8058b57ec8dab1de2c63ab7812e44a58881842417f5bde1d0a7a06",
+      "spatial_manifest_sha256": "8D3891A9CE0E1409466862427618B62830B1599B4CBD72A4A16A577EE75D9E43",
+      "spatial_run": "spsmpuff-seedvr7b-x4-20261017-v1",
+      "spatial_run_descriptor_sha256": "152E6D86394178AAC07FA45B4E922F8EFDE4E73CA90DB028E718B971E04793E8"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12,
+        12
+      ],
+      "alternate_profiles": [
+        "cycle000-once",
+        "cycle001-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          13,
+          15,
+          17,
+          19,
+          11
+        ],
+        [
+          22,
+          35,
+          37,
+          39,
+          41,
+          33
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "phase_count": 12,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          11,
+          21
+        ],
+        [
+          22,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          33,
+          43
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-10-18",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 960,
+    "path": "effects/index/qa-decisions/SPSMPUFF/2026-10-18-accepted-6a72d1a4d5a0.json",
+    "sha256": "6A72D1A4D5A024F4B77872624FC69A47FE98CF896A2AD6D23AAB78648D210C1D"
+  },
+  "resref": "SPSMPUFF",
+  "run_descriptor": {
+    "bytes": 1973,
+    "path": "effects/ressources/SPSMPUFF/runs/spsmpuff-apollo30-native-retimed-20261017-v1/run.json",
+    "sha256": "D86909D3612ABE0B4F7379BC0A429C2B00B45BF054E32BE79301E0AFD9A70125"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 29743,
+      "path": "effects/ressources/SPSMPUFF/packs/spsmpuff-7b-x4-apollo30-native-20261017-v1/manifest.json",
+      "sha256": "51CEC959470B87186D6DFF41B5CE068684EEAE25050AD64DF7F47D8F3C1C9B78"
+    },
+    "registry": {
+      "bytes": 564,
+      "path": "effects/ressources/SPSMPUFF/packs/spsmpuff-7b-x4-apollo30-native-20261017-v1/EffectAnimations-X4.registry",
+      "sha256": "C3F4A4983A4EF1F8640103089A52615EA89E45362FFA6DAE988C6BDE66D77462"
+    },
+    "registry_version": 2
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spsmpuff-apollo30-native-retimed-20261017-v1",
+  "source": {
+    "bytes": 1570,
+    "path": "effects/ressources/SPSMPUFF/source.bam",
+    "sha256": "1191A157BD8058B57EC8DAB1DE2C63AB7812E44A58881842417F5BDE1D0A7A06"
+  }
+}

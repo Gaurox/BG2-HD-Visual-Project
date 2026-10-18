@@ -1,0 +1,3301 @@
+{
+  "schema": "bg2-effects-production-batch-v1",
+  "date": "2026-10-17",
+  "assets_count": 33,
+  "proposal": "effects/batches/lot33-elemental-impacts-proposal-20261017-v1/batch.json",
+  "spatial_batch": "effects/batches/lot33-native-impacts-7b-apollo30-20261017-v1",
+  "alias_policy": {
+    "SPBRNHND": [
+      "BURNHAND"
+    ],
+    "SPPRISM2": [
+      "SPPRISM3",
+      "SPPRISMT"
+    ]
+  },
+  "authorization": "User: complete33; SeedVR7B x4 and interpolation30; remove duplicate poses and preserve native duration.",
+  "native_owner_policy": "Retain once/loop variants per cycle,15FPS compatibility basis; native runtime tint/blend/rate not inferred from index.",
+  "assets": [
+    {
+      "ordinal": 1,
+      "resref": "SPBOOM",
+      "asset_key": "effects:bam:SPBOOM",
+      "group": "feu-explosions-souffles",
+      "source": "effects/ressources/SPBOOM/source.bam",
+      "source_sha256": "982B744717089A1B88FF33FD84711ED8CD0B47AC1DDFC8410BC5BE8808B0872A",
+      "canonical_sha256": "5718F6085BD931E819CC380B1BD7D9DB9780F7EAA8B2429683759E2A345B2DA4",
+      "reuse_aliases": [],
+      "source_frames": 12,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 2495296,
+      "engine_literal_file_offset": "0x597fb4",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.035249341964857364,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 12,
+      "spatial_run": "spboom-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spboom-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPBOOM/packs/spboom-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        72,
+        65
+      ]
+    },
+    {
+      "ordinal": 2,
+      "resref": "SPBRNHND",
+      "asset_key": "effects:bam:SPBRNHND",
+      "group": "feu-explosions-souffles",
+      "source": "effects/ressources/SPBRNHND/source.bam",
+      "source_sha256": "D841B2357874FF46621F3FDFDAC9C71A7597DE2D60734BF16F6A4A17FD7D62CB",
+      "canonical_sha256": "933811A2E0C72756A3CE06368B1B141D125F1BD072EDE2DF44ECD4C09B3B0BE2",
+      "reuse_aliases": [
+        "BURNHAND"
+      ],
+      "source_frames": 30,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "cycle": 1,
+          "lookup_start": 6,
+          "frame_indices": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        },
+        {
+          "cycle": 2,
+          "lookup_start": 12,
+          "frame_indices": [
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ]
+        },
+        {
+          "cycle": 3,
+          "lookup_start": 18,
+          "frame_indices": [
+            18,
+            19,
+            20,
+            21,
+            22,
+            23
+          ]
+        },
+        {
+          "cycle": 4,
+          "lookup_start": 24,
+          "frame_indices": [
+            24,
+            25,
+            26,
+            27,
+            28,
+            29
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 4046208,
+      "engine_literal_file_offset": "0x59b468",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 1.0,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "spbrnhnd-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spbrnhnd-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPBRNHND/packs/spbrnhnd-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        57,
+        52
+      ]
+    },
+    {
+      "ordinal": 3,
+      "resref": "SPBURN",
+      "asset_key": "effects:bam:SPBURN",
+      "group": "feu-explosions-souffles",
+      "source": "effects/ressources/SPBURN/source.bam",
+      "source_sha256": "3E0C3D3623ECD8961E6C8D0EB374828F190CFC75D3D1453EB7A895925060BD37",
+      "canonical_sha256": "A9B6020FB81F423C03C8D5EB767990A037B38D5547412F5DB03F9BD898676B23",
+      "reuse_aliases": [],
+      "source_frames": 12,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        },
+        {
+          "cycle": 1,
+          "lookup_start": 24,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "cycle": 2,
+          "lookup_start": 30,
+          "frame_indices": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 77440,
+      "engine_literal_file_offset": "0x5ac164",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.40821566110397944,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "spburn-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spburn-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPBURN/packs/spburn-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        10,
+        15
+      ]
+    },
+    {
+      "ordinal": 4,
+      "resref": "SPMETSWM",
+      "asset_key": "effects:bam:SPMETSWM",
+      "group": "feu-explosions-souffles",
+      "source": "effects/ressources/SPMETSWM/source.bam",
+      "source_sha256": "F24C4CD7C6450D27B67DF1B25F80CAC243859DF948CACCAC035D07DAF355E4F1",
+      "canonical_sha256": "AB8067C838F7E261A25654F5C219F710259F9E487EB7DF48BD36CDABD1709D59",
+      "reuse_aliases": [],
+      "source_frames": 45,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        },
+        {
+          "cycle": 1,
+          "lookup_start": 12,
+          "frame_indices": [
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26
+          ]
+        },
+        {
+          "cycle": 2,
+          "lookup_start": 27,
+          "frame_indices": [
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 42830848,
+      "engine_literal_file_offset": "0x5a9da0",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.43009720264919804,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "spmetswm-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spmetswm-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPMETSWM/packs/spmetswm-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        155,
+        198
+      ]
+    },
+    {
+      "ordinal": 5,
+      "resref": "SPRDRASI",
+      "asset_key": "effects:bam:SPRDRASI",
+      "group": "feu-explosions-souffles",
+      "source": "effects/ressources/SPRDRASI/source.bam",
+      "source_sha256": "439F7EB5F56FD5C34BE6F50F53F4CED38B4C7BBA79226F73ED2AA5AD7F67785D",
+      "canonical_sha256": "0D39D5667F362B86D3D1A878582A41D9F975B95B4F99EB472920106C4D8ECF2E",
+      "reuse_aliases": [],
+      "source_frames": 99,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "cycle": 1,
+          "lookup_start": 11,
+          "frame_indices": [
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21
+          ]
+        },
+        {
+          "cycle": 2,
+          "lookup_start": 22,
+          "frame_indices": [
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        {
+          "cycle": 3,
+          "lookup_start": 33,
+          "frame_indices": [
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43
+          ]
+        },
+        {
+          "cycle": 4,
+          "lookup_start": 44,
+          "frame_indices": [
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54
+          ]
+        },
+        {
+          "cycle": 5,
+          "lookup_start": 55,
+          "frame_indices": [
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65
+          ]
+        },
+        {
+          "cycle": 6,
+          "lookup_start": 66,
+          "frame_indices": [
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76
+          ]
+        },
+        {
+          "cycle": 7,
+          "lookup_start": 77,
+          "frame_indices": [
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87
+          ]
+        },
+        {
+          "cycle": 8,
+          "lookup_start": 88,
+          "frame_indices": [
+            88,
+            89,
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 46337024,
+      "engine_literal_file_offset": "0x5a9cd0",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.1329394387001477,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 12,
+      "spatial_run": "sprdrasi-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "sprdrasi-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPRDRASI/packs/sprdrasi-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        102,
+        91
+      ]
+    },
+    {
+      "ordinal": 6,
+      "resref": "SPCCOLDL",
+      "asset_key": "effects:bam:SPCCOLDL",
+      "group": "froid-projections",
+      "source": "effects/ressources/SPCCOLDL/source.bam",
+      "source_sha256": "EF55A7306D1F588C77F1DA099A1605B4B172D6D9CCD34A008680B8372AD9FA19",
+      "canonical_sha256": "AECF29BD874933FE9870A3A5DC2BD50A86C3FCA19CAB6D8FDF4B516ECB24DD69",
+      "reuse_aliases": [],
+      "source_frames": 60,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        },
+        {
+          "cycle": 1,
+          "lookup_start": 12,
+          "frame_indices": [
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23
+          ]
+        },
+        {
+          "cycle": 2,
+          "lookup_start": 24,
+          "frame_indices": [
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35
+          ]
+        },
+        {
+          "cycle": 3,
+          "lookup_start": 36,
+          "frame_indices": [
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47
+          ]
+        },
+        {
+          "cycle": 4,
+          "lookup_start": 48,
+          "frame_indices": [
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 15616512,
+      "engine_literal_file_offset": "0x5a9e10",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.6326216908625106,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "spccoldl-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spccoldl-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPCCOLDL/packs/spccoldl-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        78,
+        78
+      ]
+    },
+    {
+      "ordinal": 7,
+      "resref": "SPICESTM",
+      "asset_key": "effects:bam:SPICESTM",
+      "group": "froid-projections",
+      "source": "effects/ressources/SPICESTM/source.bam",
+      "source_sha256": "D1C57412D7A90C51D33E230258CD7C3039CFBDAFF2B13E98977BA033A97CC06F",
+      "canonical_sha256": "60F8355E4D4819A93C4E76586DCC81BB9AB59C9571D9837B5A14CD435B690172",
+      "reuse_aliases": [],
+      "source_frames": 45,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        },
+        {
+          "cycle": 1,
+          "lookup_start": 12,
+          "frame_indices": [
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26
+          ]
+        },
+        {
+          "cycle": 2,
+          "lookup_start": 27,
+          "frame_indices": [
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 57274240,
+      "engine_literal_file_offset": "0x5a9d70",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.6879166069244075,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "spicestm-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spicestm-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPICESTM/packs/spicestm-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        202,
+        227
+      ]
+    },
+    {
+      "ordinal": 8,
+      "resref": "SPSCORIC",
+      "asset_key": "effects:bam:SPSCORIC",
+      "group": "froid-projections",
+      "source": "effects/ressources/SPSCORIC/source.bam",
+      "source_sha256": "9D3AEBECC2005F201103AED40DC05A898702CEE25873A822A6B9D37A2A9791F9",
+      "canonical_sha256": "50B4177C5D8D80B694384FE504C2EBCC7A91BBE2E0BD4242552AE0879DD4DDC4",
+      "reuse_aliases": [],
+      "source_frames": 180,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ]
+        },
+        {
+          "cycle": 1,
+          "lookup_start": 20,
+          "frame_indices": [
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39
+          ]
+        },
+        {
+          "cycle": 2,
+          "lookup_start": 40,
+          "frame_indices": [
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59
+          ]
+        },
+        {
+          "cycle": 3,
+          "lookup_start": 60,
+          "frame_indices": [
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79
+          ]
+        },
+        {
+          "cycle": 4,
+          "lookup_start": 80,
+          "frame_indices": [
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99
+          ]
+        },
+        {
+          "cycle": 5,
+          "lookup_start": 100,
+          "frame_indices": [
+            100,
+            101,
+            102,
+            103,
+            104,
+            105,
+            106,
+            107,
+            108,
+            109,
+            110,
+            111,
+            112,
+            113,
+            114,
+            115,
+            116,
+            117,
+            118,
+            119
+          ]
+        },
+        {
+          "cycle": 6,
+          "lookup_start": 120,
+          "frame_indices": [
+            120,
+            121,
+            122,
+            123,
+            124,
+            125,
+            126,
+            127,
+            128,
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135,
+            136,
+            137,
+            138,
+            139
+          ]
+        },
+        {
+          "cycle": 7,
+          "lookup_start": 140,
+          "frame_indices": [
+            140,
+            141,
+            142,
+            143,
+            144,
+            145,
+            146,
+            147,
+            148,
+            149,
+            150,
+            151,
+            152,
+            153,
+            154,
+            155,
+            156,
+            157,
+            158,
+            159
+          ]
+        },
+        {
+          "cycle": 8,
+          "lookup_start": 160,
+          "frame_indices": [
+            160,
+            161,
+            162,
+            163,
+            164,
+            165,
+            166,
+            167,
+            168,
+            169,
+            170,
+            171,
+            172,
+            173,
+            174,
+            175,
+            176,
+            177,
+            178,
+            179
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 42661376,
+      "engine_literal_file_offset": "0x59b3c0",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.44134883623104443,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "spscoric-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spscoric-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPSCORIC/packs/spscoric-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        76,
+        66
+      ]
+    },
+    {
+      "ordinal": 9,
+      "resref": "HLYMITE",
+      "asset_key": "effects:bam:HLYMITE",
+      "group": "lumiere-rayons-impacts",
+      "source": "effects/ressources/HLYMITE/source.bam",
+      "source_sha256": "ECE4F1A8C3E4FCA7B2031E3AE8E7AB21DB1F9113E2A1AF1A04FF6DCE9CF3667C",
+      "canonical_sha256": "B7C3C7C5E8D0AD7CD881674952EA0EA38134C2C133BDF9144846D0E01814B9C4",
+      "reuse_aliases": [],
+      "source_frames": 6,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 9660864,
+      "engine_literal_file_offset": "0x597c40",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.7959905660377359,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "hlymite-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "hlymite-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/HLYMITE/packs/hlymite-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        100,
+        255
+      ]
+    },
+    {
+      "ordinal": 10,
+      "resref": "SHAREA",
+      "asset_key": "effects:bam:SHAREA",
+      "group": "lumiere-rayons-impacts",
+      "source": "effects/ressources/SHAREA/source.bam",
+      "source_sha256": "8B9C776DA0BEA3F6C557DC26D43BB8BB3FD0CCFE3A499BC7FFD43E186ECE6711",
+      "canonical_sha256": "72B0DCE79350170C15B33B5EF7EE276DBE54807D2F7883A99A10E60BE9A02E8A",
+      "reuse_aliases": [],
+      "source_frames": 6,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 1876352,
+      "engine_literal_file_offset": "0x59b3d8",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.0826453104359313,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "sharea-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "sharea-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SHAREA/packs/sharea-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        125,
+        82
+      ]
+    },
+    {
+      "ordinal": 11,
+      "resref": "SHEARTH",
+      "asset_key": "effects:bam:SHEARTH",
+      "group": "lumiere-rayons-impacts",
+      "source": "effects/ressources/SHEARTH/source.bam",
+      "source_sha256": "495391342A51E054577D87382A6B021D82AEFAD68FB3F7592DB0C903BEC8CF0F",
+      "canonical_sha256": "5566FBF95F0AE0D51AEE2354F908E4AA0AF35FF18027CC7B89ABC1DA2F5F29A6",
+      "reuse_aliases": [],
+      "source_frames": 18,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 3305664,
+      "engine_literal_file_offset": "0x597c78",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.3437831070018299,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "shearth-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "shearth-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SHEARTH/packs/shearth-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        85,
+        70
+      ]
+    },
+    {
+      "ordinal": 12,
+      "resref": "SHWATER",
+      "asset_key": "effects:bam:SHWATER",
+      "group": "lumiere-rayons-impacts",
+      "source": "effects/ressources/SHWATER/source.bam",
+      "source_sha256": "0D2999695FD3077D5B64D1559C82E054BD23DE53B1C5BD62B3A5B7222886917D",
+      "canonical_sha256": "5073E3AAC01AB9FA0A2AC200B2001164AB537D395DFE5F5723E93E7313CD1EC8",
+      "reuse_aliases": [],
+      "source_frames": 18,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 1673792,
+      "engine_literal_file_offset": "0x597c90",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.34724215117947543,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "shwater-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "shwater-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SHWATER/packs/shwater-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        56,
+        41
+      ]
+    },
+    {
+      "ordinal": 13,
+      "resref": "SPGENHLA",
+      "asset_key": "effects:bam:SPGENHLA",
+      "group": "lumiere-rayons-impacts",
+      "source": "effects/ressources/SPGENHLA/source.bam",
+      "source_sha256": "B6FC563CE5A1BAE095F13E4D6B116A3DDAC27DA5EFC93A7339159130A60F0FD6",
+      "canonical_sha256": "93C407E1D3F89DD593C711943BE8C3EB372E4BECF9A8AC5FCD0FF6C32C37AB1B",
+      "reuse_aliases": [],
+      "source_frames": 11,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            9,
+            8,
+            7,
+            6,
+            5,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            5,
+            4,
+            3,
+            2,
+            1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 40596800,
+      "engine_literal_file_offset": "0x59b428",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.32314302418020235,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "spgenhla-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spgenhla-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPGENHLA/packs/spgenhla-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        194,
+        385
+      ]
+    },
+    {
+      "ordinal": 14,
+      "resref": "SPHLYSM2",
+      "asset_key": "effects:bam:SPHLYSM2",
+      "group": "lumiere-rayons-impacts",
+      "source": "effects/ressources/SPHLYSM2/source.bam",
+      "source_sha256": "5555E7BF94C938119A2EB19F770B410AE275639CF357F22A5DF2E2FDDBC09B7F",
+      "canonical_sha256": "57D4738831CC92D45CDAA94E77A595348B288E85EADC1CBAEE7005D0C8C7D7D1",
+      "reuse_aliases": [],
+      "source_frames": 46,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
+        {
+          "cycle": 1,
+          "lookup_start": 16,
+          "frame_indices": [
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30
+          ]
+        },
+        {
+          "cycle": 2,
+          "lookup_start": 31,
+          "frame_indices": [
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 12751744,
+      "engine_literal_file_offset": "0x5a9dc0",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 1.0,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "sphlysm2-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "sphlysm2-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPHLYSM2/packs/sphlysm2-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        99,
+        140
+      ]
+    },
+    {
+      "ordinal": 15,
+      "resref": "SPHLYSM3",
+      "asset_key": "effects:bam:SPHLYSM3",
+      "group": "lumiere-rayons-impacts",
+      "source": "effects/ressources/SPHLYSM3/source.bam",
+      "source_sha256": "1928490D39C701AD7543DA3144136F3B600A6D2F5CE766773DF849352284DFD9",
+      "canonical_sha256": "BDF1AC3EBF50D60BF829324A6373CDCB78AA97C35D15E0AE37F6F69A2EED4DDC",
+      "reuse_aliases": [],
+      "source_frames": 45,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "cycle": 1,
+          "lookup_start": 15,
+          "frame_indices": [
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29
+          ]
+        },
+        {
+          "cycle": 2,
+          "lookup_start": 30,
+          "frame_indices": [
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 21826688,
+      "engine_literal_file_offset": "0x5a9de0",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 1.0,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "sphlysm3-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "sphlysm3-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPHLYSM3/packs/sphlysm3-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        105,
+        188
+      ]
+    },
+    {
+      "ordinal": 16,
+      "resref": "SPUNHBL2",
+      "asset_key": "effects:bam:SPUNHBL2",
+      "group": "lumiere-rayons-impacts",
+      "source": "effects/ressources/SPUNHBL2/source.bam",
+      "source_sha256": "3184AB039397BA3B6AF3529D989FD19C642D87D458A687A59B5A0CE92B111F98",
+      "canonical_sha256": "CCABA9F6E4DC8F880285BC2E73937B905833D9B38A72CF99EB55C355490BAB99",
+      "reuse_aliases": [],
+      "source_frames": 45,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "cycle": 1,
+          "lookup_start": 15,
+          "frame_indices": [
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29
+          ]
+        },
+        {
+          "cycle": 2,
+          "lookup_start": 30,
+          "frame_indices": [
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 19110080,
+      "engine_literal_file_offset": "0x5a9dd0",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.32676348547717843,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "spunhbl2-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spunhbl2-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPUNHBL2/packs/spunhbl2-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        105,
+        170
+      ]
+    },
+    {
+      "ordinal": 17,
+      "resref": "SPUNHBL3",
+      "asset_key": "effects:bam:SPUNHBL3",
+      "group": "lumiere-rayons-impacts",
+      "source": "effects/ressources/SPUNHBL3/source.bam",
+      "source_sha256": "61F265F63A56C7E8BE8D12186D829053CE9F6802BC1D8A0162BFEBA39AA85152",
+      "canonical_sha256": "C274D3592091887A6AB62A9B73122017168471622F3D3B6B61F9B364F8A7930B",
+      "reuse_aliases": [],
+      "source_frames": 45,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "cycle": 1,
+          "lookup_start": 15,
+          "frame_indices": [
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29
+          ]
+        },
+        {
+          "cycle": 2,
+          "lookup_start": 30,
+          "frame_indices": [
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 29149504,
+      "engine_literal_file_offset": "0x5a9df0",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.3490804269106156,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "spunhbl3-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spunhbl3-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPUNHBL3/packs/spunhbl3-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        113,
+        215
+      ]
+    },
+    {
+      "ordinal": 18,
+      "resref": "SPCSPRA2",
+      "asset_key": "effects:bam:SPCSPRA2",
+      "group": "lumiere-rayons-impacts",
+      "source": "effects/ressources/SPCSPRA2/source.bam",
+      "source_sha256": "20659C8BFF45F84F8D85FFC8B88EAB259722B27E58B2629CAB331916FF5A58B6",
+      "canonical_sha256": "765134B41BD1E3DE4A7535804CD1A41F90C52E0D943115AA052BC4080E9DAD13",
+      "reuse_aliases": [],
+      "source_frames": 24,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 5571200,
+      "engine_literal_file_offset": "0x5a9e00",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.32195172119947696,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "spcspra2-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spcspra2-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPCSPRA2/packs/spcspra2-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        65,
+        66
+      ]
+    },
+    {
+      "ordinal": 19,
+      "resref": "SPCSPRA3",
+      "asset_key": "effects:bam:SPCSPRA3",
+      "group": "lumiere-rayons-impacts",
+      "source": "effects/ressources/SPCSPRA3/source.bam",
+      "source_sha256": "D2CEF78EA0BE98584613F8628CC220D121166AB4EB848D8C2E16995A48645E70",
+      "canonical_sha256": "DB6AAD133DCECF54F4CD6C2D3D6EE1B66461900F0713887E9BD073C1083FAD4C",
+      "reuse_aliases": [],
+      "source_frames": 25,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 12134208,
+      "engine_literal_file_offset": "0x5a9e30",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.6251131740647295,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "spcspra3-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spcspra3-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPCSPRA3/packs/spcspra3-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        311,
+        262
+      ]
+    },
+    {
+      "ordinal": 20,
+      "resref": "SPPRISM2",
+      "asset_key": "effects:bam:SPPRISM2",
+      "group": "lumiere-rayons-impacts",
+      "source": "effects/ressources/SPPRISM2/source.bam",
+      "source_sha256": "77CBCE6274B5CFCCFCB1482943752ECD2A0B50E80DB4BBE82F220286FCE2EF16",
+      "canonical_sha256": "249ECFCDEC04D1116AA77D2B1EF398EEB84AAE6247620C4F4A8CCBA3780A80B0",
+      "reuse_aliases": [
+        "SPPRISM3",
+        "SPPRISMT"
+      ],
+      "source_frames": 30,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            28,
+            27,
+            1
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 858816,
+      "engine_literal_file_offset": "0x5a9e20",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.013201970443349753,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "spprism2-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spprism2-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPPRISM2/packs/spprism2-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        23,
+        26
+      ]
+    },
+    {
+      "ordinal": 21,
+      "resref": "SPSPARKS",
+      "asset_key": "effects:bam:SPSPARKS",
+      "group": "lumiere-rayons-impacts",
+      "source": "effects/ressources/SPSPARKS/source.bam",
+      "source_sha256": "7D08C36111FE03CE236FB757B3ED2D2AFD6745258B3F4599D88CE9AD943268F7",
+      "canonical_sha256": "B36A1AF3CB2EE2205585DBDDEB1BE637A750DC2F122A4E4FB7D695E7EC44C6E4",
+      "reuse_aliases": [],
+      "source_frames": 24,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "cycle": 1,
+          "lookup_start": 6,
+          "frame_indices": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        },
+        {
+          "cycle": 2,
+          "lookup_start": 12,
+          "frame_indices": [
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ]
+        },
+        {
+          "cycle": 3,
+          "lookup_start": 18,
+          "frame_indices": [
+            18,
+            19,
+            20,
+            21,
+            22,
+            23
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 492864,
+      "engine_literal_file_offset": "0x5ac180",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.14794197031039136,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "spsparks-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spsparks-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPSPARKS/packs/spsparks-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        27,
+        23
+      ]
+    },
+    {
+      "ordinal": 22,
+      "resref": "SPHORPUF",
+      "asset_key": "effects:bam:SPHORPUF",
+      "group": "fumees-dissipations",
+      "source": "effects/ressources/SPHORPUF/source.bam",
+      "source_sha256": "91614BB9B3E754D1D3D8F721D1CCF3562E51D5E0E7EC68E3066F1848E6BD38A6",
+      "canonical_sha256": "216A6AE01D877B78E4B07A0B3133F1FBF4ADB7D407C6EA6744771D954400CFA8",
+      "reuse_aliases": [],
+      "source_frames": 109,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102,
+            103,
+            104,
+            105,
+            106,
+            107,
+            108,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23
+          ]
+        },
+        {
+          "cycle": 1,
+          "lookup_start": 136,
+          "frame_indices": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 69670592,
+      "engine_literal_file_offset": "0x5a9d60",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.23055052508858997,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 12,
+      "spatial_run": "sphorpuf-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "sphorpuf-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPHORPUF/packs/sphorpuf-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        187,
+        168
+      ]
+    },
+    {
+      "ordinal": 23,
+      "resref": "SPRING",
+      "asset_key": "effects:bam:SPRING",
+      "group": "fumees-dissipations",
+      "source": "effects/ressources/SPRING/source.bam",
+      "source_sha256": "8E7A1711E6828EE45992D19619CB539125710FBD34A63F2A2F77E65828E40585",
+      "canonical_sha256": "040D9F7F5F7B1B4040729F13C042CD99D966CC384CE8944703AE581E444E889D",
+      "reuse_aliases": [],
+      "source_frames": 6,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 521152,
+      "engine_literal_file_offset": "0x5a9ca8",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 1.0,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 12,
+      "spatial_run": "spring-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spring-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPRING/packs/spring-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        29,
+        56
+      ]
+    },
+    {
+      "ordinal": 24,
+      "resref": "SPSMKJET",
+      "asset_key": "effects:bam:SPSMKJET",
+      "group": "fumees-dissipations",
+      "source": "effects/ressources/SPSMKJET/source.bam",
+      "source_sha256": "C7906827AE25477D8F8404BC0EE7A6A1055D8602A9C000241F2CFAD8252D6DA2",
+      "canonical_sha256": "E4A0B4CE202D618E33D79C10BE15EADEF1A22F9FA637211669A61B039C9BCBC5",
+      "reuse_aliases": [],
+      "source_frames": 6,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 786432,
+      "engine_literal_file_offset": "0x59b268",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 1.0,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "spsmkjet-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spsmkjet-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPSMKJET/packs/spsmkjet-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        32,
+        64
+      ]
+    },
+    {
+      "ordinal": 25,
+      "resref": "SPSMPUFF",
+      "asset_key": "effects:bam:SPSMPUFF",
+      "group": "fumees-dissipations",
+      "source": "effects/ressources/SPSMPUFF/source.bam",
+      "source_sha256": "1191A157BD8058B57EC8DAB1DE2C63AB7812E44A58881842417F5BDE1D0A7A06",
+      "canonical_sha256": "31F019D96E9250BC3BF7811DC1C1AAA7E7DE4BA14A9EE0F08C87C0D37B16E674",
+      "reuse_aliases": [],
+      "source_frames": 12,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            5,
+            4,
+            3,
+            2,
+            1,
+            0
+          ]
+        },
+        {
+          "cycle": 1,
+          "lookup_start": 6,
+          "frame_indices": [
+            11,
+            10,
+            9,
+            8,
+            7,
+            6
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 125504,
+      "engine_literal_file_offset": "0x5a9d28",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 1.0,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "spsmpuff-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spsmpuff-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPSMPUFF/packs/spsmpuff-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        20,
+        20
+      ]
+    },
+    {
+      "ordinal": 26,
+      "resref": "STNKCLDD",
+      "asset_key": "effects:bam:STNKCLDD",
+      "group": "fumees-dissipations",
+      "source": "effects/ressources/STNKCLDD/source.bam",
+      "source_sha256": "5FCAA1A398CEC224127C955665D795161795B3DDAD050ECB89ED9BEE9859B4E7",
+      "canonical_sha256": "659FD84F674F9D333693092859AF4FCADF46DA43F86797894B5A7A927D496A96",
+      "reuse_aliases": [],
+      "source_frames": 18,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            0,
+            1,
+            1,
+            2,
+            2,
+            3,
+            3,
+            4,
+            4,
+            5,
+            5
+          ]
+        },
+        {
+          "cycle": 1,
+          "lookup_start": 12,
+          "frame_indices": [
+            6,
+            6,
+            7,
+            7,
+            8,
+            8,
+            9,
+            9,
+            10,
+            10,
+            11,
+            11
+          ]
+        },
+        {
+          "cycle": 2,
+          "lookup_start": 24,
+          "frame_indices": [
+            12,
+            12,
+            13,
+            13,
+            14,
+            14,
+            15,
+            15,
+            16,
+            16,
+            17,
+            17
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 740288,
+      "engine_literal_file_offset": "0x5a9d50",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 1.0,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 12,
+      "spatial_run": "stnkcldd-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "stnkcldd-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/STNKCLDD/packs/stnkcldd-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        21,
+        60
+      ]
+    },
+    {
+      "ordinal": 27,
+      "resref": "BLOODCR",
+      "asset_key": "effects:bam:BLOODCR",
+      "group": "impacts-organiques",
+      "source": "effects/ressources/BLOODCR/source.bam",
+      "source_sha256": "7C00A722C57C68F49C02478A1201A9ACB66000C6D047B0D230B70BA0A0EE254D",
+      "canonical_sha256": "07E9BCB3576EFAE645B8FE0F789EA13212A06B5ACC6740A32553B28F1FDB0219",
+      "reuse_aliases": [],
+      "source_frames": 6,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            0,
+            1,
+            1,
+            2,
+            2,
+            3,
+            3,
+            4,
+            4,
+            5,
+            5
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 357440,
+      "engine_literal_file_offset": "0x5ac150",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 1.0,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "bloodcr-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "bloodcr-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/BLOODCR/packs/bloodcr-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        47,
+        46
+      ]
+    },
+    {
+      "ordinal": 28,
+      "resref": "BLOODL",
+      "asset_key": "effects:bam:BLOODL",
+      "group": "impacts-organiques",
+      "source": "effects/ressources/BLOODL/source.bam",
+      "source_sha256": "D961D83152B32B8650BA214AA81ABA3C5F49D7689E8C2F252EF1F86B767CF5B2",
+      "canonical_sha256": "D4D12564253932D757930F680AE0B2B80BF9E84965566EEEE96D68E04B82D720",
+      "reuse_aliases": [],
+      "source_frames": 13,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 951808,
+      "engine_literal_file_offset": "0x5ac144",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 1.0,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "bloodl-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "bloodl-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/BLOODL/packs/bloodl-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        49,
+        52
+      ]
+    },
+    {
+      "ordinal": 29,
+      "resref": "BLOODM",
+      "asset_key": "effects:bam:BLOODM",
+      "group": "impacts-organiques",
+      "source": "effects/ressources/BLOODM/source.bam",
+      "source_sha256": "48E557BF9147E4F25773734856417E86308C9136A0C2FFAF2C189F1D352C271D",
+      "canonical_sha256": "6548CEB257C109BF3E080BBB786FCF8FB391E753E3999ABEAAC5A7EC1BB9A343",
+      "reuse_aliases": [],
+      "source_frames": 13,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 365376,
+      "engine_literal_file_offset": "0x5ac13c",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 1.0,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "bloodm-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "bloodm-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/BLOODM/packs/bloodm-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        24,
+        43
+      ]
+    },
+    {
+      "ordinal": 30,
+      "resref": "BLOODS",
+      "asset_key": "effects:bam:BLOODS",
+      "group": "impacts-organiques",
+      "source": "effects/ressources/BLOODS/source.bam",
+      "source_sha256": "A07239692AB630D339EC881384306A841FC092CC67BBA30027E053744E3D8693",
+      "canonical_sha256": "85909B701E77932D77947CD064C60C02C1783C798A64D9D40F29EA1AA5383138",
+      "reuse_aliases": [],
+      "source_frames": 8,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 78592,
+      "engine_literal_file_offset": "0x5ac134",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.0,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "bloods-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "bloods-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/BLOODS/packs/bloods-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        17,
+        68
+      ]
+    },
+    {
+      "ordinal": 31,
+      "resref": "SPBLOOD",
+      "asset_key": "effects:bam:SPBLOOD",
+      "group": "impacts-organiques",
+      "source": "effects/ressources/SPBLOOD/source.bam",
+      "source_sha256": "0FF12A2C943534D0EFDBB66A60A4E880392BD8B9BCB3E0E27AA1508A4416C3FA",
+      "canonical_sha256": "63A7B885DA8ECBD9A7BBA3C5CF592D5C75F879DBE014D496F11D0B75EFBA2FDB",
+      "reuse_aliases": [],
+      "source_frames": 30,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "cycle": 1,
+          "lookup_start": 6,
+          "frame_indices": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        },
+        {
+          "cycle": 2,
+          "lookup_start": 12,
+          "frame_indices": [
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ]
+        },
+        {
+          "cycle": 3,
+          "lookup_start": 18,
+          "frame_indices": [
+            18,
+            19,
+            20,
+            21,
+            22,
+            23
+          ]
+        },
+        {
+          "cycle": 4,
+          "lookup_start": 24,
+          "frame_indices": [
+            24,
+            25,
+            26,
+            27,
+            28,
+            29
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 372096,
+      "engine_literal_file_offset": "0x5a9d20",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.0,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "spblood-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spblood-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPBLOOD/packs/spblood-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        22,
+        22
+      ]
+    },
+    {
+      "ordinal": 32,
+      "resref": "SPCHUNKS",
+      "asset_key": "effects:bam:SPCHUNKS",
+      "group": "impacts-organiques",
+      "source": "effects/ressources/SPCHUNKS/source.bam",
+      "source_sha256": "B574FB59E1171F5C38A3E1327AA66ED968F4A9FF7CBDEE5EA0D8A68A45D95736",
+      "canonical_sha256": "D975085EB749E0440B5727806EF7EEFD92D338BAF2B62E133E2E8FE22B5C358A",
+      "reuse_aliases": [],
+      "source_frames": 30,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "cycle": 1,
+          "lookup_start": 6,
+          "frame_indices": [
+            5,
+            4,
+            3,
+            2,
+            1,
+            0
+          ]
+        },
+        {
+          "cycle": 2,
+          "lookup_start": 12,
+          "frame_indices": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        },
+        {
+          "cycle": 3,
+          "lookup_start": 18,
+          "frame_indices": [
+            11,
+            10,
+            9,
+            8,
+            7,
+            6
+          ]
+        },
+        {
+          "cycle": 4,
+          "lookup_start": 24,
+          "frame_indices": [
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ]
+        },
+        {
+          "cycle": 5,
+          "lookup_start": 30,
+          "frame_indices": [
+            17,
+            16,
+            15,
+            14,
+            13,
+            12
+          ]
+        },
+        {
+          "cycle": 6,
+          "lookup_start": 36,
+          "frame_indices": [
+            18,
+            19,
+            20,
+            21,
+            22,
+            23
+          ]
+        },
+        {
+          "cycle": 7,
+          "lookup_start": 42,
+          "frame_indices": [
+            23,
+            22,
+            21,
+            20,
+            19,
+            18
+          ]
+        },
+        {
+          "cycle": 8,
+          "lookup_start": 48,
+          "frame_indices": [
+            24,
+            25,
+            26,
+            27,
+            28,
+            29
+          ]
+        },
+        {
+          "cycle": 9,
+          "lookup_start": 54,
+          "frame_indices": [
+            29,
+            28,
+            27,
+            26,
+            25,
+            24
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 96768,
+      "engine_literal_file_offset": "0x5a9d00",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.0,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "spchunks-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spchunks-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPCHUNKS/packs/spchunks-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        10,
+        10
+      ]
+    },
+    {
+      "ordinal": 33,
+      "resref": "SPDEATH3",
+      "asset_key": "effects:bam:SPDEATH3",
+      "group": "impacts-organiques",
+      "source": "effects/ressources/SPDEATH3/source.bam",
+      "source_sha256": "5060274A3A4F26EE5BE40568EC74D32E52EF14C366A2CD9D90163218D083E3E7",
+      "canonical_sha256": "2E972CEB85D33A78B8EF5330979AA5937D390063FD405423B24F3D8519968BFF",
+      "reuse_aliases": [],
+      "source_frames": 30,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            0
+          ]
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "raw_x4_bytes_at_native_records": 5243776,
+      "engine_literal_file_offset": "0x5ad430",
+      "usage_index": "unresolved",
+      "usage_evidence": "native-executable-literal",
+      "consumers": [],
+      "grayscale_covered_fraction": 0.20668287576402256,
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "production": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      },
+      "runtime_contract_to_observe": "native FPS/cycle/once-loop/blend/tint; literal existence is not runtime measurement",
+      "native_rate_basis": "15 FPS compatibility default for native engine owners; not an instrumented measurement",
+      "playback": "unknown-native-owner; retain independent once and loop variants",
+      "static": false,
+      "inner_feather_x4": 0,
+      "spatial_run": "spdeath3-seedvr7b-x4-20261017-v1",
+      "interpolation_run": "spdeath3-apollo30-native-retimed-20261017-v1",
+      "pack": "effects/ressources/SPDEATH3/packs/spdeath3-7b-x4-apollo30-native-20261017-v1",
+      "max_frame_x1": [
+        48,
+        82
+      ]
+    }
+  ]
+}
