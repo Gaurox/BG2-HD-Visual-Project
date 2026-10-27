@@ -28,8 +28,8 @@
     ],
     "frame_count": 62,
     "source": {
-      "interpolation_run": "spiplaai-apollo30-retimed-strict-20261017-v2",
-      "interpolation_run_descriptor_sha256": "030B86F897D110787D25F9D663C5CD19A9B1621B7B5457A1A49385F5BADDE9E1",
+      "interpolation_run": "spiplaai-continu060-apollo30-20261027-v1",
+      "interpolation_run_descriptor_sha256": "BA88FBF880BC0652936B21111C8913A34ABB99352FE9C27C846BB404ACA23ABF",
       "source_bam_sha256": "5ce9cf15e26185fe27274e263778b4e7677176c9c48c980c6a3563fca70f857b",
       "spatial_manifest_sha256": "13564A9408750456EDD5C2A38E2BEE698CB73C4ACFB403FA4D69C832E67DF000",
       "spatial_run": "spiplaai-seedvr7b-x4-20261017-v1",
@@ -115,35 +115,35 @@
       "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
     }
   },
-  "decision_date": "2026-10-17",
+  "decision_date": "2026-10-27",
   "mode": "x4",
   "qa_evidence": {
-    "bytes": 989,
-    "path": "effects/index/qa-decisions/SPIPLAAI/2026-10-17-accepted-cac17e8f5e22.json",
-    "sha256": "CAC17E8F5E229F1F186CD6F97FB50756F941471FA883A84B5A6B9657569D5E91"
+    "bytes": 904,
+    "path": "effects/index/qa-decisions/SPIPLAAI/2026-10-27-accepted-4c6ee307e6a7.json",
+    "sha256": "4C6EE307E6A7812AEADF863591A0E9649A93E1904B32F4A20B1AB658D62CCB22"
   },
   "resref": "SPIPLAAI",
   "run_descriptor": {
-    "bytes": 1978,
-    "path": "effects/ressources/SPIPLAAI/runs/spiplaai-apollo30-retimed-strict-20261017-v2/run.json",
-    "sha256": "030B86F897D110787D25F9D663C5CD19A9B1621B7B5457A1A49385F5BADDE9E1"
+    "bytes": 2455,
+    "path": "effects/ressources/SPIPLAAI/runs/spiplaai-continu060-apollo30-20261027-v1/run.json",
+    "sha256": "BA88FBF880BC0652936B21111C8913A34ABB99352FE9C27C846BB404ACA23ABF"
   },
   "runtime_pack": {
     "manifest": {
-      "bytes": 41079,
-      "path": "effects/ressources/SPIPLAAI/packs/spiplaai-7b-x4-apollo30-20261017-v2/manifest.json",
-      "sha256": "6C06FDE6EA959DE7A13614BCBD7C69BE2BF9693305F37C54ADEEA37871AAE6BB"
+      "bytes": 40837,
+      "path": "effects/ressources/SPIPLAAI/packs/spiplaai-7b-continu060-apollo30-20261027-v1/manifest.json",
+      "sha256": "FEE62D90BFB4CBF0C6F27361A6982C6921D28DA3110E675559B8087D77588950"
     },
     "registry": {
       "bytes": 752,
-      "path": "effects/ressources/SPIPLAAI/packs/spiplaai-7b-x4-apollo30-20261017-v2/EffectAnimations-X4.registry",
-      "sha256": "CB0E9E95F9E9A58343E7AAC12D12EA2A1AC8A1E4D1B4537BA2DEF13DEA22FB00"
+      "path": "effects/ressources/SPIPLAAI/packs/spiplaai-7b-continu060-apollo30-20261027-v1/EffectAnimations-X4.registry",
+      "sha256": "39552BE3860A3F50EF19647AB91D8DE6098E5E5BAC14A1D87C0C448D9DBE39D3"
     },
     "registry_version": 2
   },
   "schema": "bg2-effects-selection-v1",
   "schema_version": 1,
-  "selected_run": "spiplaai-apollo30-retimed-strict-20261017-v2",
+  "selected_run": "spiplaai-continu060-apollo30-20261027-v1",
   "source": {
     "bytes": 34825,
     "path": "effects/ressources/SPIPLAAI/source.bam",

@@ -24,8 +24,8 @@
     ],
     "frame_count": 46,
     "source": {
-      "interpolation_run": "spiplaui-apollo30-retimed-strict-20261017-v2",
-      "interpolation_run_descriptor_sha256": "ED7C6727A375E7AE2DF2BE717FDB156A1451C35805F2E14765FA02DA522D9152",
+      "interpolation_run": "spiplaui-continu060-apollo30-20261027-v1",
+      "interpolation_run_descriptor_sha256": "114B8A76C8DA36642519CBE9B49C5689C2E715FB12B3FB9A9B3F92AE6A076CB0",
       "source_bam_sha256": "6ecf033d36ec68b65eea5f71c84cd556c4ae7268b96fd57a965c8ef06ce9914b",
       "spatial_manifest_sha256": "B9DD334F5A0EB5D800A452B47F0D28D389F6326766AF2AEF320BBD631C36E9D2",
       "spatial_run": "spiplaui-seedvr7b-x4-20261017-v1",
@@ -99,35 +99,35 @@
       "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
     }
   },
-  "decision_date": "2026-10-17",
+  "decision_date": "2026-10-27",
   "mode": "x4",
   "qa_evidence": {
-    "bytes": 989,
-    "path": "effects/index/qa-decisions/SPIPLAUI/2026-10-17-accepted-e8bfcfe09699.json",
-    "sha256": "E8BFCFE0969942B92A93DD7139AA181ED33A1BA876076E6E04018415D2E8ADC5"
+    "bytes": 904,
+    "path": "effects/index/qa-decisions/SPIPLAUI/2026-10-27-accepted-f18e9b2cb598.json",
+    "sha256": "F18E9B2CB598A2FA64990D1EECA48580CEBA6737E5155F67767AD57C5752C1C2"
   },
   "resref": "SPIPLAUI",
   "run_descriptor": {
-    "bytes": 1978,
-    "path": "effects/ressources/SPIPLAUI/runs/spiplaui-apollo30-retimed-strict-20261017-v2/run.json",
-    "sha256": "ED7C6727A375E7AE2DF2BE717FDB156A1451C35805F2E14765FA02DA522D9152"
+    "bytes": 2454,
+    "path": "effects/ressources/SPIPLAUI/runs/spiplaui-continu060-apollo30-20261027-v1/run.json",
+    "sha256": "114B8A76C8DA36642519CBE9B49C5689C2E715FB12B3FB9A9B3F92AE6A076CB0"
   },
   "runtime_pack": {
     "manifest": {
-      "bytes": 31024,
-      "path": "effects/ressources/SPIPLAUI/packs/spiplaui-7b-x4-apollo30-20261017-v2/manifest.json",
-      "sha256": "CA9AAC97C989187795FB58530948DC67CA376400463A0E768CB2DFD062C56F00"
+      "bytes": 30900,
+      "path": "effects/ressources/SPIPLAUI/packs/spiplaui-7b-continu060-apollo30-20261027-v1/manifest.json",
+      "sha256": "2613378B216808693AFAE52A37DA2C1DD04F95E599BBA75FC5BFC06A960D4171"
     },
     "registry": {
       "bytes": 576,
-      "path": "effects/ressources/SPIPLAUI/packs/spiplaui-7b-x4-apollo30-20261017-v2/EffectAnimations-X4.registry",
-      "sha256": "62349FF5CD24922A75995814B60CB9F0AAD1E0D71725B004519C53DF0854D849"
+      "path": "effects/ressources/SPIPLAUI/packs/spiplaui-7b-continu060-apollo30-20261027-v1/EffectAnimations-X4.registry",
+      "sha256": "CA973C7F9A792CA3AE01991FE41A41F5FFC5E9674CFCF6EF2306864248EEBDC3"
     },
     "registry_version": 2
   },
   "schema": "bg2-effects-selection-v1",
   "schema_version": 1,
-  "selected_run": "spiplaui-apollo30-retimed-strict-20261017-v2",
+  "selected_run": "spiplaui-continu060-apollo30-20261027-v1",
   "source": {
     "bytes": 20591,
     "path": "effects/ressources/SPIPLAUI/source.bam",

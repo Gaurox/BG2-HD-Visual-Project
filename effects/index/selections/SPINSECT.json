@@ -88,8 +88,8 @@
     ],
     "frame_count": 276,
     "source": {
-      "interpolation_run": "spinsect-apollo30-retimed-strict-20261017-v2",
-      "interpolation_run_descriptor_sha256": "86C7A11FD630AF41E1644128FA3F9ED43AB613F7C898CC488305671A177A7A9D",
+      "interpolation_run": "spinsect-continu060-apollo30-20261027-v1",
+      "interpolation_run_descriptor_sha256": "6CBBD4A0D0E3B942C37A7FAC46E0384B504B66FC25D16177130DE50D30FC2E65",
       "source_bam_sha256": "5d254006325a3aaedb42ae53362128042a71850e75277277a46bfbb7a86f92fc",
       "spatial_manifest_sha256": "AE98874541F06563E9E8A24E73F9B0C8335A67935D0B7AC6B6976F255B404442",
       "spatial_run": "spinsect-seedvr7b-x4-20261017-v1",
@@ -344,35 +344,35 @@
       "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
     }
   },
-  "decision_date": "2026-10-17",
+  "decision_date": "2026-10-27",
   "mode": "x4",
   "qa_evidence": {
-    "bytes": 989,
-    "path": "effects/index/qa-decisions/SPINSECT/2026-10-17-accepted-225506db57e0.json",
-    "sha256": "225506DB57E0F3A32C65BC7603C66FACA3240EA105755EB89E1E477ADAF7C2DB"
+    "bytes": 904,
+    "path": "effects/index/qa-decisions/SPINSECT/2026-10-27-accepted-cb990911c1ed.json",
+    "sha256": "CB990911C1ED65E9E770C47794F36F2363BE9CFACA3FFCCFF0751440E1BB8577"
   },
   "resref": "SPINSECT",
   "run_descriptor": {
-    "bytes": 1980,
-    "path": "effects/ressources/SPINSECT/runs/spinsect-apollo30-retimed-strict-20261017-v2/run.json",
-    "sha256": "86C7A11FD630AF41E1644128FA3F9ED43AB613F7C898CC488305671A177A7A9D"
+    "bytes": 2458,
+    "path": "effects/ressources/SPINSECT/runs/spinsect-continu060-apollo30-20261027-v1/run.json",
+    "sha256": "6CBBD4A0D0E3B942C37A7FAC46E0384B504B66FC25D16177130DE50D30FC2E65"
   },
   "runtime_pack": {
     "manifest": {
-      "bytes": 176725,
-      "path": "effects/ressources/SPINSECT/packs/spinsect-7b-x4-apollo30-20261017-v2/manifest.json",
-      "sha256": "43AD9FE0CC5A6555F15A7428AEC0B6D5C14AE3561E4F3F8A414B7F6139636DEF"
+      "bytes": 176496,
+      "path": "effects/ressources/SPINSECT/packs/spinsect-7b-continu060-apollo30-20261027-v1/manifest.json",
+      "sha256": "9660540779419C50738F82E634E650C952ED10EC3FA4CFB09BC84B0F51800EDF"
     },
     "registry": {
       "bytes": 3452,
-      "path": "effects/ressources/SPINSECT/packs/spinsect-7b-x4-apollo30-20261017-v2/EffectAnimations-X4.registry",
-      "sha256": "CD10275C416DB323726EB65B8AE66EA900675C5CB03A2F390C2449FF78495066"
+      "path": "effects/ressources/SPINSECT/packs/spinsect-7b-continu060-apollo30-20261027-v1/EffectAnimations-X4.registry",
+      "sha256": "EF440CEFE9A1222693E420725DF0B3B3A05AB4FA0FC0563B45D3951E13853FB4"
     },
     "registry_version": 2
   },
   "schema": "bg2-effects-selection-v1",
   "schema_version": 1,
-  "selected_run": "spinsect-apollo30-retimed-strict-20261017-v2",
+  "selected_run": "spinsect-continu060-apollo30-20261027-v1",
   "source": {
     "bytes": 81340,
     "path": "effects/ressources/SPINSECT/source.bam",

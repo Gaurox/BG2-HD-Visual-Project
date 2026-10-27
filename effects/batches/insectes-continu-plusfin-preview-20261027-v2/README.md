@@ -1,0 +1,8 @@
+# Nuées — contour continu encore plus fin,2026-10-27
+
+- Demande : « Contour continu plus fin me plait bien ! tu peux faire encore plus fin ? ». Appréciation visuelle de la variante0.60 du comparatif précédent ; aucune QA ingame déduite.
+- [Comparatif3vues](http://127.0.0.1:8798/revisions/plus-fin-20261027-v2/index.html) : référence0.60 / encore plus fin0.70 / très fin0.80. Même champ continu natif sigma0.25x1, SS4 ; seule l'isovaleur augmente. Aucun découpage en disques/grille, micro-flou non repris.
+- `result.json` :3BAM `SPIPLAAI`/alias `SPIPLARI`, `SPIPLAUI`, `SPINSECT`,4cycles bouclés/196phases ; référence exacte vérifiée contre chacun des196PNG `affine` du parent.98masques natifs contrôlés : chaque pixel natif conserve une couverture non nulle, zones pleines3×3natives entièrement pleines. A0.80≤A0.70≤A0.60 sur toutes les phases ; mélange temporel hérité après reconstruction des ancres.
+- Couverture relative à la référence0.60 :0.70=82.0–95.9% ;0.80=62.0–91.2%, suivant cycle. RGB exact sur la couverture commune, petits prolongements au plus proche uniquement si nécessaire. Durées/modes/phases et placement conservés ; marge de visualisation8px x4 identique.
+- Aperçu seul : installation/production/QA/release inchangées. Images/source du comparatif précédent immuables ; nouvelle révision ajoutée sous son serveur8798 par liens physiques. Transparences PNG dans `frames/`, WebP composités sur fonds de référence dans `review/`.
+- Recette : `pipeline/recipes/effects-insectes-continu-plusfin-20261027-v2/preview.py`. Parent et SHA de chaque source/sortie liés dans `result.json` ; phase de test ingame seulement après choix utilisateur.
