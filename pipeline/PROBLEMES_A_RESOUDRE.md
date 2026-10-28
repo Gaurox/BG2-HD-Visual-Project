@@ -6,6 +6,17 @@ Les décisions durables sont dans
 [`../docs/DECISIONS.md`](../docs/DECISIONS.md) et les preuves moteur dans
 [`../engine/InfinityEngine-Enhancer/source-patchee/docs/validation/`](../engine/InfinityEngine-Enhancer/source-patchee/docs/validation/).
 
+<a id="proj-motion-001"></a>
+
+## PROJ-MOTION-001 — Déplacement des projectiles : interpolation visuelle généralisée
+
+- **À reprendre plus tard — report explicite de l’utilisateur, 2026-10-28.** Étude conservée ; reprendre l’implémentation uniquement sur nouvelle demande. Ce report concerne le déplacement, pas la validation des images déjà produites.
+- Étude et dossier de reprise : [`projectiles/analysis/deplacement-generalise-etude-20261028-v1/README.md`](../projectiles/analysis/deplacement-generalise-etude-20261028-v1/README.md). Inventaire : `coverage-243.csv`, `engine-78.csv` ; points d’accroche : `native-classes.json` ; proposition : `design.json`.
+- État établi : l’animation des images est interpolée ; le correctif actuel conserve les positions natives. Aucun prototype d’interpolation des positions installé. 241/243 descriptions convergent vers le rendu BAM ; `SCORCHER`, `SKYBOLT` et les familles natives demandent des adaptations distinctes. Ce compte ne prouve pas 241 déplacements en jeu.
+- Proposition à reprendre : service visuel par instance, commun aux rendus natifs/HD ; simulation, collisions, vitesse et déclenchements natifs conservés. Aucune nouvelle production d’image nécessaire.
+- Premier travail : sonde des coordonnées natives/finales à chaque update et image présentée ; mesurer la cadence réelle. Ensuite prototype BAM/Area, puis autres familles. Ne pas confondre phases BAM et déplacement ; ne pas refaire les essais d’assets pour répondre à cette question.
+- Arbitrages ouverts : retard visuel/impact, rebonds et terminaisons, hauteur/ombre, masques/tri, coordonnées fractionnaires, pause/TimeStop, lifecycle/concurrence. Interpolation tamponnée = retard ; extrapolation = risque de dépassement. Aucune option n’est validée globalement.
+
 ## WORKFLOW-PERF-001 — Délai des tâches locales
 
 - Symptôme : une petite tâche peut dépasser 10 minutes.

@@ -1,0 +1,40 @@
+{
+  "utc": "2026-10-28T15:49:56.629041+00:00",
+  "resource": "XPGREEN",
+  "source": "active SPWI304.SPL",
+  "source_sha256": "DB37B85C7C79C1F992022C7C4866CB239DCA400E76D5EEA93F20DA351A3B81B8",
+  "candidate_sha256": "45A9CEF7FA37BF7A132F350FC7D3BF1767C9EDE6147A46AD5C6890A505D539A5",
+  "bytes": 978,
+  "changed_byte_offsets": [
+    152,
+    192,
+    232,
+    272,
+    312,
+    352
+  ],
+  "ability_count": 6,
+  "only_projectile_words_changed": true,
+  "projectile_raw": 104,
+  "owner": "FIREBLGR",
+  "expected_assets": [
+    "FIREBGRT",
+    "FIREBGRX",
+    "FIREBGRR",
+    "SPSMPUFF"
+  ],
+  "gameplay": "Isolated test spell inherits ordinary Fireball effects/damage; use test save. No existing spell changed.",
+  "protected_files": {
+    "InfinityEngine-Enhancer.dll": "B7F4C9DAB3CACE1DEA5023521D464D0AA4C9EC60E3A292A7184EDE2D38212B86",
+    "iee-assets/effects/EffectAnimations-X4.registry": "0275BE3817DC6B0775DF9C39251087817D966168C90D3525A453D124847A4FEA"
+  },
+  "active_resource_hashes": {
+    "SPWI304.spl": "DB37B85C7C79C1F992022C7C4866CB239DCA400E76D5EEA93F20DA351A3B81B8",
+    "FIREBLGR.pro": "A0475EC7D0AD2943BE4C717A7C2A512373208623A50581C390C0B914DCD73714",
+    "FIREBGRX.bam": "19D25C6C41C0E7B50161328FB7664115E5017CB4E6125E18F6451479383C313A",
+    "FIREBGRR.bam": "E14B48295AF3E7E36B55678FCA63F0E98B942C93283CA03DE541BFAEEE5393F7"
+  },
+  "no_new_images_or_engine_changes": true,
+  "QA": "pending-user-and-runtime",
+  "scope": "Real FIREBLGR native dispatch; does not validate unregistered FBFLAMGR owner"
+}

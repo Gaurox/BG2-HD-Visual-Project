@@ -334,6 +334,8 @@ thread_local std::optional<core::NativeOcclusionCorrelation> g_effectSurfaceCorr
 thread_local void* g_effectSurfaceRealizingCell{};
 thread_local core::area_lighting::Transfer g_effectSurfacePalette;
 thread_local const core::area_lighting::Transfer* g_effectDrawPalette{};
+thread_local core::effect_indexed_palette::Transfer g_effectSurfaceIndexedPalette;
+thread_local const core::effect_indexed_palette::Transfer* g_effectDrawIndexedPalette{};
 thread_local unsigned g_effectSurfacePaletteOpacity{255}, g_effectDrawPaletteOpacity{255};
 struct EffectSurfacePlacement { int x{},y{},width{},height{}; bool valid{}; };
 thread_local EffectSurfacePlacement g_effectSurfacePlacement;
@@ -1394,6 +1396,8 @@ bool read_effect_animation_frame(void* cell, int logicalWidth, int logicalHeight
                        currentSequence)) {
     return false;
   }
+  const auto lookupSize=core::effect_frame_lookup_size(resref,logicalWidth,logicalHeight);
+  logicalWidth=lookupSize[0];logicalHeight=lookupSize[1];
   if (!effect_animation_x4::resolve_frame(resref, currentSequence, currentFrame, logicalWidth,
                                           logicalHeight, resolved.handle, g_effectOnceProfile)) {
     if (effect_animation_x4::contains_resource(resref)) {
@@ -1524,6 +1528,8 @@ void select_effect_timeline_frame(void* instance, int worldActive, int logicalWi
                                   int logicalHeight,
                                   ResolvedEffectAnimationFrame& resolved) noexcept {
   if (!instance || !resolved.timeline.enabled || !frame::boundary_available()) return;
+  const auto lookupSize=core::effect_frame_lookup_size(resolved.resref,logicalWidth,logicalHeight);
+  logicalWidth=lookupSize[0];logicalHeight=lookupSize[1];
   try {
     const auto frequency = frame::clock_frequency();
     const auto now = frame::clock_ticks();
@@ -3019,6 +3025,7 @@ static int detour_effect_fx_lock(void* infinity, void* rect, int flags) {
   g_effectSurfaceMask = {};
   g_effectSurfaceCorrelation.reset();
   g_effectSurfacePalette = {};
+  g_effectSurfaceIndexedPalette = {};
   g_effectSurfacePlacement = {};
   g_effectSurfaceUnderlay.clear();
   g_effectSurfaceOpacityValid=false;
@@ -3040,6 +3047,7 @@ static int detour_effect_fx_render_bam(void* infinity, void* cell, int x, int y,
   g_effectSurfaceOwner.submit(reinterpret_cast<std::uintptr_t>(infinity),
                               reinterpret_cast<std::uintptr_t>(cell), registered);
   g_effectSurfaceUnderlay.clear();
+  g_effectSurfaceIndexedPalette={};
   g_effectSurfaceOpacityValid=false;
   g_effectSurfaceNativeOpacity=255;
   g_effectSurfacePlacement={};
@@ -3087,14 +3095,19 @@ static int detour_projectile_fx_render(void* thisPtr, void* sourceRect, int x, i
   std::array<char,8> surfaceRef{};
   const bool smoke = surfaceCell && read_registered_effect_resref(surfaceCell, surfaceRef) &&
       surfaceRef == std::array<char,8>{'S','P','S','M','P','U','F','F'};
+  const bool indexed=surfaceCell && core::effect_indexed_palette::enabled(surfaceRef);
+  const bool indexedReady=!indexed || (!g_effectNormalTextureProfile && g_effectSurfaceIndexedPalette.valid);
   const bool composed=g_effectSurfaceOwner.submissions()>1;
-  const bool compositionReady=!composed || (!smoke && g_effectSurfaceOpacityValid &&
-      !g_effectSurfaceUnderlay.empty());
+  const auto surfaceLayout=core::effect_surface_layout(surfaceRef,
+      g_effectSurfacePlacement.width,g_effectSurfacePlacement.height,composed);
+  const bool compositionReady=surfaceLayout!=core::EffectSurfaceLayout::NativeOnly &&
+      (!composed || (!smoke && !indexed && g_effectSurfaceOpacityValid &&
+      !g_effectSurfaceUnderlay.empty()));
   const bool surfaceOwned = g_effectAnimationHooksEnabled && surfaceCell && g_effectSurfacePlacement.valid &&
       compositionReady &&
-      (!smoke || g_effectSurfacePalette.valid) &&
+      (!smoke || g_effectSurfacePalette.valid) && indexedReady &&
       !g_creatureSpriteScope;
-  const bool suppressOwner=composed && !surfaceOwned && !g_creatureSpriteScope;
+  const bool suppressOwner=(composed || indexed) && !surfaceOwned && !g_creatureSpriteScope;
   if(suppressOwner) {
     g_effectAnimationCell=nullptr;
     std::array<char,8> ref{};
@@ -3107,6 +3120,7 @@ static int detour_projectile_fx_render(void* thisPtr, void* sourceRect, int x, i
           g_effectSurfaceOpacityValid,g_effectSurfaceNativeOpacity);
   }
   const auto* previousPalette = g_effectDrawPalette;
+  const auto* previousIndexedPalette=g_effectDrawIndexedPalette;
   const auto previousOpacity = g_effectDrawPaletteOpacity;
   const auto* previousPlacement=g_effectDrawPlacement;
   const auto* previousUnderlay=g_effectDrawUnderlay;
@@ -3115,6 +3129,7 @@ static int detour_projectile_fx_render(void* thisPtr, void* sourceRect, int x, i
   g_effectDrawNativeOpacity=g_effectSurfaceNativeOpacity;
   g_effectDrawPlacement=surfaceOwned ? &g_effectSurfacePlacement : nullptr;
   g_effectDrawPalette = surfaceOwned && smoke ? &g_effectSurfacePalette : nullptr;
+  g_effectDrawIndexedPalette=surfaceOwned && indexed ? &g_effectSurfaceIndexedPalette : nullptr;
   g_effectDrawPaletteOpacity = g_effectSurfacePaletteOpacity;
   if (surfaceOwned) {
     g_effectAnimationCell = surfaceCell;
@@ -3149,6 +3164,7 @@ static int detour_projectile_fx_render(void* thisPtr, void* sourceRect, int x, i
   if(surfaceOwned || suppressOwner) g_effectAnimationCell=previousCell;
   g_effectSurfaceOwner.clear();
   g_effectDrawPalette = previousPalette;
+  g_effectDrawIndexedPalette=previousIndexedPalette;
   g_effectDrawPaletteOpacity = previousOpacity;
   g_effectDrawPlacement=previousPlacement;
   g_effectDrawUnderlay=previousUnderlay;
@@ -3901,8 +3917,19 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
       g_effectSurfaceNativeOpacity=alpha.value_or(255);
     }
     std::array<char,8> ref{};
-    if (read_registered_effect_resref(g_effectSurfaceRealizingCell, ref) &&
-        ref == std::array<char,8>{'S','P','S','M','P','U','F','F'}) {
+    const bool paletteRefRead=read_registered_effect_resref(g_effectSurfaceRealizingCell,ref);
+    if (paletteRefRead && core::effect_indexed_palette::enabled(ref)) {
+      area_animation_x4::NativePixelEncoding encoding{};
+      if (core::safe_read(g_areaAnimationTextureApi.nativePixelEncoding,encoding) &&
+          encoding.type==game::gl::UNSIGNED_INT_8_8_8_8_REV &&
+          (encoding.externalFormat==game::gl::BGRA || encoding.externalFormat==game::gl::RGBA)) {
+        core::area_lighting::Palette realized{};
+        if(core::safe_read(realizedOutput,realized))
+          g_effectSurfaceIndexedPalette=core::effect_indexed_palette::derive(
+              realized,encoding.externalFormat==game::gl::BGRA);
+      }
+    }
+    if (paletteRefRead && ref == std::array<char,8>{'S','P','S','M','P','U','F','F'}) {
       core::area_lighting::Palette realized{};
       area_animation_x4::NativePixelEncoding encoding{};
       if (core::safe_read(realizedOutput,realized) &&
@@ -4312,6 +4339,8 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
   } else if (g_effectAnimationHooksEnabled && g_effectAnimationRenderDepth > 0 &&
              g_effectAnimationFinalRenderDepth > 0 && g_effectAnimationInstance &&
              g_effectAnimationCell &&
+             (!g_effectDrawPlacement || (g_effectDrawPlacement->width<=logicalWidth &&
+                                         g_effectDrawPlacement->height<=logicalHeight)) &&
              read_effect_animation_frame(g_effectAnimationCell,
                                          g_effectDrawPlacement ? g_effectDrawPlacement->width : logicalWidth,
                                          g_effectDrawPlacement ? g_effectDrawPlacement->height : logicalHeight,
@@ -4333,7 +4362,13 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
         resolvedEffectAnimationFrame.onceProfile, read_world_active() <= 0);
     effectAnimationDrawFrame = resolvedEffectAnimationFrame.handle;
     auto effectApi = g_effectAnimationTextureApi;
+    if(g_effectDrawPlacement && core::effect_surface_layout(resolvedEffectAnimationFrame.resref,
+        g_effectDrawPlacement->width,g_effectDrawPlacement->height,false)==
+        core::EffectSurfaceLayout::CroppedSource) {
+      effectApi.cropTop=7;effectApi.cropBottom=7;
+    }
     effectApi.paletteTransfer = g_effectDrawPalette;
+    effectApi.indexedPaletteTransfer = g_effectDrawIndexedPalette;
     effectApi.paletteOpacity = g_effectDrawPaletteOpacity;
     if (g_effectDrawPlacement) {
       effectApi.canvasWidth=logicalWidth;effectApi.canvasHeight=logicalHeight;
@@ -4350,6 +4385,23 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
           resolvedEffectAnimationFrame.resref, kEffectDiagnosticX4Bound, "x4-bound",
           resolvedEffectAnimationFrame.sequence, resolvedEffectAnimationFrame.slot,
           resolvedEffectAnimationFrame.timelinePhase, logicalWidth, logicalHeight);
+      if (effectApi.indexedPaletteTransfer) {
+        // Bounded proof per actual submitted palette, not just once per BAM.
+        thread_local std::array<std::uint64_t,16> seen{};
+        const auto fingerprint=effectApi.indexedPaletteTransfer->fingerprint;
+        if(std::find(seen.begin(),seen.end(),fingerprint)==seen.end()) {
+          const auto empty=std::find(seen.begin(),seen.end(),0);
+          if(empty!=seen.end()) {
+            *empty=fingerprint;
+            LOG_INFO("EFX_PALETTE_BOUND resref={} fingerprint={:016X} opacity={} "
+                "sequence={} phase={} backing={} canvas={}x{}; native palette at HD upload",
+                effect_animation_resref_name(resolvedEffectAnimationFrame.resref),fingerprint,
+                effectApi.indexedPaletteTransfer->opacity,resolvedEffectAnimationFrame.sequence,
+                resolvedEffectAnimationFrame.timelinePhase,effectAnimationDrawFrame.frameIndex,
+                logicalWidth,logicalHeight);
+          }
+        }
+      }
       replacement = ReplacementKind::EffectAnimation;
     } else {
       g_effectAnimationDiagnostics.bindFallback.fetch_add(1, std::memory_order_relaxed);
@@ -4548,7 +4600,14 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
          ref==std::array<char,8>{'S','P','C','H','R','O','R','B'} ||
          ref==std::array<char,8>{'X','5','8','C','L','S','\0','\0'} ||
          ref==std::array<char,8>{'X','5','8','D','F','O','G','\0'} ||
+         ref==std::array<char,8>{'X','5','8','W','F','O','G','\0'} ||
          ref==std::array<char,8>{'X','2','8','W','R','T','H','\0'} ||
+         core::effect_indexed_palette::enabled(ref) ||
+         ref==std::array<char,8>{'T','R','A','V','E','L','\0','\0'} ||
+         ref==std::array<char,8>{'Y','3','1','P','0','7','5','\0'} ||
+         ref==std::array<char,8>{'Y','3','1','P','0','7','6','\0'} ||
+         ref==std::array<char,8>{'Y','3','1','P','0','7','7','\0'} ||
+         ref==std::array<char,8>{'Y','3','1','P','0','7','8','\0'} ||
          ref==std::array<char,8>{'X','5','8','C','L','K','\0','\0'})) {
       // Bounded per resource so the first cloud's many puffs cannot consume
       // the entire trace allowance before the next spell is tested.

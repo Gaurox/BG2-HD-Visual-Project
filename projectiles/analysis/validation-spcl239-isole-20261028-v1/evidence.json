@@ -1,0 +1,100 @@
+{
+  "schema": "bg2-projectile-scoped-acceptance-v1",
+  "recorded_utc": "2026-10-28T14:20:52.401908+00:00",
+  "status": "observed-components-confirmed",
+  "scope": "SPCL239 / Faisceau de la Conscience Solaire / SPCL239X and SPCL239R",
+  "runtime": "HD-and-native-mask-observed",
+  "visual_feedback": {
+    "text": "les 3 emblent ok",
+    "evidence": "projectiles/analysis/validation-variantes-20261028-v1/evidence.json"
+  },
+  "isolated_retest_feedback": "fait",
+  "source_first_line": 40115,
+  "session_start": "[2026-10-28 15:19:16.528] [info] Infinity Engine Enhancer initializing...",
+  "session_end": "[2026-10-28 15:19:33.760] [info] Map page B1: generation=0, pages=27, prepared=0, hits=0, misses=0, consumed=0, rejected=0, failures=0, reservedBytes=0, peakBytes=0, crcMs=0.000, copyMs=0.000, renderWorkerWaits=0",
+  "snapshot_sha256": "21CE3076FC11E9503418995A3DCDF93943A629BCE0D69DEC2D9156A7083497D1",
+  "dll_sha256": "CFE479943BC70B7387705A3060EE6D6FCF2C2EE1486A1A0BAB50E51606284003",
+  "checks": {
+    "SPCL239X": {
+      "events": [
+        {
+          "line": 280,
+          "text": "[2026-10-28 15:19:28.384] [info] EFX_NATIVE_SURFACE resref=SPCL239X cell=10519AF30 flags=288 smokePalette=0000000000000000 opacity=255 source=67x224 offset=0,0 layers=1 nativePrefix=false nativeOpacity=255"
+        },
+        {
+          "line": 523,
+          "text": "[2026-10-28 15:19:33.394] [info] EFX_STREAM_DIAGNOSTIC resref=SPCL239X stage=0x80 sequence=-1 slot=-1 phase=-1 logical=0x0"
+        },
+        {
+          "line": 524,
+          "text": "[2026-10-28 15:19:33.394] [info] EFX_STREAM_DIAGNOSTIC resref=SPCL239X stage=0x1 sequence=0 slot=1 phase=-1 logical=67x224"
+        },
+        {
+          "line": 525,
+          "text": "[2026-10-28 15:19:33.394] [info] EFX_STREAM_DIAGNOSTIC resref=SPCL239X stage=0x4 sequence=0 slot=1 phase=2 logical=67x224"
+        },
+        {
+          "line": 526,
+          "text": "[2026-10-28 15:19:33.394] [info] EFX_STREAM_DIAGNOSTIC resref=SPCL239X stage=0x8 sequence=0 slot=1 phase=2 logical=67x224"
+        },
+        {
+          "line": 534,
+          "text": "[2026-10-28 15:19:33.394] [info] EFX_STREAM_DIAGNOSTIC resref=SPCL239X stage=0x20 sequence=0 slot=6 phase=12 logical=100x254"
+        }
+      ],
+      "stages": [
+        "0x1",
+        "0x4",
+        "0x8",
+        "0x20",
+        "0x80"
+      ],
+      "HD_bind_observed": true,
+      "native_mask_observed": true
+    },
+    "SPCL239R": {
+      "events": [
+        {
+          "line": 283,
+          "text": "[2026-10-28 15:19:28.393] [info] EFX_NATIVE_SURFACE resref=SPCL239R cell=74875DD0 flags=2288 smokePalette=0000000000000000 opacity=255 source=46x46 offset=0,0 layers=1 nativePrefix=false nativeOpacity=255"
+        },
+        {
+          "line": 527,
+          "text": "[2026-10-28 15:19:33.394] [info] EFX_STREAM_DIAGNOSTIC resref=SPCL239R stage=0x1 sequence=0 slot=1 phase=-1 logical=46x46"
+        },
+        {
+          "line": 528,
+          "text": "[2026-10-28 15:19:33.394] [info] EFX_STREAM_DIAGNOSTIC resref=SPCL239R stage=0x4 sequence=0 slot=1 phase=2 logical=46x46"
+        },
+        {
+          "line": 529,
+          "text": "[2026-10-28 15:19:33.394] [info] EFX_STREAM_DIAGNOSTIC resref=SPCL239R stage=0x10 sequence=0 slot=1 phase=2 logical=46x46"
+        },
+        {
+          "line": 532,
+          "text": "[2026-10-28 15:19:33.394] [info] EFX_STREAM_DIAGNOSTIC resref=SPCL239R stage=0x8 sequence=0 slot=1 phase=2 logical=46x46"
+        },
+        {
+          "line": 533,
+          "text": "[2026-10-28 15:19:33.394] [info] EFX_STREAM_DIAGNOSTIC resref=SPCL239R stage=0x20 sequence=0 slot=2 phase=4 logical=52x50"
+        }
+      ],
+      "stages": [
+        "0x1",
+        "0x4",
+        "0x8",
+        "0x10",
+        "0x20"
+      ],
+      "HD_bind_observed": true,
+      "native_mask_observed": true
+    }
+  },
+  "mask_or_composition_rejects": [],
+  "limits": [
+    "Isolated retest confirms runtime route; previous user visual approval retained, no new visual statement invented from fait",
+    "No final per-phase cadence measurement for these resources",
+    "Not a closure-wide PRO,124/243 or release approval",
+    "No image,code,installed assets or release changes"
+  ]
+}

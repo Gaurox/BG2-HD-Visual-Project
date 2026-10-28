@@ -1,0 +1,57 @@
+{
+  "renderer": "V11",
+  "temporary_stream_trace": true,
+  "resources": {
+    "SPWI615": {
+      "sha256": "B8DDE303063B2B39AE054610F2FDC496EB004E9FDC3B295A17CAA49CA4839FC2",
+      "bytes": 554,
+      "projectile_raw": 213
+    },
+    "OGRE01": {
+      "sha256": "229087A750ED06716D39595AB0FAA5F264E033820B8DBB4E40012B816192F659",
+      "bytes": 1096,
+      "EA": 255
+    },
+    "FIRESEED": {
+      "sha256": "9AF47199EA40D29C5E2541AA17018B3C946AC7811FBC7DCC7F5D99DF03E27B05",
+      "bytes": 266
+    }
+  },
+  "tests": [
+    {
+      "id": 1,
+      "name": "Eclairs en chaine",
+      "commands": [
+        "C:CreateCreature(\"OGRE01\")",
+        "C:CreateCreature(\"OGRE01\")",
+        "C:CreateCreature(\"OGRE01\")",
+        "C:Eval('ForceSpellRES(\"SPWI615\",NearestEnemyOf(Myself))',0)"
+      ],
+      "setup": "Unsaved test game; party AI off; three hostile ogres alive, nearby and visible",
+      "expected": [
+        "SPCHLGT1",
+        "SPCHLGT2",
+        "SPCHLGT3"
+      ],
+      "logs": "EFX_STREAM_ROW per serial/sequence: hd, masked, phase, paused, outcome; check mask fallback and dropped trace",
+      "not_assumed": "No runtime sequence9 or entire owner QA inferred from static field alone"
+    },
+    {
+      "id": 2,
+      "name": "Semence de feu - vol",
+      "command": "C:CreateItem(\"FIRESEED\",5)",
+      "setup": "Reload test save; select Player1 alone for creation; equip/select seeds as active weapon, fire at live target from distance; attack round optional",
+      "optional_attack_command": "C:Eval('AttackOneRound(Player2)',0)",
+      "expected": [
+        "SPFIRSE2",
+        "FSEEDX",
+        "FSEEDA",
+        "SPSMPUFF"
+      ],
+      "purpose": "Distinguish 24x16 intermediate lookup rejections from actual final native/HD/masked travel draws; existing explosion/spread/smoke acceptance retained"
+    }
+  ],
+  "after_each": "Unpause, wait15s before reload/exit for bounded trace flush",
+  "cleanup": "After reading next session and game/loader stop: disable only EnableEffectStreamingTrace. Keep V11 DLL and receipts.",
+  "motion": "Deferred PROJ-MOTION-001; no motion prototype installed"
+}

@@ -4,6 +4,8 @@
 #include <vector>
 
 #include "iee/core/native_occlusion_probe.h"
+#include "iee/core/effect_secondary_scope.h"
+#include "iee/core/effect_surface_owner.h"
 
 int main() {
   using namespace iee::core;
@@ -61,16 +63,19 @@ int main() {
     }
   }
   // BG2EE CProjectileBAM::Render calls 2A4090 first: a clipped glow is
-  // unlocked/drawn, then FXLock starts another surface for FIREBAT. An owner-
+  // unlocked/drawn, then FXLock starts another surface for FIREBAT/SPMAGMIS. An owner-
   // wide capture sees two geometries and must reject them; per-FX captures
   // must still transfer the flight's own WED cut, without inheriting the glow.
-  {
+  for (const auto geometry : {std::array<int,2>{69,78}, std::array<int,2>{64,78}}) {
+    const int width=geometry[0], height=geometry[1];
+    const auto ref=width==64 ? std::array<char,8>{'S','P','M','A','G','M','I','S'}
+                            : std::array<char,8>{'F','I','R','E','B','A','T','\0'};
     std::vector<std::uint32_t> glow(24 * 16, 0x80603018u);
-    std::vector<std::uint32_t> flight(69 * 78, 0xC0603018u);
+    std::vector<std::uint32_t> flight(width * height, 0xC0603018u);
     NativeFxSurfaceView glowView{reinterpret_cast<const std::byte*>(glow.data()),
                                 24 * 4, 24, 16};
     NativeFxSurfaceView flightView{reinterpret_cast<const std::byte*>(flight.data()),
-                                  69 * 4, 69, 78};
+                                  width * 4, width, height};
     NativeOcclusionMaskCapture ownerCapture, surfaceCapture;
     NativeOcclusionCorrelation ownerScope{NativeOcclusionOwner::ProjectileBam, 0x1000, 1};
     NativeOcclusionCorrelation flightScope{NativeOcclusionOwner::ProjectileBam, 0x2000, 1};
@@ -81,24 +86,28 @@ int main() {
     check(!ownerCapture.begin_call(flightView) && !ownerCapture.valid(),
           "Combining glow and flight captures must fail closed");
     // FXLock resets the single-surface capture, not the enclosing owner.
-    check(surfaceCapture.begin_call(flightView), "Flight begins an independent FX capture");
+    EffectSurfaceOwner fx;
+    fx.begin(0x3000);
+    fx.submit(0x3000,0x2000,effect_secondary_scope::enabled(ref));
+    auto& activeCapture=fx.pending_candidate() ? surfaceCapture : ownerCapture;
+    check(activeCapture.begin_call(flightView), "Registered flight begins an independent FX capture");
     flight[1] = 0;
     flight[2] = 0x60603018u;
-    surfaceCapture.finish_call(flightView, 1);
+    activeCapture.finish_call(flightView, 1);
     flightScope.record_clipping({.result = 1});
     // Two clipping calls within the SAME FX surface must still accumulate.
-    check(surfaceCapture.begin_call(flightView), "A second polygon keeps the flight capture");
+    check(activeCapture.begin_call(flightView), "A second polygon keeps the flight capture");
     flight[3] = 0;
-    surfaceCapture.finish_call(flightView, 1);
+    activeCapture.finish_call(flightView, 1);
     flightScope.record_clipping({.result = 1});
     std::vector<std::uint8_t> transfer;
     bool changed = false;
-    const bool ready = surfaceCapture.build_transfer(69, 78, transfer, changed);
-    check(ready && changed && transfer.size() == 69 * 78 * 4 &&
+    const bool ready = activeCapture.build_transfer(width, height, transfer, changed);
+    check(ready && changed && transfer.size() == static_cast<std::size_t>(width * height * 4) &&
               transfer[0] == 255 && transfer[4] == 0 &&
               transfer[8] == 128 && transfer[12] == 0,
           "Flight retains both native polygon cuts, partial visibility and no glow cut");
-    const auto sample = flightScope.correlate_draw({.logicalWidth=69, .logicalHeight=78,
+    const auto sample = flightScope.correlate_draw({.logicalWidth=width, .logicalHeight=height,
                                                   .replacement=effect});
     check(sample && sample->successfulClippingCallCount == 2 &&
               !native_effect_occlusion_fallback_required(effect,
@@ -107,7 +116,7 @@ int main() {
     check(!surfaceCapture.build_transfer(24, 16, transfer, changed),
           "A flight mask must never be reused on the glow geometry");
     surfaceCapture = {};
-    check(!surfaceCapture.build_transfer(69, 78, transfer, changed),
+    check(!surfaceCapture.build_transfer(width, height, transfer, changed),
           "A new FX lock must not reuse the previous flight mask");
   }
   if (failures) return 1;

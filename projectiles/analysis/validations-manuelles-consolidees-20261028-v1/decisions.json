@@ -1,0 +1,518 @@
+{
+  "schema": "bg2-projectile-manual-decisions-v1",
+  "recorded_utc": "2026-10-28T16:20:18.317914+00:00",
+  "decision_origin": "explicit user visual feedback; historical scope and runtime evidence retained independently",
+  "source_sha256": {
+    "projectiles/analysis/nuage-valide-v4-20261028-v1/acceptance.json": "B3F0D229EB0BF4B7A5C9437C57F4DF1214B0503CF92322D2FB642BE54DFC6574",
+    "projectiles/analysis/nuages-v6-valides-20261028-v1/acceptance.json": "617401B3CC6F249EB73E5D782BBB17B6E0C4672994FE5C3995BCB4B7622F1D7D",
+    "projectiles/analysis/validation-vague1-clouds-20261028-v1/accepted-components.json": "A54D77C655A371F15FE49F3504288FA89ABE268EB2F1B2BF7F98CC4F9E1852C8",
+    "projectiles/analysis/writhing-v7-valide-20261028-v1/acceptance.json": "0CE0AB46240B46933EA91E4A83FA465E88D7361B1F30AE35D8A387BB051E3119",
+    "projectiles/analysis/validation-vague2-writhing-20261028-v1/evidence.json": "3B6C076B4F90D7765BEADB922C954A33A76C2776D445832AE09FD89110953C67",
+    "projectiles/analysis/validation-variantes-20261028-v1/evidence.json": "11D87E0C136722E09F16ABC4F20F790DE89DD0F371128CE115BD69AE1DDFF223",
+    "projectiles/analysis/validation-spcl239-isole-20261028-v1/evidence.json": "7E7B0AE1622D08787DF5B963B035D29F509FE20AAC91421AF900B170A23D00A5",
+    "projectiles/analysis/sharea-palettes-validees-20261028-v1/evidence.json": "73D1FC689BC2B3F02D52144138AC82C28AD4B476C8174B718135CEABB931B0AA",
+    "projectiles/analysis/vol-animation-mouvement-20261028-v1/evidence.json": "F6C18F6C76A96BF704C9C22DA27351F59BAB81CBB42E5E52947AEE823E9C6830",
+    "projectiles/analysis/mur-brouillard-alpha-20261028-v1/feedback.json": "2DFA9F44E510D621F8743EAA5AAF2FB1BFEE55F1577F9C0F77BCA6CA2C7C0292",
+    "projectiles/analysis/mur-brouillard-v10-valide-20261028-v1/acceptance.json": "4DA1389E4A86FBDE09415BD063D10AF4C99B4259E9E7C3E0A70FD095909BA050",
+    "projectiles/analysis/piege-zone-sauvage-valides-20261028-v1/acceptance.json": "1FA911B4EE21BF06F1A03BF738608689043B4E164234516DC1AB419DA8047237",
+    "projectiles/analysis/feu-vert-valide-20261028-v1/acceptance.json": "47DE657F7865E03562F80941E1603D5B9A309FBF408084CA8F5446B8A1F07858",
+    "projectiles/analysis/six-tests-cloud-alpha-20261028-v1/evidence.json": "9D9B786FDDBFC789C8117A6DCC59FFC98AB99E40A6E70CC65B04F825A597D3B4",
+    "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/latest-feedback.json": "3D7DA262F309FAA8F2634EADB39CC04CD0F6C9D372A3E9FA68B5E70760BD78E8",
+    "projectiles/analysis/piege-semence-resultats-20261028-v1/verification.json": "525D4B9EDF83BDCCA43D1CB9AB3BB4294374D223BE0192C25468851D009CDEF3",
+    "projectiles/analysis/boule-de-feu-retest-v3-20261028-v1/summary.json": "F3A0BD9B246221B628C640565C84C0E5FA05B66D8CB14AB9B4A8892CAF488F28",
+    "projectiles/analysis/composition-retest-v5-20261028-v1/verification.json": "8F112CC90829741495CAC6A079C014B8743A82CF464A8E553758A0C6F49A7DE9",
+    "effects/index/qa-decisions/SPMAGMIS/2026-09-07-accepted-spmagmis-final-fx-r8.json": "26BE4A63DE9708A760226D79362663C20FCC4152A2C3FAF3BAAC217CDD5719AF"
+  },
+  "counts": {
+    "accepted-observed-components": 28,
+    "historical-visual-acceptance-runtime-changed": 3,
+    "accepted-historical-asset": 1
+  },
+  "decisions": [
+    {
+      "owner": "CLOUDKIL",
+      "label": "Nuage mortel",
+      "driver": "SPWI502",
+      "observed_components": [
+        "SPCLOUDK→X58CLK"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/nuage-valide-v4-20261028-v1/acceptance.json"
+      ],
+      "technical": "HD/masque et phases impaires confirmés ; transparence acceptée.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "CLOUD",
+      "label": "Nuage puant",
+      "driver": "SPWI213",
+      "observed_components": [
+        "SPCLOUDS→X58CLS"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/nuages-v6-valides-20261028-v1/acceptance.json"
+      ],
+      "technical": "HD/masque et phases impaires confirmés ; transparence acceptée.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "1PDEATHF",
+      "label": "Brume mortelle",
+      "driver": "SPWI614",
+      "observed_components": [
+        "SPDFOGA→X58DFOG"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/nuages-v6-valides-20261028-v1/acceptance.json"
+      ],
+      "technical": "HD/masque et phases impaires confirmés ; transparence acceptée.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "1PINCIND",
+      "label": "Nuage incendiaire",
+      "driver": "SPWI810",
+      "observed_components": [
+        "SPINCINA"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/validation-vague1-clouds-20261028-v1/accepted-components.json"
+      ],
+      "technical": "HD/masque observés ; pas de cadence complète mesurée.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "PWILT",
+      "label": "Flétrissure",
+      "driver": "SPWI812",
+      "observed_components": [
+        "SPHORWIL",
+        "SPHORWIA"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/validation-vague1-clouds-20261028-v1/accepted-components.json"
+      ],
+      "technical": "HD/masque observés ; pas de cadence complète mesurée.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "WRITHING",
+      "label": "Brouillard putride",
+      "driver": "SPPR250",
+      "observed_components": [
+        "WRITHING→X28WRTH"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/writhing-v7-valide-20261028-v1/acceptance.json"
+      ],
+      "technical": "HD/masque et phases intermédiaires confirmés ; profil normal accepté.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "BDSPFIRE",
+      "label": "Feu spirituel",
+      "driver": "SPPR450",
+      "observed_components": [
+        "BDSFIRET",
+        "BDSFIREH",
+        "BDSFIREA"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/validation-vague2-writhing-20261028-v1/evidence.json"
+      ],
+      "technical": "Textures HD liées ; masques selon les événements disponibles, pas de mesure par phase complète.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "FDAWN",
+      "label": "Aube illusoire",
+      "driver": "SPPR609",
+      "observed_components": [
+        "FDAWNX",
+        "FDAWNA"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/validation-vague2-writhing-20261028-v1/evidence.json"
+      ],
+      "technical": "Textures HD liées ; masques selon les événements disponibles, pas de mesure par phase complète.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "COMET",
+      "label": "Comète",
+      "driver": "SPWI925",
+      "observed_components": [
+        "SPCOMTRV",
+        "SPCOMEXP"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/validation-vague2-writhing-20261028-v1/evidence.json"
+      ],
+      "technical": "Textures HD liées ; masques selon les événements disponibles, pas de mesure par phase complète.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "FIREBLIC",
+      "label": "Malédiction de Séluné",
+      "driver": "SPWI953",
+      "observed_components": [
+        "FIREBICT",
+        "FIREBICX",
+        "FIREBICR"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/validation-variantes-20261028-v1/evidence.json"
+      ],
+      "technical": "HD/masque observés ; tentatives de lookup 24×16 du vol conservées comme limite.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "SPCL239",
+      "label": "Faisceau de la Conscience Solaire",
+      "driver": "SPCL239",
+      "observed_components": [
+        "SPCL239X",
+        "SPCL239R"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/validation-variantes-20261028-v1/evidence.json",
+        "projectiles/analysis/validation-spcl239-isole-20261028-v1/evidence.json"
+      ],
+      "technical": "HD/masque confirmés par essai isolé ; retour visuel positif antérieur conservé.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "DDBREAT",
+      "label": "Souffle",
+      "driver": "SPDD03",
+      "observed_components": [
+        "HDFBRER"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/validation-variantes-20261028-v1/evidence.json"
+      ],
+      "technical": "Anneau HD/masque observé ; pas de validation globale des sous-projectiles.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "SPARBLNP",
+      "label": "Ralentissement",
+      "driver": "SPWI312",
+      "observed_components": [
+        "Anneau SHAREA avec palette native",
+        "vol observé"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/sharea-palettes-validees-20261028-v1/evidence.json",
+        "projectiles/analysis/vol-animation-mouvement-20261028-v1/evidence.json"
+      ],
+      "technical": "Cinq palettes liées HD ; preuve des phases de vol commune TRAVEL, pas cinq mesures de cadence. Déplacement non interpolé.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "SLEEP",
+      "label": "Sommeil",
+      "driver": "SPWI116",
+      "observed_components": [
+        "Anneau SHAREA avec palette native",
+        "vol observé"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/sharea-palettes-validees-20261028-v1/evidence.json",
+        "projectiles/analysis/vol-animation-mouvement-20261028-v1/evidence.json"
+      ],
+      "technical": "Cinq palettes liées HD ; preuve des phases de vol commune TRAVEL, pas cinq mesures de cadence. Déplacement non interpolé.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "SPARGRNP",
+      "label": "Délivrance de la magie",
+      "driver": "SPWI302",
+      "observed_components": [
+        "Anneau SHAREA avec palette native",
+        "vol observé"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/sharea-palettes-validees-20261028-v1/evidence.json",
+        "projectiles/analysis/vol-animation-mouvement-20261028-v1/evidence.json"
+      ],
+      "technical": "Cinq palettes liées HD ; preuve des phases de vol commune TRAVEL, pas cinq mesures de cadence. Déplacement non interpolé.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "SPARMANP",
+      "label": "Manteau de terreur",
+      "driver": "SPPR416",
+      "observed_components": [
+        "Anneau SHAREA avec palette native",
+        "vol observé"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/sharea-palettes-validees-20261028-v1/evidence.json",
+        "projectiles/analysis/vol-animation-mouvement-20261028-v1/evidence.json"
+      ],
+      "technical": "Cinq palettes liées HD ; preuve des phases de vol commune TRAVEL, pas cinq mesures de cadence. Déplacement non interpolé.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "SPARPUPA",
+      "label": "Bénédiction",
+      "driver": "SPPR101",
+      "observed_components": [
+        "Anneau SHAREA avec palette native",
+        "vol observé"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/sharea-palettes-validees-20261028-v1/evidence.json",
+        "projectiles/analysis/vol-animation-mouvement-20261028-v1/evidence.json"
+      ],
+      "technical": "Cinq palettes liées HD ; preuve des phases de vol commune TRAVEL, pas cinq mesures de cadence. Déplacement non interpolé.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "BURNHAND",
+      "label": "Mains ardentes",
+      "driver": "SPWI103",
+      "observed_components": [
+        "SPBHANDI"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/mur-brouillard-alpha-20261028-v1/feedback.json"
+      ],
+      "technical": "HD/masque confirmés sur le cône observé.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "BDWOFOG",
+      "label": "Mur de brouillard",
+      "driver": "OHBWFOG",
+      "observed_components": [
+        "BDWOFOGA→X58WFOG"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/mur-brouillard-v10-valide-20261028-v1/acceptance.json"
+      ],
+      "technical": "HD/masque et phases impaires confirmés ; transparence corrigée acceptée.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "GREEHIT",
+      "label": "Souffle de dragon noir",
+      "driver": "SPIN691",
+      "observed_components": [
+        "SPBDIMSP",
+        "SPBDRAE2"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/mur-brouillard-alpha-20261028-v1/feedback.json"
+      ],
+      "technical": "HD/masque confirmés sur impact/dispersion observés.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "REDHIT",
+      "label": "Impact rouge",
+      "driver": "SPIN693",
+      "observed_components": [
+        "SPRDRAIM",
+        "SPRDRAE2"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/mur-brouillard-v10-valide-20261028-v1/acceptance.json"
+      ],
+      "technical": "HD/masque confirmés ; manque de preuve antérieur levé.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "TRAPBOOM",
+      "label": "Explosion de piège",
+      "driver": "SPCL911B sur ennemi",
+      "observed_components": [
+        "SPSETSCD",
+        "SPSETSH",
+        "SPFLAMES"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/piege-zone-sauvage-valides-20261028-v1/acceptance.json"
+      ],
+      "technical": "HD/masque confirmés ; condition ennemi satisfaite.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "WILDZONE",
+      "label": "Zone de magie sauvage",
+      "driver": "OHNROBE3",
+      "observed_components": [
+        "SPGRWHRL"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/piege-zone-sauvage-valides-20261028-v1/acceptance.json"
+      ],
+      "technical": "HD/masque confirmés sur l’effet observé.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "FIREBLGR",
+      "label": "Feu vert",
+      "driver": "XPGREEN",
+      "observed_components": [
+        "FIREBGRT",
+        "FIREBGRX",
+        "FIREBGRR"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/feu-vert-valide-20261028-v1/acceptance.json"
+      ],
+      "technical": "HD/masque confirmés ; ne valide pas le propriétaire FBFLAMGR.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "INSEC2",
+      "label": "Fléau d’insectes",
+      "driver": "SPPR517",
+      "observed_components": [
+        "X26PLAA",
+        "XIPLAUIN"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/six-tests-cloud-alpha-20261028-v1/evidence.json"
+      ],
+      "technical": "HD/masque observés ; pas de mesure finale par phase.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "ICESTORM",
+      "label": "Tempête de glace",
+      "driver": "SPWI404",
+      "observed_components": [
+        "Y31P067",
+        "COLDH"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/six-tests-cloud-alpha-20261028-v1/evidence.json"
+      ],
+      "technical": "HD observée et masque COLDH ; tous les enfants/fragments non identifiés.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "LIGHTCHA",
+      "label": "Éclairs en chaîne",
+      "driver": "SPWI615",
+      "observed_components": [
+        "Éclairs/branches observés"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/six-tests-cloud-alpha-20261028-v1/evidence.json",
+        "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/latest-feedback.json"
+      ],
+      "technical": "Visuel accepté explicitement ; dernière session V11 insuffisante : 1 dessin SPCHLGT2 en chargement, 0 SPCHLGT1/3. Confirmation HD/masques/phases à compléter.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "BOLT2",
+      "label": "Semence de feu",
+      "driver": "FIRESEED.ITM",
+      "observed_components": [
+        "Vol SPFIRSE2",
+        "explosion FSEEDX",
+        "dispersion FSEEDA",
+        "fumée SPSMPUFF"
+      ],
+      "visual_state": "accepted-observed-components",
+      "evidence": [
+        "projectiles/analysis/piege-semence-resultats-20261028-v1/verification.json",
+        "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/latest-feedback.json"
+      ],
+      "technical": "Visuel vol accepté explicitement ; effets HD/masque confirmés antérieurement. Aucun vol SPFIRSE2 dans la dernière session : preuve finale vol/phases/masque encore ouverte.",
+      "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires."
+    },
+    {
+      "owner": "PFIRE2",
+      "label": "Boule de feu",
+      "driver": "SPWI304",
+      "observed_components": [
+        "FIREBAT et effet de Boule de feu observé"
+      ],
+      "visual_state": "historical-visual-acceptance-runtime-changed",
+      "evidence": [
+        "projectiles/analysis/boule-de-feu-retest-v3-20261028-v1/summary.json"
+      ],
+      "technical": "Aspect positif signalé avant correctif du vol ; V3 HD/masque/phases confirmés techniquement, sans nouvel accord visuel V3 explicite.",
+      "limits": "Conserver « boule de feu testée ca a l’air ok » comme retour historique ; pas de nouvelle QA visuelle après changement de contrat V3."
+    },
+    {
+      "owner": "TRAPSKUL",
+      "label": "Piège à crâne",
+      "driver": "SPWI313",
+      "observed_components": [
+        "Vol SKLT observé"
+      ],
+      "visual_state": "historical-visual-acceptance-runtime-changed",
+      "evidence": [
+        "projectiles/analysis/six-tests-cloud-alpha-20261028-v1/evidence.json",
+        "projectiles/analysis/composition-retest-v5-20261028-v1/verification.json"
+      ],
+      "technical": "Aspect positif V3 ; rendu V5 corrigé confirmé techniquement, sans nouvel accord visuel V5 explicite.",
+      "limits": "Fragments SKLH : preuve technique distincte, aucune acceptation manuelle globale déduite."
+    },
+    {
+      "owner": "CHROMORB",
+      "label": "Orbe chromatique",
+      "driver": "SPWI118",
+      "observed_components": [
+        "SPCHRORB observé"
+      ],
+      "visual_state": "historical-visual-acceptance-runtime-changed",
+      "evidence": [
+        "projectiles/analysis/six-tests-cloud-alpha-20261028-v1/evidence.json",
+        "projectiles/analysis/composition-retest-v5-20261028-v1/verification.json"
+      ],
+      "technical": "Aspect positif V3 ; rendu V5 corrigé confirmé techniquement, sans nouvel accord visuel V5 explicite.",
+      "limits": "Fragments SKLH : preuve technique distincte, aucune acceptation manuelle globale déduite."
+    },
+    {
+      "owner": "MAGICMIS",
+      "label": "Projectile magique",
+      "driver": "QA asset SPMAGMIS du 2026-09-07",
+      "observed_components": [
+        "SPMAGMIS"
+      ],
+      "visual_state": "accepted-historical-asset",
+      "evidence": [
+        "effects/index/qa-decisions/SPMAGMIS/2026-09-07-accepted-spmagmis-final-fx-r8.json",
+        "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/latest-feedback.json"
+      ],
+      "technical": "QA historique explicite conservée. Session récente : 128 dessins natifs MaskRejected, 36 HD sans masque ; contrat actuel à examiner.",
+      "limits": "Ne valide ni chaque compte de missiles ni le contrat actuel de masque depuis le seul ancien accord."
+    }
+  ],
+  "no_complete_PRO_or_release_QA": true,
+  "no_new_image_production": true
+}

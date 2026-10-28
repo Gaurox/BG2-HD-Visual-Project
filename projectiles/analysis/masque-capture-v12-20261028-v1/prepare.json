@@ -1,0 +1,49 @@
+{
+  "scope_added": "SPMAGMIS only",
+  "cause": "Missing FX per-pass scope leaves enclosing glow+flight capture incompatible; simulated regression covers64x78 and69x78",
+  "native_contracts": 1048,
+  "contract_resources": [
+    "SPMAGMIS",
+    "SPFIRSE2",
+    "SPCHLGT1",
+    "SPCHLGT2",
+    "SPCHLGT3"
+  ],
+  "QA_resources": {
+    "XQTARG.cre": {
+      "bytes": 1096,
+      "sha256": "21889769D779E04A660E1D91AD4D30E04C97E91CD552B2087A4C2E1175865BA7"
+    },
+    "XQSEED.spl": {
+      "bytes": 978,
+      "sha256": "FE1F4DEEEA0312C5931BE86D125ACEF1B805C802F29C7CCD7EB229BD5889811C"
+    }
+  },
+  "source_hashes": {
+    "OGRE01.cre": "229087A750ED06716D39595AB0FAA5F264E033820B8DBB4E40012B816192F659",
+    "SPWI304.spl": "DB37B85C7C79C1F992022C7C4866CB239DCA400E76D5EEA93F20DA351A3B81B8",
+    "FIRESEED.itm": "9AF47199EA40D29C5E2541AA17018B3C946AC7811FBC7DCC7F5D99DF03E27B05"
+  },
+  "target_changes": "500HP, five scripts empty, unique QA script name and no dialogue; graphics/animation/items/EA preserved",
+  "seed_changes": "Only six projectile words234->226; same native BOLT2 as FIRESEED.ITM, ordinary Fireball damage retained",
+  "intended_distances": [
+    [
+      320,
+      -80
+    ],
+    [
+      384,
+      0
+    ],
+    [
+      320,
+      80
+    ]
+  ],
+  "root_confirmation": "Pending ingame; no promise that every MaskRejected case has been removed",
+  "no_image_PRO_metadata_or_motion_changes": true,
+  "sources": [
+    "https://gibberlings3.github.io/iesdp/file_formats/ie_formats/cre_v1.htm",
+    "https://gibberlings3.github.io/iesdp/scripting/actions/bgeeactions.htm#252"
+  ]
+}

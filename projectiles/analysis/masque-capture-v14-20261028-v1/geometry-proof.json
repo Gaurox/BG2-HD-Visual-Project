@@ -1,0 +1,11 @@
+{
+  "observed_V13_failure": "SPMAGMIS native final draw64x88, static64x78 pack did not resolve; evidence ../validation-v13-20261028-v1/evidence.json",
+  "source": "Existing64x78 pack contains native64x64 at logical y7; all12RGBA backings SHA verified in V13 geometry proof",
+  "correction": "Lookup existing64x78 backing, take contiguous source rows7..70 in memory, upload64x64 at actual native FX placement on variable canvas. GPU cache projection includes cropTop/cropBottom, so different crop variants cannot alias. Small24x16 glow is not replaced by the flight.",
+  "GPU_regression": "Every GPU pixel verified on64x78 with y7,64x88 with y0/y12; padding deliberately opaque in fixture to detect leakage; immutable source verified; crop validation and cache variants tested",
+  "source_images_reprocessed": false,
+  "tests": "5/5 passed",
+  "native_contracts": 1048,
+  "unsupported_prefix": "SPMAGMIS composed prefix stays fully native; other resources keep previous source-placement behavior",
+  "scope": "SPMAGMIS runtime source projection; no position interpolation, PRO, catalogue or release changes"
+}

@@ -70,7 +70,7 @@ The project also develops its own modifications to **InfinityEngine-Enhancer** t
 | Q3M sprites | **15 / 15 families**, covering **331 / 331 creature variants** in the retained native scope, accepted in game. |
 | Environmental animations | **184 / 246 results retained**, including native selections; **139** current QA selections accepted in game. |
 | Spell effects | **3 / 494 assets** built and accepted in game. |
-| Other categories | Early UI results and video method checks; icons await QA, while projectiles and cursors have not started. |
+| Other categories | Early UI results and video method checks; icons await QA, projectile manual validation is in progress, and cursors have not started. |
 
 Produced assets, in-game acceptance and inclusion in a release are tracked separately. Completed map and sprite milestones do not mean the full mod is ready. See [the progress page](https://bg2hd.gaurox.dev/progress) for the complete breakdown and [news](https://bg2hd.gaurox.dev/news) for dated updates.
 
@@ -86,6 +86,7 @@ This repository contains pipeline scripts, engine source, inventories, technical
 
 - [Map pipeline](pipeline/README.md)
 - [Environmental animations](animations/README.md) and [effects](effects/README.md)
+- [Projectiles](projectiles/README.md) — [manual validation tracking](projectiles/SUIVI_MANUEL.md), [deferred movement interpolation study](pipeline/PROBLEMES_A_RESOUDRE.md#proj-motion-001)
 - [Sprite pipeline and research](sprite/README.md)
 - [Engine source](engine/InfinityEngine-Enhancer/source-patchee/README.md)
 - [Release development](releases/BG2-HD-Upscale/README.md)

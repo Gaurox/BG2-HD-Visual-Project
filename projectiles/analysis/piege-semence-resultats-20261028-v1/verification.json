@@ -1,0 +1,160 @@
+{
+  "utc": "2026-10-28T15:43:49.668572+00:00",
+  "user_feedback": "ca a l'air ok. vérifie et donne la suite",
+  "renderer": "V10",
+  "dll_sha256": "B7F4C9DAB3CACE1DEA5023521D464D0AA4C9EC60E3A292A7184EDE2D38212B86",
+  "log": {
+    "source": "config://bg2ee_game_root/InfinityEngine-Enhancer.log",
+    "source_start_line": 43582,
+    "first_line": "[2026-10-28 16:38:50.734] [info] Infinity Engine Enhancer initializing...",
+    "last_line": "[2026-10-28 16:39:59.883] [info] Map page B1: generation=0, pages=27, prepared=0, hits=0, misses=0, consumed=0, rejected=0, failures=0, reservedBytes=0, peakBytes=0, crcMs=0.000, copyMs=0.000, renderWorkerWaits=0",
+    "sha256": "4848A330B570A4BEEB9E2E752D56B6696419D1C34C09EB642E631D70D3A9517C"
+  },
+  "diagnostic_stages": {
+    "SPSETSCD": [
+      "0x1",
+      "0x4",
+      "0x8",
+      "0x20"
+    ],
+    "SPSETSH": [],
+    "SPFLAMES": [],
+    "SPFIRSE2": [
+      "0x80000000",
+      "0x2",
+      "0x1",
+      "0x4",
+      "0x8",
+      "0x80000000",
+      "0x80000000",
+      "0x80000000",
+      "0x80000000"
+    ],
+    "FSEEDX": [
+      "0x1",
+      "0x4",
+      "0x8",
+      "0x20"
+    ],
+    "FSEEDA": [
+      "0x1",
+      "0x4",
+      "0x8",
+      "0x20"
+    ],
+    "SPSMPUFF": [
+      "0x1",
+      "0x4",
+      "0x10",
+      "0x8",
+      "0x20"
+    ],
+    "SPGRWHRL": []
+  },
+  "accepted_observed_components": [
+    "SPSETSCD",
+    "FSEEDX",
+    "FSEEDA",
+    "SPSMPUFF"
+  ],
+  "seed_travel": {
+    "HD_binding_observed": true,
+    "native_mask_diagnostic_observed": false,
+    "geometry_lookup_rejections": [
+      "[2026-10-28 16:39:58.093] [info] EFX_STREAM_DIAGNOSTIC resref=SPFIRSE2 stage=0x80000000 sequence=2 slot=1 phase=-1 logical=24x16",
+      "[2026-10-28 16:39:58.093] [info] EFX_STREAM_DIAGNOSTIC resref=SPFIRSE2 stage=0x80000000 sequence=2 slot=2 phase=-1 logical=24x16",
+      "[2026-10-28 16:39:58.093] [info] EFX_STREAM_DIAGNOSTIC resref=SPFIRSE2 stage=0x80000000 sequence=2 slot=3 phase=-1 logical=24x16",
+      "[2026-10-28 16:39:58.093] [info] EFX_STREAM_DIAGNOSTIC resref=SPFIRSE2 stage=0x80000000 sequence=2 slot=4 phase=-1 logical=24x16",
+      "[2026-10-28 16:39:58.093] [info] EFX_STREAM_DIAGNOSTIC resref=SPFIRSE2 stage=0x80000000 sequence=2 slot=0 phase=-1 logical=24x16"
+    ],
+    "native_metadata_contracts": [
+      {
+        "sequence": 2,
+        "slot": 0,
+        "native_frame": 20,
+        "dimensions": [
+          41,
+          33
+        ],
+        "centre": [
+          17,
+          16
+        ],
+        "metadata_matches": true
+      },
+      {
+        "sequence": 2,
+        "slot": 1,
+        "native_frame": 21,
+        "dimensions": [
+          44,
+          37
+        ],
+        "centre": [
+          17,
+          20
+        ],
+        "metadata_matches": true
+      },
+      {
+        "sequence": 2,
+        "slot": 2,
+        "native_frame": 22,
+        "dimensions": [
+          46,
+          39
+        ],
+        "centre": [
+          17,
+          22
+        ],
+        "metadata_matches": true
+      },
+      {
+        "sequence": 2,
+        "slot": 3,
+        "native_frame": 23,
+        "dimensions": [
+          48,
+          38
+        ],
+        "centre": [
+          17,
+          22
+        ],
+        "metadata_matches": true
+      },
+      {
+        "sequence": 2,
+        "slot": 4,
+        "native_frame": 24,
+        "dimensions": [
+          49,
+          42
+        ],
+        "centre": [
+          17,
+          25
+        ],
+        "metadata_matches": true
+      }
+    ],
+    "conclusion": "Matching actual native frame contracts; 24x16 rejected lookup geometry is not the native cycle2 slot size. No images to regenerate. Rejected lookup attempts do not alone establish which final draws fell back; no complete travel or phase-cadence acceptance inferred."
+  },
+  "trap": {
+    "area_flags": 69,
+    "conditional_trigger": true,
+    "enemies_only": true,
+    "SPSETSH_observed": false,
+    "SPFLAMES_observed": false,
+    "conclusion": "Flight HD+mask accepted; no explosion acceptance. Prior Player2 test omitted required enemy condition; next driver targets verified hostile creature."
+  },
+  "new_secondary_groups_confirmed": [
+    "explosion-animation/FSEEDX",
+    "spread-animation/FSEEDA"
+  ],
+  "mask_composite_rejections": [],
+  "no_global_QA_or_release_inferred": true,
+  "no_image_game_or_engine_changes": true,
+  "position_interpolation": "Deferred PROJ-MOTION-001"
+}

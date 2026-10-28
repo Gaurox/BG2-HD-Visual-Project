@@ -1,0 +1,9 @@
+# V9 — trace finale des vols TRAVEL
+
+- Installée, moteur seul ; DLL SHA BE2D6A814AE43880A2A064FC37471429B906E5A6F8E08851495F364E87E4D782 ;538ressources/62500backings etrendu inchangés. [Reçu](installation.json), [delta de diagnostic](diagnostic-only.json).
+- Seul deltaC++ depuisV8 :5lignes ajoutent TRAVEL/Y31P075/076/077/078 à la trace finale déjà existante,limitée64phases parressource. Aucun algorithme de rendu/temporisation modifié ; SHA de touslesautresC++ vérifiés contreV8, retrait de ces5lignes restitue exactementleSHA V8dehooks.cpp.
+- `tests.log` :5/5suites passantes ; `native-contracts.log` :120contrats slot/phase30FPS/casse passants surlecatalogue installé,0lectureRGBA. Phases impaires disponibles distinctes pourchaquevol.
+- Géométrie/indices/cycles nativeBAM des5vols identiques byte-à-byte après neutralisationpalette :SHA 3C5E1FC4115B8D21F8E3F6B5F7CF74CA8404AA9AFD60E4263B49723054AB1011 ; timelines/modesRGB identiques. Lespalettes seules distinguent cesvols. Cela justifie unseulessai duchemincommun ; pasune mesuredirecte des5vols.
+- [V8 visuellement acceptée etanneaux interpolés confirmés](../../../../projectiles/analysis/sharea-palettes-validees-20261028-v1/README.md). Leslogs V8ne journalisaient paslesphases finales decesvols ; ne pasconclure absence d’interpolation depuis lesseulesphasespaires des événements once.
+- Retest unique : relancerInfinityLoader, deuxpersonnages vivants espacés, `C:Eval('ForceSpellRES("SPWI312",Player2)',0)`, attendre5s. Attendu `EFX_BOUND_PHASE resref=TRAVEL` x4,phasesimpaires/backingsdistincts,cible30/1,cadenceproche33ms ; absence derejetmasque/composition.
+- Recette `pipeline/recipes/projectiles-flight-phases-20261028-v9/install.py prepare|install` déjàexécutée, reçusimmutables ; backups transactionnels DLL/INI. Aucun lancementInfinityLoader par agent,aucuneimage retraitée,aucunPRO/métadonnée/release modifié.

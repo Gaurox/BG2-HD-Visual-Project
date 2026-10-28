@@ -1,0 +1,49 @@
+{
+  "recorded_utc": "2026-10-28T15:37:44.020479+00:00",
+  "user_feedback": "c4est ok valid\u00e9. la suite?",
+  "scope": "Accepted observed wall-fog transparency and red impact; prior hands/black breath acceptance retained. No whole-PRO/global/release QA inferred.",
+  "renderer": "V10",
+  "dll_sha256": "B7F4C9DAB3CACE1DEA5023521D464D0AA4C9EC60E3A292A7184EDE2D38212B86",
+  "log": {
+    "source": "config://bg2ee_game_root/InfinityEngine-Enhancer.log",
+    "source_start_line": 42791,
+    "first_line": "[2026-10-28 16:31:52.172] [info] Infinity Engine Enhancer initializing...",
+    "last_line": "[2026-10-28 16:32:47.831] [info] Area animation clock probe (periodic): gen=4, resref=PORTL1B, seq=0, calls=178, occurrenceEpochs=178, sameEpochCalls=0, starts=0, slots=72, epochsPerSlot=2.47[2..3], slotMs=69.62[55.70..94.90], stalledSlots=0, longGaps=0, transitions={sequential:60, skipped:0, wraps:12, backward:0, sequence:0}, worldActive={on:178, off:0, unknown:0, changes:0}, nonMonotonic=0",
+    "snapshot_sha256": "E724534CE91C8DE9F16480631A26D529B42EC84D3296C1FA100643969EFCCB16"
+  },
+  "alias": "BDWOFOGA->X58WFOG (normal profile only)",
+  "diagnostic_stages": {
+    "X58WFOG": [
+      1,
+      4,
+      16,
+      8,
+      32
+    ],
+    "SPRDRAIM": [
+      1,
+      4,
+      16,
+      8,
+      32
+    ],
+    "SPRDRAE2": [
+      1,
+      4,
+      16,
+      8,
+      32
+    ]
+  },
+  "wall_fog": {
+    "bound_samples": 64,
+    "odd_phase_samples": 31,
+    "all_samples_x4": true,
+    "target_fps": "30/1",
+    "measured_per_instance_cadence": null,
+    "cadence_limit": "Multiple puffs/cycles interleaved; no per-instance global cadence derived"
+  },
+  "mask_composite_rejections": [],
+  "images_reprocessed": 0,
+  "position_interpolation": "Deferred; not implemented or validated"
+}

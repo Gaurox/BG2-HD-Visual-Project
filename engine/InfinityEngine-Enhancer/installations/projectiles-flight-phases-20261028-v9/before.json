@@ -1,0 +1,766 @@
+{
+  "files": {
+    "InfinityEngine-Enhancer.ini": {
+      "bytes": 6566,
+      "sha256": "AB4A3C300C08EC88A137806C4F9C6590C908E67A93028DC4387F68FFAD6D8B0D"
+    },
+    "BaldurReal.exe": {
+      "bytes": 7202696,
+      "sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+    },
+    "override/SHAREA.bam": {
+      "bytes": 40404,
+      "sha256": "52A605FD2AD8569C5730A34B1FA122884AEB3E83B66CED5BEFB2841885DE517E"
+    },
+    "override/fpDraw.glsl": {
+      "bytes": 23863,
+      "sha256": "C50A43EBD580EE840EDABAF6B96B9DF80589A7D793F27A85D1766BC17977BA20"
+    },
+    "override/fpSprite.glsl": {
+      "bytes": 24906,
+      "sha256": "CF5C2795E37EE31D908801312971B8FA1ED5BE3A87902A7A44F186A013610A73"
+    },
+    "override/fpSELECT.glsl": {
+      "bytes": 25127,
+      "sha256": "F733B8970A3B1C3FB85F335C5BC3F2DC91A113DE22C6CF0B2CFBD2ACE79B84A5"
+    },
+    "iee-assets/creature-sprites/CreatureSprites-XN.catalog": {
+      "bytes": 3719092,
+      "sha256": "2AD7838CB4157B3B3226DBF3635D59ED17CE028E209F33615499A7E1700B289C"
+    },
+    "iee-assets/effects/manifest.json": {
+      "bytes": 42350649,
+      "sha256": "6E11B00001E4EFA49BE9D00E411B2647F97C024FB416996FE11D05B5A876215B"
+    },
+    "iee-assets/effects/EffectAnimations-X4.registry": {
+      "bytes": 934392,
+      "sha256": "0275BE3817DC6B0775DF9C39251087817D966168C90D3525A453D124847A4FEA"
+    },
+    "InfinityEngine-Enhancer.dll": {
+      "bytes": 3469824,
+      "sha256": "FEAE6EB5EEA0D0E6EDBEC32006B9DC71B469E96E3F11062A01B6FC0BFEB0DC76"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame000.rgba": {
+      "bytes": 95040,
+      "sha256": "E02038A3E59A250F348606B61A516BB1F4553F42F57B83354C6668907E617B7A"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame001.rgba": {
+      "bytes": 95040,
+      "sha256": "FD30116EADC3C711B044C5E9178119DA23C74F807B90DD1792EB4FBCB73A3B25"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame002.rgba": {
+      "bytes": 244224,
+      "sha256": "3AC8D8A463B08D41553509599DB352BD8D680470645A1B74501B21D45BEB0A58"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame003.rgba": {
+      "bytes": 244224,
+      "sha256": "FD97A26D6C003AEA360AB4CE4A64246825E05AC3587FCB82D3AD4FB82E23998C"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame004.rgba": {
+      "bytes": 367488,
+      "sha256": "78D8B9D481F759AF9AFA8DF2F317A29F0C1D1A67A94E0312327B7EC4A0B12613"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame005.rgba": {
+      "bytes": 367488,
+      "sha256": "DA1568F83C4D493375FB0A881A71F8DAD5FF224B674DF025783AB2EEACA98678"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame006.rgba": {
+      "bytes": 494400,
+      "sha256": "68F551168BC88DA50F2F07759BAFF0F2AE90F2C30BF716BEFC57A2958D5280CA"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame007.rgba": {
+      "bytes": 494400,
+      "sha256": "4796CCAC34F0A02D2EED30F82D3AA6FF93D1882201235AAE11471315E8EF8DE5"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame008.rgba": {
+      "bytes": 656000,
+      "sha256": "FA3B873B98848C224FA0BC7BB4F5D3D19D8F50C669E6FB8C2F9ECD1952FFA727"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame009.rgba": {
+      "bytes": 656000,
+      "sha256": "48AB520EFA649EFA82093B47133B0CB37FBD5000217886AB0FE9E59F39E3CDE3"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame010.rgba": {
+      "bytes": 656000,
+      "sha256": "AF7460E71B7AEB631B0BE82232CD646C915EFB20E6EE637319A198701DB0EAF8"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame011.rgba": {
+      "bytes": 656000,
+      "sha256": "D46450119FEEEF25999272BF5834772304A96412F06B5F0066491A86EF80FAE1"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame012.rgba": {
+      "bytes": 95040,
+      "sha256": "C259BE9610B5ECA6AB0B4EE99E17DCDC929677ACE06242E027511A3DA4FD8443"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame013.rgba": {
+      "bytes": 244224,
+      "sha256": "F4869693C3D5A17A754507E441173C4827A8A339C657F27F1BD79A23CDCEB741"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame014.rgba": {
+      "bytes": 244224,
+      "sha256": "536047871453D52BE18BAE8CFF77B93AA50E9A7F8CF5A8D022375635AEA06B69"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame015.rgba": {
+      "bytes": 367488,
+      "sha256": "787AA1C099311204C27937C8E69EF0AB8B7BE04E0553ED8F984F547BB93BC52D"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame016.rgba": {
+      "bytes": 367488,
+      "sha256": "A7635DDE60660E904F5C7790652654D275F342ECC90AE70F5F1FA712E4DD7E57"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame017.rgba": {
+      "bytes": 494400,
+      "sha256": "B2CF533673E6C64E68474DAEC0195DF12084979B7529292EFEA417ADB2CCACC7"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame018.rgba": {
+      "bytes": 494400,
+      "sha256": "0476CACB570E5B09F2FD35C75F0514080A0CA5BD6831F6035BDC482E78CE2B7A"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame019.rgba": {
+      "bytes": 656000,
+      "sha256": "C95F2F9984B7211A443FE8D4DB018DF130745F9555649ED7AFC6BA0D81C0322D"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame020.rgba": {
+      "bytes": 656000,
+      "sha256": "9C9F63911D660759CD223D8D192470DC006512F6D6E500ED0AC60EB034A7D710"
+    },
+    "iee-assets/effects/EFX4-SHAREA-frame021.rgba": {
+      "bytes": 656000,
+      "sha256": "078BEF43408F29CECF3361932D560B699A809B2CB80EE3460169FD19E8AE5D86"
+    }
+  },
+  "PROs": {
+    "1AROW02.pro": {
+      "bytes": 512,
+      "sha256": "9A7C056D7EA387E3B1008D8EB5E371C69D4113868B1A95CEF8AA79B5122B15E7"
+    },
+    "1AROW03.pro": {
+      "bytes": 512,
+      "sha256": "3264E597039386D240845D31E7A1EDCBAF5276DB15579BC9C12B96C1EB7111AF"
+    },
+    "1AROW04.pro": {
+      "bytes": 512,
+      "sha256": "7F34ED3DDF6A7D1A2E05E782AA01ECEBA7492F17FC55E18637BB82C7C00853D4"
+    },
+    "1AROW05.pro": {
+      "bytes": 512,
+      "sha256": "EFC67DB85E892879D87F09550951A66C0C90AD603D7CB998A83D8105FCFA8152"
+    },
+    "1AROW07.pro": {
+      "bytes": 512,
+      "sha256": "D16A1F5AFE619F050AE3DFD4DE79E32A523E1D99A3049A217D155507F8839FD2"
+    },
+    "1AROW10.pro": {
+      "bytes": 512,
+      "sha256": "253C791F148E4173E29C4F9576E1E1533F48E2404D1C3EBA365CD556963C244A"
+    },
+    "1AROW11.pro": {
+      "bytes": 512,
+      "sha256": "71ECBFBBA52DFA06F955141475C27CDB65E27F60776FDCF6F91858D1E1BBB5D0"
+    },
+    "1AROW15.pro": {
+      "bytes": 512,
+      "sha256": "BC5CE7B70C140335D3DE105FFD02ED420512F07F7ED8FB0BC4A51271BA60BEC0"
+    },
+    "1AXE05.pro": {
+      "bytes": 512,
+      "sha256": "2F9252FE307AE097168AB7510285620C9ABF3EA3D6004247D5E59603DA5D1DF9"
+    },
+    "1AXE08.pro": {
+      "bytes": 512,
+      "sha256": "D38E18731210ECBB92B299D4E25376B0745817E295CCCBAA59BB7FBE661C2FF5"
+    },
+    "1AXE09.pro": {
+      "bytes": 512,
+      "sha256": "8F99F035DE2051ED778E5DF235F7B139CCA6B10041E519493283347E6D7FABEF"
+    },
+    "1AXE10.pro": {
+      "bytes": 512,
+      "sha256": "04F453433A9075A2ECE53F3D35881C5CFC6102F2384EC7A21B7B9FA3EFEAF4C9"
+    },
+    "1AXE16.pro": {
+      "bytes": 512,
+      "sha256": "8719262EE4BA2620F2227EEB380953B0FB8A270D5E1BA4067FAAE50C078C810C"
+    },
+    "1BOLT01.pro": {
+      "bytes": 512,
+      "sha256": "292EC7A7A892CB605E1E4AF44934E86D8D17AE8C923505EA1A6A066EE89A4305"
+    },
+    "1BOLT02.pro": {
+      "bytes": 512,
+      "sha256": "23F6AE9F4B6B461516AAB49CE6601E229A29C1202F45D6150953F78AB06C9738"
+    },
+    "1BOLT03.pro": {
+      "bytes": 512,
+      "sha256": "7AA8D6CE31CE7EFDF6C59FC41287784F30BE7F8DC791FC2F9E047DF057B37D43"
+    },
+    "1BOLT04.pro": {
+      "bytes": 512,
+      "sha256": "D3F6C4D9929D008B53915BF5610311EED1051AD3863189AE127AB58D919DB8ED"
+    },
+    "1BOLT05.pro": {
+      "bytes": 512,
+      "sha256": "C64FB35F028412E292313BBB740C8AB4B2ABE04E09D95A061EECB6E331C6DE23"
+    },
+    "1BOLT06.pro": {
+      "bytes": 512,
+      "sha256": "7D75F91D7D534362B2F9E80BA6AB5E8B91360B7B309ED5DA93E3BDE9374270D1"
+    },
+    "1BOLT09.pro": {
+      "bytes": 512,
+      "sha256": "7A07D2842BD48D37218A03251C3BF336B9A56B6EF4392730942D10770F3F8D77"
+    },
+    "1BULL02.pro": {
+      "bytes": 512,
+      "sha256": "BC48CEA4B53E4A865016D3BF79C6088687B4257D8DA9A2D7A80CB942A3C4F3C1"
+    },
+    "1BULL03.pro": {
+      "bytes": 512,
+      "sha256": "7794AADAFADDDC73DD9C7373AC9DB5B0E077C6136FE6D7CD412ACA6D4A437C9A"
+    },
+    "1BULL04.pro": {
+      "bytes": 512,
+      "sha256": "35C03985FBFF37C7C39761AF439098583603EF132B3648C6BCBB7A43464831C5"
+    },
+    "1BULL05.pro": {
+      "bytes": 512,
+      "sha256": "3A6CD2FBFDF953C5C260D812D7B8F18621F00F170C70696C2E7CEC13C34A68F8"
+    },
+    "1DAGG11.pro": {
+      "bytes": 512,
+      "sha256": "15FF67814230DF9989C517CDA7262C8AE8C40996FD9A6028ACB4218F88B5ECF2"
+    },
+    "1DAGG12.pro": {
+      "bytes": 512,
+      "sha256": "F4390CB29CA74BCED7A5F65A295D17A424557F26A150F04298F5C324D28BC659"
+    },
+    "1DAGG16.pro": {
+      "bytes": 512,
+      "sha256": "B80AD0DDC0E0C3CBD460470985223172AA4276CFF5BBF9305DB3B195251E61D4"
+    },
+    "1DART01.pro": {
+      "bytes": 512,
+      "sha256": "7005126526B1F1585D5D0FFA6D640C74555AA85BB83D2F8576832637F2F3B9C1"
+    },
+    "1DART02.pro": {
+      "bytes": 512,
+      "sha256": "A0C70890BA25085D130EC42C17D8CB527CDC0D8F0E5B3292FE003D95B9FF5EAF"
+    },
+    "1DART03.pro": {
+      "bytes": 512,
+      "sha256": "58BBDCC0040F59AF91B0F944EBE64BD649D08955D8911F4E5B7F2AA99B030D39"
+    },
+    "1DART04.pro": {
+      "bytes": 512,
+      "sha256": "926C1866259615F6A19688408E7F93C32695FCDE8273BFAB32F521BFC78A7574"
+    },
+    "1DART05.pro": {
+      "bytes": 512,
+      "sha256": "05D9EF600332AF1321AAB8C70005305778A4E33B3D63F390B0D3C77E58AA82B2"
+    },
+    "1DART08.pro": {
+      "bytes": 512,
+      "sha256": "62510CBE30E51F332BCA472CF44BF7F602968152B91B10CDA39EA50C13297B6D"
+    },
+    "1PDEATHF.pro": {
+      "bytes": 768,
+      "sha256": "C79542769C40B368C44A2086BC14747D14F2EDF5C5CA694F24C88144B515BB8B"
+    },
+    "1PGSPORE.pro": {
+      "bytes": 768,
+      "sha256": "EC1AEF7B54446CA156299462496137602375178394A96B6BC3C7AAC1A35D5FBA"
+    },
+    "1PICECLD.pro": {
+      "bytes": 768,
+      "sha256": "4CE94355F794E33D2D046678DD965BA07F20D8D35ED415B066901475AED6A5E8"
+    },
+    "1PINCIND.pro": {
+      "bytes": 768,
+      "sha256": "B34E0E1337388C45E88B30856AC8AB231E39947457D549B4E33BDA8CB44D7ED5"
+    },
+    "1PMANEGS.pro": {
+      "bytes": 768,
+      "sha256": "E1CE02D0DBCC2EC8EFE11621A608E0ED6F56F4EA90E265F7524797A09B46775E"
+    },
+    "1PSLEEPC.pro": {
+      "bytes": 768,
+      "sha256": "6FBF9D52D10679F909C16B85102F089FC3020B30DB0A500D3B4AAF590DCB12FA"
+    },
+    "ACIDBLGR.pro": {
+      "bytes": 512,
+      "sha256": "EEDE5B6033A04BE42CF813A4868CFD5C8781C36050F3C0F9B3F530496C014B00"
+    },
+    "ACIDBLMU.pro": {
+      "bytes": 512,
+      "sha256": "CE2A8E107B35315CDA3EB411DABA05C8CA74C56F03D4C44D9C164762C1A12298"
+    },
+    "ACIDBLOB.pro": {
+      "bytes": 512,
+      "sha256": "B4EBD07F8DF6075651C677A27B62529F42181CDD8867CAD76475810C35265643"
+    },
+    "ACIDBLOC.pro": {
+      "bytes": 512,
+      "sha256": "30D09C7BE7EC7D07F15D22E79B57514C746DA36C5225E958D0519D3C19DB20FA"
+    },
+    "ARROW.pro": {
+      "bytes": 512,
+      "sha256": "A2EA9FA0412791F1103DBB1A96C1483FCB7CF6A098B1B424C3A82119A527E28A"
+    },
+    "ARROWEX.pro": {
+      "bytes": 768,
+      "sha256": "930EBC104EC4C03FB58E7ED800711D371B24AA7444154B89F9ECE733D2785154"
+    },
+    "ARROWFLB.pro": {
+      "bytes": 512,
+      "sha256": "2E27F98A47EE4DF50A3EA0F4AE77D4DB098DB3639934148DE4FD6283C73573BC"
+    },
+    "ARROWFLG.pro": {
+      "bytes": 512,
+      "sha256": "B287B34D6D0E6D942E91FF042D74A56E6E9697A972C7166A445602509A59C24F"
+    },
+    "ARROWFLI.pro": {
+      "bytes": 512,
+      "sha256": "8EFF3C47A5812F657747F17F67000DB92CE517D0D69806BFE06D05EEFA91F942"
+    },
+    "ARROWFLM.pro": {
+      "bytes": 512,
+      "sha256": "E04F102E7C763B114A3F673F6574483815CF4F95359D3B11B577BB1DD85BC94C"
+    },
+    "ARROWHVY.pro": {
+      "bytes": 512,
+      "sha256": "158D2A49BD685FCEE68D3D11817473060A257A69F45930EFAAA0AACF03B235F8"
+    },
+    "BDWOFOG.pro": {
+      "bytes": 768,
+      "sha256": "9E83A98AEDEF77817595970A3916643FC7AED5A4169B0144FE681F6BDD82CDA3"
+    },
+    "BULLET.pro": {
+      "bytes": 512,
+      "sha256": "6C22748653372E1256F86DF4C201A9393F2F1E135ACC8D6423BD8B57F0917D34"
+    },
+    "BULLETEX.pro": {
+      "bytes": 768,
+      "sha256": "DA53FA480478F68140955000BEDD5C83470002E8F8FE7EFF6CB50F7D0DA4AD5B"
+    },
+    "CLOUD.pro": {
+      "bytes": 768,
+      "sha256": "B1639DCAC5C864E982622914A62AECF1687838AD5DD417DB7F7CDF5B67973A22"
+    },
+    "CLOUDKIL.pro": {
+      "bytes": 768,
+      "sha256": "1383068A09F7492814C227A9C9E9A25DEC5B884C8FF7F8C46AE3176F45D5BE88"
+    },
+    "CLOUDPC.pro": {
+      "bytes": 768,
+      "sha256": "971DBADF1390D7CB5CB429E380C454F4C39138BA07592A031818C65EE37D90C7"
+    },
+    "DRAGGREE.pro": {
+      "bytes": 768,
+      "sha256": "7357E4FCD0C36B29FED7C30ABB972E07940557B5114158A723116450C766BAF8"
+    },
+    "FIREBALL.pro": {
+      "bytes": 768,
+      "sha256": "0EEABB774383E31E26A0CB91305D393F01024E01E0E5BDAA53227DCCDE257A64"
+    },
+    "FIREBLNS.pro": {
+      "bytes": 768,
+      "sha256": "22DAFCAFE743EF06E7EBE3514F4D4E1D89BC20CAD1F6F4EDD531DC8FE62AF4A5"
+    },
+    "FIREBOLT.pro": {
+      "bytes": 512,
+      "sha256": "CB60E037017560F1B1FA91A8444D82EE246AC6EF7D181874C4DB722948C952F3"
+    },
+    "FIRESTOR.pro": {
+      "bytes": 768,
+      "sha256": "02C385AB8A95E93528796A357816467A995AAEB6F6E6F73BDF3D2B0E2055CBC3"
+    },
+    "GOLCLOUD.pro": {
+      "bytes": 768,
+      "sha256": "B7F70961943C974ACE889876403568238D53388BB87CDFF52C7584023D3D0F43"
+    },
+    "GREASE.pro": {
+      "bytes": 768,
+      "sha256": "487DE5ECEBDB67D4608021BB3DAEBC5269FEDDA900F239308392BC357CFE1948"
+    },
+    "HOLD.pro": {
+      "bytes": 768,
+      "sha256": "FAA53F39B3405C47FA40032A3666C5D30679BA9DAA32A938382FA1CC0B470181"
+    },
+    "HOLDNECR.pro": {
+      "bytes": 768,
+      "sha256": "01D10C17CD986246757361862F6E4EE1A8328EC97B03313D947458300289CB47"
+    },
+    "HOLDSUMM.pro": {
+      "bytes": 768,
+      "sha256": "C13B690E0FDB804AB0CDA2B6F674A6E304DBFC6E3B845F1DE6F50AE4516BB4AA"
+    },
+    "ICESTORM.pro": {
+      "bytes": 768,
+      "sha256": "01C4614440576E59BA04BABBB977968F11B929D614E11D19DBEC4E951A8D54E7"
+    },
+    "INSEC1.pro": {
+      "bytes": 512,
+      "sha256": "9919EB6562E35D2C9E90C04C58194B3E848C94CABE547AE7AD4751B87A8E6CAB"
+    },
+    "INSEC2.pro": {
+      "bytes": 768,
+      "sha256": "95F6688928B63FC6EC1A24B912F128850F7DC483C940374F8C8EA50910ACC22D"
+    },
+    "INSEC3.pro": {
+      "bytes": 768,
+      "sha256": "21EE331156CAA94EBE042D5F9131913A173AC53019C5D8A327CBBE02997B7FE5"
+    },
+    "INSEC4.pro": {
+      "bytes": 512,
+      "sha256": "955C65F8B684EB5E9B2B62541C7F15A4E45E59D32ECCCD50ED0CC931C9F55112"
+    },
+    "METSWARM.pro": {
+      "bytes": 768,
+      "sha256": "EB9C4AC8E0E2BC7BA322EA80216486E9E0B80603C2FFEA34665BD2C84D29B51F"
+    },
+    "OHBICEW.pro": {
+      "bytes": 768,
+      "sha256": "59C75FB006CB315E12CC0A3144E4813E0C949E445988CE165655D4704BB9BF57"
+    },
+    "OHCL937.pro": {
+      "bytes": 768,
+      "sha256": "3FCB35DCF2EF98AC6F5F7A400967ED0C3BD33AED8CE34CAD56FD9A058F7B6C35"
+    },
+    "OHDETEVL.pro": {
+      "bytes": 768,
+      "sha256": "67B66C915344646E376F52EA7B76729F75C5C154CBABC8FB986A3ED349538536"
+    },
+    "PFIELD.pro": {
+      "bytes": 768,
+      "sha256": "D5F6FFB85A88EA53DE981B7001B442A24A14C25129BAA7208F303FE1AE25CBEF"
+    },
+    "PWILT.pro": {
+      "bytes": 768,
+      "sha256": "1354ED57D661D38039C4A62140B1192BB43EB27198187EA578AFD4229BE54C33"
+    },
+    "SLEEP.pro": {
+      "bytes": 768,
+      "sha256": "1D2A86D807973BA97D42C1693C8ECCC690CB0773439D1E9E914DE665A8C1C8F1"
+    },
+    "SPARCHNP.pro": {
+      "bytes": 768,
+      "sha256": "14F2C34AA14EED04110BCBCCF98B082CA463994EB8D1505AF9B7D4E1C6ECA571"
+    },
+    "SPARCHPA.pro": {
+      "bytes": 768,
+      "sha256": "4A2CAD5190453C04CBF5F009ABDD8BE9361D512B9C28D23255EFE7E7123A68DD"
+    },
+    "SPARGONP.pro": {
+      "bytes": 768,
+      "sha256": "9A9C0E0A3BD170C55E7C87B1619E376DADE413A25C96CDB6A370F4CDEE134A3D"
+    },
+    "SPARGOPA.pro": {
+      "bytes": 768,
+      "sha256": "34BD590A91969C4DF97D64E505E316BA0FD85E9BFC7569F3E1079E4B5C7EA24C"
+    },
+    "SPARGRNP.pro": {
+      "bytes": 768,
+      "sha256": "A58BBD08A15A1B4A2DC3BD5BB6276EFF35DE0BB94BE324B87BC9738DE7E4118F"
+    },
+    "SPARGRPA.pro": {
+      "bytes": 768,
+      "sha256": "DB2FD20F1A6B246841C08D6D5895B2A01034804B2F3EF6C90700B0E41740FF59"
+    },
+    "SPARICNP.pro": {
+      "bytes": 768,
+      "sha256": "DF8CD08E0426B347E2F425D3300A5431548D53E3B2E66ECC42953A4632FAB415"
+    },
+    "SPARICPA.pro": {
+      "bytes": 768,
+      "sha256": "F105A55F945EE3A429E3F6D84F72C4A590140DFE63E46B541C95C37E0D1DFA18"
+    },
+    "SPARKLCH.pro": {
+      "bytes": 512,
+      "sha256": "B1E4C5C96E01CE27B17A042A2C7D106089944EC56B7CB665FB7EDB974D8FB149"
+    },
+    "SPARKLGO.pro": {
+      "bytes": 512,
+      "sha256": "2FBFD20A66AB138D088BB0A11B62F3BC47C3E17E802627FC1B3B7AB1F4A709EE"
+    },
+    "SPARKLGR.pro": {
+      "bytes": 512,
+      "sha256": "F5627CB0B96BB3853DC9661B014938269E77C4AC818502131EDCC6D7140B7887"
+    },
+    "SPARKLIC.pro": {
+      "bytes": 512,
+      "sha256": "1C52C989D55D7B5FE2389F7A0A2A3986587A06F9F548B40A6B5240D602C235BB"
+    },
+    "SPARKLMA.pro": {
+      "bytes": 512,
+      "sha256": "8A01EEBF7101027577BBB5C93159C25B64F7DF84FBEF90BAC1563BE5A310B5AD"
+    },
+    "SPARKLOR.pro": {
+      "bytes": 512,
+      "sha256": "211166AC714FFDBC8F10D025C19716A032A73F9ED8B7C2EFE7CA88DCB81027C8"
+    },
+    "SPARKLPU.pro": {
+      "bytes": 512,
+      "sha256": "1E249C3954921D8DC802BEE85F2EFBBB03E07B572149AF944EE2AE7D1B28B5A6"
+    },
+    "SPARKLRE.pro": {
+      "bytes": 512,
+      "sha256": "951AFFAEDB8E77A95A84338E665E0E3DCC3BAB08F4590FF8CA4E74E9A05E81F0"
+    },
+    "SPARKLST.pro": {
+      "bytes": 512,
+      "sha256": "11170C88DBFB073625305F7BE75C5A9097B6460D189322BE5C8D1AF26ED972F0"
+    },
+    "SPARMANP.pro": {
+      "bytes": 768,
+      "sha256": "5042E122727FF319739D997BCE560BAD51BC79BF734F50ED9C92AF8877E62015"
+    },
+    "SPARMAPA.pro": {
+      "bytes": 768,
+      "sha256": "4DE970894786BFB0C7BC274B957BB8E11BF41FFD5A072ABAF850C109661DB075"
+    },
+    "SPARORNP.pro": {
+      "bytes": 768,
+      "sha256": "55B53F4FD0F5FA1F6A69E1484EDFCB366EA00010F0973784EE03E4557BC9FF0C"
+    },
+    "SPARORPA.pro": {
+      "bytes": 768,
+      "sha256": "7FD9BD9C4B508AE228C794794EB3ED2BCCAA99165E9F22E40125BDA83DD474F6"
+    },
+    "SPARPUNP.pro": {
+      "bytes": 768,
+      "sha256": "BCD04CB409E406FF993926D041B50612B6B11EBFEC70E10100AC3B33DA0EACD0"
+    },
+    "SPARPUPA.pro": {
+      "bytes": 768,
+      "sha256": "0487B3D8CE9DB716771C5BA92B4F2F414D3F76D05522C80A45CEB373D4B44A50"
+    },
+    "SPARRENP.pro": {
+      "bytes": 768,
+      "sha256": "A816A3E881487DAB30BF8D3C88B6064A4F31462DFBFE5D57A4373150FB109E01"
+    },
+    "SPARREPA.pro": {
+      "bytes": 768,
+      "sha256": "7933D099CA52ECC5B088C51ACF7AB716D1181F0C2AB9838F12A279BBCED33166"
+    },
+    "SPARSTNP.pro": {
+      "bytes": 768,
+      "sha256": "08A70C5E8588A17AF5E2C8165300A16A5C644C9D7750A54D99E299CB54AC130B"
+    },
+    "SPARSTPA.pro": {
+      "bytes": 768,
+      "sha256": "4FE4FCE18A9850F03B657FD10C5FCCA8E30E8702CD4914BEC83F520604E3ADEC"
+    },
+    "SPKLARCH.pro": {
+      "bytes": 768,
+      "sha256": "C15CA811ACF54F6C832738716DA304A9DF25EF69A9AD0BB4AEA657CD67716B49"
+    },
+    "SPKLARGO.pro": {
+      "bytes": 768,
+      "sha256": "876C97597202FE3C2E68F09554CBA75DA222AFC3A3936B3F255B4DFFA1CFEA8E"
+    },
+    "SPKLARGR.pro": {
+      "bytes": 768,
+      "sha256": "CAEC3E99C1310C28B445D0F883849588AE3E35D994EABFF498AB12E371B19DE1"
+    },
+    "SPKLARIC.pro": {
+      "bytes": 768,
+      "sha256": "BA9BE1685156D96AB93621CE39563A7A80C9E81909C355FF19EBB364C44D5B16"
+    },
+    "SPKLARMA.pro": {
+      "bytes": 768,
+      "sha256": "50DDBF2E0AC9B16324746B57046145972EEA8DE5CB2072D8238A268F42634572"
+    },
+    "SPKLAROR.pro": {
+      "bytes": 768,
+      "sha256": "E375CF16EB4CBB821C2634BE0EF0BC9DCCF276D384E78C00AB47009E5418E7ED"
+    },
+    "SPKLARPU.pro": {
+      "bytes": 768,
+      "sha256": "08355914AEFC6A38315F6445B1D414C317A1A3F1FF0E2A5DAC5ABA97A231C563"
+    },
+    "SPKLARRE.pro": {
+      "bytes": 768,
+      "sha256": "46C1CF023E8DC58916450E33055DEFA024CC8D8425AD1E651DF56A25F2C0E1B7"
+    },
+    "SPKLARST.pro": {
+      "bytes": 768,
+      "sha256": "0FC0E98D648E33E629D663E7567B5B823DA2E13C54E2A180874FB09850F0D0A2"
+    },
+    "STONE.pro": {
+      "bytes": 512,
+      "sha256": "FDB8208C36CBE24D86FD229F367600C135309EFAD099C034A39EBEF4CE5E0672"
+    },
+    "WEB.pro": {
+      "bytes": 768,
+      "sha256": "DCF7F27FB3A595CD73CD4F59C46838DC96DA70094F88B033CAA3C8C7D51E8991"
+    },
+    "WEB1P.pro": {
+      "bytes": 512,
+      "sha256": "5DE15628DEEEF348883A99D0A1A9564FDAC5596EBBA41093E44BE796D41A0D2E"
+    }
+  },
+  "source_sha256": {
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/am0205e_animation_x4_test.cpp": "A1A109B66EE288514DB7C2FBA81BC9A336D51A9B82936DCDD27D94B08AA6348E",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/am0205e_animation_x4_test.h": "8F62721DB6AD580005DC3088090638189DD165A8816CFE0BE7921FB42C2451B8",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/am0700a_animation_x4_test.cpp": "955EF79FF414E7CB3AB5267F1015C98996B16D57ABDB8B8BEC70DFF65ADF5777",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/am0700a_animation_x4_test.h": "79DA2212E2B0067126961111D3334A0F29161341E7FCF1D44700020B3EAEF6A7",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/am3000a_frame_x4_test.cpp": "9392A4E6B9708397887086A1DDBE60C861E9E4772AED6299FD99588E07ED9AF3",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/am3000a_frame_x4_test.h": "CED7AFBD854BEC058FDE87F6B176A21726B492DCAA2AE2CC01EB17B268D1FDF1",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/app_context.h": "A9E9227145596BC51F0D74C26F7347B82AB6F20BD0C616141D8C2AD6058712D4",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/area_animation_clock_diagnostics.cpp": "3ECA2A9FDCE9D66C5BF08CE947F465C4551DC85E0BF4AAA9FAE9FB9452986B49",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/area_animation_clock_diagnostics.h": "771DFE28CD45C13A1628AB8A757210D9FBFB6F457BCFCA97EDE2494B763BB370",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/area_animation_x4_registry.cpp": "35B8431BAF980DF8E9AD448309C8F95EE6C61847BF5ACD7BB8D84F7D69978E66",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/area_animation_x4_registry.h": "F66318AC65921E7D85E97C79A1732534B176674B0A339850A268EDF99D463707",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/area_state.cpp": "02A4F0ACC64283521C886DEFEEF71DABFB2D3A45BE57AED99BE65AD982AC4299",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/area_state.h": "83704B5B5E132E4131E1F9D0FEFAABB11547C77343A9181E85B190FD8B77EB27",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/biglogo_ui_upscale.cpp": "852720A4C8821B21D9CBA34A14D2797F7C502E28AE9301A574D75B6915A90920",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/biglogo_ui_upscale.h": "194EB94FD79CB9301222C7AFEFC7A3D634415A80EA1F8E2B2B8CFD1350E6A7D2",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/bridge_transition.cpp": "4C7CFF19E337CC5CADE38439CAD60F2CA3BC2A6892BE84427A38F60B60E8F80E",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/bridge_transition.h": "6975EFC9330A4ABFFA1215492F630E0D7E0DDCB820ED3F3E2A28680EB5E5FD50",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_filter.cpp": "0C3BD8E44511B6552EA4969E5E8FAF2F13B2353C9E3B60DF9962B46E440C3EC5",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_filter.h": "9DFD75C86B54B71E223F4293896BFA26CA476167B2183D49A9A3482F4528A6C1",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_minification.h": "4A1C937EE154025CE04828352C9C68FBACCE13BBE2C33B9A4F06379B0429F07D",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp": "A98D3B84BC7E74C91BCD587C96493B9505F7742B8CE0451E03F210E26FE22EBA",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.h": "1AA90FDEBD014E30A36D26ED3981B5B73CCDF9164D40A2662A2F7F2D43343CAB",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/diagnostics.cpp": "5793B8A86DDCA9D61B72E5213D158B7EBB84D5A89FD337632C4AFDCE2A01F87B",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/diagnostics.h": "6058AA572BB8BAB2E0AC4DF72BC02DAE02034749B30071C21911FD0288E086C5",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/dll_main.cpp": "3E98DAE8DF02619A213DF668004642A60EE59C33DFB62094798C3E552F7EF7A9",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/effect_animation_x4_registry.cpp": "2BD9A066B9D128C1F76F9CE6D28B361847CE43215C712C4252E1E44BBEB01536",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/effect_animation_x4_registry.h": "A296858D7CCA24DB18CCA1A29768020BE33BF9E8A10A364F16033CF17F82F3A2",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/exports.cpp": "886DC9F46FBD866CDC38A07C1FC4090E09A4B1458E49A13985E53BBF7B6806F8",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/frame_hook.cpp": "488079C209A84CECD8CA326252AEA917A02284809888EF631DEBE91EF9F2EB4A",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/frame_hook.h": "605C079B30A0AED8E741624B65D277CCAF4B89EE07A1A0C97E3FDF93284DDB99",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp": "D515F454F768DF49D527CBC24462F404EB36AD03915DCE2B8EE563DCA249A623",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.h": "EE97383C81637F42D2E190E4E1826908E5AB8C9482AD8753B9A4EE5DA49CD558",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/item_icon_x2.cpp": "9DDE21EAA66989345714130A6B4741C645ED9C2E212594EB1D45286EF45D1B82",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/item_icon_x2.h": "F62D12046D5AF35B618F8BE5FA90006BCFA1D1ED859A4321D73B338014BE3AFB",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/map_page_preload.cpp": "5E0F28D89D3226E2204678A03BC823D8479A49D36D64539E914C033B03BAB6F5",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/map_page_preload.h": "3896B9B32B094718D20ED4738921E3A965EC318312DE6A3425B409373FAFDEB0",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/map_page_prepare.cpp": "8E38232F889D5CE626B95EA3FDEFF6E5784B076B4425FEC44D0BE4A54E2B3863",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/map_page_prepare.h": "6811C709B71A5C6BC70D093019AF1B870D86900201A9FEA4E754108F34A57A48",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/map_page_prewarm.cpp": "A018D77A8C470C99532AB9FF53C69C3AAB688D32756629F5737DB61B01DE9B56",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/map_page_prewarm.h": "1A33349C8648E737E137BC8FAB1459C0509AF10045E11814270425306E4CD219",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/native_occlusion_bridge.cpp": "4DEAEA23B8BF4E612FA8D57E639EE7739908638762135CA6F80AC0F5802EFDED",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/native_occlusion_bridge.h": "7AAB78A5F7F763908DAD4EB6FA5D88558E443DD1BA469119DE43A29B66EA0750",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/paperdoll_q3m.cpp": "A3040C70370E26ED41BE045CE7DDE837D082AC3259DFFEC42ACC4C723110B32E",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/paperdoll_q3m.h": "D5657CC1C9E2C8A0ACA1461F23257739C07BC02518029BA1596415D3F7ADF3AB",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/paperdoll_q3m_scope.h": "7DF72117A8FD1C45003A4F4D2A2AF1385FAC859BAF92E76E3B7A1FBE792FA1A9",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/post_process.cpp": "3BCBCAC577C42E2395B8579268A7C92C96F1079587729ABDD37A15828CF9AB49",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/post_process.h": "2D1E169CC50110ED08A941BE77013B83A1AB8388FF3A8F2CACF2C7D959C73FAD",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/shader_diagnostics.cpp": "694A84684B338E4B66ABF4DB580721D15FDCDD7996F5EE3B4ABD9F4B97B8254D",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/shader_diagnostics.h": "1D89B0F6571822E4FADB845D467D5476F12FEDDCDAFB793B569EDAAFC1E30709",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/shader_probe.cpp": "D3BC861FB34793DFB515E339B626CA33437F078982294425A4D42D951BD1AC80",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/shader_probe.h": "939C25006470BCCC34550546C154B6BAD1C4AF4A27862FD419504ED43A2ED2E0",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/shader_suite.cpp": "A2E5FA7EE176C7AE3A4234A440D09A7EEDBF282B59867319A35563682829FC0B",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/shader_suite.h": "441FAD6471A6F2B42D26127395FC7C9CFDB1D0B38E516B342626704517E9DD0B",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/shader_uniform_bridge.cpp": "82296F44DECBE01B67F4EA88CD3AFE32FA14A3EB6A9F48310D071D462D7490E3",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/shader_uniform_bridge.h": "AB82B8167C35026D4E2E47FFA14073E700B54B9C5F61DC3B3224EE9F77C506D6",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/supersample.cpp": "74871700F884961BE46D990D1FCB90F478C8AF37CFB10E791C8AC9D9974FF1ED",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/supersample.h": "747D47D5F287A7EA26CC712DC9326D6DC928F49ECDD7D5AD851DE3880969D979",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/water_route2_registry.cpp": "23E3D30FB58457EFBE2C0B46B801EDF8BCF2D95C80EACC2C48FBE9141DD3C385",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/water_route2_registry.h": "0E6CE35B91A981C19B1386ABEF180778EE0D12BC9495537F1280284DC9BF9AED",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/water_textures.cpp": "383165AC7BE094AD1DDF89A339A87DF2933799960E779380D8CF71903A28FE96",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/water_textures.h": "F5D80C83FAFC4A0EFE85558B1A58F105D459F8CCBBAD072843B63EB60AF1B69C",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/area_animation_clock_probe.cpp": "0AD2354F16C50A537126765CAD96C516FA0856B33664DCDFC757CCBFD34A8F19",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/area_animation_clock_probe.h": "B01FF75D34565911CD4C2415E346D5E57070654993437DE832A8D2AA4A24B7C6",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/area_animation_lighting.h": "4360DEA540C3FC733FE1E9E118C8E34E28026C9257FE46509E98D336454075F9",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/area_animation_timeline.cpp": "AE24552FE95B93845F865CFE03204CCE5521521D2862C859AD05E0592941944F",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/area_animation_timeline.h": "E75A75411D6300903DDDD3C90F4DDEF6C16E627F320A54A884A5C63171AAFD7D",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/area_occlusion_smoothing.h": "1C58588719D435680491113BBC37DA62033738BC271C188C61C00CA829A7B369",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/bdforcew_visual_placement.h": "C0730A75F167D30F24C165805F039210B01D18456EEEE9680C177EAE030B322A",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/cache_budget_simulator.cpp": "10E279B8F5E72CFBF16F5242EC053ED0AD9B997BE99A2E35996285272EE1181A",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/cache_budget_simulator.h": "8E9268DFB14447F092F6FFA008CD9882A15D0744D6BCF9B39B148D06D4407205",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/config.cpp": "44F79B23FB9B78A7F9AD082E9D6B231228BA2B179F7874744DA916071CCC6A30",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/config.h": "CBB17EE5F3B1170446F6F01E1A3A884CDF05635DCC3A385D0BBB736F1CC6C72F",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/creature_sprite_filter_math.cpp": "D8532E3DBFC983199996B0312940467AB904EBF67CE9F8A3827C611261CA32DE",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/creature_sprite_filter_math.h": "4E97B11BE1B41A31FA460DD1FF7C8A0FA8CEA48827CFF0B6B3FFBE0357BB0A6E",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/effect_frame_cache.cpp": "7D7A2B02BC59A78A89CF1AE1969EA5B74853CA65C226B5D9321199CEC715E6BA",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/effect_frame_cache.h": "72D0F102E73552648F26927AE80F34AEA606A9804D2B8E5B671375C0067D91CF",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/effect_indexed_palette.h": "A34AFCB85A30A0DFB073B12DDD6FF345E68FC99788C636391786FE230986C073",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/effect_native_underlay.h": "6232C94052A132F4AEDE87E57D4DBB66BFDD655E13D6E4D7DB4CD39238B8A8E5",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/effect_playback_profile.h": "BA8F73D088EA8B29A46174CB8659BE02ABE8679BBF2F2E80BA2F3EF7B4E2F7B1",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/effect_presentation_trace.h": "7BFB2822F01F341017A090C2A311BB2C6599A53AEC9F484C3B1D736F174AC10D",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/effect_secondary_scope.h": "15A5B8F03C46EFC84244EEAD3D569033F96377DF00895C3E92C55EB1294A3245",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/effect_sharea_source_palette.h": "163A080A3A5CFF4F3B2150706EC5926FAA5AE6C7E03144ECBA64293CBB4421BC",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/effect_smoke_palette.h": "DDCB788205F07A690150254E0DF36EE21E6C7737C42365AE9ED6B183F697C163",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/effect_surface_owner.h": "F6DAC90589B13A4701083917032283967FD8776B7D8C17BBFE2F521FDBD5AF40",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/effect_texture_alias.h": "2B54BBAC9568BE189010715D2EBC7B0AB9127D8EC370864F6C044603CFD9C863",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/gl_state_guard.h": "4064A2E3728CAEFC69545F50B4367A89C312E1373570213E6BF450D9B055D3CE",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/hooking.h": "40432C1B65650F7D34F42A0E274FC7C574165E567AA1A2F73A2A57B33FE6BE7C",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/logger.cpp": "D4FD7FCE008C63B406A9023523F70D6FE320ACF33C347786E7CD58C7CB58312D",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/logger.h": "BDB6879A4831A75AF6ACC2A83D484282941B42E3E2147C3AEB75AC91D236469A",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/map_page_preload_policy.cpp": "485E4D518101FE5C5B18F8FC1C503678AB183495ED65690E4B3CCF835D0F6857",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/map_page_preload_policy.h": "713FD33B6350EA7686D3F02C79B8E24BE37961B722341A56E623AD4A92F21707",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/map_page_prepare_queue.cpp": "8E7EF59CFB2D0DF8F6F26BBDBE094560AC9E5AD60E531B011CA2C70627773F92",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/map_page_prepare_queue.h": "EE20E620AD1570126322F67DCAA4231ACAA74CDDB93CF28E2ABF0BDE381ACE51",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/map_page_shadow.cpp": "0CC545DFADDDA1B4CDD1AA8B1752543A70E28582C5D7FCFD4FD59667A3FA7A24",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/map_page_shadow.h": "0A94E6FCADC1A2A65AEAFA0B0C40080CA2CD1B4811E5F4067D82926EFC765354",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/map_texture_telemetry.cpp": "B64491F3F06873FF775EE73FB3FEC09A40AA38D3E5F8BD8DB341D46FE4C61369",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/map_texture_telemetry.h": "075097CFD07116FA00D2618A4ADB0E33716395B9F8D60C2260C5050280261CD7",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/map_view_burst_telemetry.cpp": "02427B14D91493EC794A3B5BE8F5091E6132FA75B9E5C3016B027DFDFCCF0C1F",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/map_view_burst_telemetry.h": "4C224F8C48F9D15E9A2000A1B6ED9733AABE6C2DE3176730E5E1A16B32F9D777",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/monster_palette_profiles.h": "473E86FB83B9205490F28CB09067345F31B6CBBEA810A03A3C0D903D4EA2CDB3",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/native_occlusion_feather.h": "D977DD6FE225D81CEB5D51130ECB618C491B8072791EBE7B98F4CE9651A99A37",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/native_occlusion_probe.cpp": "F7815EA70C77FC6C6AAB0AAF0D06AF9CCB7A16F38F6A33A6FC4C0AFEF0A04B8B",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/native_occlusion_probe.h": "F33B95ECD8FEAB5EC59A094767B4C8CD39395550226CA0F84DC2B6464FE65E8E",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/palette_fraction.h": "D676696C48E06D0D81BAB5A7A2B5C3D74648D802DCFB2E02A6DF9161E1216ABC",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/palette_partners.h": "975977CA1A976E339F8193BFB7419854513D9F20B34C0A65D7EF3731F9E91B90",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/pattern_scanner.cpp": "995461BD103858CF65E839E9531DCDEFDEA890B1213922E0CF3E8B356B129B3F",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/pattern_scanner.h": "75B97C6033380E37452EC6DBCDA9E4EC58B9ED624F9D30893DB29EA7D2D06630",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/performance_samples.h": "140FCA113849EA4E2A9BBE4623098CDED164B8373FA8885596193C6300DC5A77",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/planar_sphinct_world_masks.h": "1C6E71215FAFEBE80B4B9A08C1F69E45E6188478AD6255A53D6C8C8B5873A135",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/process_lifetime_worker.h": "91E48477D3C4E9EF541BF7EEF95A6987A519A0E03CEF022A989FAD1D47E805CA",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/process_resource_telemetry.cpp": "8C476F04FFE48F7023F03827CCF172743B595083889DEE2BCDBDE958A43241FD",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/process_resource_telemetry.h": "CFB3AB9B5C605ADFF2A1B65B4D0A470E02DBB52511EF8E95E9BA34242C3F23FC",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/pvr_demand_telemetry.cpp": "C4B12DFDEAD2FBC29F0E3D5B5E242E6D39A27DAF86A1DFEAE740CBBD6E65BF54",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/pvr_demand_telemetry.h": "21790AEE580FC40FEF85080AE17732AB2A6197854258230801A892A9F8ADBC45",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/shader_suite_config.cpp": "98F5DC29F561A55632520370B8A7010ED50F2605EB92FDC259E4BA36822E53AE",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/shader_suite_config.h": "33BFEF18EABC341FA29471720DAE0FC11ABE88704247C7A48209E87FD36EB8F7",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/shader_suite_math.cpp": "AC0E484DB56AA82A213F45C940FCF653B172F8EFB2DE1B8A108A16AEAFDB0D74",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/shader_suite_math.h": "D2759EFBA8B7728CF30FDB67D6976E0606F589E2ED7795B705A6F9A3189F6581",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/sprite_family_owners.h": "22DDE4D3AE02B5BB69BFE54F3455BCB918F8E69ED7BBF3898FAC2AF8A563AB97",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/sprite_minification.h": "C628E2D1E0A3B9C95C2C30B1DAD3534907A30D8BB647F496190AFC07C9B40483",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/sprite_p4_probe.cpp": "181329C5471A790C915C82E57098BDB38AB6275818600445DEA1BBB979F779F4",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/sprite_p4_probe.h": "A06BC10ABE33D9E52E358466DCA4BCB25BABFC7FD9E4C3380559FEE2F51BA6D6",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/startup_barrier.h": "FAEC12ACFC3871AC42F0B32EA65A555B829ADC2DDB63AD39352B8A51F6646418",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/water_overlay_policy.h": "42BD4576361A57D75DADFEC53863DAA6FCDD7EC372CE238F3017437FC5B1F0ED",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/features/tile_render.cpp": "1DDB8186B3390A1284D6472FC5DD24D92F87B2D24D8CE5DCAB3A03AA751EEA7F",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/features/tile_render.h": "1A7066DE4CEA7139B3231389EADCD178F7B6C8C51C5FC5CC6B50BC4A67107641",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/active_area_runtime.h": "73C12A3E906D253CEE6686BEDEE0F55069DDBFF715BB9AB18D49A4CC4FF9F262",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/area_redraw_runtime.h": "E87E7AB35EDF0441FF82C134345B2EC4358F1A2F1A556DF74F8658B473B96BE4",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/area_texture.cpp": "DEB309E28D29773EAA316ABD5B393050C5B19608EC99DC4878F6E074AADCDB4F",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/area_texture.h": "ABB39EDC87B6A7618F7676EBB2F03146FA9F88D35C94BFFB640531B6ABCB5A71",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/build_manifest.cpp": "0003D18ACC168B7B7E511D6EB85100560E76527F5A38DED424923455AFD29EF7",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/build_manifest.h": "D84548DF01718A3C9FA17EF466FE9CBA277481ABE91B8F6ACF9A81ED6488390B",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/dds_texture.cpp": "D90638C1D1BA09BEB4B37C38A2512077BC41CC524CCEB5177FF3B0B7A51068DE",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/dds_texture.h": "95701C6995605856BC4C77AB0325DDEADF14566FC9B254D4C5AE2F549DE24627",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/eeex_doc_layouts_x64.h": "667C4271F9DD913D6EB6E1D99C7F1612217A5320F407D2C15AB32B32339841E2",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/file_formats.h": "148BAEBE86E56CD6D095704B99F577B0F2ECCA7C8F52646F1AC1383217C5EB34",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/game_addrs.cpp": "5D3F610B36E190639FA898E363778DB4F086BA556C37B427E0F95FFDB45BD401",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/game_addrs.h": "A6FF024DF67ACCC58ABF52497974B503DF6BD20DE955528A30C4E3D9DB0FF321",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/game_types.h": "28A3842D38D46DE5D9C4BAE103C5D08E65AF33F425C02BD42279A5E724B20192",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/opengl_types.cpp": "6B8F03FF94425EEE4F16F425D9CE323EEBE6FAE4566A8F50F00388F113551F00",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/opengl_types.h": "56B82F72214D774AEB2CDFCDE1F5DBB1D9CAC4CAE925CCF0A8FAAE761EC99191",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/renderer.cpp": "B4586463ADB85E228350065FB277C6EA085CCA33583C9BE896A9FE5D416F5383",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/renderer.h": "202FEEDC03372E58009E8FA2E0AB4C66F4F5F2DC791FF030E727B220639D6612",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/resref_runtime.cpp": "394BD85F2E994721A24697997759DC73A8C06DADD8933C1D52AA2082A5128A57",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/resref_runtime.h": "44DD75AF1AC52389BBD354ACA20AB13B2A620C3DD8F93FA58197E0A58ECF0E02",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/runtime_types_x64.h": "97B076E6CC2C0569CF026C6EB42B72C19E67089846E87E244C001F1E59677571",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/scoped_effect_gl_state.h": "78A380D98F34558451F1C35519754CE03164B4FA92D85AC664EBF0CF92464022",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/shader_override.cpp": "8D2F2DF1739FA16B68460230857CA972264AE485B9F4C3C693374B7601892F92",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/shader_override.h": "F0522D513A7E03DED2DD50D6B1FF4A27EE9BC85CB8E1BFDF5B7502570965F8D5",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/texture_units.h": "6D17674362415B72D28992D011634B1C010E9A4979E76E51CFCC281FB0A83E7E",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/tile_liquid.cpp": "F9C74837C5C9B0269EDD9EC1324A0F42D87C787FFC4CCCC69CA4CD98A0C4825F",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/tile_liquid.h": "AEC50BEF72218DA1FEC431439B7EE7283A64DA7F3878808A3466DC7D0409A693",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/tile_upscale.cpp": "6F9A3812A82ABEB539C78A20E0E454FD2E0A61716C214250349EE564D7F88F95",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/tile_upscale.h": "1C76795A7878C4D3FA0A328FC1DDA839C189ABC7510B1ECB8F96BBA8AFB5123E",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/tis_palette.cpp": "D267F00BD715862B18D663E38F1BFB52F86A23201244A9F950490596E2217C97",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/tis_palette.h": "99BC1A86FE69D1E43409E73855D93548308C89AF9E34A8FB0517E697EFB4A146",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/tis_runtime.cpp": "B68A855C43C5CAD5DF88EE03B885D3D059583899B7FB2D5F3B3A9D2D04430725",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/tis_runtime.h": "ABA428D0BE96082BCDC1A24D6B4F4130A408ECD7BEFECBE0C4A14AA4968613A7",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/wed_runtime.cpp": "E8C83D6873526613773125AC8862AE6FFBAB8CDFDA07DF6C440B8B19E533FC11",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/wed_runtime.h": "F92F0171B1398B3068FF1F6D5A7F692D654A6783D912E93FF49B6294FAF0F6BE"
+  },
+  "SHAREA_images": 22,
+  "resource_count": 538
+}

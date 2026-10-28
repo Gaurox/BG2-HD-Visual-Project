@@ -1,0 +1,243 @@
+{
+  "schema": "bg2-projectile-scoped-feedback-v1",
+  "utc": "2026-10-28T15:26:16.572289+00:00",
+  "feedback": "transparence a corriger sur le 2. les autres semblent ok. vérifie",
+  "source_first_line": 41803,
+  "snapshot_sha256": "2B6BB2B0F2A38A7DF3C3ED73094724668DC6D404C1F97F569B4F439222C7A660",
+  "session_start": "[2026-10-28 16:18:32.279] [info] Infinity Engine Enhancer initializing...",
+  "session_end": "[2026-10-28 16:19:27.142] [info] Map page B1: generation=0, pages=27, prepared=0, hits=0, misses=0, consumed=0, rejected=0, failures=0, reservedBytes=0, peakBytes=0, crcMs=0.000, copyMs=0.000, renderWorkerWaits=0",
+  "results": [
+    {
+      "test": 1,
+      "spell": "SPWI103",
+      "PRO": "BURNHAND",
+      "visual": "accepted-observed-component",
+      "runtime": "HD-and-mask-observed"
+    },
+    {
+      "test": 2,
+      "spell": "OHBWFOG",
+      "PRO": "BDWOFOG",
+      "visual": "rejected-transparency",
+      "runtime": "Wrong normal-alpha profile selected; compatible corrected existing alias now proven"
+    },
+    {
+      "test": 3,
+      "spell": "SPIN691",
+      "PRO": "GREEHIT",
+      "visual": "accepted-observed-components",
+      "runtime": "HD-and-mask-observed"
+    },
+    {
+      "test": 4,
+      "spell": "SPIN693",
+      "PRO": "REDHIT",
+      "visual": "positive-feedback-retained",
+      "runtime": "Native surfaces captured but final HD/mask events absent from saved session; technical confirmation pending"
+    }
+  ],
+  "checks": {
+    "SPBHANDI": {
+      "events": [
+        {
+          "line": 284,
+          "text": "[2026-10-28 16:18:54.655] [info] EFX_NATIVE_SURFACE resref=SPBHANDI cell=7384BC00 flags=2288 smokePalette=0000000000000000 opacity=255 source=44x44 offset=0,0 layers=1 nativePrefix=false nativeOpacity=255"
+        },
+        {
+          "line": 399,
+          "text": "[2026-10-28 16:18:55.191] [info] EFX_STREAM_DIAGNOSTIC resref=SPBHANDI stage=0x1 sequence=0 slot=0 phase=-1 logical=44x44"
+        },
+        {
+          "line": 400,
+          "text": "[2026-10-28 16:18:55.191] [info] EFX_STREAM_DIAGNOSTIC resref=SPBHANDI stage=0x4 sequence=0 slot=0 phase=0 logical=44x44"
+        },
+        {
+          "line": 401,
+          "text": "[2026-10-28 16:18:55.191] [info] EFX_STREAM_DIAGNOSTIC resref=SPBHANDI stage=0x8 sequence=0 slot=0 phase=0 logical=44x44"
+        },
+        {
+          "line": 402,
+          "text": "[2026-10-28 16:18:55.191] [info] EFX_STREAM_DIAGNOSTIC resref=SPBHANDI stage=0x10 sequence=0 slot=1 phase=2 logical=44x44"
+        },
+        {
+          "line": 403,
+          "text": "[2026-10-28 16:18:55.191] [info] EFX_STREAM_DIAGNOSTIC resref=SPBHANDI stage=0x20 sequence=0 slot=1 phase=2 logical=44x44"
+        }
+      ],
+      "stages": [
+        "0x1",
+        "0x4",
+        "0x8",
+        "0x10",
+        "0x20"
+      ],
+      "HD_bind_observed": true,
+      "mask_observed": true
+    },
+    "BDWOFOGA": {
+      "events": [
+        {
+          "line": 520,
+          "text": "[2026-10-28 16:19:01.524] [info] EFX_NATIVE_SURFACE resref=BDWOFOGA cell=7A438F40 flags=30001 smokePalette=0000000000000000 opacity=255 source=157x119 offset=0,0 layers=1 nativePrefix=false nativeOpacity=255"
+        },
+        {
+          "line": 575,
+          "text": "[2026-10-28 16:19:05.764] [info] EFX_STREAM_DIAGNOSTIC resref=BDWOFOGA stage=0x1 sequence=0 slot=0 phase=-1 logical=157x119"
+        },
+        {
+          "line": 576,
+          "text": "[2026-10-28 16:19:05.764] [info] EFX_STREAM_DIAGNOSTIC resref=BDWOFOGA stage=0x4 sequence=0 slot=0 phase=0 logical=157x119"
+        },
+        {
+          "line": 577,
+          "text": "[2026-10-28 16:19:05.764] [info] EFX_STREAM_DIAGNOSTIC resref=BDWOFOGA stage=0x10 sequence=0 slot=0 phase=0 logical=157x119"
+        },
+        {
+          "line": 578,
+          "text": "[2026-10-28 16:19:05.764] [info] EFX_STREAM_DIAGNOSTIC resref=BDWOFOGA stage=0x8 sequence=0 slot=0 phase=0 logical=157x119"
+        },
+        {
+          "line": 579,
+          "text": "[2026-10-28 16:19:05.764] [info] EFX_STREAM_DIAGNOSTIC resref=BDWOFOGA stage=0x20 sequence=3 slot=2 phase=4 logical=163x123"
+        }
+      ],
+      "stages": [
+        "0x1",
+        "0x4",
+        "0x8",
+        "0x10",
+        "0x20"
+      ],
+      "HD_bind_observed": true,
+      "mask_observed": true
+    },
+    "Y31P070": {
+      "events": [
+        {
+          "line": 488,
+          "text": "[2026-10-28 16:19:00.462] [info] EFX_NATIVE_SURFACE resref=Y31P070\u0000 cell=78D7F5A0 flags=30088 smokePalette=0000000000000000 opacity=255 source=31x31 offset=0,0 layers=1 nativePrefix=false nativeOpacity=255"
+        },
+        {
+          "line": 507,
+          "text": "[2026-10-28 16:19:00.762] [info] EFX_STREAM_DIAGNOSTIC resref=Y31P070 stage=0x1 sequence=0 slot=0 phase=-1 logical=31x31"
+        },
+        {
+          "line": 508,
+          "text": "[2026-10-28 16:19:00.762] [info] EFX_STREAM_DIAGNOSTIC resref=Y31P070 stage=0x4 sequence=0 slot=0 phase=0 logical=31x31"
+        },
+        {
+          "line": 509,
+          "text": "[2026-10-28 16:19:00.762] [info] EFX_STREAM_DIAGNOSTIC resref=Y31P070 stage=0x8 sequence=0 slot=0 phase=0 logical=31x31"
+        }
+      ],
+      "stages": [
+        "0x1",
+        "0x4",
+        "0x8"
+      ],
+      "HD_bind_observed": true,
+      "mask_observed": false
+    },
+    "SPBDIMSP": {
+      "events": [
+        {
+          "line": 707,
+          "text": "[2026-10-28 16:19:13.932] [info] EFX_NATIVE_SURFACE resref=SPBDIMSP cell=12CEC7C80 flags=288 smokePalette=0000000000000000 opacity=255 source=76x69 offset=0,0 layers=1 nativePrefix=false nativeOpacity=255"
+        },
+        {
+          "line": 926,
+          "text": "[2026-10-28 16:19:16.369] [info] EFX_STREAM_DIAGNOSTIC resref=SPBDIMSP stage=0x1 sequence=0 slot=1 phase=-1 logical=76x69"
+        },
+        {
+          "line": 927,
+          "text": "[2026-10-28 16:19:16.369] [info] EFX_STREAM_DIAGNOSTIC resref=SPBDIMSP stage=0x4 sequence=0 slot=1 phase=2 logical=76x69"
+        },
+        {
+          "line": 928,
+          "text": "[2026-10-28 16:19:16.369] [info] EFX_STREAM_DIAGNOSTIC resref=SPBDIMSP stage=0x10 sequence=0 slot=1 phase=2 logical=76x69"
+        },
+        {
+          "line": 932,
+          "text": "[2026-10-28 16:19:16.369] [info] EFX_STREAM_DIAGNOSTIC resref=SPBDIMSP stage=0x8 sequence=0 slot=1 phase=2 logical=76x69"
+        },
+        {
+          "line": 934,
+          "text": "[2026-10-28 16:19:16.369] [info] EFX_STREAM_DIAGNOSTIC resref=SPBDIMSP stage=0x20 sequence=0 slot=2 phase=4 logical=86x76"
+        }
+      ],
+      "stages": [
+        "0x1",
+        "0x4",
+        "0x8",
+        "0x10",
+        "0x20"
+      ],
+      "HD_bind_observed": true,
+      "mask_observed": true
+    },
+    "SPBDRAE2": {
+      "events": [
+        {
+          "line": 709,
+          "text": "[2026-10-28 16:19:13.949] [info] EFX_NATIVE_SURFACE resref=SPBDRAE2 cell=79C41CF0 flags=2288 smokePalette=0000000000000000 opacity=255 source=79x76 offset=0,0 layers=1 nativePrefix=false nativeOpacity=255"
+        },
+        {
+          "line": 929,
+          "text": "[2026-10-28 16:19:16.369] [info] EFX_STREAM_DIAGNOSTIC resref=SPBDRAE2 stage=0x1 sequence=2 slot=0 phase=-1 logical=79x76"
+        },
+        {
+          "line": 930,
+          "text": "[2026-10-28 16:19:16.369] [info] EFX_STREAM_DIAGNOSTIC resref=SPBDRAE2 stage=0x4 sequence=2 slot=0 phase=0 logical=79x76"
+        },
+        {
+          "line": 931,
+          "text": "[2026-10-28 16:19:16.369] [info] EFX_STREAM_DIAGNOSTIC resref=SPBDRAE2 stage=0x10 sequence=2 slot=0 phase=0 logical=79x76"
+        },
+        {
+          "line": 933,
+          "text": "[2026-10-28 16:19:16.369] [info] EFX_STREAM_DIAGNOSTIC resref=SPBDRAE2 stage=0x8 sequence=0 slot=0 phase=0 logical=125x122"
+        },
+        {
+          "line": 935,
+          "text": "[2026-10-28 16:19:16.369] [info] EFX_STREAM_DIAGNOSTIC resref=SPBDRAE2 stage=0x20 sequence=1 slot=0 phase=0 logical=77x66"
+        }
+      ],
+      "stages": [
+        "0x1",
+        "0x4",
+        "0x8",
+        "0x10",
+        "0x20"
+      ],
+      "HD_bind_observed": true,
+      "mask_observed": true
+    },
+    "SPRDRAIM": {
+      "events": [
+        {
+          "line": 964,
+          "text": "[2026-10-28 16:19:23.943] [info] EFX_NATIVE_SURFACE resref=SPRDRAIM cell=12CEC7C80 flags=288 smokePalette=0000000000000000 opacity=255 source=76x69 offset=0,0 layers=1 nativePrefix=false nativeOpacity=255"
+        }
+      ],
+      "stages": [],
+      "HD_bind_observed": false,
+      "mask_observed": false
+    },
+    "SPRDRAE2": {
+      "events": [
+        {
+          "line": 967,
+          "text": "[2026-10-28 16:19:23.961] [info] EFX_NATIVE_SURFACE resref=SPRDRAE2 cell=79C3DCB0 flags=2288 smokePalette=0000000000000000 opacity=255 source=125x122 offset=0,0 layers=1 nativePrefix=false nativeOpacity=255"
+        }
+      ],
+      "stages": [],
+      "HD_bind_observed": false,
+      "mask_observed": false
+    }
+  },
+  "mask_or_composition_rejects": [],
+  "limits": [
+    "No frame cadence or motion interpolation inferred",
+    "Visual acceptance scoped to observed components, not entire PRO closure"
+  ]
+}

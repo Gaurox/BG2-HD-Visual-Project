@@ -1,0 +1,38 @@
+{
+  "native_source": {
+    "frames": 6,
+    "logical": [
+      64,
+      64
+    ],
+    "centre": [
+      32,
+      32
+    ],
+    "sha256": "5E12FFB565DC20D2F7E2ABDA40735771E67BC37AC7327B8B67B43BE1DDEA126D"
+  },
+  "existing_backings": {
+    "frames": 12,
+    "canvas": [
+      64,
+      78
+    ],
+    "centre": [
+      32,
+      39
+    ],
+    "native_destination": [
+      0,
+      7,
+      64,
+      71
+    ],
+    "all_12_SHA_verified": true,
+    "bytes_read": 3833856
+  },
+  "correction": "SPMAGMIS64x64 single-cell FX keeps per-pass mask, resolves already-padded pack against final runtime canvas; no second placement/padding. Unsupported composed prefixes remain native. Other resources use existing source placement.",
+  "V12_status": "Intermediate whitelist-only candidate superseded before user test; would look up64x64 against64x78 pack. Preserve receipt, do not request testing V12.",
+  "unchanged": "Images, registry, PRO, gameplay, position interpolation",
+  "geometry_descriptor_sha256": "373C176F71E4AAFF216A48FA462E8D71F8E304DA415A80DF1EFA61F6F20CABEE",
+  "native_contracts": "Reuse 1048 loader contracts from V12 with identical registry/metadata; V13 adds geometry policy tests."
+}

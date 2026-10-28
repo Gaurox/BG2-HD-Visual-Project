@@ -3,8 +3,8 @@
 
 namespace iee::core {
 // Existing compatible cloud packs retain geometry/timelines/RGB and restore
-// native palette alpha. Native cells, BAMs and PROs stay unchanged. BDWOFOGA
-// is intentionally absent: its corrected alias has a different timeline.
+// native palette alpha. Native cells, BAMs and PROs stay unchanged. Backing
+// numbers may differ after alpha deduplication; slot/phase semantics must match.
 // Resolve this same identity at prefetch, selection and final draw boundaries.
 [[nodiscard]] constexpr std::array<char,8> effect_texture_resref(
     const std::array<char,8>& native, bool normalProfile=false) noexcept {
@@ -12,6 +12,8 @@ namespace iee::core {
   // straight companion is selected only for normal native FX draws.
   if(normalProfile && native==std::array<char,8>{'W','R','I','T','H','I','N','G'})
     return {'X','2','8','W','R','T','H','\0'};
+  if(normalProfile && native==std::array<char,8>{'B','D','W','O','F','O','G','A'})
+    return {'X','5','8','W','F','O','G','\0'};
   constexpr std::array<char,8> cloud{'S','P','C','L','O','U','D','K'};
   constexpr std::array<char,8> alphaCloud{'X','5','8','C','L','K','\0','\0'};
   if(native==std::array<char,8>{'S','P','C','L','O','U','D','S'})

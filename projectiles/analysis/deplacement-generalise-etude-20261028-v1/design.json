@@ -1,0 +1,30 @@
+{
+  "schema": "bg2-projectile-motion-design-v1",
+  "created_utc": "2026-10-28T15:09:34.315379+00:00",
+  "status": "study-complete-prototype-not-implemented",
+  "recommended": "Shared per-instance visual motion service plus class/render adapters",
+  "prototype_policy": "Buffered interpolation with explicit native terminal resynchronization; quantify final correction before global use",
+  "source_scope": {
+    "CProjectileBAM": 98,
+    "CProjectileArea": 143,
+    "CProjectileNewScorcher": 1,
+    "CProjectileSkyStrikeBAM": 1
+  },
+  "preserve": [
+    "Simulation/physics",
+    "Native gameplay timing",
+    "Existing image bytes",
+    "HD animation cadence",
+    "Save/network contracts"
+  ],
+  "unknown": [
+    "Actual physical update cadence",
+    "Thread lifecycle ownership",
+    "Fractional final-vertex path",
+    "Impact latency policy",
+    "Coverage of native subclasses and particles",
+    "Mask and entity draw ordering"
+  ],
+  "next": "Read-only coordinate probe before visual position modification",
+  "runtime_or_release_changed": false
+}

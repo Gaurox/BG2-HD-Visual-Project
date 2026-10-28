@@ -1,0 +1,24 @@
+4556:   int visualX = x;
+4557:   if (replacement == ReplacementKind::AreaRegistry && nativeOcclusionSample && g_ctx) {
+4558:     const auto wed = g_ctx->wed.load(std::memory_order_acquire);
+4559:     visualX = core::bdforcew_visual_draw_x(
+4560:         *nativeOcclusionSample, wed ? wed->areaResrefView() : std::string_view{},
+4561:         transientOcclusionTextureId > 0, x);
+4562:     if (visualX != x && g_ctx->cfg.enablePerformanceLogging) {
+4563:       static std::array<std::atomic<bool>, 2> placementLogged{};
+4564:       const auto& clip = nativeOcclusionSample->lastClippingCall;
+4565:       const std::size_t occurrence = clip.x == 2286 ? 0 : 1;
+4566:       if (!placementLogged[occurrence].exchange(true, std::memory_order_relaxed)) {
+4567:         LOG_INFO("BDFORCEW visual placement: area=OH8100 world=({}, {}) "
+4568:                  "post-WED dx=6 x1, fade=16 x4, drawX={}->{}",
+4569:                  clip.x, clip.y, x, visualX);
+4570:       }
+4571:     }
+4572:   }
+4573:   const bool traceDraw = g_spimpfrTraceActive && g_effectAnimationFinalRenderDepth > 0;
+4574:   std::uint32_t traceTextureState = 0;
+4575:   if (traceDraw && g_effectAnimationTextureApi.glTextureState) {
+4576:     (void)core::safe_read(g_effectAnimationTextureApi.glTextureState, traceTextureState);
+4577:   }
+4578:   const auto traceDrawTicks = traceDraw ? frame::clock_ticks() : 0;
+4579:   original(visualX, y, sourceRect, logicalSize, clipRect, flags);

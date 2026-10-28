@@ -1,0 +1,13 @@
+{
+  "resource": "SPMAGMIS",
+  "command": "C:Eval('ForceSpellRES(\"SPWI112\",\"XQTARG\")',0)",
+  "setup": "Reload test save, partyAI off, open space east of Player1; create one passive target",
+  "target_command": "C:Eval('CreateCreatureObjectOffset(\"XQTARG\",Player1,[384.0])',0)",
+  "after": "Wait15seconds unpaused then quit normally, no save",
+  "expected": "Real HD draws, successful native masking where needed, odd animation phases and no persistent geometry/mask fallback",
+  "no_retest": [
+    "SPWI615/LIGHTCHA",
+    "FIRESEED/BOLT2"
+  ],
+  "cleanup": "After capture and game/loader stop, disable only EnableEffectStreamingTrace; preserve V14 and manual approvals"
+}

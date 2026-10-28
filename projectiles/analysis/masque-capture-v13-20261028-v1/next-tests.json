@@ -1,0 +1,51 @@
+{
+  "purpose": "Technical capture after mask/geometry correction, preserve existing visual approvals",
+  "setup": [
+    "Test save in open area; party AI off",
+    "Three passive hostile500HP QA targets, no autonomous scripts",
+    "Do not save test game"
+  ],
+  "setup_commands": [
+    "C:Eval('CreateCreatureObjectOffset(\"XQTARG\",Player1,[320.-80])',0)",
+    "C:Eval('CreateCreatureObjectOffset(\"XQTARG\",Player1,[384.0])',0)",
+    "C:Eval('CreateCreatureObjectOffset(\"XQTARG\",Player1,[320.80])',0)"
+  ],
+  "tests": [
+    {
+      "id": 1,
+      "name": "Projectile magique",
+      "command": "C:Eval('ForceSpellRES(\"SPWI112\",\"XQTARG\")',0)",
+      "expected": [
+        "SPMAGMIS"
+      ],
+      "new_visual_QA_needed": "Mask/canvas fix must not introduce visual regression; runtime capture pending"
+    },
+    {
+      "id": 2,
+      "name": "Semence de feu, native BOLT2 emitted by QA spell",
+      "command": "C:Eval('ForceSpellRES(\"XQSEED\",\"XQTARG\")',0)",
+      "expected": [
+        "SPFIRSE2",
+        "FSEEDX",
+        "FSEEDA",
+        "SPSMPUFF"
+      ],
+      "scope": "Same PRO/graphics as weapon, not validation of weapon gameplay/launch contract; no inventory/equip step needed"
+    },
+    {
+      "id": 3,
+      "name": "Eclairs en chaine",
+      "command": "C:Eval('ForceSpellRES(\"SPWI615\",\"XQTARG\")',0)",
+      "expected": [
+        "SPCHLGT1",
+        "SPCHLGT2",
+        "SPCHLGT3"
+      ],
+      "scope": "Record actual sequences and rebounds; do not manufacture sequence9"
+    }
+  ],
+  "after_each": "Separate console submissions;15seconds unpaused after each cast; allow3seconds unpaused after target creation. Quit game normally after final flush.",
+  "interpretation": "HD and odd phases per resource/serial/sequence; distinguish CpuNotReady from persistent MaskRejected. masked=false alone is not a failure when no occlusion mask is required. Inspect traceDropped and source declaration before accepting.",
+  "cleanup": "After new capture, stop game/loader and disable only temporary trace. Keep V13. Remove only SHA-matched QA files when no longer needed.",
+  "movement": "No position interpolation; PROJ-MOTION-001 remains deferred"
+}

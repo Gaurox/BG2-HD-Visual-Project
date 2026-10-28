@@ -1,0 +1,34 @@
+{
+  "status": "installed-awaiting-lightning-and-flight-trace",
+  "utc": "2026-10-28T16:09:01.527132+00:00",
+  "receipt": "engine\\InfinityEngine-Enhancer\\installations\\projectiles-lightning-trails-20261028-v11\\backups\\20261028T160901265688Z-54c02ab0\\renderer-install-receipt.json",
+  "dll": {
+    "bytes": 3470336,
+    "sha256": "09EEE20EC52546C12BEDDCB61E5365AF0B968C2D27A96313A3575E5B7FB0D850"
+  },
+  "previous_dll": {
+    "bytes": 3470336,
+    "sha256": "B7F4C9DAB3CACE1DEA5023521D464D0AA4C9EC60E3A292A7184EDE2D38212B86"
+  },
+  "ini": {
+    "bytes": 6565,
+    "sha256": "0D240D4E4BF492E3DA254F52D2E99CA7CA955FE30C576AEAD8B64B772729C405"
+  },
+  "temporary_trace": true,
+  "FX_scope_added": [
+    "SPCHLGT1",
+    "SPCHLGT3"
+  ],
+  "resources": 538,
+  "frames": 62500,
+  "native_cycles_checked": 27,
+  "native_contracts": 824,
+  "tests": "3/3 passed",
+  "image_files_changed": false,
+  "PROs_changed": false,
+  "metadata_changed": false,
+  "movement_changed": false,
+  "release_changed": false,
+  "ingame_validated": false,
+  "cleanup": "After trace capture and game/loader stop, disable ONLY EnableEffectStreamingTrace; preserve V11 DLL"
+}

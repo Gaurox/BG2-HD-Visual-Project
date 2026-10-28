@@ -8,6 +8,7 @@
 
 #include "iee/area_animation_x4_registry.h"
 #include "iee/core/effect_frame_cache.h"
+#include "iee/core/effect_indexed_palette.h"
 
 namespace iee::effect_animation_x4 {
 
@@ -49,8 +50,12 @@ struct EngineTextureApi {
   void (*DrawPopState)(){};
   std::byte* glTextureTable{};
   const core::area_lighting::Transfer* paletteTransfer{};
+  const core::effect_indexed_palette::Transfer* indexedPaletteTransfer{};
   unsigned paletteOpacity{255};
   int canvasWidth{}, canvasHeight{}, offsetX{}, offsetY{};
+  // Logical source rows to remove from an already-contained pack before
+  // placing it on an explicit native FX canvas; never rewrites cached assets.
+  int cropTop{}, cropBottom{};
   std::span<const std::byte> nativeUnderlay{};
   unsigned nativeOpacity{255};
 };

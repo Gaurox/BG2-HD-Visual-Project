@@ -1,0 +1,74 @@
+{
+  "user_feedback": "c4est ok vqlide",
+  "visual_decision": "All three reported visually accepted; preserve exact current scope, not complete243 QA",
+  "renderer": "V13",
+  "first_line": "[2026-10-28 17:46:35.125] [info] Infinity Engine Enhancer initializing...",
+  "last_line": "[2026-10-28 17:48:02.389] [info] Map page B1: generation=0, pages=27, prepared=0, hits=0, misses=0, consumed=0, rejected=0, failures=0, reservedBytes=0, peakBytes=0, crcMs=0.000, copyMs=0.000, renderWorkerWaits=0",
+  "sha256": "10335BB418A674C2C763D371AFA545CC5C6C5DC9CCEBA968F45F52CA17ACD551",
+  "resources": {
+    "SPMAGMIS": {
+      "draws": 0,
+      "HD": 0,
+      "masked": 0,
+      "odd_HD": 0,
+      "sequences": [],
+      "outcomes": {}
+    },
+    "SPFIRSE2": {
+      "draws": 3,
+      "HD": 3,
+      "masked": 2,
+      "odd_HD": 0,
+      "sequences": [
+        4
+      ],
+      "outcomes": {
+        "0": 3
+      }
+    },
+    "SPCHLGT1": {
+      "draws": 42,
+      "HD": 41,
+      "masked": 41,
+      "odd_HD": 22,
+      "sequences": [
+        5
+      ],
+      "outcomes": {
+        "1": 1,
+        "0": 41
+      }
+    },
+    "SPCHLGT2": {
+      "draws": 35,
+      "HD": 34,
+      "masked": 30,
+      "odd_HD": 18,
+      "sequences": [
+        5,
+        7
+      ],
+      "outcomes": {
+        "1": 1,
+        "0": 34
+      }
+    },
+    "SPCHLGT3": {
+      "draws": 19,
+      "HD": 18,
+      "masked": 18,
+      "odd_HD": 10,
+      "sequences": [
+        5
+      ],
+      "outcomes": {
+        "1": 1,
+        "0": 18
+      }
+    }
+  },
+  "SPMAGMIS_limit": "NativeSurface observed, but actual canvas64x88 mismatches64x78 metadata; zero final draws resolved. No HD/mask acceptance inferred. V14 must reuse the contained64x64 source and project it to dynamic native canvas.",
+  "SPFIRSE2_limit": "HD+mask confirmed; only3draws/phases0,2, no odd phase displayed in this sample. No cadence/position interpolation inferred.",
+  "warnings": [],
+  "traceDropped": 0
+}

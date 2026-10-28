@@ -1,0 +1,12 @@
+# Mur de brouillard — profil normal corrigé V10
+
+- [Retour et logs figés](feedback.json), `runtime-session.log` : session16:18:32–16:19:27. Utilisateur refuse latransparence du2,autressemblentcorrects.
+- Test1SPWI103/SPBHANDI ettest3SPIN691/SPBDIMSP+SPBDRAE2 :bindHD+masque0x8/0x20 confirmés,aspect positif conservé. Aucun rejetmasque/composition observé. Pasdemesuredecadence finale pourcesressources.
+- Test4SPIN693/SPRDRAIM+SPRDRAE2 :aspectpositif utilisateur conservé ;surfacesnatives capturées maispasd’événements finauxHD/masque danslasession sauvegardée. Ne pasdéduire unéchec niunepreuveHD deces seulestraces ; rejouer4 enpremier/aprèsrelancepourleverledoute.
+- Test2OHBWFOG :BDWOFOGA réel,flags30001 sansBlended. Anciennesimages straight àalpha majoritairement255 ;variantecorrigéeX58WFOG déjàinstallée,alpha natifgradué.
+- [Correspondance complète](alias-correspondence.json) :2683backings physiquesSHA vérifiés,1344paires sémantiquesRGBidentiques,ycompris RGB caché ;géométrie/centres/cycles/cadences/durées identiques sur2168accès slot/phase/profil.1342vs1341backings etindices différents dusàladéduplicationalpha ; ils n’établissaient pas uneincompatibilité. Historiqued’exclusion levé par cettepreuve, sansréécrirelesanciensrapports.
+- [V10 installée](../../../engine/InfinityEngine-Enhancer/installations/projectiles-wall-fog-alpha-20261028-v10/installation.json),DLL SHA B7F4C9DAB3CACE1DEA5023521D464D0AA4C9EC60E3A292A7184EDE2D38212B86 ;BDWOFOGA→X58WFOG seulement pourprofilnormal,Blendedinchangé. ScopeFX/tracefinalealias activés ;538ressources/62500backings,metadata,images,PRO,INI etgameplayinchangés ;0inférence/0release.
+- Tests3/3 : `engine/InfinityEngine-Enhancer/installations/projectiles-wall-fog-alpha-20261028-v10/tests.log` ;probechargeur [`native-contracts.log`](native-contracts.log),2720contrats7cycles/slots/phases/once-loop/casse passants,0lectureRGBA.
+- **Essais restants ciblés aprèsrelance** :4SPIN693 enpremier pourconfirmationtechniqueHD (sonaspect estdéjàjugécorrect),puis2OHBWFOGpourtransparence. Ciblevivante/partiedetest ;attendre10s aprèschaquelancement avantdequitterourecharger afin decollecterlestraces. Ne pasrefaire1/3.
+- Attendu2 : `EFX_TEXTURE_ALIAS native=BDWOFOGA runtime=X58WFOG`,surfacealias,phasesfinalesx4/intermédiaires à30/1,pasderejetmasque ; jugementvisuel fond/transparence demandé. Attendu4 :bindHD etmasque surSPRDRAIM/SPRDRAE2,observerleséventuelsmisscold séparément.
+- Interpolation du déplacement toujours reportéePROJ-MOTION-001 ;aucun changementdelissage despositions.

@@ -1,0 +1,337 @@
+{
+  "schema": "bg2-projectile-scoped-acceptance-v1",
+  "utc": "2026-10-28T14:42:51.349275+00:00",
+  "user_feedback": "tout a l'air ok ! vérifie (surtout interpolation des projectiles)",
+  "status": "visual-accepted-rings-interpolation-confirmed-flight-final-phase-proof-pending",
+  "scope": "Five V8 spells; observed native-color rings and HD flight components",
+  "installation": "engine/InfinityEngine-Enhancer/installations/projectiles-sharea-palettes-20261028-v8/installation.json",
+  "dll_sha256": "FEAE6EB5EEA0D0E6EDBEC32006B9DC71B469E96E3F11062A01B6FC0BFEB0DC76",
+  "snapshot_sha256": "9172FD722C0B77B70E3C3ACB0788570126F523A663FB52C4611CA4BC205952C8",
+  "source_first_line": 40652,
+  "session_start": "[2026-10-28 15:39:03.904] [info] Infinity Engine Enhancer initializing...",
+  "session_end": "[2026-10-28 15:40:06.430] [info] EFX_STREAM_DIAGNOSTIC resref=SPBLESHI stage=0x8 sequence=0 slot=1 phase=2 logical=57x31",
+  "ring": {
+    "final_draw_samples": 11,
+    "interpolated_odd_phases": 5,
+    "median_phase_interval_ms": 33.3935,
+    "min_phase_interval_ms": 29.1532,
+    "max_phase_interval_ms": 36.9069,
+    "target_fps": "30/1",
+    "palettes": [
+      {
+        "line": 315,
+        "text": "[2026-10-28 15:39:27.763] [info] EFX_PALETTE_BOUND resref=SHAREA fingerprint=374332986479E27F opacity=255 sequence=0 phase=0 backing=0 canvas=45x33; native palette at HD upload",
+        "fingerprint": "374332986479E27F"
+      },
+      {
+        "line": 480,
+        "text": "[2026-10-28 15:39:35.151] [info] EFX_PALETTE_BOUND resref=SHAREA fingerprint=28EA371B9E57D6DC opacity=255 sequence=0 phase=2 backing=13 canvas=72x53; native palette at HD upload",
+        "fingerprint": "28EA371B9E57D6DC"
+      },
+      {
+        "line": 533,
+        "text": "[2026-10-28 15:39:41.993] [info] EFX_PALETTE_BOUND resref=SHAREA fingerprint=F993D239BABFDCC0 opacity=255 sequence=0 phase=2 backing=13 canvas=72x53; native palette at HD upload",
+        "fingerprint": "F993D239BABFDCC0"
+      },
+      {
+        "line": 635,
+        "text": "[2026-10-28 15:39:50.835] [info] EFX_PALETTE_BOUND resref=SHAREA fingerprint=543AC68638205B87 opacity=255 sequence=0 phase=2 backing=13 canvas=72x53; native palette at HD upload",
+        "fingerprint": "543AC68638205B87"
+      },
+      {
+        "line": 741,
+        "text": "[2026-10-28 15:40:03.337] [info] EFX_PALETTE_BOUND resref=SHAREA fingerprint=E6FCB74762E56896 opacity=255 sequence=0 phase=0 backing=0 canvas=45x33; native palette at HD upload",
+        "fingerprint": "E6FCB74762E56896"
+      }
+    ],
+    "phases": [
+      {
+        "slot": 0,
+        "phase": 0,
+        "backing": 0,
+        "canvas_w": 45,
+        "canvas_h": 33,
+        "texture_w": 180,
+        "texture_h": 132,
+        "fps_num": 30,
+        "fps_den": 1,
+        "ticks": 241373612986,
+        "frequency": 10000000
+      },
+      {
+        "slot": 1,
+        "phase": 2,
+        "backing": 13,
+        "canvas_w": 72,
+        "canvas_h": 53,
+        "texture_w": 288,
+        "texture_h": 212,
+        "fps_num": 30,
+        "fps_den": 1,
+        "ticks": 241373754894,
+        "frequency": 10000000
+      },
+      {
+        "slot": 1,
+        "phase": 3,
+        "backing": 14,
+        "canvas_w": 72,
+        "canvas_h": 53,
+        "texture_w": 288,
+        "texture_h": 212,
+        "fps_num": 30,
+        "fps_den": 1,
+        "ticks": 241374108115,
+        "frequency": 10000000
+      },
+      {
+        "slot": 2,
+        "phase": 4,
+        "backing": 15,
+        "canvas_w": 87,
+        "canvas_h": 66,
+        "texture_w": 348,
+        "texture_h": 264,
+        "fps_num": 30,
+        "fps_den": 1,
+        "ticks": 241374441488,
+        "frequency": 10000000
+      },
+      {
+        "slot": 2,
+        "phase": 5,
+        "backing": 16,
+        "canvas_w": 87,
+        "canvas_h": 66,
+        "texture_w": 348,
+        "texture_h": 264,
+        "fps_num": 30,
+        "fps_den": 1,
+        "ticks": 241374810557,
+        "frequency": 10000000
+      },
+      {
+        "slot": 3,
+        "phase": 6,
+        "backing": 17,
+        "canvas_w": 103,
+        "canvas_h": 75,
+        "texture_w": 412,
+        "texture_h": 300,
+        "fps_num": 30,
+        "fps_den": 1,
+        "ticks": 241375133621,
+        "frequency": 10000000
+      },
+      {
+        "slot": 3,
+        "phase": 7,
+        "backing": 18,
+        "canvas_w": 103,
+        "canvas_h": 75,
+        "texture_w": 412,
+        "texture_h": 300,
+        "fps_num": 30,
+        "fps_den": 1,
+        "ticks": 241375490174,
+        "frequency": 10000000
+      },
+      {
+        "slot": 4,
+        "phase": 8,
+        "backing": 19,
+        "canvas_w": 125,
+        "canvas_h": 82,
+        "texture_w": 500,
+        "texture_h": 328,
+        "fps_num": 30,
+        "fps_den": 1,
+        "ticks": 241375793787,
+        "frequency": 10000000
+      },
+      {
+        "slot": 4,
+        "phase": 9,
+        "backing": 20,
+        "canvas_w": 125,
+        "canvas_h": 82,
+        "texture_w": 500,
+        "texture_h": 328,
+        "fps_num": 30,
+        "fps_den": 1,
+        "ticks": 241376147069,
+        "frequency": 10000000
+      },
+      {
+        "slot": 5,
+        "phase": 10,
+        "backing": 11,
+        "canvas_w": 125,
+        "canvas_h": 82,
+        "texture_w": 500,
+        "texture_h": 328,
+        "fps_num": 30,
+        "fps_den": 1,
+        "ticks": 241376438601,
+        "frequency": 10000000
+      },
+      {
+        "slot": 5,
+        "phase": 11,
+        "backing": 21,
+        "canvas_w": 125,
+        "canvas_h": 82,
+        "texture_w": 500,
+        "texture_h": 328,
+        "fps_num": 30,
+        "fps_den": 1,
+        "ticks": 241376772536,
+        "frequency": 10000000
+      }
+    ]
+  },
+  "flights": {
+    "TRAVEL": {
+      "events": [
+        {
+          "line": 298,
+          "text": "[2026-10-28 15:39:26.846] [info] EFX_NATIVE_SURFACE resref=TRAVEL\u0000\u0000 cell=1D565100 flags=20288 smokePalette=0000000000000000 opacity=255 source=46x46 offset=0,0 layers=1 nativePrefix=false nativeOpacity=255"
+        },
+        {
+          "line": 363,
+          "text": "[2026-10-28 15:39:28.747] [info] EFX_STREAM_DIAGNOSTIC resref=TRAVEL stage=0x1 sequence=0 slot=1 phase=-1 logical=46x46"
+        },
+        {
+          "line": 364,
+          "text": "[2026-10-28 15:39:28.747] [info] EFX_STREAM_DIAGNOSTIC resref=TRAVEL stage=0x4 sequence=0 slot=1 phase=2 logical=46x46"
+        },
+        {
+          "line": 365,
+          "text": "[2026-10-28 15:39:28.747] [info] EFX_STREAM_DIAGNOSTIC resref=TRAVEL stage=0x8 sequence=0 slot=1 phase=2 logical=46x46"
+        },
+        {
+          "line": 366,
+          "text": "[2026-10-28 15:39:28.747] [info] EFX_STREAM_DIAGNOSTIC resref=TRAVEL stage=0x20 sequence=0 slot=5 phase=10 logical=46x46"
+        }
+      ],
+      "HD_and_mask_observed": true,
+      "interpolated_final_phases_observed": false,
+      "reason": "Per-phase final trace whitelist did not include these flight resources; stage-first samples only show even phases"
+    },
+    "Y31P078": {
+      "events": [
+        {
+          "line": 450,
+          "text": "[2026-10-28 15:39:34.251] [info] EFX_NATIVE_SURFACE resref=Y31P078\u0000 cell=7ADC1EB0 flags=20088 smokePalette=0000000000000000 opacity=255 source=46x46 offset=0,0 layers=1 nativePrefix=false nativeOpacity=255"
+        },
+        {
+          "line": 468,
+          "text": "[2026-10-28 15:39:34.588] [info] EFX_STREAM_DIAGNOSTIC resref=Y31P078 stage=0x1 sequence=0 slot=1 phase=-1 logical=46x46"
+        },
+        {
+          "line": 469,
+          "text": "[2026-10-28 15:39:34.588] [info] EFX_STREAM_DIAGNOSTIC resref=Y31P078 stage=0x4 sequence=0 slot=1 phase=2 logical=46x46"
+        },
+        {
+          "line": 470,
+          "text": "[2026-10-28 15:39:34.588] [info] EFX_STREAM_DIAGNOSTIC resref=Y31P078 stage=0x8 sequence=0 slot=1 phase=2 logical=46x46"
+        },
+        {
+          "line": 471,
+          "text": "[2026-10-28 15:39:34.588] [info] EFX_STREAM_DIAGNOSTIC resref=Y31P078 stage=0x20 sequence=0 slot=5 phase=10 logical=46x46"
+        }
+      ],
+      "HD_and_mask_observed": true,
+      "interpolated_final_phases_observed": false,
+      "reason": "Per-phase final trace whitelist did not include these flight resources; stage-first samples only show even phases"
+    },
+    "Y31P076": {
+      "events": [
+        {
+          "line": 524,
+          "text": "[2026-10-28 15:39:41.060] [info] EFX_NATIVE_SURFACE resref=Y31P076\u0000 cell=1053691B0 flags=20288 smokePalette=0000000000000000 opacity=255 source=46x46 offset=0,0 layers=1 nativePrefix=false nativeOpacity=255"
+        },
+        {
+          "line": 558,
+          "text": "[2026-10-28 15:39:45.563] [info] EFX_STREAM_DIAGNOSTIC resref=Y31P076 stage=0x1 sequence=0 slot=0 phase=-1 logical=46x46"
+        },
+        {
+          "line": 559,
+          "text": "[2026-10-28 15:39:45.563] [info] EFX_STREAM_DIAGNOSTIC resref=Y31P076 stage=0x4 sequence=0 slot=0 phase=0 logical=46x46"
+        },
+        {
+          "line": 560,
+          "text": "[2026-10-28 15:39:45.563] [info] EFX_STREAM_DIAGNOSTIC resref=Y31P076 stage=0x8 sequence=0 slot=0 phase=0 logical=46x46"
+        },
+        {
+          "line": 561,
+          "text": "[2026-10-28 15:39:45.563] [info] EFX_STREAM_DIAGNOSTIC resref=Y31P076 stage=0x20 sequence=0 slot=5 phase=10 logical=46x46"
+        }
+      ],
+      "HD_and_mask_observed": true,
+      "interpolated_final_phases_observed": false,
+      "reason": "Per-phase final trace whitelist did not include these flight resources; stage-first samples only show even phases"
+    },
+    "Y31P077": {
+      "events": [
+        {
+          "line": 601,
+          "text": "[2026-10-28 15:39:49.936] [info] EFX_NATIVE_SURFACE resref=Y31P077\u0000 cell=105368CB0 flags=20288 smokePalette=0000000000000000 opacity=255 source=46x46 offset=0,0 layers=1 nativePrefix=false nativeOpacity=255"
+        },
+        {
+          "line": 624,
+          "text": "[2026-10-28 15:39:50.570] [info] EFX_STREAM_DIAGNOSTIC resref=Y31P077 stage=0x1 sequence=0 slot=1 phase=-1 logical=46x46"
+        },
+        {
+          "line": 625,
+          "text": "[2026-10-28 15:39:50.570] [info] EFX_STREAM_DIAGNOSTIC resref=Y31P077 stage=0x4 sequence=0 slot=1 phase=2 logical=46x46"
+        },
+        {
+          "line": 626,
+          "text": "[2026-10-28 15:39:50.570] [info] EFX_STREAM_DIAGNOSTIC resref=Y31P077 stage=0x8 sequence=0 slot=1 phase=2 logical=46x46"
+        },
+        {
+          "line": 627,
+          "text": "[2026-10-28 15:39:50.570] [info] EFX_STREAM_DIAGNOSTIC resref=Y31P077 stage=0x20 sequence=0 slot=5 phase=10 logical=46x46"
+        }
+      ],
+      "HD_and_mask_observed": true,
+      "interpolated_final_phases_observed": false,
+      "reason": "Per-phase final trace whitelist did not include these flight resources; stage-first samples only show even phases"
+    },
+    "Y31P075": {
+      "events": [
+        {
+          "line": 710,
+          "text": "[2026-10-28 15:40:02.407] [info] EFX_NATIVE_SURFACE resref=Y31P075\u0000 cell=105367270 flags=20288 smokePalette=0000000000000000 opacity=255 source=46x46 offset=0,0 layers=1 nativePrefix=false nativeOpacity=255"
+        },
+        {
+          "line": 762,
+          "text": "[2026-10-28 15:40:06.430] [info] EFX_STREAM_DIAGNOSTIC resref=Y31P075 stage=0x1 sequence=0 slot=0 phase=-1 logical=46x46"
+        },
+        {
+          "line": 763,
+          "text": "[2026-10-28 15:40:06.430] [info] EFX_STREAM_DIAGNOSTIC resref=Y31P075 stage=0x4 sequence=0 slot=0 phase=0 logical=46x46"
+        },
+        {
+          "line": 764,
+          "text": "[2026-10-28 15:40:06.430] [info] EFX_STREAM_DIAGNOSTIC resref=Y31P075 stage=0x8 sequence=0 slot=0 phase=0 logical=46x46"
+        },
+        {
+          "line": 765,
+          "text": "[2026-10-28 15:40:06.430] [info] EFX_STREAM_DIAGNOSTIC resref=Y31P075 stage=0x20 sequence=0 slot=5 phase=10 logical=46x46"
+        }
+      ],
+      "HD_and_mask_observed": true,
+      "interpolated_final_phases_observed": false,
+      "reason": "Per-phase final trace whitelist did not include these flight resources; stage-first samples only show even phases"
+    }
+  },
+  "mask_or_composition_rejects": [],
+  "limits": [
+    "Ring phase trace is sampled once per sequence/phase across SHAREA, not a separate timing measure for each palette",
+    "Five distinct palette uploads bound; native dispatch beyond these five cases is not inferred",
+    "Flight interpolation frames exist in packs but are not claimed displayed from even-only diagnostic samples",
+    "Visual acceptance remains acquired while diagnostic trace is added; no image reprocessing/release"
+  ]
+}

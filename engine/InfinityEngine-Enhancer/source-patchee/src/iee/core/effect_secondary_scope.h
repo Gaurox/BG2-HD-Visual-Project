@@ -2,12 +2,14 @@
 #include <array>
 #include <string_view>
 namespace iee::core::effect_secondary_scope {
-// Sources/aliases in the124PRO closure; no unrelated native FX cells opt in.
+// Existing projectile sources/aliases, including the three LIGHTCHA trails.
+// Unrelated native FX cells stay outside this scope.
 inline bool enabled(const std::array<char,8>& ref) noexcept {
  constexpr std::string_view names[]{
   "X58CLK", // SPCLOUDK's already-installed native-palette-alpha texture pack.
   "X58CLS",
   "X58DFOG",
+  "X58WFOG",
   "X28WRTH",
   "AXE",
   "BDETHREA",
@@ -30,13 +32,16 @@ inline bool enabled(const std::array<char,8>& ref) noexcept {
   "FSEEDA",
   "FSEEDX",
   "HDFBRER",
+  "SHAREA",
   "SKLH",
   "SKLT",
   "SPBDIMSP",
   "SPBDRAE2",
   "SPBEHBLA",
   "SPBHANDI",
+  "SPCHLGT1",
   "SPCHLGT2",
+  "SPCHLGT3",
   "SPCHRORB",
   "SPCHUNKS",
   "SPCL239R",
@@ -59,6 +64,7 @@ inline bool enabled(const std::array<char,8>& ref) noexcept {
   "SPHORWIA",
   "SPHORWIL",
   "SPINCINA",
+  "SPMAGMIS",
   "SPRDRAE2",
   "SPRDRAIM",
   "SPSETSCD",

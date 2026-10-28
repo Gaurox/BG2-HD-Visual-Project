@@ -84,7 +84,7 @@ struct TextureCacheEntry {
   std::uint32_t glName{};
   std::uint64_t paletteFingerprint{};
   std::uint64_t underlayFingerprint{};
-  std::array<int,4> projection{};
+  std::array<int,6> projection{};
 };
 
 class BinaryReader {
@@ -349,6 +349,8 @@ void observe_texture_owners_locked(const EngineTextureApi& api) noexcept {
 
 bool bind_frame_texture_locked(FrameHandle handle, const EngineTextureApi& api,
                                int previousTextureId) noexcept {
+  if ((api.paletteTransfer && api.indexedPaletteTransfer) ||
+      (api.indexedPaletteTransfer && !api.indexedPaletteTransfer->valid)) return false;
   if(!api.nativeUnderlay.empty() && (api.canvasWidth<=0 || api.canvasHeight<=0)) return false;
   if ((handle.generation && handle.generation != g_packGeneration) ||
       (g_options.streaming && !handle.generation) ||
@@ -357,9 +359,11 @@ bool bind_frame_texture_locked(FrameHandle handle, const EngineTextureApi& api,
   handle.generation = g_packGeneration;
   observe_texture_owners_locked(api);
   ++g_textureCacheStats.requests;
-  const auto paletteFingerprint = api.paletteTransfer ? api.paletteTransfer->fingerprint : 0;
+  const auto paletteFingerprint = api.indexedPaletteTransfer ? api.indexedPaletteTransfer->fingerprint :
+      api.paletteTransfer ? api.paletteTransfer->fingerprint : 0;
   const auto underlayFingerprint = core::effect_native_underlay::fingerprint(api.nativeUnderlay,api.nativeOpacity);
-  const std::array<int,4> projection{api.canvasWidth,api.canvasHeight,api.offsetX,api.offsetY};
+  const std::array<int,6> projection{api.canvasWidth,api.canvasHeight,api.offsetX,api.offsetY,
+                                    api.cropTop,api.cropBottom};
   const auto existing = std::find_if(g_textureCache.begin(), g_textureCache.end(),
       [&](const TextureCacheEntry& e) { return e.valid && e.handle == handle &&
           e.paletteFingerprint == paletteFingerprint && e.underlayFingerprint == underlayFingerprint &&
@@ -382,6 +386,10 @@ bool bind_frame_texture_locked(FrameHandle handle, const EngineTextureApi& api,
     return true;
   }
   const auto& frame = g_resources[handle.resourceIndex].frames[handle.frameIndex];
+  if(api.cropTop<0 || api.cropBottom<0 || api.cropTop>=frame.logicalHeight ||
+      api.cropBottom>=frame.logicalHeight-api.cropTop ||
+      ((api.cropTop || api.cropBottom) && (api.canvasWidth<=0 || api.canvasHeight<=0))) return false;
+  const int contentHeight=frame.logicalHeight-api.cropTop-api.cropBottom;
   core::EffectFrameCache::Lease lease;
   std::span<const std::byte> pixels = frame.replacement;
   if (g_options.streaming) {
@@ -391,11 +399,23 @@ bool bind_frame_texture_locked(FrameHandle handle, const EngineTextureApi& api,
   }
   auto bytes = static_cast<std::uint64_t>(pixels.size());
   if (!bytes || bytes > g_options.gpuBytes) return false;
+  if(api.cropTop || api.cropBottom) {
+    const auto rowBytes=static_cast<std::size_t>(frame.logicalWidth)*64;
+    const auto start=std::size_t(api.cropTop)*rowBytes;
+    const auto count=std::size_t(contentHeight)*rowBytes;
+    if(start>pixels.size() || count>pixels.size()-start) return false;
+    pixels=pixels.subspan(start,count);
+  }
   std::vector<std::byte> colored;
   if (api.paletteTransfer) {
     if (!api.paletteTransfer->valid) return false;
     colored.assign(pixels.begin(),pixels.end());
     core::effect_smoke_palette::apply(colored,*api.paletteTransfer,api.paletteOpacity);
+    pixels=colored;
+  }
+  if (api.indexedPaletteTransfer) {
+    colored.assign(pixels.begin(),pixels.end());
+    core::effect_indexed_palette::apply(colored,*api.indexedPaletteTransfer);
     pixels=colored;
   }
   Frame canvasFrame{};
@@ -404,18 +424,18 @@ bool bind_frame_texture_locked(FrameHandle handle, const EngineTextureApi& api,
   if (api.canvasWidth || api.canvasHeight) {
     if (api.canvasWidth<=0 || api.canvasHeight<=0 || api.canvasWidth>2048 || api.canvasHeight>2048 ||
         api.offsetX<0 || api.offsetY<0 || frame.logicalWidth>api.canvasWidth-api.offsetX ||
-        frame.logicalHeight>api.canvasHeight-api.offsetY) return false;
+        contentHeight>api.canvasHeight-api.offsetY) return false;
     const auto canvasBytes=std::uint64_t(api.canvasWidth)*api.canvasHeight*64;
     if (canvasBytes>g_options.gpuBytes) return false;
     if (!api.nativeUnderlay.empty()) {
-      if (!core::effect_native_underlay::compose(pixels,frame.logicalWidth,frame.logicalHeight,
+      if (!core::effect_native_underlay::compose(pixels,frame.logicalWidth,contentHeight,
           api.canvasWidth,api.canvasHeight,api.offsetX,api.offsetY,api.nativeUnderlay,
           api.nativeOpacity,projected)) return false;
     } else {
       projected.resize(static_cast<std::size_t>(canvasBytes));
       const auto srcStride=static_cast<std::size_t>(frame.logicalWidth)*16;
       const auto dstStride=static_cast<std::size_t>(api.canvasWidth)*16;
-      for(int y=0;y<frame.logicalHeight*4;++y)
+      for(int y=0;y<contentHeight*4;++y)
         std::copy_n(pixels.data()+std::size_t(y)*srcStride,srcStride,
             projected.data()+(std::size_t(y)+api.offsetY*4)*dstStride+api.offsetX*16);
     }

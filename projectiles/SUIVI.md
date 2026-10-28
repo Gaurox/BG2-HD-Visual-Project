@@ -1,6 +1,9 @@
 # Suivi projectiles — analyse des travaux
 
-- Instantané UTC : `2026-10-28T00:29:55.892644+00:00` ; [rapport figé](analysis/20261028-v2/analysis.json).
+- Validation manuelle courante : [suivi détaillé](SUIVI_MANUEL.md), [acceptation finale V14](analysis/projectile-magique-v14-valide-20261028-v1/acceptance.json). 29 PRO acceptés pour les composants observés ; 3 accords historiques antérieurs à un correctif conservés. Les 37 groupes secondaires partagent une preuve technique, sans validation globale des PRO ni de leurs variantes.
+- Projectile magique V14 : 28 dessins HD masqués, 12 phases distinctes, aucun rejet ; trace temporaire désactivée. Interpolation du déplacement reportée : [PROJ-MOTION-001](../pipeline/PROBLEMES_A_RESOUDRE.md#proj-motion-001).
+
+- Instantané UTC : `2026-10-28T17:23:14.108449+00:00` ; [rapport figé](analysis/20261028-validation-v14-acceptee-v1/analysis.json).
 - Projection générée ; décisions métier : `index/work-tracking.json`. Ne pas éditer les CSV générés.
 - Cette analyse conserve les autorités effets/animations/sprites ; aucune production, QA, installation ou release accordée.
 
@@ -35,7 +38,7 @@
 | SPGLYPHI | TRAPGLPN/fragment-animation, TRAPGLYP/fragment-animation | sprite `effect`, inventorié, hors campagne Q3m | 60 / 0 |
 
 - Ces trois BAM ne sont ni des équipements superposés ni des sprites multipart Q3m : animations moteur de classe `effect`. Le rendu de ces propriétaires reste à raccorder/confirmer.
-- Planche : `analysis/20261028-v2/new-source-candidates.png`.
+- Planche : `analysis/20261028-validation-v14-acceptee-v1/new-source-candidates.png`.
 
 ### Cas à préserver
 
@@ -67,7 +70,7 @@
 - `hooks.cpp:resolve_effect_animation_cell` : recherche par RESREF/séquence/slot/géométrie ; aucun choix de pack par palette PRO dans cette résolution.
 - Un RESREF partagé par plusieurs palettes/contextes ne peut pas être couvert par la simple présence d’une entrée du registre. Prévoir dispatch par propriétaire/palette ou représentation compatible ; conserver les sorties existantes.
 - Fumées/fragments, ombres/traînées et autres classes : ne pas déduire leur prise en charge du seul hook de la cellule primaire. Vérifier le chemin final et préserver le fallback natif.
-- Catalogue installé : 537 noms, SHA registre/manifeste concordants ; aucune observation de draw ni validation palette/propriétaire actuelle déduite.
+- Catalogue installé : 538 noms, SHA registre/manifeste concordants ; aucune observation de draw ni validation palette/propriétaire actuelle déduite.
 
 ## Fichiers et commandes
 
@@ -78,8 +81,8 @@
 | Déduplication des BAM + alias exacts | `index/visual-assets.csv` |
 | Une ligne par source canonique + palette réalisée | `index/visual-contexts.csv` |
 | Décisions explicites, notes/priorités humaines | `index/work-tracking.json` |
-| Dépendances développées, PRO secondaires, usages, contrats natifs | `analysis/20261028-v2/` |
-| Source/QA/run/pack/palette et SHA des entrées | `analysis/20261028-v2/analysis.json`, `contexts.json` |
+| Dépendances développées, PRO secondaires, usages, contrats natifs | `analysis/20261028-validation-v14-acceptee-v1/` |
+| Source/QA/run/pack/palette et SHA des entrées | `analysis/20261028-validation-v14-acceptee-v1/analysis.json`, `contexts.json` |
 
 ```powershell
 python -B pipeline/scripts/projectile_tracking.py status

@@ -1,0 +1,258 @@
+{
+  "schema": "bg2-projectile-scoped-acceptance-v1",
+  "recorded_utc": "2026-10-28T14:18:50.105119+00:00",
+  "user_feedback": "les 3 emblent ok",
+  "source_first_line": 39441,
+  "session_start": "[2026-10-28 15:14:52.356] [info] Infinity Engine Enhancer initializing...",
+  "session_end": "[2026-10-28 15:15:26.278] [info] Area animation clock probe (periodic): gen=4, resref=PORTL1B, seq=0, calls=274, occurrenceEpochs=274, sameEpochCalls=0, starts=0, slots=74, epochsPerSlot=3.70[2..4], slotMs=67.61[49.84..83.62], stalledSlots=0, longGaps=0, transitions={sequential:62, skipped:0, wraps:12, backward:0, sequence:0}, worldActive={on:274, off:0, unknown:0, changes:0}, nonMonotonic=0",
+  "snapshot_sha256": "AF0C6E4027C6DA77CB5303E1D9B43F65BC6A35AC60246CA016B5DF2D04CB4863",
+  "results": [
+    {
+      "spell": "SPWI953",
+      "pro": "FIREBLIC",
+      "visual": "accepted-user-feedback",
+      "runtime": "HD-and-mask-observed",
+      "assets": [
+        "FIREBICT",
+        "FIREBICX",
+        "FIREBICR"
+      ],
+      "limit": "Only observed components; registry fallback slots also logged for travel, not all frames proven HD"
+    },
+    {
+      "spell": "SPCL239",
+      "pro": "SPCL239",
+      "visual": "accepted-user-feedback",
+      "runtime": "not-observed",
+      "assets": [
+        "SPCL239X",
+        "SPCL239R"
+      ],
+      "limit": "No actual expected resource event; no HD acceptance inferred. Verify isolated cast on living target."
+    },
+    {
+      "spell": "SPDD03",
+      "pro": "DDBREAT",
+      "visual": "accepted-user-feedback",
+      "runtime": "HD-and-mask-observed",
+      "assets": [
+        "HDFBRER"
+      ],
+      "limit": "Only observed ring component; no closure-wide acceptance"
+    }
+  ],
+  "checks": {
+    "FIREBICT": {
+      "events": 13,
+      "stages": [
+        "0x1",
+        "0x2",
+        "0x4",
+        "0x8",
+        "0x20",
+        "0x80000000"
+      ],
+      "HD_bind_observed": true,
+      "mask_observed": true,
+      "limits": "Stages are sampled; no final per-phase cadence trace for this resource"
+    },
+    "FIREBICX": {
+      "events": 5,
+      "stages": [
+        "0x1",
+        "0x4",
+        "0x8",
+        "0x20"
+      ],
+      "HD_bind_observed": true,
+      "mask_observed": true,
+      "limits": "Stages are sampled; no final per-phase cadence trace for this resource"
+    },
+    "FIREBICR": {
+      "events": 6,
+      "stages": [
+        "0x1",
+        "0x4",
+        "0x8",
+        "0x10",
+        "0x20"
+      ],
+      "HD_bind_observed": true,
+      "mask_observed": true,
+      "limits": "Stages are sampled; no final per-phase cadence trace for this resource"
+    },
+    "SPCL239": {
+      "events": 0,
+      "stages": [],
+      "HD_bind_observed": false,
+      "mask_observed": false,
+      "limits": "Stages are sampled; no final per-phase cadence trace for this resource"
+    },
+    "SPCL239X": {
+      "events": 0,
+      "stages": [],
+      "HD_bind_observed": false,
+      "mask_observed": false,
+      "limits": "Stages are sampled; no final per-phase cadence trace for this resource"
+    },
+    "SPCL239R": {
+      "events": 0,
+      "stages": [],
+      "HD_bind_observed": false,
+      "mask_observed": false,
+      "limits": "Stages are sampled; no final per-phase cadence trace for this resource"
+    },
+    "HDFBRER": {
+      "events": 6,
+      "stages": [
+        "0x1",
+        "0x4",
+        "0x8",
+        "0x10",
+        "0x20"
+      ],
+      "HD_bind_observed": true,
+      "mask_observed": true,
+      "limits": "Stages are sampled; no final per-phase cadence trace for this resource"
+    }
+  },
+  "events": {
+    "FIREBICT": [
+      {
+        "line": 280,
+        "text": "[2026-10-28 15:15:05.297] [info] EFX_NATIVE_SURFACE resref=FIREBICT cell=79019660 flags=20008 smokePalette=0000000000000000 opacity=255 source=69x65 offset=0,0 layers=1 nativePrefix=false nativeOpacity=255"
+      },
+      {
+        "line": 526,
+        "text": "[2026-10-28 15:15:08.673] [info] EFX_STREAM_DIAGNOSTIC resref=FIREBICT stage=0x80000000 sequence=0 slot=1 phase=-1 logical=24x16"
+      },
+      {
+        "line": 527,
+        "text": "[2026-10-28 15:15:08.673] [info] EFX_STREAM_DIAGNOSTIC resref=FIREBICT stage=0x2 sequence=0 slot=1 phase=-1 logical=24x16"
+      },
+      {
+        "line": 528,
+        "text": "[2026-10-28 15:15:08.673] [info] EFX_STREAM_DIAGNOSTIC resref=FIREBICT stage=0x1 sequence=0 slot=1 phase=-1 logical=69x65"
+      },
+      {
+        "line": 529,
+        "text": "[2026-10-28 15:15:08.673] [info] EFX_STREAM_DIAGNOSTIC resref=FIREBICT stage=0x4 sequence=0 slot=1 phase=2 logical=69x65"
+      },
+      {
+        "line": 530,
+        "text": "[2026-10-28 15:15:08.673] [info] EFX_STREAM_DIAGNOSTIC resref=FIREBICT stage=0x8 sequence=0 slot=1 phase=2 logical=69x77"
+      },
+      {
+        "line": 531,
+        "text": "[2026-10-28 15:15:08.673] [info] EFX_STREAM_DIAGNOSTIC resref=FIREBICT stage=0x20 sequence=0 slot=1 phase=2 logical=69x77"
+      },
+      {
+        "line": 532,
+        "text": "[2026-10-28 15:15:08.673] [info] EFX_STREAM_DIAGNOSTIC resref=FIREBICT stage=0x80000000 sequence=0 slot=2 phase=-1 logical=24x16"
+      },
+      {
+        "line": 537,
+        "text": "[2026-10-28 15:15:08.673] [info] EFX_STREAM_DIAGNOSTIC resref=FIREBICT stage=0x80000000 sequence=0 slot=3 phase=-1 logical=24x16"
+      },
+      {
+        "line": 538,
+        "text": "[2026-10-28 15:15:08.673] [info] EFX_STREAM_DIAGNOSTIC resref=FIREBICT stage=0x80000000 sequence=0 slot=4 phase=-1 logical=24x16"
+      },
+      {
+        "line": 539,
+        "text": "[2026-10-28 15:15:08.673] [info] EFX_STREAM_DIAGNOSTIC resref=FIREBICT stage=0x80000000 sequence=0 slot=5 phase=-1 logical=24x16"
+      },
+      {
+        "line": 540,
+        "text": "[2026-10-28 15:15:08.673] [info] EFX_STREAM_DIAGNOSTIC resref=FIREBICT stage=0x80000000 sequence=0 slot=6 phase=-1 logical=24x16"
+      },
+      {
+        "line": 618,
+        "text": "[2026-10-28 15:15:19.459] [info] EFX_STREAM_DIAGNOSTIC resref=FIREBICT stage=0x80000000 sequence=0 slot=0 phase=-1 logical=24x16"
+      }
+    ],
+    "FIREBICX": [
+      {
+        "line": 328,
+        "text": "[2026-10-28 15:15:05.811] [info] EFX_NATIVE_SURFACE resref=FIREBICX cell=737A62C0 flags=89 smokePalette=0000000000000000 opacity=255 source=67x59 offset=0,0 layers=1 nativePrefix=false nativeOpacity=255"
+      },
+      {
+        "line": 542,
+        "text": "[2026-10-28 15:15:08.673] [info] EFX_STREAM_DIAGNOSTIC resref=FIREBICX stage=0x1 sequence=0 slot=0 phase=-1 logical=67x59"
+      },
+      {
+        "line": 543,
+        "text": "[2026-10-28 15:15:08.673] [info] EFX_STREAM_DIAGNOSTIC resref=FIREBICX stage=0x4 sequence=0 slot=0 phase=0 logical=67x59"
+      },
+      {
+        "line": 544,
+        "text": "[2026-10-28 15:15:08.673] [info] EFX_STREAM_DIAGNOSTIC resref=FIREBICX stage=0x8 sequence=0 slot=0 phase=0 logical=67x59"
+      },
+      {
+        "line": 545,
+        "text": "[2026-10-28 15:15:08.673] [info] EFX_STREAM_DIAGNOSTIC resref=FIREBICX stage=0x20 sequence=0 slot=1 phase=2 logical=92x66"
+      }
+    ],
+    "FIREBICR": [
+      {
+        "line": 338,
+        "text": "[2026-10-28 15:15:05.858] [info] EFX_NATIVE_SURFACE resref=FIREBICR cell=7A371F10 flags=88 smokePalette=0000000000000000 opacity=255 source=43x54 offset=0,0 layers=1 nativePrefix=false nativeOpacity=255"
+      },
+      {
+        "line": 546,
+        "text": "[2026-10-28 15:15:08.673] [info] EFX_STREAM_DIAGNOSTIC resref=FIREBICR stage=0x1 sequence=8 slot=0 phase=-1 logical=43x54"
+      },
+      {
+        "line": 547,
+        "text": "[2026-10-28 15:15:08.673] [info] EFX_STREAM_DIAGNOSTIC resref=FIREBICR stage=0x4 sequence=8 slot=0 phase=0 logical=43x54"
+      },
+      {
+        "line": 548,
+        "text": "[2026-10-28 15:15:08.673] [info] EFX_STREAM_DIAGNOSTIC resref=FIREBICR stage=0x8 sequence=8 slot=0 phase=0 logical=43x54"
+      },
+      {
+        "line": 549,
+        "text": "[2026-10-28 15:15:08.673] [info] EFX_STREAM_DIAGNOSTIC resref=FIREBICR stage=0x10 sequence=6 slot=1 phase=2 logical=69x53"
+      },
+      {
+        "line": 550,
+        "text": "[2026-10-28 15:15:08.673] [info] EFX_STREAM_DIAGNOSTIC resref=FIREBICR stage=0x20 sequence=4 slot=0 phase=0 logical=65x42"
+      }
+    ],
+    "SPCL239": [],
+    "SPCL239X": [],
+    "SPCL239R": [],
+    "HDFBRER": [
+      {
+        "line": 640,
+        "text": "[2026-10-28 15:15:22.627] [info] EFX_NATIVE_SURFACE resref=HDFBRER\u0000 cell=11FE98D70 flags=2288 smokePalette=0000000000000000 opacity=255 source=56x56 offset=0,0 layers=1 nativePrefix=false nativeOpacity=255"
+      },
+      {
+        "line": 646,
+        "text": "[2026-10-28 15:15:24.461] [info] EFX_STREAM_DIAGNOSTIC resref=HDFBRER stage=0x1 sequence=0 slot=0 phase=-1 logical=56x56"
+      },
+      {
+        "line": 647,
+        "text": "[2026-10-28 15:15:24.461] [info] EFX_STREAM_DIAGNOSTIC resref=HDFBRER stage=0x4 sequence=0 slot=0 phase=0 logical=56x56"
+      },
+      {
+        "line": 648,
+        "text": "[2026-10-28 15:15:24.461] [info] EFX_STREAM_DIAGNOSTIC resref=HDFBRER stage=0x8 sequence=0 slot=0 phase=0 logical=56x56"
+      },
+      {
+        "line": 649,
+        "text": "[2026-10-28 15:15:24.461] [info] EFX_STREAM_DIAGNOSTIC resref=HDFBRER stage=0x10 sequence=0 slot=1 phase=2 logical=56x56"
+      },
+      {
+        "line": 650,
+        "text": "[2026-10-28 15:15:24.461] [info] EFX_STREAM_DIAGNOSTIC resref=HDFBRER stage=0x20 sequence=0 slot=1 phase=2 logical=56x56"
+      }
+    ]
+  },
+  "mask_or_composition_rejects": [],
+  "limits": [
+    "User visual feedback preserved for all3; technical HD confirmation only for observed components in tests1/3",
+    "No final per-phase cadence measurement for these resources",
+    "No image/code/installation/release changes"
+  ]
+}

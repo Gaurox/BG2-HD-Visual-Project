@@ -1,0 +1,56 @@
+{
+  "utc": "2026-10-28T15:49:29.942726+00:00",
+  "user_feedback": "ca me semble ok. vérifie puis la suite",
+  "renderer": "V10",
+  "dll_sha256": "B7F4C9DAB3CACE1DEA5023521D464D0AA4C9EC60E3A292A7184EDE2D38212B86",
+  "source_log_start_line": 44411,
+  "first_line": "[2026-10-28 16:45:13.562] [info] Infinity Engine Enhancer initializing...",
+  "last_line": "[2026-10-28 16:46:21.334] [info] Effect streaming GPU: bytes=62991232/301989888, peak=62991232, slots=64/64, pending=0, scratch=768740, scratchPeak=16257304, scratchRefusals=0, flushes=380, cpuMisses=82, draws=2935, drawMisses=191, firstSubmitMisses=17/89, leadNs=350607400, maxLeadNs=48481500, traceDropped=0, uploads=444, uploadedBytes=182095872, uploadCpuNs=228073400, maxUploadCpuNs=1546900, horizonReductions=0",
+  "log_sha256": "A9A7874DF572F8C55A8404024A699421F73178D2DFCC23272CD68A7DE99ED840",
+  "diagnostic_stages": {
+    "SPSETSCD": [
+      "0x1",
+      "0x4",
+      "0x8",
+      "0x20"
+    ],
+    "SPSETSH": [
+      "0x1",
+      "0x4",
+      "0x10",
+      "0x8",
+      "0x20"
+    ],
+    "SPFLAMES": [
+      "0x1",
+      "0x4",
+      "0x8",
+      "0x10",
+      "0x20"
+    ],
+    "SPGRWHRL": [
+      "0x1",
+      "0x4",
+      "0x8",
+      "0x20"
+    ]
+  },
+  "accepted_scope": {
+    "TRAPBOOM": [
+      "SPSETSCD",
+      "SPSETSH",
+      "SPFLAMES"
+    ],
+    "WILDZONE": [
+      "SPGRWHRL"
+    ]
+  },
+  "in_scope_mask_composite_rejections": [],
+  "other_warnings": [
+    "[2026-10-28 16:45:47.376] [warning] EFX_MASK_FALLBACK resref=SPMAGMIS maskReady=false maskChanged=false maskBound=false captureValid=false captureCalls=0 ownerCalls=1 captured=0x0 draw=64x78; clipped native FX retained"
+  ],
+  "other_warning_scope": "SPMAGMIS native clipped rendering retained; not an error of the two tested effects. No global rejection-free statement or global QA inferred. Preserve for targeted review.",
+  "no_phase_or_cadence_proof_inferred_from_bind_diagnostics": true,
+  "no_whole_PRO_or_release_QA": true,
+  "no_images_reprocessed": true
+}

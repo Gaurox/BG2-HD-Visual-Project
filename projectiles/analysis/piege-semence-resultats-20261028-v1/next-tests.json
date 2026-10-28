@@ -1,0 +1,54 @@
+{
+  "resources": {
+    "SPCL911B": {
+      "sha256": "B349A8C4854E249BEC4D09080ED49278456374E4DDCB98E6BD49798C30E3E06D",
+      "bytes": 394
+    },
+    "OGRE01": {
+      "sha256": "229087A750ED06716D39595AB0FAA5F264E033820B8DBB4E40012B816192F659",
+      "bytes": 1096,
+      "EA": 255
+    },
+    "OHNROBE3": {
+      "sha256": "381E504F020420EE9C90FA93FAA610A36AE0001763251ACEEA4AD05202EDEC3C",
+      "bytes": 650,
+      "target": 5,
+      "projectile_raw": 330,
+      "charges": 1
+    },
+    "WILDZONE": {
+      "sha256": "AC9D571F2AC90B2FFEF51330A31AA696C49232BCC38FEACAF0C058AD2AADDC88",
+      "bytes": 768
+    }
+  },
+  "current_renderer": "V10",
+  "commands": {
+    "1_trap_enemy": [
+      "C:CreateCreature(\"OGRE01\")",
+      "C:Eval('ForceSpellRES(\"SPCL911B\",NearestEnemyOf(Myself))',0)"
+    ],
+    "2_wild_zone": [
+      "C:CreateItem(\"OHNROBE3\")",
+      "C:Eval('UseItem(\"OHNROBE3\",Myself)',0)"
+    ]
+  },
+  "steps": [
+    "Separate tests in unsaved test game; select Player1 alone before item creation; keep OGRE01 alive and in sight for test1",
+    "Robe ability0 targets self and uses WILDZONE; UseItem can act from inventory without equipping; native runtime success still to be observed",
+    "After each, unpause and wait15s; for wild zone observe full duration around60s for10*100ticks"
+  ],
+  "expected": {
+    "1": [
+      "SPSETSH",
+      "SPFLAMES"
+    ],
+    "2": [
+      "SPGRWHRL"
+    ]
+  },
+  "scope": "Native conditional projectile/item dispatch; no resource edits or new images",
+  "sources": [
+    "https://gibberlings3.github.io/iesdp/file_formats/ie_formats/pro_v1.htm",
+    "https://gibberlings3.github.io/iesdp/scripting/actions/bgeeactions.htm"
+  ]
+}

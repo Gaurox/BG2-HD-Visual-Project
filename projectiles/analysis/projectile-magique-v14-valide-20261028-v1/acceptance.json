@@ -1,0 +1,47 @@
+{
+  "schema": "bg2-projectile-scoped-acceptance-v1",
+  "recorded_utc": "2026-10-28T17:20:33.698315+00:00",
+  "status": "accepted-observed-components",
+  "owner": "MAGICMIS",
+  "asset": "SPMAGMIS",
+  "renderer": "V14",
+  "dll": {
+    "bytes": 3471872,
+    "sha256": "393820D32FFC94E20E50D0DD27B6511C19EA1994B64AF3444BE75AA434987912"
+  },
+  "user_feedback": "c'est validé. maj le suivi et committe",
+  "scope": "Observed magic-missile flight, HD texture, native mask and animation phases; no universal missile-count/owner/position/release QA",
+  "first_line": "[2026-10-28 18:16:02.287] [info] Infinity Engine Enhancer initializing...",
+  "last_line": "[2026-10-28 18:16:25.337] [info] Map page B1: generation=0, pages=27, prepared=0, hits=0, misses=0, consumed=0, rejected=0, failures=0, reservedBytes=0, peakBytes=0, crcMs=0.000, copyMs=0.000, renderWorkerWaits=0",
+  "snapshot_sha256": "5D4AE1F0A7AF92F5B176470986C33D2BD60D1F12D7CECC5252AE91AFC7188249",
+  "final_draws": 28,
+  "HD": 28,
+  "masked": 28,
+  "odd_phase_draws": 13,
+  "distinct_phases": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "instances": [
+    8
+  ],
+  "native_canvas_observed": [
+    64,
+    79
+  ],
+  "mask_composite_rejections": [],
+  "traceDropped": 0,
+  "source_crop": "Existing64x78 pack -> native64x64 content -> actual64x79 canvas; no image regeneration",
+  "cadence": "Mixed instances; no global cadence measurement inferred",
+  "position_interpolation": "Deferred PROJ-MOTION-001"
+}

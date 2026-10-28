@@ -1,0 +1,54 @@
+{
+  "schema": "bg2-projectile-motion-feasibility-v1",
+  "utc": "2026-10-28T15:04:29.508610+00:00",
+  "scope": "Study only; generalized visual movement interpolation, separate from sprite animation",
+  "executable_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57",
+  "source_sha256": {
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp": "D515F454F768DF49D527CBC24462F404EB36AD03915DCE2B8EE563DCA249A623",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/frame_hook.cpp": "488079C209A84CECD8CA326252AEA917A02284809888EF631DEBE91EF9F2EB4A",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/build_manifest.h": "D84548DF01718A3C9FA17EF466FE9CBA277481ABE91B8F6ACF9A81ED6488390B",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/runtime_types_x64.h": "97B076E6CC2C0569CF026C6EB42B72C19E67089846E87E244C001F1E59677571"
+  },
+  "PROs": 243,
+  "source_types": {
+    "2": 100,
+    "3": 143
+  },
+  "generic_factory_class_counts": {
+    "CProjectileBAM": 98,
+    "CProjectileArea": 143,
+    "CProjectileNewScorcher": 1,
+    "CProjectileSkyStrikeBAM": 1
+  },
+  "shared_Render_descriptor_count": 241,
+  "PROs_with_PROJECTL_binding": 238,
+  "PROJECTL_bindings": 253,
+  "PROs_without_PROJECTL_binding": [
+    "DBFIREBL",
+    "FBFLAMES",
+    "FBFLAMGR",
+    "FBFLAMIC",
+    "LIGHTBLT"
+  ],
+  "native_IDs_without_PRO": 78,
+  "special_flag_counts": {
+    "bounce": 1,
+    "pass-target": 2,
+    "immediate-hit": 17,
+    "curve-flag-not-proof-of-curve": 0,
+    "pillar": 1,
+    "multi": 0,
+    "falling": 0,
+    "comet": 1,
+    "line": 1,
+    "rectangle": 0,
+    "random": 0
+  },
+  "declared_travel": 195,
+  "limits": [
+    "Class/Render predictions do not prove a moving instance or ingame smoothing",
+    "Actual motion cadence, latency, threading and final draw positions remain unmeasured",
+    "No build, runtime install, gameplay/image/release modification"
+  ],
+  "decision": "General service is feasible as a prototype; universal coverage requires multiple render/lifecycle adapters and an explicit impact-latency policy"
+}

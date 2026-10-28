@@ -1,3 +1,4 @@
+#include "effect_sharea_palette_fixtures.h"
 // Exercise the production effect uploader on a real hidden WGL context and
 // a finite native descriptor allocator. A long spell sequence must leave a
 // slot for the next Character composite, and recycled frames must stay exact.
@@ -275,6 +276,23 @@ bool exercise(const std::filesystem::path& root) {
   iee::effect_animation_x4::restore_texture(api,previous);
   api.paletteTransfer=nullptr;
   if (!verifyFrame(2)) return false;
+  // Same frame, different native ring palettes; no cross-variant GPU reuse,
+  // neutral fallback remains exact, and conflicting transfer modes fail closed.
+  for(unsigned variant:{3u,5u,6u,3u}) {
+    auto transfer=iee::core::effect_indexed_palette::derive(shareaPalettes[variant],true);
+    api.indexedPaletteTransfer=&transfer;
+    if(!iee::effect_animation_x4::bind_frame_texture({0,2},api,previous))return false;
+    glBindTexture(GL_TEXTURE_2D,names[boundSlot]);
+    glGetTexImage(GL_TEXTURE_2D,0,GL_RGBA,GL_UNSIGNED_BYTE,tinted.data());
+    const auto expected=iee::core::effect_indexed_palette::recolor({2,0,0},transfer);
+    if(tinted[0]!=expected[0] || tinted[1]!=expected[1] || tinted[2]!=expected[2] || tinted[3]!=255)
+      return false;
+    iee::effect_animation_x4::restore_texture(api,previous);
+    api.paletteTransfer=&tint;
+    if(iee::effect_animation_x4::bind_frame_texture({0,2},api,previous))return false;
+    api.paletteTransfer=nullptr;api.indexedPaletteTransfer=nullptr;
+    if(!verifyFrame(2))return false;
+  }
   api.canvasWidth=4;api.canvasHeight=5;api.offsetX=1;api.offsetY=2;
   if (!iee::effect_animation_x4::bind_frame_texture({0,2},api,previous)) return false;
   glBindTexture(GL_TEXTURE_2D,names[boundSlot]);
@@ -309,6 +327,27 @@ bool exercise(const std::filesystem::path& root) {
   prefix[0]=std::byte{55};if(!verifyComposite(55,127)) return false;
   api.nativeOpacity=191;if(!verifyComposite(55,191)) return false;
   api.nativeUnderlay={};api.nativeOpacity=255;
+  // Already-padded source: remove rows before native-canvas placement, not
+  // after upload. Cropped and complete variants cannot share a GPU entry.
+  api.canvasWidth=4;api.canvasHeight=5;api.offsetX=1;api.offsetY=2;
+  api.cropTop=1;
+  if(!iee::effect_animation_x4::bind_frame_texture({0,2},api,previous))return false;
+  glBindTexture(GL_TEXTURE_2D,names[boundSlot]);
+  glGetTexImage(GL_TEXTURE_2D,0,GL_RGBA,GL_UNSIGNED_BYTE,canvas.data());
+  for(int y=0;y<20;++y)for(int x=0;x<16;++x) {
+    const auto at=(y*16+x)*4;
+    const bool inside=x>=4 && x<12 && y>=8 && y<12;
+    if(canvas[at]!=(inside?2:0) || canvas[at+3]!=(inside?255:0))return false;
+  }
+  iee::effect_animation_x4::restore_texture(api,previous);
+  const auto uploadsBeforeCropVariant=iee::effect_animation_x4::texture_cache_stats().uploads;
+  api.cropTop=0;api.cropBottom=1;
+  if(!iee::effect_animation_x4::bind_frame_texture({0,2},api,previous) ||
+      iee::effect_animation_x4::texture_cache_stats().uploads!=uploadsBeforeCropVariant+1)return false;
+  iee::effect_animation_x4::restore_texture(api,previous);
+  api.cropTop=2;
+  if(iee::effect_animation_x4::bind_frame_texture({0,2},api,previous))return false;
+  api.cropTop=api.cropBottom=0;
   api.offsetX=-1;
   if (iee::effect_animation_x4::bind_frame_texture({0,2},api,previous)) return false;
   api.canvasWidth=api.canvasHeight=api.offsetX=api.offsetY=0;
@@ -364,6 +403,49 @@ bool exercise(const std::filesystem::path& root) {
   if (iee::effect_animation_x4::texture_cache_stats().scratchBytes) return false;
   iee::effect_animation_x4::release_gpu(api); collect();
   iee::effect_animation_x4::release_gpu(api); iee::effect_animation_x4::release();
+  // Regression: native SPMAGMIS is64x64, while its retained pack is64x78
+  // and the actual FX destination can be64x88. Padding must never determine
+  // the final draw dimensions or be applied twice. Inspect every GPU pixel.
+  const auto padded=root/"padded";
+  std::filesystem::create_directories(padded);
+  std::vector<unsigned char> paddedPixels(64*78*64);
+  for(int y=0;y<78*4;++y)for(int x=0;x<64*4;++x) {
+    const auto at=(y*64*4+x)*4;
+    paddedPixels[at]=static_cast<unsigned char>(y/4>=7 && y/4<71 ? y/4-6 : 230);
+    paddedPixels[at+1]=77;paddedPixels[at+3]=255;
+  }
+  {
+    std::ofstream registry(padded/"EffectAnimations-X4.registry",std::ios::binary);
+    registry.write("IEEEFX4\0",8);u32(registry,1);u32(registry,4);u32(registry,1);u32(registry,0);
+    registry.write("PADDEDFX",8);u32(registry,1);u32(registry,1);
+    u32(registry,64);u32(registry,78);u32(registry,1);u32(registry,0);
+    std::ofstream pixels(padded/"EFX4-PADDEDFX-frame000.rgba",std::ios::binary);
+    pixels.write(reinterpret_cast<const char*>(paddedPixels.data()),paddedPixels.size());
+  }
+  if(!iee::effect_animation_x4::prepare(padded))return false;
+  api.canvasWidth=64;api.offsetX=0;api.cropTop=api.cropBottom=7;
+  for(const auto geometry:{std::array<int,2>{78,7},std::array<int,2>{88,0},std::array<int,2>{88,12}}) {
+    api.canvasHeight=geometry[0];api.offsetY=geometry[1];
+    bind(1); // The engine binds its original FX descriptor before replacement.
+    if(!iee::effect_animation_x4::bind_frame_texture({0,0},api,previous))return false;
+    glBindTexture(GL_TEXTURE_2D,names[boundSlot]);
+    std::vector<unsigned char> readback(64*api.canvasHeight*64);
+    glGetTexImage(GL_TEXTURE_2D,0,GL_RGBA,GL_UNSIGNED_BYTE,readback.data());
+    for(int y=0;y<api.canvasHeight*4;++y)for(int x=0;x<64*4;++x) {
+      const auto at=(y*64*4+x)*4;
+      const bool inside=y>=api.offsetY*4 && y<(api.offsetY+64)*4;
+      if(readback[at]!=(inside?y/4-api.offsetY+1:0) || readback[at+1]!=(inside?77:0) ||
+          readback[at+2]!=0 || readback[at+3]!=(inside?255:0))return false;
+    }
+    iee::effect_animation_x4::restore_texture(api,previous);
+  }
+  std::ifstream original(padded/"EFX4-PADDEDFX-frame000.rgba",std::ios::binary);
+  std::vector<unsigned char> unchanged(paddedPixels.size());
+  original.read(reinterpret_cast<char*>(unchanged.data()),unchanged.size());
+  if(unchanged!=paddedPixels)return false;
+  iee::effect_animation_x4::release_gpu(api);collect();
+  iee::effect_animation_x4::release_gpu(api);iee::effect_animation_x4::release();
+  std::cout << "Padded64x78 source cropped to64x64 on native64x78/64x88 canvases: exact GPU pixels; source unchanged\n";
   std::cout << "720 distinct effect frames: exact GPU pixels, NEAREST min/mag, no mips, cache <=64; "
                "Character allocation succeeds on every frame with 400 occupied slots; "
                "LRU hit/reload, allocation pressure and upload recovery passed\n";

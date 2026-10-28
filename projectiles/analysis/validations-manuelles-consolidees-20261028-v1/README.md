@@ -1,0 +1,8 @@
+# Consolidation des validations manuelles
+
+- [32 décisions](decisions.json) et SHA des sources :28PRO acceptés pour les composants observés,3accords visuels antérieurs à un correctif de rendu,1QAasset historique. Autorité projet : `projectiles/index/work-tracking.json:qa` ; [table de suivi courant](../../SUIVI_MANUEL.md).
+- [Dernier retour explicite](latest-feedback.json) : utilisateur confirme avoir joué et validé les deux essais SPWI615/FIRESEED. Acceptation visuelle acquise ; [session figée](runtime-session.log)17:11:46–17:12:37 insuffisante pour confirmer leur rendu final HD+masque/phases.0traceDropped,0SPFIRSE2/SPCHLGT1/3 ;1SPCHLGT2 CpuNotReady. Aucun échec visuel inventé depuis une lacune de capture.
+- Même session : SPMAGMIS164dessins,128natifs `MaskRejected` et36HD sans masque. Garde-fou natif conservé ; ne pas prétendre «tout HD» sur le contrat courant ni effacer la QAasset7septembre.
+- [Matrice secondaire](secondary-progress.json) :35/37groupes avec preuve technique partagée antérieure,2groupes d'éclair visuellement acceptés mais confirmation techniqueV11 ouverte. Aucune validation complète par propriétaire propagée depuis ces groupes.
+- [Trace désactivée](trace-disabled.json), [plan](trace-disable-plan.json), copies INI avant/après conservées. Jeu/loader arrêtés ; seul `EnableEffectStreamingTrace=true→false`, DLLV11 et autres octets INI inchangés. Aucun retraitement d'image/PRO/release.
+- Sources de reprise : [suivi manuel](../../SUIVI_MANUEL.md#suite-utile), [reprise](../../REPRISE_LIAISONS124.md). Suite technique prioritaire : corrélation/masquesSPMAGMIS, protocole de capture utileLIGHTCHA/SPFIRSE2 ; pas de nouvel essai visuel identique demandé avant cela. Déplacement reportéPROJ-MOTION-001.

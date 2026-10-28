@@ -1,0 +1,15 @@
+{
+  "hypothesis": "Illustration only: 30 simulation updates/s, 60 displayed frames/s, 12 world pixels/update",
+  "step_ms": 33.333333333333336,
+  "display_ms": 16.666666666666668,
+  "delayed_interpolation": {
+    "display_latency_ms": 33.333333333333336,
+    "spatial_lag_pixels": 12
+  },
+  "prediction": {
+    "at_half_step_pixels": 6,
+    "at_full_step_pixels": 12,
+    "collision_or_turn_error": "Future bounce/arrival unknown; not a guarantee of correct trajectory"
+  },
+  "impact": "Immediate native terminal snap preserves gameplay event timing but can produce a visible final correction up to one simulated segment"
+}

@@ -1,0 +1,76 @@
+{
+  "created_utc": "2026-10-28T15:37:44.020479+00:00",
+  "renderer": "V10",
+  "resources": {
+    "SPCL911B": {
+      "source": "KEY://SPCL911B.spl",
+      "sha256": "B349A8C4854E249BEC4D09080ED49278456374E4DDCB98E6BD49798C30E3E06D",
+      "bytes": 394,
+      "raw_projectile": 269,
+      "target_type": 1
+    },
+    "FIRESEED": {
+      "source": "KEY://FIRESEED.itm",
+      "sha256": "9AF47199EA40D29C5E2541AA17018B3C946AC7811FBC7DCC7F5D99DF03E27B05",
+      "bytes": 266,
+      "raw_projectile": 226,
+      "ability_type": 2,
+      "usability": 0
+    },
+    "BOLT2": {
+      "source": "KEY://BOLT2.pro",
+      "sha256": "9E318B0E885AEC072DF0695C131063767C10E2A5C8BFF14F66F56A5ADAE3CD39",
+      "bytes": 768
+    },
+    "TRAPBOOM": {
+      "source": "KEY://TRAPBOOM.pro",
+      "sha256": "3EB9A06B8BB5755E42D6032245D9ADBD10BB52D6B6657624D0C4590D17EF9DE1",
+      "bytes": 768
+    }
+  },
+  "tests": [
+    {
+      "id": 1,
+      "owner": "TRAPBOOM",
+      "driver": "SPCL911B",
+      "command": "C:Eval('ForceSpellRES(\"SPCL911B\",Player2)',0)",
+      "expected_existing_components": [
+        "SPSETSCD",
+        "SPSETSH",
+        "SPFLAMES"
+      ],
+      "new_group": "explosion-animation/SPSETSH",
+      "scope": "Technical explosion driver only; not trap placement or triggering gameplay"
+    },
+    {
+      "id": 2,
+      "owner": "BOLT2",
+      "driver": "FIRESEED.ITM",
+      "command": "C:CreateItem(\"FIRESEED\",5)",
+      "manual_steps": [
+        "Select Player1 before item creation",
+        "Equip fire seeds in weapon slot and select as active ranged weapon",
+        "Attack a live target at distance; item creation alone does not test rendering"
+      ],
+      "optional_attack_command": "C:Eval('AttackOneRound(Player2)',0)",
+      "expected_existing_components": [
+        "SPFIRSE2",
+        "FSEEDX",
+        "FSEEDA",
+        "SPSMPUFF"
+      ],
+      "new_groups": [
+        "explosion-animation/FSEEDX",
+        "spread-animation/FSEEDA"
+      ]
+    }
+  ],
+  "observation": "Transparency/edges, explosion and dispersion, animation; wait10s after each test for diagnostic flush",
+  "sources": [
+    "https://gibberlings3.github.io/iesdp/appendices/clua/bg2.htm",
+    "https://gibberlings3.github.io/iesdp/scripting/actions/bgeeactions.htm"
+  ],
+  "no_new_images": true,
+  "no_game_installation_changes": true,
+  "no_movement_interpolation_test": true
+}

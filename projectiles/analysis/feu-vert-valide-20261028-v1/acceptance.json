@@ -1,0 +1,46 @@
+{
+  "utc": "2026-10-28T16:06:38.842940+00:00",
+  "user_feedback": "c'est ok ! la suite",
+  "test": "XPGREEN -> FIREBLGR",
+  "renderer": "V10",
+  "source_start_line": 45255,
+  "first_line": "[2026-10-28 17:03:39.749] [info] Infinity Engine Enhancer initializing...",
+  "last_line": "[2026-10-28 17:03:56.773] [info] Map page B1: generation=0, pages=27, prepared=0, hits=0, misses=0, consumed=0, rejected=0, failures=0, reservedBytes=0, peakBytes=0, crcMs=0.000, copyMs=0.000, renderWorkerWaits=0",
+  "log_sha256": "29710F29EF89ACCAEBC6157BBF6D8A14CAEAEB2CA01A7DEFF4D939F299FC3B83",
+  "diagnostic_stages": {
+    "FIREBGRT": [
+      "0x80000000",
+      "0x2",
+      "0x1",
+      "0x4",
+      "0x8",
+      "0x20",
+      "0x80000000",
+      "0x80000000",
+      "0x80000000",
+      "0x80000000",
+      "0x80000000"
+    ],
+    "FIREBGRX": [
+      "0x1",
+      "0x4",
+      "0x8",
+      "0x20"
+    ],
+    "FIREBGRR": [
+      "0x1",
+      "0x4",
+      "0x8",
+      "0x10",
+      "0x20"
+    ]
+  },
+  "mask_composite_rejections": [],
+  "accepted_scope": "Observed FIREBGRT/FIREBGRX/FIREBGRR visuals, HD binding and masks; no full-phase cadence/position/other-owner QA inferred",
+  "travel_lookup_caveat": "24x16 rejected lookup attempts coexist with successful HD+mask travel; do not conclude final native fallback from lookup alone",
+  "new_shared_groups": [
+    "explosion-animation/FIREBGRX",
+    "ring-animation/FIREBGRR"
+  ],
+  "no_image_or_release_changes": true
+}

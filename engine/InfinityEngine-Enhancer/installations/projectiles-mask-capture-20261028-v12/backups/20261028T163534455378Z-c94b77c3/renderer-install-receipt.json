@@ -1,0 +1,48 @@
+{
+  "schema": "bg2-upscale-renderer-install-backup-v1",
+  "status": "installed",
+  "transaction_id": "20261028T163534455378Z-c94b77c3",
+  "created_at_utc": "2026-10-28T16:35:34.588795+00:00",
+  "updated_at_utc": "2026-10-28T16:35:34.663378+00:00",
+  "game_root": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition",
+  "candidate_root": "G:\\AI\\BG2_Upscale\\engine\\InfinityEngine-Enhancer\\installations\\projectiles-mask-capture-20261028-v12\\candidate",
+  "transaction_root": "G:\\AI\\BG2_Upscale\\engine\\InfinityEngine-Enhancer\\installations\\projectiles-mask-capture-20261028-v12\\backups\\20261028T163534455378Z-c94b77c3",
+  "managed_files": [
+    "InfinityEngine-Enhancer.dll",
+    "InfinityEngine-Enhancer.ini"
+  ],
+  "before_set_sha256": "EA828AD36B8A4467072080B18B7C019AC404D898716ECF6FC561F7FAFA5E5BAB",
+  "installed_set_sha256": "0FCB89D7DED73E002CB813402BA9BEECACF707D66980F18DC6CBAF0536C2995E",
+  "files": [
+    {
+      "name": "InfinityEngine-Enhancer.dll",
+      "before": {
+        "present": true,
+        "bytes": 3470336,
+        "sha256": "09EEE20EC52546C12BEDDCB61E5365AF0B968C2D27A96313A3575E5B7FB0D850"
+      },
+      "installed": {
+        "present": true,
+        "bytes": 3470336,
+        "sha256": "D8AA64EFD9C8C37E7896616A421CD5D74C4812CA6274A187F3642EECA377B45D"
+      },
+      "backup": "before/InfinityEngine-Enhancer.dll",
+      "payload": "candidate/InfinityEngine-Enhancer.dll"
+    },
+    {
+      "name": "InfinityEngine-Enhancer.ini",
+      "before": {
+        "present": true,
+        "bytes": 6566,
+        "sha256": "AB4A3C300C08EC88A137806C4F9C6590C908E67A93028DC4387F68FFAD6D8B0D"
+      },
+      "installed": {
+        "present": true,
+        "bytes": 6565,
+        "sha256": "0D240D4E4BF492E3DA254F52D2E99CA7CA955FE30C576AEAD8B64B772729C405"
+      },
+      "backup": "before/InfinityEngine-Enhancer.ini",
+      "payload": "candidate/InfinityEngine-Enhancer.ini"
+    }
+  ]
+}

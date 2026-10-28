@@ -3,9 +3,22 @@
 #include "iee/core/effect_secondary_scope.h"
 #include "iee/core/effect_texture_alias.h"
 #include "iee/core/effect_native_underlay.h"
+#include "effect_sharea_palette_fixtures.h"
+#include "iee/core/effect_indexed_palette.h"
 #include <cstdlib>
 static void require(bool value) { if (!value) std::abort(); }
 int main() {
+  {
+    using namespace iee::core;
+    const std::array<char,8> missile{'S','P','M','A','G','M','I','S'};
+    require(effect_surface_layout(missile,64,64,false)==EffectSurfaceLayout::CroppedSource);
+    require(effect_frame_lookup_size(missile,64,64)==std::array<int,2>{64,78});
+    require(effect_frame_lookup_size(missile,24,16)==std::array<int,2>{24,16});
+    require(effect_surface_layout(missile,64,64,true)==EffectSurfaceLayout::NativeOnly);
+    require(effect_surface_layout(missile,64,78,false)==EffectSurfaceLayout::SourcePlacement);
+    require(effect_surface_layout({'F','I','R','E','B','A','T','\0'},64,64,false)==
+        EffectSurfaceLayout::SourcePlacement);
+  }
   // Native source identity must reach the corrected pack AND remain eligible
   // for the actual single-cell FX path. A corrected pack outside the whitelist
   // would silently retain the native draw instead of testing its alpha.
@@ -19,8 +32,12 @@ int main() {
     require(target!=source && iee::core::effect_secondary_scope::enabled(target));
     require(iee::core::effect_texture_resref(target)==target);
   }
-  const std::array<char,8> incompatible{'B','D','W','O','F','O','G','A'};
-  require(iee::core::effect_texture_resref(incompatible)==incompatible);
+  const std::array<char,8> wallFog{'B','D','W','O','F','O','G','A'};
+  require(iee::core::effect_texture_resref(wallFog,false)==wallFog);
+  const auto normalWallFog=iee::core::effect_texture_resref(wallFog,true);
+  require(normalWallFog==(std::array<char,8>{'X','5','8','W','F','O','G','\0'}));
+  require(iee::core::effect_secondary_scope::enabled(normalWallFog));
+  require(iee::core::effect_texture_resref(normalWallFog,true)==normalWallFog);
   const std::array<char,8> writhing{'W','R','I','T','H','I','N','G'};
   require(iee::core::effect_texture_resref(writhing,false)==writhing);
   const auto normalWrithing=iee::core::effect_texture_resref(writhing,true);
@@ -30,7 +47,50 @@ int main() {
   const std::array<char,8> fire{'F','I','R','E','B','A','T','\0'};
   require(iee::core::effect_texture_resref(fire)==fire);
   require(iee::core::effect_secondary_scope::enabled({'S','P','S','M','P','U','F','F'}));
+  require(iee::core::effect_secondary_scope::enabled({'S','P','M','A','G','M','I','S'}));
+  // The real LIGHTCHA path creates all three oriented trails. Each must
+  // retain the single-cell FX/mask route, not just generic texture binding.
+  for (char suffix : {'1','2','3'}) {
+    const std::array<char,8> trail{'S','P','C','H','L','G','T',suffix};
+    require(iee::core::effect_secondary_scope::enabled(trail));
+    require(iee::core::effect_texture_resref(trail)==trail);
+  }
+  require(!iee::core::effect_secondary_scope::enabled({'S','P','C','H','L','G','T','4'}));
   require(!iee::core::effect_secondary_scope::enabled({'G','R','N','D','G','L','O','W'}));
+  {
+    using namespace iee::core::effect_indexed_palette;
+    require(enabled({'S','H','A','R','E','A','\0','\0'}));
+    require(iee::core::effect_secondary_scope::enabled({'S','H','A','R','E','A','\0','\0'}));
+    require(!enabled({'S','H','A','R','E','A','W','\0'}));
+    std::array<std::uint64_t,7> hashes{};
+    for(unsigned variant=0;variant<shareaPalettes.size();++variant) {
+      const auto transfer=derive(shareaPalettes[variant],true);
+      require(transfer.valid && transfer.opacity==255 && transfer.identity==(variant==0));
+      hashes[variant]=transfer.fingerprint;
+      for(unsigned previous=0;previous<variant;++previous) require(hashes[previous]!=hashes[variant]);
+      for(unsigned i=1;i<256;++i) {
+        std::array<unsigned,3> rgb{(source[i]>>16)&255,(source[i]>>8)&255,source[i]&255};
+        const auto output=recolor(rgb,transfer);
+        for(unsigned c=0;c<3;++c)
+          require(output[c]==((shareaPalettes[variant][i]>>((2-c)*8))&255));
+      }
+      // Equivalent RGBA/BGRA realizations must choose the same GPU variant.
+      auto rgba=shareaPalettes[variant];
+      for(auto& value:rgba) value=(value&0xff00ff00u)|((value&255)<<16)|((value>>16)&255);
+      require(derive(rgba,false).fingerprint==transfer.fingerprint);
+    }
+    const auto neutral=derive(shareaPalettes[0],true);
+    std::array<std::byte,12> pixels{std::byte{8},std::byte{5},std::byte{2},std::byte{16},
+        std::byte{71},std::byte{99},std::byte{33},std::byte{255},
+        std::byte{22},std::byte{33},std::byte{44},std::byte{0}};
+    const auto before=pixels;iee::core::effect_indexed_palette::apply(pixels,neutral);require(pixels==before);
+    auto half=shareaPalettes[3];for(auto& value:half)value=(value&0xffffffu)|0x80000000u;
+    const auto colored=derive(half,true);require(colored.valid && colored.fingerprint!=hashes[3]);
+    iee::core::effect_indexed_palette::apply(pixels,colored);require(pixels[3]==std::byte{8} && pixels[7]==std::byte{128});
+    for(unsigned i=8;i<12;++i)require(pixels[i]==before[i]);
+    half[99]=0;require(!derive(half,true).valid); // Per-index alpha cannot use a uniform remap.
+    require(recolor({0,0,0},colored)==std::array<unsigned,3>{0,0,0});
+  }
   iee::core::EffectSurfaceOwner owner;
   require(!owner.pending_cell());
   owner.submit(1,2,true); require(!owner.cell(1)); // No prepared pass.

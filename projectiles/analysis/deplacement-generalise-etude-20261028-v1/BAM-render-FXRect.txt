@@ -1,0 +1,141 @@
+22b7b0: mov qword ptr [rsp + 0x10], rbx
+22b7b5: mov qword ptr [rsp + 0x18], rsi
+22b7ba: push rbp
+22b7bb: push rdi
+22b7bc: push r12
+22b7be: push r14
+22b7c0: push r15
+22b7c2: mov rbp, rsp
+22b7c5: sub rsp, 0x30
+22b7c9: mov r14, qword ptr [rbp + 0x50]
+22b7cd: mov r15d, r9d
+22b7d0: mov rbx, r8
+22b7d3: mov rsi, rdx
+22b7d6: mov rdi, rcx
+22b7d9: test r14, r14
+22b7dc: jne 0x22b7e5
+22b7de: mov r14, qword ptr [rcx + 0x1b8]
+22b7e5: xor r12d, r12d
+22b7e8: cmp dword ptr [rcx + 0x200], r12d
+22b7ef: jne 0x22b820
+22b7f1: cmp dword ptr [rcx + 0x210], r12d
+22b7f8: jne 0x22b820
+22b7fa: mov rdx, rbx
+22b7fd: mov rcx, r14
+22b800: call 0x411660
+22b805: lea rdx, [rbp + 0x50]
+22b809: mov rcx, r14
+22b80c: call 0x411780
+22b811: mov eax, dword ptr [rbp + 0x50]
+22b814: mov dword ptr [rsi + 8], eax
+22b817: mov eax, dword ptr [rbp + 0x54]
+22b81a: mov dword ptr [rsi + 0xc], eax
+22b81d: mov qword ptr [rsi], r12
+22b820: cmp dword ptr [rdi + 0x210], r12d
+22b827: je 0x22b8d7
+22b82d: lea rdx, [rbp + 0x30]
+22b831: mov rcx, r14
+22b834: call 0x411660
+22b839: mov rcx, qword ptr [rdi + 0x1c0]
+22b840: lea rdx, [rbp - 0x10]
+22b844: add dword ptr [rbp + 0x34], r15d
+22b848: call 0x411660
+22b84d: mov rax, qword ptr [rbp + 0x30]
+22b851: mov qword ptr [rbx], rax
+22b854: mov eax, dword ptr [rbp - 0x10]
+22b857: cmp eax, dword ptr [rbx]
+22b859: jle 0x22b85d
+22b85b: mov dword ptr [rbx], eax
+22b85d: mov eax, dword ptr [rbp - 0xc]
+22b860: cmp eax, dword ptr [rbx + 4]
+22b863: jle 0x22b868
+22b865: mov dword ptr [rbx + 4], eax
+22b868: lea rdx, [rbp + 0x50]
+22b86c: mov rcx, r14
+22b86f: call 0x411780
+22b874: mov eax, dword ptr [rbx]
+22b876: sub eax, dword ptr [rbp + 0x30]
+22b879: mov edx, dword ptr [rbp + 0x50]
+22b87c: mov ecx, dword ptr [rbp + 0x54]
+22b87f: add edx, eax
+22b881: mov eax, dword ptr [rbx + 4]
+22b884: sub eax, dword ptr [rbp + 0x34]
+22b887: add ecx, eax
+22b889: mov dword ptr [rsi + 8], edx
+22b88c: mov dword ptr [rbp + 0x54], ecx
+22b88f: mov dword ptr [rsi + 0xc], ecx
+22b892: mov dword ptr [rbp + 0x50], edx
+22b895: lea rdx, [rbp + 0x50]
+22b899: mov qword ptr [rsi], r12
+22b89c: mov rcx, qword ptr [rdi + 0x1c0]
+22b8a3: call 0x411780
+22b8a8: mov r8d, dword ptr [rbp + 0x54]
+22b8ac: sub r8d, dword ptr [rbp - 0xc]
+22b8b0: mov edx, dword ptr [rbp + 0x50]
+22b8b3: add r8d, dword ptr [rbx + 4]
+22b8b7: mov eax, dword ptr [rbx]
+22b8b9: sub eax, dword ptr [rbp - 0x10]
+22b8bc: add edx, eax
+22b8be: mov dword ptr [rbp + 0x54], r8d
+22b8c2: mov dword ptr [rbp + 0x50], edx
+22b8c5: cmp edx, dword ptr [rsi + 8]
+22b8c8: jle 0x22b8cd
+22b8ca: mov dword ptr [rsi + 8], edx
+22b8cd: cmp r8d, dword ptr [rsi + 0xc]
+22b8d1: jle 0x22b8d7
+22b8d3: mov dword ptr [rsi + 0xc], r8d
+22b8d7: cmp dword ptr [rdi + 0x200], r12d
+22b8de: je 0x22b9cc
+22b8e4: lea rdx, [rbp + 0x30]
+22b8e8: mov rcx, r14
+22b8eb: call 0x411660
+22b8f0: lea rdx, [rbp + 0x50]
+22b8f4: mov rcx, r14
+22b8f7: call 0x411780
+22b8fc: cmp word ptr [rdi + 0x214], 5
+22b904: mov r8d, dword ptr [rbp + 0x54]
+22b908: jne 0x22b92f
+22b90a: movsx ecx, word ptr [rdi + 0x216]
+22b911: movzx eax, byte ptr [rip + 0x381577] ; b'\x04'
+22b918: cmp ecx, eax
+22b91a: jle 0x22b92f
+22b91c: movzx eax, byte ptr [rip + 0x381574] ; b'\x0c\xff\xff\x0e\x01\xe8\x03\x03\x05\x10'
+22b923: cmp ecx, eax
+22b925: jge 0x22b92f
+22b927: mov eax, r8d
+22b92a: sub eax, dword ptr [rbp + 0x34]
+22b92d: jmp 0x22b932
+22b92f: mov eax, dword ptr [rbp + 0x34]
+22b932: mov r11d, dword ptr [rdi + 0x204]
+22b939: lea r10d, [rax + r15]
+22b93d: mov edx, dword ptr [rdi + 0x208]
+22b943: mov dword ptr [rbp + 0x34], r10d
+22b947: mov rax, qword ptr [rbp + 0x30]
+22b94b: mov qword ptr [rbx], rax
+22b94e: mov ecx, eax
+22b950: cmp r11d, eax
+22b953: jle 0x22b95b
+22b955: mov dword ptr [rbx], r11d
+22b958: mov ecx, r11d
+22b95b: mov eax, dword ptr [rbx + 4]
+22b95e: cmp edx, eax
+22b960: jle 0x22b967
+22b962: mov dword ptr [rbx + 4], edx
+22b965: mov eax, edx
+22b967: sub ecx, dword ptr [rbp + 0x30]
+22b96a: sub eax, r10d
+22b96d: mov r9d, dword ptr [rbp + 0x50]
+22b971: add r9d, ecx
+22b974: mov qword ptr [rsi], r12
+22b977: mov dword ptr [rsi + 8], r9d
+22b97b: lea r10d, [rax + r8]
+22b97f: mov dword ptr [rsi + 0xc], r10d
+22b983: mov rax, qword ptr [rdi + 0x204]
+22b98a: mov r8d, dword ptr [rbx]
+22b98d: sub r8d, r11d
+22b990: lea ecx, [rax + rax]
+22b993: shr rax, 0x20
+22b997: add eax, eax
+22b999: mov dword ptr [rbp + 0x50], ecx
+22b99c: add r8d, ecx
+22b99f: .byte 0x89

@@ -1,0 +1,65 @@
+{
+  "user_statement": "validé. MAJ le suivi projectile avec tout ce qui a été validé manuellement et donne la suite",
+  "clarification_question": "Les deux essais : Éclairs en chaîne et Semence de feu lancée comme arme ?",
+  "clarification_answer": "Oui, les deux essais",
+  "visual_accepted": [
+    "LIGHTCHA observed lightning",
+    "BOLT2 observed fire-seed flight"
+  ],
+  "runtime_status": "incomplete-for-these-tests; visual decision preserved independently",
+  "log_start_line": 45819,
+  "first_line": "[2026-10-28 17:11:46.312] [info] Infinity Engine Enhancer initializing...",
+  "last_line": "[2026-10-28 17:12:37.482] [info] Map page B1: generation=0, pages=27, prepared=0, hits=0, misses=0, consumed=0, rejected=0, failures=0, reservedBytes=0, peakBytes=0, crcMs=0.000, copyMs=0.000, renderWorkerWaits=0",
+  "snapshot_sha256": "129090C2A6227CEB0030DB7CDCFFB34BA372F181CD7A16EE02BBD16BBFB0DB84",
+  "resources": {
+    "SPCHLGT1": {
+      "rows": 0,
+      "HD": 0,
+      "masked": 0,
+      "outcomes": {},
+      "sequences": []
+    },
+    "SPCHLGT2": {
+      "rows": 1,
+      "HD": 0,
+      "masked": 0,
+      "outcomes": {
+        "1": 1
+      },
+      "sequences": [
+        "4"
+      ]
+    },
+    "SPCHLGT3": {
+      "rows": 0,
+      "HD": 0,
+      "masked": 0,
+      "outcomes": {},
+      "sequences": []
+    },
+    "SPFIRSE2": {
+      "rows": 0,
+      "HD": 0,
+      "masked": 0,
+      "outcomes": {},
+      "sequences": []
+    },
+    "SPMAGMIS": {
+      "rows": 164,
+      "HD": 36,
+      "masked": 0,
+      "outcomes": {
+        "4": 128,
+        "0": 36
+      },
+      "sequences": [
+        "0"
+      ]
+    }
+  },
+  "maximum_trace_dropped": 0,
+  "warnings": [
+    "[2026-10-28 17:12:20.235] [warning] EFX_MASK_FALLBACK resref=SPMAGMIS maskReady=false maskChanged=false maskBound=false captureValid=false captureCalls=0 ownerCalls=2 captured=0x0 draw=64x78; clipped native FX retained"
+  ],
+  "limits": "No SPFIRSE2/SPCHLGT1/3 row in this snapshot; one SPCHLGT2 CPU-not-ready draw. No inferred HD/mask/interpolation confirmation."
+}
