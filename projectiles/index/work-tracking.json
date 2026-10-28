@@ -1,0 +1,885 @@
+{
+  "schema": "bg2-projectiles-work-tracking-v1",
+  "role": "Sparse projectile work decisions; generated analysis never grants production/QA/installation/release status",
+  "created_on": "2026-10-18",
+  "production_authorities": [
+    "effects/index/processing.csv",
+    "effects/index/selections/",
+    "animations/index/selections/",
+    "sprite/index/q3m-work-tracking.json"
+  ],
+  "dedup_key": "canonical native BAM bytes + realized consumer RGB palette; owner timing/blend/alpha/orientation tracked separately",
+  "engine_projectiles": {},
+  "projectiles": {
+    "TRAPSKUL": {
+      "historical_evidence": [
+        "projectiles/analysis/composition-retest-v5-20261028-v1/verification.json"
+      ],
+      "notes": "V5 : vol SKLT x4/phases interpolees finales confirme, prefixe natif conserve ; SKLH lie HD+masque avec miss de chargement transitoire. Preuve technique ciblee, pas d'acceptation visuelle globale PRO."
+    },
+    "CHROMORB": {
+      "historical_evidence": [
+        "projectiles/analysis/composition-retest-v5-20261028-v1/verification.json"
+      ],
+      "notes": "V5 : SPCHRORB x4/phases interpolees finales confirme, 2couches/prefixe natif conserve. Preuve technique ciblee, pas d'acceptation visuelle globale PRO."
+    },
+    "CLOUDKIL": {
+      "historical_evidence": [
+        "projectiles/analysis/nuage-valide-v4-20261028-v1/acceptance.json"
+      ],
+      "notes": "2026-10-28 : utilisateur valide le nuage apres raccord V4 SPCLOUDK->X58CLK/alpha palette natif. 128 traces finales x4 dont63phases impaires, cible30/1, aucun repli masque observe. Acceptation limitee au nuage visible de SPWI502 ; ne pas promouvoir toute la fermeture PRO, les124/243cas ou la release."
+    },
+    "MAGICMIS": {
+      "historical_evidence": [
+        "effects/index/qa-decisions/SPMAGMIS/2026-09-07-accepted-spmagmis-final-fx-r8.json"
+      ],
+      "notes": "Historical evidence explicitly validates magic missile rendering, x4 and 30FPS. Keep this exact scope; no automatic validation of hardcoded missile-count variants or every projectile.",
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1AROW01": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1AROW02": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1AROW03": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1AROW04": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1AROW05": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1AROW07": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1AROW10": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1AROW11": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1AROW15": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1AXE05": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1AXE08": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1AXE09": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1AXE10": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1AXE16": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1BOLT01": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1BOLT02": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1BOLT03": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1BOLT04": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1BOLT05": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1BOLT06": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1BOLT09": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1BULL02": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1BULL03": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1BULL05": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1BULL06": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1DAGG05": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1DAGG11": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1DAGG16": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1DART01": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1DART02": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1DART03": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1DART04": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1DART05": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1DART08": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "ACIDBLGR": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "ACIDBLMU": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "ACIDBLOB": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "ACIDBLOC": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "ARROW": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "ARROWHVY": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "AURA10NS": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "AURA10PA": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "AXE": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "BIGNAREA": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "BOLT": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "BULLET": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "CDBEHBLA": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "CGABJURA": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "CGALTERA": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "CGCONJUR": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "CGDIVINA": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "CGENCHAN": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "CGILLUSI": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "CGINVOCA": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "CGNECROM": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "DAGGER": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "DART": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "DRAGGREE": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "DRAGRED": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "DRAGSILV": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "HOLDSUMM": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "INSEC1": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "INSEC4": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "LIGHTB": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "LIGHTBLT": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "LIGHTGRN": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "LIGHTNB": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "OHVRNP": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "OHVRPO": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "PCOMETT": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "PSKULLT": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "PSPEART": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SCORCHER": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SKYBOLT": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPARBKNP": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPARBKPA": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPARICNP": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPARICPA": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPARKLBL": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPARKLCH": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPARKLGO": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPARKLGR": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPARKLIC": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPARKLMA": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPARKLOR": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPARKLPU": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPARKLRE": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPARKLST": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPATTCK2": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPBEHBLA": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPDRBRTH": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPEAR": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPENBLD": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPGREORB": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPKLARBK": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "SPKLARIC": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "STONE": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "TRAPDART": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "WEB1P": {
+      "integration": {
+        "state": "verified-static",
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ]
+      }
+    },
+    "1PINCIND": {
+      "historical_evidence": [
+        "projectiles/analysis/validation-vague1-clouds-20261028-v1/accepted-components.json"
+      ],
+      "notes": "Nuage incendiaire SPINCINA : retour utilisateur positif vague1 et bindsHD/masque observes. Acceptation visuelle des composants testes uniquement ; pas de QA de tous les frames/enfants."
+    },
+    "PWILT": {
+      "historical_evidence": [
+        "projectiles/analysis/validation-vague1-clouds-20261028-v1/accepted-components.json"
+      ],
+      "notes": "Fletrissure SPHORWIL/SPHORWIA : retour utilisateur positif vague1 et bindsHD/masque observes. Acceptation visuelle des composants testes uniquement ; pas de QA de tous les frames/enfants."
+    },
+    "CLOUD": {
+      "historical_evidence": [
+        "projectiles/analysis/nuages-v6-valides-20261028-v1/acceptance.json"
+      ],
+      "notes": "Nuage puant SPCLOUDS->X58CLS : variante transparente V6 validee visuellement par utilisateur ; dessins finaux x4/phases impaires et cible30/1 confirmes, aucun repli masque observe. Acceptation du nuage teste uniquement."
+    },
+    "1PDEATHF": {
+      "historical_evidence": [
+        "projectiles/analysis/nuages-v6-valides-20261028-v1/acceptance.json"
+      ],
+      "notes": "Brume mortelle SPDFOGA->X58DFOG : variante transparente V6 validee visuellement par utilisateur ; dessins finaux x4/phases impaires et cible30/1 confirmes, aucun repli masque observe. Acceptation du nuage teste uniquement."
+    },
+    "BDSPFIRE": {
+      "historical_evidence": [
+        "projectiles/analysis/validation-vague2-writhing-20261028-v1/evidence.json"
+      ],
+      "notes": "Feu spirituel : BDSFIRET/H/A : aspect juge correct par utilisateur vague2 et texturesHD liees dans les logs. Acceptation limitee aux composants observes ; pas de mesure finale de cadence ni de QA de tous les enfants."
+    },
+    "FDAWN": {
+      "historical_evidence": [
+        "projectiles/analysis/validation-vague2-writhing-20261028-v1/evidence.json"
+      ],
+      "notes": "Aube illusoire : FDAWNX/A : aspect juge correct par utilisateur vague2 et texturesHD liees dans les logs. Acceptation limitee aux composants observes ; pas de mesure finale de cadence ni de QA de tous les enfants."
+    },
+    "COMET": {
+      "historical_evidence": [
+        "projectiles/analysis/validation-vague2-writhing-20261028-v1/evidence.json"
+      ],
+      "notes": "Comete : SPCOMTRV/EXP : aspect juge correct par utilisateur vague2 et texturesHD liees dans les logs. Acceptation limitee aux composants observes ; pas de mesure finale de cadence ni de QA de tous les enfants."
+    },
+    "WRITHING": {
+      "historical_evidence": [
+        "projectiles/analysis/writhing-v7-valide-20261028-v1/acceptance.json"
+      ],
+      "notes": "V7 : utilisateur valide le nuage normal SPPR250/WRITHING->X28WRTH. 64 dessins x4/phases interpolées, cible30/1, aucun rejet observé. Acceptation du composant visible seulement ; pas de QA globale du PRO ou des124/243. Suite : trois variantes SPWI953/SPCL239/SPDD03 ; SHAREA en revue technique."
+    }
+  }
+}

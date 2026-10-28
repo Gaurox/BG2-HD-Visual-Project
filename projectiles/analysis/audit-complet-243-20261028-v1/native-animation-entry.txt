@@ -1,0 +1,198 @@
+30adcb: mov qword ptr [rsp + 0x98], rbx
+30add3: and eax, 0xf00
+30add8: cmp eax, 0x700
+30addd: ja 0x30b794
+30ade3: je 0x30b731
+30ade9: cmp eax, 0x300
+30adee: ja 0x30b2ab
+30adf4: je 0x30b207
+30adfa: test eax, eax
+30adfc: je 0x30af7f
+30ae02: cmp eax, 0x100
+30ae07: je 0x30aee5
+30ae0d: cmp eax, 0x200
+30ae12: jne 0x30b3ea
+30ae18: lea rdx, [rip + 0x2a0501]
+30ae1f: lea rcx, [rbp - 0x38]
+30ae23: call 0x3ff7c0
+30ae28: mov ebx, 1
+30ae2d: lea rcx, [rsi + 0xde8]
+30ae34: mov r9d, ebx
+30ae37: lea rdx, [rbp - 0x38]
+30ae3b: mov r8d, ebx
+30ae3e: call 0x14d080
+30ae43: lea rdx, [rip + 0x2a04c6]
+30ae4a: lea rcx, [rbp - 0x38]
+30ae4e: call 0x3ff7c0
+30ae53: lea rcx, [rsi + 0xf20]
+30ae5a: mov r9d, ebx
+30ae5d: mov r8d, ebx
+30ae60: lea rdx, [rbp - 0x38]
+30ae64: call 0x14d080
+30ae69: and edi, 0xf0
+30ae6f: je 0x30aed0
+30ae71: cmp edi, 0x10
+30ae74: je 0x30aec1
+30ae76: cmp edi, 0x20
+30ae79: je 0x30aead
+30ae7b: cmp edi, 0x30
+30ae7e: je 0x30ae99
+30ae80: cmp edi, 0x40
+30ae83: jne 0x30aed9
+30ae85: mov eax, 4
+30ae8a: mov word ptr [rsi + 0xf86], ax
+30ae91: movzx edx, ax
+30ae94: jmp 0x30b6d0
+30ae99: mov eax, 3
+30ae9e: mov word ptr [rsi + 0xf86], ax
+30aea5: movzx edx, ax
+30aea8: jmp 0x30b6d0
+30aead: mov eax, 2
+30aeb2: mov word ptr [rsi + 0xf86], ax
+30aeb9: movzx edx, ax
+30aebc: jmp 0x30b6d0
+30aec1: mov word ptr [rsi + 0xf86], bx
+30aec8: movzx edx, bx
+30aecb: jmp 0x30b6d0
+30aed0: xor edi, edi
+30aed2: mov word ptr [rsi + 0xf86], di
+30aed9: movzx edx, word ptr [rsi + 0xf86]
+30aee0: jmp 0x30b6d0
+30aee5: lea rdx, [rip + 0x2a0414]
+30aeec: lea rcx, [rbp - 0x38]
+30aef0: call 0x3ff7c0
+30aef5: mov ebx, 1
+30aefa: lea rcx, [rsi + 0xde8]
+30af01: mov r9d, ebx
+30af04: lea rdx, [rbp - 0x38]
+30af08: mov r8d, ebx
+30af0b: call 0x14d080
+30af10: lea rdx, [rip + 0x2a03f9]
+30af17: lea rcx, [rbp - 0x38]
+30af1b: call 0x3ff7c0
+30af20: lea rcx, [rsi + 0xf20]
+30af27: mov r9d, ebx
+30af2a: mov r8d, ebx
+30af2d: lea rdx, [rbp - 0x38]
+30af31: call 0x14d080
+30af36: xor bl, bl
+30af38: nop dword ptr [rax + rax]
+30af40: mov rax, qword ptr [rip + 0x35c601]
+30af47: mov rcx, r12
+30af4a: movzx r8d, byte ptr [r14]
+30af4e: movzx edx, bl
+30af51: mov r9, qword ptr [rax + 0x1090]
+30af58: add r9, 0x63d8
+30af5f: call 0x4221c0
+30af64: inc bl
+30af66: lea r14, [r14 + 1]
+30af6a: cmp bl, 7
+30af6d: jb 0x30af40
+30af6f: mov rdx, r12
+30af72: mov rcx, r15
+30af75: call 0x412390
+30af7a: jmp 0x30b6ab
+30af7f: and edi, 0xf
+30af82: je 0x30b137
+30af88: sub edi, 1
+30af8b: je 0x30b0d3
+30af91: sub edi, 1
+30af94: je 0x30b086
+30af9a: sub edi, 1
+30af9d: je 0x30aff6
+30af9f: cmp edi, 1
+30afa2: jne 0x30b3da
+30afa8: lea rdx, [rip + 0x2a0321]
+30afaf: lea rcx, [rbp - 0x38]
+30afb3: call 0x3ff7c0
+30afb8: mov ebx, edi
+30afba: lea rcx, [rsi + 0xde8]
+30afc1: mov r9d, ebx
+30afc4: lea rdx, [rbp - 0x38]
+30afc8: mov r8d, ebx
+30afcb: call 0x14d080
+30afd0: xor edi, edi
+30afd2: xor edx, edx
+30afd4: mov rcx, r15
+30afd7: mov word ptr [rsi + 0xf86], di
+30afde: call 0x412380
+30afe3: xor edx, edx
+30afe5: mov rcx, r15
+30afe8: call 0x411610
+30afed: lea rdx, [rip + 0x2a02fc]
+30aff4: jmp 0x30b05c
+30aff6: lea rdx, [rip + 0x2a02bb]
+30affd: lea rcx, [rbp - 0x38]
+30b001: call 0x3ff7c0
+30b006: mov ebx, 1
+30b00b: lea rcx, [rsi + 0xde8]
+30b012: mov r9d, ebx
+30b015: lea rdx, [rbp - 0x38]
+30b019: mov r8d, ebx
+30b01c: call 0x14d080
+30b021: xor edi, edi
+30b023: xor edx, edx
+30b025: mov rcx, r15
+30b028: mov word ptr [rsi + 0xf86], di
+30b02f: call 0x412380
+30b034: xor edx, edx
+30b036: mov rcx, r15
+30b039: call 0x411610
+30b03e: lea rcx, [rsi + 0x5f7]
+30b045: lea r8, [rip + 0x2a0278]
+30b04c: lea rdx, [rbp - 0x38]
+30b050: call 0x3ff960
+30b055: lea rdx, [rip + 0x2a0284]
+30b05c: lea rcx, [rbp - 0x38]
+30b060: mov dword ptr [rsi + 0xba8], ebx
+30b066: call 0x3ff7c0
+30b06b: lea rcx, [rsi + 0xbb0]
+30b072: mov r9d, ebx
+30b075: mov r8d, ebx
+30b078: lea rdx, [rbp - 0x38]
+30b07c: call 0x18aa40
+30b081: jmp 0x30b3dc
+30b086: lea rdx, [rip + 0x2a0243]
+30b08d: lea rcx, [rbp - 0x38]
+30b091: call 0x3ff7c0
+30b096: mov ebx, 1
+30b09b: lea rcx, [rsi + 0xde8]
+30b0a2: mov r9d, ebx
+30b0a5: lea rdx, [rbp - 0x38]
+30b0a9: mov r8d, ebx
+30b0ac: call 0x14d080
+30b0b1: xor edi, edi
+30b0b3: xor edx, edx
+30b0b5: mov rcx, r15
+30b0b8: mov word ptr [rsi + 0xf86], di
+30b0bf: call 0x412380
+30b0c4: xor edx, edx
+30b0c6: mov rcx, r15
+30b0c9: call 0x411610
+30b0ce: jmp 0x30b3dc
+30b0d3: lea rdx, [rip + 0x2a01de]
+30b0da: lea rcx, [rbp - 0x38]
+30b0de: call 0x3ff7c0
+30b0e3: mov ebx, 1
+30b0e8: lea rcx, [rsi + 0xde8]
+30b0ef: mov r9d, ebx
+30b0f2: lea rdx, [rbp - 0x38]
+30b0f6: mov r8d, ebx
+30b0f9: call 0x14d080
+30b0fe: xor edi, edi
+30b100: xor edx, edx
+30b102: mov rcx, r15
+30b105: mov word ptr [rsi + 0xf86], di
+30b10c: call 0x412380
+30b111: xor edx, edx
+30b113: mov rcx, r15
+30b116: call 0x411610
+30b11b: lea rcx, [rsi + 0x5f7]
+30b122: lea r8, [rip + 0x2a019b]
+30b129: lea rdx, [rbp - 0x38]
+30b12d: call 0x3ff960
+30b132: jmp 0x30b3dc
+30b137: lea rdx, [rip + 0x2a016a]
+30b13e: lea rcx, [rbp - 0x38]
+30b142: call 0x3ff7c0
+30b147: mov ebx, 1

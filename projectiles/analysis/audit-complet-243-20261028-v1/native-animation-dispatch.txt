@@ -1,0 +1,139 @@
+30b050: call 0x3ff960
+30b055: lea rdx, [rip + 0x2a0284] ; b'SPFlameB'
+30b05c: lea rcx, [rbp - 0x38]
+30b060: mov dword ptr [rsi + 0xba8], ebx
+30b066: call 0x3ff7c0
+30b06b: lea rcx, [rsi + 0xbb0]
+30b072: mov r9d, ebx
+30b075: mov r8d, ebx
+30b078: lea rdx, [rbp - 0x38]
+30b07c: call 0x18aa40
+30b081: jmp 0x30b3dc
+30b086: lea rdx, [rip + 0x2a0243] ; b'sprdrasi'
+30b08d: lea rcx, [rbp - 0x38]
+30b091: call 0x3ff7c0
+30b096: mov ebx, 1
+30b09b: lea rcx, [rsi + 0xde8]
+30b0a2: mov r9d, ebx
+30b0a5: lea rdx, [rbp - 0x38]
+30b0a9: mov r8d, ebx
+30b0ac: call 0x14d080
+30b0b1: xor edi, edi
+30b0b3: xor edx, edx
+30b0b5: mov rcx, r15
+30b0b8: mov word ptr [rsi + 0xf86], di
+30b0bf: call 0x412380
+30b0c4: xor edx, edx
+30b0c6: mov rcx, r15
+30b0c9: call 0x411610
+30b0ce: jmp 0x30b3dc
+30b0d3: lea rdx, [rip + 0x2a01de] ; b'SPFLAMES'
+30b0da: lea rcx, [rbp - 0x38]
+30b0de: call 0x3ff7c0
+30b0e3: mov ebx, 1
+30b0e8: lea rcx, [rsi + 0xde8]
+30b0ef: mov r9d, ebx
+30b0f2: lea rdx, [rbp - 0x38]
+30b0f6: mov r8d, ebx
+30b0f9: call 0x14d080
+30b0fe: xor edi, edi
+30b100: xor edx, edx
+30b102: mov rcx, r15
+30b105: mov word ptr [rsi + 0xf86], di
+30b10c: call 0x412380
+30b111: xor edx, edx
+30b113: mov rcx, r15
+30b116: call 0x411610
+30b11b: lea rcx, [rsi + 0x5f7]
+30b122: lea r8, [rip + 0x2a019b] ; b'SPFL'
+30b129: lea rdx, [rbp - 0x38]
+30b12d: call 0x3ff960
+30b132: jmp 0x30b3dc
+30b137: lea rdx, [rip + 0x2a016a] ; b'SPRING'
+30b13e: lea rcx, [rbp - 0x38]
+30b142: call 0x3ff7c0
+30b147: mov ebx, 1
+30b14c: lea rcx, [rsi + 0xde8]
+30b153: mov r9d, ebx
+30b156: lea rdx, [rbp - 0x38]
+30b15a: mov r8d, ebx
+30b15d: call 0x14d080
+30b162: xor bl, bl
+30b164: nop dword ptr [rax]
+30b168: nop dword ptr [rax + rax]
+30b170: mov rax, qword ptr [rip + 0x35c3d1] ; b''
+30b177: mov rcx, r12
+30b17a: movzx r8d, byte ptr [r14]
+30b17e: movzx edx, bl
+30b181: mov r9, qword ptr [rax + 0x1090]
+30b188: add r9, 0x63d8
+30b18f: call 0x4221c0
+30b194: inc bl
+30b196: lea r14, [r14 + 1]
+30b19a: cmp bl, 7
+30b19d: jb 0x30b170
+30b19f: mov rdx, r12
+30b1a2: mov rcx, r15
+30b1a5: call 0x412390
+30b1aa: xor edi, edi
+30b1ac: xor edx, edx
+30b1ae: mov rcx, r15
+30b1b1: mov word ptr [rsi + 0xf86], di
+30b1b8: call 0x412380
+30b1bd: movzx edx, word ptr [r15 + 0x11a]
+30b1c5: mov rcx, r15
+30b1c8: call 0x411cc0
+30b1cd: movzx ebx, al
+30b1d0: call 0x50933c
+30b1d5: mov edx, eax
+30b1d7: mov rcx, r15
+30b1da: and edx, 0x7fff
+30b1e0: imul edx, ebx
+30b1e3: shr edx, 0xf
+30b1e6: call 0x411610
+30b1eb: lea rcx, [rsi + 0x5f7]
+30b1f2: lea r8, [rip + 0x2a00b7] ; b'SPRI'
+30b1f9: lea rdx, [rbp - 0x38]
+30b1fd: call 0x3ff960
+30b202: jmp 0x30b3dc
+30b207: lea rdx, [rip + 0x2a011a] ; b'SPSMPUFF'
+30b20e: lea rcx, [rbp - 0x38]
+30b212: call 0x3ff7c0
+30b217: mov ebx, 1
+30b21c: lea rcx, [rsi + 0xde8]
+30b223: mov r9d, ebx
+30b226: lea rdx, [rbp - 0x38]
+30b22a: mov r8d, ebx
+30b22d: call 0x14d080
+30b232: xor bl, bl
+30b234: .byte 0x0f
+30b630: mov word ptr [rbx + 0x11], gs
+30b633: add dh, bh
+30b635: ret 
+30b636: lea r14, [r14 + 1]
+30b63a: cmp bl, 7
+30b63d: jb 0x30b610
+30b63f: jmp 0x30b3cf
+30b644: mov ebx, 1
+30b649: and edi, 0xf0
+30b64f: je 0x30b65f
+30b651: cmp edi, 0x10
+30b654: jne 0x30b685
+30b656: lea rdx, [rip + 0x29fce3] ; b'GLPHWRDH'
+30b65d: jmp 0x30b666
+30b65f: lea rdx, [rip + 0x29fcce] ; b'SKLH'
+30b666: lea rcx, [rbp - 0x38]
+30b66a: call 0x3ff7c0
+30b66f: mov r9d, ebx
+30b672: lea rdx, [rbp - 0x38]
+30b676: mov r8d, ebx
+30b679: lea rcx, [rsi + 0xde8]
+30b680: call 0x14d080
+30b685: lea rdx, [rip + 0x29fc84] ; b'SPSHADOW'
+30b68c: lea rcx, [rbp - 0x38]
+30b690: call 0x3ff7c0
+30b695: lea rcx, [rsi + 0xf20]
+30b69c: mov r9d, ebx
+30b69f: mov r8d, ebx
+30b6a2: lea rdx, [rbp - 0x38]
+30b6a6: call 0x14d080

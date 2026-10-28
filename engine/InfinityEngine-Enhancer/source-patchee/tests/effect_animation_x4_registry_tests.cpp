@@ -134,10 +134,21 @@ bool streaming_contracts(const std::filesystem::path& root) {
 }  // namespace
 
 int main(int argc, char** argv) {
-  const bool catalogueOnly = argc > 2 && std::string_view(argv[1]) == "--catalogue-only";
-  const int first = catalogueOnly ? 2 : 1;
+  int option=1;
+  std::uint64_t metadataMiB=0;
+  if(argc>3 && std::string_view(argv[1])=="--metadata-mib") {
+    try {
+      std::size_t end=0;const std::string value(argv[2]);
+      metadataMiB=std::stoull(value,&end);
+      if(end!=value.size() || !metadataMiB || metadataMiB>256) return 1;
+    } catch(...) {return 1;}
+    option=3;
+  }
+  const bool catalogueOnly = argc > option+1 && std::string_view(argv[option]) == "--catalogue-only";
+  const int first = option+(catalogueOnly?1:0);
   if (argc == first + 1 || argc == first + 2) {
     iee::effect_animation_x4::Options options;
+    if(metadataMiB) options.metadataBytes=metadataMiB<<20;
     options.streaming = catalogueOnly;
     if (catalogueOnly) options.cpu.headBytes = 0;
     const bool loaded = iee::effect_animation_x4::prepare(std::filesystem::path(argv[first]), options);

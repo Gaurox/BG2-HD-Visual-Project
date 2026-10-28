@@ -1,0 +1,408 @@
+PROJECTL 38 factory raw 39 classindex 55 case 22e8f5
+22e8f5: mov rax, qword ptr [rip + 0x438c4c] ; b''
+22e8fc: mov edx, r12d
+22e8ff: mov rcx, qword ptr [rax + 0x1090]
+22e906: add rcx, 0x1810
+22e90d: call 0x11b480
+22e912: mov rdi, rax
+22e915: test rax, rax
+22e918: je 0x22e94d
+22e91a: mov ecx, 0x3b8
+22e91f: call 0x4f7a88
+22e924: test rax, rax
+22e927: je 0x22e936
+22e929: mov rcx, rax
+22e92c: call 0x227a40
+22e931: mov rbx, rax
+22e934: jmp 0x22e938
+22e936: xor ebx, ebx
+22e938: lea rdx, [rdi + 8]
+22e93c: lea rcx, [rbx + 0x178]
+22e943: call 0x3fd770
+22e948: jmp 0x22ed7f
+22e94d: mov rax, qword ptr [rip + 0x438bf4] ; b''
+22e954: mov edx, r12d
+22e957: mov rcx, qword ptr [rax + 0x1090]
+22e95e: add rcx, 0x1880
+22e965: call 0x11b480
+22e96a: test rax, rax
+22e96d: je 0x22ed47
+22e973: lea r12, [rax + 8]
+22e977: mov rdx, r12
+22e97a: lea rcx, [rbp]
+22e97e: call 0x3ff710
+22e983: lea rcx, [rbp + 0x10]
+22e987: mov rdx, qword ptr [rax]
+22e98a: call 0x227930
+22e98f: mov rcx, qword ptr [rbp + 0x10]
+22e993: test rcx, rcx
+22e996: je 0x22ed47
+22e99c: call 0x3f6d50
+22e9a1: test rax, rax
+22e9a4: je 0x22ed1e
+22e9aa: mov rcx, qword ptr [rbp + 0x10]
+22e9ae: mov eax, dword ptr [rcx + 0x48]
+22e9b1: .byte 0x83
+22e9b2: clc 
+PROJECTL 73 factory raw 74 classindex 7 case 22c44f
+22c44f: mov ecx, 0x3f0
+22c454: call 0x4f7a88
+22c459: mov rbx, rax
+22c45c: test rax, rax
+22c45f: je 0x22c618
+22c465: movzx edi, word ptr [rip + 0x394210] ; b'\x01'
+22c46c: lea rdx, [rip + 0x3705c5] ; b'SPMAGMIS'
+22c473: lea rcx, [rbp - 0x18]
+22c477: call 0x3ff800
+22c47c: mov rcx, rbx
+22c47f: mov rdx, qword ptr [rax]
+22c482: call 0x227600
+22c487: lea rax, [rip + 0x36fa2a] ; b'0\x83"@\x01'
+22c48e: mov edx, 0xa
+22c493: lea rcx, [rbx + 0x3b8]
+22c49a: mov qword ptr [rbx], rax
+22c49d: call 0x4073a0
+22c4a2: lea rax, [rip + 0x3608af] ; b'\x90n\x11@\x01'
+22c4a9: xor edx, edx
+22c4ab: mov qword ptr [rbx + 0x3b8], rax
+22c4b2: mov rcx, qword ptr [rbx + 0x1b8]
+22c4b9: call 0x412380
+22c4be: or dword ptr [rbx + 0x118], 8
+22c4c5: cmp di, r14w
+22c4c9: jne 0x22c505
+22c4cb: mov rax, qword ptr [rip + 0x43b076] ; b''
+22c4d2: lea rcx, [rbx + 0x1c8]
+22c4d9: xor edx, edx
+22c4db: mov r9, qword ptr [rax + 0x1090]
+22c4e2: add r9, 0x63d8
+22c4e9: lea r8d, [rdx + 0x21]
+22c4ed: call 0x4221c0
+22c4f2: mov rcx, qword ptr [rbx + 0x1b8]
+22c4f9: lea rdx, [rbx + 0x1c8]
+22c500: call 0x412390
+22c505: lea eax, [r15 - 0x43]
+22c509: xor edi, edi
+22c50b: .byte 0x44
+22c50c: .byte 0x0f
+PROJECTL 76 factory raw 77 classindex 7 case 22c44f
+22c44f: mov ecx, 0x3f0
+22c454: call 0x4f7a88
+22c459: mov rbx, rax
+22c45c: test rax, rax
+22c45f: je 0x22c618
+22c465: movzx edi, word ptr [rip + 0x394210] ; b'\x01'
+22c46c: lea rdx, [rip + 0x3705c5] ; b'SPMAGMIS'
+22c473: lea rcx, [rbp - 0x18]
+22c477: call 0x3ff800
+22c47c: mov rcx, rbx
+22c47f: mov rdx, qword ptr [rax]
+22c482: call 0x227600
+22c487: lea rax, [rip + 0x36fa2a] ; b'0\x83"@\x01'
+22c48e: mov edx, 0xa
+22c493: lea rcx, [rbx + 0x3b8]
+22c49a: mov qword ptr [rbx], rax
+22c49d: call 0x4073a0
+22c4a2: lea rax, [rip + 0x3608af] ; b'\x90n\x11@\x01'
+22c4a9: xor edx, edx
+22c4ab: mov qword ptr [rbx + 0x3b8], rax
+22c4b2: mov rcx, qword ptr [rbx + 0x1b8]
+22c4b9: call 0x412380
+22c4be: or dword ptr [rbx + 0x118], 8
+22c4c5: cmp di, r14w
+22c4c9: jne 0x22c505
+22c4cb: mov rax, qword ptr [rip + 0x43b076] ; b''
+22c4d2: lea rcx, [rbx + 0x1c8]
+22c4d9: xor edx, edx
+22c4db: mov r9, qword ptr [rax + 0x1090]
+22c4e2: add r9, 0x63d8
+22c4e9: lea r8d, [rdx + 0x21]
+22c4ed: call 0x4221c0
+22c4f2: mov rcx, qword ptr [rbx + 0x1b8]
+22c4f9: lea rdx, [rbx + 0x1c8]
+22c500: call 0x412390
+22c505: lea eax, [r15 - 0x43]
+22c509: xor edi, edi
+22c50b: .byte 0x44
+22c50c: .byte 0x0f
+PROJECTL 78 factory raw 79 classindex 8 case 22c654
+22c654: mov ecx, 0x3b8
+22c659: call 0x4f7a88
+22c65e: test rax, rax
+22c661: je 0x22e8f5
+22c667: mov rcx, rax
+22c66a: call 0x227a40
+22c66f: mov rbx, rax
+22c672: jmp 0x22e8ec
+22c677: mov ecx, 0x400
+22c67c: call 0x4f7a88
+22c681: mov rbx, rax
+22c684: test rax, rax
+22c687: je 0x22c87d
+22c68d: mov rax, qword ptr [rip + 0x43047c] ; b'$\xcbe@\x01'
+22c694: lea rdx, [rip + 0x42ec4d] ; b''
+22c69b: lea rcx, [rbp + 0x10]
+22c69f: mov qword ptr [rbp + 0x10], rax
+22c6a3: call 0x11ea00
+22c6a8: lea rdx, [rip + 0x370389] ; b'SPMAGMIS'
+22c6af: lea rcx, [rbp - 0x20]
+22c6b3: call 0x3ff800
+22c6b8: mov rcx, rbx
+22c6bb: mov rdx, qword ptr [rax]
+22c6be: call 0x227600
+22c6c3: mov dword ptr [rsp + 0x40], 0xffffffff
+22c6cb: lea rax, [rip + 0x36ff0e] ; b'\x10\x82"@\x01'
+22c6d2: mov byte ptr [rsp + 0x38], dil
+22c6d7: lea rcx, [rbx + 0x3d8]
+22c6de: mov byte ptr [rsp + 0x30], dil
+22c6e3: xor r9d, r9d
+22c6e6: mov byte ptr [rsp + 0x28], dil
+22c6eb: xor r8d, r8d
+22c6ee: xor edx, edx
+22c6f0: mov byte ptr [rsp + 0x20], dil
+22c6f5: mov qword ptr [rbx], rax
+22c6f8: call 0x11ba20
+22c6fd: mov rcx, qword ptr [rbx + 0x1b8]
+22c704: xor edx, edx
+22c706: mov dword ptr [rbx + 0x11c], edi
+22c70c: call 0x412380
+22c711: .byte 0x41
+PROJECTL 197 factory raw 198 classindex 45 case 22e46f
+22e46f: lea rdx, [rip + 0x36e562] ; b'SHAREA'
+22e476: lea rcx, [rsp + 0x60]
+22e47b: call 0x3fd810
+22e480: lea rdx, [rip + 0x3bd326] ; b''
+22e487: lea rcx, [rsp + 0x50]
+22e48c: call 0x3fd810
+22e491: lea rdx, [rip + 0x3bd315] ; b''
+22e498: lea rcx, [rsp + 0x58]
+22e49d: call 0x3fd810
+22e4a2: mov ecx, 0x418
+22e4a7: call 0x4f7a88
+22e4ac: test rax, rax
+22e4af: je 0x22e8be
+22e4b5: mov byte ptr [rsp + 0x28], bl
+22e4b9: lea r9, [rsp + 0x50]
+22e4be: lea r8, [rsp + 0x58]
+22e4c3: mov dword ptr [rsp + 0x20], 8
+22e4cb: lea rdx, [rsp + 0x60]
+22e4d0: mov rcx, rax
+22e4d3: call 0x227df0
+22e4d8: mov rbx, rax
+22e4db: jmp 0x22e8be
+22e4e0: lea rdx, [rip + 0x36e4f1] ; b'SHAREA'
+22e4e7: lea rcx, [rsp + 0x60]
+22e4ec: call 0x3fd810
+22e4f1: lea rdx, [rip + 0x36e4e8] ; b'SHAREA1'
+22e4f8: lea rcx, [rsp + 0x50]
+22e4fd: call 0x3fd810
+22e502: lea rdx, [rip + 0x3bd2a4] ; b''
+22e509: lea rcx, [rsp + 0x58]
+22e50e: call 0x3fd810
+22e513: mov ecx, 0x418
+22e518: call 0x4f7a88
+22e51d: test rax, rax
+22e520: je 0x22e8be
+22e526: mov byte ptr [rsp + 0x28], bl
+22e52a: .byte 0x4c
+22e52b: .byte 0x8d
+22e52c: .byte 0x4c
+PROJECTL 198 factory raw 199 classindex 47 case 22e551
+22e551: lea rdx, [rip + 0x36e480] ; b'SHAREA'
+22e558: lea rcx, [rsp + 0x60]
+22e55d: call 0x3fd810
+22e562: lea rdx, [rip + 0x36e47f] ; b'SHAREA3'
+22e569: lea rcx, [rsp + 0x50]
+22e56e: call 0x3fd810
+22e573: lea rdx, [rip + 0x3bd233] ; b''
+22e57a: lea rcx, [rsp + 0x58]
+22e57f: call 0x3fd810
+22e584: mov ecx, 0x418
+22e589: call 0x4f7a88
+22e58e: test rax, rax
+22e591: je 0x22e8be
+22e597: mov byte ptr [rsp + 0x28], bl
+22e59b: lea r9, [rsp + 0x50]
+22e5a0: lea r8, [rsp + 0x58]
+22e5a5: mov dword ptr [rsp + 0x20], 8
+22e5ad: lea rdx, [rsp + 0x60]
+22e5b2: mov rcx, rax
+22e5b5: call 0x227df0
+22e5ba: mov rbx, rax
+22e5bd: jmp 0x22e8be
+22e5c2: lea rdx, [rip + 0x36e40f] ; b'SHAREA'
+22e5c9: lea rcx, [rsp + 0x60]
+22e5ce: call 0x3fd810
+22e5d3: lea rdx, [rip + 0x36e416] ; b'SHAREA4'
+22e5da: lea rcx, [rsp + 0x50]
+22e5df: call 0x3fd810
+22e5e4: lea rdx, [rip + 0x3bd1c2] ; b''
+22e5eb: lea rcx, [rsp + 0x58]
+22e5f0: call 0x3fd810
+22e5f5: mov ecx, 0x418
+22e5fa: call 0x4f7a88
+22e5ff: test rax, rax
+22e602: je 0x22e8be
+22e608: mov byte ptr [rsp + 0x28], bl
+22e60c: .byte 0x4c
+22e60d: .byte 0x8d
+22e60e: .byte 0x4c
+PROJECTL 199 factory raw 200 classindex 48 case 22e5c2
+22e5c2: lea rdx, [rip + 0x36e40f] ; b'SHAREA'
+22e5c9: lea rcx, [rsp + 0x60]
+22e5ce: call 0x3fd810
+22e5d3: lea rdx, [rip + 0x36e416] ; b'SHAREA4'
+22e5da: lea rcx, [rsp + 0x50]
+22e5df: call 0x3fd810
+22e5e4: lea rdx, [rip + 0x3bd1c2] ; b''
+22e5eb: lea rcx, [rsp + 0x58]
+22e5f0: call 0x3fd810
+22e5f5: mov ecx, 0x418
+22e5fa: call 0x4f7a88
+22e5ff: test rax, rax
+22e602: je 0x22e8be
+22e608: mov byte ptr [rsp + 0x28], bl
+22e60c: lea r9, [rsp + 0x50]
+22e611: lea r8, [rsp + 0x58]
+22e616: mov dword ptr [rsp + 0x20], 8
+22e61e: lea rdx, [rsp + 0x60]
+22e623: mov rcx, rax
+22e626: call 0x227df0
+22e62b: mov rbx, rax
+22e62e: jmp 0x22e8be
+22e633: lea rdx, [rip + 0x36e39e] ; b'SHAREA'
+22e63a: lea rcx, [rsp + 0x60]
+22e63f: call 0x3fd810
+22e644: lea rdx, [rip + 0x36e3ad] ; b'SHAREA5'
+22e64b: lea rcx, [rsp + 0x50]
+22e650: call 0x3fd810
+22e655: lea rdx, [rip + 0x3bd151] ; b''
+22e65c: lea rcx, [rsp + 0x58]
+22e661: call 0x3fd810
+22e666: mov ecx, 0x418
+22e66b: call 0x4f7a88
+22e670: test rax, rax
+22e673: je 0x22e8be
+22e679: mov byte ptr [rsp + 0x28], bl
+22e67d: .byte 0x4c
+22e67e: .byte 0x8d
+22e67f: .byte 0x4c
+PROJECTL 200 factory raw 201 classindex 49 case 22e633
+22e633: lea rdx, [rip + 0x36e39e] ; b'SHAREA'
+22e63a: lea rcx, [rsp + 0x60]
+22e63f: call 0x3fd810
+22e644: lea rdx, [rip + 0x36e3ad] ; b'SHAREA5'
+22e64b: lea rcx, [rsp + 0x50]
+22e650: call 0x3fd810
+22e655: lea rdx, [rip + 0x3bd151] ; b''
+22e65c: lea rcx, [rsp + 0x58]
+22e661: call 0x3fd810
+22e666: mov ecx, 0x418
+22e66b: call 0x4f7a88
+22e670: test rax, rax
+22e673: je 0x22e8be
+22e679: mov byte ptr [rsp + 0x28], bl
+22e67d: lea r9, [rsp + 0x50]
+22e682: lea r8, [rsp + 0x58]
+22e687: mov dword ptr [rsp + 0x20], 8
+22e68f: lea rdx, [rsp + 0x60]
+22e694: mov rcx, rax
+22e697: call 0x227df0
+22e69c: mov rbx, rax
+22e69f: jmp 0x22e8be
+22e6a4: lea rdx, [rip + 0x36e32d] ; b'SHAREA'
+22e6ab: lea rcx, [rsp + 0x60]
+22e6b0: call 0x3fd810
+22e6b5: lea rdx, [rip + 0x36e344] ; b'SHAREA6'
+22e6bc: lea rcx, [rsp + 0x50]
+22e6c1: call 0x3fd810
+22e6c6: lea rdx, [rip + 0x3bd0e0] ; b''
+22e6cd: lea rcx, [rsp + 0x58]
+22e6d2: call 0x3fd810
+22e6d7: mov ecx, 0x418
+22e6dc: call 0x4f7a88
+22e6e1: test rax, rax
+22e6e4: je 0x22e8be
+22e6ea: mov byte ptr [rsp + 0x28], bl
+22e6ee: .byte 0x4c
+22e6ef: .byte 0x8d
+22e6f0: .byte 0x4c
+PROJECTL 201 factory raw 202 classindex 50 case 22e6a4
+22e6a4: lea rdx, [rip + 0x36e32d] ; b'SHAREA'
+22e6ab: lea rcx, [rsp + 0x60]
+22e6b0: call 0x3fd810
+22e6b5: lea rdx, [rip + 0x36e344] ; b'SHAREA6'
+22e6bc: lea rcx, [rsp + 0x50]
+22e6c1: call 0x3fd810
+22e6c6: lea rdx, [rip + 0x3bd0e0] ; b''
+22e6cd: lea rcx, [rsp + 0x58]
+22e6d2: call 0x3fd810
+22e6d7: mov ecx, 0x418
+22e6dc: call 0x4f7a88
+22e6e1: test rax, rax
+22e6e4: je 0x22e8be
+22e6ea: mov byte ptr [rsp + 0x28], bl
+22e6ee: lea r9, [rsp + 0x50]
+22e6f3: lea r8, [rsp + 0x58]
+22e6f8: mov dword ptr [rsp + 0x20], 8
+22e700: lea rdx, [rsp + 0x60]
+22e705: mov rcx, rax
+22e708: call 0x227df0
+22e70d: mov rbx, rax
+22e710: jmp 0x22e8be
+22e715: lea rdx, [rip + 0x36e2bc] ; b'SHAREA'
+22e71c: lea rcx, [rsp + 0x60]
+22e721: call 0x3fd810
+22e726: lea rdx, [rip + 0x36e2db] ; b'SHAREA2'
+22e72d: lea rcx, [rsp + 0x50]
+22e732: call 0x3fd810
+22e737: lea rdx, [rip + 0x3bd06f] ; b''
+22e73e: lea rcx, [rsp + 0x58]
+22e743: call 0x3fd810
+22e748: mov ecx, 0x418
+22e74d: call 0x4f7a88
+22e752: test rax, rax
+22e755: je 0x22e8be
+22e75b: mov byte ptr [rsp + 0x28], bl
+22e75f: .byte 0x4c
+22e760: .byte 0x8d
+22e761: .byte 0x4c
+PROJECTL 202 factory raw 203 classindex 51 case 22e715
+22e715: lea rdx, [rip + 0x36e2bc] ; b'SHAREA'
+22e71c: lea rcx, [rsp + 0x60]
+22e721: call 0x3fd810
+22e726: lea rdx, [rip + 0x36e2db] ; b'SHAREA2'
+22e72d: lea rcx, [rsp + 0x50]
+22e732: call 0x3fd810
+22e737: lea rdx, [rip + 0x3bd06f] ; b''
+22e73e: lea rcx, [rsp + 0x58]
+22e743: call 0x3fd810
+22e748: mov ecx, 0x418
+22e74d: call 0x4f7a88
+22e752: test rax, rax
+22e755: je 0x22e8be
+22e75b: mov byte ptr [rsp + 0x28], bl
+22e75f: lea r9, [rsp + 0x50]
+22e764: lea r8, [rsp + 0x58]
+22e769: mov dword ptr [rsp + 0x20], 8
+22e771: lea rdx, [rsp + 0x60]
+22e776: mov rcx, rax
+22e779: call 0x227df0
+22e77e: mov rbx, rax
+22e781: jmp 0x22e8be
+22e786: lea rdx, [rip + 0x36aacb] ; b'SPFDEATH'
+22e78d: lea rcx, [rsp + 0x60]
+22e792: call 0x3fd810
+22e797: lea rdx, [rip + 0x3bd00f] ; b''
+22e79e: lea rcx, [rsp + 0x50]
+22e7a3: call 0x3fd810
+22e7a8: lea rdx, [rip + 0x36aab9] ; b'EFF_P17'
+22e7af: jmp 0x22e498
+22e7b4: mov ecx, 0x328
+22e7b9: call 0x4f7a88
+22e7be: mov rbx, rax
+22e7c1: test rax, rax
+22e7c4: je 0x22e817
+22e7c6: lea rdx, [rip + 0x36e243] ; b'EFF_P78'
+22e7cd: lea rcx, [rbp - 0x10]
+22e7d1: .byte 0xe8
+22e7d2: .byte 0xda

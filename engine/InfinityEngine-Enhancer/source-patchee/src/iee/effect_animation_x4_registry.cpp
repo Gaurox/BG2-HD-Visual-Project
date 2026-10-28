@@ -1,4 +1,6 @@
 #include "iee/effect_animation_x4_registry.h"
+#include "iee/core/effect_smoke_palette.h"
+#include "iee/core/effect_native_underlay.h"
 
 #include <algorithm>
 #include <atomic>
@@ -80,6 +82,9 @@ struct TextureCacheEntry {
   bool valid{};
   bool pendingDelete{};
   std::uint32_t glName{};
+  std::uint64_t paletteFingerprint{};
+  std::uint64_t underlayFingerprint{};
+  std::array<int,4> projection{};
 };
 
 class BinaryReader {
@@ -344,6 +349,7 @@ void observe_texture_owners_locked(const EngineTextureApi& api) noexcept {
 
 bool bind_frame_texture_locked(FrameHandle handle, const EngineTextureApi& api,
                                int previousTextureId) noexcept {
+  if(!api.nativeUnderlay.empty() && (api.canvasWidth<=0 || api.canvasHeight<=0)) return false;
   if ((handle.generation && handle.generation != g_packGeneration) ||
       (g_options.streaming && !handle.generation) ||
       handle.resourceIndex >= g_resources.size() ||
@@ -351,8 +357,13 @@ bool bind_frame_texture_locked(FrameHandle handle, const EngineTextureApi& api,
   handle.generation = g_packGeneration;
   observe_texture_owners_locked(api);
   ++g_textureCacheStats.requests;
+  const auto paletteFingerprint = api.paletteTransfer ? api.paletteTransfer->fingerprint : 0;
+  const auto underlayFingerprint = core::effect_native_underlay::fingerprint(api.nativeUnderlay,api.nativeOpacity);
+  const std::array<int,4> projection{api.canvasWidth,api.canvasHeight,api.offsetX,api.offsetY};
   const auto existing = std::find_if(g_textureCache.begin(), g_textureCache.end(),
-      [&](const TextureCacheEntry& e) { return e.valid && e.handle == handle; });
+      [&](const TextureCacheEntry& e) { return e.valid && e.handle == handle &&
+          e.paletteFingerprint == paletteFingerprint && e.underlayFingerprint == underlayFingerprint &&
+          e.projection == projection; });
   if (existing != g_textureCache.end()) {
     if (api.glTextureTable) {
       std::uint32_t name = 0; std::uint8_t pending = 0;
@@ -378,8 +389,40 @@ bool bind_frame_texture_locked(FrameHandle handle, const EngineTextureApi& api,
     if (!lease) { ++g_textureCacheStats.cpuMisses; return false; }
     pixels = *lease;
   }
-  const auto bytes = static_cast<std::uint64_t>(pixels.size());
+  auto bytes = static_cast<std::uint64_t>(pixels.size());
   if (!bytes || bytes > g_options.gpuBytes) return false;
+  std::vector<std::byte> colored;
+  if (api.paletteTransfer) {
+    if (!api.paletteTransfer->valid) return false;
+    colored.assign(pixels.begin(),pixels.end());
+    core::effect_smoke_palette::apply(colored,*api.paletteTransfer,api.paletteOpacity);
+    pixels=colored;
+  }
+  Frame canvasFrame{};
+  const Frame* uploadFrame=&frame;
+  std::vector<std::byte> projected;
+  if (api.canvasWidth || api.canvasHeight) {
+    if (api.canvasWidth<=0 || api.canvasHeight<=0 || api.canvasWidth>2048 || api.canvasHeight>2048 ||
+        api.offsetX<0 || api.offsetY<0 || frame.logicalWidth>api.canvasWidth-api.offsetX ||
+        frame.logicalHeight>api.canvasHeight-api.offsetY) return false;
+    const auto canvasBytes=std::uint64_t(api.canvasWidth)*api.canvasHeight*64;
+    if (canvasBytes>g_options.gpuBytes) return false;
+    if (!api.nativeUnderlay.empty()) {
+      if (!core::effect_native_underlay::compose(pixels,frame.logicalWidth,frame.logicalHeight,
+          api.canvasWidth,api.canvasHeight,api.offsetX,api.offsetY,api.nativeUnderlay,
+          api.nativeOpacity,projected)) return false;
+    } else {
+      projected.resize(static_cast<std::size_t>(canvasBytes));
+      const auto srcStride=static_cast<std::size_t>(frame.logicalWidth)*16;
+      const auto dstStride=static_cast<std::size_t>(api.canvasWidth)*16;
+      for(int y=0;y<frame.logicalHeight*4;++y)
+        std::copy_n(pixels.data()+std::size_t(y)*srcStride,srcStride,
+            projected.data()+(std::size_t(y)+api.offsetY*4)*dstStride+api.offsetX*16);
+    }
+    pixels=projected;bytes=canvasBytes;
+    canvasFrame.logicalWidth=api.canvasWidth;canvasFrame.logicalHeight=api.canvasHeight;
+    uploadFrame=&canvasFrame;
+  }
   struct UploadMetric {
     std::uint64_t started{steady_ns()}, bytes{};
     bool attempted{};
@@ -470,7 +513,7 @@ bool bind_frame_texture_locked(FrameHandle handle, const EngineTextureApi& api,
   if (entry.bytes && !flush()) return false;
   entry.valid = false;
   metric.attempted = true;
-  if (!upload_frame_locked(frame, pixels, texture, api, previousTextureId)) {
+  if (!upload_frame_locked(*uploadFrame, pixels, texture, api, previousTextureId)) {
     ++g_textureCacheStats.uploadFailures;
     // Keep ownership on failure. DrawDeleteTexture is deferred and blindly
     // erasing this slot would allow allocations to bypass the descriptor cap.
@@ -479,6 +522,9 @@ bool bind_frame_texture_locked(FrameHandle handle, const EngineTextureApi& api,
     return false;
   }
   entry.handle = handle; entry.lastUse = ++g_textureUseCounter;
+  entry.paletteFingerprint = paletteFingerprint;
+  entry.underlayFingerprint = underlayFingerprint;
+  entry.projection = projection;
   entry.bytes = bytes; entry.valid = true;
   if (api.glTextureTable && (!core::safe_read(api.glTextureTable +
       texture * game::TextureDescriptorLayout::stride, entry.glName) || !entry.glName)) {

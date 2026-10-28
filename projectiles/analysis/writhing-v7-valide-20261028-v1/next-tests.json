@@ -1,0 +1,47 @@
+{
+  "reason": "Advance three existing produced variants; SHAREA197-202 requires technical palette-route review first",
+  "tests": [
+    {
+      "wave": 4,
+      "spell": "SPWI953",
+      "pro": "FIREBLIC",
+      "label": "Malediction de Selune",
+      "watch": "FIREBICX/R : variante coloree d explosion",
+      "assets": "FIREBICR;FIREBICT;FIREBICX;SPSMPUFF",
+      "spell_sha256": "6237BEF2BB6902C1F892CE9BE6525B48734F09CA6596D3255B088D6FA1CA5D04",
+      "command": "C:Eval('ForceSpellRES(\"SPWI953\",Player2)',0)",
+      "state": "ready-to-test",
+      "limit": "Produced components only; visual acceptance and actual runtime bind pending"
+    },
+    {
+      "wave": 4,
+      "spell": "SPCL239",
+      "pro": "SPCL239",
+      "label": "Faisceau de la Conscience Solaire",
+      "watch": "SPCL239R : anneau et dispersion",
+      "assets": "SPCL239R;SPCL239X",
+      "spell_sha256": "A111E23CDD599EF3F21A678728F78C762455BE2F06FED54EEDF4925789F019E0",
+      "command": "C:Eval('ForceSpellRES(\"SPCL239\",Player2)',0)",
+      "state": "ready-to-test",
+      "limit": "Produced components only; visual acceptance and actual runtime bind pending"
+    },
+    {
+      "wave": 4,
+      "spell": "SPDD03",
+      "pro": "DDBREAT",
+      "label": "Souffle",
+      "watch": "HDFBRER : cone/anneau natif",
+      "assets": "HDFBRER;SPSMPUFF;Y31N053",
+      "spell_sha256": "2A007675B2788BCCD5FE4E49A4479C05C603C8B48C8EB317BCE6BF4684338EEC",
+      "command": "C:Eval('ForceSpellRES(\"SPDD03\",Player2)',0)",
+      "state": "ready-to-test",
+      "limit": "Produced components only; visual acceptance and actual runtime bind pending"
+    }
+  ],
+  "excluded_missing": [
+    "BGLRYU",
+    "SPCL236U",
+    "SPGLYPHI",
+    "MAGMIS"
+  ]
+}

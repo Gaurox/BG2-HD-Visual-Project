@@ -318,3 +318,13 @@ releases/BG2-HD-Upscale/manifests/sprite-release-candidates.json -text whitespac
 releases/BG2-HD-Upscale/bg2hd/manifests/sprite-release-candidates.json -text whitespace=cr-at-eol
 releases/BG2-HD-Upscale/manifests/sprite-inventories/** -text whitespace=cr-at-eol
 releases/BG2-HD-Upscale/bg2hd/manifests/sprite-inventories/** -text whitespace=cr-at-eol
+
+# Projectile audits and acceptance records pin exact source/evidence bytes.
+projectiles/analysis/** -text -whitespace
+projectiles/index/*.csv -text whitespace=cr-at-eol
+projectiles/previews/** -text -whitespace
+engine/InfinityEngine-Enhancer/installations/projectiles-*/**/*.tsv -text whitespace=cr-at-eol
+pipeline/recipes/projectiles-secondary-links-20261028-v1/*.txt -text -whitespace
+engine/InfinityEngine-Enhancer/installations/projectiles-*/**/*.csv -text whitespace=cr-at-eol
+projectiles/index/*.json -text whitespace=cr-at-eol
+engine/InfinityEngine-Enhancer/installations/projectiles-*/** -text -whitespace

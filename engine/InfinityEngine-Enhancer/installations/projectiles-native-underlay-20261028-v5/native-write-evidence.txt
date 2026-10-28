@@ -1,0 +1,67 @@
+424200: push rbx
+424202: push r12
+424204: push r13
+424206: push r14
+424208: push r15
+42420a: sub rsp, 0x80
+424211: mov rax, qword ptr [rip + 0x2407c0] ; b'2\xa2\xdf-\x99+'
+424218: xor rax, rsp
+42421b: mov qword ptr [rsp + 0x50], rax
+424220: mov r14d, 0xff
+424226: mov r13, r9
+424229: mov eax, r14d
+42422c: mov r12d, r8d
+42422f: sub eax, dword ptr [rsp + 0xd8]
+424236: mov r15d, edx
+424239: cmp dword ptr [rsp + 0xd8], -1
+424241: mov rbx, rcx
+426d10: mov r15d, dword ptr [rsp + 0xd8]
+426d18: mov eax, r15d
+426d1b: and eax, 0x4000
+426d20: mov dword ptr [rsp + 0x48], eax
+426d24: mov eax, dword ptr [rsp + 0x3c]
+426d28: je 0x426d2e
+426d2a: inc esi
+426d2c: inc eax
+426d2e: mov rcx, qword ptr [rbx + 0x108]
+426d35: mov rdx, r8
+426d38: shr r15d, 8
+426d3c: and r15b, 1
+426e21: mov r8, rax
+426e24: mov eax, dword ptr [rsp + 0x2c]
+426e28: add eax, r11d
+426e2b: imul eax, r15d
+426e2f: movsxd rcx, eax
+426e32: movsxd rax, edx
+426e35: add rcx, rax
+426e38: movsxd rax, esi
+426e3b: add rcx, rax
+426e3e: mov eax, dword ptr [r13 + r8*4]
+426e43: mov dword ptr [rbp + rcx*4], eax
+426f3f: cmp edx, edi
+426f41: jne 0x426f47
+426f43: mov ecx, ebp
+426f45: jmp 0x426f4d
+426f47: movsxd rax, edx
+426f4a: mov ecx, dword ptr [rcx + rax*4]
+426f4d: cmp ecx, 0xff00
+426f53: mov eax, ebp
+426f55: cmovne eax, ecx
+426f58: test eax, eax
+426f5a: jne 0x426f66
+426f5c: cmp byte ptr [rsp + 0xd8], bpl
+426f64: je 0x426f69
+426f66: mov dword ptr [r9], eax
+426f69: lea rcx, [rip + 0x303240]
+42704f: mov ecx, ebp
+427051: cmp edx, edi
+427053: je 0x42705a
+427055: mov ecx, dword ptr [r13 + rdx*4]
+42705a: cmp ecx, 0xff00
+427060: mov eax, ebp
+427062: cmovne eax, ecx
+427065: test eax, eax
+427067: jne 0x42706e
+427069: test r12b, r12b
+42706c: je 0x427071
+42706e: mov dword ptr [r8], eax

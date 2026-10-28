@@ -1,0 +1,30 @@
+{
+  "schema": "bg2-projectile-scoped-acceptance-v1",
+  "recorded_utc": "2026-10-28T13:38:28.899101+00:00",
+  "user_feedback": "les 2 suivants me semblent ok",
+  "evidence": "projectiles/analysis/validation-vague1-clouds-20261028-v1/evidence.json",
+  "accepted": [
+    {
+      "spell": "SPWI810",
+      "pro": "1PINCIND",
+      "components": [
+        "SPINCINA"
+      ],
+      "scope": "Effet de nuage incendiaire observe; aspect visuel satisfaisant et bindsHD/masque presents"
+    },
+    {
+      "spell": "SPWI812",
+      "pro": "PWILT",
+      "components": [
+        "SPHORWIL",
+        "SPHORWIA"
+      ],
+      "scope": "Impact/dispersion fletrissure observes; aspect visuel satisfaisant et bindsHD/masque presents"
+    }
+  ],
+  "limits": [
+    "No global per-frame or full recursive-PRO QA",
+    "Transient loading stage0x10 observed",
+    "First two clouds remain pending after V6 correction"
+  ]
+}

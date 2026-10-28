@@ -1,0 +1,40 @@
+{
+  "proof": "pipeline/recipes/projectiles-secondary-links-20261028-v1/native-hardcoded-children.txt",
+  "factory": "BaldurReal.exe RVA0x22bf00; raw missile ID -> compressed switch; index=PROJECTL ID",
+  "73,76": {
+    "bam": "SPMAGMIS",
+    "evidence": "0x22c44f..0x22c482"
+  },
+  "78": {
+    "prototype": "constructor0x227a40 default SPFIREBL",
+    "visibility": "invisible travelling; do not infer visible draw from prototype BAM"
+  },
+  "197": {
+    "bam": "SHAREA",
+    "palette": "embedded/default"
+  },
+  "198": {
+    "bam": "SHAREA",
+    "palette_bmp": "SHAREA3"
+  },
+  "199": {
+    "bam": "SHAREA",
+    "palette_bmp": "SHAREA4"
+  },
+  "200": {
+    "bam": "SHAREA",
+    "palette_bmp": "SHAREA5"
+  },
+  "201": {
+    "bam": "SHAREA",
+    "palette_bmp": "SHAREA6"
+  },
+  "202": {
+    "bam": "SHAREA",
+    "palette_bmp": "SHAREA2"
+  },
+  "38": {
+    "route": "native generic resource lookup at0x22e8f5; no BAM inferred",
+    "note": "SPCHUNKS is not proven for this ID by the current binary evidence"
+  }
+}

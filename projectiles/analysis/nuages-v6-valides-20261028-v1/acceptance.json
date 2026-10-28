@@ -1,0 +1,2473 @@
+{
+  "schema": "bg2-projectile-scoped-acceptance-v1",
+  "recorded_utc": "2026-10-28T13:42:46.777242+00:00",
+  "status": "accepted",
+  "scope": [
+    "SPWI213 / CLOUD / visible cloud SPCLOUDS->X58CLS",
+    "SPWI614 / 1PDEATHF / visible cloud SPDFOGA->X58DFOG"
+  ],
+  "user_feedback": "les 2 semble ok",
+  "installation": "engine/InfinityEngine-Enhancer/installations/projectiles-clouds-wave1-20261028-v6/installation.json",
+  "dll_sha256": "9CA03C3C6CB3AFAA2EFF79398094519A728DB66833BE311E18B3FE698E9F37E4",
+  "snapshot_sha256": "F7752E6B6D677109C1CF53E9E66FBA0BAE493AB79D7C44775764290032F5590A",
+  "source_first_line": 36523,
+  "session_start": "[2026-10-28 14:41:06.547] [info] Infinity Engine Enhancer initializing...",
+  "session_end": "[2026-10-28 14:41:35.395]",
+  "checks": {
+    "X58CLS": {
+      "final_draw_samples": 64,
+      "odd_phase_records": 31,
+      "alias": [
+        "[2026-10-28 14:41:19.367] [info] EFX_TEXTURE_ALIAS native=SPCLOUDS runtime=X58CLS; existing native-palette alpha pack, native resource and gameplay unchanged"
+      ],
+      "mask_or_composition_rejects": []
+    },
+    "X58DFOG": {
+      "final_draw_samples": 64,
+      "odd_phase_records": 31,
+      "alias": [
+        "[2026-10-28 14:41:31.488] [info] EFX_TEXTURE_ALIAS native=SPDFOGA runtime=X58DFOG; existing native-palette alpha pack, native resource and gameplay unchanged"
+      ],
+      "mask_or_composition_rejects": []
+    }
+  },
+  "phases": [
+    {
+      "line": 311,
+      "resref": "X58CLS",
+      "slot": 0,
+      "phase": 0,
+      "backing": 0,
+      "canvas": [
+        1,
+        1
+      ],
+      "texture": [
+        4,
+        4
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 314,
+      "resref": "X58CLS",
+      "slot": 0,
+      "phase": 0,
+      "backing": 91,
+      "canvas": [
+        82,
+        89
+      ],
+      "texture": [
+        328,
+        356
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 317,
+      "resref": "X58CLS",
+      "slot": 0,
+      "phase": 0,
+      "backing": 1,
+      "canvas": [
+        53,
+        35
+      ],
+      "texture": [
+        212,
+        140
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 319,
+      "resref": "X58CLS",
+      "slot": 0,
+      "phase": 1,
+      "backing": 157,
+      "canvas": [
+        82,
+        89
+      ],
+      "texture": [
+        328,
+        356
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 322,
+      "resref": "X58CLS",
+      "slot": 0,
+      "phase": 0,
+      "backing": 221,
+      "canvas": [
+        36,
+        46
+      ],
+      "texture": [
+        144,
+        184
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 323,
+      "resref": "X58CLS",
+      "slot": 0,
+      "phase": 1,
+      "backing": 47,
+      "canvas": [
+        53,
+        35
+      ],
+      "texture": [
+        212,
+        140
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 325,
+      "resref": "X58CLS",
+      "slot": 1,
+      "phase": 2,
+      "backing": 158,
+      "canvas": [
+        113,
+        94
+      ],
+      "texture": [
+        452,
+        376
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 330,
+      "resref": "X58CLS",
+      "slot": 0,
+      "phase": 0,
+      "backing": 91,
+      "canvas": [
+        82,
+        89
+      ],
+      "texture": [
+        328,
+        356
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 331,
+      "resref": "X58CLS",
+      "slot": 0,
+      "phase": 1,
+      "backing": 289,
+      "canvas": [
+        36,
+        46
+      ],
+      "texture": [
+        144,
+        184
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 333,
+      "resref": "X58CLS",
+      "slot": 1,
+      "phase": 2,
+      "backing": 48,
+      "canvas": [
+        57,
+        43
+      ],
+      "texture": [
+        228,
+        172
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 336,
+      "resref": "X58CLS",
+      "slot": 1,
+      "phase": 3,
+      "backing": 159,
+      "canvas": [
+        113,
+        94
+      ],
+      "texture": [
+        452,
+        376
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 340,
+      "resref": "X58CLS",
+      "slot": 0,
+      "phase": 1,
+      "backing": 157,
+      "canvas": [
+        82,
+        89
+      ],
+      "texture": [
+        328,
+        356
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 342,
+      "resref": "X58CLS",
+      "slot": 1,
+      "phase": 2,
+      "backing": 290,
+      "canvas": [
+        42,
+        53
+      ],
+      "texture": [
+        168,
+        212
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 343,
+      "resref": "X58CLS",
+      "slot": 1,
+      "phase": 3,
+      "backing": 49,
+      "canvas": [
+        57,
+        43
+      ],
+      "texture": [
+        228,
+        172
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 346,
+      "resref": "X58CLS",
+      "slot": 2,
+      "phase": 4,
+      "backing": 160,
+      "canvas": [
+        122,
+        102
+      ],
+      "texture": [
+        488,
+        408
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 347,
+      "resref": "X58CLS",
+      "slot": 0,
+      "phase": 1,
+      "backing": 0,
+      "canvas": [
+        1,
+        1
+      ],
+      "texture": [
+        4,
+        4
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 352,
+      "resref": "X58CLS",
+      "slot": 1,
+      "phase": 2,
+      "backing": 158,
+      "canvas": [
+        113,
+        94
+      ],
+      "texture": [
+        452,
+        376
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 353,
+      "resref": "X58CLS",
+      "slot": 1,
+      "phase": 3,
+      "backing": 291,
+      "canvas": [
+        42,
+        53
+      ],
+      "texture": [
+        168,
+        212
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 355,
+      "resref": "X58CLS",
+      "slot": 2,
+      "phase": 4,
+      "backing": 50,
+      "canvas": [
+        57,
+        53
+      ],
+      "texture": [
+        228,
+        212
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 358,
+      "resref": "X58CLS",
+      "slot": 2,
+      "phase": 5,
+      "backing": 161,
+      "canvas": [
+        122,
+        102
+      ],
+      "texture": [
+        488,
+        408
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 361,
+      "resref": "X58CLS",
+      "slot": 0,
+      "phase": 0,
+      "backing": 355,
+      "canvas": [
+        49,
+        40
+      ],
+      "texture": [
+        196,
+        160
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 362,
+      "resref": "X58CLS",
+      "slot": 1,
+      "phase": 3,
+      "backing": 159,
+      "canvas": [
+        113,
+        94
+      ],
+      "texture": [
+        452,
+        376
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 364,
+      "resref": "X58CLS",
+      "slot": 2,
+      "phase": 4,
+      "backing": 292,
+      "canvas": [
+        47,
+        60
+      ],
+      "texture": [
+        188,
+        240
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 365,
+      "resref": "X58CLS",
+      "slot": 2,
+      "phase": 5,
+      "backing": 51,
+      "canvas": [
+        57,
+        53
+      ],
+      "texture": [
+        228,
+        212
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 368,
+      "resref": "X58CLS",
+      "slot": 3,
+      "phase": 6,
+      "backing": 162,
+      "canvas": [
+        137,
+        106
+      ],
+      "texture": [
+        548,
+        424
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 374,
+      "resref": "X58CLS",
+      "slot": 0,
+      "phase": 1,
+      "backing": 391,
+      "canvas": [
+        49,
+        40
+      ],
+      "texture": [
+        196,
+        160
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 381,
+      "resref": "X58CLS",
+      "slot": 2,
+      "phase": 4,
+      "backing": 160,
+      "canvas": [
+        122,
+        102
+      ],
+      "texture": [
+        488,
+        408
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 383,
+      "resref": "X58CLS",
+      "slot": 2,
+      "phase": 5,
+      "backing": 293,
+      "canvas": [
+        47,
+        60
+      ],
+      "texture": [
+        188,
+        240
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 385,
+      "resref": "X58CLS",
+      "slot": 3,
+      "phase": 6,
+      "backing": 52,
+      "canvas": [
+        58,
+        64
+      ],
+      "texture": [
+        232,
+        256
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 389,
+      "resref": "X58CLS",
+      "slot": 3,
+      "phase": 7,
+      "backing": 163,
+      "canvas": [
+        137,
+        106
+      ],
+      "texture": [
+        548,
+        424
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 393,
+      "resref": "X58CLS",
+      "slot": 1,
+      "phase": 2,
+      "backing": 392,
+      "canvas": [
+        54,
+        49
+      ],
+      "texture": [
+        216,
+        196
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 396,
+      "resref": "X58CLS",
+      "slot": 2,
+      "phase": 5,
+      "backing": 161,
+      "canvas": [
+        122,
+        102
+      ],
+      "texture": [
+        488,
+        408
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 399,
+      "resref": "X58CLS",
+      "slot": 3,
+      "phase": 6,
+      "backing": 294,
+      "canvas": [
+        49,
+        74
+      ],
+      "texture": [
+        196,
+        296
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 400,
+      "resref": "X58CLS",
+      "slot": 3,
+      "phase": 7,
+      "backing": 53,
+      "canvas": [
+        58,
+        64
+      ],
+      "texture": [
+        232,
+        256
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 403,
+      "resref": "X58CLS",
+      "slot": 4,
+      "phase": 8,
+      "backing": 164,
+      "canvas": [
+        142,
+        99
+      ],
+      "texture": [
+        568,
+        396
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 407,
+      "resref": "X58CLS",
+      "slot": 1,
+      "phase": 3,
+      "backing": 393,
+      "canvas": [
+        54,
+        49
+      ],
+      "texture": [
+        216,
+        196
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 412,
+      "resref": "X58CLS",
+      "slot": 3,
+      "phase": 6,
+      "backing": 162,
+      "canvas": [
+        137,
+        106
+      ],
+      "texture": [
+        548,
+        424
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 413,
+      "resref": "X58CLS",
+      "slot": 3,
+      "phase": 7,
+      "backing": 295,
+      "canvas": [
+        49,
+        74
+      ],
+      "texture": [
+        196,
+        296
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 415,
+      "resref": "X58CLS",
+      "slot": 4,
+      "phase": 8,
+      "backing": 54,
+      "canvas": [
+        60,
+        66
+      ],
+      "texture": [
+        240,
+        264
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 419,
+      "resref": "X58CLS",
+      "slot": 4,
+      "phase": 9,
+      "backing": 165,
+      "canvas": [
+        142,
+        99
+      ],
+      "texture": [
+        568,
+        396
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 423,
+      "resref": "X58CLS",
+      "slot": 2,
+      "phase": 4,
+      "backing": 394,
+      "canvas": [
+        60,
+        58
+      ],
+      "texture": [
+        240,
+        232
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 426,
+      "resref": "X58CLS",
+      "slot": 3,
+      "phase": 7,
+      "backing": 163,
+      "canvas": [
+        137,
+        106
+      ],
+      "texture": [
+        548,
+        424
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 429,
+      "resref": "X58CLS",
+      "slot": 4,
+      "phase": 8,
+      "backing": 296,
+      "canvas": [
+        51,
+        76
+      ],
+      "texture": [
+        204,
+        304
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 430,
+      "resref": "X58CLS",
+      "slot": 4,
+      "phase": 9,
+      "backing": 55,
+      "canvas": [
+        60,
+        66
+      ],
+      "texture": [
+        240,
+        264
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 433,
+      "resref": "X58CLS",
+      "slot": 5,
+      "phase": 10,
+      "backing": 166,
+      "canvas": [
+        161,
+        104
+      ],
+      "texture": [
+        644,
+        416
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 437,
+      "resref": "X58CLS",
+      "slot": 2,
+      "phase": 5,
+      "backing": 395,
+      "canvas": [
+        60,
+        58
+      ],
+      "texture": [
+        240,
+        232
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 441,
+      "resref": "X58CLS",
+      "slot": 4,
+      "phase": 8,
+      "backing": 164,
+      "canvas": [
+        142,
+        99
+      ],
+      "texture": [
+        568,
+        396
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 442,
+      "resref": "X58CLS",
+      "slot": 4,
+      "phase": 9,
+      "backing": 297,
+      "canvas": [
+        51,
+        76
+      ],
+      "texture": [
+        204,
+        304
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 444,
+      "resref": "X58CLS",
+      "slot": 5,
+      "phase": 10,
+      "backing": 56,
+      "canvas": [
+        61,
+        73
+      ],
+      "texture": [
+        244,
+        292
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 448,
+      "resref": "X58CLS",
+      "slot": 5,
+      "phase": 11,
+      "backing": 167,
+      "canvas": [
+        161,
+        104
+      ],
+      "texture": [
+        644,
+        416
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 452,
+      "resref": "X58CLS",
+      "slot": 3,
+      "phase": 6,
+      "backing": 396,
+      "canvas": [
+        63,
+        63
+      ],
+      "texture": [
+        252,
+        252
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 455,
+      "resref": "X58CLS",
+      "slot": 4,
+      "phase": 9,
+      "backing": 165,
+      "canvas": [
+        142,
+        99
+      ],
+      "texture": [
+        568,
+        396
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 458,
+      "resref": "X58CLS",
+      "slot": 5,
+      "phase": 10,
+      "backing": 298,
+      "canvas": [
+        52,
+        89
+      ],
+      "texture": [
+        208,
+        356
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 459,
+      "resref": "X58CLS",
+      "slot": 5,
+      "phase": 11,
+      "backing": 57,
+      "canvas": [
+        61,
+        73
+      ],
+      "texture": [
+        244,
+        292
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 462,
+      "resref": "X58CLS",
+      "slot": 6,
+      "phase": 12,
+      "backing": 168,
+      "canvas": [
+        166,
+        111
+      ],
+      "texture": [
+        664,
+        444
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 466,
+      "resref": "X58CLS",
+      "slot": 3,
+      "phase": 7,
+      "backing": 397,
+      "canvas": [
+        63,
+        63
+      ],
+      "texture": [
+        252,
+        252
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 469,
+      "resref": "X58CLS",
+      "slot": 5,
+      "phase": 10,
+      "backing": 166,
+      "canvas": [
+        161,
+        104
+      ],
+      "texture": [
+        644,
+        416
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 470,
+      "resref": "X58CLS",
+      "slot": 5,
+      "phase": 11,
+      "backing": 299,
+      "canvas": [
+        52,
+        89
+      ],
+      "texture": [
+        208,
+        356
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 472,
+      "resref": "X58CLS",
+      "slot": 6,
+      "phase": 12,
+      "backing": 58,
+      "canvas": [
+        61,
+        77
+      ],
+      "texture": [
+        244,
+        308
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 476,
+      "resref": "X58CLS",
+      "slot": 6,
+      "phase": 13,
+      "backing": 169,
+      "canvas": [
+        166,
+        111
+      ],
+      "texture": [
+        664,
+        444
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 480,
+      "resref": "X58CLS",
+      "slot": 4,
+      "phase": 8,
+      "backing": 398,
+      "canvas": [
+        67,
+        68
+      ],
+      "texture": [
+        268,
+        272
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 483,
+      "resref": "X58CLS",
+      "slot": 5,
+      "phase": 11,
+      "backing": 167,
+      "canvas": [
+        161,
+        104
+      ],
+      "texture": [
+        644,
+        416
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 486,
+      "resref": "X58CLS",
+      "slot": 6,
+      "phase": 12,
+      "backing": 300,
+      "canvas": [
+        51,
+        92
+      ],
+      "texture": [
+        204,
+        368
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 487,
+      "resref": "X58CLS",
+      "slot": 6,
+      "phase": 13,
+      "backing": 59,
+      "canvas": [
+        61,
+        77
+      ],
+      "texture": [
+        244,
+        308
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 727,
+      "resref": "X58DFOG",
+      "slot": 0,
+      "phase": 0,
+      "backing": 0,
+      "canvas": [
+        1,
+        1
+      ],
+      "texture": [
+        4,
+        4
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 728,
+      "resref": "X58DFOG",
+      "slot": 0,
+      "phase": 1,
+      "backing": 0,
+      "canvas": [
+        1,
+        1
+      ],
+      "texture": [
+        4,
+        4
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 732,
+      "resref": "X58DFOG",
+      "slot": 0,
+      "phase": 0,
+      "backing": 1,
+      "canvas": [
+        49,
+        60
+      ],
+      "texture": [
+        196,
+        240
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 734,
+      "resref": "X58DFOG",
+      "slot": 0,
+      "phase": 1,
+      "backing": 133,
+      "canvas": [
+        49,
+        60
+      ],
+      "texture": [
+        196,
+        240
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 738,
+      "resref": "X58DFOG",
+      "slot": 0,
+      "phase": 0,
+      "backing": 413,
+      "canvas": [
+        27,
+        21
+      ],
+      "texture": [
+        108,
+        84
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 743,
+      "resref": "X58DFOG",
+      "slot": 1,
+      "phase": 2,
+      "backing": 134,
+      "canvas": [
+        58,
+        63
+      ],
+      "texture": [
+        232,
+        252
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 745,
+      "resref": "X58DFOG",
+      "slot": 0,
+      "phase": 1,
+      "backing": 487,
+      "canvas": [
+        27,
+        21
+      ],
+      "texture": [
+        108,
+        84
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 747,
+      "resref": "X58DFOG",
+      "slot": 0,
+      "phase": 0,
+      "backing": 263,
+      "canvas": [
+        24,
+        28
+      ],
+      "texture": [
+        96,
+        112
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 752,
+      "resref": "X58DFOG",
+      "slot": 1,
+      "phase": 3,
+      "backing": 135,
+      "canvas": [
+        58,
+        63
+      ],
+      "texture": [
+        232,
+        252
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 755,
+      "resref": "X58DFOG",
+      "slot": 1,
+      "phase": 2,
+      "backing": 488,
+      "canvas": [
+        33,
+        24
+      ],
+      "texture": [
+        132,
+        96
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 756,
+      "resref": "X58DFOG",
+      "slot": 0,
+      "phase": 1,
+      "backing": 339,
+      "canvas": [
+        24,
+        28
+      ],
+      "texture": [
+        96,
+        112
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 761,
+      "resref": "X58DFOG",
+      "slot": 2,
+      "phase": 4,
+      "backing": 136,
+      "canvas": [
+        58,
+        63
+      ],
+      "texture": [
+        232,
+        252
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 762,
+      "resref": "X58DFOG",
+      "slot": 1,
+      "phase": 3,
+      "backing": 489,
+      "canvas": [
+        33,
+        24
+      ],
+      "texture": [
+        132,
+        96
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 765,
+      "resref": "X58DFOG",
+      "slot": 1,
+      "phase": 2,
+      "backing": 340,
+      "canvas": [
+        36,
+        40
+      ],
+      "texture": [
+        144,
+        160
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 771,
+      "resref": "X58DFOG",
+      "slot": 2,
+      "phase": 5,
+      "backing": 137,
+      "canvas": [
+        58,
+        63
+      ],
+      "texture": [
+        232,
+        252
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 773,
+      "resref": "X58DFOG",
+      "slot": 2,
+      "phase": 4,
+      "backing": 490,
+      "canvas": [
+        33,
+        24
+      ],
+      "texture": [
+        132,
+        96
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 774,
+      "resref": "X58DFOG",
+      "slot": 1,
+      "phase": 3,
+      "backing": 341,
+      "canvas": [
+        36,
+        40
+      ],
+      "texture": [
+        144,
+        160
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 779,
+      "resref": "X58DFOG",
+      "slot": 3,
+      "phase": 6,
+      "backing": 138,
+      "canvas": [
+        77,
+        64
+      ],
+      "texture": [
+        308,
+        256
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 780,
+      "resref": "X58DFOG",
+      "slot": 2,
+      "phase": 5,
+      "backing": 491,
+      "canvas": [
+        33,
+        24
+      ],
+      "texture": [
+        132,
+        96
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 783,
+      "resref": "X58DFOG",
+      "slot": 2,
+      "phase": 4,
+      "backing": 342,
+      "canvas": [
+        36,
+        41
+      ],
+      "texture": [
+        144,
+        164
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 788,
+      "resref": "X58DFOG",
+      "slot": 3,
+      "phase": 7,
+      "backing": 139,
+      "canvas": [
+        77,
+        64
+      ],
+      "texture": [
+        308,
+        256
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 791,
+      "resref": "X58DFOG",
+      "slot": 3,
+      "phase": 6,
+      "backing": 492,
+      "canvas": [
+        37,
+        34
+      ],
+      "texture": [
+        148,
+        136
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 792,
+      "resref": "X58DFOG",
+      "slot": 2,
+      "phase": 5,
+      "backing": 343,
+      "canvas": [
+        36,
+        41
+      ],
+      "texture": [
+        144,
+        164
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 799,
+      "resref": "X58DFOG",
+      "slot": 4,
+      "phase": 8,
+      "backing": 140,
+      "canvas": [
+        77,
+        64
+      ],
+      "texture": [
+        308,
+        256
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 800,
+      "resref": "X58DFOG",
+      "slot": 3,
+      "phase": 7,
+      "backing": 493,
+      "canvas": [
+        37,
+        34
+      ],
+      "texture": [
+        148,
+        136
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 803,
+      "resref": "X58DFOG",
+      "slot": 3,
+      "phase": 6,
+      "backing": 344,
+      "canvas": [
+        45,
+        46
+      ],
+      "texture": [
+        180,
+        184
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 809,
+      "resref": "X58DFOG",
+      "slot": 4,
+      "phase": 9,
+      "backing": 141,
+      "canvas": [
+        77,
+        64
+      ],
+      "texture": [
+        308,
+        256
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 811,
+      "resref": "X58DFOG",
+      "slot": 4,
+      "phase": 8,
+      "backing": 494,
+      "canvas": [
+        37,
+        34
+      ],
+      "texture": [
+        148,
+        136
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 812,
+      "resref": "X58DFOG",
+      "slot": 3,
+      "phase": 7,
+      "backing": 345,
+      "canvas": [
+        45,
+        46
+      ],
+      "texture": [
+        180,
+        184
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 828,
+      "resref": "X58DFOG",
+      "slot": 5,
+      "phase": 10,
+      "backing": 142,
+      "canvas": [
+        82,
+        66
+      ],
+      "texture": [
+        328,
+        264
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 830,
+      "resref": "X58DFOG",
+      "slot": 4,
+      "phase": 9,
+      "backing": 495,
+      "canvas": [
+        37,
+        34
+      ],
+      "texture": [
+        148,
+        136
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 833,
+      "resref": "X58DFOG",
+      "slot": 4,
+      "phase": 8,
+      "backing": 346,
+      "canvas": [
+        46,
+        46
+      ],
+      "texture": [
+        184,
+        184
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 846,
+      "resref": "X58DFOG",
+      "slot": 5,
+      "phase": 11,
+      "backing": 143,
+      "canvas": [
+        82,
+        66
+      ],
+      "texture": [
+        328,
+        264
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 850,
+      "resref": "X58DFOG",
+      "slot": 5,
+      "phase": 10,
+      "backing": 496,
+      "canvas": [
+        42,
+        37
+      ],
+      "texture": [
+        168,
+        148
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 851,
+      "resref": "X58DFOG",
+      "slot": 4,
+      "phase": 9,
+      "backing": 347,
+      "canvas": [
+        46,
+        46
+      ],
+      "texture": [
+        184,
+        184
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 871,
+      "resref": "X58DFOG",
+      "slot": 6,
+      "phase": 12,
+      "backing": 144,
+      "canvas": [
+        82,
+        60
+      ],
+      "texture": [
+        328,
+        240
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 873,
+      "resref": "X58DFOG",
+      "slot": 5,
+      "phase": 11,
+      "backing": 497,
+      "canvas": [
+        42,
+        37
+      ],
+      "texture": [
+        168,
+        148
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 876,
+      "resref": "X58DFOG",
+      "slot": 5,
+      "phase": 10,
+      "backing": 348,
+      "canvas": [
+        50,
+        66
+      ],
+      "texture": [
+        200,
+        264
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 895,
+      "resref": "X58DFOG",
+      "slot": 6,
+      "phase": 13,
+      "backing": 145,
+      "canvas": [
+        82,
+        60
+      ],
+      "texture": [
+        328,
+        240
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 898,
+      "resref": "X58DFOG",
+      "slot": 6,
+      "phase": 12,
+      "backing": 498,
+      "canvas": [
+        42,
+        37
+      ],
+      "texture": [
+        168,
+        148
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 899,
+      "resref": "X58DFOG",
+      "slot": 5,
+      "phase": 11,
+      "backing": 349,
+      "canvas": [
+        50,
+        66
+      ],
+      "texture": [
+        200,
+        264
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 910,
+      "resref": "X58DFOG",
+      "slot": 7,
+      "phase": 14,
+      "backing": 146,
+      "canvas": [
+        101,
+        61
+      ],
+      "texture": [
+        404,
+        244
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 911,
+      "resref": "X58DFOG",
+      "slot": 6,
+      "phase": 13,
+      "backing": 499,
+      "canvas": [
+        42,
+        37
+      ],
+      "texture": [
+        168,
+        148
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 913,
+      "resref": "X58DFOG",
+      "slot": 6,
+      "phase": 12,
+      "backing": 350,
+      "canvas": [
+        50,
+        66
+      ],
+      "texture": [
+        200,
+        264
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 926,
+      "resref": "X58DFOG",
+      "slot": 7,
+      "phase": 15,
+      "backing": 147,
+      "canvas": [
+        101,
+        61
+      ],
+      "texture": [
+        404,
+        244
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 928,
+      "resref": "X58DFOG",
+      "slot": 7,
+      "phase": 14,
+      "backing": 500,
+      "canvas": [
+        44,
+        43
+      ],
+      "texture": [
+        176,
+        172
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 929,
+      "resref": "X58DFOG",
+      "slot": 6,
+      "phase": 13,
+      "backing": 351,
+      "canvas": [
+        50,
+        66
+      ],
+      "texture": [
+        200,
+        264
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 937,
+      "resref": "X58DFOG",
+      "slot": 8,
+      "phase": 16,
+      "backing": 148,
+      "canvas": [
+        101,
+        56
+      ],
+      "texture": [
+        404,
+        224
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 939,
+      "resref": "X58DFOG",
+      "slot": 7,
+      "phase": 15,
+      "backing": 501,
+      "canvas": [
+        44,
+        43
+      ],
+      "texture": [
+        176,
+        172
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 942,
+      "resref": "X58DFOG",
+      "slot": 7,
+      "phase": 14,
+      "backing": 352,
+      "canvas": [
+        53,
+        70
+      ],
+      "texture": [
+        212,
+        280
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 956,
+      "resref": "X58DFOG",
+      "slot": 8,
+      "phase": 17,
+      "backing": 149,
+      "canvas": [
+        101,
+        56
+      ],
+      "texture": [
+        404,
+        224
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 959,
+      "resref": "X58DFOG",
+      "slot": 8,
+      "phase": 16,
+      "backing": 502,
+      "canvas": [
+        45,
+        44
+      ],
+      "texture": [
+        180,
+        176
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 960,
+      "resref": "X58DFOG",
+      "slot": 7,
+      "phase": 15,
+      "backing": 353,
+      "canvas": [
+        53,
+        70
+      ],
+      "texture": [
+        212,
+        280
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 972,
+      "resref": "X58DFOG",
+      "slot": 9,
+      "phase": 18,
+      "backing": 150,
+      "canvas": [
+        104,
+        69
+      ],
+      "texture": [
+        416,
+        276
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 973,
+      "resref": "X58DFOG",
+      "slot": 8,
+      "phase": 17,
+      "backing": 503,
+      "canvas": [
+        45,
+        44
+      ],
+      "texture": [
+        180,
+        176
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 975,
+      "resref": "X58DFOG",
+      "slot": 8,
+      "phase": 16,
+      "backing": 354,
+      "canvas": [
+        54,
+        70
+      ],
+      "texture": [
+        216,
+        280
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 978,
+      "resref": "X58DFOG",
+      "slot": 9,
+      "phase": 19,
+      "backing": 151,
+      "canvas": [
+        104,
+        69
+      ],
+      "texture": [
+        416,
+        276
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 979,
+      "resref": "X58DFOG",
+      "slot": 9,
+      "phase": 18,
+      "backing": 504,
+      "canvas": [
+        47,
+        46
+      ],
+      "texture": [
+        188,
+        184
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 980,
+      "resref": "X58DFOG",
+      "slot": 8,
+      "phase": 17,
+      "backing": 355,
+      "canvas": [
+        54,
+        70
+      ],
+      "texture": [
+        216,
+        280
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 981,
+      "resref": "X58DFOG",
+      "slot": 10,
+      "phase": 20,
+      "backing": 152,
+      "canvas": [
+        104,
+        69
+      ],
+      "texture": [
+        416,
+        276
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 982,
+      "resref": "X58DFOG",
+      "slot": 9,
+      "phase": 19,
+      "backing": 505,
+      "canvas": [
+        47,
+        46
+      ],
+      "texture": [
+        188,
+        184
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 983,
+      "resref": "X58DFOG",
+      "slot": 9,
+      "phase": 18,
+      "backing": 356,
+      "canvas": [
+        57,
+        83
+      ],
+      "texture": [
+        228,
+        332
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 984,
+      "resref": "X58DFOG",
+      "slot": 10,
+      "phase": 21,
+      "backing": 153,
+      "canvas": [
+        104,
+        69
+      ],
+      "texture": [
+        416,
+        276
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    },
+    {
+      "line": 985,
+      "resref": "X58DFOG",
+      "slot": 10,
+      "phase": 20,
+      "backing": 506,
+      "canvas": [
+        47,
+        46
+      ],
+      "texture": [
+        188,
+        184
+      ],
+      "fps": [
+        30,
+        1
+      ]
+    }
+  ],
+  "limits": [
+    "Scoped visual acceptance and observed final HD phases only",
+    "No measured global FPS from mixed puff records",
+    "No global124/243 QA or release"
+  ]
+}

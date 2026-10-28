@@ -1,0 +1,3060 @@
+{
+  "schema": "bg2-projectiles-identification-v1",
+  "date": "2026-10-18",
+  "status": "source-identification-only",
+  "count": 49,
+  "selection": "All direct PRO travel BAMs except casting-school symbols and black-only masks; one representative PRO palette per BAM.",
+  "preview_contract": "Native palette alpha on dark checker, visible crop, nearest resize; native geometry unchanged in source. No runtime blend/tint simulation.",
+  "exclusions": [
+    {
+      "bam": "CGABJURA",
+      "reason": "casting-school symbol, outside flight inventory"
+    },
+    {
+      "bam": "CGALTERA",
+      "reason": "casting-school symbol, outside flight inventory"
+    },
+    {
+      "bam": "CGCONJUR",
+      "reason": "casting-school symbol, outside flight inventory"
+    },
+    {
+      "bam": "CGDIVINA",
+      "reason": "casting-school symbol, outside flight inventory"
+    },
+    {
+      "bam": "CGENCHAN",
+      "reason": "casting-school symbol, outside flight inventory"
+    },
+    {
+      "bam": "CGILLUSI",
+      "reason": "casting-school symbol, outside flight inventory"
+    },
+    {
+      "bam": "CGINVOCA",
+      "reason": "casting-school symbol, outside flight inventory"
+    },
+    {
+      "bam": "CGNECROM",
+      "reason": "casting-school symbol, outside flight inventory"
+    },
+    {
+      "bam": "SPSDRABU",
+      "reason": "black-only travel mask, no standalone RGB appearance"
+    },
+    {
+      "bam": "TRAVELB",
+      "reason": "black-only travel mask, no standalone RGB appearance"
+    }
+  ],
+  "assets": [
+    {
+      "number": 1,
+      "bam": "ACIDBLOB",
+      "representative_projectile": "ACIDBLOB",
+      "source": "effects/ressources/ACIDBLOB/source.bam",
+      "source_sha256": "3a212f9dddd3e06dbbc11afad998977d7c9b42fa936a412aec5e4479c24792ec",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 1,
+      "frame_dimensions": [
+        18,
+        35
+      ],
+      "frame_center": [
+        8,
+        28
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        18,
+        35
+      ],
+      "display_scale": "x4",
+      "palette_kind": "seven-native-ranges",
+      "palette_source": {
+        "bmp": "MPALETTE",
+        "sha256": "7a9a654d5cbc4cee0ca211be05d24fb54bf8298a781c074882000d5f829d66dd",
+        "colors": [
+          73,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "palette_rgb_sha256": "d43d631fd49fcd8e3b5a729ac184a4a8626b9ed4f54fa350cc6f890b0c69a79a",
+      "consumer": {
+        "asset_key": "effects:bam:ACIDBLOB",
+        "consumer_key": "projectile:ACIDBLOB",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "1B953A4BC0C9D08A11088400CDF87BE3FA4666AA178798FD7EA38139802D8283",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "5",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "1",
+        "colors": "73;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 137, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:ACIDBLOB",
+        "projectile:ACIDBLGR",
+        "projectile:ACIDBLMU",
+        "projectile:ACIDBLOC",
+        "projectile:GREASE"
+      ],
+      "production_snapshot": {
+        "spatial_state": "produced",
+        "interpolation_state": "produced",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      }
+    },
+    {
+      "number": 2,
+      "bam": "ARARROW",
+      "representative_projectile": "ARROW",
+      "source": "effects/ressources/ARARROW/source.bam",
+      "source_sha256": "062c2b646df3d17d73309e3fbd9f74c6526f83f1446b9ed91fa6c79c3f51add2",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 6,
+      "frame_dimensions": [
+        3,
+        18
+      ],
+      "frame_center": [
+        1,
+        17
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        3,
+        18
+      ],
+      "display_scale": "x4",
+      "palette_kind": "seven-native-ranges",
+      "palette_source": {
+        "bmp": "MPALETTE",
+        "sha256": "7a9a654d5cbc4cee0ca211be05d24fb54bf8298a781c074882000d5f829d66dd",
+        "colors": [
+          0,
+          0,
+          46,
+          0,
+          23,
+          27,
+          0
+        ]
+      },
+      "palette_rgb_sha256": "c6d492e7bd9e96367ab82e329c29f23708d58ac4818777c240cd5e6247837556",
+      "consumer": {
+        "asset_key": "effects:bam:ARARROW",
+        "consumer_key": "projectile:ARROW",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "FC46545338498F38882A43E1F99E26A68E7A16738EE4F458B6B942912C81971C",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "5",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "1",
+        "colors": "0;0;46;0;23;27;0",
+        "flags_json": "{\"bam\": 9, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:ARROW",
+        "projectile:ARROWHVY",
+        "projectile:1AROW01",
+        "projectile:1AROW02",
+        "projectile:1AROW03",
+        "projectile:1AROW04",
+        "projectile:1AROW05",
+        "projectile:1AROW07",
+        "projectile:1AROW10",
+        "projectile:1AROW11",
+        "projectile:1AROW15"
+      ],
+      "production_snapshot": {
+        "spatial_state": "produced",
+        "interpolation_state": "produced",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      }
+    },
+    {
+      "number": 3,
+      "bam": "AXE",
+      "representative_projectile": "AXE",
+      "source": "effects/ressources/AXE/source.bam",
+      "source_sha256": "ab1f2c45281a94f22877b013a087e0932dd3d3c8bc911f1322f00c5c992976ca",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 1,
+      "frame_dimensions": [
+        36,
+        36
+      ],
+      "frame_center": [
+        18,
+        18
+      ],
+      "visible_bbox": [
+        17,
+        8,
+        19,
+        34
+      ],
+      "display_scale": "x4",
+      "palette_kind": "seven-native-ranges",
+      "palette_source": {
+        "bmp": "MPALETTE",
+        "sha256": "7a9a654d5cbc4cee0ca211be05d24fb54bf8298a781c074882000d5f829d66dd",
+        "colors": [
+          6,
+          0,
+          0,
+          0,
+          91,
+          0,
+          0
+        ]
+      },
+      "palette_rgb_sha256": "91703e7e77dc81726e140f593d162c502db5817da48953db6bb6ae3e83d1af98",
+      "consumer": {
+        "asset_key": "effects:bam:AXE",
+        "consumer_key": "projectile:AXE",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "1E0DBE2C73D709BC49CC592B912F3E9A37BF400714028917424B1EE3D78DB9D9",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "5",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "1",
+        "colors": "6;0;0;0;91;0;0",
+        "flags_json": "{\"bam\": 9, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:AXE",
+        "projectile:AXEEX",
+        "projectile:1AXE05",
+        "projectile:1AXE08",
+        "projectile:1AXE09",
+        "projectile:1AXE10",
+        "projectile:1AXE16"
+      ],
+      "production_snapshot": {
+        "spatial_state": "produced",
+        "interpolation_state": "produced",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      }
+    },
+    {
+      "number": 4,
+      "bam": "BDSFIRET",
+      "representative_projectile": "BDSPFIRE",
+      "source": "effects/ressources/BDSFIRET/source.bam",
+      "source_sha256": "a13ab170a6a5cbff57f2b410e49611e9805b863f16eb50be7c59bc48b1728caf",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 5,
+      "frame_dimensions": [
+        38,
+        39
+      ],
+      "frame_center": [
+        19,
+        20
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        38,
+        39
+      ],
+      "display_scale": "x4",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "a13ab170a6a5cbff57f2b410e49611e9805b863f16eb50be7c59bc48b1728caf"
+      },
+      "palette_rgb_sha256": "098f6548226b05a7db10f126d874904af72d43e39d0b786b104caf64ca91e830",
+      "consumer": {
+        "asset_key": "effects:bam:BDSFIRET",
+        "consumer_key": "projectile:BDSPFIRE",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "090C8A9EA1414070495DA61FF41D8180ABF2FF266EDEF174C795B09EAC2CC8D0",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "9",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 640, \"extended\": 4194368}"
+      },
+      "all_travel_consumers": [
+        "projectile:BDSPFIRE"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 5,
+      "bam": "BGLRYT",
+      "representative_projectile": "BGLRY",
+      "source": "effects/ressources/BGLRYT/source.bam",
+      "source_sha256": "91d12d8ce8a09e08497fe2b39e32cea09d077e0b025f06ab95556dce6d533e52",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 0,
+      "frame_dimensions": [
+        118,
+        118
+      ],
+      "frame_center": [
+        58,
+        58
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        118,
+        118
+      ],
+      "display_scale": "x1",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "eb0d88ccaf22b8723c427aaeab4d9051de8e4a68b0f469eed9a8f7ea9b23d68c"
+      },
+      "palette_rgb_sha256": "675e5b1660e2a9c95d1c37708957cc157622de2dded075111261b8c52c382266",
+      "consumer": {
+        "asset_key": "effects:bam:BGLRYT",
+        "consumer_key": "projectile:BGLRY",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "58A793E22AC3CE3593CA7C5FAB03476076B731D20C1B93A266EB78D9A480FCA6",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 962, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:BGLRY"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 6,
+      "bam": "BOLT",
+      "representative_projectile": "BOLT",
+      "source": "effects/ressources/BOLT/source.bam",
+      "source_sha256": "b53af138e774b4ef7bdf56f2c8d2b54aaea0d87e4eff55731336ce27a28a7ac8",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 5,
+      "frame_dimensions": [
+        20,
+        20
+      ],
+      "frame_center": [
+        10,
+        10
+      ],
+      "visible_bbox": [
+        8,
+        3,
+        12,
+        14
+      ],
+      "display_scale": "x4",
+      "palette_kind": "seven-native-ranges",
+      "palette_source": {
+        "bmp": "MPALETTE",
+        "sha256": "7a9a654d5cbc4cee0ca211be05d24fb54bf8298a781c074882000d5f829d66dd",
+        "colors": [
+          0,
+          0,
+          85,
+          0,
+          160,
+          6,
+          0
+        ]
+      },
+      "palette_rgb_sha256": "93e8b8eeec16726ff8d3bdd13b4ec5985fb990fb5659d057387e9fe4a3851d03",
+      "consumer": {
+        "asset_key": "effects:bam:BOLT",
+        "consumer_key": "projectile:BOLT",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "481B763198E7232945D8F8082527976102EA11E689ABCEB3B48DD34364DBE224",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "5",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "1",
+        "colors": "0;0;85;0;160;6;0",
+        "flags_json": "{\"bam\": 9, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:BOLT",
+        "projectile:BOLTEX",
+        "projectile:1BOLT01",
+        "projectile:1BOLT02",
+        "projectile:1BOLT03",
+        "projectile:1BOLT04",
+        "projectile:1BOLT05",
+        "projectile:1BOLT06",
+        "projectile:1BOLT09",
+        "projectile:1DART01",
+        "projectile:1DART02",
+        "projectile:1DART03",
+        "projectile:1DART04",
+        "projectile:1DART05"
+      ],
+      "production_snapshot": {
+        "spatial_state": "produced",
+        "interpolation_state": "produced",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      }
+    },
+    {
+      "number": 7,
+      "bam": "DAGGER",
+      "representative_projectile": "DAGGER",
+      "source": "effects/ressources/DAGGER/source.bam",
+      "source_sha256": "3dfad5ba67ae0362b159726514eae11b0fc7358b166d8125968ad7862269dd3e",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 3,
+      "frame_dimensions": [
+        8,
+        20
+      ],
+      "frame_center": [
+        4,
+        16
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        8,
+        20
+      ],
+      "display_scale": "x4",
+      "palette_kind": "seven-native-ranges",
+      "palette_source": {
+        "bmp": "MPALETTE",
+        "sha256": "7a9a654d5cbc4cee0ca211be05d24fb54bf8298a781c074882000d5f829d66dd",
+        "colors": [
+          0,
+          0,
+          0,
+          0,
+          30,
+          27,
+          0
+        ]
+      },
+      "palette_rgb_sha256": "120024ff76a2e232937e44edea616bca828b25d0bce0f24222790fe1aff9d313",
+      "consumer": {
+        "asset_key": "effects:bam:DAGGER",
+        "consumer_key": "projectile:DAGGER",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "E44A4E8E3DE79E40659D3D90A745F68FBB4929248D928D9FE47B7426E362C052",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "5",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "1",
+        "colors": "0;0;0;0;30;27;0",
+        "flags_json": "{\"bam\": 9, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:DAGGER",
+        "projectile:DAGGEREX",
+        "projectile:1DAGG11"
+      ],
+      "production_snapshot": {
+        "spatial_state": "produced",
+        "interpolation_state": "produced",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      }
+    },
+    {
+      "number": 8,
+      "bam": "DART",
+      "representative_projectile": "DART",
+      "source": "effects/ressources/DART/source.bam",
+      "source_sha256": "516a8b8e4fbd5424e4c28d6af550ba54de5822d64869cde8b20a69ed4e487db5",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 0,
+      "frame_dimensions": [
+        20,
+        20
+      ],
+      "frame_center": [
+        10,
+        10
+      ],
+      "visible_bbox": [
+        9,
+        3,
+        11,
+        12
+      ],
+      "display_scale": "x4",
+      "palette_kind": "seven-native-ranges",
+      "palette_source": {
+        "bmp": "MPALETTE",
+        "sha256": "7a9a654d5cbc4cee0ca211be05d24fb54bf8298a781c074882000d5f829d66dd",
+        "colors": [
+          6,
+          0,
+          0,
+          0,
+          160,
+          6,
+          0
+        ]
+      },
+      "palette_rgb_sha256": "c1be640bf849e4dc3707c47cd856c5d17f6fdff15475344c1a84754d418e2199",
+      "consumer": {
+        "asset_key": "effects:bam:DART",
+        "consumer_key": "projectile:DART",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "413FF2E1F06F99810291EFDA54ADE7325BB5BEDA6B46A89337DBB04ECDDD3E3C",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "5",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "1",
+        "colors": "6;0;0;0;160;6;0",
+        "flags_json": "{\"bam\": 9, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:DART",
+        "projectile:DARTEX",
+        "projectile:1DAGG05",
+        "projectile:1DAGG12",
+        "projectile:1DAGG16",
+        "projectile:1DART08"
+      ],
+      "production_snapshot": {
+        "spatial_state": "produced",
+        "interpolation_state": "produced",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      }
+    },
+    {
+      "number": 9,
+      "bam": "FIREBAT",
+      "representative_projectile": "DBFIREBL",
+      "source": "effects/ressources/FIREBAT/source.bam",
+      "source_sha256": "4aa73da568190875428fc532714ad7576c02a9ffe61fc1db65231ea19ba6db4d",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 10,
+      "frame_dimensions": [
+        69,
+        65
+      ],
+      "frame_center": [
+        35,
+        32
+      ],
+      "visible_bbox": [
+        1,
+        0,
+        68,
+        65
+      ],
+      "display_scale": "x2",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "85d35f669477421ebb511401a75a9baa0454b7735277ba3eef95f939d131e3e4"
+      },
+      "palette_rgb_sha256": "b6f31eac961cc3fe4200e54fff26a655dfe7c3d4032d97a0947297aac08a76ee",
+      "consumer": {
+        "asset_key": "effects:bam:FIREBAT",
+        "consumer_key": "projectile:DBFIREBL",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "28EC2E0455F98A4B9A77A31ACAA40B1CD397E8C7EA15F25DED646E1A817EB5C7",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 194, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:DBFIREBL",
+        "projectile:DFIREBL",
+        "projectile:PFIRE2",
+        "projectile:SAFEFIRE"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 10,
+      "bam": "FIREBGRT",
+      "representative_projectile": "FIREBLGR",
+      "source": "effects/ressources/FIREBGRT/source.bam",
+      "source_sha256": "7b00715b834970bc0bdbe3922cb4a841ef81e6475948748ba427aee158fafbb9",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 10,
+      "frame_dimensions": [
+        69,
+        65
+      ],
+      "frame_center": [
+        35,
+        32
+      ],
+      "visible_bbox": [
+        1,
+        0,
+        68,
+        65
+      ],
+      "display_scale": "x2",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "938fc1df0682503653676924ba2e32277f8dac4c868a19488faeb434357cc9a2"
+      },
+      "palette_rgb_sha256": "597f5f891bb1ef4c126887a48339f959320dbab828eddaa44c7573806527c720",
+      "consumer": {
+        "asset_key": "effects:bam:FIREBGRT",
+        "consumer_key": "projectile:FIREBLGR",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "A0475EC7D0AD2943BE4C717A7C2A512373208623A50581C390C0B914DCD73714",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "69;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 198, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:FIREBLGR"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 11,
+      "bam": "FIREBICT",
+      "representative_projectile": "FIREBLIC",
+      "source": "effects/ressources/FIREBICT/source.bam",
+      "source_sha256": "ee5dde2a3c034208899febd9a09cc450383eb18500b680ea4ec7e16068d48983",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 1,
+      "frame_dimensions": [
+        69,
+        65
+      ],
+      "frame_center": [
+        35,
+        32
+      ],
+      "visible_bbox": [
+        2,
+        0,
+        68,
+        65
+      ],
+      "display_scale": "x2",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "111aff4e42165c947b63bc9f2c1ac1877cee9dc57476ab18e02b4b333c826397"
+      },
+      "palette_rgb_sha256": "56a668e2b07f158981fb7d6cab3ecd09ff45716df0346a3a03e068e054e0fcee",
+      "consumer": {
+        "asset_key": "effects:bam:FIREBICT",
+        "consumer_key": "projectile:FIREBLIC",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "2A0DD14D50C6A982A68B97C49C00FB392B36E116C08C8DC31585FB7B675178B2",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "71;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 198, \"extended\": 4194304}"
+      },
+      "all_travel_consumers": [
+        "projectile:FIREBLIC"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 12,
+      "bam": "GLPHWRDT",
+      "representative_projectile": "TRAPGLPN",
+      "source": "effects/ressources/GLPHWRDT/source.bam",
+      "source_sha256": "e9393bdcefabd1df3410f085db561092dd86d006db677f6638bf8a8fa600e062",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 2,
+      "frame_dimensions": [
+        24,
+        24
+      ],
+      "frame_center": [
+        12,
+        12
+      ],
+      "visible_bbox": [
+        0,
+        3,
+        24,
+        21
+      ],
+      "display_scale": "x4",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "ea71a0c4f52992876a2bc6c12094543f32e1366744b5f9f531ac5f0e8bd158bf"
+      },
+      "palette_rgb_sha256": "ec1018ed96837a315e2728abd9fcf99fa6291d642b370010c93709ea373dea38",
+      "consumer": {
+        "asset_key": "effects:bam:GLPHWRDT",
+        "consumer_key": "projectile:TRAPGLPN",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "4E78347063D053C0B18925C38B66C54935D155DCA3FEF5507AFE1CEA547EB1E0",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 40, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:TRAPGLPN"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 13,
+      "bam": "MAGICSTN",
+      "representative_projectile": "BULLET",
+      "source": "effects/ressources/MAGICSTN/source.bam",
+      "source_sha256": "03cdc1776460d2e274346cdbb797211f4375f5d9260efb5fc2c6e168e14e3cd6",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 0,
+      "frame_dimensions": [
+        6,
+        5
+      ],
+      "frame_center": [
+        3,
+        3
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        6,
+        5
+      ],
+      "display_scale": "x4",
+      "palette_kind": "seven-native-ranges",
+      "palette_source": {
+        "bmp": "MPALETTE",
+        "sha256": "7a9a654d5cbc4cee0ca211be05d24fb54bf8298a781c074882000d5f829d66dd",
+        "colors": [
+          27,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "palette_rgb_sha256": "7557dd21b0ca96f2f2bd02f5d51653d25a02486ababcdb92cad5a9ade3556d84",
+      "consumer": {
+        "asset_key": "effects:bam:MAGICSTN",
+        "consumer_key": "projectile:BULLET",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "FF477F71197B6B5637CAAE8EFABC43C185039EEE987BB3FD2B2D32044BACA2F2",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "1",
+        "colors": "27;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 9, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:BULLET",
+        "projectile:BULLETEX",
+        "projectile:STONE",
+        "projectile:1BULL02",
+        "projectile:1BULL03",
+        "projectile:1BULL04",
+        "projectile:1BULL05",
+        "projectile:1BULL06"
+      ],
+      "production_snapshot": {
+        "spatial_state": "produced",
+        "interpolation_state": "produced",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      }
+    },
+    {
+      "number": 14,
+      "bam": "SKLT",
+      "representative_projectile": "TRAPSKUL",
+      "source": "effects/ressources/SKLT/source.bam",
+      "source_sha256": "a2cc27443930b25115501bc9207cac902e04411db16072b6ab0ccbae7639f161",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 2,
+      "frame_dimensions": [
+        24,
+        24
+      ],
+      "frame_center": [
+        12,
+        12
+      ],
+      "visible_bbox": [
+        7,
+        5,
+        17,
+        19
+      ],
+      "display_scale": "x4",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "5b872a8d08038f650c2edb11e67d0da697a0c93dcacb730c94b63ec48b9aad61"
+      },
+      "palette_rgb_sha256": "9b5832adcaab4806a0f8fc756eeab8b5168d0d04c7a07eb3086f109631c97402",
+      "consumer": {
+        "asset_key": "effects:bam:SKLT",
+        "consumer_key": "projectile:TRAPSKUL",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "FBEF84AE577F4A3A9A3DAD49046C39DF9B3E4C9988E6542D16C80825E7D2B574",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 40, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:TRAPSKUL",
+        "projectile:TSKULLNP"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 15,
+      "bam": "SKYBOLT",
+      "representative_projectile": "SKYBOLT",
+      "source": "effects/ressources/SKYBOLT/source.bam",
+      "source_sha256": "cc3f75d03b11a68250811ee5b34d04a4edde69896ba09ffdedd228084a4910d4",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 3,
+      "frame_dimensions": [
+        77,
+        497
+      ],
+      "frame_center": [
+        38,
+        464
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        77,
+        497
+      ],
+      "display_scale": "x0.31",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "c258f5363e3acdf256972b040a9b049f354bffa25fd055531493f980301ce1e5"
+      },
+      "palette_rgb_sha256": "17a540f48dc69c4770ac4f77246d6b958b588f632e31630230866e84ce7b9050",
+      "consumer": {
+        "asset_key": "effects:bam:SKYBOLT",
+        "consumer_key": "projectile:SKYBOLT",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "6511A8BD69F5F13F472EE0D2E288ADB69D86F8CB3BE84397E1645FB862294A8A",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 640, \"extended\": 136}"
+      },
+      "all_travel_consumers": [
+        "projectile:SKYBOLT"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 16,
+      "bam": "SPATTCK2",
+      "representative_projectile": "SPATTCK2",
+      "source": "effects/ressources/SPATTCK2/source.bam",
+      "source_sha256": "101bcd288b7b6b9c973529d37dcaed02f96bf44fbe2d2e2edce97083bbf1e083",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 16,
+      "frame_dimensions": [
+        18,
+        16
+      ],
+      "frame_center": [
+        10,
+        7
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        18,
+        16
+      ],
+      "display_scale": "x4",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "f814291b4bff8e74e07e1bf6f3bcfd4b4e9b128ab50a232fef2ba1d1c893b638"
+      },
+      "palette_rgb_sha256": "4011d929d0a7590e62938540104747aba2b87d473de62c5d73a25bd6538dd20e",
+      "consumer": {
+        "asset_key": "effects:bam:SPATTCK2",
+        "consumer_key": "projectile:SPATTCK2",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "795D5E350021F903038E21548F08F7B6308F5D733708D3080498470DF00E493D",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "27;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 48, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:SPATTCK2"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 17,
+      "bam": "SPBEHBLA",
+      "representative_projectile": "SPBEHBLA",
+      "source": "effects/ressources/SPBEHBLA/source.bam",
+      "source_sha256": "92fda05a13b80e7e3e78f470e5fbefb0978586d9a93825f8bdcbd758bde5439b",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 3,
+      "frame_dimensions": [
+        72,
+        71
+      ],
+      "frame_center": [
+        35,
+        31
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        72,
+        71
+      ],
+      "display_scale": "x2",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "5c6f4ede09691a9e5c6fba567c39b0c42dba46419a7203cea9cbcd11796e1b20"
+      },
+      "palette_rgb_sha256": "4e5781537ed4f81b7c58772cd1fa7af105d0cf0dfaf35c9fadb97ced389c964f",
+      "consumer": {
+        "asset_key": "effects:bam:SPBEHBLA",
+        "consumer_key": "projectile:SPBEHBLA",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "8C0078615FA328EF219FDE8A201551A35E54B5FF5EAE0AD1549E30DCD7E29AFF",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "5",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "27;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 144, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:SPBEHBLA",
+        "projectile:CDBEHBLA"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 18,
+      "bam": "SPCHRORB",
+      "representative_projectile": "CHROMORB",
+      "source": "effects/ressources/SPCHRORB/source.bam",
+      "source_sha256": "931d3ce77d593f24390cc211910e65a78183e8db3227d59fcdc9e4ae0332c34f",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 2,
+      "frame_dimensions": [
+        29,
+        27
+      ],
+      "frame_center": [
+        15,
+        13
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        29,
+        27
+      ],
+      "display_scale": "x4",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "7e1249a7deb136f41450d7eac490aa2ed0a44a29cefe0501cb46eadfa32c90aa"
+      },
+      "palette_rgb_sha256": "bcdf930f8b394a3b02e124047228f7e40e7f763bbdee335e1a6f2210f020c2f9",
+      "consumer": {
+        "asset_key": "effects:bam:SPCHRORB",
+        "consumer_key": "projectile:CHROMORB",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "9B7F1ABEAA3A278A1864CDEB5497C90E2CB1A2F3B3DCEF46FF2E0FFF0E8F6D73",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "27;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 176, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:CHROMORB"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 19,
+      "bam": "SPCL236",
+      "representative_projectile": "SPCL236",
+      "source": "effects/ressources/SPCL236/source.bam",
+      "source_sha256": "6ea6c105202352ca4b18c94f36b3d2a7e88fc30d677bee37024ec45586ba3c3d",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 2,
+      "frame_dimensions": [
+        66,
+        64
+      ],
+      "frame_center": [
+        33,
+        34
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        66,
+        64
+      ],
+      "display_scale": "x2",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "08f7183cb3fb4d8270cbf6b4101f83bdc2e9379c486df62bb156390a7149fd88"
+      },
+      "palette_rgb_sha256": "aca22925b600de060d76acaf97afce6b2064567fc61cd3c769a5b5038d59570c",
+      "consumer": {
+        "asset_key": "effects:bam:SPCL236",
+        "consumer_key": "projectile:SPCL236",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "296C83A01B598AC59066C70D14FDF4766C5E4A544F024625E1D0677C97DB9367",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 962, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:SPCL236"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 20,
+      "bam": "SPCLOUD3",
+      "representative_projectile": "BDETHRET",
+      "source": "effects/ressources/SPCLOUD3/source.bam",
+      "source_sha256": "869c0ebec02473e2be84ed4412c3957abc4bee967b7b8b0ecad91f613694c7c6",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 10,
+      "frame_dimensions": [
+        56,
+        37
+      ],
+      "frame_center": [
+        31,
+        15
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        56,
+        37
+      ],
+      "display_scale": "x4",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "b32f7b6ce9a436e878a84d941584497ad786c2c9677f949a19febebb81841e5e"
+      },
+      "palette_rgb_sha256": "214defeb9e4ee73d3c428197507993ffe7e73b6cf13da771c3bbbb648d3dbc96",
+      "consumer": {
+        "asset_key": "effects:bam:SPCLOUD3",
+        "consumer_key": "projectile:BDETHRET",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "7040DF7159308E599257A4EDD23EF91AA2C2175D1EA344ECBFA8D1DB2537B2C7",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "5",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 640, \"extended\": 2151677952}"
+      },
+      "all_travel_consumers": [
+        "projectile:BDETHRET"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 21,
+      "bam": "SPCOMETT",
+      "representative_projectile": "PCOMETT",
+      "source": "effects/ressources/SPCOMETT/source.bam",
+      "source_sha256": "decae242d91f4642b3c56149025903601b4c0f3048cabd098bf4806f72f25e66",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 5,
+      "frame_dimensions": [
+        38,
+        39
+      ],
+      "frame_center": [
+        19,
+        20
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        38,
+        39
+      ],
+      "display_scale": "x4",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "c3a28dac514899d2b2690d0e3a5472cf96145a96ed50490bada59ce77fab138c"
+      },
+      "palette_rgb_sha256": "8d001fecde20bfaab376e45b4ddc843062fee63a48f3fa575d62b2551b950d67",
+      "consumer": {
+        "asset_key": "effects:bam:SPCOMETT",
+        "consumer_key": "projectile:PCOMETT",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "01642E2FE96E6311EA86BEC34F6F4E1777C3BE35104D53B343D6CE1E9336C2FC",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "5",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 136, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:PCOMETT"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 22,
+      "bam": "SPCOMTRV",
+      "representative_projectile": "COMET",
+      "source": "effects/ressources/SPCOMTRV/source.bam",
+      "source_sha256": "75ad2661c6c1a7f7c23393053159dd3579ce5ba5b81c360d8c54750f8ad57762",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 3,
+      "frame_dimensions": [
+        120,
+        151
+      ],
+      "frame_center": [
+        11,
+        146
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        120,
+        151
+      ],
+      "display_scale": "x1",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "3ac64b020b04f07408ad1ee5ce90ea58fcb39415ec5f7a2d79ac044dd1542826"
+      },
+      "palette_rgb_sha256": "20b78bb0d4f9d305f027ff6b30495222ee382f271c480d02d8a7015c5873913e",
+      "consumer": {
+        "asset_key": "effects:bam:SPCOMTRV",
+        "consumer_key": "projectile:COMET",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "4F49999140D87FC661DEF66AD28EDA19892A445BFB8F983046439CC2A018FB46",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "67;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 384, \"extended\": 8192}"
+      },
+      "all_travel_consumers": [
+        "projectile:COMET"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 23,
+      "bam": "SPEAR",
+      "representative_projectile": "SPEAR",
+      "source": "effects/ressources/SPEAR/source.bam",
+      "source_sha256": "80802e06ed6c18d836394c3d07020a0e1bda793b55e2d7725a0f023ae0e9437f",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 1,
+      "frame_dimensions": [
+        4,
+        45
+      ],
+      "frame_center": [
+        1,
+        24
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        4,
+        45
+      ],
+      "display_scale": "x3",
+      "palette_kind": "seven-native-ranges",
+      "palette_source": {
+        "bmp": "MPALETTE",
+        "sha256": "7a9a654d5cbc4cee0ca211be05d24fb54bf8298a781c074882000d5f829d66dd",
+        "colors": [
+          0,
+          0,
+          0,
+          0,
+          160,
+          6,
+          0
+        ]
+      },
+      "palette_rgb_sha256": "22ceed1ea1779fad25fddfd69156446606e381a3dd0c8bc9854a482d5c548583",
+      "consumer": {
+        "asset_key": "effects:bam:SPEAR",
+        "consumer_key": "projectile:SPEAR",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "AEEB5176CD04AF0574A942D2DF74F05D1B592AC05E9684F4BC20071B09EF573B",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "5",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "1",
+        "colors": "0;0;0;0;160;6;0",
+        "flags_json": "{\"bam\": 9, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:SPEAR",
+        "projectile:SPEAREX"
+      ],
+      "production_snapshot": {
+        "spatial_state": "produced",
+        "interpolation_state": "produced",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      }
+    },
+    {
+      "number": 24,
+      "bam": "SPENBLD",
+      "representative_projectile": "SPENBLD",
+      "source": "effects/ressources/SPENBLD/source.bam",
+      "source_sha256": "62ae2f264fce9020669ba765d93aaffac80afa3259b01ddcd554ed38149a61eb",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 1,
+      "frame_dimensions": [
+        32,
+        32
+      ],
+      "frame_center": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        1,
+        3,
+        30,
+        31
+      ],
+      "display_scale": "x4",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "0a4e642fe5521c2964641cd821e846925b8e8dfc53f2bcd54ea6745395c2d9eb"
+      },
+      "palette_rgb_sha256": "d367114d79363735402a261f0bbc008cc17364432d71cca70b11d8fcb1b6d322",
+      "consumer": {
+        "asset_key": "effects:bam:SPENBLD",
+        "consumer_key": "projectile:SPENBLD",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "72D003329350396070317669656D4B9BD6A400DE761BBF81996EE31F2ABF64C1",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 704, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:SPENBLD"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 25,
+      "bam": "SPFIREBL",
+      "representative_projectile": "FIREBALL",
+      "source": "effects/ressources/SPFIREBL/source.bam",
+      "source_sha256": "997d40459e27d402d4e6914d46180b344ccc93cc37d3f1a859636237188e6c22",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 5,
+      "frame_dimensions": [
+        22,
+        40
+      ],
+      "frame_center": [
+        12,
+        33
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        22,
+        40
+      ],
+      "display_scale": "x3",
+      "palette_kind": "seven-native-ranges",
+      "palette_source": {
+        "bmp": "MPALETTE",
+        "sha256": "7a9a654d5cbc4cee0ca211be05d24fb54bf8298a781c074882000d5f829d66dd",
+        "colors": [
+          67,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "palette_rgb_sha256": "be5aae386a2e3805df4b61062068bb17c36ab4f9451e6198ca4320eeecdf306e",
+      "consumer": {
+        "asset_key": "effects:bam:SPFIREBL",
+        "consumer_key": "projectile:FIREBALL",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "7A21847FDBDEDF8208CADC0B184E418849EFD92DABCF7ADF6258E3C7EF3400F9",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "5",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "1",
+        "colors": "67;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 71, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:FIREBALL",
+        "projectile:FIREBLNS",
+        "projectile:FIREBOLT",
+        "projectile:FIREBTBL",
+        "projectile:FIRESTOR",
+        "projectile:OHDETEVL"
+      ],
+      "production_snapshot": {
+        "spatial_state": "produced",
+        "interpolation_state": "produced",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      }
+    },
+    {
+      "number": 26,
+      "bam": "SPFIRSE2",
+      "representative_projectile": "BOLT2",
+      "source": "effects/ressources/SPFIRSE2/source.bam",
+      "source_sha256": "1923b1eeae3fac319115d28918eef4fa2e3aa0b5ef061a7867126e14c2aa1622",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 6,
+      "frame_dimensions": [
+        30,
+        49
+      ],
+      "frame_center": [
+        15,
+        31
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        30,
+        49
+      ],
+      "display_scale": "x3",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "5f2de321d0af4c9410d09093ea23f495206b5856bc44541b29e3c8a1217a8ca2"
+      },
+      "palette_rgb_sha256": "7efcfd735a26083f4a2927ffc4c558f94c946bc437d77620a74131971c591ad1",
+      "consumer": {
+        "asset_key": "effects:bam:SPFIRSE2",
+        "consumer_key": "projectile:BOLT2",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "9E318B0E885AEC072DF0695C131063767C10E2A5C8BFF14F66F56A5ADAE3CD39",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "5",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "67;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 194, \"extended\": 4194368}"
+      },
+      "all_travel_consumers": [
+        "projectile:BOLT2"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 27,
+      "bam": "SPFIRSED",
+      "representative_projectile": "PFIRE3",
+      "source": "effects/ressources/SPFIRSED/source.bam",
+      "source_sha256": "ac7873cc665f02412e3362937ca534d35bb848077b75661d0cdd88188a3cd661",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 3,
+      "frame_dimensions": [
+        19,
+        25
+      ],
+      "frame_center": [
+        10,
+        15
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        19,
+        25
+      ],
+      "display_scale": "x4",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "8ff5cbcd6a33262e0d9882d454bcc2321d378f4f33d64066fe4be8f56212ffb2"
+      },
+      "palette_rgb_sha256": "01b00e92295c4adcffa84dfd1c308b7cd7d4159507ebf349c7a025c22011ce00",
+      "consumer": {
+        "asset_key": "effects:bam:SPFIRSED",
+        "consumer_key": "projectile:PFIRE3",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "2F7C882E54D48F95C097E9046A54F327657406296C9AFBE659AC5ACC4E6F7F09",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "5",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "67;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 198, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:PFIRE3"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 28,
+      "bam": "SPFLMARR",
+      "representative_projectile": "ARROWEX",
+      "source": "effects/ressources/SPFLMARR/source.bam",
+      "source_sha256": "eca45907de0e20abb39880d7eac2c0790d728a88ea0bc3e705a1c7f3589bbd19",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 3,
+      "frame_dimensions": [
+        12,
+        35
+      ],
+      "frame_center": [
+        5,
+        29
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        12,
+        35
+      ],
+      "display_scale": "x4",
+      "palette_kind": "seven-native-ranges",
+      "palette_source": {
+        "bmp": "MPALETTE",
+        "sha256": "7a9a654d5cbc4cee0ca211be05d24fb54bf8298a781c074882000d5f829d66dd",
+        "colors": [
+          216,
+          254,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "palette_rgb_sha256": "f02d5f3e6d3ea7f9d01b62ebb9348828257a93b133df138cf0c807fdfc829a86",
+      "consumer": {
+        "asset_key": "effects:bam:SPFLMARR",
+        "consumer_key": "projectile:ARROWEX",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "DD93A79D9C0E84313D2B1D86B32A5BCCCEBE789E2EF105C2EA1041596E4B1F1D",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "5",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "1",
+        "colors": "216;254;0;0;0;0;0",
+        "flags_json": "{\"bam\": 199, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:ARROWEX",
+        "projectile:ARROWFLB",
+        "projectile:ARROWFLG",
+        "projectile:ARROWFLI",
+        "projectile:ARROWFLM"
+      ],
+      "production_snapshot": {
+        "spatial_state": "produced",
+        "interpolation_state": "produced",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      }
+    },
+    {
+      "number": 29,
+      "bam": "SPGLYPTI",
+      "representative_projectile": "ICEGLYP",
+      "source": "effects/ressources/SPGLYPTI/source.bam",
+      "source_sha256": "3552d340b50ca1cf06e5de79c1c0d5ccde61d38b4a22dd8d87b939a33722af08",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 10,
+      "frame_dimensions": [
+        50,
+        49
+      ],
+      "frame_center": [
+        25,
+        45
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        50,
+        49
+      ],
+      "display_scale": "x3",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "ebfbed9530aafabbfcc12ce25e8b6fc3e83d93c3b5472a340f1d18752b4d2eae"
+      },
+      "palette_rgb_sha256": "763cb3d6fa1f027f4f7129ef20d8324ee99b014ada7ee4353fe01be307a5ea99",
+      "consumer": {
+        "asset_key": "effects:bam:SPGLYPTI",
+        "consumer_key": "projectile:ICEGLYP",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "2AFDE7C82CD8C3767EAD93554B13A1154A3B22397C6E2D27910826EE6531DCCB",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 640, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:ICEGLYP",
+        "projectile:OHSYMBOL",
+        "projectile:TRAPGLYP"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 30,
+      "bam": "SPGREORB",
+      "representative_projectile": "SPGREORB",
+      "source": "effects/ressources/SPGREORB/source.bam",
+      "source_sha256": "025377c0c20b744d092354e341395a85eabbcd9f55415eb8c06418416be73c55",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 6,
+      "frame_dimensions": [
+        54,
+        53
+      ],
+      "frame_center": [
+        27,
+        27
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        54,
+        53
+      ],
+      "display_scale": "x2",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "2ecf5607fb97449bb93aa4bf57577b5ba7b7e65e5dde0fdd4643abac22d36079"
+      },
+      "palette_rgb_sha256": "834faf52da68b067765045ac65a27ca0d8974da6dc5d32561cfae73c123f3001",
+      "consumer": {
+        "asset_key": "effects:bam:SPGREORB",
+        "consumer_key": "projectile:SPGREORB",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "74B5EF2AD4A4DFA9756F12F1691913DDFB4B04D05D172110D52B704645B71C35",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "27;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 144, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:SPGREORB"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 31,
+      "bam": "SPINSECT",
+      "representative_projectile": "INSEC3",
+      "source": "effects/ressources/SPINSECT/source.bam",
+      "source_sha256": "5d254006325a3aaedb42ae53362128042a71850e75277277a46bfbb7a86f92fc",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 39,
+      "frame_dimensions": [
+        113,
+        90
+      ],
+      "frame_center": [
+        57,
+        100
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        113,
+        90
+      ],
+      "display_scale": "x1",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "8c86071d728560f18388515652087bc9de7add2bdca20f92d9828b6f6c9a7665"
+      },
+      "palette_rgb_sha256": "932b8b95b7e49802d3883c994298bcff256f7ac4b9bcc538ecac0f0bafd2f7c9",
+      "consumer": {
+        "asset_key": "effects:bam:SPINSECT",
+        "consumer_key": "projectile:INSEC3",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "03E0C944EF7FC090F8D0E40828F4B2DF74EEA1F41E03D47496B6295F9783B0D6",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 8, \"extended\": 4194368}"
+      },
+      "all_travel_consumers": [
+        "projectile:INSEC3",
+        "projectile:INSEC4"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 32,
+      "bam": "SPIPLARI",
+      "representative_projectile": "INSEC1",
+      "source": "effects/ressources/SPIPLARI/source.bam",
+      "source_sha256": "5ce9cf15e26185fe27274e263778b4e7677176c9c48c980c6a3563fca70f857b",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 7,
+      "frame_dimensions": [
+        114,
+        85
+      ],
+      "frame_center": [
+        63,
+        42
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        114,
+        85
+      ],
+      "display_scale": "x1",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "0fbe099dd3927483d2ce9fcb4a116325566ef07928e0ce2adc810bbddb19c95f"
+      },
+      "palette_rgb_sha256": "a4ba5e810889afd22e2422dd132790760555d7a60cf40573678c168b4b2783a9",
+      "consumer": {
+        "asset_key": "effects:bam:SPIPLARI",
+        "consumer_key": "projectile:INSEC1",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "137EBD60DFDF1FCCBB6BE666BC4FE6D11547406A070626C42DBC02B14539D7AA",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 8, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:INSEC1",
+        "projectile:INSEC2"
+      ],
+      "production_snapshot": {
+        "spatial_state": "not-started",
+        "interpolation_state": "not-started",
+        "qa_state": "not-assessed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 33,
+      "bam": "SPLIGHTB",
+      "representative_projectile": "LIGHTB",
+      "source": "effects/ressources/SPLIGHTB/source.bam",
+      "source_sha256": "a8ef072a3068237d9107e9876accaf6d1369cde57c60e9d520951ac1689a91d2",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 26,
+      "frame_dimensions": [
+        37,
+        90
+      ],
+      "frame_center": [
+        18,
+        45
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        37,
+        90
+      ],
+      "display_scale": "x1",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "e07587ef1cd29b6457362ce292633ad8481832c4a3a42b10fc6cd3c567275975"
+      },
+      "palette_rgb_sha256": "5994b79323d2502cbbf500245c0ba27db364a61712581c0dd422fc0eb750331e",
+      "consumer": {
+        "asset_key": "effects:bam:SPLIGHTB",
+        "consumer_key": "projectile:LIGHTB",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "156FD9C91D53B618D1537F24AA16B4DD1C9FC34EF01548912BE128BEF4045872",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "5",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "67;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 128, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:LIGHTB",
+        "projectile:LIGHTBLT",
+        "projectile:LIGHTGRN",
+        "projectile:LIGHTNB"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 34,
+      "bam": "SPMAGMIS",
+      "representative_projectile": "MAGICMIS",
+      "source": "effects/ressources/SPMAGMIS/source.bam",
+      "source_sha256": "bee7d9c8bd7e82ba7427968a00cdf1ffa7d58a71e92e39fa56b3a21e0b167944",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 0,
+      "frame_dimensions": [
+        64,
+        64
+      ],
+      "frame_center": [
+        32,
+        32
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "display_scale": "x2",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "5e12ffb565dc20d2f7e2abda40735771e67bc37ac7327b8b67b43be1ddea126d"
+      },
+      "palette_rgb_sha256": "f218f138c31f8ce56d88cc1c3aae8ad820f9c03e0bb546487a3daf14ffb0ccd6",
+      "consumer": {
+        "asset_key": "effects:bam:SPMAGMIS",
+        "consumer_key": "projectile:MAGICMIS",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "8060ECF0DEF1E4A23EB3B65FEFD0850DE5AB50290B02DA909EBCCB9367DDC5CF",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 704, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:MAGICMIS"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 35,
+      "bam": "SPRDRABU",
+      "representative_projectile": "DRAGGREE",
+      "source": "effects/ressources/SPRDRABU/source.bam",
+      "source_sha256": "74af0116497ef37865a0b8ecf154b1c616839f1cbf20c6d7f0f9ed233ce02e42",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 3,
+      "frame_dimensions": [
+        83,
+        201
+      ],
+      "frame_center": [
+        42,
+        -17
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        83,
+        201
+      ],
+      "display_scale": "x0.78",
+      "palette_kind": "external-bmp",
+      "palette_source": {
+        "bmp": "SPGDRABU",
+        "sha256": "cf7cc4cccc75b653683457fb29bf4097b9e277f5e0b487ce7f9ab7797fbdfbf9"
+      },
+      "palette_rgb_sha256": "bcabed23f48bf14983fa43681f2961be7c36bb3cb5ed36f52f42835d3898cdda",
+      "consumer": {
+        "asset_key": "effects:bam:SPRDRABU",
+        "consumer_key": "projectile:DRAGGREE",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "88F2E988F48DFA591A593F86D62B281732AB126BC9A7746275D117715C2B9AD1",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "9",
+        "blend": "",
+        "palette": "SPGDRABU",
+        "color_enabled": "0",
+        "colors": "67;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 144, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:DRAGGREE",
+        "projectile:DRAGRED"
+      ],
+      "production_snapshot": {
+        "spatial_state": "produced",
+        "interpolation_state": "produced",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      }
+    },
+    {
+      "number": 36,
+      "bam": "SPSCORCH",
+      "representative_projectile": "SCORCHER",
+      "source": "effects/ressources/SPSCORCH/source.bam",
+      "source_sha256": "4bc157a1bfc0eac6b7042e139dda591023759ba28456d9e059778c2df73b2d89",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 4,
+      "frame_dimensions": [
+        36,
+        61
+      ],
+      "frame_center": [
+        18,
+        12
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        36,
+        61
+      ],
+      "display_scale": "x2",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "75c7c27560d44bafe82901aca70f5753c7125c4216309f410fa4df05a6924cb4"
+      },
+      "palette_rgb_sha256": "cd55d47dcf00e3976fde289c1d3556dddd9cbb3d6df3985ef8c4e2af4c06d8dd",
+      "consumer": {
+        "asset_key": "effects:bam:SPSCORCH",
+        "consumer_key": "projectile:SCORCHER",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "C83E11263396B10C5F296153EC12AEDAD7CA94F0A3CDD7060D55DF039D0BD4F8",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "5",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "50;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 640, \"extended\": 16384}"
+      },
+      "all_travel_consumers": [
+        "projectile:SCORCHER"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 37,
+      "bam": "SPSDBUR",
+      "representative_projectile": "DRAGSILV",
+      "source": "effects/ressources/SPSDBUR/source.bam",
+      "source_sha256": "dce395b30f6ec3f92f22ae38eb3576698f84bea5d561577ee05dafaa8f336574",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 3,
+      "frame_dimensions": [
+        105,
+        238
+      ],
+      "frame_center": [
+        93,
+        118
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        105,
+        238
+      ],
+      "display_scale": "x0.67",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "ccb6db7097c7ca59523bd37e716d2094a89c91a8a144c02e5373a6e339b968ba"
+      },
+      "palette_rgb_sha256": "b037a30a0f002b9381b27cba59bfbb413dfa5dafd70c4f271c4bf0f0df80862d",
+      "consumer": {
+        "asset_key": "effects:bam:SPSDBUR",
+        "consumer_key": "projectile:DRAGSILV",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "561F72628810829D0C26CDA2791D3D0810377D00D848496BFB412D1D08793B39",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "9",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "67;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 144, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:DRAGSILV"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 38,
+      "bam": "SPSETSCD",
+      "representative_projectile": "TRAPBOOM",
+      "source": "effects/ressources/SPSETSCD/source.bam",
+      "source_sha256": "e09333b0bd34880bff5b16fee37abdafea6426de9a450beee2f068be3d7fb0d0",
+      "cycle_zero_based": 1,
+      "frame_zero_based": 19,
+      "frame_dimensions": [
+        44,
+        38
+      ],
+      "frame_center": [
+        24,
+        14
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        44,
+        38
+      ],
+      "display_scale": "x4",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "789d539dc36e7cac000bda2f3819a927d1ff5b9925730f99883677b412860a8b"
+      },
+      "palette_rgb_sha256": "34b05510d1a5e4ac20d6cf60bb2f10bf94a3451f7738667ecb1af80fe0f06d3b",
+      "consumer": {
+        "asset_key": "effects:bam:SPSETSCD",
+        "consumer_key": "projectile:TRAPBOOM",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "3EB9A06B8BB5755E42D6032245D9ADBD10BB52D6B6657624D0C4590D17EF9DE1",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "1",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 640, \"extended\": 4194304}"
+      },
+      "all_travel_consumers": [
+        "projectile:TRAPBOOM",
+        "projectile:TRAPSPIK"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 39,
+      "bam": "SPSETTID",
+      "representative_projectile": "TRAPTIME",
+      "source": "effects/ressources/SPSETTID/source.bam",
+      "source_sha256": "cdfee4c72461bea4ebc29a905bc6362ce6d634c825eb8d3d2cdb459fd7ae8405",
+      "cycle_zero_based": 1,
+      "frame_zero_based": 15,
+      "frame_dimensions": [
+        40,
+        30
+      ],
+      "frame_center": [
+        22,
+        8
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        40,
+        30
+      ],
+      "display_scale": "x4",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "70f83f7625489bc65e5ec2763d290332a0d881d549d6fb332260d63b8f173650"
+      },
+      "palette_rgb_sha256": "24edc3c30d623d31c7aecce68b3493306d0b19518fb32ee44d2bda4a8785ba40",
+      "consumer": {
+        "asset_key": "effects:bam:SPSETTID",
+        "consumer_key": "projectile:TRAPTIME",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "3E92B258C9C96D944D8758A7FEE4293039117F11B4F7AF3DC326B4C596486520",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "1",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 640, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:TRAPTIME"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 40,
+      "bam": "SPSKULLT",
+      "representative_projectile": "PSKULLT",
+      "source": "effects/ressources/SPSKULLT/source.bam",
+      "source_sha256": "64b6cc67dc0e40f61d20779a44551609b26aa5b8dfd5781b52f61c949d328d62",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 6,
+      "frame_dimensions": [
+        80,
+        80
+      ],
+      "frame_center": [
+        40,
+        40
+      ],
+      "visible_bbox": [
+        29,
+        13,
+        51,
+        50
+      ],
+      "display_scale": "x4",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "7043aa17986df275b39ceb70a652d7ab8f5a5d799779d8b0ec4240bc7aba7e8c"
+      },
+      "palette_rgb_sha256": "1b8ce5c853d977bbc54644578f63c5ebce2d6ab3e5dfe921d96826f5e97c3db3",
+      "consumer": {
+        "asset_key": "effects:bam:SPSKULLT",
+        "consumer_key": "projectile:PSKULLT",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "41224DF9A57850588992A8CCC76ACEB74DE55276424AC9EE7E61AE059A0195ED",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "9",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 8, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:PSKULLT"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 41,
+      "bam": "SPSPAINI",
+      "representative_projectile": "ICGHIT",
+      "source": "effects/ressources/SPSPAINI/source.bam",
+      "source_sha256": "e6a80fe78290d815d532ce110f0ae9104f0a538e843e0281f3b58a2514c28c89",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 15,
+      "frame_dimensions": [
+        267,
+        194
+      ],
+      "frame_center": [
+        133,
+        108
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        267,
+        194
+      ],
+      "display_scale": "x0.81",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "c9b4f6c9c35d0480f582cb6cf66a36261bd374a465f013c25bc5d099e6f97065"
+      },
+      "palette_rgb_sha256": "a205c7f5bb521ab6a33cc50edd7e739b84b8f5d436694f86b0c56689d579a4f4",
+      "consumer": {
+        "asset_key": "effects:bam:SPSPAINI",
+        "consumer_key": "projectile:ICGHIT",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "C9FF4110E74C29880F7B6575A31363EF76E0F27E70904EED1FFDC06257DDBE77",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 0, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:ICGHIT"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 42,
+      "bam": "SPSPEART",
+      "representative_projectile": "PSPEART",
+      "source": "effects/ressources/SPSPEART/source.bam",
+      "source_sha256": "12279fa1215dd44277d6752e5878adb833b8189af20e37b4a94ee902c6052769",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 1,
+      "frame_dimensions": [
+        8,
+        37
+      ],
+      "frame_center": [
+        3,
+        40
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        8,
+        37
+      ],
+      "display_scale": "x4",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "4f351340c23a34c89b1ee69be2693b332c2427d9ea5cef7c0c5b75fb2647daba"
+      },
+      "palette_rgb_sha256": "aeb51ea6783f761f456553b03c0596be137092772419db936e86bb9c5dad78b4",
+      "consumer": {
+        "asset_key": "effects:bam:SPSPEART",
+        "consumer_key": "projectile:PSPEART",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "6ABF9F421B6774655B0CC52656C3A816B8FF6F2B0BA67BBA76BBE50EB689C267",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "5",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 128, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:PSPEART"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 43,
+      "bam": "SPSTRMVA",
+      "representative_projectile": "STRMVENG",
+      "source": "effects/ressources/SPSTRMVA/source.bam",
+      "source_sha256": "b21368ef03e0ea1cb1a808858129b51d4ec76c52e287ad5da21b7ee147cd0d08",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 5,
+      "frame_dimensions": [
+        103,
+        115
+      ],
+      "frame_center": [
+        48,
+        100
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        103,
+        115
+      ],
+      "display_scale": "x1",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "d76d5a8165272af2bc31b5edf06bfa4a033cf4a8f3d56afe3290fe317bf7f6b1"
+      },
+      "palette_rgb_sha256": "db2d985012c32cefcf4bae8c23d7b987789ec55273e4cc8181f02a71508f83f5",
+      "consumer": {
+        "asset_key": "effects:bam:SPSTRMVA",
+        "consumer_key": "projectile:STRMVENG",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "A318A06A9346D1A360BFD5DFB9610243B370176193DAD4AB49B82772A275FB62",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "67;67;67;67;67;67;67",
+        "flags_json": "{\"bam\": 128, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:STRMVENG"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 44,
+      "bam": "STNKCLDT",
+      "representative_projectile": "BDWOFOG",
+      "source": "effects/ressources/STNKCLDT/source.bam",
+      "source_sha256": "6f00cb7c03e2cdb0fda8801011c7f70636895898d4da176734e5cd63c93ace56",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 0,
+      "frame_dimensions": [
+        20,
+        20
+      ],
+      "frame_center": [
+        9,
+        11
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        20,
+        20
+      ],
+      "display_scale": "x4",
+      "palette_kind": "seven-native-ranges",
+      "palette_source": {
+        "bmp": "MPALETTE",
+        "sha256": "7a9a654d5cbc4cee0ca211be05d24fb54bf8298a781c074882000d5f829d66dd",
+        "colors": [
+          191,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "palette_rgb_sha256": "9b7dbec2e8b6f3deeb1c52aa24f1afaf13ecfacec1848ca65d3e650f63f7de3f",
+      "consumer": {
+        "asset_key": "effects:bam:STNKCLDT",
+        "consumer_key": "projectile:BDWOFOG",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "8B5FAAFE3FC53B08602D6FB8A3B2F1FD804FA0EABA6F3009532F66CD97C39991",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "1",
+        "colors": "191;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 137, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:BDWOFOG",
+        "projectile:CLOUD",
+        "projectile:CLOUDKIL",
+        "projectile:CLOUDPC",
+        "projectile:GOLCLOUD",
+        "projectile:ICESTORM",
+        "projectile:METSWARM",
+        "projectile:OHBICEW",
+        "projectile:PFIELD",
+        "projectile:PWILT",
+        "projectile:1PDEATHF",
+        "projectile:1PGSPORE",
+        "projectile:1PICECLD",
+        "projectile:1PINCIND",
+        "projectile:1PMANEGS",
+        "projectile:1PSLEEPC"
+      ],
+      "production_snapshot": {
+        "spatial_state": "produced",
+        "interpolation_state": "produced",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      }
+    },
+    {
+      "number": 45,
+      "bam": "TRAPGR",
+      "representative_projectile": "TRAPSNAR",
+      "source": "effects/ressources/TRAPGR/source.bam",
+      "source_sha256": "360e8e1dd5f1f943f3b2f97e0e7f1c15c187186db1e1ee126e7f779e04f53d40",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 0,
+      "frame_dimensions": [
+        36,
+        36
+      ],
+      "frame_center": [
+        18,
+        18
+      ],
+      "visible_bbox": [
+        4,
+        6,
+        32,
+        31
+      ],
+      "display_scale": "x4",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "9555d387411cee2984809162a2abc6c6650c2a83cf79e48af0dc492881546bc3"
+      },
+      "palette_rgb_sha256": "f8e296a1d4ef2562f591ddbdac49ce054d463f0dcea740b076bae38fdf39dce1",
+      "consumer": {
+        "asset_key": "effects:bam:TRAPGR",
+        "consumer_key": "projectile:TRAPSNAR",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "A95BF94862447C6A1227583682601E0610ED96841604E0BF3A9417B9C492FB13",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 8, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:TRAPSNAR"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    },
+    {
+      "number": 46,
+      "bam": "TRAVEL",
+      "representative_projectile": "HOLD",
+      "source": "effects/ressources/TRAVEL/source.bam",
+      "source_sha256": "9b52906662e5993b2fc72c346acf94c79a864fc6e2e2c4b5b0320c67cbd6b9a3",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 3,
+      "frame_dimensions": [
+        36,
+        36
+      ],
+      "frame_center": [
+        18,
+        18
+      ],
+      "visible_bbox": [
+        1,
+        1,
+        36,
+        35
+      ],
+      "display_scale": "x4",
+      "palette_kind": "external-bmp",
+      "palette_source": {
+        "bmp": "STTRAVL2",
+        "sha256": "41137dfc420f713ccbd05904f6216f0d34862321e5092707593d9a70739a6e71"
+      },
+      "palette_rgb_sha256": "7a7b1ed6fbb2dc179eed2d1047f91bb83d0ff1dd7695220bd06600ec1a70e7c7",
+      "consumer": {
+        "asset_key": "effects:bam:TRAVEL",
+        "consumer_key": "projectile:HOLD",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "B2A499B865CE580B4904DFF19A2C010FF5334C0D167A7AEEE95AD46BD6358CC8",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "STTRAVL2",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 128, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:HOLD",
+        "projectile:HOLDNECR",
+        "projectile:HOLDSUMM",
+        "projectile:OHCL937",
+        "projectile:SLEEP",
+        "projectile:SPARBLNP",
+        "projectile:SPARBLPA",
+        "projectile:SPARCHNP",
+        "projectile:SPARCHPA",
+        "projectile:SPARGONP",
+        "projectile:SPARGOPA",
+        "projectile:SPARGRNP",
+        "projectile:SPARGRPA",
+        "projectile:SPARICNP",
+        "projectile:SPARICPA",
+        "projectile:SPARKLBL",
+        "projectile:SPARKLCH",
+        "projectile:SPARKLGO",
+        "projectile:SPARKLGR",
+        "projectile:SPARKLIC",
+        "projectile:SPARKLMA",
+        "projectile:SPARKLOR",
+        "projectile:SPARKLPU",
+        "projectile:SPARKLRE",
+        "projectile:SPARKLST",
+        "projectile:SPARMANP",
+        "projectile:SPARMAPA",
+        "projectile:SPARORNP",
+        "projectile:SPARORPA",
+        "projectile:SPARPUNP",
+        "projectile:SPARPUPA",
+        "projectile:SPARRENP",
+        "projectile:SPARREPA",
+        "projectile:SPARSTNP",
+        "projectile:SPARSTPA",
+        "projectile:SPKLARBL",
+        "projectile:SPKLARCH",
+        "projectile:SPKLARGO",
+        "projectile:SPKLARGR",
+        "projectile:SPKLARIC",
+        "projectile:SPKLARMA",
+        "projectile:SPKLAROR",
+        "projectile:SPKLARPU",
+        "projectile:SPKLARRE",
+        "projectile:SPKLARST"
+      ],
+      "production_snapshot": {
+        "spatial_state": "produced",
+        "interpolation_state": "produced",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      }
+    },
+    {
+      "number": 47,
+      "bam": "TRDARTST",
+      "representative_projectile": "TRAPDART",
+      "source": "effects/ressources/TRDARTST/source.bam",
+      "source_sha256": "ec508dca1b37a22577b99bde4d93ae8005040734394128565eba7b9f4073d475",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 6,
+      "frame_dimensions": [
+        20,
+        29
+      ],
+      "frame_center": [
+        11,
+        20
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        20,
+        29
+      ],
+      "display_scale": "x4",
+      "palette_kind": "seven-native-ranges",
+      "palette_source": {
+        "bmp": "MPALETTE",
+        "sha256": "7a9a654d5cbc4cee0ca211be05d24fb54bf8298a781c074882000d5f829d66dd",
+        "colors": [
+          0,
+          0,
+          46,
+          0,
+          23,
+          27,
+          0
+        ]
+      },
+      "palette_rgb_sha256": "c6d492e7bd9e96367ab82e329c29f23708d58ac4818777c240cd5e6247837556",
+      "consumer": {
+        "asset_key": "effects:bam:TRDARTST",
+        "consumer_key": "projectile:TRAPDART",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "7935041BD9606A3DB990EAACAF3B392EF8EA52318646A03C7F7A666B1DCBD767",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "5",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "1",
+        "colors": "0;0;46;0;23;27;0",
+        "flags_json": "{\"bam\": 9, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:TRAPDART"
+      ],
+      "production_snapshot": {
+        "spatial_state": "produced",
+        "interpolation_state": "produced",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      }
+    },
+    {
+      "number": 48,
+      "bam": "WEBENTT",
+      "representative_projectile": "ENTANG2",
+      "source": "effects/ressources/WEBENTT/source.bam",
+      "source_sha256": "5e9941af73dea68ec8be6b78d38aa9250ba15cc5ac3b96a3a0f1f66bbb5fb69f",
+      "cycle_zero_based": 0,
+      "frame_zero_based": 3,
+      "frame_dimensions": [
+        21,
+        23
+      ],
+      "frame_center": [
+        10,
+        12
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        21,
+        23
+      ],
+      "display_scale": "x4",
+      "palette_kind": "seven-native-ranges",
+      "palette_source": {
+        "bmp": "MPALETTE",
+        "sha256": "7a9a654d5cbc4cee0ca211be05d24fb54bf8298a781c074882000d5f829d66dd",
+        "colors": [
+          65,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "palette_rgb_sha256": "c7223b5fc86692627ed93b600105937394dd9ff796add8fc112ed050262849f1",
+      "consumer": {
+        "asset_key": "effects:bam:WEBENTT",
+        "consumer_key": "projectile:ENTANG2",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "E9BF44BA17C683D16308762F846D1551F174C9D1F9BFDA457D55FC0A1465A106",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "0",
+        "orientations": "",
+        "mirror": "1",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "1",
+        "colors": "65;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 9, \"extended\": 0}"
+      },
+      "all_travel_consumers": [
+        "projectile:ENTANG2",
+        "projectile:WEB",
+        "projectile:WEB1P"
+      ],
+      "production_snapshot": {
+        "spatial_state": "produced",
+        "interpolation_state": "produced",
+        "qa_state": "not-assessed",
+        "installation_state": "not-installed"
+      }
+    },
+    {
+      "number": 49,
+      "bam": "WRITHING",
+      "representative_projectile": "WRITHING",
+      "source": "effects/ressources/WRITHING/source.bam",
+      "source_sha256": "fca64bcc0e624472f379049806bfe01ee0d1a2c72555a8346d9febf282255129",
+      "cycle_zero_based": 3,
+      "frame_zero_based": 27,
+      "frame_dimensions": [
+        132,
+        106
+      ],
+      "frame_center": [
+        61,
+        73
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        132,
+        106
+      ],
+      "display_scale": "x1",
+      "palette_kind": "embedded",
+      "palette_source": {
+        "bam_sha256": "fca64bcc0e624472f379049806bfe01ee0d1a2c72555a8346d9febf282255129"
+      },
+      "palette_rgb_sha256": "56a668e2b07f158981fb7d6cab3ecd09ff45716df0346a3a03e068e054e0fcee",
+      "consumer": {
+        "asset_key": "effects:bam:WRITHING",
+        "consumer_key": "projectile:WRITHING",
+        "relation": "travel-animation",
+        "via": "",
+        "source_sha256": "FC8C47BDF5328832A7F5AB06404FFC6A140A395FBA3FA120498543D636F96A98",
+        "owner_route": "projectile",
+        "native_fps": "",
+        "loop": "",
+        "cycles": "3",
+        "orientations": "",
+        "mirror": "5",
+        "blend": "",
+        "palette": "",
+        "color_enabled": "0",
+        "colors": "0;0;0;0;0;0;0",
+        "flags_json": "{\"bam\": 8, \"extended\": 4194368}"
+      },
+      "all_travel_consumers": [
+        "projectile:WRITHING"
+      ],
+      "production_snapshot": {
+        "spatial_state": "verified",
+        "interpolation_state": "verified",
+        "qa_state": "passed",
+        "installation_state": "installed"
+      }
+    }
+  ]
+}

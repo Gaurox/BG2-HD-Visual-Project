@@ -1,0 +1,217 @@
+32d020: push rbx
+32d022: push rsi
+32d023: push r14
+32d025: push r15
+32d027: sub rsp, 0x88
+32d02e: mov rax, qword ptr [rip + 0x3379a3] ; b'2\xa2\xdf-\x99+'
+32d035: xor rax, rsp
+32d038: mov qword ptr [rsp + 0x60], rax
+32d03d: cmp byte ptr [rcx + 0xf81], 0
+32d044: mov r15, rdx
+32d047: mov rbx, qword ptr [rsp + 0xf0]
+32d04f: mov rsi, rcx
+32d052: mov rax, qword ptr [rsp + 0xd0]
+32d05a: mov r14, qword ptr [rsp + 0xd8]
+32d062: mov qword ptr [rsp + 0x48], rbx
+32d067: je 0x32d36f
+32d06d: mov qword ptr [rsp + 0xc0], rbp
+32d075: mov qword ptr [rsp + 0x78], r12
+32d07a: mov r12d, dword ptr [rsp + 0x108]
+32d082: mov qword ptr [rsp + 0x70], r13
+32d087: test r12d, r12d
+32d08a: jne 0x32d097
+32d08c: movzx r12d, word ptr [rcx + 0xf82]
+32d094: neg r12d
+32d097: mov rax, qword ptr [rax]
+32d09a: movups xmm0, xmmword ptr [r9]
+32d09e: mov qword ptr [rsp + 0x40], rax
+32d0a3: shr rax, 0x20
+32d0a7: add eax, r12d
+32d0aa: mov dword ptr [rsp + 0x44], eax
+32d0ae: movzx eax, byte ptr [rcx + 0xf8a]
+32d0b5: cmp word ptr [rcx + 0xf88], ax
+32d0bc: mov ecx, dword ptr [rsp + 0xe0]
+32d0c3: movups xmmword ptr [rsp + 0x50], xmm0
+32d0c8: jle 0x32d0d0
+32d0ca: or ecx, dword ptr [rip + 0x27527c] ; b'\x10'
+32d0d0: movzx r8d, byte ptr [rsi + 0x5f4]
+32d0d8: mov eax, ecx
+32d0da: movzx r9d, byte ptr [rsi + 0x5f5]
+32d0e2: or eax, 8
+32d0e5: mov rdx, qword ptr [rsi + 0xcd8]
+32d0ec: test r8b, r8b
+32d0ef: movzx r13d, byte ptr [rsp + 0x110]
+32d0f8: cmove eax, ecx
+32d0fb: mov ecx, eax
+32d0fd: or ecx, 0x2200
+32d103: test r9b, r9b
+32d106: cmove ecx, eax
+32d109: test rdx, rdx
+32d10c: jne 0x32d12e
+32d10e: movzx eax, byte ptr [rsi + 0xf80]
+32d115: test al, al
+32d117: jne 0x32d12e
+32d119: test r13b, r13b
+32d11c: jne 0x32d12e
+32d11e: test cl, 8
+32d121: jne 0x32d12e
+32d123: or ecx, dword ptr [rip + 0x27521f] ; b''
+32d129: or ecx, 1
+32d12c: jmp 0x32d13b
+32d12e: or ecx, dword ptr [rip + 0x275210] ; b'\x80'
+32d134: movzx eax, byte ptr [rsi + 0xf80]
+32d13b: mov ebp, ecx
+32d13d: or ebp, 4
+32d140: test rdx, rdx
+32d143: cmove ebp, ecx
+32d146: test al, al
+32d148: jne 0x32d14f
+32d14a: test r13b, r13b
+32d14d: je 0x32d152
+32d14f: or ebp, 2
+32d152: cmp byte ptr [rsi + 0x5f6], 0
+32d159: jne 0x32d165
+32d15b: test r8b, r8b
+32d15e: jne 0x32d165
+32d160: test r9b, r9b
+32d163: je 0x32d16b
+32d165: and ebp, 0xfffcffff
+32d16b: lea r9, [rsp + 0x40]
+32d170: mov qword ptr [rsp + 0x20], r14
+32d175: mov r8d, ebp
+32d178: lea rdx, [rsp + 0x50]
+32d17d: mov rcx, r15
+32d180: call 0x29e1b0
+32d185: mov r8d, ebp
+32d188: lea rdx, [rsp + 0x50]
+32d18d: mov rcx, r15
+32d190: call 0x29e190
+32d195: test eax, eax
+32d197: je 0x32d35d
+32d19d: cmp byte ptr [rsi + 0x5f6], 0
+32d1a4: mov qword ptr [rsp + 0x80], rdi
+32d1ac: jne 0x32d1d7
+32d1ae: cmp byte ptr [rsi + 0x5f4], 0
+32d1b5: jne 0x32d1d7
+32d1b7: cmp byte ptr [rsi + 0x5f5], 0
+32d1be: jne 0x32d1d7
+32d1c0: mov rcx, qword ptr [rsi + 0xcd0]
+32d1c7: mov edx, dword ptr [rsp + 0xe8]
+32d1ce: add rcx, 8
+32d1d2: call 0x412690
+32d1d7: cmp dword ptr [rsi + 0xba8], 0
+32d1de: je 0x32d224
+32d1e0: mov rcx, qword ptr [rsi + 0xcb0]
+32d1e7: call 0x3f6d50
+32d1ec: mov rbx, qword ptr [rsi + 0xcb0]
+32d1f3: mov rcx, rbx
+32d1f6: call 0x3f7890
+32d1fb: mov rcx, rbx
+32d1fe: mov edi, eax
+32d200: call 0x3f78b0
+32d205: movzx r9d, word ptr [rip + 0x29346b] ; b''
+32d20d: mov rdx, rax
+32d210: mov rcx, qword ptr [rsi + 0xcd0]
+32d217: mov r8d, edi
+32d21a: call 0x4123c0
+32d21f: mov rbx, qword ptr [rsp + 0x48]
+32d224: mov rdx, qword ptr [rsi + 0xcd8]
+32d22b: xor edi, edi
+32d22d: test rdx, rdx
+32d230: je 0x32d24c
+32d232: mov r9d, dword ptr [r14 + 4]
+32d236: mov rcx, r15
+32d239: mov r8d, dword ptr [r14]
+32d23c: sub r9d, r12d
+32d23f: mov dword ptr [rsp + 0x28], edi
+32d243: mov dword ptr [rsp + 0x20], ebp
+32d247: call 0x29e260
+32d24c: cmp byte ptr [rsi + 0xf80], dil
+32d253: je 0x32d280
+32d255: test r13b, r13b
+32d258: je 0x32d279
+32d25a: movzx ecx, r13b
+32d25e: mov eax, 0x80808081
+32d263: shl ecx, 7
+32d266: imul ecx
+32d268: add edx, ecx
+32d26a: sar edx, 7
+32d26d: mov ecx, edx
+32d26f: shr ecx, 0x1f
+32d272: sub ecx, -0x80
+32d275: add ecx, edx
+32d277: jmp 0x32d28b
+32d279: mov ecx, 0x80
+32d27e: jmp 0x32d28b
+32d280: movzx ecx, r13b
+32d284: test r13b, r13b
+32d287: jne 0x32d28b
+32d289: mov ecx, edi
+32d28b: mov r9d, dword ptr [r14 + 4]
+32d28f: mov r8d, dword ptr [r14]
+32d292: mov rdx, qword ptr [rsi + 0xcd0]
+32d299: mov dword ptr [rsp + 0x28], ecx
+32d29d: mov rcx, r15
+32d2a0: mov dword ptr [rsp + 0x20], ebp
+32d2a4: call 0x29e260
+32d2a9: mov rax, qword ptr [rsi]
+32d2ac: mov rcx, rsi
+32d2af: call qword ptr [rax + 0x78]
+32d2b2: cmp al, byte ptr [rip + 0x26c471] ; b'\x02\x03\x01\x1f\x01\x03'
+32d2b8: je 0x32d2e8
+32d2ba: movzx eax, byte ptr [rsp + 0xf8]
+32d2c2: xor r9d, r9d
+32d2c5: mov r8d, dword ptr [rsp + 0x44]
+32d2ca: mov rcx, r15
+32d2cd: mov edx, dword ptr [rsp + 0x40]
+32d2d1: mov dword ptr [rsp + 0x38], ebp
+32d2d5: mov byte ptr [rsp + 0x30], al
+32d2d9: mov qword ptr [rsp + 0x28], rbx
+32d2de: mov qword ptr [rsp + 0x20], r14
+32d2e3: call 0x29e4c0
+32d2e8: lea r9, [rsp + 0x48]
+32d2ed: mov edx, ebp
+32d2ef: cmp dword ptr [rsp + 0x100], edi
+32d2f6: je 0x32d31b
+32d2f8: mov ecx, dword ptr [r14]
+32d2fb: lea r8, [rsp + 0x50]
+32d300: add ecx, dword ptr [rsp + 0x40]
+32d304: mov rax, qword ptr [rsp + 0x40]
+32d309: shr rax, 0x20
+32d30d: add eax, dword ptr [r14 + 4]
+32d311: mov dword ptr [rsp + 0x4c], eax
+32d315: mov dword ptr [rsp + 0x48], ecx
+32d319: jmp 0x32d323
+32d31b: mov qword ptr [rsp + 0x48], rdi
+32d320: xor r8d, r8d
+32d323: mov rcx, r15
+32d326: call 0x29ea40
+32d32b: mov eax, dword ptr [r14 + 4]
+32d32f: lea rdx, [rsp + 0x50]
+32d334: mov r9d, dword ptr [rsp + 0x44]
+32d339: mov rcx, r15
+32d33c: mov r8d, dword ptr [rsp + 0x40]
+32d341: mov dword ptr [rsp + 0x30], ebp
+32d345: mov dword ptr [rsp + 0x28], eax
+32d349: mov eax, dword ptr [r14]
+32d34c: mov dword ptr [rsp + 0x20], eax
+32d350: call 0x29df60
+32d355: mov rdi, qword ptr [rsp + 0x80]
+32d35d: mov r12, qword ptr [rsp + 0x78]
+32d362: mov rbp, qword ptr [rsp + 0xc0]
+32d36a: mov r13, qword ptr [rsp + 0x70]
+32d36f: mov rcx, qword ptr [rsp + 0x60]
+32d374: xor rcx, rsp
+32d377: call 0x4f77a0
+32d37c: add rsp, 0x88
+32d383: pop r15
+32d385: pop r14
+32d387: pop rsi
+32d388: pop rbx
+32d389: ret 
+32d38a: int3 
+32d38b: int3 
+32d38c: int3 
+32d38d: int3 
+32d38e: int3 
+32d38f: int3 

@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <filesystem>
+#include <span>
 
 #include "iee/area_animation_x4_registry.h"
 #include "iee/core/effect_frame_cache.h"
@@ -47,6 +48,11 @@ struct EngineTextureApi {
   void (*DrawPushState)(){};
   void (*DrawPopState)(){};
   std::byte* glTextureTable{};
+  const core::area_lighting::Transfer* paletteTransfer{};
+  unsigned paletteOpacity{255};
+  int canvasWidth{}, canvasHeight{}, offsetX{}, offsetY{};
+  std::span<const std::byte> nativeUnderlay{};
+  unsigned nativeOpacity{255};
 };
 
 struct Options {

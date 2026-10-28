@@ -336,13 +336,20 @@ struct EffectAnimationRuntime {
   std::uintptr_t infinityFxRender{};
   std::string_view infinityFxRenderSignature{};
   Streaming streaming{};
+  std::uintptr_t infinityFxLock{}, infinityFxRenderBam{};
+  std::string_view infinityFxLockSignature{}, infinityFxRenderBamSignature{};
+  std::uintptr_t vidCellFrameCenter{};
+  std::string_view vidCellFrameCenterSignature{};
 
   [[nodiscard]] constexpr bool validate() const noexcept {
     if (!enabled) return true;
     return projectileBamRender != 0 && projectileVidCell != 0 &&
            !projectileBamRenderSignature.empty() && vvcVidCellRender != 0 &&
            vvcVidCell != 0 && !vvcVidCellRenderSignature.empty() &&
-           infinityFxRender != 0 && !infinityFxRenderSignature.empty();
+           infinityFxRender != 0 && !infinityFxRenderSignature.empty() &&
+           infinityFxLock != 0 && infinityFxRenderBam != 0 &&
+           !infinityFxLockSignature.empty() && !infinityFxRenderBamSignature.empty() &&
+           vidCellFrameCenter != 0 && !vidCellFrameCenterSignature.empty();
   }
 };
 

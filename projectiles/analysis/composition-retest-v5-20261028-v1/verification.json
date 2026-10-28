@@ -1,0 +1,741 @@
+{
+  "recorded_utc": "2026-10-28T13:18:53.171834+00:00",
+  "status": "targeted-runtime-confirmed",
+  "scope": "V5 SKLT/SPCHRORB final HD layer with native prefix",
+  "installation": "engine/InfinityEngine-Enhancer/installations/projectiles-native-underlay-20261028-v5/installation.json",
+  "dll_sha256": "36541C5F212077AD247658DC60CBC6998D4594414D9E4028CDCA4F8DACE80CF5",
+  "session_start": "[2026-10-28 14:17:10.350] [info] Infinity Engine Enhancer initializing...",
+  "session_end": "[2026-10-28 14:17:37.766]",
+  "snapshot_sha256": "67C68D5E63491C643E99F5E7223A6C062B16238D62960CA4688FF03579ED31F4",
+  "source_first_line": 34237,
+  "checks": {
+    "SKLT": {
+      "final_draw_samples": 15,
+      "odd_phases": 7,
+      "phases": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "interval_ms": {
+        "min": 32.738,
+        "max": 33.8584,
+        "median": 33.2226
+      },
+      "native_surface": [
+        "[2026-10-28 14:17:29.867] [info] EFX_NATIVE_SURFACE resref=SKLT cell=7C133980 flags=30084 smokePalette=0000000000000000 opacity=255 source=24x24 offset=0,0 layers=2 nativePrefix=true nativeOpacity=255"
+      ],
+      "composition_or_mask_rejects": []
+    },
+    "SPCHRORB": {
+      "final_draw_samples": 16,
+      "odd_phases": 8,
+      "phases": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "interval_ms": {
+        "min": 32.2978,
+        "max": 33.8323,
+        "median": 33.3756
+      },
+      "native_surface": [
+        "[2026-10-28 14:17:36.079] [info] EFX_NATIVE_SURFACE resref=SPCHRORB cell=7C136400 flags=2008C smokePalette=0000000000000000 opacity=255 source=29x27 offset=13,0 layers=2 nativePrefix=true nativeOpacity=255"
+      ],
+      "composition_or_mask_rejects": []
+    }
+  },
+  "fragments_SKLH_events": [
+    "[2026-10-28 14:17:30.399] [info] EFX_NATIVE_SURFACE resref=SKLH cell=733EA3A0 flags=30084 smokePalette=0000000000000000 opacity=255 source=26x26 offset=0,0 layers=2 nativePrefix=true nativeOpacity=255",
+    "[2026-10-28 14:17:35.368] [info] EFX_STREAM_DIAGNOSTIC resref=SKLH stage=0x1 sequence=2 slot=2 phase=-1 logical=26x26",
+    "[2026-10-28 14:17:35.368] [info] EFX_STREAM_DIAGNOSTIC resref=SKLH stage=0x4 sequence=2 slot=2 phase=4 logical=26x26",
+    "[2026-10-28 14:17:35.368] [info] EFX_STREAM_DIAGNOSTIC resref=SKLH stage=0x10 sequence=2 slot=2 phase=4 logical=26x52",
+    "[2026-10-28 14:17:35.368] [info] EFX_STREAM_DIAGNOSTIC resref=SKLH stage=0x8 sequence=2 slot=2 phase=4 logical=26x52",
+    "[2026-10-28 14:17:35.368] [info] EFX_STREAM_DIAGNOSTIC resref=SKLH stage=0x20 sequence=5 slot=2 phase=4 logical=26x91"
+  ],
+  "phases": [
+    {
+      "line": 282,
+      "resref": "SKLT",
+      "slot": 0,
+      "phase": 0,
+      "backing": 0,
+      "canvas": [
+        24,
+        52
+      ],
+      "texture": [
+        96,
+        208
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192194646302,
+      "frequency": 10000000
+    },
+    {
+      "line": 283,
+      "resref": "SKLT",
+      "slot": 1,
+      "phase": 2,
+      "backing": 19,
+      "canvas": [
+        24,
+        52
+      ],
+      "texture": [
+        96,
+        208
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192194962848,
+      "frequency": 10000000
+    },
+    {
+      "line": 284,
+      "resref": "SKLT",
+      "slot": 1,
+      "phase": 3,
+      "backing": 20,
+      "canvas": [
+        24,
+        52
+      ],
+      "texture": [
+        96,
+        208
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192195292089,
+      "frequency": 10000000
+    },
+    {
+      "line": 286,
+      "resref": "SKLT",
+      "slot": 2,
+      "phase": 4,
+      "backing": 21,
+      "canvas": [
+        24,
+        52
+      ],
+      "texture": [
+        96,
+        208
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192195630570,
+      "frequency": 10000000
+    },
+    {
+      "line": 287,
+      "resref": "SKLT",
+      "slot": 2,
+      "phase": 5,
+      "backing": 22,
+      "canvas": [
+        24,
+        52
+      ],
+      "texture": [
+        96,
+        208
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192195961504,
+      "frequency": 10000000
+    },
+    {
+      "line": 288,
+      "resref": "SKLT",
+      "slot": 3,
+      "phase": 6,
+      "backing": 23,
+      "canvas": [
+        24,
+        52
+      ],
+      "texture": [
+        96,
+        208
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192196296052,
+      "frequency": 10000000
+    },
+    {
+      "line": 289,
+      "resref": "SKLT",
+      "slot": 3,
+      "phase": 7,
+      "backing": 24,
+      "canvas": [
+        24,
+        52
+      ],
+      "texture": [
+        96,
+        208
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192196634636,
+      "frequency": 10000000
+    },
+    {
+      "line": 291,
+      "resref": "SKLT",
+      "slot": 4,
+      "phase": 8,
+      "backing": 25,
+      "canvas": [
+        24,
+        52
+      ],
+      "texture": [
+        96,
+        208
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192196964436,
+      "frequency": 10000000
+    },
+    {
+      "line": 292,
+      "resref": "SKLT",
+      "slot": 4,
+      "phase": 9,
+      "backing": 26,
+      "canvas": [
+        24,
+        52
+      ],
+      "texture": [
+        96,
+        208
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192197299255,
+      "frequency": 10000000
+    },
+    {
+      "line": 293,
+      "resref": "SKLT",
+      "slot": 5,
+      "phase": 10,
+      "backing": 27,
+      "canvas": [
+        24,
+        52
+      ],
+      "texture": [
+        96,
+        208
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192197631481,
+      "frequency": 10000000
+    },
+    {
+      "line": 303,
+      "resref": "SKLT",
+      "slot": 5,
+      "phase": 11,
+      "backing": 28,
+      "canvas": [
+        24,
+        52
+      ],
+      "texture": [
+        96,
+        208
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192197960501,
+      "frequency": 10000000
+    },
+    {
+      "line": 305,
+      "resref": "SKLT",
+      "slot": 6,
+      "phase": 12,
+      "backing": 29,
+      "canvas": [
+        24,
+        52
+      ],
+      "texture": [
+        96,
+        208
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192198297148,
+      "frequency": 10000000
+    },
+    {
+      "line": 306,
+      "resref": "SKLT",
+      "slot": 6,
+      "phase": 13,
+      "backing": 30,
+      "canvas": [
+        24,
+        52
+      ],
+      "texture": [
+        96,
+        208
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192198635238,
+      "frequency": 10000000
+    },
+    {
+      "line": 309,
+      "resref": "SKLT",
+      "slot": 7,
+      "phase": 14,
+      "backing": 31,
+      "canvas": [
+        24,
+        52
+      ],
+      "texture": [
+        96,
+        208
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192198967204,
+      "frequency": 10000000
+    },
+    {
+      "line": 310,
+      "resref": "SKLT",
+      "slot": 7,
+      "phase": 15,
+      "backing": 32,
+      "canvas": [
+        24,
+        52
+      ],
+      "texture": [
+        96,
+        208
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192199294584,
+      "frequency": 10000000
+    },
+    {
+      "line": 568,
+      "resref": "SPCHRORB",
+      "slot": 1,
+      "phase": 2,
+      "backing": 33,
+      "canvas": [
+        57,
+        59
+      ],
+      "texture": [
+        228,
+        236
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192256777415,
+      "frequency": 10000000
+    },
+    {
+      "line": 569,
+      "resref": "SPCHRORB",
+      "slot": 1,
+      "phase": 3,
+      "backing": 34,
+      "canvas": [
+        57,
+        59
+      ],
+      "texture": [
+        228,
+        236
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192257109702,
+      "frequency": 10000000
+    },
+    {
+      "line": 570,
+      "resref": "SPCHRORB",
+      "slot": 2,
+      "phase": 4,
+      "backing": 35,
+      "canvas": [
+        57,
+        58
+      ],
+      "texture": [
+        228,
+        232
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192257432680,
+      "frequency": 10000000
+    },
+    {
+      "line": 571,
+      "resref": "SPCHRORB",
+      "slot": 2,
+      "phase": 5,
+      "backing": 36,
+      "canvas": [
+        57,
+        58
+      ],
+      "texture": [
+        228,
+        232
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192257769758,
+      "frequency": 10000000
+    },
+    {
+      "line": 572,
+      "resref": "SPCHRORB",
+      "slot": 3,
+      "phase": 6,
+      "backing": 37,
+      "canvas": [
+        57,
+        58
+      ],
+      "texture": [
+        228,
+        232
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192258101603,
+      "frequency": 10000000
+    },
+    {
+      "line": 573,
+      "resref": "SPCHRORB",
+      "slot": 3,
+      "phase": 7,
+      "backing": 38,
+      "canvas": [
+        57,
+        58
+      ],
+      "texture": [
+        228,
+        232
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192258434324,
+      "frequency": 10000000
+    },
+    {
+      "line": 574,
+      "resref": "SPCHRORB",
+      "slot": 4,
+      "phase": 8,
+      "backing": 39,
+      "canvas": [
+        56,
+        58
+      ],
+      "texture": [
+        224,
+        232
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192258768080,
+      "frequency": 10000000
+    },
+    {
+      "line": 575,
+      "resref": "SPCHRORB",
+      "slot": 4,
+      "phase": 9,
+      "backing": 40,
+      "canvas": [
+        56,
+        58
+      ],
+      "texture": [
+        224,
+        232
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192259106403,
+      "frequency": 10000000
+    },
+    {
+      "line": 576,
+      "resref": "SPCHRORB",
+      "slot": 5,
+      "phase": 10,
+      "backing": 41,
+      "canvas": [
+        54,
+        57
+      ],
+      "texture": [
+        216,
+        228
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192259434454,
+      "frequency": 10000000
+    },
+    {
+      "line": 577,
+      "resref": "SPCHRORB",
+      "slot": 5,
+      "phase": 11,
+      "backing": 42,
+      "canvas": [
+        54,
+        57
+      ],
+      "texture": [
+        216,
+        228
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192259771836,
+      "frequency": 10000000
+    },
+    {
+      "line": 578,
+      "resref": "SPCHRORB",
+      "slot": 6,
+      "phase": 12,
+      "backing": 43,
+      "canvas": [
+        55,
+        57
+      ],
+      "texture": [
+        220,
+        228
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192260105794,
+      "frequency": 10000000
+    },
+    {
+      "line": 579,
+      "resref": "SPCHRORB",
+      "slot": 6,
+      "phase": 13,
+      "backing": 44,
+      "canvas": [
+        55,
+        57
+      ],
+      "texture": [
+        220,
+        228
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192260444109,
+      "frequency": 10000000
+    },
+    {
+      "line": 580,
+      "resref": "SPCHRORB",
+      "slot": 7,
+      "phase": 14,
+      "backing": 45,
+      "canvas": [
+        56,
+        57
+      ],
+      "texture": [
+        224,
+        228
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192260773005,
+      "frequency": 10000000
+    },
+    {
+      "line": 581,
+      "resref": "SPCHRORB",
+      "slot": 7,
+      "phase": 15,
+      "backing": 46,
+      "canvas": [
+        56,
+        57
+      ],
+      "texture": [
+        224,
+        228
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192261107608,
+      "frequency": 10000000
+    },
+    {
+      "line": 582,
+      "resref": "SPCHRORB",
+      "slot": 8,
+      "phase": 16,
+      "backing": 47,
+      "canvas": [
+        55,
+        58
+      ],
+      "texture": [
+        220,
+        232
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192261441596,
+      "frequency": 10000000
+    },
+    {
+      "line": 583,
+      "resref": "SPCHRORB",
+      "slot": 8,
+      "phase": 17,
+      "backing": 48,
+      "canvas": [
+        55,
+        58
+      ],
+      "texture": [
+        220,
+        232
+      ],
+      "fps": [
+        30,
+        1
+      ],
+      "ticks": 192261773197,
+      "frequency": 10000000
+    }
+  ],
+  "limits": [
+    "No explicit V5 visual acceptance received",
+    "Native prefix pixels retained, only last layer HD",
+    "SKLH has HD+occlusion binds but transient CPU-not-ready stage0x10 and no final per-phase trace",
+    "Not a global243/124 validation"
+  ]
+}

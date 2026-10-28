@@ -1,0 +1,36 @@
+{
+  "owner_states": {
+    "technical-static-validated-no-new-systematic-test": 100,
+    "continue-existing-produced-components-only": 128,
+    "native-no-HD-job-no-test-requested": 13,
+    "native-dispatch-to-identify-no-new-production": 2
+  },
+  "no_inference": true,
+  "no_game_writes": true,
+  "planned_tests": 16,
+  "current_wave": 1,
+  "missing_outputs_excluded": [
+    "BGLRYU",
+    "SPCL236U",
+    "SPGLYPHI"
+  ],
+  "missing_resource_excluded": [
+    "MAGMIS"
+  ],
+  "scope": "Only existing produced components. Mixed chains may be tested for their produced parts, not closed over missing parts.",
+  "preserve_previous_tests": [
+    "PFIRE2/FIREBAT",
+    "CLOUDKIL/X58CLK",
+    "TRAPSKUL/SKLT/SKLH",
+    "CHROMORB/SPCHRORB",
+    "INSEC2",
+    "ICESTORM",
+    "LIGHTCHA sequence2"
+  ],
+  "remaining_nonstandard": [
+    "TSKULLNP has no direct SPL reference; use static reuse or a later verified driver, not an invented spell command",
+    "SHAREA child202 has no verified direct SPL in inventory",
+    "LIGHTCHA declared cycle9 requires native semantics review; previous cycle2 test preserved",
+    "Item-only projectiles and native FIREBALL enum paths require additional targeted drivers/observations"
+  ]
+}

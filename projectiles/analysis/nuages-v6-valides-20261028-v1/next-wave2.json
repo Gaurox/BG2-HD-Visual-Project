@@ -1,0 +1,50 @@
+[
+  {
+    "wave": "2",
+    "spell": "SPPR250",
+    "pro": "WRITHING",
+    "label": "Brouillard putride",
+    "watch": "WRITHING : vol, dispersion et couleur",
+    "assets": "SPSMPUFF;WRITHING;Y31N053",
+    "spell_sha256": "A1C3F5F5AF7D91960123905FE7FD24D6C92BA2BE62FCC0D9DB06ABBF51DECF1B",
+    "command": "C:Eval('ForceSpellRES(\"SPPR250\",Player2)',0)",
+    "state": "requested-next-wave",
+    "limit": "runtime and visual acceptance pending"
+  },
+  {
+    "wave": "2",
+    "spell": "SPPR450",
+    "pro": "BDSPFIRE",
+    "label": "Feu spirituel",
+    "watch": "BDSFIRET/H/A : vol, impact et dispersion",
+    "assets": "BDSFIREA;BDSFIREH;BDSFIRET;SPSMPUFF;Y31N053",
+    "spell_sha256": "4B90C3CBB633E0247B13BDF4C6B87FB1A05DE4B8104B083F988E461D5FEF99F1",
+    "command": "C:Eval('ForceSpellRES(\"SPPR450\",Player2)',0)",
+    "state": "requested-next-wave",
+    "limit": "runtime and visual acceptance pending"
+  },
+  {
+    "wave": "2",
+    "spell": "SPPR609",
+    "pro": "FDAWN",
+    "label": "Aube illusoire",
+    "watch": "FDAWNX/A : explosion et dispersion",
+    "assets": "FDAWNA;FDAWNX;Y31N009",
+    "spell_sha256": "20508CE3D96E4BEA0E587F3E0DEECB6D3EC1B8ABCC0534E2140C86C1532EE3A1",
+    "command": "C:Eval('ForceSpellRES(\"SPPR609\",Player2)',0)",
+    "state": "requested-next-wave",
+    "limit": "runtime and visual acceptance pending"
+  },
+  {
+    "wave": "2",
+    "spell": "SPWI925",
+    "pro": "COMET",
+    "label": "Comete",
+    "watch": "SPCOMTRV/EXP : vol et explosion",
+    "assets": "SPCOMEXP;SPCOMTRV;SPSMPUFF;Y31N053",
+    "spell_sha256": "BF3963EF31FE08061AEAEE84EAF3B6E76140F67695964699630C46E58363F6E6",
+    "command": "C:Eval('ForceSpellRES(\"SPWI925\",Player2)',0)",
+    "state": "requested-next-wave",
+    "limit": "runtime and visual acceptance pending"
+  }
+]

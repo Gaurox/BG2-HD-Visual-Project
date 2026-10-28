@@ -1,0 +1,10 @@
+# Nuage mortel — réutilisation alpha natif, V4
+
+- Installé : `installation.json`, DLL SHA `CEFBCB1986379DC23F526A2862E42DD75863D7FB96B55FACC0126DC46AB99C20`,3448320octets. V3 sauvegardée transactionnellement ; jeu/InfinityLoader absents au contrôle hors sandbox.
+- Défaut et six testsV3 : `projectiles/analysis/six-tests-cloud-alpha-20261028-v1/README.md` et preuves ; nuage toujours lié àSPCLOUDK/binaryalpha au lieu du pack corrigéX58CLK existant. Variante correcte initialement limitée aux contrôleursVVC de test.
+- Sources : `src/iee/core/effect_texture_alias.h` + `hooks.cpp::read_effect_resref`. Identité de textureSPCLOUDK→X58CLK commune aux préchargements, résolution native/timeline et dessin final ; les cellules natives/PRO/BAM restent identiques. Autres ressources inchangées. Alias absent/non conforme → résolution refusée/repli natif, aucune réutilisation de l'ancien alpha opaque. X58CLK ajouté à la whitelistFX de cette même famille.
+- Preuve de compatibilité :425paires existantes, RGB/cycles/timelines/centres/géométrie/encodage identiques ; SHA des850fichiers vérifiés, carriers identiques. Alpha corrigé natif interpolé déjà produit, aucune nouvelle inférence ni réécritureRGBA.
+- Diagnostics : `EFX_TEXTURE_ALIAS native=SPCLOUDK runtime=X58CLK` = sélection, pas preuve de draw ; `EFX_BOUND_PHASE resref=X58CLK ...` après masque/dessin final = preuve réelle. Masque/repliV3 conservés ; trace finale étendue àX58CLK.
+- Build : `build/iee-projectile-secondary-links-20261028-v1/cloud-alpha-v4-build-final.log`. Tests2/2passants,0,90s : `cloud-alpha-v4-tests.log`, surface-owner/scope/alias + contrats moteur. `git diff --check` passé.
+- Installation : `python -B pipeline/recipes/projectiles-secondary-links-20261028-v1/install.py prepare-v4|install-v4`, déjà exécuté ; ne pas relancer sur ces reçus. DLL seule changée ;537ressources/manifeste/registre/PRO/INI/shaders/personnages/eau conservés. Aucune release.
+- **RetestV4en attente** : relancerInfinityLoader, `C:Eval('ForceSpellRES("SPWI502",Player2)',0)`. Comparer disparition du fond opaque et découpe décor ; capturer une nouvelle session. Aucun autre sort à rejouer pour ce changement.

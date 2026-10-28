@@ -257,6 +257,62 @@ bool exercise(const std::filesystem::path& root) {
   const auto recovery = iee::effect_animation_x4::texture_cache_stats();
   if (recovery.allocationFailures != 1 || recovery.reuses != 1 ||
       recovery.uploadFailures != 1 || recovery.residentTextures > 3) return false;
+  // A palette variant must never replace the neutral frame's cache entry.
+  iee::core::area_lighting::Transfer tint{};
+  for(unsigned c=0;c<3;++c) for(unsigned v=0;v<256;++v)
+    tint.rgb[c][v]=static_cast<std::uint8_t>(c==0?std::min(v+1,255u):v);
+  tint.valid=true;tint.fingerprint=iee::core::area_lighting::fingerprint(tint);
+  api.paletteTransfer=&tint;
+  if (!iee::effect_animation_x4::bind_frame_texture({0,2},api,previous)) return false;
+  std::vector<unsigned char> tinted(logical_size(2)*logical_size(2)*64);
+  glBindTexture(GL_TEXTURE_2D,names[boundSlot]);
+  glGetTexImage(GL_TEXTURE_2D,0,GL_RGBA,GL_UNSIGNED_BYTE,tinted.data());
+  if (tinted[0]!=3 || tinted[1]!=0 || tinted[2]!=0 || tinted[3]!=255) {
+    std::cerr << "palette variant pixel=" << unsigned(tinted[0]) << ',' << unsigned(tinted[1])
+        << ',' << unsigned(tinted[2]) << ',' << unsigned(tinted[3]) << '\n';
+    return false;
+  }
+  iee::effect_animation_x4::restore_texture(api,previous);
+  api.paletteTransfer=nullptr;
+  if (!verifyFrame(2)) return false;
+  api.canvasWidth=4;api.canvasHeight=5;api.offsetX=1;api.offsetY=2;
+  if (!iee::effect_animation_x4::bind_frame_texture({0,2},api,previous)) return false;
+  glBindTexture(GL_TEXTURE_2D,names[boundSlot]);
+  std::vector<unsigned char> canvas(4*5*64);
+  glGetTexImage(GL_TEXTURE_2D,0,GL_RGBA,GL_UNSIGNED_BYTE,canvas.data());
+  for(int y=0;y<20;++y) for(int x=0;x<16;++x) {
+    const auto at=(y*16+x)*4;
+    const bool inside=x>=4 && x<12 && y>=8 && y<16;
+    if (canvas[at]!=(inside?2:0) || canvas[at+1]!=0 || canvas[at+2]!=0 ||
+        canvas[at+3]!=(inside?255:0)) return false;
+  }
+  iee::effect_animation_x4::restore_texture(api,previous);
+  // Native prefix + last HD layer on the real GL uploader. A changed shadow
+  // or native alpha must not reuse another composite's GPU cache entry.
+  std::vector<std::byte> prefix(4*5*4);
+  for(std::size_t p=0;p<prefix.size();p+=4) {
+    prefix[p]=std::byte{11};prefix[p+1]=std::byte{22};
+    prefix[p+2]=std::byte{33};prefix[p+3]=std::byte{99};
+  }
+  api.nativeUnderlay=prefix;api.nativeOpacity=127;
+  const auto verifyComposite=[&](unsigned corner,unsigned alpha) {
+    if(!iee::effect_animation_x4::bind_frame_texture({0,2},api,previous)) return false;
+    glBindTexture(GL_TEXTURE_2D,names[boundSlot]);
+    glGetTexImage(GL_TEXTURE_2D,0,GL_RGBA,GL_UNSIGNED_BYTE,canvas.data());
+    const auto center=(8*16+4)*4;
+    const bool ok=canvas[0]==corner && canvas[1]==22 && canvas[2]==33 && canvas[3]==99 &&
+        canvas[center]==2 && canvas[center+1]==0 && canvas[center+2]==0 && canvas[center+3]==alpha;
+    iee::effect_animation_x4::restore_texture(api,previous);
+    return ok;
+  };
+  if(!verifyComposite(11,127)) return false;
+  prefix[0]=std::byte{55};if(!verifyComposite(55,127)) return false;
+  api.nativeOpacity=191;if(!verifyComposite(55,191)) return false;
+  api.nativeUnderlay={};api.nativeOpacity=255;
+  api.offsetX=-1;
+  if (iee::effect_animation_x4::bind_frame_texture({0,2},api,previous)) return false;
+  api.canvasWidth=api.canvasHeight=api.offsetX=api.offsetY=0;
+  if (!verifyFrame(2)) return false;
   iee::effect_animation_x4::release_gpu(api); collect();
   iee::effect_animation_x4::release_gpu(api); iee::effect_animation_x4::release();
   iee::effect_animation_x4::Options byteOptions;

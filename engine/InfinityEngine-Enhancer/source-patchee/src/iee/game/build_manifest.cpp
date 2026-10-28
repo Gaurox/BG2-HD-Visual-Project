@@ -383,6 +383,11 @@ constexpr BuildManifest kKnownBuilds[] = {
              // its last call, not this prologue. Do not detour DecodeProjectile.
              "48 89 5C 24 10 48 89 74 24 18 48 89 7C 24 20 55 41 54 41 55 41 56 41 57"},
             // EFFECT_STREAMING_ABI_END
+            0x29E190, 0x29E260,
+            "48 8B 05 ? ? ? ? 48 8B 88 10 02 00 00 E9 ? ? ? ?",
+            "40 53 57 41 54 41 55 41 57 48 83 EC 50 48 8B 0D ? ? ? ? 33 FF 33 DB",
+            0x411660,
+            "48 89 5C 24 10 48 89 74 24 18 57 48 83 EC 20 48 8B F9 33 DB 48 8B 89 08 01 00 00",
         },
         {
             true,

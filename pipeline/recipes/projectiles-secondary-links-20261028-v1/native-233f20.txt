@@ -1,0 +1,85 @@
+233f20: mov r11, rsp
+233f23: push rbp
+233f24: push r12
+233f26: push r14
+233f28: lea rbp, [r11 - 0x5f]
+233f2c: sub rsp, 0xc0
+233f33: mov rax, qword ptr [rip + 0x430a9e] ; b'2\xa2\xdf-\x99+'
+233f3a: xor rax, rsp
+233f3d: mov qword ptr [rbp + 0x17], rax
+233f41: cmp qword ptr [rcx + 0x18], 0
+233f46: mov r12, r8
+233f49: mov r14, rcx
+233f4c: je 0x234505
+233f52: movzx edx, byte ptr [rip + 0x38c726] ; b'\xff\x0c'
+233f59: mov qword ptr [r11 + 0x10], rbx
+233f5d: mov eax, edx
+233f5f: shl eax, 0x10
+233f62: mov ebx, edx
+233f64: shl ebx, 8
+233f67: or ebx, eax
+233f69: mov qword ptr [r11 - 0x28], rdi
+233f6d: mov rax, qword ptr [rcx]
+233f70: or ebx, edx
+233f72: mov qword ptr [r11 - 0x30], r13
+233f76: xor r13d, r13d
+233f79: mov qword ptr [rbp + 7], r13
+233f7d: call qword ptr [rax + 0xf8]
+233f83: mov edi, eax
+233f85: cmp dword ptr [r14 + 0x21c], r13d
+233f8c: je 0x2344ed
+233f92: movzx ecx, byte ptr [rip + 0x36ac52] ; b' \x0f'
+233f99: mov eax, dword ptr [r14 + 0x10]
+233f9d: mov r9, qword ptr [r14 + 0x18]
+233fa1: cdq 
+233fa2: mov r10d, dword ptr [r14 + 0xc]
+233fa6: idiv ecx
+233fa8: mov qword ptr [rsp + 0xb8], rsi
+233fb0: lea rsi, [r14 + 0xc]
+233fb4: movsx ecx, word ptr [r9 + 0xbbc]
+233fbc: movsx r8d, ax
+233fc0: mov eax, r10d
+233fc3: imul r8d, ecx
+233fc7: cdq 
+233fc8: movzx ecx, byte ptr [rip + 0x36ac1b] ; b'  \x0f'
+233fcf: idiv ecx
+233fd1: add r8w, ax
+233fd5: movsx rcx, r8w
+233fd9: test ecx, ecx
+233fdb: js 0x2344e5
+233fe1: cmp ecx, dword ptr [r9 + 0xbb8]
+233fe8: jge 0x2344e5
+233fee: mov rax, qword ptr [r9 + 0xbb0]
+233ff5: movzx ecx, word ptr [rax + rcx*2]
+233ff9: test word ptr [rip + 0x36abe8], cx ; b'\xff\x7f  \x0f'
+234000: je 0x2344e5
+234006: movzx ecx, byte ptr [rip + 0x366ff3] ; b'\x10\x0c\xff\x05@\x01\x01'
+23400d: lea r8, [r14 + 0x100]
+234014: mov eax, r10d
+234017: mov dword ptr [rsp + 0x20], 1
+23401f: cdq 
+234020: idiv ecx
+234022: movzx ecx, byte ptr [rip + 0x366fd8] ; b'\x0c\xff\x05@\x01\x01'
+234029: mov dword ptr [rbp - 0x29], eax
+23402c: mov eax, dword ptr [r14 + 0x10]
+234030: cdq 
+234031: idiv ecx
+234033: lea rcx, [r9 + 0xa60]
+23403a: mov r9b, 1
+23403d: lea rdx, [rbp - 0x29]
+234041: mov dword ptr [rbp - 0x25], eax
+234044: call 0x24c9d0
+234049: cmp al, byte ptr [rip + 0x366fb3] ; b'\xff\x05@\x01\x01'
+23404f: je 0x2344e5
+234055: mov qword ptr [rsp + 0xa0], r15
+23405d: cmp dword ptr [r14 + 0x1f8], r13d
+234064: je 0x23406a
+234066: bts edi, 0x10
+23406a: mov r15d, edi
+23406d: or r15d, 4
+234071: cmp dword ptr [r14 + 0x210], r13d
+234078: cmove r15d, edi
+23407c: .byte 0x66
+23407d: .byte 0x41
+23407e: .byte 0x83
+23407f: .byte 0xbe

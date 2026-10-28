@@ -13,6 +13,7 @@
 #include <filesystem>
 #include <iomanip>
 #include <limits>
+#include <map>
 #include <optional>
 #include <set>
 #include <sstream>
@@ -37,6 +38,11 @@
 #include "iee/core/hooking.h"
 #include "iee/core/area_animation_timeline.h"
 #include "iee/core/effect_playback_profile.h"
+#include "iee/core/effect_surface_owner.h"
+#include "iee/core/effect_smoke_palette.h"
+#include "iee/core/effect_secondary_scope.h"
+#include "iee/core/effect_texture_alias.h"
+#include "iee/core/effect_native_underlay.h"
 #include "iee/core/effect_presentation_trace.h"
 #include "iee/core/config.h"
 #include "iee/core/logger.h"
@@ -81,6 +87,8 @@ using VvcVidCellRenderFn = void (*)(void*, void*, void*);
 // earlier clipping-polygons draw, which has no CVidCell identity left at
 // RenderTexture.
 using ProjectileFxRenderFn = int (*)(void*, void*, int, int, int, int, int);
+using EffectFxLockFn = int (*)(void*, void*, int);
+using EffectFxRenderBamFn = int (*)(void*, void*, int, int, int, int);
 using EffectCellConstructFn = void* (*)(void*, std::uint64_t);
 using EffectCellDestructFn = void (*)(void*);
 using EffectVvcConfigureFn = std::uintptr_t (*)(void*, void*);
@@ -127,6 +135,12 @@ static core::Hook<GameStaticRenderBamFn> g_gameStaticRenderBamHook;
 static core::Hook<ProjectileBamRenderFn> g_projectileBamRenderHook;
 static core::Hook<VvcVidCellRenderFn> g_vvcVidCellRenderHook;
 static core::Hook<ProjectileFxRenderFn> g_projectileFxRenderHook;
+static core::Hook<EffectFxLockFn> g_effectFxLockHook;
+static core::Hook<EffectFxRenderBamFn> g_effectFxRenderBamHook;
+static void remove_effect_surface_hooks() noexcept {
+  (void)g_effectFxRenderBamHook.remove();
+  (void)g_effectFxLockHook.remove();
+}
 static core::Hook<EffectCellConstructFn> g_effectCellConstructHook;
 static core::Hook<EffectCellDestructFn> g_effectCellDestructHook;
 static core::Hook<EffectVvcConfigureFn> g_effectVvcConfigureHook;
@@ -314,6 +328,24 @@ void log_effect_animation_registry_fallback_slot_once(const std::array<char, 8>&
 }
 thread_local core::NativeOcclusionCorrelation* g_nativeOcclusionCorrelation = nullptr;
 thread_local core::NativeOcclusionMaskCapture* g_nativeOcclusionMaskCapture = nullptr;
+thread_local core::EffectSurfaceOwner g_effectSurfaceOwner;
+thread_local core::NativeOcclusionMaskCapture g_effectSurfaceMask;
+thread_local std::optional<core::NativeOcclusionCorrelation> g_effectSurfaceCorrelation;
+thread_local void* g_effectSurfaceRealizingCell{};
+thread_local core::area_lighting::Transfer g_effectSurfacePalette;
+thread_local const core::area_lighting::Transfer* g_effectDrawPalette{};
+thread_local unsigned g_effectSurfacePaletteOpacity{255}, g_effectDrawPaletteOpacity{255};
+struct EffectSurfacePlacement { int x{},y{},width{},height{}; bool valid{}; };
+thread_local EffectSurfacePlacement g_effectSurfacePlacement;
+thread_local const EffectSurfacePlacement* g_effectDrawPlacement{};
+thread_local std::array<std::int32_t,4> g_effectSurfaceRect{};
+thread_local std::vector<std::byte> g_effectSurfaceUnderlay;
+thread_local const std::vector<std::byte>* g_effectDrawUnderlay{};
+thread_local unsigned g_effectSurfaceNativeOpacity{255},g_effectDrawNativeOpacity{255};
+thread_local bool g_effectSurfaceOpacityValid{};
+thread_local bool g_effectNormalTextureProfile{};
+using EffectCellGeometryFn = int (*)(void*,void*);
+EffectCellGeometryFn g_effectCellCenter{},g_effectCellSize{};
 thread_local core::NativeOcclusionSampleGate g_nativeOcclusionSampleGate{};
 thread_local std::uint64_t g_nativeOcclusionSampleGeneration = 0;
 thread_local map_page_prewarm::PvrConsumeAttempt* g_activePvrConsumeAttempt = nullptr;
@@ -758,6 +790,32 @@ bool read_native_fx_surface(std::uint32_t flags, const void* clipRect,
       .height = height,
   };
   return true;
+}
+
+// Read the already drawn native prefix without modifying the locked FX buffer.
+// No readback or re-render: native shadows/overlays retain their actual pixels.
+bool capture_effect_native_underlay(std::uint32_t flags) noexcept {
+  g_effectSurfaceUnderlay.clear();
+  core::NativeFxSurfaceView surface{};
+  area_animation_x4::NativePixelEncoding encoding{};
+  if (!read_native_fx_surface(flags,g_effectSurfaceRect.data(),surface) ||
+      surface.width>1024 || surface.height>1024 ||
+      !core::safe_read(g_areaAnimationTextureApi.nativePixelEncoding,encoding) ||
+      encoding.type!=game::gl::UNSIGNED_INT_8_8_8_8_REV ||
+      (encoding.externalFormat!=game::gl::BGRA && encoding.externalFormat!=game::gl::RGBA)) return false;
+  const auto readable=std::size_t(surface.pitchBytes)*(surface.height-1)+std::size_t(surface.width)*4;
+  if(!core::is_readable(surface.pixels,readable)) return false;
+  try {
+    g_effectSurfaceUnderlay.resize(std::size_t(surface.width)*surface.height*4);
+    for(int y=0;y<surface.height;++y) for(int x=0;x<surface.width;++x) {
+      const auto* pixel=surface.pixels+std::size_t(y)*surface.pitchBytes+x*4;
+      auto* target=g_effectSurfaceUnderlay.data()+(std::size_t(y)*surface.width+x)*4;
+      target[0]=pixel[encoding.externalFormat==game::gl::BGRA?2:0];
+      target[1]=pixel[1];target[2]=pixel[encoding.externalFormat==game::gl::BGRA?0:2];
+      target[3]=pixel[3];
+    }
+    return true;
+  } catch(...) {g_effectSurfaceUnderlay.clear();return false;}
 }
 
 bool is_ar1300(const game::CGameArea* area) noexcept {
@@ -1295,6 +1353,18 @@ bool read_effect_resref(const void* address, std::array<char, 8>& resref) noexce
   game::ResrefBuffer canonical{};
   if (!game::read_runtime_resref(address, canonical)) return false;
   std::copy_n(canonical.begin(), resref.size(), resref.begin());
+  const auto native = resref;
+  resref = core::effect_texture_resref(native,g_effectNormalTextureProfile);
+  if (resref != native) {
+    static std::array<std::atomic<bool>,4> aliasLogged{};
+    const std::size_t aliasIndex=native==std::array<char,8>{'S','P','C','L','O','U','D','K'}?0:
+        native==std::array<char,8>{'S','P','C','L','O','U','D','S'}?1:
+        native==std::array<char,8>{'S','P','D','F','O','G','A','\0'}?2:3;
+    if (!aliasLogged[aliasIndex].exchange(true, std::memory_order_relaxed))
+      LOG_INFO("EFX_TEXTURE_ALIAS native={} runtime={}; existing native-palette alpha pack, "
+               "native resource and gameplay unchanged",
+               effect_animation_resref_name(native), effect_animation_resref_name(resref));
+  }
   return true;
 }
 
@@ -1864,6 +1934,17 @@ bool prepare_effect_animation_composition_hooks(AppContext& ctx) noexcept {
   const auto module = core::get_module_span(nullptr);
   if (!module) return false;
   const auto& effectRuntime = ctx.manifest->effectAnimations;
+  if (!matches_pattern_at_rva(*module, effectRuntime.infinityFxLock,
+                              effectRuntime.infinityFxLockSignature) ||
+      !matches_pattern_at_rva(*module, effectRuntime.infinityFxRenderBam,
+                              effectRuntime.infinityFxRenderBamSignature) ||
+      !matches_pattern_at_rva(*module, effectRuntime.vidCellFrameCenter,
+                              effectRuntime.vidCellFrameCenterSignature) ||
+      !matches_pattern_at_rva(*module, ctx.manifest->itemIcons.vidCellGetCurrentFrameSize,
+                              ctx.manifest->itemIcons.vidCellGetCurrentFrameSizeSignature)) {
+    LOG_WARN("Effect native FX cell bridge rejected: lock/BAM signature mismatch");
+    return false;
+  }
   if (effectRuntime.projectileBamRender > module->size ||
       !matches_pattern_at_rva(*module, effectRuntime.projectileBamRender,
                               effectRuntime.projectileBamRenderSignature)) {
@@ -1889,6 +1970,8 @@ bool prepare_effect_animation_composition_hooks(AppContext& ctx) noexcept {
     return false;
   }
   const auto moduleBase = reinterpret_cast<std::uintptr_t>(module->base);
+  g_effectCellCenter=reinterpret_cast<EffectCellGeometryFn>(moduleBase+effectRuntime.vidCellFrameCenter);
+  g_effectCellSize=reinterpret_cast<EffectCellGeometryFn>(moduleBase+ctx.manifest->itemIcons.vidCellGetCurrentFrameSize);
   const auto& cellRuntime = ctx.manifest->areaAnimations;
   const auto& flush = ctx.manifest->worldOverlay;
   if (!flush.enabled || !ctx.draw.DrawPushState || !ctx.draw.DrawPopState ||
@@ -2626,7 +2709,13 @@ static int detour_infinity_fx_render_clipping_polys(
     std::uint8_t dither, std::uint32_t flags) {
   const auto original = g_infinityFxRenderClippingPolysHook.original();
   core::NativeFxSurfaceView fxSurface{};
-  auto* maskCapture = g_nativeOcclusionMaskCapture;
+  // A projectile owner can draw a clipped glow, unlock it, then lock a second
+  // surface for the flight cell. The owner-wide capture would combine both
+  // allocations and fail closed. The single-cell FX pass owns its own mask,
+  // even when an enclosing projectile/VVC correlation is already active.
+  const bool effectSurface = g_nativeOcclusionBridgeEnabled &&
+      !g_creatureSpriteScope && g_effectSurfaceOwner.pending_candidate();
+  auto* maskCapture = effectSurface ? &g_effectSurfaceMask : g_nativeOcclusionMaskCapture;
   bool captureArmed = false;
   if (maskCapture) {
     if (read_native_fx_surface(flags, clipRect, fxSurface)) {
@@ -2637,7 +2726,9 @@ static int detour_infinity_fx_render_clipping_polys(
   }
   const int result = original(thisPtr, x, y, referenceZ, fxRect, clipRect, dither, flags);
   if (captureArmed) maskCapture->finish_call(fxSurface, result);
-  if (auto* correlation = g_nativeOcclusionCorrelation) {
+  auto* correlation = effectSurface && g_effectSurfaceCorrelation
+      ? &*g_effectSurfaceCorrelation : g_nativeOcclusionCorrelation;
+  if (correlation) {
     correlation->record_clipping({
         .infinity = reinterpret_cast<std::uintptr_t>(thisPtr),
         .x = x,
@@ -2923,14 +3014,146 @@ static void detour_vvc_vid_cell_render(void* thisPtr, void* gameArea, void* vidM
   g_spimpfrTraceSequence = previousTraceSequence;
 }
 
+static int detour_effect_fx_lock(void* infinity, void* rect, int flags) {
+  g_effectSurfaceOwner.begin(reinterpret_cast<std::uintptr_t>(infinity));
+  g_effectSurfaceMask = {};
+  g_effectSurfaceCorrelation.reset();
+  g_effectSurfacePalette = {};
+  g_effectSurfacePlacement = {};
+  g_effectSurfaceUnderlay.clear();
+  g_effectSurfaceOpacityValid=false;
+  g_effectSurfaceRect={};
+  (void)core::safe_read(rect,g_effectSurfaceRect);
+  const int result = g_effectFxLockHook.original()(infinity, rect, flags);
+  if (!result) g_effectSurfaceOwner.clear();
+  return result;
+}
+
+static int detour_effect_fx_render_bam(void* infinity, void* cell, int x, int y,
+                                      int flags, int transparency) {
+  const bool previousNormalProfile=g_effectNormalTextureProfile;
+  g_effectNormalTextureProfile=(flags & 8)==0;
+  std::array<char,8> ref{};
+  const bool registered = g_effectAnimationHooksEnabled &&
+      !g_creatureSpriteScope && read_registered_effect_resref(cell, ref) &&
+      core::effect_secondary_scope::enabled(ref);
+  g_effectSurfaceOwner.submit(reinterpret_cast<std::uintptr_t>(infinity),
+                              reinterpret_cast<std::uintptr_t>(cell), registered);
+  g_effectSurfaceUnderlay.clear();
+  g_effectSurfaceOpacityValid=false;
+  g_effectSurfaceNativeOpacity=255;
+  g_effectSurfacePlacement={};
+  if (g_effectSurfaceOwner.pending_candidate()) {
+    std::array<int,2> center{},size{};
+    if (g_effectCellCenter && g_effectCellSize &&
+        g_effectCellCenter(cell,center.data()) && g_effectCellSize(cell,size.data()))
+      g_effectSurfacePlacement={x-center[0],y-center[1],size[0],size[1],true};
+    if (g_effectSurfaceOwner.submissions()>1) {
+      // Native bit0x100 writes transparent source pixels too. Unsupported
+      // destructive writes must retain the complete native composition.
+      if ((flags & 0x100) || !capture_effect_native_underlay(flags))
+        g_effectSurfacePlacement.valid=false;
+    }
+    g_effectSurfaceCorrelation.emplace(core::NativeOcclusionOwner::ProjectileBam,
+        reinterpret_cast<std::uintptr_t>(cell), pack_probe_subject(ref));
+    effect_animation_x4::prefetch_resource(ref);
+    const auto key = reinterpret_cast<std::uintptr_t>(cell);
+    if (!effect_animation_x4::occurrence_serial(key))
+      (void)effect_animation_x4::begin_occurrence(key);
+  } else {
+    g_effectSurfaceCorrelation.reset();
+    g_effectSurfacePlacement = {};
+  }
+  const auto previousRealizingCell = g_effectSurfaceRealizingCell;
+  g_effectSurfaceRealizingCell = registered ? cell : nullptr;
+  const int result = g_effectFxRenderBamHook.original()(infinity, cell, x, y, flags, transparency);
+  g_effectSurfaceRealizingCell = previousRealizingCell;
+  g_effectNormalTextureProfile=previousNormalProfile;
+  return result;
+}
+
 static int detour_projectile_fx_render(void* thisPtr, void* sourceRect, int x, int y,
                                        int renderFlags, int transparency, int drawFlags) {
+  const bool previousNormalProfile=g_effectNormalTextureProfile;
+  g_effectNormalTextureProfile=(drawFlags & 8)==0;
+  // The surface records the CVidCell actually submitted, including CGameAnimation
+  // smoke, fragments, trail and area effects without a CProjectileBAM owner.
+  // The last registered layer may use a captured native prefix. Unknown top
+  // layers and unsupported compositions retain the complete native draw.
+  auto* surfaceCell = reinterpret_cast<void*>(
+      g_effectSurfaceOwner.candidate_cell(reinterpret_cast<std::uintptr_t>(thisPtr)));
+  const auto previousCell = g_effectAnimationCell;
+  const auto previousInstance = g_effectAnimationInstance;
+  std::array<char,8> surfaceRef{};
+  const bool smoke = surfaceCell && read_registered_effect_resref(surfaceCell, surfaceRef) &&
+      surfaceRef == std::array<char,8>{'S','P','S','M','P','U','F','F'};
+  const bool composed=g_effectSurfaceOwner.submissions()>1;
+  const bool compositionReady=!composed || (!smoke && g_effectSurfaceOpacityValid &&
+      !g_effectSurfaceUnderlay.empty());
+  const bool surfaceOwned = g_effectAnimationHooksEnabled && surfaceCell && g_effectSurfacePlacement.valid &&
+      compositionReady &&
+      (!smoke || g_effectSurfacePalette.valid) &&
+      !g_creatureSpriteScope;
+  const bool suppressOwner=composed && !surfaceOwned && !g_creatureSpriteScope;
+  if(suppressOwner) {
+    g_effectAnimationCell=nullptr;
+    std::array<char,8> ref{};
+    if(read_registered_effect_resref(previousCell,ref) &&
+        effect_animation_x4::mark_diagnostic_stage_once(ref,0x20000000u))
+      LOG_INFO("EFX_COMPOSITE_REJECT resref={} layers={} placement={} prefixBytes={} "
+          "opacityValid={} opacity={}; complete native surface retained",
+          effect_animation_resref_name(ref),g_effectSurfaceOwner.submissions(),
+          g_effectSurfacePlacement.valid,g_effectSurfaceUnderlay.size(),
+          g_effectSurfaceOpacityValid,g_effectSurfaceNativeOpacity);
+  }
+  const auto* previousPalette = g_effectDrawPalette;
+  const auto previousOpacity = g_effectDrawPaletteOpacity;
+  const auto* previousPlacement=g_effectDrawPlacement;
+  const auto* previousUnderlay=g_effectDrawUnderlay;
+  const auto previousNativeOpacity=g_effectDrawNativeOpacity;
+  g_effectDrawUnderlay=surfaceOwned && composed ? &g_effectSurfaceUnderlay : nullptr;
+  g_effectDrawNativeOpacity=g_effectSurfaceNativeOpacity;
+  g_effectDrawPlacement=surfaceOwned ? &g_effectSurfacePlacement : nullptr;
+  g_effectDrawPalette = surfaceOwned && smoke ? &g_effectSurfacePalette : nullptr;
+  g_effectDrawPaletteOpacity = g_effectSurfacePaletteOpacity;
+  if (surfaceOwned) {
+    g_effectAnimationCell = surfaceCell;
+    g_effectAnimationInstance = previousInstance ? previousInstance : surfaceCell;
+    ++g_effectAnimationRenderDepth;
+    if (effect_animation_x4::mark_diagnostic_stage_once(surfaceRef, 0x40000000u)) {
+      LOG_INFO("EFX_NATIVE_SURFACE resref={} cell={:X} flags={:X} smokePalette={:016X} opacity={} "
+          "source={}x{} offset={},{} layers={} nativePrefix={} nativeOpacity={}",
+          std::string(surfaceRef.begin(), surfaceRef.end()),
+          reinterpret_cast<std::uintptr_t>(surfaceCell), drawFlags,
+          smoke ? g_effectSurfacePalette.fingerprint : 0,
+          smoke ? g_effectSurfacePaletteOpacity : 255,
+          g_effectSurfacePlacement.width,g_effectSurfacePlacement.height,
+          g_effectSurfacePlacement.x,g_effectSurfacePlacement.y,
+          g_effectSurfaceOwner.submissions(),composed,g_effectSurfaceNativeOpacity);
+    }
+  }
+  NativeOcclusionCorrelationOverride correlationOverride(surfaceOwned && g_effectSurfaceCorrelation
+      ? &*g_effectSurfaceCorrelation : g_nativeOcclusionCorrelation);
+  NativeOcclusionMaskCaptureOverride maskOverride(surfaceOwned
+      ? &g_effectSurfaceMask : g_nativeOcclusionMaskCapture);
   const bool scoped = g_effectAnimationHooksEnabled && g_effectAnimationRenderDepth > 0 &&
                       g_effectAnimationInstance && g_effectAnimationCell;
   if (scoped) ++g_effectAnimationFinalRenderDepth;
   const int result = g_projectileFxRenderHook.original()(
       thisPtr, sourceRect, x, y, renderFlags, transparency, drawFlags);
   if (scoped) --g_effectAnimationFinalRenderDepth;
+  if (surfaceOwned) {
+    --g_effectAnimationRenderDepth;
+    g_effectAnimationInstance = previousInstance;
+  }
+  if(surfaceOwned || suppressOwner) g_effectAnimationCell=previousCell;
+  g_effectSurfaceOwner.clear();
+  g_effectDrawPalette = previousPalette;
+  g_effectDrawPaletteOpacity = previousOpacity;
+  g_effectDrawPlacement=previousPlacement;
+  g_effectDrawUnderlay=previousUnderlay;
+  g_effectDrawNativeOpacity=previousNativeOpacity;
+  g_effectNormalTextureProfile=previousNormalProfile;
   return result;
 }
 
@@ -3668,6 +3891,30 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
 
   g_vidPaletteRealizeHook.original()(paletteThis, realizedOutput, flags, rangeEffects,
                                       transparency, arg6);
+  if (g_effectSurfaceRealizingCell && g_ctx && g_ctx->manifest &&
+      paletteThis == static_cast<std::byte*>(g_effectSurfaceRealizingCell) +
+          g_ctx->manifest->areaAnimations.vidCellPalette) {
+    core::area_lighting::Palette nativePalette{};
+    if(core::safe_read(realizedOutput,nativePalette)) {
+      const auto alpha=core::effect_native_underlay::uniform_opacity(nativePalette);
+      g_effectSurfaceOpacityValid=alpha.has_value();
+      g_effectSurfaceNativeOpacity=alpha.value_or(255);
+    }
+    std::array<char,8> ref{};
+    if (read_registered_effect_resref(g_effectSurfaceRealizingCell, ref) &&
+        ref == std::array<char,8>{'S','P','S','M','P','U','F','F'}) {
+      core::area_lighting::Palette realized{};
+      area_animation_x4::NativePixelEncoding encoding{};
+      if (core::safe_read(realizedOutput,realized) &&
+          core::safe_read(g_areaAnimationTextureApi.nativePixelEncoding,encoding) &&
+          encoding.type == game::gl::UNSIGNED_INT_8_8_8_8_REV &&
+          (encoding.externalFormat == game::gl::BGRA || encoding.externalFormat == game::gl::RGBA)) {
+        g_effectSurfacePalette = core::effect_smoke_palette::derive(realized,
+            encoding.externalFormat == game::gl::BGRA);
+        g_effectSurfacePaletteOpacity = realized[22]>>24;
+      }
+    }
+  }
   if (areaOwner && areaSourceRead && g_areaLightingScope == areaScope &&
       realizedOutput == g_areaAnimationTextureApi.realizedPalette) {
     core::area_lighting::Palette realized{};
@@ -4065,10 +4312,14 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
   } else if (g_effectAnimationHooksEnabled && g_effectAnimationRenderDepth > 0 &&
              g_effectAnimationFinalRenderDepth > 0 && g_effectAnimationInstance &&
              g_effectAnimationCell &&
-             read_effect_animation_frame(g_effectAnimationCell, logicalWidth, logicalHeight,
+             read_effect_animation_frame(g_effectAnimationCell,
+                                         g_effectDrawPlacement ? g_effectDrawPlacement->width : logicalWidth,
+                                         g_effectDrawPlacement ? g_effectDrawPlacement->height : logicalHeight,
                                          resolvedEffectAnimationFrame)) {
-    select_effect_timeline_frame(g_effectAnimationInstance, read_world_active(), logicalWidth,
-                                 logicalHeight, resolvedEffectAnimationFrame);
+    select_effect_timeline_frame(g_effectAnimationInstance, read_world_active(),
+                                 g_effectDrawPlacement ? g_effectDrawPlacement->width : logicalWidth,
+                                 g_effectDrawPlacement ? g_effectDrawPlacement->height : logicalHeight,
+                                 resolvedEffectAnimationFrame);
     const auto& timing = resolvedEffectAnimationFrame.timeline;
     const auto phase = resolvedEffectAnimationFrame.timelinePhase >= 0
         ? static_cast<std::uint32_t>(resolvedEffectAnimationFrame.timelinePhase)
@@ -4081,8 +4332,19 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
         resolvedEffectAnimationFrame.resref, resolvedEffectAnimationFrame.sequence, phase,
         resolvedEffectAnimationFrame.onceProfile, read_world_active() <= 0);
     effectAnimationDrawFrame = resolvedEffectAnimationFrame.handle;
+    auto effectApi = g_effectAnimationTextureApi;
+    effectApi.paletteTransfer = g_effectDrawPalette;
+    effectApi.paletteOpacity = g_effectDrawPaletteOpacity;
+    if (g_effectDrawPlacement) {
+      effectApi.canvasWidth=logicalWidth;effectApi.canvasHeight=logicalHeight;
+      effectApi.offsetX=g_effectDrawPlacement->x;effectApi.offsetY=g_effectDrawPlacement->y;
+      if(g_effectDrawUnderlay) {
+        effectApi.nativeUnderlay=*g_effectDrawUnderlay;
+        effectApi.nativeOpacity=g_effectDrawNativeOpacity;
+      }
+    }
     if (effect_animation_x4::bind_frame_texture(effectAnimationDrawFrame,
-                                                g_effectAnimationTextureApi, previousTextureId, &effectDrawOutcome)) {
+                                                effectApi, previousTextureId, &effectDrawOutcome)) {
       g_effectAnimationDiagnostics.x4Bound.fetch_add(1, std::memory_order_relaxed);
       log_effect_animation_diagnostic_once(
           resolvedEffectAnimationFrame.resref, kEffectDiagnosticX4Bound, "x4-bound",
@@ -4224,11 +4486,16 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
               kEffectDiagnosticOcclusionFallback, resolvedEffectAnimationFrame.sequence,
               resolvedEffectAnimationFrame.slot, resolvedEffectAnimationFrame.timelinePhase,
               logicalWidth, logicalHeight);
-        } else LOG_WARN("Effect native occlusion fallback: resref={}, clipped native FX retained; "
-                 "maskReady={}, maskChanged={}, maskBound={}, captured={}x{}, draw={}x{}",
+        }
+        LOG_WARN("EFX_MASK_FALLBACK resref={} maskReady={} maskChanged={} maskBound={} "
+                 "captureValid={} captureCalls={} ownerCalls={} captured={}x{} draw={}x{}; "
+                 "clipped native FX retained",
                  effect_animation_resref_name(resolvedEffectAnimationFrame.resref),
-                 transferReady, changed, maskBound, g_nativeOcclusionMaskCapture->width(),
-                 g_nativeOcclusionMaskCapture->height(), logicalWidth, logicalHeight);
+                 transferReady, changed, maskBound, g_nativeOcclusionMaskCapture->valid(),
+                 g_nativeOcclusionMaskCapture->successful_call_count(),
+                 nativeOcclusionSample->successfulClippingCallCount,
+                 g_nativeOcclusionMaskCapture->width(), g_nativeOcclusionMaskCapture->height(),
+                 logicalWidth, logicalHeight);
       }
     }
   }
@@ -4273,6 +4540,36 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
   const auto traceDrawTicks = traceDraw ? frame::clock_ticks() : 0;
   original(visualX, y, sourceRect, logicalSize, clipRect, flags);
   if (resolvedEffectAnimationFrame.resref[0] && g_effectAnimationCell) {
+    const auto& ref=resolvedEffectAnimationFrame.resref;
+    if (replacement==ReplacementKind::EffectAnimation &&
+        (ref==std::array<char,8>{'F','I','R','E','B','A','T','\0'} ||
+         ref==std::array<char,8>{'S','P','S','M','P','U','F','F'} ||
+         ref==std::array<char,8>{'S','K','L','T','\0'} ||
+         ref==std::array<char,8>{'S','P','C','H','R','O','R','B'} ||
+         ref==std::array<char,8>{'X','5','8','C','L','S','\0','\0'} ||
+         ref==std::array<char,8>{'X','5','8','D','F','O','G','\0'} ||
+         ref==std::array<char,8>{'X','2','8','W','R','T','H','\0'} ||
+         ref==std::array<char,8>{'X','5','8','C','L','K','\0','\0'})) {
+      // Bounded per resource so the first cloud's many puffs cannot consume
+      // the entire trace allowance before the next spell is tested.
+      thread_local std::map<std::uint64_t,std::set<std::array<std::uint64_t,2>>> phaseTraces;
+      auto& phases=phaseTraces[pack_probe_subject(ref)];
+      const std::array<std::uint64_t,2> key{
+          static_cast<std::uint64_t>(resolvedEffectAnimationFrame.sequence),
+          static_cast<std::uint64_t>(resolvedEffectAnimationFrame.timelinePhase)};
+      if (phases.size()<64 && phases.insert(key).second)
+        LOG_INFO("EFX_BOUND_PHASE resref={} slot={} phase={} backing={} canvas={}x{} texture={}x{} "
+            "source={}x{} offset={},{} targetFPS={}/{} ticks={} frequency={}",
+            effect_animation_resref_name(ref),resolvedEffectAnimationFrame.slot,
+            resolvedEffectAnimationFrame.timelinePhase,effectAnimationDrawFrame.frameIndex,
+            logicalWidth,logicalHeight,logicalWidth*4,logicalHeight*4,
+            g_effectDrawPlacement?g_effectDrawPlacement->width:logicalWidth,
+            g_effectDrawPlacement?g_effectDrawPlacement->height:logicalHeight,
+            g_effectDrawPlacement?g_effectDrawPlacement->x:0,g_effectDrawPlacement?g_effectDrawPlacement->y:0,
+            resolvedEffectAnimationFrame.timeline.targetFpsNumerator,
+            resolvedEffectAnimationFrame.timeline.targetFpsDenominator,
+            frame::clock_ticks(),frame::clock_frequency());
+    }
     effect_animation_x4::note_draw(reinterpret_cast<std::uintptr_t>(g_effectAnimationCell),
         resolvedEffectAnimationFrame.handle, resolvedEffectAnimationFrame.slot,
         resolvedEffectAnimationFrame.timelinePhase, frame::frame_count(), frame::clock_ticks(),
@@ -5718,6 +6015,14 @@ bool install_all(AppContext& ctx) {
         }
         if (g_effectAnimationHooksEnabled) {
           const auto& effectRuntime = ctx.manifest->effectAnimations;
+          g_effectFxLockHook.create(
+              reinterpret_cast<void*>(moduleBase + effectRuntime.infinityFxLock),
+              reinterpret_cast<void*>(&detour_effect_fx_lock));
+          g_effectFxLockHook.enable();
+          g_effectFxRenderBamHook.create(
+              reinterpret_cast<void*>(moduleBase + effectRuntime.infinityFxRenderBam),
+              reinterpret_cast<void*>(&detour_effect_fx_render_bam));
+          g_effectFxRenderBamHook.enable();
           if (g_effectStreamHooksPrepared) {
             g_effectCellConstructHook.enable(); g_effectCellDestructHook.enable();
             g_effectVvcConfigureHook.enable(); g_effectVvcSequenceHook.enable();
@@ -5743,7 +6048,7 @@ bool install_all(AppContext& ctx) {
               effectRuntime.vvcVidCellRender, effectRuntime.vvcVidCell,
               effectRuntime.infinityFxRender);
         }
-        if (g_creatureSpriteHooksEnabled ||
+        if (g_creatureSpriteHooksEnabled || g_effectAnimationHooksEnabled ||
             (g_areaCompositionMode == AreaCompositionMode::Registry && g_areaLightingHooksEnabled)) {
           g_vidPaletteRealizeHook.create(
               reinterpret_cast<void*>(moduleBase + runtime.vidPaletteRealize),
@@ -5855,7 +6160,7 @@ bool install_all(AppContext& ctx) {
         (void)g_projectileBamRenderHook.remove();
         remove_effect_stream_hooks();
         (void)g_vvcVidCellRenderHook.remove();
-        (void)g_projectileFxRenderHook.remove();
+        (void)g_projectileFxRenderHook.remove(); remove_effect_surface_hooks();
         (void)g_gameStaticRenderBamHook.remove();
         (void)g_vidPaletteRealizeHook.remove();
         (void)g_vidCellRenderTextureHook.remove();
@@ -5896,7 +6201,7 @@ bool install_all(AppContext& ctx) {
         (void)g_projectileBamRenderHook.remove();
         remove_effect_stream_hooks();
         (void)g_vvcVidCellRenderHook.remove();
-        (void)g_projectileFxRenderHook.remove();
+        (void)g_projectileFxRenderHook.remove(); remove_effect_surface_hooks();
         (void)g_gameStaticRenderBamHook.remove();
         (void)g_vidPaletteRealizeHook.remove();
         (void)g_vidCellRenderTextureHook.remove();
@@ -6109,7 +6414,7 @@ bool install_all(AppContext& ctx) {
     (void)g_projectileBamRenderHook.remove();
     remove_effect_stream_hooks();
     (void)g_vvcVidCellRenderHook.remove();
-    (void)g_projectileFxRenderHook.remove();
+    (void)g_projectileFxRenderHook.remove(); remove_effect_surface_hooks();
     (void)g_gameStaticRenderBamHook.remove();
     (void)g_infinityFxRenderClippingPolysHook.remove();
     (void)g_vidPaletteRealizeHook.remove();
@@ -6172,7 +6477,7 @@ bool install_all(AppContext& ctx) {
     (void)g_projectileBamRenderHook.remove();
     remove_effect_stream_hooks();
     (void)g_vvcVidCellRenderHook.remove();
-    (void)g_projectileFxRenderHook.remove();
+    (void)g_projectileFxRenderHook.remove(); remove_effect_surface_hooks();
     (void)g_gameStaticRenderBamHook.remove();
     (void)g_infinityFxRenderClippingPolysHook.remove();
     (void)g_vidPaletteRealizeHook.remove();
@@ -6243,7 +6548,7 @@ void uninstall_all() noexcept {
   (void)g_projectileBamRenderHook.remove();
   remove_effect_stream_hooks();
   (void)g_vvcVidCellRenderHook.remove();
-  (void)g_projectileFxRenderHook.remove();
+  (void)g_projectileFxRenderHook.remove(); remove_effect_surface_hooks();
   (void)g_gameStaticRenderBamHook.remove();
   (void)g_infinityFxRenderClippingPolysHook.remove();
   (void)g_vidPaletteRealizeHook.remove();
@@ -6330,6 +6635,7 @@ void prepare_for_shutdown() noexcept {
   (void)g_projectileBamRenderHook.disable();
   (void)g_vvcVidCellRenderHook.disable();
   (void)g_projectileFxRenderHook.disable();
+  (void)g_effectFxLockHook.disable(); (void)g_effectFxRenderBamHook.disable();
   (void)g_gameStaticRenderBamHook.disable();
   (void)g_infinityFxRenderClippingPolysHook.disable();
   (void)g_vidPaletteRealizeHook.disable();

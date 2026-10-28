@@ -1,0 +1,91 @@
+[
+  {
+    "spell": "SPWI502",
+    "pro": "CLOUDKIL",
+    "label": "Nuage mortel",
+    "risk": "Nuage persistant, fumée, palette et transparence",
+    "ability_references_current": true,
+    "runtime_resources": [
+      "SPCLOUDK",
+      "SPSMPUFF",
+      "Y31N053",
+      "Y31P069"
+    ],
+    "baseline_verdict": "partial-route-unproven",
+    "command": "C:Eval('ForceSpellRES(\"SPWI502\",Player2)',0)",
+    "result": "awaiting-user-test-and-runtime-evidence"
+  },
+  {
+    "spell": "SPWI313",
+    "pro": "TRAPSKUL",
+    "label": "Piège à crâne",
+    "risk": "Projectile + ombre native + fragments SKLH/SPSHADOW",
+    "ability_references_current": true,
+    "runtime_resources": [
+      "SKLH",
+      "SKLT",
+      "SPSMPUFF",
+      "Y31N053"
+    ],
+    "baseline_verdict": "partial-route-unproven",
+    "command": "C:Eval('ForceSpellRES(\"SPWI313\",Player2)',0)",
+    "result": "awaiting-user-test-and-runtime-evidence"
+  },
+  {
+    "spell": "SPWI118",
+    "pro": "CHROMORB",
+    "label": "Orbe chromatique",
+    "risk": "Surface composée primaire/ombre ; repli natif connu à diagnostiquer",
+    "ability_references_current": true,
+    "runtime_resources": [
+      "SPCHRORB"
+    ],
+    "baseline_verdict": "partial-route-unproven",
+    "command": "C:Eval('ForceSpellRES(\"SPWI118\",Player2)',0)",
+    "result": "awaiting-user-test-and-runtime-evidence"
+  },
+  {
+    "spell": "SPPR517",
+    "pro": "INSEC2",
+    "label": "Fléau d’insectes",
+    "risk": "Vol, anneau/impact, alias et palette déjà installés",
+    "ability_references_current": true,
+    "runtime_resources": [
+      "X26PLAA",
+      "XIPLAUIN"
+    ],
+    "baseline_verdict": "partial-route-unproven",
+    "command": "C:Eval('ForceSpellRES(\"SPPR517\",Player2)',0)",
+    "result": "awaiting-user-test-and-runtime-evidence"
+  },
+  {
+    "spell": "SPWI404",
+    "pro": "ICESTORM",
+    "label": "Tempête de glace",
+    "risk": "Explosion native FIREBALL:3 ; ne pas présumer la couverture des fragments",
+    "ability_references_current": true,
+    "runtime_resources": [
+      "SPSMPUFF",
+      "Y31N053",
+      "Y31P067"
+    ],
+    "baseline_verdict": "partial-route-unproven",
+    "command": "C:Eval('ForceSpellRES(\"SPWI404\",Player2)',0)",
+    "result": "awaiting-user-test-and-runtime-evidence"
+  },
+  {
+    "spell": "SPWI615",
+    "pro": "LIGHTCHA",
+    "label": "Éclairs en chaîne",
+    "risk": "Traînées SPCHLGT1/2/3 ; cycle9 SPCHLGT3 déjà signalé absent",
+    "ability_references_current": true,
+    "runtime_resources": [
+      "SPCHLGT1",
+      "SPCHLGT2",
+      "SPCHLGT3"
+    ],
+    "baseline_verdict": "contract-review",
+    "command": "C:Eval('ForceSpellRES(\"SPWI615\",Player2)',0)",
+    "result": "awaiting-user-test-and-runtime-evidence"
+  }
+]
