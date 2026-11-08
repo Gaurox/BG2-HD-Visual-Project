@@ -1,0 +1,50 @@
+{
+  "resref": "TRBLOBB",
+  "passed": true,
+  "phases": 280,
+  "profiles": 4,
+  "native_anchor_contracts": 280,
+  "source_pixels_palette_cycles_centres_preserved": true,
+  "source_derived_alpha_verified": true,
+  "profile_timings": [
+    {
+      "id": "cycle000-once",
+      "native_slots": 10,
+      "phases": 20,
+      "duration": [
+        10,
+        15
+      ]
+    },
+    {
+      "id": "cycle000-loop",
+      "native_slots": 10,
+      "phases": 20,
+      "duration": [
+        10,
+        15
+      ]
+    },
+    {
+      "id": "cycle001-once",
+      "native_slots": 60,
+      "phases": 120,
+      "duration": [
+        60,
+        15
+      ]
+    },
+    {
+      "id": "cycle001-loop",
+      "native_slots": 60,
+      "phases": 120,
+      "duration": [
+        60,
+        15
+      ]
+    }
+  ],
+  "pack_manifest_sha256": "E752820385402A44BCA4B59D2109EE8D2EAC84854D1881189A5A1E2042C82FF9",
+  "visual_qa": "pending-user-review",
+  "installed": false
+}

@@ -1,0 +1,5518 @@
+{
+  "assets": [
+    {
+      "asset": {
+        "ordinal": 6,
+        "resref": "SPARMOR2",
+        "asset_key": "effects:bam:SPARMOR2",
+        "group": "portails-manifestations",
+        "source": "effects/ressources/SPARMOR2/source.bam",
+        "source_sha256": "43502961C8E26B1688E8008B487C81FBF117D1891E7D480B9D389E0E32B5E2DF",
+        "canonical_sha256": "1F5757E733D53428AC0B917D2F9C441793E595EDAEDDD926F9334942550A5B42",
+        "strict_visual_sha256": "CB139BF865738E86D8BC727D009889768F6C087E17AF99F967D374EF7E03CBEB",
+        "reuse_aliases": [],
+        "source_frames": 30,
+        "native_cycles": [
+          {
+            "cycle": 0,
+            "lookup_start": 0,
+            "frame_indices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              17,
+              17,
+              17,
+              17,
+              17,
+              17,
+              17,
+              17,
+              17,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29
+            ]
+          }
+        ],
+        "native_fps": [],
+        "playback_hint": "unknown",
+        "native_canvas": [
+          63,
+          69
+        ],
+        "consumers": [],
+        "usage_evidence": "unresolved",
+        "normal_palette_alpha_levels": [
+          0,
+          255
+        ],
+        "native_graded_pixels": 0,
+        "nearblack_covered_percent": 1.607,
+        "exact_green_covered_percent": 0.0,
+        "production": {
+          "asset_key": "effects:bam:SPARMOR2",
+          "asset_directory": "effects/ressources/SPARMOR2",
+          "spatial_run": "",
+          "spatial_state": "not-started",
+          "interpolation_run": "",
+          "interpolation_state": "not-started",
+          "selected_run": "",
+          "qa_state": "not-assessed",
+          "qa_evidence": "",
+          "installation_state": "not-installed",
+          "installation_receipt": "",
+          "release_state": "not-evaluated",
+          "release_candidate": "",
+          "notes": ""
+        },
+        "processing_started": false,
+        "recipe_profile": "X-STRUCT",
+        "profile": "N",
+        "sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "spatial_run": "sparmor2-xbr4x-20261108-v1",
+        "interpolation_run": "sparmor2-xbr4x-cpu-flow30-20261108-v1",
+        "pack": "effects/ressources/SPARMOR2/packs/sparmor2-xbr4x-cpu-initial-20261108-v1",
+        "green_index": null,
+        "recipe_plan": {
+          "ordinal": 6,
+          "resref": "SPARMOR2",
+          "profile": "S-DETAIL",
+          "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+          "source": "effects/ressources/SPARMOR2/source.bam",
+          "source_sha256": "43502961C8E26B1688E8008B487C81FBF117D1891E7D480B9D389E0E32B5E2DF",
+          "reuse_decision": "new-source-no-reuse-found",
+          "canvas_x1": [
+            63,
+            69
+          ],
+          "alpha_levels": 2,
+          "recipe": {
+            "spatial": "SeedVR2 7B INT8/LAB x4",
+            "model": "seedvr2_7b_int8_convrot.safetensors",
+            "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+            "rgb_gauss_sigma_x4": 0,
+            "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+            "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+            "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+          },
+          "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+          "green_derivation": null,
+          "cycles": [
+            {
+              "cycle": 0,
+              "native_slots": 40,
+              "phases30": 80,
+              "duration_seconds": 2.6666666666666665,
+              "constant": false,
+              "empty": false,
+              "repeated_slots": 10
+            }
+          ],
+          "used_records": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29
+          ],
+          "temporal": {
+            "target_fps": 30,
+            "model": "apo-8",
+            "input_fps": 15,
+            "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+            "status": "planned",
+            "preserve_native_holds": true,
+            "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+            "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+            "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+            "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+          },
+          "extra": [],
+          "previous_recommendation": {
+            "profile": "X-STRUCT",
+            "recipe": {
+              "spatial": "xBR4X, blend_colors=false, scale4",
+              "rgb_gauss_sigma_x4": 0,
+              "alpha": "Native alpha nearest4, feather0, erosion0",
+              "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+              "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+            },
+            "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+          }
+        },
+        "final_pack": "effects/ressources/SPARMOR2/packs/sparmor2-xbr4x-cpu-flow30-profiles-20261108-v1",
+        "temporal_model": "CPU/ffmpeg-minterpolate-mci",
+        "temporal_recipe_id": "cpu-motion-compensated-native-clock"
+      },
+      "result": {
+        "resref": "SPARMOR2",
+        "passed": true,
+        "pack": "effects/ressources/SPARMOR2/packs/sparmor2-xbr4x-cpu-flow30-profiles-20261108-v1",
+        "pack_manifest_sha256": "06B981200A93168C2F23617948C3D2B981C1343BBD3E05645263C54D287C2379",
+        "registry_version": 3,
+        "source_cycles": 1,
+        "runtime_cycles": 1,
+        "source_empty_cycles_retained": [],
+        "profiles": 2,
+        "phases": 160,
+        "backings": 60,
+        "native_contracts": 320,
+        "raw_bytes": 11695872,
+        "source_interpolation_run": "sparmor2-xbr4x-cpu-flow30-20261108-v1",
+        "catalogue_probe": "effects/batches/lot50-magic-water-production-20261108-v1/review-feedback-0634-20261108-v1/runtime-verification/SPARMOR2.log",
+        "installed": false,
+        "qa": "pending-user-review"
+      },
+      "card": {
+        "ordinal": 6,
+        "resref": "SPARMOR2",
+        "profile": "X-STRUCT",
+        "sigma": 0,
+        "feather": 0,
+        "width": 252,
+        "height": 276,
+        "native": {
+          "image": "alternatives/feedback-cpu-0634/SPARMOR2/native/SPARMOR2.png",
+          "width": 63,
+          "height": 69,
+          "cols": 30
+        },
+        "profiles": [
+          {
+            "id": "cycle000-once",
+            "cycle": 0,
+            "loop": false,
+            "native": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              17,
+              17,
+              17,
+              17,
+              17,
+              17,
+              17,
+              17,
+              17,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29
+            ],
+            "frames": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              48,
+              49,
+              50,
+              51,
+              52,
+              53,
+              54,
+              55,
+              56,
+              57,
+              58,
+              59,
+              60,
+              61,
+              62,
+              63,
+              64,
+              65,
+              66,
+              67,
+              68,
+              69,
+              70,
+              71,
+              72,
+              73,
+              74,
+              75,
+              76,
+              77,
+              78,
+              79
+            ],
+            "duration": 2.6666666666666665
+          },
+          {
+            "id": "cycle000-loop",
+            "cycle": 0,
+            "loop": true,
+            "native": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              17,
+              17,
+              17,
+              17,
+              17,
+              17,
+              17,
+              17,
+              17,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29
+            ],
+            "frames": [
+              80,
+              81,
+              82,
+              83,
+              84,
+              85,
+              86,
+              87,
+              88,
+              89,
+              90,
+              91,
+              92,
+              93,
+              94,
+              95,
+              96,
+              97,
+              98,
+              99,
+              100,
+              101,
+              102,
+              103,
+              104,
+              105,
+              106,
+              107,
+              108,
+              109,
+              110,
+              111,
+              112,
+              113,
+              114,
+              115,
+              116,
+              117,
+              118,
+              119,
+              120,
+              121,
+              122,
+              123,
+              124,
+              125,
+              126,
+              127,
+              128,
+              129,
+              130,
+              131,
+              132,
+              133,
+              134,
+              135,
+              136,
+              137,
+              138,
+              139,
+              140,
+              141,
+              142,
+              143,
+              144,
+              145,
+              146,
+              147,
+              148,
+              149,
+              150,
+              151,
+              152,
+              153,
+              154,
+              155,
+              156,
+              157,
+              158,
+              159
+            ],
+            "duration": 2.6666666666666665
+          }
+        ],
+        "frames": [
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/c51cea142119c2ecb4f101dce60bfc0f180fcafdb8e3ab15cdbfc6e8e2addf6e.png",
+            "x": 72,
+            "y": 80,
+            "w": 112,
+            "h": 128
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/ae62189f5aecdd921bc222a9a525281042b653bdcaac5991ef6cc237727a96e8.png",
+            "x": 72,
+            "y": 80,
+            "w": 112,
+            "h": 128
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/bdd1f8f04ac865a3c581cb9c9b219490c41e2e313f26219e0a7e5ffcd9a412fc.png",
+            "x": 64,
+            "y": 68,
+            "w": 128,
+            "h": 144
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/1b54fa0ee3a310b6e3fadbd0f7d39f82de69cb596690d0e5bcf3f21fed889792.png",
+            "x": 64,
+            "y": 68,
+            "w": 128,
+            "h": 144
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/a615d4a76b4763ded5fdeb035e594dcd8fa2038094d4150ce921062f7e030a99.png",
+            "x": 60,
+            "y": 68,
+            "w": 132,
+            "h": 148
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/804683fe1dc2f190a5d38b6d47e122c07bb6ae992eeb6ffc2b7106cd01ce4901.png",
+            "x": 60,
+            "y": 68,
+            "w": 132,
+            "h": 148
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/479e8073a4b68b89492952815085537363bf18bc30c2b47b75dfafa7b8853b10.png",
+            "x": 52,
+            "y": 60,
+            "w": 152,
+            "h": 176
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/279bd0c2c8ac355a686a36ab3d9509f7697f551eaf2ce190ee9e69b9e85b6893.png",
+            "x": 52,
+            "y": 60,
+            "w": 152,
+            "h": 176
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/8b9204eb0d98927ef25e220ee2fc77e0cac08df2ac90b3a45fdfb95f85615ba8.png",
+            "x": 48,
+            "y": 56,
+            "w": 160,
+            "h": 196
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/04f406a99219b946232cf55eb7d7a65788b50d03a6f561732551218b61b03a9a.png",
+            "x": 48,
+            "y": 56,
+            "w": 160,
+            "h": 196
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/373de33cc83147b00ee50f1452d3d9d0cd952a38248493459d5921f13349979d.png",
+            "x": 44,
+            "y": 56,
+            "w": 164,
+            "h": 208
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/f42bb03f7fb46cd8fe7d7036eafe32128715a52b97742c07269606cdc38b405e.png",
+            "x": 44,
+            "y": 56,
+            "w": 164,
+            "h": 208
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/0f30dde7055c378625c50145b645663cd1c40b66a62b494c067ba712fcd0735a.png",
+            "x": 40,
+            "y": 4,
+            "w": 176,
+            "h": 260
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/401c718391baf4161912ea2d8310a9260adfd23b9eb2f2e8220bb6d8b4788505.png",
+            "x": 40,
+            "y": 4,
+            "w": 176,
+            "h": 260
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/4d4281d8270a0991f9bf948367f8f6249db2d7a203361a937ee335402859d0b7.png",
+            "x": 36,
+            "y": 0,
+            "w": 184,
+            "h": 264
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/dab46bf1482be7c37cfa3b287572da2a04f020ed8f9d0b6af15d42eb444888ba.png",
+            "x": 36,
+            "y": 0,
+            "w": 184,
+            "h": 264
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/89e3e6c76ad4cbe13e5d7702f8e193caa0801c743973db2cda902265b66818c7.png",
+            "x": 32,
+            "y": 0,
+            "w": 196,
+            "h": 264
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/13ff00fdf4f82e834461f8c9553a28fd39a2e89fc5a40624eae1574fc8bb6f4e.png",
+            "x": 32,
+            "y": 0,
+            "w": 196,
+            "h": 264
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/2d72982907d82df6babf322bc98eeda52538329c23c2c7d77c08be4b5717be5e.png",
+            "x": 28,
+            "y": 4,
+            "w": 204,
+            "h": 260
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/cb9e486d78167756fdd21f15b8d3a3cab63aa818e2bd614afae72d15352639aa.png",
+            "x": 28,
+            "y": 4,
+            "w": 204,
+            "h": 260
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/22079fd2667a385c54f25647a7b181baca9cc0c4c687e5523ce4933fc55848a6.png",
+            "x": 28,
+            "y": 8,
+            "w": 204,
+            "h": 260
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/8bcdac6c2bbb193d270d3a2deefa618f0f0450cee9cd6edd4baf3d2f62ac5f10.png",
+            "x": 28,
+            "y": 8,
+            "w": 204,
+            "h": 260
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/c47f3b7cae1731bbe6ef5378fc23f6653cfbca874dc69cdd1dee847d41955785.png",
+            "x": 28,
+            "y": 12,
+            "w": 200,
+            "h": 260
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/346964cc2aba2ff168e0371e077d2af68c2d61ebf3d21639d5d99522fa11b957.png",
+            "x": 28,
+            "y": 12,
+            "w": 200,
+            "h": 260
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/a780478a0beaa5486a80bd1c87a81b156620451ebd07cbc22af05e79e4a18b85.png",
+            "x": 20,
+            "y": 16,
+            "w": 212,
+            "h": 256
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/ed3226c754312407e7662bf30b0b387d5c0f170f68e6df3b2487178c3ffef9ac.png",
+            "x": 20,
+            "y": 16,
+            "w": 212,
+            "h": 256
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/d0e8c630250eed37cae9a6860b7960430441c37051691fa2728786c79d00e75d.png",
+            "x": 12,
+            "y": 16,
+            "w": 228,
+            "h": 260
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/a34d4393ab2f9e262735c3a2e1203dd7dd4bc7dd17b5440d251eecbd623bd6da.png",
+            "x": 12,
+            "y": 16,
+            "w": 228,
+            "h": 260
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/9c8839519396ddf88ca8e0375d11534757f33ba95d60e21abb12c8351faedc60.png",
+            "x": 4,
+            "y": 20,
+            "w": 244,
+            "h": 256
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/81c8f72d622b5c799dd131dd76b4624039416d9e1e0032f4328121fd2a067ddb.png",
+            "x": 4,
+            "y": 20,
+            "w": 244,
+            "h": 256
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/7e1411dbdb6b49beb413f641de50854aa5c516cf5c7429b3988e6187939d26d3.png",
+            "x": 0,
+            "y": 24,
+            "w": 252,
+            "h": 252
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/52ee48e05e81181da049ca5a1fc2657678a6dcf232126b19dcd7a1e2391fc4bf.png",
+            "x": 0,
+            "y": 24,
+            "w": 252,
+            "h": 252
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/a605554fc94c4cd5f541b41afcb80984907e63d30da441bc92b8a938856dd848.png",
+            "x": 0,
+            "y": 32,
+            "w": 252,
+            "h": 244
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/747bd35d6000fb61d29358ef02be2f166f4e58c3ae6b4f17506236ffaf0ffb58.png",
+            "x": 0,
+            "y": 32,
+            "w": 252,
+            "h": 244
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/5f2471d95c1defec16d69cfcc324310660f3d82512d083d449a78c315bb7d508.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/7c946ce752ac9cd268784ed17f56db37047c6e69016232d94169591ac4339ac5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/ae0df3c664c9e2bf605f5f97299209e04ae4edf39da4a9346e42b4c8959b74e3.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/d7b247539e1cffc6a2a28cdcb217d7973bf39b3953c5d1382ac07cc40b7f8af6.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/f6b3dfccf1bce931d980fb31d06c978d8dd15054c55b5b507e5425bdd1b81d74.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/15add53dc25b2fd228427f48c6aa35eb023cd7cd345a052ff86e58b77d942596.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/beefdca23837944f6d183e0aba5145cd8d9e41fa91fa85fc4048f27857738be0.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/42c764e556fafff9391b921908a5a9eb7026e161ccabc10837e812eb022ccd71.png",
+            "x": 0,
+            "y": 40,
+            "w": 248,
+            "h": 232
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/1f68e3ddaf25b3fd1ce17bb3d7e7f976003eda65abc76e16aa190e1bf0d70251.png",
+            "x": 0,
+            "y": 40,
+            "w": 248,
+            "h": 232
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/56bf18eec9186a52db0c46334b52bcf9f930029b2fc966b3e4050c1d88ff8da8.png",
+            "x": 4,
+            "y": 40,
+            "w": 244,
+            "h": 232
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/9c48f3bf46d6ad7120fe204acad61156c5b0d11436b8f0a844d8066246155ff2.png",
+            "x": 4,
+            "y": 40,
+            "w": 244,
+            "h": 232
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/2a234e93701393b9952e2e6903994db7e29b5b3a6f229d00699860acb239f3ae.png",
+            "x": 4,
+            "y": 40,
+            "w": 244,
+            "h": 232
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/d39091b238dbc1355ed7c0fa950cfe39d50a7d144e0f62f723a6cd71b8a9ac53.png",
+            "x": 4,
+            "y": 40,
+            "w": 244,
+            "h": 232
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/c897c8350fc619880edf54faf9f10b827cd4070deafc4acc2d40a95e84a1c047.png",
+            "x": 4,
+            "y": 44,
+            "w": 244,
+            "h": 228
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/2e208f71d5577143b90e32fea0802307156a085b96ab5c7f3045ca22cbad83b3.png",
+            "x": 4,
+            "y": 44,
+            "w": 244,
+            "h": 228
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/905628fa4641a5b308ccdea9d79e437e9abcd6e1cc656ffcb66667bcd4c2bf72.png",
+            "x": 8,
+            "y": 44,
+            "w": 236,
+            "h": 224
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/5022f31a56d6071870766a327162d5312b98fbd10fd67bbecd20ba4e5c609070.png",
+            "x": 8,
+            "y": 44,
+            "w": 236,
+            "h": 224
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/791fbabc3e12d81c04e5f72ccb8d3e6194800b281385411f8103eb3669a184ed.png",
+            "x": 8,
+            "y": 48,
+            "w": 236,
+            "h": 220
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/d3dc79797a114683d30f6ee14c0740efcc33ed5bc655e092bdcc9acb53834a0d.png",
+            "x": 8,
+            "y": 48,
+            "w": 236,
+            "h": 220
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/db16790a9c80f160818d903f126c05168fc8a9fe38f726250f47aa29de366acf.png",
+            "x": 12,
+            "y": 48,
+            "w": 228,
+            "h": 216
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/78e5a97c13323c85461ac53f0ac525a6ab89c6553a2838c46d7a40d182e3316b.png",
+            "x": 12,
+            "y": 48,
+            "w": 228,
+            "h": 216
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/015fd0e2a54fd0f026fd1ad67c5df94131ae2c99eef844ad794ffcde4b28ce70.png",
+            "x": 16,
+            "y": 48,
+            "w": 220,
+            "h": 216
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/a196b9b659fbbfeb103b9d2efb279d63f7d0a19f2e1781a83e51f344033d565e.png",
+            "x": 16,
+            "y": 48,
+            "w": 220,
+            "h": 216
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/5a2f4833d46f7d06c3395852d9ab89eb68496fcea699084ea75ab8e540958d44.png",
+            "x": 20,
+            "y": 52,
+            "w": 208,
+            "h": 204
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/5a2f4833d46f7d06c3395852d9ab89eb68496fcea699084ea75ab8e540958d44.png",
+            "x": 20,
+            "y": 52,
+            "w": 208,
+            "h": 204
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/c51cea142119c2ecb4f101dce60bfc0f180fcafdb8e3ab15cdbfc6e8e2addf6e.png",
+            "x": 72,
+            "y": 80,
+            "w": 112,
+            "h": 128
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/ae62189f5aecdd921bc222a9a525281042b653bdcaac5991ef6cc237727a96e8.png",
+            "x": 72,
+            "y": 80,
+            "w": 112,
+            "h": 128
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/bdd1f8f04ac865a3c581cb9c9b219490c41e2e313f26219e0a7e5ffcd9a412fc.png",
+            "x": 64,
+            "y": 68,
+            "w": 128,
+            "h": 144
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/1b54fa0ee3a310b6e3fadbd0f7d39f82de69cb596690d0e5bcf3f21fed889792.png",
+            "x": 64,
+            "y": 68,
+            "w": 128,
+            "h": 144
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/a615d4a76b4763ded5fdeb035e594dcd8fa2038094d4150ce921062f7e030a99.png",
+            "x": 60,
+            "y": 68,
+            "w": 132,
+            "h": 148
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/804683fe1dc2f190a5d38b6d47e122c07bb6ae992eeb6ffc2b7106cd01ce4901.png",
+            "x": 60,
+            "y": 68,
+            "w": 132,
+            "h": 148
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/479e8073a4b68b89492952815085537363bf18bc30c2b47b75dfafa7b8853b10.png",
+            "x": 52,
+            "y": 60,
+            "w": 152,
+            "h": 176
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/279bd0c2c8ac355a686a36ab3d9509f7697f551eaf2ce190ee9e69b9e85b6893.png",
+            "x": 52,
+            "y": 60,
+            "w": 152,
+            "h": 176
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/8b9204eb0d98927ef25e220ee2fc77e0cac08df2ac90b3a45fdfb95f85615ba8.png",
+            "x": 48,
+            "y": 56,
+            "w": 160,
+            "h": 196
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/04f406a99219b946232cf55eb7d7a65788b50d03a6f561732551218b61b03a9a.png",
+            "x": 48,
+            "y": 56,
+            "w": 160,
+            "h": 196
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/373de33cc83147b00ee50f1452d3d9d0cd952a38248493459d5921f13349979d.png",
+            "x": 44,
+            "y": 56,
+            "w": 164,
+            "h": 208
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/f42bb03f7fb46cd8fe7d7036eafe32128715a52b97742c07269606cdc38b405e.png",
+            "x": 44,
+            "y": 56,
+            "w": 164,
+            "h": 208
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/0f30dde7055c378625c50145b645663cd1c40b66a62b494c067ba712fcd0735a.png",
+            "x": 40,
+            "y": 4,
+            "w": 176,
+            "h": 260
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/401c718391baf4161912ea2d8310a9260adfd23b9eb2f2e8220bb6d8b4788505.png",
+            "x": 40,
+            "y": 4,
+            "w": 176,
+            "h": 260
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/4d4281d8270a0991f9bf948367f8f6249db2d7a203361a937ee335402859d0b7.png",
+            "x": 36,
+            "y": 0,
+            "w": 184,
+            "h": 264
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/dab46bf1482be7c37cfa3b287572da2a04f020ed8f9d0b6af15d42eb444888ba.png",
+            "x": 36,
+            "y": 0,
+            "w": 184,
+            "h": 264
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/89e3e6c76ad4cbe13e5d7702f8e193caa0801c743973db2cda902265b66818c7.png",
+            "x": 32,
+            "y": 0,
+            "w": 196,
+            "h": 264
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/13ff00fdf4f82e834461f8c9553a28fd39a2e89fc5a40624eae1574fc8bb6f4e.png",
+            "x": 32,
+            "y": 0,
+            "w": 196,
+            "h": 264
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/2d72982907d82df6babf322bc98eeda52538329c23c2c7d77c08be4b5717be5e.png",
+            "x": 28,
+            "y": 4,
+            "w": 204,
+            "h": 260
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/cb9e486d78167756fdd21f15b8d3a3cab63aa818e2bd614afae72d15352639aa.png",
+            "x": 28,
+            "y": 4,
+            "w": 204,
+            "h": 260
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/22079fd2667a385c54f25647a7b181baca9cc0c4c687e5523ce4933fc55848a6.png",
+            "x": 28,
+            "y": 8,
+            "w": 204,
+            "h": 260
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/8bcdac6c2bbb193d270d3a2deefa618f0f0450cee9cd6edd4baf3d2f62ac5f10.png",
+            "x": 28,
+            "y": 8,
+            "w": 204,
+            "h": 260
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/c47f3b7cae1731bbe6ef5378fc23f6653cfbca874dc69cdd1dee847d41955785.png",
+            "x": 28,
+            "y": 12,
+            "w": 200,
+            "h": 260
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/346964cc2aba2ff168e0371e077d2af68c2d61ebf3d21639d5d99522fa11b957.png",
+            "x": 28,
+            "y": 12,
+            "w": 200,
+            "h": 260
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/a780478a0beaa5486a80bd1c87a81b156620451ebd07cbc22af05e79e4a18b85.png",
+            "x": 20,
+            "y": 16,
+            "w": 212,
+            "h": 256
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/ed3226c754312407e7662bf30b0b387d5c0f170f68e6df3b2487178c3ffef9ac.png",
+            "x": 20,
+            "y": 16,
+            "w": 212,
+            "h": 256
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/d0e8c630250eed37cae9a6860b7960430441c37051691fa2728786c79d00e75d.png",
+            "x": 12,
+            "y": 16,
+            "w": 228,
+            "h": 260
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/a34d4393ab2f9e262735c3a2e1203dd7dd4bc7dd17b5440d251eecbd623bd6da.png",
+            "x": 12,
+            "y": 16,
+            "w": 228,
+            "h": 260
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/9c8839519396ddf88ca8e0375d11534757f33ba95d60e21abb12c8351faedc60.png",
+            "x": 4,
+            "y": 20,
+            "w": 244,
+            "h": 256
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/81c8f72d622b5c799dd131dd76b4624039416d9e1e0032f4328121fd2a067ddb.png",
+            "x": 4,
+            "y": 20,
+            "w": 244,
+            "h": 256
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/7e1411dbdb6b49beb413f641de50854aa5c516cf5c7429b3988e6187939d26d3.png",
+            "x": 0,
+            "y": 24,
+            "w": 252,
+            "h": 252
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/52ee48e05e81181da049ca5a1fc2657678a6dcf232126b19dcd7a1e2391fc4bf.png",
+            "x": 0,
+            "y": 24,
+            "w": 252,
+            "h": 252
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/a605554fc94c4cd5f541b41afcb80984907e63d30da441bc92b8a938856dd848.png",
+            "x": 0,
+            "y": 32,
+            "w": 252,
+            "h": 244
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/747bd35d6000fb61d29358ef02be2f166f4e58c3ae6b4f17506236ffaf0ffb58.png",
+            "x": 0,
+            "y": 32,
+            "w": 252,
+            "h": 244
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/87568de05f8ff2bb68d0824edbf073d520dd531a42ad5fbc3add8cb1a697dbb5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/5f2471d95c1defec16d69cfcc324310660f3d82512d083d449a78c315bb7d508.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/7c946ce752ac9cd268784ed17f56db37047c6e69016232d94169591ac4339ac5.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/ae0df3c664c9e2bf605f5f97299209e04ae4edf39da4a9346e42b4c8959b74e3.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/d7b247539e1cffc6a2a28cdcb217d7973bf39b3953c5d1382ac07cc40b7f8af6.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/f6b3dfccf1bce931d980fb31d06c978d8dd15054c55b5b507e5425bdd1b81d74.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/15add53dc25b2fd228427f48c6aa35eb023cd7cd345a052ff86e58b77d942596.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/beefdca23837944f6d183e0aba5145cd8d9e41fa91fa85fc4048f27857738be0.png",
+            "x": 0,
+            "y": 36,
+            "w": 252,
+            "h": 240
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/42c764e556fafff9391b921908a5a9eb7026e161ccabc10837e812eb022ccd71.png",
+            "x": 0,
+            "y": 40,
+            "w": 248,
+            "h": 232
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/1f68e3ddaf25b3fd1ce17bb3d7e7f976003eda65abc76e16aa190e1bf0d70251.png",
+            "x": 0,
+            "y": 40,
+            "w": 248,
+            "h": 232
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/56bf18eec9186a52db0c46334b52bcf9f930029b2fc966b3e4050c1d88ff8da8.png",
+            "x": 4,
+            "y": 40,
+            "w": 244,
+            "h": 232
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/9c48f3bf46d6ad7120fe204acad61156c5b0d11436b8f0a844d8066246155ff2.png",
+            "x": 4,
+            "y": 40,
+            "w": 244,
+            "h": 232
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/2a234e93701393b9952e2e6903994db7e29b5b3a6f229d00699860acb239f3ae.png",
+            "x": 4,
+            "y": 40,
+            "w": 244,
+            "h": 232
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/d39091b238dbc1355ed7c0fa950cfe39d50a7d144e0f62f723a6cd71b8a9ac53.png",
+            "x": 4,
+            "y": 40,
+            "w": 244,
+            "h": 232
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/c897c8350fc619880edf54faf9f10b827cd4070deafc4acc2d40a95e84a1c047.png",
+            "x": 4,
+            "y": 44,
+            "w": 244,
+            "h": 228
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/2e208f71d5577143b90e32fea0802307156a085b96ab5c7f3045ca22cbad83b3.png",
+            "x": 4,
+            "y": 44,
+            "w": 244,
+            "h": 228
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/905628fa4641a5b308ccdea9d79e437e9abcd6e1cc656ffcb66667bcd4c2bf72.png",
+            "x": 8,
+            "y": 44,
+            "w": 236,
+            "h": 224
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/5022f31a56d6071870766a327162d5312b98fbd10fd67bbecd20ba4e5c609070.png",
+            "x": 8,
+            "y": 44,
+            "w": 236,
+            "h": 224
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/791fbabc3e12d81c04e5f72ccb8d3e6194800b281385411f8103eb3669a184ed.png",
+            "x": 8,
+            "y": 48,
+            "w": 236,
+            "h": 220
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/d3dc79797a114683d30f6ee14c0740efcc33ed5bc655e092bdcc9acb53834a0d.png",
+            "x": 8,
+            "y": 48,
+            "w": 236,
+            "h": 220
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/db16790a9c80f160818d903f126c05168fc8a9fe38f726250f47aa29de366acf.png",
+            "x": 12,
+            "y": 48,
+            "w": 228,
+            "h": 216
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/78e5a97c13323c85461ac53f0ac525a6ab89c6553a2838c46d7a40d182e3316b.png",
+            "x": 12,
+            "y": 48,
+            "w": 228,
+            "h": 216
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/015fd0e2a54fd0f026fd1ad67c5df94131ae2c99eef844ad794ffcde4b28ce70.png",
+            "x": 16,
+            "y": 48,
+            "w": 220,
+            "h": 216
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/a196b9b659fbbfeb103b9d2efb279d63f7d0a19f2e1781a83e51f344033d565e.png",
+            "x": 16,
+            "y": 48,
+            "w": 220,
+            "h": 216
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/5a2f4833d46f7d06c3395852d9ab89eb68496fcea699084ea75ab8e540958d44.png",
+            "x": 20,
+            "y": 52,
+            "w": 208,
+            "h": 204
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPARMOR2/images/aa3c0ea3472a832151369a3c3d56d7227834bc68ea656682d6af2621011147b8.png",
+            "x": 20,
+            "y": 52,
+            "w": 208,
+            "h": 204
+          }
+        ],
+        "green": null,
+        "method": "xBR4X · mouvement CPU30",
+        "nativeOnly": false
+      },
+      "gpu_used": false,
+      "qa": "pending-user-retest"
+    },
+    {
+      "asset": {
+        "ordinal": 34,
+        "resref": "SPSDRAE2",
+        "asset_key": "effects:bam:SPSDRAE2",
+        "group": "ombres-poussiere-precipitations",
+        "source": "effects/ressources/SPSDRAE2/source.bam",
+        "source_sha256": "118A68D5F316F5B6D0A73596DC38C8C778C303260C7136156E7496AF8C80EB5B",
+        "canonical_sha256": "118A68D5F316F5B6D0A73596DC38C8C778C303260C7136156E7496AF8C80EB5B",
+        "strict_visual_sha256": "FD7A50351E6F6BC324BD0E99C37394B07FD4B85C715A779CD83B4EC1A900B59E",
+        "reuse_aliases": [],
+        "source_frames": 33,
+        "native_cycles": [
+          {
+            "cycle": 0,
+            "lookup_start": 0,
+            "frame_indices": [
+              19
+            ]
+          },
+          {
+            "cycle": 1,
+            "lookup_start": 1,
+            "frame_indices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19
+            ]
+          },
+          {
+            "cycle": 2,
+            "lookup_start": 51,
+            "frame_indices": [
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19
+            ]
+          }
+        ],
+        "native_fps": [],
+        "playback_hint": "unknown",
+        "native_canvas": [
+          125,
+          122
+        ],
+        "consumers": [
+          {
+            "asset_key": "effects:bam:SPSDRAE2",
+            "consumer_key": "projectile:CDDRBLCK",
+            "relation": "spread-animation",
+            "via": "",
+            "source_sha256": "70C17537465BE7CEAAEE0AB10516A65A1897E8BF7F92E56631401952EE65298E",
+            "owner_route": "projectile",
+            "native_fps": "",
+            "loop": "",
+            "cycles": "",
+            "orientations": "",
+            "mirror": "",
+            "blend": "",
+            "palette": "",
+            "color_enabled": "",
+            "colors": "",
+            "flags_json": ""
+          }
+        ],
+        "usage_evidence": "indexed-consumer",
+        "normal_palette_alpha_levels": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          40,
+          41,
+          42,
+          43,
+          44,
+          46,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          63,
+          64,
+          65,
+          66,
+          67,
+          69,
+          70,
+          71,
+          72,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          116,
+          118,
+          119,
+          120,
+          121,
+          122,
+          123,
+          125,
+          126,
+          128,
+          130,
+          132,
+          133,
+          134,
+          135,
+          136,
+          137,
+          138,
+          140,
+          141,
+          143,
+          144,
+          146,
+          147,
+          149,
+          151,
+          152,
+          153,
+          155,
+          156,
+          157,
+          159,
+          160,
+          161,
+          163,
+          164,
+          167,
+          168,
+          169,
+          172,
+          173,
+          174,
+          175,
+          177,
+          178,
+          179,
+          180,
+          181,
+          182,
+          184,
+          185,
+          186,
+          188,
+          189,
+          192,
+          196
+        ],
+        "native_graded_pixels": 240224,
+        "nearblack_covered_percent": 100.0,
+        "exact_green_covered_percent": 0.0,
+        "production": {
+          "asset_key": "effects:bam:SPSDRAE2",
+          "asset_directory": "effects/ressources/SPSDRAE2",
+          "spatial_run": "",
+          "spatial_state": "not-started",
+          "interpolation_run": "",
+          "interpolation_state": "not-started",
+          "selected_run": "",
+          "qa_state": "not-assessed",
+          "qa_evidence": "",
+          "installation_state": "not-installed",
+          "installation_receipt": "",
+          "release_state": "not-evaluated",
+          "release_candidate": "",
+          "notes": ""
+        },
+        "processing_started": false,
+        "spatial_run": "spsdrae2-native-palette-alpha-x4-20261108-v1",
+        "interpolation_run": "spsdrae2-native-alpha-cpu30-20261108-v1",
+        "pack": "effects/ressources/SPSDRAE2/packs/spsdrae2-native-alpha-cpu-initial-20261108-v1",
+        "final_pack": "effects/ressources/SPSDRAE2/packs/spsdrae2-native-alpha-cpu30-profiles-20261108-v1",
+        "sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "profile": "N",
+        "recipe_profile": "NATIVE-MASK",
+        "green_index": null,
+        "temporal_model": "CPU/native-alpha-linear30",
+        "temporal_recipe_id": "cpu-native-mask-alpha-clock",
+        "mask_alpha_authoritative": true
+      },
+      "result": {
+        "resref": "SPSDRAE2",
+        "passed": true,
+        "pack": "effects/ressources/SPSDRAE2/packs/spsdrae2-native-alpha-cpu30-profiles-20261108-v1",
+        "pack_manifest_sha256": "42B4E9135C1D7080AE68DA10FC8FAC88A1C2FE4CE589BD96B7B0BE090AD1062B",
+        "registry_version": 3,
+        "source_cycles": 3,
+        "runtime_cycles": 3,
+        "source_empty_cycles_retained": [],
+        "profiles": 6,
+        "phases": 404,
+        "backings": 67,
+        "native_contracts": 808,
+        "raw_bytes": 44302528,
+        "source_interpolation_run": "spsdrae2-native-alpha-cpu30-20261108-v1",
+        "catalogue_probe": "effects/batches/lot50-magic-water-production-20261108-v1/review-feedback-0634-20261108-v1/runtime-verification/SPSDRAE2.log",
+        "installed": false,
+        "qa": "pending-user-review"
+      },
+      "card": {
+        "ordinal": 34,
+        "resref": "SPSDRAE2",
+        "profile": "NATIVE-MASK",
+        "sigma": 0,
+        "feather": 0,
+        "width": 500,
+        "height": 488,
+        "native": {
+          "image": "alternatives/feedback-cpu-0634/SPSDRAE2/native/SPSDRAE2.png",
+          "width": 125,
+          "height": 122,
+          "cols": 16
+        },
+        "profiles": [
+          {
+            "id": "cycle000-once",
+            "cycle": 0,
+            "loop": false,
+            "native": [
+              19
+            ],
+            "frames": [
+              0,
+              1
+            ],
+            "duration": 0.06666666666666667
+          },
+          {
+            "id": "cycle000-loop",
+            "cycle": 0,
+            "loop": true,
+            "native": [
+              19
+            ],
+            "frames": [
+              2,
+              3
+            ],
+            "duration": 0.06666666666666667
+          },
+          {
+            "id": "cycle001-once",
+            "cycle": 1,
+            "loop": false,
+            "native": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19
+            ],
+            "frames": [
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              48,
+              49,
+              50,
+              51,
+              52,
+              53,
+              54,
+              55,
+              56,
+              57,
+              58,
+              59,
+              60,
+              61,
+              62,
+              63,
+              64,
+              65,
+              66,
+              67,
+              68,
+              69,
+              70,
+              71,
+              72,
+              73,
+              74,
+              75,
+              76,
+              77,
+              78,
+              79,
+              80,
+              81,
+              82,
+              83,
+              84,
+              85,
+              86,
+              87,
+              88,
+              89,
+              90,
+              91,
+              92,
+              93,
+              94,
+              95,
+              96,
+              97,
+              98,
+              99,
+              100,
+              101,
+              102,
+              103
+            ],
+            "duration": 3.3333333333333335
+          },
+          {
+            "id": "cycle001-loop",
+            "cycle": 1,
+            "loop": true,
+            "native": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19
+            ],
+            "frames": [
+              104,
+              105,
+              106,
+              107,
+              108,
+              109,
+              110,
+              111,
+              112,
+              113,
+              114,
+              115,
+              116,
+              117,
+              118,
+              119,
+              120,
+              121,
+              122,
+              123,
+              124,
+              125,
+              126,
+              127,
+              128,
+              129,
+              130,
+              131,
+              132,
+              133,
+              134,
+              135,
+              136,
+              137,
+              138,
+              139,
+              140,
+              141,
+              142,
+              143,
+              144,
+              145,
+              146,
+              147,
+              148,
+              149,
+              150,
+              151,
+              152,
+              153,
+              154,
+              155,
+              156,
+              157,
+              158,
+              159,
+              160,
+              161,
+              162,
+              163,
+              164,
+              165,
+              166,
+              167,
+              168,
+              169,
+              170,
+              171,
+              172,
+              173,
+              174,
+              175,
+              176,
+              177,
+              178,
+              179,
+              180,
+              181,
+              182,
+              183,
+              184,
+              185,
+              186,
+              187,
+              188,
+              189,
+              190,
+              191,
+              192,
+              193,
+              194,
+              195,
+              196,
+              197,
+              198,
+              199,
+              200,
+              201,
+              202,
+              203
+            ],
+            "duration": 3.3333333333333335
+          },
+          {
+            "id": "cycle002-once",
+            "cycle": 2,
+            "loop": false,
+            "native": [
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19
+            ],
+            "frames": [
+              204,
+              205,
+              206,
+              207,
+              208,
+              209,
+              210,
+              211,
+              212,
+              213,
+              214,
+              215,
+              216,
+              217,
+              218,
+              219,
+              220,
+              221,
+              222,
+              223,
+              224,
+              225,
+              226,
+              227,
+              228,
+              229,
+              230,
+              231,
+              232,
+              233,
+              234,
+              235,
+              236,
+              237,
+              238,
+              239,
+              240,
+              241,
+              242,
+              243,
+              244,
+              245,
+              246,
+              247,
+              248,
+              249,
+              250,
+              251,
+              252,
+              253,
+              254,
+              255,
+              256,
+              257,
+              258,
+              259,
+              260,
+              261,
+              262,
+              263,
+              264,
+              265,
+              266,
+              267,
+              268,
+              269,
+              270,
+              271,
+              272,
+              273,
+              274,
+              275,
+              276,
+              277,
+              278,
+              279,
+              280,
+              281,
+              282,
+              283,
+              284,
+              285,
+              286,
+              287,
+              288,
+              289,
+              290,
+              291,
+              292,
+              293,
+              294,
+              295,
+              296,
+              297,
+              298,
+              299,
+              300,
+              301,
+              302,
+              303
+            ],
+            "duration": 3.3333333333333335
+          },
+          {
+            "id": "cycle002-loop",
+            "cycle": 2,
+            "loop": true,
+            "native": [
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19,
+              19
+            ],
+            "frames": [
+              304,
+              305,
+              306,
+              307,
+              308,
+              309,
+              310,
+              311,
+              312,
+              313,
+              314,
+              315,
+              316,
+              317,
+              318,
+              319,
+              320,
+              321,
+              322,
+              323,
+              324,
+              325,
+              326,
+              327,
+              328,
+              329,
+              330,
+              331,
+              332,
+              333,
+              334,
+              335,
+              336,
+              337,
+              338,
+              339,
+              340,
+              341,
+              342,
+              343,
+              344,
+              345,
+              346,
+              347,
+              348,
+              349,
+              350,
+              351,
+              352,
+              353,
+              354,
+              355,
+              356,
+              357,
+              358,
+              359,
+              360,
+              361,
+              362,
+              363,
+              364,
+              365,
+              366,
+              367,
+              368,
+              369,
+              370,
+              371,
+              372,
+              373,
+              374,
+              375,
+              376,
+              377,
+              378,
+              379,
+              380,
+              381,
+              382,
+              383,
+              384,
+              385,
+              386,
+              387,
+              388,
+              389,
+              390,
+              391,
+              392,
+              393,
+              394,
+              395,
+              396,
+              397,
+              398,
+              399,
+              400,
+              401,
+              402,
+              403
+            ],
+            "duration": 3.3333333333333335
+          }
+        ],
+        "frames": [
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/b1e25a211286945e668c6a31d0227585a4288dc444b3e099b2703db5800bdc2c.png",
+            "x": 76,
+            "y": 156,
+            "w": 308,
+            "h": 264
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/c563f25fcfc751fc7b31e95811fd6d904eab6fec15eb6ca63e45da2ffc025a1f.png",
+            "x": 76,
+            "y": 156,
+            "w": 308,
+            "h": 264
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/ae9d23618a29724c3d89125ce2f9174e10ad13c4216b02d05b46f12671e7e8d2.png",
+            "x": 60,
+            "y": 132,
+            "w": 356,
+            "h": 296
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/cdfe104a73e24c5e0984bf1ac7d61d23daff1300f2e45ba7a8ab235a71994cbb.png",
+            "x": 60,
+            "y": 132,
+            "w": 356,
+            "h": 296
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/343d09478b2e47ecf59d12500209a6da75592f57d8c1d5d1bd39a745c6a6a4ff.png",
+            "x": 48,
+            "y": 116,
+            "w": 384,
+            "h": 320
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/26cc4f8c4862d6bc1b044950153557ab3d492d5bb845085c921ba700dc7a37af.png",
+            "x": 48,
+            "y": 116,
+            "w": 384,
+            "h": 320
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/3462cd79df36907c7efdeca3a03725979f61833553b9b787ff442acd14f275a9.png",
+            "x": 36,
+            "y": 96,
+            "w": 408,
+            "h": 348
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/6964deac4622586b4d7bb8ec46ff4deb8a0a45629e34112c11192c40e2def38c.png",
+            "x": 36,
+            "y": 96,
+            "w": 408,
+            "h": 348
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/71fe9b6eada4115e3472ba41940fe9aebbf710c02cf9ecc2d1d070c370eb4afe.png",
+            "x": 28,
+            "y": 80,
+            "w": 428,
+            "h": 368
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/0c7713a2674441cf9dd26dec9a27adc00056ab248922fbe93d8cd50009d736f7.png",
+            "x": 28,
+            "y": 80,
+            "w": 428,
+            "h": 368
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/abfab3828e62fff2cafdbdf03657f373e83e28e7c7460fe37ca322b7a61f7585.png",
+            "x": 20,
+            "y": 60,
+            "w": 440,
+            "h": 388
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d72449e1db282707fbfa5cfbd8d3ec131eb8cbe08221942e936821ca6fc98eac.png",
+            "x": 20,
+            "y": 60,
+            "w": 440,
+            "h": 388
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/409abdd2f21718cb8df623dcdcad58f761ce0dbbd48b8a26c4dec890612213bd.png",
+            "x": 16,
+            "y": 48,
+            "w": 448,
+            "h": 400
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/92c852ca33a4beb90075a6f3846b49fc1def4410b77228d45e5cf4c3f1ed606f.png",
+            "x": 16,
+            "y": 48,
+            "w": 448,
+            "h": 400
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/07ecf9926f69ab1bc7f54f692a519c82ff881113fc1aaf50655c204f3ca19c75.png",
+            "x": 8,
+            "y": 36,
+            "w": 460,
+            "h": 408
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/5a2ddfb1e705a053633827f7f6454fadca20dcdd5e9a331d8160ecc735ba5cfd.png",
+            "x": 8,
+            "y": 36,
+            "w": 460,
+            "h": 408
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/74c964b34a46dc3c1ad348b69a1d0c1ce2c9ec82ae657f18406d7909971a30df.png",
+            "x": 4,
+            "y": 24,
+            "w": 472,
+            "h": 420
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/0d815f325cab7510a30fc36cd669feb9c629e0be3f63dedb98e4ec752520a477.png",
+            "x": 4,
+            "y": 24,
+            "w": 472,
+            "h": 420
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/5742c5f4358d7b8ce06146f45cb7e53f1007b9812beae2bf8ea939669709d623.png",
+            "x": 4,
+            "y": 16,
+            "w": 480,
+            "h": 424
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/991ab1edff7e6311f9d512184df5b8a20187127932c48533015ea75acafc91ff.png",
+            "x": 4,
+            "y": 16,
+            "w": 480,
+            "h": 424
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/0eb98a9279bf1e1596eead779457ba8b5dff73daa743b64f7fd530149b16e00f.png",
+            "x": 4,
+            "y": 8,
+            "w": 488,
+            "h": 428
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/a9c82e439946e10c4edce44bf3e09947aa4e57c59446c1a8a1c1588859cf7557.png",
+            "x": 4,
+            "y": 8,
+            "w": 488,
+            "h": 428
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/8510234c2e28473940b191e2cf178037a3c2429ebdd90d6ebe1208e773c09119.png",
+            "x": 4,
+            "y": 0,
+            "w": 492,
+            "h": 428
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/6904855ef51ade6e44b8d5a2b71d207057e40eef089563adb3315809dc1c3359.png",
+            "x": 4,
+            "y": 0,
+            "w": 492,
+            "h": 428
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/fc52dbec447bd58a5f6ee19b5f853076a11431b61edfe446ec2a2a6cb3eef3ce.png",
+            "x": 4,
+            "y": 0,
+            "w": 496,
+            "h": 420
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/02d20a9d1dab5ce4c213e5a9c3ecd5335de1c1c93e404d879b616dc10155e433.png",
+            "x": 4,
+            "y": 0,
+            "w": 496,
+            "h": 420
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/595f6598760817f978565179003b022ea857fe6e249de157a497b2d7603ac2e3.png",
+            "x": 0,
+            "y": 0,
+            "w": 500,
+            "h": 408
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/2430c4bd1cfc8549bc2ee322c5f0f16b168e372c15013da399fe221404b8ded7.png",
+            "x": 0,
+            "y": 0,
+            "w": 500,
+            "h": 408
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/013c7b668473601f24b75401a127e51de9ecd4caa7e3d10775f5f90770f1107b.png",
+            "x": 0,
+            "y": 8,
+            "w": 500,
+            "h": 396
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d820be39f9d7da5b5b5e93012f678df71578a12d012d6f862724e0b59b26b6b3.png",
+            "x": 0,
+            "y": 8,
+            "w": 500,
+            "h": 396
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/919d6131147f35e6073f83ff755d946f7cc9d6776a8dccc1d4e1d21f1191e33b.png",
+            "x": 0,
+            "y": 16,
+            "w": 496,
+            "h": 380
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/f5aca46cea4f32ffbb22c0c5bb473b8f7e0794451848b239f894825dbcf501c5.png",
+            "x": 0,
+            "y": 16,
+            "w": 496,
+            "h": 380
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/a2cb2b8693cada774b26d8a9d6f5affdae7c521ef0dcf8aec45150ebf215773e.png",
+            "x": 0,
+            "y": 12,
+            "w": 492,
+            "h": 372
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/734c1fc77affe426242b25da651cec62382ba81a67bdac81083151b74ed89f38.png",
+            "x": 0,
+            "y": 12,
+            "w": 492,
+            "h": 372
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/c7c0daa4ba94b83392c404e6d772b5c70bc626ea3a7a6fac59b92f8987672767.png",
+            "x": 4,
+            "y": 12,
+            "w": 464,
+            "h": 356
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/71553fa79808bc3f113cde40e90db52e7b057a5b6c42b53e750c7f37bb9ab421.png",
+            "x": 4,
+            "y": 12,
+            "w": 464,
+            "h": 356
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/18ec5a77a389dab61c26638312e46f121f4f3c112c6038de0b5ee45a109382ba.png",
+            "x": 20,
+            "y": 16,
+            "w": 428,
+            "h": 332
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/6746f2d19b6d91276c9cf7d92a7bd888406a72e5b6e139dd5c8a52e580d13e5a.png",
+            "x": 20,
+            "y": 16,
+            "w": 428,
+            "h": 332
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/b1e25a211286945e668c6a31d0227585a4288dc444b3e099b2703db5800bdc2c.png",
+            "x": 76,
+            "y": 156,
+            "w": 308,
+            "h": 264
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/c563f25fcfc751fc7b31e95811fd6d904eab6fec15eb6ca63e45da2ffc025a1f.png",
+            "x": 76,
+            "y": 156,
+            "w": 308,
+            "h": 264
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/ae9d23618a29724c3d89125ce2f9174e10ad13c4216b02d05b46f12671e7e8d2.png",
+            "x": 60,
+            "y": 132,
+            "w": 356,
+            "h": 296
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/cdfe104a73e24c5e0984bf1ac7d61d23daff1300f2e45ba7a8ab235a71994cbb.png",
+            "x": 60,
+            "y": 132,
+            "w": 356,
+            "h": 296
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/343d09478b2e47ecf59d12500209a6da75592f57d8c1d5d1bd39a745c6a6a4ff.png",
+            "x": 48,
+            "y": 116,
+            "w": 384,
+            "h": 320
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/26cc4f8c4862d6bc1b044950153557ab3d492d5bb845085c921ba700dc7a37af.png",
+            "x": 48,
+            "y": 116,
+            "w": 384,
+            "h": 320
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/3462cd79df36907c7efdeca3a03725979f61833553b9b787ff442acd14f275a9.png",
+            "x": 36,
+            "y": 96,
+            "w": 408,
+            "h": 348
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/6964deac4622586b4d7bb8ec46ff4deb8a0a45629e34112c11192c40e2def38c.png",
+            "x": 36,
+            "y": 96,
+            "w": 408,
+            "h": 348
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/71fe9b6eada4115e3472ba41940fe9aebbf710c02cf9ecc2d1d070c370eb4afe.png",
+            "x": 28,
+            "y": 80,
+            "w": 428,
+            "h": 368
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/0c7713a2674441cf9dd26dec9a27adc00056ab248922fbe93d8cd50009d736f7.png",
+            "x": 28,
+            "y": 80,
+            "w": 428,
+            "h": 368
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/abfab3828e62fff2cafdbdf03657f373e83e28e7c7460fe37ca322b7a61f7585.png",
+            "x": 20,
+            "y": 60,
+            "w": 440,
+            "h": 388
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d72449e1db282707fbfa5cfbd8d3ec131eb8cbe08221942e936821ca6fc98eac.png",
+            "x": 20,
+            "y": 60,
+            "w": 440,
+            "h": 388
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/409abdd2f21718cb8df623dcdcad58f761ce0dbbd48b8a26c4dec890612213bd.png",
+            "x": 16,
+            "y": 48,
+            "w": 448,
+            "h": 400
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/92c852ca33a4beb90075a6f3846b49fc1def4410b77228d45e5cf4c3f1ed606f.png",
+            "x": 16,
+            "y": 48,
+            "w": 448,
+            "h": 400
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/07ecf9926f69ab1bc7f54f692a519c82ff881113fc1aaf50655c204f3ca19c75.png",
+            "x": 8,
+            "y": 36,
+            "w": 460,
+            "h": 408
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/5a2ddfb1e705a053633827f7f6454fadca20dcdd5e9a331d8160ecc735ba5cfd.png",
+            "x": 8,
+            "y": 36,
+            "w": 460,
+            "h": 408
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/74c964b34a46dc3c1ad348b69a1d0c1ce2c9ec82ae657f18406d7909971a30df.png",
+            "x": 4,
+            "y": 24,
+            "w": 472,
+            "h": 420
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/0d815f325cab7510a30fc36cd669feb9c629e0be3f63dedb98e4ec752520a477.png",
+            "x": 4,
+            "y": 24,
+            "w": 472,
+            "h": 420
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/5742c5f4358d7b8ce06146f45cb7e53f1007b9812beae2bf8ea939669709d623.png",
+            "x": 4,
+            "y": 16,
+            "w": 480,
+            "h": 424
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/991ab1edff7e6311f9d512184df5b8a20187127932c48533015ea75acafc91ff.png",
+            "x": 4,
+            "y": 16,
+            "w": 480,
+            "h": 424
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/0eb98a9279bf1e1596eead779457ba8b5dff73daa743b64f7fd530149b16e00f.png",
+            "x": 4,
+            "y": 8,
+            "w": 488,
+            "h": 428
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/a9c82e439946e10c4edce44bf3e09947aa4e57c59446c1a8a1c1588859cf7557.png",
+            "x": 4,
+            "y": 8,
+            "w": 488,
+            "h": 428
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/8510234c2e28473940b191e2cf178037a3c2429ebdd90d6ebe1208e773c09119.png",
+            "x": 4,
+            "y": 0,
+            "w": 492,
+            "h": 428
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/6904855ef51ade6e44b8d5a2b71d207057e40eef089563adb3315809dc1c3359.png",
+            "x": 4,
+            "y": 0,
+            "w": 492,
+            "h": 428
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/fc52dbec447bd58a5f6ee19b5f853076a11431b61edfe446ec2a2a6cb3eef3ce.png",
+            "x": 4,
+            "y": 0,
+            "w": 496,
+            "h": 420
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/02d20a9d1dab5ce4c213e5a9c3ecd5335de1c1c93e404d879b616dc10155e433.png",
+            "x": 4,
+            "y": 0,
+            "w": 496,
+            "h": 420
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/595f6598760817f978565179003b022ea857fe6e249de157a497b2d7603ac2e3.png",
+            "x": 0,
+            "y": 0,
+            "w": 500,
+            "h": 408
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/2430c4bd1cfc8549bc2ee322c5f0f16b168e372c15013da399fe221404b8ded7.png",
+            "x": 0,
+            "y": 0,
+            "w": 500,
+            "h": 408
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/013c7b668473601f24b75401a127e51de9ecd4caa7e3d10775f5f90770f1107b.png",
+            "x": 0,
+            "y": 8,
+            "w": 500,
+            "h": 396
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d820be39f9d7da5b5b5e93012f678df71578a12d012d6f862724e0b59b26b6b3.png",
+            "x": 0,
+            "y": 8,
+            "w": 500,
+            "h": 396
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/919d6131147f35e6073f83ff755d946f7cc9d6776a8dccc1d4e1d21f1191e33b.png",
+            "x": 0,
+            "y": 16,
+            "w": 496,
+            "h": 380
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/f5aca46cea4f32ffbb22c0c5bb473b8f7e0794451848b239f894825dbcf501c5.png",
+            "x": 0,
+            "y": 16,
+            "w": 496,
+            "h": 380
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/a2cb2b8693cada774b26d8a9d6f5affdae7c521ef0dcf8aec45150ebf215773e.png",
+            "x": 0,
+            "y": 12,
+            "w": 492,
+            "h": 372
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/734c1fc77affe426242b25da651cec62382ba81a67bdac81083151b74ed89f38.png",
+            "x": 0,
+            "y": 12,
+            "w": 492,
+            "h": 372
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/c7c0daa4ba94b83392c404e6d772b5c70bc626ea3a7a6fac59b92f8987672767.png",
+            "x": 4,
+            "y": 12,
+            "w": 464,
+            "h": 356
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/71553fa79808bc3f113cde40e90db52e7b057a5b6c42b53e750c7f37bb9ab421.png",
+            "x": 4,
+            "y": 12,
+            "w": 464,
+            "h": 356
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/18ec5a77a389dab61c26638312e46f121f4f3c112c6038de0b5ee45a109382ba.png",
+            "x": 20,
+            "y": 16,
+            "w": 428,
+            "h": 332
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/6746f2d19b6d91276c9cf7d92a7bd888406a72e5b6e139dd5c8a52e580d13e5a.png",
+            "x": 20,
+            "y": 16,
+            "w": 428,
+            "h": 332
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/021dfbea6a87d70dd54fdf142df1fc58be94cbfad4e15dc95877fc2abfc93bc1.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/ad2510f4800a9fa9ffaae4427c2c9fb71ecb9acc2844a8c3814fc94c8310c37d.png",
+            "x": 92,
+            "y": 116,
+            "w": 316,
+            "h": 304
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/f1566843c2505b4e8888be174eae71cecb1ffad82c0b8d0a6f114aa4e31e6fc1.png",
+            "x": 92,
+            "y": 116,
+            "w": 316,
+            "h": 304
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/e0effd34da3a10d0c08426d00466252cfe33f6333c970e2dac6606415e75ba24.png",
+            "x": 60,
+            "y": 92,
+            "w": 376,
+            "h": 344
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d54914be408dfaf2b24102914d8c28ec74318f692d898ec79d02a5de0eda717e.png",
+            "x": 60,
+            "y": 92,
+            "w": 376,
+            "h": 344
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/ce96a4d2676c169c2ae418173c22e1c553a76b06ee1c0a0ebeda869b24a59a24.png",
+            "x": 48,
+            "y": 76,
+            "w": 408,
+            "h": 372
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/0e6ad97958948cb4d00db189088f046fc59b6873decef5b802c9b1025c9c8cfb.png",
+            "x": 48,
+            "y": 76,
+            "w": 408,
+            "h": 372
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/5191ea90ccff2c775adaad6deff8ca2738b23e2995699c81de673be394219aab.png",
+            "x": 40,
+            "y": 68,
+            "w": 428,
+            "h": 388
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/8685d0408faefc6131e812aca30a379871a51dc5050372146f61d02f093ee287.png",
+            "x": 40,
+            "y": 68,
+            "w": 428,
+            "h": 388
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/9b63b5cab315ebea21e695bcb4eb4a7c1771c2b78ccf6bc3352ce7bf2f08bfe3.png",
+            "x": 36,
+            "y": 68,
+            "w": 436,
+            "h": 400
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/254d6e86b57dae8be42d4c93578f09a43752d092e1cfe72b11ba5337f5a643d9.png",
+            "x": 36,
+            "y": 68,
+            "w": 436,
+            "h": 400
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/c83a616cb0b553199e94ff102fda6da9a53b271017b1756e612a991cc1fc4d25.png",
+            "x": 32,
+            "y": 68,
+            "w": 448,
+            "h": 416
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/6ed16d2f1902439aa48669dd5938277322fc573184415d781be9a4fd4e391afc.png",
+            "x": 32,
+            "y": 68,
+            "w": 448,
+            "h": 416
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/b38574356a1a678b73905d26ec929b835d54e877200705e11497a8059b650ad9.png",
+            "x": 28,
+            "y": 64,
+            "w": 460,
+            "h": 424
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/8725f58432f6af1658f4930865a97123f1409a584acfcdf5ab0d690960ece9e5.png",
+            "x": 28,
+            "y": 64,
+            "w": 460,
+            "h": 424
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/c7d30a5e2409f5c6d27041aa7961b6ac0d03aa4d953ee0b5810ce569bc608505.png",
+            "x": 20,
+            "y": 52,
+            "w": 476,
+            "h": 436
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/f6311e9630e4d9fb168ef97115624cff11b51d5bc9df9115d35ff7fc9dd794df.png",
+            "x": 20,
+            "y": 52,
+            "w": 476,
+            "h": 436
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/c7b14aa36bf6569d71e73c03fa115e4ef6af6fa72daa42fc4f7ff92327e724b7.png",
+            "x": 20,
+            "y": 44,
+            "w": 480,
+            "h": 444
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/4b9f5a2fe48ba02322bc429a537d6d2ed45e0b7bc3dc91d64f237c69bd41d3a0.png",
+            "x": 20,
+            "y": 44,
+            "w": 480,
+            "h": 444
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/dfa4d9e79d1042bf7c4865b7d6f5b2cc3271b40fe397e34023834c383b03e4ea.png",
+            "x": 24,
+            "y": 44,
+            "w": 476,
+            "h": 440
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/5ac65f2abe9b0d72a2f9a3a9bd1dc42b908a5450df29cfc31f469197a36231e4.png",
+            "x": 24,
+            "y": 44,
+            "w": 476,
+            "h": 440
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/ce493e5cda9d5386a923ee3d84a4bda5c0a29fa1c7a23ebff03aa0366afd0b43.png",
+            "x": 28,
+            "y": 44,
+            "w": 464,
+            "h": 428
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/b79b91c4021b3e473eb83402b9b3011c4d787cd481e60389b75162456f3f85f4.png",
+            "x": 28,
+            "y": 44,
+            "w": 464,
+            "h": 428
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/fea45934e62fc94aabeaf9cfdea55bcfc1a1ab35abb4c36fe66417360921615d.png",
+            "x": 48,
+            "y": 56,
+            "w": 416,
+            "h": 396
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/51eda06d49dff1b37d6492590a483016daae29f16c27ed52a9220539d6d41eba.png",
+            "x": 48,
+            "y": 56,
+            "w": 416,
+            "h": 396
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d0327d641700bf5c5d916185e8edd65de03016f69dad948d765eedbc77acef28.png",
+            "x": 48,
+            "y": 88,
+            "w": 416,
+            "h": 252
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/2516b3648d7d832aaef3010924ceb7ecaa5b0d66cd161d069b55492d0e05cfe3.png",
+            "x": 48,
+            "y": 88,
+            "w": 416,
+            "h": 252
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/ad2510f4800a9fa9ffaae4427c2c9fb71ecb9acc2844a8c3814fc94c8310c37d.png",
+            "x": 92,
+            "y": 116,
+            "w": 316,
+            "h": 304
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/f1566843c2505b4e8888be174eae71cecb1ffad82c0b8d0a6f114aa4e31e6fc1.png",
+            "x": 92,
+            "y": 116,
+            "w": 316,
+            "h": 304
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/e0effd34da3a10d0c08426d00466252cfe33f6333c970e2dac6606415e75ba24.png",
+            "x": 60,
+            "y": 92,
+            "w": 376,
+            "h": 344
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d54914be408dfaf2b24102914d8c28ec74318f692d898ec79d02a5de0eda717e.png",
+            "x": 60,
+            "y": 92,
+            "w": 376,
+            "h": 344
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/ce96a4d2676c169c2ae418173c22e1c553a76b06ee1c0a0ebeda869b24a59a24.png",
+            "x": 48,
+            "y": 76,
+            "w": 408,
+            "h": 372
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/0e6ad97958948cb4d00db189088f046fc59b6873decef5b802c9b1025c9c8cfb.png",
+            "x": 48,
+            "y": 76,
+            "w": 408,
+            "h": 372
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/5191ea90ccff2c775adaad6deff8ca2738b23e2995699c81de673be394219aab.png",
+            "x": 40,
+            "y": 68,
+            "w": 428,
+            "h": 388
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/8685d0408faefc6131e812aca30a379871a51dc5050372146f61d02f093ee287.png",
+            "x": 40,
+            "y": 68,
+            "w": 428,
+            "h": 388
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/9b63b5cab315ebea21e695bcb4eb4a7c1771c2b78ccf6bc3352ce7bf2f08bfe3.png",
+            "x": 36,
+            "y": 68,
+            "w": 436,
+            "h": 400
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/254d6e86b57dae8be42d4c93578f09a43752d092e1cfe72b11ba5337f5a643d9.png",
+            "x": 36,
+            "y": 68,
+            "w": 436,
+            "h": 400
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/c83a616cb0b553199e94ff102fda6da9a53b271017b1756e612a991cc1fc4d25.png",
+            "x": 32,
+            "y": 68,
+            "w": 448,
+            "h": 416
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/6ed16d2f1902439aa48669dd5938277322fc573184415d781be9a4fd4e391afc.png",
+            "x": 32,
+            "y": 68,
+            "w": 448,
+            "h": 416
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/b38574356a1a678b73905d26ec929b835d54e877200705e11497a8059b650ad9.png",
+            "x": 28,
+            "y": 64,
+            "w": 460,
+            "h": 424
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/8725f58432f6af1658f4930865a97123f1409a584acfcdf5ab0d690960ece9e5.png",
+            "x": 28,
+            "y": 64,
+            "w": 460,
+            "h": 424
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/c7d30a5e2409f5c6d27041aa7961b6ac0d03aa4d953ee0b5810ce569bc608505.png",
+            "x": 20,
+            "y": 52,
+            "w": 476,
+            "h": 436
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/f6311e9630e4d9fb168ef97115624cff11b51d5bc9df9115d35ff7fc9dd794df.png",
+            "x": 20,
+            "y": 52,
+            "w": 476,
+            "h": 436
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/c7b14aa36bf6569d71e73c03fa115e4ef6af6fa72daa42fc4f7ff92327e724b7.png",
+            "x": 20,
+            "y": 44,
+            "w": 480,
+            "h": 444
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/4b9f5a2fe48ba02322bc429a537d6d2ed45e0b7bc3dc91d64f237c69bd41d3a0.png",
+            "x": 20,
+            "y": 44,
+            "w": 480,
+            "h": 444
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/dfa4d9e79d1042bf7c4865b7d6f5b2cc3271b40fe397e34023834c383b03e4ea.png",
+            "x": 24,
+            "y": 44,
+            "w": 476,
+            "h": 440
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/5ac65f2abe9b0d72a2f9a3a9bd1dc42b908a5450df29cfc31f469197a36231e4.png",
+            "x": 24,
+            "y": 44,
+            "w": 476,
+            "h": 440
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/ce493e5cda9d5386a923ee3d84a4bda5c0a29fa1c7a23ebff03aa0366afd0b43.png",
+            "x": 28,
+            "y": 44,
+            "w": 464,
+            "h": 428
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/b79b91c4021b3e473eb83402b9b3011c4d787cd481e60389b75162456f3f85f4.png",
+            "x": 28,
+            "y": 44,
+            "w": 464,
+            "h": 428
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/fea45934e62fc94aabeaf9cfdea55bcfc1a1ab35abb4c36fe66417360921615d.png",
+            "x": 48,
+            "y": 56,
+            "w": 416,
+            "h": 396
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/51eda06d49dff1b37d6492590a483016daae29f16c27ed52a9220539d6d41eba.png",
+            "x": 48,
+            "y": 56,
+            "w": 416,
+            "h": 396
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d0327d641700bf5c5d916185e8edd65de03016f69dad948d765eedbc77acef28.png",
+            "x": 48,
+            "y": 88,
+            "w": 416,
+            "h": 252
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/2516b3648d7d832aaef3010924ceb7ecaa5b0d66cd161d069b55492d0e05cfe3.png",
+            "x": 48,
+            "y": 88,
+            "w": 416,
+            "h": 252
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/d05ab45684a4f4060545107d5d42b1a740699b61ef8933911fe2da303cc47e94.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          },
+          {
+            "image": "alternatives/feedback-cpu-0634/SPSDRAE2/images/c937c58d9c75b990760008f908c679484c3909ee0005647125c4cf9c3d5d4a6b.png",
+            "x": 104,
+            "y": 164,
+            "w": 236,
+            "h": 236
+          }
+        ],
+        "green": null,
+        "method": "Masque natif RGBA · alpha CPU30 · sans IA",
+        "nativeOnly": false
+      },
+      "gpu_used": false,
+      "qa": "pending-user-retest"
+    }
+  ],
+  "gpu_used": false
+}

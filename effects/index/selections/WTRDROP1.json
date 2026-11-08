@@ -1,0 +1,143 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:WTRDROP1",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 15,
+    "source": {
+      "interpolation_run": "wtrdrop1-magic-apollo30-20261108-v1",
+      "interpolation_run_descriptor_sha256": "8F64509056D1E7D209A9CF54C22AC111A9ECF062120AAE55D8792FFC5F0B2626",
+      "source_bam_sha256": "d311df1f02bd29075654334d48d653e7b6e90d44e8a7fa1aecff6fdbc6a1ae8c",
+      "spatial_manifest_sha256": "B2F80BD05D0E696B653A61E135367D4A3D4CA57894AE0D838489E7C89067D372",
+      "spatial_run": "wtrdrop1-magic-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "99691A46FBACD8A2753F32F4727D947AF663D442B1C4C3D08998C67ECE397266"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        14
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          12
+        ]
+      ],
+      "phase_count": 14,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          13,
+          12,
+          14
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1130,
+    "path": "effects/index/qa-decisions/WTRDROP1/2026-11-09-accepted-c15331725bc0.json",
+    "sha256": "C15331725BC0037306F4AAEE16D026ED60963B90C888B00F82D4588F31269B31"
+  },
+  "resref": "WTRDROP1",
+  "run_descriptor": {
+    "bytes": 1980,
+    "path": "effects/ressources/WTRDROP1/runs/wtrdrop1-magic-apollo30-20261108-v1/run.json",
+    "sha256": "8F64509056D1E7D209A9CF54C22AC111A9ECF062120AAE55D8792FFC5F0B2626"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 12187,
+      "path": "effects/ressources/WTRDROP1/packs/wtrdrop1-magic-x4-apollo30-profiles-20261108-v1/manifest.json",
+      "sha256": "2AF10649388075E226C25CC482049450D4862B26452C0D007973AFAB24BB1746"
+    },
+    "registry": {
+      "bytes": 336,
+      "path": "effects/ressources/WTRDROP1/packs/wtrdrop1-magic-x4-apollo30-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "14C03D37C04ABDD9DFED40A143E3FB58117ED017EB008EDD735EC6410B754393"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "wtrdrop1-magic-apollo30-20261108-v1",
+  "source": {
+    "bytes": 10160,
+    "path": "effects/ressources/WTRDROP1/source.bam",
+    "sha256": "D311DF1F02BD29075654334D48D653E7B6E90D44E8A7FA1AECFF6FDBC6A1AE8C"
+  }
+}

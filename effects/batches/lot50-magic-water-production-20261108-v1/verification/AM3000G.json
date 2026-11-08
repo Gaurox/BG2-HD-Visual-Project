@@ -1,0 +1,32 @@
+{
+  "resref": "AM3000G",
+  "passed": true,
+  "phases": 64,
+  "profiles": 2,
+  "native_anchor_contracts": 64,
+  "source_pixels_palette_cycles_centres_preserved": true,
+  "source_derived_alpha_verified": true,
+  "profile_timings": [
+    {
+      "id": "cycle000-once",
+      "native_slots": 16,
+      "phases": 32,
+      "duration": [
+        16,
+        15
+      ]
+    },
+    {
+      "id": "cycle000-loop",
+      "native_slots": 16,
+      "phases": 32,
+      "duration": [
+        16,
+        15
+      ]
+    }
+  ],
+  "pack_manifest_sha256": "F71B749F71A0CA1D6B31223C0F1C3D04DC878A2F796D2D384C6BA08D5F432774",
+  "visual_qa": "pending-user-review",
+  "installed": false
+}

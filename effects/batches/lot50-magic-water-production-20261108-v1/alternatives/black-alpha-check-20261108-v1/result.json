@@ -1,0 +1,30 @@
+{
+  "assets": [
+    {
+      "resref": "SPBASEWT",
+      "frames": 196,
+      "changed_alpha_pixels": 15461618,
+      "exact_black_opaque_before": 13543,
+      "exact_black_opaque_after": 0
+    },
+    {
+      "resref": "SPENTAXI",
+      "frames": 92,
+      "changed_alpha_pixels": 8882104,
+      "exact_black_opaque_before": 24249,
+      "exact_black_opaque_after": 0
+    }
+  ],
+  "source_findings": {
+    "SPBASEWT": {
+      "exact_black_source_pixels": 0,
+      "nearblack_source_pixels": 38043,
+      "covered_source_pixels": 243509
+    },
+    "SPENTAXI": {
+      "exact_black_source_pixels": 0,
+      "nearblack_source_pixels": 5324,
+      "covered_source_pixels": 134881
+    }
+  }
+}

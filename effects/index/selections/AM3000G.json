@@ -1,0 +1,197 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:AM3000G",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          1,
+          2,
+          2,
+          3,
+          3,
+          4,
+          4,
+          5,
+          5,
+          6,
+          6,
+          7,
+          7,
+          0
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 16,
+    "source": {
+      "interpolation_run": "am3000g-magic-apollo30-20261108-v1",
+      "interpolation_run_descriptor_sha256": "8CCEB594F3C9AFC96059216D4E4C6D0A639821EB4909CE2E4C2FF62B7B2759C6",
+      "source_bam_sha256": "0d53f5a0a385b24eee610e1918f79f5c55411fd83dadeca88c2b8856916d75cf",
+      "spatial_manifest_sha256": "99312FC0CA8F76F6180B3F2088470FDD6BE7FF4BFB642BDDF1A15806DD36EEE6",
+      "spatial_run": "am3000g-magic-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "BB88D76CC84C79570380C4D4ABD775E2E1CF6E3439EF936CCE3A4C6402F2C0E7"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        32
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          2,
+          4,
+          4,
+          6,
+          6,
+          8,
+          8,
+          10,
+          10,
+          12,
+          12,
+          14,
+          14,
+          0
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          2,
+          2,
+          3,
+          4,
+          4,
+          4,
+          5,
+          6,
+          6,
+          6,
+          7,
+          8,
+          8,
+          8,
+          9,
+          10,
+          10,
+          10,
+          11,
+          12,
+          12,
+          12,
+          13,
+          14,
+          14,
+          14,
+          15,
+          0,
+          0
+        ]
+      ],
+      "phase_count": 32,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          2,
+          2,
+          3,
+          4,
+          4,
+          4,
+          5,
+          6,
+          6,
+          6,
+          7,
+          8,
+          8,
+          8,
+          9,
+          10,
+          10,
+          10,
+          11,
+          12,
+          12,
+          12,
+          13,
+          14,
+          14,
+          14,
+          15,
+          0,
+          0
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1123,
+    "path": "effects/index/qa-decisions/AM3000G/2026-11-09-accepted-df57bc393a08.json",
+    "sha256": "DF57BC393A087FA85FCF97D260AE1E825E0D6726D6464476F707A73181B0A82F"
+  },
+  "resref": "AM3000G",
+  "run_descriptor": {
+    "bytes": 1966,
+    "path": "effects/ressources/AM3000G/runs/am3000g-magic-apollo30-20261108-v1/run.json",
+    "sha256": "8CCEB594F3C9AFC96059216D4E4C6D0A639821EB4909CE2E4C2FF62B7B2759C6"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 13453,
+      "path": "effects/ressources/AM3000G/packs/am3000g-magic-x4-apollo30-profiles-20261108-v1/manifest.json",
+      "sha256": "EB93EF8FD2C739FF6FA3D575B8EC2E7ECEAEC3EAB75F4219F8DDC1A895C52103"
+    },
+    "registry": {
+      "bytes": 524,
+      "path": "effects/ressources/AM3000G/packs/am3000g-magic-x4-apollo30-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "D7F2FAA4BC4B359E55FE3DDD109352B2CED30F11453434557B94567A5FE49F1C"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "am3000g-magic-apollo30-20261108-v1",
+  "source": {
+    "bytes": 43232,
+    "path": "effects/ressources/AM3000G/source.bam",
+    "sha256": "0D53F5A0A385B24EEE610E1918F79F5C55411FD83DADECA88C2B8856916D75CF"
+  }
+}

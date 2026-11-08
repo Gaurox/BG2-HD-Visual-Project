@@ -1,0 +1,257 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SNOWFAL2",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [],
+        "lookup_start": 21
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [],
+        "lookup_start": 21
+      },
+      {
+        "cycle": 3,
+        "frame_indices": [],
+        "lookup_start": 21
+      },
+      {
+        "cycle": 4,
+        "frame_indices": [],
+        "lookup_start": 21
+      }
+    ],
+    "frame_count": 43,
+    "source": {
+      "interpolation_run": "snowfal2-magic-apollo30-20261108-v1",
+      "interpolation_run_descriptor_sha256": "300EE0844487742E50E2759B2136F35AC21C6D1D6D5B8AE8D4DE8EBD797C8990",
+      "source_bam_sha256": "b57038950ac2d82d977ef1bdb8cd59c9604ffb2b7f1841dda2109e4cda073243",
+      "spatial_manifest_sha256": "FA2AC6B6D4AF71ABD0F6CFC3B709BC5B531D44FCA0FABF13668047A162742279",
+      "spatial_run": "snowfal2-magic-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "C7E170E1821DB54FF61236E95FE7B3214242112FE5D6FD1E5988BEE9913A19DA"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        42
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "excluded_empty_source_cycles": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30,
+          32,
+          34,
+          36,
+          38,
+          40
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 5,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          40
+        ]
+      ],
+      "phase_count": 42,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          41,
+          40,
+          42
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1130,
+    "path": "effects/index/qa-decisions/SNOWFAL2/2026-11-09-accepted-978c8cdf5aff.json",
+    "sha256": "978C8CDF5AFF7B80D1039267516686232C1F54AFC9796650D7F9BA36DF429E61"
+  },
+  "resref": "SNOWFAL2",
+  "run_descriptor": {
+    "bytes": 1981,
+    "path": "effects/ressources/SNOWFAL2/runs/snowfal2-magic-apollo30-20261108-v1/run.json",
+    "sha256": "300EE0844487742E50E2759B2136F35AC21C6D1D6D5B8AE8D4DE8EBD797C8990"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 30731,
+      "path": "effects/ressources/SNOWFAL2/packs/snowfal2-magic-x4-apollo30-profiles-20261108-v1/manifest.json",
+      "sha256": "0C4C1582F13E098D0B76DD083A91CEA97C03F5058755B1EB9F0393FAEC02D6BC"
+    },
+    "registry": {
+      "bytes": 840,
+      "path": "effects/ressources/SNOWFAL2/packs/snowfal2-magic-x4-apollo30-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "C331C781DFA4337D6F2F88A0710C768DE6A5A9FDEE4F0F7A6F3A196F12E39A08"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "snowfal2-magic-apollo30-20261108-v1",
+  "source": {
+    "bytes": 9445,
+    "path": "effects/ressources/SNOWFAL2/source.bam",
+    "sha256": "B57038950AC2D82D977EF1BDB8CD59C9604FFB2B7F1841DDA2109E4CDA073243"
+  }
+}

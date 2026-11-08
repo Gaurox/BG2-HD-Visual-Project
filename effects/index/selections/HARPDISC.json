@@ -1,0 +1,167 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:HARPDISC",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          10,
+          9,
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 23,
+    "source": {
+      "interpolation_run": "harpdisc-magic-apollo30-20261108-v1",
+      "interpolation_run_descriptor_sha256": "8FD9252E04434508B6C76668BA9C0882257931DBA4755F644946126A4FCAC49F",
+      "source_bam_sha256": "c90d694aabeaf3bedd266f515a3aa1d6e9cd1413eafcb2b012abeec2b1e678ce",
+      "spatial_manifest_sha256": "1433292DF9FF9414742963E66A1BE0C9ABAA0B3B1EF7FBAFEF828210F248BE75",
+      "spatial_run": "harpdisc-magic-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "6E316BC2E9C9C24F5894E24E124E6C821A7A1F5BDC0920085BF69ED31D68895C"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        22
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          20
+        ]
+      ],
+      "phase_count": 22,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          21,
+          20,
+          22
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1130,
+    "path": "effects/index/qa-decisions/HARPDISC/2026-11-09-accepted-f4050a476bfe.json",
+    "sha256": "F4050A476BFE8CFBF329C698E326F448052741A15BF170571945793BBD695BED"
+  },
+  "resref": "HARPDISC",
+  "run_descriptor": {
+    "bytes": 1980,
+    "path": "effects/ressources/HARPDISC/runs/harpdisc-magic-apollo30-20261108-v1/run.json",
+    "sha256": "8FD9252E04434508B6C76668BA9C0882257931DBA4755F644946126A4FCAC49F"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 17369,
+      "path": "effects/ressources/HARPDISC/packs/harpdisc-magic-x4-apollo30-profiles-20261108-v1/manifest.json",
+      "sha256": "5CD608167D3A1129725D16570B5E27758CCB9A012FC436EDE40849AAC25784CF"
+    },
+    "registry": {
+      "bytes": 480,
+      "path": "effects/ressources/HARPDISC/packs/harpdisc-magic-x4-apollo30-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "116E726B5C628094388C3FC9D92C8A878A2D7754FE5111AB30FA360E12EC410D"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "harpdisc-magic-apollo30-20261108-v1",
+  "source": {
+    "bytes": 21742,
+    "path": "effects/ressources/HARPDISC/source.bam",
+    "sha256": "C90D694AABEAF3BEDD266F515A3AA1D6E9CD1413EAFCB2B012ABEEC2B1E678CE"
+  }
+}

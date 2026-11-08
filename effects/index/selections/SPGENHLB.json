@@ -1,0 +1,401 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPGENHLB",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          14,
+          13,
+          12,
+          11,
+          10,
+          9
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "lookup_start": 6
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "lookup_start": 12
+      },
+      {
+        "cycle": 3,
+        "frame_indices": [
+          14,
+          13,
+          12,
+          11,
+          10,
+          9,
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "lookup_start": 21
+      }
+    ],
+    "frame_count": 45,
+    "source": {
+      "interpolation_run": "spgenhlb-magic-apollo30-20261108-v1",
+      "interpolation_run_descriptor_sha256": "B46FF1B82E7BDF6EDC9539EB6A0DE8390AB5D6E6A408A938E08498117CEBD717",
+      "source_bam_sha256": "c15ef8e2e167889a3e2204b4d9dfed3b996e1ffbe9a0faf75bb1f6c109a4605a",
+      "spatial_manifest_sha256": "7A55A546BBE5594412291ABA2A481174635C42FA2A8D57BE47BDD6517EB2EE6E",
+      "spatial_run": "spgenhlb-magic-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "15A92369F09CF736980FBAADC00818D2C8B5ED9E42E858B19B77197B05B2DC6F"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12,
+        12,
+        18,
+        42
+      ],
+      "alternate_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop",
+        "cycle002-loop",
+        "cycle003-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10
+        ],
+        [
+          10,
+          8,
+          6,
+          4,
+          2,
+          0
+        ],
+        [
+          20,
+          22,
+          24,
+          26,
+          28,
+          30,
+          32,
+          34,
+          36
+        ],
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30,
+          32,
+          34,
+          36,
+          10,
+          8,
+          6,
+          4,
+          2,
+          0
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 4,
+      "once_cycle_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          10
+        ],
+        [
+          10,
+          13,
+          8,
+          14,
+          6,
+          15,
+          4,
+          16,
+          2,
+          17,
+          0,
+          0
+        ],
+        [
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          36
+        ],
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          39,
+          10,
+          40,
+          20,
+          41,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          42,
+          36,
+          43,
+          10,
+          44,
+          8,
+          14,
+          6,
+          15,
+          4,
+          16,
+          2,
+          17,
+          0,
+          0
+        ]
+      ],
+      "phase_count": 42,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 4,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          11,
+          10,
+          12
+        ],
+        [
+          10,
+          13,
+          8,
+          14,
+          6,
+          15,
+          4,
+          16,
+          2,
+          18,
+          0,
+          19
+        ],
+        [
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          37,
+          36,
+          38
+        ],
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          39,
+          10,
+          40,
+          20,
+          41,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          42,
+          36,
+          43,
+          10,
+          44,
+          8,
+          14,
+          6,
+          15,
+          4,
+          16,
+          2,
+          17,
+          0,
+          0
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1130,
+    "path": "effects/index/qa-decisions/SPGENHLB/2026-11-09-accepted-570c8e70726b.json",
+    "sha256": "570C8E70726BED13E719B8BE6EF08A77A9DF6FFA7A17FDD991499897E8A4464A"
+  },
+  "resref": "SPGENHLB",
+  "run_descriptor": {
+    "bytes": 1982,
+    "path": "effects/ressources/SPGENHLB/runs/spgenhlb-magic-apollo30-20261108-v1/run.json",
+    "sha256": "B46FF1B82E7BDF6EDC9539EB6A0DE8390AB5D6E6A408A938E08498117CEBD717"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 33996,
+      "path": "effects/ressources/SPGENHLB/packs/spgenhlb-magic-x4-apollo30-profiles-20261108-v1/manifest.json",
+      "sha256": "BBA162EA4BC6C0F2D47C1B2BCD2D476ED777717AFA575946ADDB38C21B3DB236"
+    },
+    "registry": {
+      "bytes": 1648,
+      "path": "effects/ressources/SPGENHLB/packs/spgenhlb-magic-x4-apollo30-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "10FE98663633B6AACD8E95A2469AF89124673441BE56635B2EC77E55483A4D81"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spgenhlb-magic-apollo30-20261108-v1",
+  "source": {
+    "bytes": 152402,
+    "path": "effects/ressources/SPGENHLB/source.bam",
+    "sha256": "C15EF8E2E167889A3E2204B4D9DFED3B996E1FFBE9A0FAF75BB1F6C109A4605A"
+  }
+}

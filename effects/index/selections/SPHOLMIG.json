@@ -1,0 +1,173 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPHOLMIG",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 25,
+    "source": {
+      "interpolation_run": "spholmig-magic-apollo30-20261108-v1",
+      "interpolation_run_descriptor_sha256": "B16CC89F53AC7A332431B4FA5F2E3793D6ED00F81C2C836D22623125983B0995",
+      "source_bam_sha256": "c3dc0c725b09e3df36c5c3011f71fe2f5a5f8a245c0742681eab38cc0e4f42ef",
+      "spatial_manifest_sha256": "DA12931F61BC59930FDA24F7D27B25C8AB98F27A16FD96CDA4524B980ADBFE6D",
+      "spatial_run": "spholmig-magic-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "B4C05657570ED842F5843B91BECC2437A23DCE415AF7E7AB8022066542217528"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        24
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          22
+        ]
+      ],
+      "phase_count": 24,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          23,
+          22,
+          24
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1130,
+    "path": "effects/index/qa-decisions/SPHOLMIG/2026-11-09-accepted-d94e00853b33.json",
+    "sha256": "D94E00853B3306F28646781A3B016E7153FA0C7184AC46E592E3E0C77D9B3620"
+  },
+  "resref": "SPHOLMIG",
+  "run_descriptor": {
+    "bytes": 1981,
+    "path": "effects/ressources/SPHOLMIG/runs/spholmig-magic-apollo30-20261108-v1/run.json",
+    "sha256": "B16CC89F53AC7A332431B4FA5F2E3793D6ED00F81C2C836D22623125983B0995"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 18738,
+      "path": "effects/ressources/SPHOLMIG/packs/spholmig-magic-x4-apollo30-profiles-20261108-v1/manifest.json",
+      "sha256": "24A8DCFDBCCC79BD8BC87CC9972CAB0F3FC37B408E07E22D41F41366BAFE2F07"
+    },
+    "registry": {
+      "bytes": 516,
+      "path": "effects/ressources/SPHOLMIG/packs/spholmig-magic-x4-apollo30-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "FA6713911776EF1F7E3F66B7572C78DF9C083F1DC7FDD5180047325E08036D40"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spholmig-magic-apollo30-20261108-v1",
+  "source": {
+    "bytes": 93594,
+    "path": "effects/ressources/SPHOLMIG/source.bam",
+    "sha256": "C3DC0C725B09E3DF36C5C3011F71FE2F5A5F8A245C0742681EAB38CC0E4F42EF"
+  }
+}

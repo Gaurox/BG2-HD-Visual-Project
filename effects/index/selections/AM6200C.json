@@ -1,0 +1,155 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:AM6200C",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 19,
+    "source": {
+      "interpolation_run": "am6200c-magic-apollo30-20261108-v1",
+      "interpolation_run_descriptor_sha256": "5ADF697160FB27C48D187507EDBC5DFF71A09AAE9867BC2AF0746923F3751248",
+      "source_bam_sha256": "e5668def1724800230ce23f169138195668c32a26a6e1003d3ced3dc1e21be2d",
+      "spatial_manifest_sha256": "63F00070A9B154D133F4DF993DCF6C64EB48508F9E5A086ED7B32D0E0E06B3B6",
+      "spatial_run": "am6200c-magic-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "AF04B0F3B103B39B35E2E86BCAD819EA38152D8749894492E36754725E137CE6"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        18
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          16
+        ]
+      ],
+      "phase_count": 18,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          17,
+          16,
+          18
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1123,
+    "path": "effects/index/qa-decisions/AM6200C/2026-11-09-accepted-929bacf1cbd9.json",
+    "sha256": "929BACF1CBD9016DBA3E5AC39D8188FB593184B4B6BBB4643A18F9DE02807CB1"
+  },
+  "resref": "AM6200C",
+  "run_descriptor": {
+    "bytes": 1966,
+    "path": "effects/ressources/AM6200C/runs/am6200c-magic-apollo30-20261108-v1/run.json",
+    "sha256": "5ADF697160FB27C48D187507EDBC5DFF71A09AAE9867BC2AF0746923F3751248"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 14798,
+      "path": "effects/ressources/AM6200C/packs/am6200c-magic-x4-apollo30-profiles-20261108-v1/manifest.json",
+      "sha256": "E3B17DDE34D10686F271BE5FBFCAF218869A6055D6E988C7384F7DD23D57D518"
+    },
+    "registry": {
+      "bytes": 408,
+      "path": "effects/ressources/AM6200C/packs/am6200c-magic-x4-apollo30-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "12C29778AB45620F8A0CE91B2EF0AEB1C43C2A1DAF18F0F26B3F7B49482CA0BF"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "am6200c-magic-apollo30-20261108-v1",
+  "source": {
+    "bytes": 198914,
+    "path": "effects/ressources/AM6200C/source.bam",
+    "sha256": "E5668DEF1724800230CE23F169138195668C32A26A6E1003D3CED3DC1E21BE2D"
+  }
+}

@@ -1,0 +1,634 @@
+{
+  "asset": {
+    "ordinal": 13,
+    "resref": "WHIRLY",
+    "asset_key": "effects:bam:WHIRLY",
+    "group": "portails-manifestations",
+    "source": "effects/ressources/WHIRLY/source.bam",
+    "source_sha256": "F731CDA15D58D8437312688BBDB7EF0B10838519085CC01EA7CFF17115983030",
+    "canonical_sha256": "D44D98E07C89760BE7DA61AB590F0BCE02DF325631F3E91F7A304B724AF04A95",
+    "strict_visual_sha256": "8EFBC02B61F2DED56743C4AAFEB0F4BF887905CF7B2C0D28DC289F39183E997F",
+    "reuse_aliases": [],
+    "source_frames": 24,
+    "native_cycles": [
+      {
+        "cycle": 0,
+        "lookup_start": 0,
+        "frame_indices": [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ]
+      }
+    ],
+    "native_fps": [],
+    "playback_hint": "unknown",
+    "native_canvas": [
+      127,
+      254
+    ],
+    "consumers": [],
+    "usage_evidence": "unresolved",
+    "normal_palette_alpha_levels": [
+      0,
+      255
+    ],
+    "native_graded_pixels": 0,
+    "nearblack_covered_percent": 0.0,
+    "exact_green_covered_percent": 69.672,
+    "production": {
+      "asset_key": "effects:bam:WHIRLY",
+      "asset_directory": "effects/ressources/WHIRLY",
+      "spatial_run": "",
+      "spatial_state": "not-started",
+      "interpolation_run": "",
+      "interpolation_state": "not-started",
+      "selected_run": "",
+      "qa_state": "not-assessed",
+      "qa_evidence": "",
+      "installation_state": "not-installed",
+      "installation_receipt": "",
+      "release_state": "not-evaluated",
+      "release_candidate": "",
+      "notes": ""
+    },
+    "processing_started": false,
+    "recipe_profile": "S-DETAIL",
+    "profile": "N",
+    "sigma_x4": 0,
+    "inner_feather_x4": 0,
+    "spatial_run": "whirly-magic-x4-20261108-v1",
+    "interpolation_run": "whirly-green-clean-cpu-apollo30-20261108-v2",
+    "pack": "effects/ressources/WHIRLY/packs/whirly-green-clean-initial-20261108-v2",
+    "green_index": 178,
+    "recipe_plan": {
+      "ordinal": 13,
+      "resref": "WHIRLY",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/WHIRLY/source.bam",
+      "source_sha256": "F731CDA15D58D8437312688BBDB7EF0B10838519085CC01EA7CFF17115983030",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        127,
+        254
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": {
+        "palette_indices": [
+          0,
+          178
+        ],
+        "policy": "Working export only: remove exact indexed green connected to source-frame border before SeedVR; never hue-threshold foreground. Preserve canonical BAM and native-alpha witness. Fill transparent input RGB without green spill; restore derived native mask after inference.",
+        "reference": "pipeline/recipes/effects-lot50-seedvr7b-apollo30-20261108-v1/spatial_one.py",
+        "status": "proposed-derivation-not-yet-reviewed"
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 12,
+          "phases30": 24,
+          "duration_seconds": 0.8,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    "final_pack": "effects/ressources/WHIRLY/packs/whirly-green-clean-profiles-20261108-v2"
+  },
+  "result": {
+    "resref": "WHIRLY",
+    "passed": true,
+    "pack": "effects/ressources/WHIRLY/packs/whirly-green-clean-profiles-20261108-v1",
+    "pack_manifest_sha256": "3CDC2CC47F1CA52205677BF9E9CDA8B1BD1BD48982F2072EACCF201A3ED590F9",
+    "registry_version": 3,
+    "source_cycles": 1,
+    "runtime_cycles": 1,
+    "source_empty_cycles_retained": [],
+    "profiles": 2,
+    "phases": 48,
+    "backings": 26,
+    "native_contracts": 96,
+    "raw_bytes": 26838656,
+    "source_interpolation_run": "whirly-green-clean-cpu-apollo30-20261108-v1",
+    "catalogue_probe": "effects/batches/lot50-magic-water-production-20261108-v1/review-feedback-20261108-v1/runtime-verification/WHIRLY.log",
+    "installed": false,
+    "qa": "pending-user-review"
+  },
+  "card": {
+    "ordinal": 13,
+    "resref": "WHIRLY",
+    "profile": "GREEN-CLEAN",
+    "sigma": 0,
+    "feather": 0,
+    "width": 508,
+    "height": 1016,
+    "native": {
+      "image": "alternatives/feedback-green-clean-v2/native/WHIRLY.png",
+      "width": 127,
+      "height": 254,
+      "cols": 16
+    },
+    "profiles": [
+      {
+        "id": "cycle000-once",
+        "cycle": 0,
+        "loop": false,
+        "native": [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "duration": 0.8
+      },
+      {
+        "id": "cycle000-loop",
+        "cycle": 0,
+        "loop": true,
+        "native": [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "frames": [
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47
+        ],
+        "duration": 0.8
+      }
+    ],
+    "frames": [
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/6fb0076c7921ef894d30349e26bb544921be5795ad111d697cd530312523e21d.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/b9104c565c9eec8c9a0a1e8a91d9da4e0becfc4d026c9545309557b55d71fb8d.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/a5073a087f75e1659fabc8a377e7d3d6d039aba090fe0544be9625b50d18df12.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/30f3b402eed2350f8e487a64e2df3cbd0b2c5c54c32271e918f4aaf473b741d7.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/942f2fd0a97d7c21bd1f842c1576369de974324644bebf68ab62770a3b13e793.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/f9243632e95977f22f4202890224309281633c607a5f9784cae21012f9c745bf.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/032f7090b96785570acad5c1b6fa6dee4c4fb83c1dfbcd602f71b5f5eefccd69.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/b774dd7e1e0a10356ae04594a954ebb7728b3428782d9e122edb985e46dc3464.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/5dcdd1113e00d0f4d9bda011923339785f241ebd2ca2a875ec4d5b0b561ce7bf.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/f926b9fa95e173c8adfc29845729776a3c3682d7b7a4ccc3487020d90ac41ba1.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/bc7d933a12cde7f0da8f4e1c931bd175bfc03c92f682035ec2610b1668c12025.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/ae5ec2e2549f8367790d2108ed45e8c497eea46e4378ded8e2c25f7492d1ae62.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/7e2ad7b5244da86143b340f7595f46be1a9aff8453e925748d96a8bf45404523.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/3abdca91ff712a765be5a83f411df04353f2a8499dcbee101ea60f2c39c8d5f1.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/1d0df42b4003993c8c4d39077a799a9d1045de68f69373c58808ab9935db17ed.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/e2b1907476526143a54c15e0be167ca8bcb7b8f5bf4d22b30ac7a5afa7d6081d.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/1b8c2a01867df019af861e5bf3090fd89991f7d9f49b2c9e72aee4817791d1db.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/3d261a280256fbaadeebd388ab0f37100556c0695dc0bd304a5fb0176e4323b2.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/2142c745ed68285e6197d855cad1960c2786746317f95c9ba28790cf8ebc3abb.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/4bee887433dc63b61997a1d1bbfc9b050950771bf111c45c6e040f6c97cb54ca.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/daa276c8c488e843df25376d40a90f08e14f347ed223056f08a94984f7248285.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/5f08c7b20e8209dde8c036f59db65f53323aee0e28012831c5c3ed488feefef2.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/9c4422621f7319700db1991c2b757ff457ffc1e4170c9f74a4d7d4b3d0a0c992.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/9c4422621f7319700db1991c2b757ff457ffc1e4170c9f74a4d7d4b3d0a0c992.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/6fb0076c7921ef894d30349e26bb544921be5795ad111d697cd530312523e21d.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/b9104c565c9eec8c9a0a1e8a91d9da4e0becfc4d026c9545309557b55d71fb8d.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/a5073a087f75e1659fabc8a377e7d3d6d039aba090fe0544be9625b50d18df12.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/30f3b402eed2350f8e487a64e2df3cbd0b2c5c54c32271e918f4aaf473b741d7.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/942f2fd0a97d7c21bd1f842c1576369de974324644bebf68ab62770a3b13e793.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/f9243632e95977f22f4202890224309281633c607a5f9784cae21012f9c745bf.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/032f7090b96785570acad5c1b6fa6dee4c4fb83c1dfbcd602f71b5f5eefccd69.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/b774dd7e1e0a10356ae04594a954ebb7728b3428782d9e122edb985e46dc3464.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/5dcdd1113e00d0f4d9bda011923339785f241ebd2ca2a875ec4d5b0b561ce7bf.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/f926b9fa95e173c8adfc29845729776a3c3682d7b7a4ccc3487020d90ac41ba1.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/bc7d933a12cde7f0da8f4e1c931bd175bfc03c92f682035ec2610b1668c12025.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/ae5ec2e2549f8367790d2108ed45e8c497eea46e4378ded8e2c25f7492d1ae62.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/7e2ad7b5244da86143b340f7595f46be1a9aff8453e925748d96a8bf45404523.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/3abdca91ff712a765be5a83f411df04353f2a8499dcbee101ea60f2c39c8d5f1.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/1d0df42b4003993c8c4d39077a799a9d1045de68f69373c58808ab9935db17ed.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/e2b1907476526143a54c15e0be167ca8bcb7b8f5bf4d22b30ac7a5afa7d6081d.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/1b8c2a01867df019af861e5bf3090fd89991f7d9f49b2c9e72aee4817791d1db.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/3d261a280256fbaadeebd388ab0f37100556c0695dc0bd304a5fb0176e4323b2.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/2142c745ed68285e6197d855cad1960c2786746317f95c9ba28790cf8ebc3abb.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/4bee887433dc63b61997a1d1bbfc9b050950771bf111c45c6e040f6c97cb54ca.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/daa276c8c488e843df25376d40a90f08e14f347ed223056f08a94984f7248285.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/a4d80b8b4e7a9287e8eb7ad8ab01f91e0fcd61f407dabefc15400db744ab46da.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/9c4422621f7319700db1991c2b757ff457ffc1e4170c9f74a4d7d4b3d0a0c992.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      },
+      {
+        "image": "alternatives/feedback-green-clean-v2/images/c76622b836600bb45877e88dfd0f250cba3cda63f25e5a0c88c8be3da60054ac.png",
+        "x": 0,
+        "y": 0,
+        "w": 508,
+        "h": 508
+      }
+    ],
+    "green": 178,
+    "method": "SeedVR7B · détourage vert corrigé CPU · Apollo30",
+    "nativeOnly": false
+  },
+  "source_key_green_pixels": 269698,
+  "source_green_fringe_pixels": 9374,
+  "changed_alpha_pixels": 484192,
+  "covered_green_before": 519694,
+  "covered_green_after": 0,
+  "source_geometry_and_timing_unchanged": true,
+  "gpu_used": false,
+  "qa": "pending-user-review"
+}

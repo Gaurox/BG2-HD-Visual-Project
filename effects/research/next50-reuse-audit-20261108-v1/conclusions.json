@@ -1,0 +1,684 @@
+{
+  "date": "2026-11-08",
+  "source_audit": "audit.json",
+  "summary": {
+    "new-source-no-reuse-found": 40,
+    "native-owner-mask-no-ai": 6,
+    "palette-variant-adaptation": 1,
+    "new-source-proven-recipe": 1,
+    "spatial-reuse-candidate": 2
+  },
+  "assets": [
+    {
+      "ordinal": 1,
+      "resref": "AM3000G",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 2,
+      "resref": "AM6200C",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 3,
+      "resref": "AM6200D",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 4,
+      "resref": "AMDEMGT",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 5,
+      "resref": "HARPDISC",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 6,
+      "resref": "SPARMOR2",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 7,
+      "resref": "SPDIMDR1",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 8,
+      "resref": "SPDIMDR2",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 9,
+      "resref": "SPMIRROI",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 10,
+      "resref": "SPRESURI",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 11,
+      "resref": "SPWIRBLA",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 12,
+      "resref": "WHIRL01",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 13,
+      "resref": "WHIRLY",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 14,
+      "resref": "HIHEDGE",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 15,
+      "resref": "SHAREAB",
+      "decision": "native-owner-mask-no-ai",
+      "note": "Masque projectile déjà classé native-mask-no-ai ; conserver le rendu natif dans ces propriétaires. Ne pas traiter les RGB noirs par IA. Tout autre usage éventuel reste à qualifier séparément.",
+      "projectile_contexts": [
+        {
+          "context_id": "8A78E6B03AE86BAC8A2E0B7F5B0847C3B92594C129AF1CE253A43C50E8A552AA:844EFD7CB2B0C1B126D96649C73833C7139078A4AB3E1A40FFDEE6331267498A",
+          "bam_names": [
+            "SHAREAB"
+          ],
+          "action": "native-mask-no-ai",
+          "coverage_level": "native-mask",
+          "black_only": true,
+          "uses": [
+            {
+              "projectile": "SPARBKNP",
+              "role": "explosion-animation",
+              "bam": "SHAREAB",
+              "context_id": "8A78E6B03AE86BAC8A2E0B7F5B0847C3B92594C129AF1CE253A43C50E8A552AA:844EFD7CB2B0C1B126D96649C73833C7139078A4AB3E1A40FFDEE6331267498A",
+              "activity": "potential",
+              "reason": "declared native visual dependency; static evidence, no draw observation",
+              "path": "SHAREAB>SHAREAB:animation:SHAREAB",
+              "via": "SHAREAB",
+              "native_fps": 15,
+              "blend": false,
+              "cycles": [
+                0,
+                4294967295,
+                0
+              ],
+              "travel_cycle": "",
+              "orientations": "",
+              "pro_flags": 0,
+              "extended_flags": 0,
+              "area_extended_flags": 0,
+              "explosion_color": 67,
+              "owner_recolor_review": false,
+              "runtime_state": "not-proven-for-this-owner-role"
+            },
+            {
+              "projectile": "SPARBKPA",
+              "role": "explosion-animation",
+              "bam": "SHAREAB",
+              "context_id": "8A78E6B03AE86BAC8A2E0B7F5B0847C3B92594C129AF1CE253A43C50E8A552AA:844EFD7CB2B0C1B126D96649C73833C7139078A4AB3E1A40FFDEE6331267498A",
+              "activity": "potential",
+              "reason": "declared native visual dependency; static evidence, no draw observation",
+              "path": "SHAREAB>SHAREAB:animation:SHAREAB",
+              "via": "SHAREAB",
+              "native_fps": 15,
+              "blend": false,
+              "cycles": [
+                0,
+                4294967295,
+                0
+              ],
+              "travel_cycle": "",
+              "orientations": "",
+              "pro_flags": 0,
+              "extended_flags": 0,
+              "area_extended_flags": 0,
+              "explosion_color": 67,
+              "owner_recolor_review": false,
+              "runtime_state": "not-proven-for-this-owner-role"
+            },
+            {
+              "projectile": "SPKLARBK",
+              "role": "explosion-animation",
+              "bam": "SHAREAB",
+              "context_id": "8A78E6B03AE86BAC8A2E0B7F5B0847C3B92594C129AF1CE253A43C50E8A552AA:844EFD7CB2B0C1B126D96649C73833C7139078A4AB3E1A40FFDEE6331267498A",
+              "activity": "potential",
+              "reason": "declared native visual dependency; static evidence, no draw observation",
+              "path": "SHAREAB>SHAREAB:animation:SHAREAB",
+              "via": "SHAREAB",
+              "native_fps": 15,
+              "blend": false,
+              "cycles": [
+                0,
+                4294967295,
+                0
+              ],
+              "travel_cycle": "",
+              "orientations": "",
+              "pro_flags": 0,
+              "extended_flags": 0,
+              "area_extended_flags": 0,
+              "explosion_color": 67,
+              "owner_recolor_review": false,
+              "runtime_state": "not-proven-for-this-owner-role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ordinal": 16,
+      "resref": "SPBASEWT",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 17,
+      "resref": "SPCCOLDE",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 18,
+      "resref": "SPCCWOUI",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 19,
+      "resref": "SPCHROMI",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 20,
+      "resref": "SPCSPRAI",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 21,
+      "resref": "SPENTAXI",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 22,
+      "resref": "SPGENHLB",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 23,
+      "resref": "SPHLYSMT",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 24,
+      "resref": "SPHOLMIG",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 25,
+      "resref": "SPHOLYWD",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 26,
+      "resref": "SPRWRA2I",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 27,
+      "resref": "SPSDIMSP",
+      "decision": "native-owner-mask-no-ai",
+      "note": "Masque projectile déjà classé native-mask-no-ai ; conserver le rendu natif dans ces propriétaires. Ne pas traiter les RGB noirs par IA. Tout autre usage éventuel reste à qualifier séparément.",
+      "projectile_contexts": [
+        {
+          "context_id": "FAA1B62C0029D07394A1F4CA867F8C8E37896A14EAF69DDD3204B963CBE24A7A:EF115A0E0C15CDC41958CA46B5B14B456115F4BAEC5E3CA68599D2A8F435E3B8",
+          "bam_names": [
+            "SPSDIMSP"
+          ],
+          "action": "native-mask-no-ai",
+          "coverage_level": "native-mask",
+          "black_only": true,
+          "uses": [
+            {
+              "projectile": "CDDRBLCK",
+              "role": "explosion-animation",
+              "bam": "SPSDIMSP",
+              "context_id": "FAA1B62C0029D07394A1F4CA867F8C8E37896A14EAF69DDD3204B963CBE24A7A:EF115A0E0C15CDC41958CA46B5B14B456115F4BAEC5E3CA68599D2A8F435E3B8",
+              "activity": "potential",
+              "reason": "declared native visual dependency; static evidence, no draw observation",
+              "path": "SPSDIMSP",
+              "via": "",
+              "native_fps": "",
+              "blend": "",
+              "cycles": [],
+              "travel_cycle": "",
+              "orientations": "",
+              "pro_flags": 384,
+              "extended_flags": 8,
+              "area_extended_flags": 4628,
+              "explosion_color": 67,
+              "owner_recolor_review": false,
+              "runtime_state": "not-proven-for-this-owner-role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ordinal": 28,
+      "resref": "SPSNRAYI",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 29,
+      "resref": "SPUNHBLT",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 30,
+      "resref": "DUST",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 31,
+      "resref": "SNOWFAL1",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 32,
+      "resref": "SNOWFAL2",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 33,
+      "resref": "SPSDRABU",
+      "decision": "native-owner-mask-no-ai",
+      "note": "Masque projectile déjà classé native-mask-no-ai ; conserver le rendu natif dans ces propriétaires. Ne pas traiter les RGB noirs par IA. Tout autre usage éventuel reste à qualifier séparément.",
+      "projectile_contexts": [
+        {
+          "context_id": "943BDDF9678B96ED3210194FF1420B0A0621BEE6F16042F2C6BF2D8E46DD0070:EF115A0E0C15CDC41958CA46B5B14B456115F4BAEC5E3CA68599D2A8F435E3B8",
+          "bam_names": [
+            "SPSDRABU"
+          ],
+          "action": "native-mask-no-ai",
+          "coverage_level": "native-mask",
+          "black_only": true,
+          "uses": [
+            {
+              "projectile": "DRAGBLCK",
+              "role": "travel-animation",
+              "bam": "SPSDRABU",
+              "context_id": "943BDDF9678B96ED3210194FF1420B0A0621BEE6F16042F2C6BF2D8E46DD0070:EF115A0E0C15CDC41958CA46B5B14B456115F4BAEC5E3CA68599D2A8F435E3B8",
+              "activity": "potential",
+              "reason": "declared native visual dependency; static evidence, no draw observation",
+              "path": "SPSDRABU",
+              "via": "",
+              "native_fps": "",
+              "blend": "",
+              "cycles": [],
+              "travel_cycle": 0,
+              "orientations": 9,
+              "pro_flags": 16,
+              "extended_flags": 0,
+              "area_extended_flags": 0,
+              "explosion_color": 69,
+              "owner_recolor_review": false,
+              "runtime_state": "not-proven-for-this-owner-role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ordinal": 34,
+      "resref": "SPSDRAE2",
+      "decision": "native-owner-mask-no-ai",
+      "note": "Masque projectile déjà classé native-mask-no-ai ; conserver le rendu natif dans ces propriétaires. Ne pas traiter les RGB noirs par IA. Tout autre usage éventuel reste à qualifier séparément.",
+      "projectile_contexts": [
+        {
+          "context_id": "118A68D5F316F5B6D0A73596DC38C8C778C303260C7136156E7496AF8C80EB5B:EF115A0E0C15CDC41958CA46B5B14B456115F4BAEC5E3CA68599D2A8F435E3B8",
+          "bam_names": [
+            "SPSDRAE2"
+          ],
+          "action": "native-mask-no-ai",
+          "coverage_level": "native-mask",
+          "black_only": true,
+          "uses": [
+            {
+              "projectile": "CDDRBLCK",
+              "role": "spread-animation",
+              "bam": "SPSDRAE2",
+              "context_id": "118A68D5F316F5B6D0A73596DC38C8C778C303260C7136156E7496AF8C80EB5B:EF115A0E0C15CDC41958CA46B5B14B456115F4BAEC5E3CA68599D2A8F435E3B8",
+              "activity": "potential",
+              "reason": "declared native visual dependency; static evidence, no draw observation",
+              "path": "SPSDRAE2",
+              "via": "",
+              "native_fps": "",
+              "blend": "",
+              "cycles": [],
+              "travel_cycle": "",
+              "orientations": "",
+              "pro_flags": 384,
+              "extended_flags": 8,
+              "area_extended_flags": 4628,
+              "explosion_color": 67,
+              "owner_recolor_review": false,
+              "runtime_state": "not-proven-for-this-owner-role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ordinal": 35,
+      "resref": "SPSHADOW",
+      "decision": "native-owner-mask-no-ai",
+      "note": "Masque projectile déjà classé native-mask-no-ai ; conserver le rendu natif dans ces propriétaires. Ne pas traiter les RGB noirs par IA. Tout autre usage éventuel reste à qualifier séparément.",
+      "projectile_contexts": [
+        {
+          "context_id": "559946365AAF2D785E082F1F4F43BA6FC8F84D8D5762616528512C9A2D06ED3E:49459680B1BBAE76D855AE41ED9D45C0752AA60BB85BF06A8BB120CC6E7FEFF3",
+          "bam_names": [
+            "SPSHADOW"
+          ],
+          "action": "native-mask-no-ai",
+          "coverage_level": "native-mask",
+          "black_only": true,
+          "uses": [
+            {
+              "projectile": "SPATTCK2",
+              "role": "shadow-animation",
+              "bam": "SPSHADOW",
+              "context_id": "559946365AAF2D785E082F1F4F43BA6FC8F84D8D5762616528512C9A2D06ED3E:49459680B1BBAE76D855AE41ED9D45C0752AA60BB85BF06A8BB120CC6E7FEFF3",
+              "activity": "potential",
+              "reason": "declared native visual dependency; static evidence, no draw observation",
+              "path": "SPSHADOW",
+              "via": "",
+              "native_fps": "",
+              "blend": "",
+              "cycles": [],
+              "travel_cycle": "",
+              "orientations": "",
+              "pro_flags": 48,
+              "extended_flags": 0,
+              "area_extended_flags": 0,
+              "explosion_color": "",
+              "owner_recolor_review": false,
+              "runtime_state": "not-proven-for-this-owner-role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ordinal": 36,
+      "resref": "TRAVELB",
+      "decision": "native-owner-mask-no-ai",
+      "note": "Masque projectile déjà classé native-mask-no-ai ; conserver le rendu natif dans ces propriétaires. Ne pas traiter les RGB noirs par IA. Tout autre usage éventuel reste à qualifier séparément.",
+      "projectile_contexts": [
+        {
+          "context_id": "36EF3C826E66FB2796152B63025399823C03028452FAD9DA3D468AB8BC6BCF5A:844EFD7CB2B0C1B126D96649C73833C7139078A4AB3E1A40FFDEE6331267498A",
+          "bam_names": [
+            "TRAVELB"
+          ],
+          "action": "native-mask-no-ai",
+          "coverage_level": "native-mask",
+          "black_only": true,
+          "uses": [
+            {
+              "projectile": "SPARBKNP",
+              "role": "travel-animation",
+              "bam": "TRAVELB",
+              "context_id": "36EF3C826E66FB2796152B63025399823C03028452FAD9DA3D468AB8BC6BCF5A:844EFD7CB2B0C1B126D96649C73833C7139078A4AB3E1A40FFDEE6331267498A",
+              "activity": "potential",
+              "reason": "declared native visual dependency; static evidence, no draw observation",
+              "path": "TRAVELB",
+              "via": "",
+              "native_fps": "",
+              "blend": "",
+              "cycles": [],
+              "travel_cycle": 0,
+              "orientations": 1,
+              "pro_flags": 0,
+              "extended_flags": 0,
+              "area_extended_flags": 0,
+              "explosion_color": 67,
+              "owner_recolor_review": false,
+              "runtime_state": "not-proven-for-this-owner-role"
+            },
+            {
+              "projectile": "SPARBKPA",
+              "role": "travel-animation",
+              "bam": "TRAVELB",
+              "context_id": "36EF3C826E66FB2796152B63025399823C03028452FAD9DA3D468AB8BC6BCF5A:844EFD7CB2B0C1B126D96649C73833C7139078A4AB3E1A40FFDEE6331267498A",
+              "activity": "potential",
+              "reason": "declared native visual dependency; static evidence, no draw observation",
+              "path": "TRAVELB",
+              "via": "",
+              "native_fps": "",
+              "blend": "",
+              "cycles": [],
+              "travel_cycle": 0,
+              "orientations": 1,
+              "pro_flags": 0,
+              "extended_flags": 0,
+              "area_extended_flags": 0,
+              "explosion_color": 67,
+              "owner_recolor_review": false,
+              "runtime_state": "not-proven-for-this-owner-role"
+            },
+            {
+              "projectile": "SPARKLBK",
+              "role": "travel-animation",
+              "bam": "TRAVELB",
+              "context_id": "36EF3C826E66FB2796152B63025399823C03028452FAD9DA3D468AB8BC6BCF5A:844EFD7CB2B0C1B126D96649C73833C7139078A4AB3E1A40FFDEE6331267498A",
+              "activity": "potential",
+              "reason": "declared native visual dependency; static evidence, no draw observation",
+              "path": "TRAVELB",
+              "via": "",
+              "native_fps": "",
+              "blend": "",
+              "cycles": [],
+              "travel_cycle": 0,
+              "orientations": 1,
+              "pro_flags": 0,
+              "extended_flags": 0,
+              "area_extended_flags": 0,
+              "explosion_color": "",
+              "owner_recolor_review": false,
+              "runtime_state": "not-proven-for-this-owner-role"
+            },
+            {
+              "projectile": "SPKLARBK",
+              "role": "travel-animation",
+              "bam": "TRAVELB",
+              "context_id": "36EF3C826E66FB2796152B63025399823C03028452FAD9DA3D468AB8BC6BCF5A:844EFD7CB2B0C1B126D96649C73833C7139078A4AB3E1A40FFDEE6331267498A",
+              "activity": "potential",
+              "reason": "declared native visual dependency; static evidence, no draw observation",
+              "path": "TRAVELB",
+              "via": "",
+              "native_fps": "",
+              "blend": "",
+              "cycles": [],
+              "travel_cycle": 0,
+              "orientations": 1,
+              "pro_flags": 0,
+              "extended_flags": 0,
+              "area_extended_flags": 0,
+              "explosion_color": 67,
+              "owner_recolor_review": false,
+              "runtime_state": "not-proven-for-this-owner-role"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ordinal": 37,
+      "resref": "BUBBLES1",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 38,
+      "resref": "BUBLES",
+      "decision": "palette-variant-adaptation",
+      "note": "AMOH7300 accepté : 108/108 matrices indexées, alphas, géométries et cycles identiques ; palette différente. Réutiliser la recette xBR2blend/Apollo prémultiplié. Les RGB verts finaux ne sont pas directement substituables.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 39,
+      "resref": "FOUNT2",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 40,
+      "resref": "FOUNTN",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 41,
+      "resref": "RIPPLE_1",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 42,
+      "resref": "RIPPLE_2",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 43,
+      "resref": "RIPPLE_3",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 44,
+      "resref": "SPLASH",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 45,
+      "resref": "WTRBODY2",
+      "decision": "new-source-proven-recipe",
+      "note": "Variante de WTRBODY1 accepté : 10 poses sans égalité RGBA contre 20 records/10 poses. Eau et séquence distinctes ; reprendre la recette xBR/Apollo, conserver son contrat propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 46,
+      "resref": "WTRDROP1",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 47,
+      "resref": "TRBLOBA",
+      "decision": "spatial-reuse-candidate",
+      "note": "TRGOOYAA accepté : même famille de dessins, contour et géométrie différents. Tenter adaptation du spatial existant ; pas de copie directe ni de nouvelle inférence avant contrôle des ancres, contours, couleurs et cycles.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 48,
+      "resref": "TRBLOBB",
+      "decision": "spatial-reuse-candidate",
+      "note": "TRGOOYBB accepté : 70 tailles identiques, 68/70 alphas identiques ; RGB proches (MAE 1.696/255), centres et frontière de cycles différents. Tenter réemploi spatial adapté ; reconstruire contrat temporel propre, pas copier le pack final.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 49,
+      "resref": "WEBBOMB",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    },
+    {
+      "ordinal": 50,
+      "resref": "WEBC",
+      "decision": "new-source-no-reuse-found",
+      "note": "Aucun réemploi exact de poses RGBA détecté dans les 623 sources produites/sélectionnées ; candidat au traitement propre.",
+      "projectile_contexts": []
+    }
+  ],
+  "limits": [
+    "No new inference, QA, installation, domain-index or release writes.",
+    "41 source-specific candidates including WTRBODY2; 3 adaptations/reuse candidates; 6 native owner masks.",
+    "No exact RGBA matches does not prove absence of perceptually related variants.",
+    "Native owner decisions do not grant global QA to every use of the BAM."
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:WHIRL01",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 25,
+    "source": {
+      "interpolation_run": "whirl01-magic-apollo30-20261108-v1",
+      "interpolation_run_descriptor_sha256": "443FF5DDC320F5B5F84EBA02DCC7983A7821C3DA549E82E6562BFB671F82BF4A",
+      "source_bam_sha256": "dc8f61b476bf020faaa683aa5f775d9b20da14c10c4ac48a505c3a2077c4d46c",
+      "spatial_manifest_sha256": "827F85A8B6B441FD76829E799E7D8E1315D0565E472FA8157783BEBA5852E0C2",
+      "spatial_run": "whirl01-magic-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "40A7D615B4D099EAAF996DCE201B2352147FA8F678F08990285B0A9BEB615E95"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        24
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          22
+        ]
+      ],
+      "phase_count": 24,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          23,
+          22,
+          24
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1123,
+    "path": "effects/index/qa-decisions/WHIRL01/2026-11-09-accepted-397dab5bfc1d.json",
+    "sha256": "397DAB5BFC1DAFA11DB3DC5B865FC998111C8E8104B4D5426B0194A732B54770"
+  },
+  "resref": "WHIRL01",
+  "run_descriptor": {
+    "bytes": 1966,
+    "path": "effects/ressources/WHIRL01/runs/whirl01-magic-apollo30-20261108-v1/run.json",
+    "sha256": "443FF5DDC320F5B5F84EBA02DCC7983A7821C3DA549E82E6562BFB671F82BF4A"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 18729,
+      "path": "effects/ressources/WHIRL01/packs/whirl01-magic-x4-apollo30-profiles-20261108-v1/manifest.json",
+      "sha256": "B9FD001D5D422064D48FDF0515FCB6454AF130FBC7A9378154638F296AF42E65"
+    },
+    "registry": {
+      "bytes": 516,
+      "path": "effects/ressources/WHIRL01/packs/whirl01-magic-x4-apollo30-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "0903A8A31D376E3920C9F792F69ABA97FD1C82B2C334DF1681FE8D4209B7964F"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "whirl01-magic-apollo30-20261108-v1",
+  "source": {
+    "bytes": 174499,
+    "path": "effects/ressources/WHIRL01/source.bam",
+    "sha256": "DC8F61B476BF020FAAA683AA5F775D9B20DA14C10C4AC48A505C3A2077C4D46C"
+  }
+}

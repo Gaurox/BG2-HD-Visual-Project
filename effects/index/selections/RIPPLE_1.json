@@ -1,0 +1,209 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:RIPPLE_1",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [],
+        "lookup_start": 13
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [],
+        "lookup_start": 13
+      },
+      {
+        "cycle": 3,
+        "frame_indices": [],
+        "lookup_start": 13
+      },
+      {
+        "cycle": 4,
+        "frame_indices": [],
+        "lookup_start": 13
+      }
+    ],
+    "frame_count": 27,
+    "source": {
+      "interpolation_run": "ripple_1-magic-apollo30-20261108-v1",
+      "interpolation_run_descriptor_sha256": "79AF8C57B42E69A6C5E76FD2F46F1062280168E004DD54A6F1FF86AE26197395",
+      "source_bam_sha256": "b54166c72acc68f88cb00ed737a5fbb0816229e3133464fab0f6079194341b5c",
+      "spatial_manifest_sha256": "47426C803214FDF79D0AE4D34A8862D61FC109073E027A5BC30113183FE7A061",
+      "spatial_run": "ripple_1-magic-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "59801345FC330048DB3EB0E920F3AB97FC031A3AF9161322CB58C464B541BD2E"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        26
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "excluded_empty_source_cycles": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 5,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          24
+        ]
+      ],
+      "phase_count": 26,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          25,
+          24,
+          26
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1130,
+    "path": "effects/index/qa-decisions/RIPPLE_1/2026-11-09-accepted-909093a21f77.json",
+    "sha256": "909093A21F771F6A10425BD01E1275F606C57BA934010889125C6AE347C7D37A"
+  },
+  "resref": "RIPPLE_1",
+  "run_descriptor": {
+    "bytes": 1980,
+    "path": "effects/ressources/RIPPLE_1/runs/ripple_1-magic-apollo30-20261108-v1/run.json",
+    "sha256": "79AF8C57B42E69A6C5E76FD2F46F1062280168E004DD54A6F1FF86AE26197395"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 20372,
+      "path": "effects/ressources/RIPPLE_1/packs/ripple_1-magic-x4-apollo30-profiles-20261108-v1/manifest.json",
+      "sha256": "FF011E04A113A8CAB748E0F13D344DB8CFB903C5DE85A9D66545F65452CC223F"
+    },
+    "registry": {
+      "bytes": 552,
+      "path": "effects/ressources/RIPPLE_1/packs/ripple_1-magic-x4-apollo30-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "A0808FE0F5FD86459DD78CF6835A8AACA61ABE181DDDB966397AAC5B2AF7AA28"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "ripple_1-magic-apollo30-20261108-v1",
+  "source": {
+    "bytes": 2139,
+    "path": "effects/ressources/RIPPLE_1/source.bam",
+    "sha256": "B54166C72ACC68F88CB00ED737A5FBB0816229E3133464FAB0F6079194341B5C"
+  }
+}

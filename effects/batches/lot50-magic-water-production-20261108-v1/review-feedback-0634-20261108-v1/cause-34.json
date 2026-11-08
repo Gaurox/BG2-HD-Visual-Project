@@ -1,0 +1,33 @@
+{
+  "source": "SPSDRAE2",
+  "reserved_cycle": 0,
+  "reserved_frame": 19,
+  "reserved_frame_alpha_max": 0,
+  "visible_cycles": [
+    1,
+    2
+  ],
+  "controllers": [
+    {
+      "vvc": "ZMWT34",
+      "old_cycle": 0,
+      "new_cycle": 1,
+      "new_lifetime_ticks": 180
+    },
+    {
+      "vvc": "ZFR34N",
+      "old_cycle": 0,
+      "new_cycle": 1,
+      "new_lifetime_ticks": 180
+    },
+    {
+      "vvc": "ZFR34C",
+      "old_cycle": 0,
+      "new_cycle": 1,
+      "new_lifetime_ticks": 180
+    }
+  ],
+  "engine_change_required": false,
+  "native_pause_slots_preserved": true,
+  "gpu_used": false
+}

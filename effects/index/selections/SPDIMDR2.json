@@ -1,0 +1,137 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPDIMDR2",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 13,
+    "source": {
+      "interpolation_run": "spdimdr2-magic-apollo30-20261108-v1",
+      "interpolation_run_descriptor_sha256": "98153D5300AE26CBD89817E61AE72E2E424CBA10F8665D0DE3DEE98F09336066",
+      "source_bam_sha256": "dcc03c5f49d1383b7f7ca85ba9b1959829537a385aed8a633350ce3a8a54afeb",
+      "spatial_manifest_sha256": "2A4E6520C342D379967A7604D3476A416553A6B1766942BF0297F3459A97956B",
+      "spatial_run": "spdimdr2-magic-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "E4B2854150545D03004BEE341B6559E8F4BC0847774E6CC773C9C114F10BD3EA"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          10
+        ]
+      ],
+      "phase_count": 12,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          11,
+          10,
+          12
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1130,
+    "path": "effects/index/qa-decisions/SPDIMDR2/2026-11-09-accepted-06f6eac98ac5.json",
+    "sha256": "06F6EAC98AC5D5BE3666DBD2874948B157354E8EEDC790F337213865B15483C3"
+  },
+  "resref": "SPDIMDR2",
+  "run_descriptor": {
+    "bytes": 1980,
+    "path": "effects/ressources/SPDIMDR2/runs/spdimdr2-magic-apollo30-20261108-v1/run.json",
+    "sha256": "98153D5300AE26CBD89817E61AE72E2E424CBA10F8665D0DE3DEE98F09336066"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 10898,
+      "path": "effects/ressources/SPDIMDR2/packs/spdimdr2-magic-x4-apollo30-profiles-20261108-v1/manifest.json",
+      "sha256": "3CD5F7E670B049196DFB11E0B2EE5A5623A4D3E180664EA06270B9403DA16FF0"
+    },
+    "registry": {
+      "bytes": 300,
+      "path": "effects/ressources/SPDIMDR2/packs/spdimdr2-magic-x4-apollo30-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "EA2614E0B55436F61C12AC0C882DD4C8EAB4D5CE5924116E2335235F91B4A146"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spdimdr2-magic-apollo30-20261108-v1",
+  "source": {
+    "bytes": 8836,
+    "path": "effects/ressources/SPDIMDR2/source.bam",
+    "sha256": "DCC03C5F49D1383B7F7CA85BA9B1959829537A385AED8A633350CE3A8A54AFEB"
+  }
+}

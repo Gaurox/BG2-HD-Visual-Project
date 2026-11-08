@@ -1,0 +1,173 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPLASH",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 25,
+    "source": {
+      "interpolation_run": "splash-magic-apollo30-20261108-v1",
+      "interpolation_run_descriptor_sha256": "50B214BF98D5F35EA5F6F9252836F69B8F6D393CBDB5B2215034D497AD3B5FC3",
+      "source_bam_sha256": "7513620a0e7a2c59c7500009c2537e28cecc580277daff76fd96fd5f28f0152b",
+      "spatial_manifest_sha256": "C039C71347A835BE6F40622D9798720453B0C0A70AB14093AF5AF97B65DF2A33",
+      "spatial_run": "splash-magic-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "A80AFCE4817B4FCA5850E2203E3850E4AAA8E699157C38CFE025D2BFCFBA20A4"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        24
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          22
+        ]
+      ],
+      "phase_count": 24,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          23,
+          22,
+          24
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1116,
+    "path": "effects/index/qa-decisions/SPLASH/2026-11-09-accepted-bd1a0da43d22.json",
+    "sha256": "BD1A0DA43D228C108B741D0B926C8221DEE79139BCDD66DDD27FE65D7CDF7487"
+  },
+  "resref": "SPLASH",
+  "run_descriptor": {
+    "bytes": 1950,
+    "path": "effects/ressources/SPLASH/runs/splash-magic-apollo30-20261108-v1/run.json",
+    "sha256": "50B214BF98D5F35EA5F6F9252836F69B8F6D393CBDB5B2215034D497AD3B5FC3"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 18487,
+      "path": "effects/ressources/SPLASH/packs/splash-magic-x4-apollo30-profiles-20261108-v1/manifest.json",
+      "sha256": "DE09C0586114A66D4CB13723A0DD9C3A355367127DC0CDEFDA15D914546B4864"
+    },
+    "registry": {
+      "bytes": 516,
+      "path": "effects/ressources/SPLASH/packs/splash-magic-x4-apollo30-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "5D938EDB9952A6C1754EA6769281EA710AC0696E7B53D9333E055FE1A438CFE7"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "splash-magic-apollo30-20261108-v1",
+  "source": {
+    "bytes": 9728,
+    "path": "effects/ressources/SPLASH/source.bam",
+    "sha256": "7513620A0E7A2C59C7500009C2537E28CECC580277DAFF76FD96FD5F28F0152B"
+  }
+}

@@ -1,0 +1,173 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:HIHEDGE",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 25,
+    "source": {
+      "interpolation_run": "hihedge-magic-apollo30-20261108-v1",
+      "interpolation_run_descriptor_sha256": "1D1341E093E628D2615BA87A8A9594A0230BEECDD0FE92492508049A1346DCFA",
+      "source_bam_sha256": "1ee588007c2d9a4339a4ae9a44ebaa0420541e7c5af968ec9b4891c997d1b18a",
+      "spatial_manifest_sha256": "A7FFBCB84FB40CA5DE0D008628A658C33747176E244DDA8484BCBA393B09EED8",
+      "spatial_run": "hihedge-magic-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "3C6F1C5A40BEE9893CCDBE88984244EFC24E833522FF1DF305BC2E8C8577453D"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        24
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          22
+        ]
+      ],
+      "phase_count": 24,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          23,
+          22,
+          24
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1123,
+    "path": "effects/index/qa-decisions/HIHEDGE/2026-11-09-accepted-a1d34fe965f5.json",
+    "sha256": "A1D34FE965F5FD4532E202CA733866BEA3557E3B3F8785AB0C033D55D82946C5"
+  },
+  "resref": "HIHEDGE",
+  "run_descriptor": {
+    "bytes": 1966,
+    "path": "effects/ressources/HIHEDGE/runs/hihedge-magic-apollo30-20261108-v1/run.json",
+    "sha256": "1D1341E093E628D2615BA87A8A9594A0230BEECDD0FE92492508049A1346DCFA"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 18659,
+      "path": "effects/ressources/HIHEDGE/packs/hihedge-magic-x4-apollo30-profiles-20261108-v1/manifest.json",
+      "sha256": "0535BF081DCA1A321834D77C6978217C0E3853B64CF5D49DAFD823DEAA7BA326"
+    },
+    "registry": {
+      "bytes": 516,
+      "path": "effects/ressources/HIHEDGE/packs/hihedge-magic-x4-apollo30-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "9074D0685C8C49FF9595DE50DC2E5A283D4FDFA1BBA0A2E2B041F875BDCB2365"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "hihedge-magic-apollo30-20261108-v1",
+  "source": {
+    "bytes": 26946,
+    "path": "effects/ressources/HIHEDGE/source.bam",
+    "sha256": "1EE588007C2D9A4339A4AE9A44EBAA0420541E7C5AF968EC9B4891C997D1B18A"
+  }
+}

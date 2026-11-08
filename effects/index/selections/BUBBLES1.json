@@ -1,0 +1,179 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:BUBBLES1",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [],
+        "lookup_start": 8
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [],
+        "lookup_start": 8
+      },
+      {
+        "cycle": 3,
+        "frame_indices": [],
+        "lookup_start": 8
+      },
+      {
+        "cycle": 4,
+        "frame_indices": [],
+        "lookup_start": 8
+      }
+    ],
+    "frame_count": 17,
+    "source": {
+      "interpolation_run": "bubbles1-magic-apollo30-20261108-v1",
+      "interpolation_run_descriptor_sha256": "755DECB775469E2F605D7C54CEE3FC479C9F85378439B764D41D6520A588C367",
+      "source_bam_sha256": "a7ebbbbedc4557983c1093701e5443854710a797ac546210c6b8d2ca2afa781e",
+      "spatial_manifest_sha256": "32E1F3EC8A1F82F285656AE6D2AE9598981158FCB497A6686555B38E28D94419",
+      "spatial_run": "bubbles1-magic-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "6CD8F04747C153C4D830B51F510BB0C6D256DDE9F29165C5BC2EC303BD9D06D8"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        16
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "excluded_empty_source_cycles": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 5,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          14
+        ]
+      ],
+      "phase_count": 16,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          15,
+          14,
+          16
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1130,
+    "path": "effects/index/qa-decisions/BUBBLES1/2026-11-09-accepted-9ce291e005a7.json",
+    "sha256": "9CE291E005A79B17F81F726F24AB52B9475598125B6B2DEAD06E4170C3F211C6"
+  },
+  "resref": "BUBBLES1",
+  "run_descriptor": {
+    "bytes": 1980,
+    "path": "effects/ressources/BUBBLES1/runs/bubbles1-magic-apollo30-20261108-v1/run.json",
+    "sha256": "755DECB775469E2F605D7C54CEE3FC479C9F85378439B764D41D6520A588C367"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 13927,
+      "path": "effects/ressources/BUBBLES1/packs/bubbles1-magic-x4-apollo30-profiles-20261108-v1/manifest.json",
+      "sha256": "201547DA60525666195972832D72BACA87147EB094978A9897E64DC80D9C19A4"
+    },
+    "registry": {
+      "bytes": 372,
+      "path": "effects/ressources/BUBBLES1/packs/bubbles1-magic-x4-apollo30-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "6A1A149020044DE06655C0121C99B78001C9D89B73C7FB6E1E2F0E6FC8C902AE"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "bubbles1-magic-apollo30-20261108-v1",
+  "source": {
+    "bytes": 2266,
+    "path": "effects/ressources/BUBBLES1/source.bam",
+    "sha256": "A7EBBBBEDC4557983C1093701E5443854710A797AC546210C6B8D2CA2AFA781E"
+  }
+}

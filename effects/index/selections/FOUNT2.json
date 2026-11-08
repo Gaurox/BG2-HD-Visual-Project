@@ -1,0 +1,137 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:FOUNT2",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 13,
+    "source": {
+      "interpolation_run": "fount2-magic-apollo30-20261108-v1",
+      "interpolation_run_descriptor_sha256": "5AB0B8CCD2CE0153D1130EC87A1120ACB4D58D60659B541C8A8D8B833475067B",
+      "source_bam_sha256": "be60c9ddccedd56141c9e4656605cf8543750fc40e07f4b259d46f43d12c2e45",
+      "spatial_manifest_sha256": "9F5610B7364135B1F865769598F94A4DA8B15DC96746DC47B4FCFF30FF994C2D",
+      "spatial_run": "fount2-magic-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "B6122688F658BB01E4B531429F6FE8345065FCE8C2A29C34D5DCD9EA1BFFB05C"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          10
+        ]
+      ],
+      "phase_count": 12,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          11,
+          10,
+          12
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1116,
+    "path": "effects/index/qa-decisions/FOUNT2/2026-11-09-accepted-20b4f2030d40.json",
+    "sha256": "20B4F2030D40AB8E093C678C1FC60D43BC361CB3C4BAB8E68E9C8730EE488484"
+  },
+  "resref": "FOUNT2",
+  "run_descriptor": {
+    "bytes": 1950,
+    "path": "effects/ressources/FOUNT2/runs/fount2-magic-apollo30-20261108-v1/run.json",
+    "sha256": "5AB0B8CCD2CE0153D1130EC87A1120ACB4D58D60659B541C8A8D8B833475067B"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 10841,
+      "path": "effects/ressources/FOUNT2/packs/fount2-magic-x4-apollo30-profiles-20261108-v1/manifest.json",
+      "sha256": "969ECD1FF6F1E4979A4C2968E9C1E1D6A73DA5E9CC3F47766410860886A6D938"
+    },
+    "registry": {
+      "bytes": 300,
+      "path": "effects/ressources/FOUNT2/packs/fount2-magic-x4-apollo30-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "9BDAD058E27A7357EF237223906A3554734C83515126DD22EEBEC4CDF1630D09"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "fount2-magic-apollo30-20261108-v1",
+  "source": {
+    "bytes": 12581,
+    "path": "effects/ressources/FOUNT2/source.bam",
+    "sha256": "BE60C9DDCCEDD56141C9E4656605CF8543750FC40E07F4B259D46F43D12C2E45"
+  }
+}

@@ -1,0 +1,661 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPCHROMI",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "lookup_start": 8
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "lookup_start": 16
+      },
+      {
+        "cycle": 3,
+        "frame_indices": [
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31
+        ],
+        "lookup_start": 24
+      },
+      {
+        "cycle": 4,
+        "frame_indices": [
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39
+        ],
+        "lookup_start": 32
+      },
+      {
+        "cycle": 5,
+        "frame_indices": [
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47
+        ],
+        "lookup_start": 40
+      },
+      {
+        "cycle": 6,
+        "frame_indices": [
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55
+        ],
+        "lookup_start": 48
+      },
+      {
+        "cycle": 7,
+        "frame_indices": [
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63
+        ],
+        "lookup_start": 56
+      },
+      {
+        "cycle": 8,
+        "frame_indices": [
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71
+        ],
+        "lookup_start": 64
+      }
+    ],
+    "frame_count": 153,
+    "source": {
+      "interpolation_run": "spchromi-magic-apollo30-20261108-v1",
+      "interpolation_run_descriptor_sha256": "F39FDD4A960D06F6D4529A37FB70A161D81987726203CDEFE235B054184EA2A5",
+      "source_bam_sha256": "12059a6af79d3ac94c7e3c2735774be8c04f5dbfb4e7710db5e37abad73fe2d9",
+      "spatial_manifest_sha256": "E0A0257D5BF8828B2C2B3CA824B28375DE88B081796CFD8AFA69405A07376528",
+      "spatial_run": "spchromi-magic-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "FC07DAB5BB2F4FB7DF9043D8D2261AD6116AD989FAEB67C05BDE0ED071891B08"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "alternate_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once",
+        "cycle005-once",
+        "cycle006-once",
+        "cycle007-once",
+        "cycle008-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop",
+        "cycle002-loop",
+        "cycle003-loop",
+        "cycle004-loop",
+        "cycle005-loop",
+        "cycle006-loop",
+        "cycle007-loop",
+        "cycle008-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14
+        ],
+        [
+          17,
+          19,
+          21,
+          23,
+          25,
+          27,
+          29,
+          31
+        ],
+        [
+          34,
+          36,
+          38,
+          40,
+          42,
+          44,
+          46,
+          48
+        ],
+        [
+          51,
+          53,
+          55,
+          57,
+          59,
+          61,
+          63,
+          65
+        ],
+        [
+          68,
+          70,
+          72,
+          74,
+          76,
+          78,
+          80,
+          82
+        ],
+        [
+          85,
+          87,
+          89,
+          91,
+          93,
+          95,
+          97,
+          99
+        ],
+        [
+          102,
+          104,
+          106,
+          108,
+          110,
+          112,
+          114,
+          116
+        ],
+        [
+          119,
+          121,
+          123,
+          125,
+          127,
+          129,
+          131,
+          133
+        ],
+        [
+          136,
+          138,
+          140,
+          142,
+          144,
+          146,
+          148,
+          150
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 9,
+      "once_cycle_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once",
+        "cycle005-once",
+        "cycle006-once",
+        "cycle007-once",
+        "cycle008-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          14
+        ],
+        [
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          31
+        ],
+        [
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          48
+        ],
+        [
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          65
+        ],
+        [
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          82
+        ],
+        [
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          99
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          115,
+          116,
+          116
+        ],
+        [
+          119,
+          120,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126,
+          127,
+          128,
+          129,
+          130,
+          131,
+          132,
+          133,
+          133
+        ],
+        [
+          136,
+          137,
+          138,
+          139,
+          140,
+          141,
+          142,
+          143,
+          144,
+          145,
+          146,
+          147,
+          148,
+          149,
+          150,
+          150
+        ]
+      ],
+      "phase_count": 16,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 9,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          15,
+          14,
+          16
+        ],
+        [
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          32,
+          31,
+          33
+        ],
+        [
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          49,
+          48,
+          50
+        ],
+        [
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          66,
+          65,
+          67
+        ],
+        [
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          83,
+          82,
+          84
+        ],
+        [
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          100,
+          99,
+          101
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          117,
+          116,
+          118
+        ],
+        [
+          119,
+          120,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126,
+          127,
+          128,
+          129,
+          130,
+          131,
+          134,
+          133,
+          135
+        ],
+        [
+          136,
+          137,
+          138,
+          139,
+          140,
+          141,
+          142,
+          143,
+          144,
+          145,
+          146,
+          147,
+          148,
+          151,
+          150,
+          152
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1130,
+    "path": "effects/index/qa-decisions/SPCHROMI/2026-11-09-accepted-d4b5c875f647.json",
+    "sha256": "D4B5C875F647C9F8A1344B85331BF3A778B3DE527F906116D54BF38DDE914BED"
+  },
+  "resref": "SPCHROMI",
+  "run_descriptor": {
+    "bytes": 1983,
+    "path": "effects/ressources/SPCHROMI/runs/spchromi-magic-apollo30-20261108-v1/run.json",
+    "sha256": "F39FDD4A960D06F6D4529A37FB70A161D81987726203CDEFE235B054184EA2A5"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 103199,
+      "path": "effects/ressources/SPCHROMI/packs/spchromi-magic-x4-apollo30-profiles-20261108-v1/manifest.json",
+      "sha256": "8CBE890D7E204B8FEBF8CB90F4D0E3A241B099DAD4E0BD0D3B610305A51284C8"
+    },
+    "registry": {
+      "bytes": 2836,
+      "path": "effects/ressources/SPCHROMI/packs/spchromi-magic-x4-apollo30-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "670687675B64B1D930B2B7C384CEC084A039CDBEB21A510B427154658119733F"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spchromi-magic-apollo30-20261108-v1",
+  "source": {
+    "bytes": 74740,
+    "path": "effects/ressources/SPCHROMI/source.bam",
+    "sha256": "12059A6AF79D3AC94C7E3C2735774BE8C04F5DBFB4E7710DB5E37ABAD73FE2D9"
+  }
+}

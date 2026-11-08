@@ -1,0 +1,191 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:WTRBODY2",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [],
+        "lookup_start": 10
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [],
+        "lookup_start": 10
+      },
+      {
+        "cycle": 3,
+        "frame_indices": [],
+        "lookup_start": 10
+      },
+      {
+        "cycle": 4,
+        "frame_indices": [],
+        "lookup_start": 10
+      }
+    ],
+    "frame_count": 21,
+    "source": {
+      "interpolation_run": "wtrbody2-magic-xbr2-apollo30-20261108-v1",
+      "interpolation_run_descriptor_sha256": "88CCE042D3B96462F1F2CC48BAC83FA6E654B73CE7A9DB072D483A912CAF4F3D",
+      "source_bam_sha256": "dae5f7e52d5fc97721ebbe57feebc53a761df81cf7343ca3610899d55f11c6a6",
+      "spatial_manifest_sha256": "01D08C7EFF6AF69DAD022F5C0CC6058B0BAB00DC039BCA603CC4F5A9207838E2",
+      "spatial_run": "wtrbody2-magic-xbr2-nearest2-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "8CF93CCB127B9EE96A6AB22569C4800DC274970D0A53D942F8E8C8B854391949"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        20
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "excluded_empty_source_cycles": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 5,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          18
+        ]
+      ],
+      "phase_count": 20,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          19,
+          18,
+          20
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-08",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1126,
+    "path": "effects/index/qa-decisions/WTRBODY2/2026-11-08-accepted-6affc5584919.json",
+    "sha256": "6AFFC55849190D91A6D614289C7D044E35BB50E43B4952020CB2CB98DAD03BE9"
+  },
+  "resref": "WTRBODY2",
+  "run_descriptor": {
+    "bytes": 1989,
+    "path": "effects/ressources/WTRBODY2/runs/wtrbody2-magic-xbr2-apollo30-20261108-v1/run.json",
+    "sha256": "88CCE042D3B96462F1F2CC48BAC83FA6E654B73CE7A9DB072D483A912CAF4F3D"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 16620,
+      "path": "effects/ressources/WTRBODY2/packs/wtrbody2-magic-xbr2-apollo30-profiles-20261108-v1/manifest.json",
+      "sha256": "72D5ACFDE7F23AF8FF1D11C1445DED24276F57C9FB2F31AD1D47AF2FAA1E7E85"
+    },
+    "registry": {
+      "bytes": 444,
+      "path": "effects/ressources/WTRBODY2/packs/wtrbody2-magic-xbr2-apollo30-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "FB36FEAAA5BA316E69360C937730BA6120C24478CC715D2E39D36AF22CD29FCF"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "wtrbody2-magic-xbr2-apollo30-20261108-v1",
+  "source": {
+    "bytes": 5636,
+    "path": "effects/ressources/WTRBODY2/source.bam",
+    "sha256": "DAE5F7E52D5FC97721EBBE57FEEBC53A761DF81CF7343CA3610899D55F11C6A6"
+  }
+}

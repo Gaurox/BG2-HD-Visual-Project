@@ -1,0 +1,205 @@
+{
+  "assets": [
+    {
+      "ordinal": 45,
+      "resref": "WTRBODY2",
+      "asset_key": "effects:bam:WTRBODY2",
+      "group": "eau-bulles-ondes",
+      "source": "effects/ressources/WTRBODY2/source.bam",
+      "source_sha256": "DAE5F7E52D5FC97721EBBE57FEEBC53A761DF81CF7343CA3610899D55F11C6A6",
+      "canonical_sha256": "9900E1AE0EF097230A2F96DEBBB1C0905E07C477EBEC04007776CE54A45D79DD",
+      "strict_visual_sha256": "2F9FA9FE212A207575B349136874044A524CA1500361A1F79AC87D58C0B2DCB9",
+      "reuse_aliases": [],
+      "source_frames": 10,
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "cycle": 1,
+          "lookup_start": 10,
+          "frame_indices": []
+        },
+        {
+          "cycle": 2,
+          "lookup_start": 10,
+          "frame_indices": []
+        },
+        {
+          "cycle": 3,
+          "lookup_start": 10,
+          "frame_indices": []
+        },
+        {
+          "cycle": 4,
+          "lookup_start": 10,
+          "frame_indices": []
+        }
+      ],
+      "native_fps": [],
+      "playback_hint": "unknown",
+      "native_canvas": [
+        32,
+        32
+      ],
+      "consumers": [],
+      "usage_evidence": "unresolved",
+      "normal_palette_alpha_levels": [
+        0,
+        255
+      ],
+      "native_graded_pixels": 0,
+      "nearblack_covered_percent": 77.275,
+      "exact_green_covered_percent": 0.0,
+      "production": {
+        "asset_key": "effects:bam:WTRBODY2",
+        "asset_directory": "effects/ressources/WTRBODY2",
+        "spatial_run": "",
+        "spatial_state": "not-started",
+        "interpolation_run": "",
+        "interpolation_state": "not-started",
+        "selected_run": "",
+        "qa_state": "not-assessed",
+        "qa_evidence": "",
+        "installation_state": "not-installed",
+        "installation_receipt": "",
+        "release_state": "not-evaluated",
+        "release_candidate": "",
+        "notes": ""
+      },
+      "processing_started": false,
+      "recipe_profile": "X-BODY",
+      "profile": "N",
+      "sigma_x4": 0,
+      "inner_feather_x4": 0,
+      "spatial_run": "wtrbody2-magic-xbr2-nearest2-x4-20261108-v1",
+      "interpolation_run": "wtrbody2-magic-xbr2-apollo30-20261108-v1",
+      "pack": "effects/ressources/WTRBODY2/packs/wtrbody2-magic-xbr2-initial-20261108-v1",
+      "green_index": null,
+      "recipe_plan": {
+        "ordinal": 45,
+        "resref": "WTRBODY2",
+        "profile": "S-DETAIL",
+        "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+        "source": "effects/ressources/WTRBODY2/source.bam",
+        "source_sha256": "DAE5F7E52D5FC97721EBBE57FEEBC53A761DF81CF7343CA3610899D55F11C6A6",
+        "reuse_decision": "new-source-proven-recipe",
+        "canvas_x1": [
+          32,
+          32
+        ],
+        "alpha_levels": 2,
+        "recipe": {
+          "spatial": "SeedVR2 7B INT8/LAB x4",
+          "model": "seedvr2_7b_int8_convrot.safetensors",
+          "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+          "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+          "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR2x -> nearest2 to x4"
+        },
+        "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+        "green_derivation": null,
+        "cycles": [
+          {
+            "cycle": 0,
+            "native_slots": 10,
+            "phases30": 20,
+            "duration_seconds": 0.6666666666666666,
+            "constant": false,
+            "empty": false,
+            "repeated_slots": 0
+          },
+          {
+            "cycle": 1,
+            "native_slots": 0,
+            "phases30": 0,
+            "duration_seconds": 0.0,
+            "constant": false,
+            "empty": true,
+            "repeated_slots": 0
+          },
+          {
+            "cycle": 2,
+            "native_slots": 0,
+            "phases30": 0,
+            "duration_seconds": 0.0,
+            "constant": false,
+            "empty": true,
+            "repeated_slots": 0
+          },
+          {
+            "cycle": 3,
+            "native_slots": 0,
+            "phases30": 0,
+            "duration_seconds": 0.0,
+            "constant": false,
+            "empty": true,
+            "repeated_slots": 0
+          },
+          {
+            "cycle": 4,
+            "native_slots": 0,
+            "phases30": 0,
+            "duration_seconds": 0.0,
+            "constant": false,
+            "empty": true,
+            "repeated_slots": 0
+          }
+        ],
+        "used_records": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "temporal": {
+          "target_fps": 30,
+          "model": "apo-8",
+          "input_fps": 15,
+          "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+          "status": "planned",
+          "preserve_native_holds": true,
+          "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+          "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+          "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+          "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+        },
+        "extra": [
+          "Dark source is not evidence of a disposable matte; do not use global flux-alpha conversion.",
+          "User priority SeedVR overrides previous xBR recommendation. WTRBODY1 xBR2->nearest2 remains fallback; own dark corpse/water and native10-slot timing preserved."
+        ],
+        "previous_recommendation": {
+          "profile": "X-BODY",
+          "recipe": {
+            "spatial": "xBR2x -> nearest2 to x4",
+            "alpha": "Native alpha retained, no threshold on dark corpse or water",
+            "history": "pipeline/recipes/wtrbody1-xbr-apo8-collapse-20261011-v1/build.py",
+            "fallback": "Own WTRBODY2 source and cycles; do not copy WTRBODY1 pixels, duplicate holds or 7.5 FPS input setting."
+          },
+          "reason": "Variante réelle de WTRBODY1, 10 poses propres ; conserver matière sombre et durée propre."
+        }
+      },
+      "final_pack": "effects/ressources/WTRBODY2/packs/wtrbody2-magic-xbr2-apollo30-profiles-20261108-v1"
+    }
+  ]
+}

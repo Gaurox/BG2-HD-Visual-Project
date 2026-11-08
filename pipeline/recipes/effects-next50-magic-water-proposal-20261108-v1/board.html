@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nouveau lot50 · Magie, ombres et eau</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#11151c;color:#e9edf5;font:14px system-ui,sans-serif}header{padding:26px 30px 18px;background:#1a202b}h1{font-size:28px;margin:0 0 8px}p{color:#b8c3d4;line-height:1.6;margin:6px 0}.toolbar{position:sticky;top:0;z-index:2;display:flex;gap:12px;flex-wrap:wrap;align-items:center;background:#252d3df5;padding:12px 30px;border-bottom:1px solid #46526a}button,select,input{font:inherit;color:inherit;background:#192131;border:1px solid #526078;border-radius:6px;padding:6px}button{cursor:pointer}label{display:flex;align-items:center;gap:6px}#grid{padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}.card{background:#1c2330;border:1px solid #354055;border-radius:12px;overflow:hidden}.heading{padding:12px 14px;display:flex;justify-content:space-between;align-items:center}.num{color:#ffb365;font-weight:700;margin-right:8px}h2{font-size:17px;display:inline;margin:0}.stage{height:220px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#252b36}.checker .stage{background-color:#343a43;background-image:conic-gradient(#474e59 25%,transparent 0 50%,#474e59 0 75%,transparent 0);background-size:24px 24px}.terrain .stage{background:#6e5e46}.dark .stage{background:#000}.light .stage{background:#cbd0d7}canvas{image-rendering:pixelated;max-width:100%;max-height:100%}.controls{padding:10px 14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.controls select{max-width:205px}.meta{padding:0 14px 12px;color:#aebbd0;font-size:12px}.phase{width:100%;accent-color:#ffb365}.counter{color:#ffca97;font-variant-numeric:tabular-nums}.hidden{display:none}.error{color:#ff7777}
+</style>
+<header><h1>Nouveau lot de 50 effets · Magie, ombres et eau</h1><p>13 portails et manifestations · 16 rayons et impacts · 7 ombres et précipitations · 10 effets d’eau · 4 matières et toiles</p><p>Sources natives animées, avant traitement HD. Cycles natifs séparés ; poses répétées et pauses conservées. Les entrées de cycle vides sont écartées de la lecture.<br>Lecture d’aperçu à 15 FPS, cadence native non mesurée. 50 productions distinctes / 51 RESREF avec l’alias SP_DEMGT. Aucun traitement HD lancé.</p></header>
+<div class="toolbar"><button id="play">⏸ Tout mettre en pause</button><button id="restart">↺ Recommencer</button><label>Vitesse <select id="speed"><option value="0.25">¼×</option><option value="0.5">½×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><label>Fond <select id="bg"><option value="slate">Ardoise</option><option value="checker">Damier</option><option value="terrain">Terrain</option><option value="dark">Noir</option><option value="light">Clair</option></select></label><label>Mélange <select id="blend"><option value="normal">Alpha natif</option><option value="screen">Lumineux (simulation)</option></select></label><label><input type="checkbox" id="autocycles">Parcourir tous les cycles</label><label>Filtrer <input id="search" placeholder="Nom ou famille" size="16"></label><span id="count">50 effets</span></div>
+<main id="grid"></main>
+<script>
+const catalog=__CATALOG__;
+const $=s=>document.querySelector(s), cards=[];
+let running=true,speed=1,time=0,last=performance.now();
+for(const a of catalog.assets){
+ a.cycles=a.cycles.filter(c=>c.frame_indices.length>0);
+ const el=document.createElement('article');el.className='card';el.dataset.resref=a.resref;
+ el.innerHTML=`<div class="heading"><div><span class="num">${String(a.ordinal).padStart(2,'0')}</span><h2>${a.resref}</h2></div><span class="counter"></span></div><div class="stage"><canvas></canvas></div><div class="controls"><button class="pause">⏸</button><select>${a.cycles.map((c,i)=>`<option value="${i}">Cycle ${c.cycle} · ${c.frame_indices.length} poses</option>`).join('')}</select><input class="phase" type="range" min="0" step="1" value="0"></div><div class="meta">${a.group} · ${a.frames} images · ${a.width} × ${a.height}<br>À traiter · source native, sans upscale</div>`;
+ $('#grid').append(el);
+ const canvas=el.querySelector('canvas'),ctx=canvas.getContext('2d');
+ canvas.width=a.width;canvas.height=a.height;
+ const scale=Math.min(4,270/a.width,210/a.height);canvas.style.width=`${a.width*scale}px`;canvas.style.height=`${a.height*scale}px`;
+ const card={a,el,canvas,ctx,image:new Image(),ready:false,cycle:0,start:0,paused:false,phase:0,visible:true,drawn:-1,autoTick:0};cards.push(card);
+ const slider=el.querySelector('.phase'),select=el.querySelector('select'),pause=el.querySelector('.pause');
+ function setCycle(i){card.cycle=i;card.start=time;card.phase=0;card.drawn=-1;slider.max=a.cycles[i].frame_indices.length-1;select.value=i}
+ card.setCycle=setCycle;setCycle(0);
+ card.image.onload=()=>{card.ready=true};card.image.onerror=()=>{el.querySelector('.meta').classList.add('error');el.querySelector('.meta').textContent='Erreur de chargement'};card.image.src=a.image;
+ select.onchange=()=>setCycle(Number(select.value));
+ pause.onclick=()=>{card.paused=!card.paused;if(!card.paused)card.start=time-card.phase/15;pause.textContent=card.paused?'▶':'⏸'};
+ slider.oninput=()=>{card.phase=Number(slider.value);card.paused=true;pause.textContent='▶';card.drawn=-1};
+}
+const observer=new IntersectionObserver(entries=>{for(const e of entries)cards.find(c=>c.el===e.target).visible=e.isIntersecting},{rootMargin:'100px'});cards.forEach(c=>observer.observe(c.el));
+function tick(now){if(running)time+=(now-last)/1000*speed;last=now;
+ for(const c of cards){if(!c.ready||!c.visible||c.el.classList.contains('hidden'))continue;
+ let frames=c.a.cycles[c.cycle].frame_indices;
+ if(!c.paused){let elapsed=Math.floor((time-c.start)*15);if($('#autocycles').checked&&elapsed>=Math.max(frames.length,45)&&c.a.cycles.length>1){c.setCycle((c.cycle+1)%c.a.cycles.length);frames=c.a.cycles[c.cycle].frame_indices;elapsed=0}c.phase=elapsed%frames.length}
+ const idx=frames[c.phase];if(c.drawn!==idx){c.ctx.clearRect(0,0,c.a.width,c.a.height);c.ctx.drawImage(c.image,(idx%c.a.cols)*c.a.width,Math.floor(idx/c.a.cols)*c.a.height,c.a.width,c.a.height,0,0,c.a.width,c.a.height);c.drawn=idx;c.el.querySelector('.phase').value=c.phase;c.el.querySelector('.counter').textContent=`${c.phase+1}/${frames.length}`}
+ }requestAnimationFrame(tick)}requestAnimationFrame(tick);
+$('#play').onclick=()=>{running=!running;$('#play').textContent=running?'⏸ Tout mettre en pause':'▶ Tout reprendre'};
+$('#restart').onclick=()=>{time=0;cards.forEach(c=>{c.start=0;c.phase=0;c.drawn=-1})};
+$('#speed').onchange=e=>speed=Number(e.target.value);
+$('#bg').onchange=e=>document.body.className=e.target.value;
+$('#blend').onchange=e=>cards.forEach(c=>c.canvas.style.mixBlendMode=e.target.value);
+$('#search').oninput=e=>{const q=e.target.value.trim().toLowerCase();let n=0;cards.forEach(c=>{const show=(c.a.resref+' '+c.a.group).toLowerCase().includes(q);c.el.classList.toggle('hidden',!show);n+=show});$('#count').textContent=`${n} effets`};
+</script></html>

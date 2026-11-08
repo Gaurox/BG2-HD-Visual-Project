@@ -1,0 +1,279 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPHOLYWD",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          26
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25
+        ],
+        "lookup_start": 15
+      }
+    ],
+    "frame_count": 56,
+    "source": {
+      "interpolation_run": "spholywd-magic-apollo30-20261108-v1",
+      "interpolation_run_descriptor_sha256": "A88D55FB0A5F543FCDA320EA43EFD7D7552FB19B3C6D60BB3503EA2A8AB7E0B7",
+      "source_bam_sha256": "9468359ac403964ae07676ddf1dc62bb6111c36b1b8367134e4ffd6ed2e0a4c0",
+      "spatial_manifest_sha256": "BF8DDD5DEF6BF6E13DA5DDF98CDBB2CC563D319AA4DE076A394C50F27FBEAF28",
+      "spatial_run": "spholywd-magic-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "8A6A34C15EBDCEE341DFA63E46B752654A63FC547992ADE66C9AB526C1EB5CBA"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        30,
+        24
+      ],
+      "alternate_profiles": [
+        "cycle000-once",
+        "cycle001-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28
+        ],
+        [
+          31,
+          33,
+          35,
+          37,
+          39,
+          41,
+          43,
+          45,
+          47,
+          49,
+          51,
+          53
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 2,
+      "once_cycle_profiles": [
+        "cycle000-once",
+        "cycle001-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          28
+        ],
+        [
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          53
+        ]
+      ],
+      "phase_count": 30,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 2,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          29,
+          28,
+          30
+        ],
+        [
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          54,
+          53,
+          55
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1130,
+    "path": "effects/index/qa-decisions/SPHOLYWD/2026-11-09-accepted-0f9ad0851709.json",
+    "sha256": "0F9AD08517094997B820FA882228DE31B093AB009D28171CFA10A674A46BCD8E"
+  },
+  "resref": "SPHOLYWD",
+  "run_descriptor": {
+    "bytes": 1982,
+    "path": "effects/ressources/SPHOLYWD/runs/spholywd-magic-apollo30-20261108-v1/run.json",
+    "sha256": "A88D55FB0A5F543FCDA320EA43EFD7D7552FB19B3C6D60BB3503EA2A8AB7E0B7"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 39010,
+      "path": "effects/ressources/SPHOLYWD/packs/spholywd-magic-x4-apollo30-profiles-20261108-v1/manifest.json",
+      "sha256": "E3CF83862E9DA7B308B7E72D2C7A7EDDF1BA7988BB37B7155265D78397179328"
+    },
+    "registry": {
+      "bytes": 1100,
+      "path": "effects/ressources/SPHOLYWD/packs/spholywd-magic-x4-apollo30-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "DDDDBEE30210CB1A5EC3F79D9426A7807FBCFED8CFEA7243B55C9EE12BDFDF90"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spholywd-magic-apollo30-20261108-v1",
+  "source": {
+    "bytes": 95519,
+    "path": "effects/ressources/SPHOLYWD/source.bam",
+    "sha256": "9468359AC403964AE07676DDF1DC62BB6111C36B1B8367134E4FFD6ED2E0A4C0"
+  }
+}

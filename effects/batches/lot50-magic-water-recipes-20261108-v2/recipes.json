@@ -1,0 +1,5073 @@
+{
+  "schema": "bg2-effects-recipe-plan-v1",
+  "date": "2026-11-08",
+  "status": "recommendations-not-produced-not-QA",
+  "summary": {
+    "S-SOFT": 5,
+    "S-DETAIL": 30,
+    "N-MASK": 6,
+    "X-TINY": 6,
+    "A-BUBBLE": 1,
+    "A-BLOB": 2
+  },
+  "global_contract": {
+    "scale": 4,
+    "target_fps": 30,
+    "alpha_runtime": "premultiplied exactly once; transparent RGB nearest-opaque filled only for model input; runtime zero under alpha0",
+    "geometry": "Native per-frame centres, logical rectangles and alternative cycles preserved; padding temporary only",
+    "timing": "Keep native slot lookup and pauses; source dedup never redistributes duration. Apollo anchor pairs sampled onto original slot-time axis; constant and transparent phases handled explicitly.",
+    "confidence": "Historical recipe transfer plus source inspection, not validation of new pixels",
+    "source_fps": "Most sources lack owner evidence:15 FPS compatibility assumption, not measured ingame",
+    "native_masks": "6 retain native timing; no claim of new interpolation30",
+    "scope": "No model execution, installation, QA acceptance, domain-index or release update",
+    "spatial_priority": "SeedVR7B INT8/LAB x4 default for35 new sources; xBR only6 tiny sources plus BUBLES palette adaptation;2 spatial reuse attempts;6 native masks."
+  },
+  "assets": [
+    {
+      "ordinal": 1,
+      "resref": "AM3000G",
+      "profile": "S-SOFT",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; masse diffuse/lumineuse, lissage RGB léger.",
+      "source": "effects/ressources/AM3000G/source.bam",
+      "source_sha256": "0D53F5A0A385B24EEE610E1918F79F5C55411FD83DADECA88C2B8856916D75CF",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        117,
+        119
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 1.2,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: ReboutCX x4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 16,
+          "phases30": 32,
+          "duration_seconds": 1.0666666666666667,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 8
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "R-SOFT",
+        "recipe": {
+          "spatial": "ReboutCX x4",
+          "alpha": "Native alpha nearest4; soft premultiplied RGBA sigma2 x4, canvas edge ramp2 x4, runtime geometry unchanged",
+          "history": "animations/ressources/AM3000E/runs/am3000e-contour-native-accepted-20261011-v1/manifest.json",
+          "fallback": "Native alpha, no soft2 if plume energy or fine fringes are lost."
+        },
+        "reason": "Grande bouffée claire ; AM3000E donne un précédent ReboutCX avec adoucissement léger et géométrie native restaurée."
+      }
+    },
+    {
+      "ordinal": 2,
+      "resref": "AM6200C",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/AM6200C/source.bam",
+      "source_sha256": "E5668DEF1724800230CE23F169138195668C32A26A6E1003D3CED3DC1E21BE2D",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        147,
+        215
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: ReboutCX x4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 9,
+          "phases30": 18,
+          "duration_seconds": 0.6,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [
+        "ReboutCX/inner16 precedent AM6200A/B retained as comparison only; main source is SeedVR, feather0 baseline."
+      ],
+      "previous_recommendation": {
+        "profile": "R-COLUMN",
+        "recipe": {
+          "spatial": "ReboutCX x4",
+          "alpha": "Native alpha, inner feather16 x4 on broad column only, premultiply once; keep all detached grains. Native-alpha witness mandatory for transfer of this setting.",
+          "history": "animations/batches/am6200a-selection-accepted-20260922/manifest.json",
+          "fallback": "Native-alpha feather0 if16 suppresses thin ends; SeedVR7B/LAB only if actual veins are erased as on AM6200E/F."
+        },
+        "reason": "Colonnes vertes de la famille AM6200 : partir du choix ReboutCX validé sur A/B, conserver les extrémités et grains."
+      }
+    },
+    {
+      "ordinal": 3,
+      "resref": "AM6200D",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/AM6200D/source.bam",
+      "source_sha256": "5C87B445DF0179AF77E0BD58E47113F7AECB64C1CA865E0DD903526E12427271",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        145,
+        215
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: ReboutCX x4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 9,
+          "phases30": 18,
+          "duration_seconds": 0.6,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [
+        "ReboutCX/inner16 precedent AM6200A/B retained as comparison only; main source is SeedVR, feather0 baseline."
+      ],
+      "previous_recommendation": {
+        "profile": "R-COLUMN",
+        "recipe": {
+          "spatial": "ReboutCX x4",
+          "alpha": "Native alpha, inner feather16 x4 on broad column only, premultiply once; keep all detached grains. Native-alpha witness mandatory for transfer of this setting.",
+          "history": "animations/batches/am6200a-selection-accepted-20260922/manifest.json",
+          "fallback": "Native-alpha feather0 if16 suppresses thin ends; SeedVR7B/LAB only if actual veins are erased as on AM6200E/F."
+        },
+        "reason": "Colonnes vertes de la famille AM6200 : partir du choix ReboutCX validé sur A/B, conserver les extrémités et grains."
+      }
+    },
+    {
+      "ordinal": 4,
+      "resref": "AMDEMGT",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/AMDEMGT/source.bam",
+      "source_sha256": "51382DACD59F0AF394C1B3F33A2FB37199B4B96F904006EB4F9C7AD72FD017A6",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        249,
+        247
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 38,
+          "phases30": 76,
+          "duration_seconds": 2.533333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 1,
+          "native_slots": 4,
+          "phases30": 8,
+          "duration_seconds": 0.26666666666666666,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [
+        "SP_DEMGT is a source alias: one spatial production, separate resource binding; no second inference."
+      ],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 5,
+      "resref": "HARPDISC",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/HARPDISC/source.bam",
+      "source_sha256": "C90D694AABEAF3BEDD266F515A3AA1D6E9CD1413EAFCB2B012ABEEC2B1E678CE",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        86,
+        88
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 11,
+          "phases30": 22,
+          "duration_seconds": 0.7333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 6,
+      "resref": "SPARMOR2",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/SPARMOR2/source.bam",
+      "source_sha256": "43502961C8E26B1688E8008B487C81FBF117D1891E7D480B9D389E0E32B5E2DF",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        63,
+        69
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 40,
+          "phases30": 80,
+          "duration_seconds": 2.6666666666666665,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 10
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 7,
+      "resref": "SPDIMDR1",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/SPDIMDR1/source.bam",
+      "source_sha256": "D4E6CBB43145EE6E747670590A5286F1DB9A47D06D45B303136B0F1552CF1E46",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        64,
+        88
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: ReboutCX x4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 6,
+          "phases30": 12,
+          "duration_seconds": 0.4,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "R-PORTAL",
+        "recipe": {
+          "spatial": "ReboutCX x4",
+          "alpha": "Native alpha nearest4, feather0; preserve opaque door frame, recess and central spiral",
+          "history": "pipeline/recipes/portails-deux-correctif-20261010-v1/build_fix.py",
+          "fallback": "xBR4X, no blend, if frame ornament or spiral changes. No luminous flux conversion on stone."
+        },
+        "reason": "Cadre matériel et spirale : préserver angles, pierre et décor interne ; ne pas convertir les parties sombres en transparence."
+      }
+    },
+    {
+      "ordinal": 8,
+      "resref": "SPDIMDR2",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/SPDIMDR2/source.bam",
+      "source_sha256": "DCC03C5F49D1383B7F7CA85BA9B1959829537A385AED8A633350CE3A8A54AFEB",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        58,
+        77
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: ReboutCX x4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 6,
+          "phases30": 12,
+          "duration_seconds": 0.4,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "R-PORTAL",
+        "recipe": {
+          "spatial": "ReboutCX x4",
+          "alpha": "Native alpha nearest4, feather0; preserve opaque door frame, recess and central spiral",
+          "history": "pipeline/recipes/portails-deux-correctif-20261010-v1/build_fix.py",
+          "fallback": "xBR4X, no blend, if frame ornament or spiral changes. No luminous flux conversion on stone."
+        },
+        "reason": "Cadre matériel et spirale : préserver angles, pierre et décor interne ; ne pas convertir les parties sombres en transparence."
+      }
+    },
+    {
+      "ordinal": 9,
+      "resref": "SPMIRROI",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/SPMIRROI/source.bam",
+      "source_sha256": "F92888EA7DAFBFDB57F3B38080B46AC0CA598E592CB2C14E0EAFB3F8D15583CC",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        88,
+        111
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 20,
+          "phases30": 40,
+          "duration_seconds": 1.3333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 10,
+      "resref": "SPRESURI",
+      "profile": "S-SOFT",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; masse diffuse/lumineuse, lissage RGB léger.",
+      "source": "effects/ressources/SPRESURI/source.bam",
+      "source_sha256": "6CF6BA6FA7C5568D1A1B189A841E08276DA9B294FB2F3B9CA986ADB7CFFAAB8F",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        115,
+        135
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 1.2,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: SeedVR2 7B INT8/LAB x4"
+      },
+      "black_policy": "Light-only black-matte candidate: keep native-alpha witness; proposed normal preview A=max(P.r,P.g,P.b), P=round(A_native*C/255), straight RGB=round(255*P/A). Keep P exact, roundtrip<=1. Apply only to luminous layer; unknown owner blend is not established by this proposal.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 60,
+          "phases30": 120,
+          "duration_seconds": 4.0,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 23
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "S-GLOW",
+        "recipe": {
+          "spatial": "SeedVR2 7B INT8/LAB x4",
+          "model": "seedvr2_7b_int8_convrot.safetensors",
+          "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+          "rgb_gauss_sigma_x4": 1.2,
+          "alpha": "Native support nearest4, feather0; apply explicit per-asset black-matte policy after premultiplied temporal composition",
+          "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+          "fallback": "xBR4X if symbols, false texture, hue drift or unstable core are introduced; reduce sigma to0 if grains disappear."
+        },
+        "reason": "Masse lumineuse assez large pour SeedVR ; protéger cœur/halo et comparer aux ancres natives."
+      }
+    },
+    {
+      "ordinal": 11,
+      "resref": "SPWIRBLA",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/SPWIRBLA/source.bam",
+      "source_sha256": "75E543DE59FBB953E17DD8755CC71DDFD15F7ADDB59699BD5B98F3A5AAFD0F9C",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        149,
+        102
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 46,
+          "phases30": 92,
+          "duration_seconds": 3.066666666666667,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 12,
+      "resref": "WHIRL01",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/WHIRL01/source.bam",
+      "source_sha256": "DC8F61B476BF020FAAA683AA5F775D9B20DA14C10C4AC48A505C3A2077C4D46C",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        239,
+        255
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 12,
+          "phases30": 24,
+          "duration_seconds": 0.8,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 13,
+      "resref": "WHIRLY",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/WHIRLY/source.bam",
+      "source_sha256": "F731CDA15D58D8437312688BBDB7EF0B10838519085CC01EA7CFF17115983030",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        127,
+        254
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": {
+        "palette_indices": [
+          0,
+          178
+        ],
+        "policy": "Working export only: remove exact indexed green connected to source-frame border before SeedVR; never hue-threshold foreground. Preserve canonical BAM and native-alpha witness. Fill transparent input RGB without green spill; restore derived native mask after inference.",
+        "reference": "pipeline/recipes/effects-lot50-seedvr7b-apollo30-20261108-v1/spatial_one.py",
+        "status": "proposed-derivation-not-yet-reviewed"
+      },
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 12,
+          "phases30": 24,
+          "duration_seconds": 0.8,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 14,
+      "resref": "HIHEDGE",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/HIHEDGE/source.bam",
+      "source_sha256": "1EE588007C2D9A4339A4AE9A44EBAA0420541E7C5AF968EC9B4891C997D1B18A",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        425,
+        306
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Light-only black-matte candidate: keep native-alpha witness; proposed normal preview A=max(P.r,P.g,P.b), P=round(A_native*C/255), straight RGB=round(255*P/A). Keep P exact, roundtrip<=1. Apply only to luminous layer; unknown owner blend is not established by this proposal.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 12,
+          "phases30": 24,
+          "duration_seconds": 0.8,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 15,
+      "resref": "SHAREAB",
+      "profile": "N-MASK",
+      "reason": "Masques natifs propriétaires déjà classés côté projectiles ; noir et alpha font partie du rendu voulu.",
+      "source": "effects/ressources/SHAREAB/source.bam",
+      "source_sha256": "8A78E6B03AE86BAC8A2E0B7F5B0847C3B92594C129AF1CE253A43C50E8A552AA",
+      "reuse_decision": "native-owner-mask-no-ai",
+      "canvas_x1": [
+        125,
+        82
+      ],
+      "alpha_levels": 167,
+      "recipe": {
+        "spatial": "No new spatial or AI job; retain native owner mask",
+        "alpha": "Preserve native black RGB and graduated alpha/owner role; no flux conversion, feather or erosion",
+        "history": "projectiles/index/visual-assets.csv",
+        "fallback": "If another visible non-mask owner is discovered, qualify that owner separately; this decision is not global acceptance of every BAM use."
+      },
+      "black_policy": "Black mask is meaningful: native owner rendering preserved; no A=max(RGB), no black removal.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 6,
+          "phases30": 12,
+          "duration_seconds": 0.4,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": null,
+        "input_fps": 15,
+        "rate_basis": "indexed consumer",
+        "status": "retain-native-no-new-job",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "N-MASK",
+        "recipe": {
+          "spatial": "No new spatial or AI job; retain native owner mask",
+          "alpha": "Preserve native black RGB and graduated alpha/owner role; no flux conversion, feather or erosion",
+          "history": "projectiles/index/visual-assets.csv",
+          "fallback": "If another visible non-mask owner is discovered, qualify that owner separately; this decision is not global acceptance of every BAM use."
+        },
+        "reason": "Masques natifs propriétaires déjà classés côté projectiles ; noir et alpha font partie du rendu voulu."
+      }
+    },
+    {
+      "ordinal": 16,
+      "resref": "SPBASEWT",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/SPBASEWT/source.bam",
+      "source_sha256": "F03797953119B0074E45172C4C9D4DC9802DC74ABD1E4C1AAB01C249C1484381",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        140,
+        154
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 49,
+          "phases30": 98,
+          "duration_seconds": 3.2666666666666666,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 17,
+      "resref": "SPCCOLDE",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/SPCCOLDE/source.bam",
+      "source_sha256": "F019301117A9F077D4BFE92F0A12CB49BAD4419D31DC56747A9D5B33D7606648",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        109,
+        95
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Light-only black-matte candidate: keep native-alpha witness; proposed normal preview A=max(P.r,P.g,P.b), P=round(A_native*C/255), straight RGB=round(255*P/A). Keep P exact, roundtrip<=1. Apply only to luminous layer; unknown owner blend is not established by this proposal.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 16,
+          "phases30": 32,
+          "duration_seconds": 1.0666666666666667,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 1,
+          "native_slots": 16,
+          "phases30": 32,
+          "duration_seconds": 1.0666666666666667,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 2,
+          "native_slots": 16,
+          "phases30": 32,
+          "duration_seconds": 1.0666666666666667,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 3,
+          "native_slots": 16,
+          "phases30": 32,
+          "duration_seconds": 1.0666666666666667,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 4,
+          "native_slots": 16,
+          "phases30": 32,
+          "duration_seconds": 1.0666666666666667,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 18,
+      "resref": "SPCCWOUI",
+      "profile": "S-SOFT",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; masse diffuse/lumineuse, lissage RGB léger.",
+      "source": "effects/ressources/SPCCWOUI/source.bam",
+      "source_sha256": "C578DD59F0CD4494DBA29F4CA2995D4939792E68A74D17C1AAA0DC075DD836B3",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        149,
+        181
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 1.2,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: SeedVR2 7B INT8/LAB x4"
+      },
+      "black_policy": "Light-only black-matte candidate: keep native-alpha witness; proposed normal preview A=max(P.r,P.g,P.b), P=round(A_native*C/255), straight RGB=round(255*P/A). Keep P exact, roundtrip<=1. Apply only to luminous layer; unknown owner blend is not established by this proposal.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 40,
+          "phases30": 80,
+          "duration_seconds": 2.6666666666666665,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 19
+        },
+        {
+          "cycle": 1,
+          "native_slots": 40,
+          "phases30": 80,
+          "duration_seconds": 2.6666666666666665,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 19
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "S-GLOW",
+        "recipe": {
+          "spatial": "SeedVR2 7B INT8/LAB x4",
+          "model": "seedvr2_7b_int8_convrot.safetensors",
+          "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+          "rgb_gauss_sigma_x4": 1.2,
+          "alpha": "Native support nearest4, feather0; apply explicit per-asset black-matte policy after premultiplied temporal composition",
+          "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+          "fallback": "xBR4X if symbols, false texture, hue drift or unstable core are introduced; reduce sigma to0 if grains disappear."
+        },
+        "reason": "Masse lumineuse assez large pour SeedVR ; protéger cœur/halo et comparer aux ancres natives."
+      }
+    },
+    {
+      "ordinal": 19,
+      "resref": "SPCHROMI",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/SPCHROMI/source.bam",
+      "source_sha256": "12059A6AF79D3AC94C7E3C2735774BE8C04F5DBFB4E7710DB5E37ABAD73FE2D9",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        50,
+        51
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Light-only black-matte candidate: keep native-alpha witness; proposed normal preview A=max(P.r,P.g,P.b), P=round(A_native*C/255), straight RGB=round(255*P/A). Keep P exact, roundtrip<=1. Apply only to luminous layer; unknown owner blend is not established by this proposal.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 8,
+          "phases30": 16,
+          "duration_seconds": 0.5333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 1,
+          "native_slots": 8,
+          "phases30": 16,
+          "duration_seconds": 0.5333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 2,
+          "native_slots": 8,
+          "phases30": 16,
+          "duration_seconds": 0.5333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 3,
+          "native_slots": 8,
+          "phases30": 16,
+          "duration_seconds": 0.5333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 4,
+          "native_slots": 8,
+          "phases30": 16,
+          "duration_seconds": 0.5333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 5,
+          "native_slots": 8,
+          "phases30": 16,
+          "duration_seconds": 0.5333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 6,
+          "native_slots": 8,
+          "phases30": 16,
+          "duration_seconds": 0.5333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 7,
+          "native_slots": 8,
+          "phases30": 16,
+          "duration_seconds": 0.5333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 8,
+          "native_slots": 8,
+          "phases30": 16,
+          "duration_seconds": 0.5333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 20,
+      "resref": "SPCSPRAI",
+      "profile": "X-TINY",
+      "reason": "Très petits grains, flocons, points lumineux ou gouttes : conserver séparation et silhouette ; exception xBR à la priorité SeedVR demandée.",
+      "source": "effects/ressources/SPCSPRAI/source.bam",
+      "source_sha256": "00B136EFF5385E3299696D28202FF1C9113C6DCDF6D00D26A47763322CCE25CB",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        36,
+        41
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "xBR4X, blend_colors=false, scale4",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4; feather0, erosion0; protect each particle",
+        "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+        "fallback": "SeedVR comparison only if xBR result is insufficient; no automatic blur or merging of grains."
+      },
+      "black_policy": "Light-only black-matte candidate: keep native-alpha witness; proposed normal preview A=max(P.r,P.g,P.b), P=round(A_native*C/255), straight RGB=round(255*P/A). Keep P exact, roundtrip<=1. Apply only to luminous layer; unknown owner blend is not established by this proposal.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 24,
+          "phases30": 48,
+          "duration_seconds": 1.6,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 21,
+      "resref": "SPENTAXI",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/SPENTAXI/source.bam",
+      "source_sha256": "618BD5B5A3550B25B5E4D9DCE2D65135E87AAADBFCB3A9BB820E017CECF16AE2",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        300,
+        244
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 23,
+          "phases30": 46,
+          "duration_seconds": 1.5333333333333334,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 22,
+      "resref": "SPGENHLB",
+      "profile": "S-SOFT",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; masse diffuse/lumineuse, lissage RGB léger.",
+      "source": "effects/ressources/SPGENHLB/source.bam",
+      "source_sha256": "C15EF8E2E167889A3E2204B4D9DFED3B996E1FFBE9A0FAF75BB1F6C109A4605A",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        239,
+        230
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 1.2,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: SeedVR2 7B INT8/LAB x4"
+      },
+      "black_policy": "Light-only black-matte candidate: keep native-alpha witness; proposed normal preview A=max(P.r,P.g,P.b), P=round(A_native*C/255), straight RGB=round(255*P/A). Keep P exact, roundtrip<=1. Apply only to luminous layer; unknown owner blend is not established by this proposal.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 6,
+          "phases30": 12,
+          "duration_seconds": 0.4,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 1,
+          "native_slots": 6,
+          "phases30": 12,
+          "duration_seconds": 0.4,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 2,
+          "native_slots": 9,
+          "phases30": 18,
+          "duration_seconds": 0.6,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 3,
+          "native_slots": 21,
+          "phases30": 42,
+          "duration_seconds": 1.4,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 6
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "S-GLOW",
+        "recipe": {
+          "spatial": "SeedVR2 7B INT8/LAB x4",
+          "model": "seedvr2_7b_int8_convrot.safetensors",
+          "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+          "rgb_gauss_sigma_x4": 1.2,
+          "alpha": "Native support nearest4, feather0; apply explicit per-asset black-matte policy after premultiplied temporal composition",
+          "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+          "fallback": "xBR4X if symbols, false texture, hue drift or unstable core are introduced; reduce sigma to0 if grains disappear."
+        },
+        "reason": "Masse lumineuse assez large pour SeedVR ; protéger cœur/halo et comparer aux ancres natives."
+      }
+    },
+    {
+      "ordinal": 23,
+      "resref": "SPHLYSMT",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/SPHLYSMT/source.bam",
+      "source_sha256": "2743E55FCDE69EA26D0F2A017C61C54D03F16FA345A8E6361C32864DE9D252FB",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        104,
+        237
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 15,
+          "phases30": 30,
+          "duration_seconds": 1.0,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 1,
+          "native_slots": 14,
+          "phases30": 28,
+          "duration_seconds": 0.9333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 2,
+          "native_slots": 14,
+          "phases30": 28,
+          "duration_seconds": 0.9333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 24,
+      "resref": "SPHOLMIG",
+      "profile": "S-SOFT",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; masse diffuse/lumineuse, lissage RGB léger.",
+      "source": "effects/ressources/SPHOLMIG/source.bam",
+      "source_sha256": "C3DC0C725B09E3DF36C5C3011F71FE2F5A5F8A245C0742681EAB38CC0E4F42EF",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        172,
+        188
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 1.2,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: SeedVR2 7B INT8/LAB x4"
+      },
+      "black_policy": "Light-only black-matte candidate: keep native-alpha witness; proposed normal preview A=max(P.r,P.g,P.b), P=round(A_native*C/255), straight RGB=round(255*P/A). Keep P exact, roundtrip<=1. Apply only to luminous layer; unknown owner blend is not established by this proposal.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 12,
+          "phases30": 24,
+          "duration_seconds": 0.8,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "S-GLOW",
+        "recipe": {
+          "spatial": "SeedVR2 7B INT8/LAB x4",
+          "model": "seedvr2_7b_int8_convrot.safetensors",
+          "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+          "rgb_gauss_sigma_x4": 1.2,
+          "alpha": "Native support nearest4, feather0; apply explicit per-asset black-matte policy after premultiplied temporal composition",
+          "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+          "fallback": "xBR4X if symbols, false texture, hue drift or unstable core are introduced; reduce sigma to0 if grains disappear."
+        },
+        "reason": "Masse lumineuse assez large pour SeedVR ; protéger cœur/halo et comparer aux ancres natives."
+      }
+    },
+    {
+      "ordinal": 25,
+      "resref": "SPHOLYWD",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/SPHOLYWD/source.bam",
+      "source_sha256": "9468359AC403964AE07676DDF1DC62BB6111C36B1B8367134E4FFD6ED2E0A4C0",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        61,
+        231
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Light-only black-matte candidate: keep native-alpha witness; proposed normal preview A=max(P.r,P.g,P.b), P=round(A_native*C/255), straight RGB=round(255*P/A). Keep P exact, roundtrip<=1. Apply only to luminous layer; unknown owner blend is not established by this proposal.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 15,
+          "phases30": 30,
+          "duration_seconds": 1.0,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 1,
+          "native_slots": 12,
+          "phases30": 24,
+          "duration_seconds": 0.8,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 26,
+      "resref": "SPRWRA2I",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/SPRWRA2I/source.bam",
+      "source_sha256": "0A80128F2776AFDAA879543E7884F14546205E33BD40F560F595F4FBEC6D7569",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        71,
+        62
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 48,
+          "phases30": 96,
+          "duration_seconds": 3.2,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 27,
+      "resref": "SPSDIMSP",
+      "profile": "N-MASK",
+      "reason": "Masques natifs propriétaires déjà classés côté projectiles ; noir et alpha font partie du rendu voulu.",
+      "source": "effects/ressources/SPSDIMSP/source.bam",
+      "source_sha256": "FAA1B62C0029D07394A1F4CA867F8C8E37896A14EAF69DDD3204B963CBE24A7A",
+      "reuse_decision": "native-owner-mask-no-ai",
+      "canvas_x1": [
+        132,
+        105
+      ],
+      "alpha_levels": 160,
+      "recipe": {
+        "spatial": "No new spatial or AI job; retain native owner mask",
+        "alpha": "Preserve native black RGB and graduated alpha/owner role; no flux conversion, feather or erosion",
+        "history": "projectiles/index/visual-assets.csv",
+        "fallback": "If another visible non-mask owner is discovered, qualify that owner separately; this decision is not global acceptance of every BAM use."
+      },
+      "black_policy": "Black mask is meaningful: native owner rendering preserved; no A=max(RGB), no black removal.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 12,
+          "phases30": 24,
+          "duration_seconds": 0.8,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": null,
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "retain-native-no-new-job",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "N-MASK",
+        "recipe": {
+          "spatial": "No new spatial or AI job; retain native owner mask",
+          "alpha": "Preserve native black RGB and graduated alpha/owner role; no flux conversion, feather or erosion",
+          "history": "projectiles/index/visual-assets.csv",
+          "fallback": "If another visible non-mask owner is discovered, qualify that owner separately; this decision is not global acceptance of every BAM use."
+        },
+        "reason": "Masques natifs propriétaires déjà classés côté projectiles ; noir et alpha font partie du rendu voulu."
+      }
+    },
+    {
+      "ordinal": 28,
+      "resref": "SPSNRAYI",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/SPSNRAYI/source.bam",
+      "source_sha256": "AEE1D9115FF455A2E31E2C3E4737F0274166311CE07C8F3C4ACFB8DB3B63F55B",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        46,
+        136
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Light-only black-matte candidate: keep native-alpha witness; proposed normal preview A=max(P.r,P.g,P.b), P=round(A_native*C/255), straight RGB=round(255*P/A). Keep P exact, roundtrip<=1. Apply only to luminous layer; unknown owner blend is not established by this proposal.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 24,
+          "phases30": 48,
+          "duration_seconds": 1.6,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 29,
+      "resref": "SPUNHBLT",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/SPUNHBLT/source.bam",
+      "source_sha256": "65DACE74BECFE4198CD5560AEE48CD62E637D52F130FF026E1375485E87C4574",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        105,
+        237
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 15,
+          "phases30": 30,
+          "duration_seconds": 1.0,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 1,
+          "native_slots": 15,
+          "phases30": 30,
+          "duration_seconds": 1.0,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 2,
+          "native_slots": 15,
+          "phases30": 30,
+          "duration_seconds": 1.0,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 30,
+      "resref": "DUST",
+      "profile": "X-TINY",
+      "reason": "Très petits grains, flocons, points lumineux ou gouttes : conserver séparation et silhouette ; exception xBR à la priorité SeedVR demandée.",
+      "source": "effects/ressources/DUST/source.bam",
+      "source_sha256": "3E38053E8C2D1EA23C6FE926EAB61C3469BCA6DC24108C4781B85E4FBE3E5898",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        57,
+        42
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "xBR4X, blend_colors=false, scale4",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4; feather0, erosion0; protect each particle",
+        "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+        "fallback": "SeedVR comparison only if xBR result is insufficient; no automatic blur or merging of grains."
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 30,
+          "phases30": 60,
+          "duration_seconds": 2.0,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-PARTICLE",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0; preserve every particle and centre",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "If temporal merge/splitting occurs, retain native anchors and use alpha interpolation from the same anchor pair; do not add blur or reshape into discs."
+        },
+        "reason": "Grains/gouttes minuscules ; fidélité au nombre, à la séparation et au placement avant enrichissement de texture."
+      }
+    },
+    {
+      "ordinal": 31,
+      "resref": "SNOWFAL1",
+      "profile": "X-TINY",
+      "reason": "Très petits grains, flocons, points lumineux ou gouttes : conserver séparation et silhouette ; exception xBR à la priorité SeedVR demandée.",
+      "source": "effects/ressources/SNOWFAL1/source.bam",
+      "source_sha256": "F71448994496296AE9CD08147D3A2787B64C3E8781FE392383E8DCCDD205D2A7",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        64,
+        64
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "xBR4X, blend_colors=false, scale4",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4; feather0, erosion0; protect each particle",
+        "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+        "fallback": "SeedVR comparison only if xBR result is insufficient; no automatic blur or merging of grains."
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 18,
+          "phases30": 36,
+          "duration_seconds": 1.2,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 1,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 2,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 3,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 4,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-PARTICLE",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0; preserve every particle and centre",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "If temporal merge/splitting occurs, retain native anchors and use alpha interpolation from the same anchor pair; do not add blur or reshape into discs."
+        },
+        "reason": "Grains/gouttes minuscules ; fidélité au nombre, à la séparation et au placement avant enrichissement de texture."
+      }
+    },
+    {
+      "ordinal": 32,
+      "resref": "SNOWFAL2",
+      "profile": "X-TINY",
+      "reason": "Très petits grains, flocons, points lumineux ou gouttes : conserver séparation et silhouette ; exception xBR à la priorité SeedVR demandée.",
+      "source": "effects/ressources/SNOWFAL2/source.bam",
+      "source_sha256": "B57038950AC2D82D977EF1BDB8CD59C9604FFB2B7F1841DDA2109E4CDA073243",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        64,
+        64
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "xBR4X, blend_colors=false, scale4",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4; feather0, erosion0; protect each particle",
+        "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+        "fallback": "SeedVR comparison only if xBR result is insufficient; no automatic blur or merging of grains."
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 21,
+          "phases30": 42,
+          "duration_seconds": 1.4,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 1,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 2,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 3,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 4,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-PARTICLE",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0; preserve every particle and centre",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "If temporal merge/splitting occurs, retain native anchors and use alpha interpolation from the same anchor pair; do not add blur or reshape into discs."
+        },
+        "reason": "Grains/gouttes minuscules ; fidélité au nombre, à la séparation et au placement avant enrichissement de texture."
+      }
+    },
+    {
+      "ordinal": 33,
+      "resref": "SPSDRABU",
+      "profile": "N-MASK",
+      "reason": "Masques natifs propriétaires déjà classés côté projectiles ; noir et alpha font partie du rendu voulu.",
+      "source": "effects/ressources/SPSDRABU/source.bam",
+      "source_sha256": "943BDDF9678B96ED3210194FF1420B0A0621BEE6F16042F2C6BF2D8E46DD0070",
+      "reuse_decision": "native-owner-mask-no-ai",
+      "canvas_x1": [
+        209,
+        257
+      ],
+      "alpha_levels": 160,
+      "recipe": {
+        "spatial": "No new spatial or AI job; retain native owner mask",
+        "alpha": "Preserve native black RGB and graduated alpha/owner role; no flux conversion, feather or erosion",
+        "history": "projectiles/index/visual-assets.csv",
+        "fallback": "If another visible non-mask owner is discovered, qualify that owner separately; this decision is not global acceptance of every BAM use."
+      },
+      "black_policy": "Black mask is meaningful: native owner rendering preserved; no A=max(RGB), no black removal.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 20,
+          "phases30": 40,
+          "duration_seconds": 1.3333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 11
+        },
+        {
+          "cycle": 1,
+          "native_slots": 20,
+          "phases30": 40,
+          "duration_seconds": 1.3333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 11
+        },
+        {
+          "cycle": 2,
+          "native_slots": 20,
+          "phases30": 40,
+          "duration_seconds": 1.3333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 11
+        },
+        {
+          "cycle": 3,
+          "native_slots": 20,
+          "phases30": 40,
+          "duration_seconds": 1.3333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 11
+        },
+        {
+          "cycle": 4,
+          "native_slots": 20,
+          "phases30": 40,
+          "duration_seconds": 1.3333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 11
+        },
+        {
+          "cycle": 5,
+          "native_slots": 20,
+          "phases30": 40,
+          "duration_seconds": 1.3333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 11
+        },
+        {
+          "cycle": 6,
+          "native_slots": 20,
+          "phases30": 40,
+          "duration_seconds": 1.3333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 11
+        },
+        {
+          "cycle": 7,
+          "native_slots": 20,
+          "phases30": 40,
+          "duration_seconds": 1.3333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 11
+        },
+        {
+          "cycle": 8,
+          "native_slots": 20,
+          "phases30": 40,
+          "duration_seconds": 1.3333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 11
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": null,
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "retain-native-no-new-job",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "N-MASK",
+        "recipe": {
+          "spatial": "No new spatial or AI job; retain native owner mask",
+          "alpha": "Preserve native black RGB and graduated alpha/owner role; no flux conversion, feather or erosion",
+          "history": "projectiles/index/visual-assets.csv",
+          "fallback": "If another visible non-mask owner is discovered, qualify that owner separately; this decision is not global acceptance of every BAM use."
+        },
+        "reason": "Masques natifs propriétaires déjà classés côté projectiles ; noir et alpha font partie du rendu voulu."
+      }
+    },
+    {
+      "ordinal": 34,
+      "resref": "SPSDRAE2",
+      "profile": "N-MASK",
+      "reason": "Masques natifs propriétaires déjà classés côté projectiles ; noir et alpha font partie du rendu voulu.",
+      "source": "effects/ressources/SPSDRAE2/source.bam",
+      "source_sha256": "118A68D5F316F5B6D0A73596DC38C8C778C303260C7136156E7496AF8C80EB5B",
+      "reuse_decision": "native-owner-mask-no-ai",
+      "canvas_x1": [
+        125,
+        122
+      ],
+      "alpha_levels": 160,
+      "recipe": {
+        "spatial": "No new spatial or AI job; retain native owner mask",
+        "alpha": "Preserve native black RGB and graduated alpha/owner role; no flux conversion, feather or erosion",
+        "history": "projectiles/index/visual-assets.csv",
+        "fallback": "If another visible non-mask owner is discovered, qualify that owner separately; this decision is not global acceptance of every BAM use."
+      },
+      "black_policy": "Black mask is meaningful: native owner rendering preserved; no A=max(RGB), no black removal.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 1,
+          "phases30": 2,
+          "duration_seconds": 0.06666666666666667,
+          "constant": true,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 1,
+          "native_slots": 50,
+          "phases30": 100,
+          "duration_seconds": 3.3333333333333335,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 30
+        },
+        {
+          "cycle": 2,
+          "native_slots": 50,
+          "phases30": 100,
+          "duration_seconds": 3.3333333333333335,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 36
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": null,
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "retain-native-no-new-job",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "N-MASK",
+        "recipe": {
+          "spatial": "No new spatial or AI job; retain native owner mask",
+          "alpha": "Preserve native black RGB and graduated alpha/owner role; no flux conversion, feather or erosion",
+          "history": "projectiles/index/visual-assets.csv",
+          "fallback": "If another visible non-mask owner is discovered, qualify that owner separately; this decision is not global acceptance of every BAM use."
+        },
+        "reason": "Masques natifs propriétaires déjà classés côté projectiles ; noir et alpha font partie du rendu voulu."
+      }
+    },
+    {
+      "ordinal": 35,
+      "resref": "SPSHADOW",
+      "profile": "N-MASK",
+      "reason": "Masques natifs propriétaires déjà classés côté projectiles ; noir et alpha font partie du rendu voulu.",
+      "source": "effects/ressources/SPSHADOW/source.bam",
+      "source_sha256": "7A28B012E267A59D4EBA48A4B7879CD02495937F78F3E31977877C44FC1077E5",
+      "reuse_decision": "native-owner-mask-no-ai",
+      "canvas_x1": [
+        7,
+        7
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "No new spatial or AI job; retain native owner mask",
+        "alpha": "Preserve native black RGB and graduated alpha/owner role; no flux conversion, feather or erosion",
+        "history": "projectiles/index/visual-assets.csv",
+        "fallback": "If another visible non-mask owner is discovered, qualify that owner separately; this decision is not global acceptance of every BAM use."
+      },
+      "black_policy": "Black mask is meaningful: native owner rendering preserved; no A=max(RGB), no black removal.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 6,
+          "phases30": 12,
+          "duration_seconds": 0.4,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": null,
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "retain-native-no-new-job",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "N-MASK",
+        "recipe": {
+          "spatial": "No new spatial or AI job; retain native owner mask",
+          "alpha": "Preserve native black RGB and graduated alpha/owner role; no flux conversion, feather or erosion",
+          "history": "projectiles/index/visual-assets.csv",
+          "fallback": "If another visible non-mask owner is discovered, qualify that owner separately; this decision is not global acceptance of every BAM use."
+        },
+        "reason": "Masques natifs propriétaires déjà classés côté projectiles ; noir et alpha font partie du rendu voulu."
+      }
+    },
+    {
+      "ordinal": 36,
+      "resref": "TRAVELB",
+      "profile": "N-MASK",
+      "reason": "Masques natifs propriétaires déjà classés côté projectiles ; noir et alpha font partie du rendu voulu.",
+      "source": "effects/ressources/TRAVELB/source.bam",
+      "source_sha256": "36EF3C826E66FB2796152B63025399823C03028452FAD9DA3D468AB8BC6BCF5A",
+      "reuse_decision": "native-owner-mask-no-ai",
+      "canvas_x1": [
+        36,
+        36
+      ],
+      "alpha_levels": 158,
+      "recipe": {
+        "spatial": "No new spatial or AI job; retain native owner mask",
+        "alpha": "Preserve native black RGB and graduated alpha/owner role; no flux conversion, feather or erosion",
+        "history": "projectiles/index/visual-assets.csv",
+        "fallback": "If another visible non-mask owner is discovered, qualify that owner separately; this decision is not global acceptance of every BAM use."
+      },
+      "black_policy": "Black mask is meaningful: native owner rendering preserved; no A=max(RGB), no black removal.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 6,
+          "phases30": 12,
+          "duration_seconds": 0.4,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": null,
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "retain-native-no-new-job",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "N-MASK",
+        "recipe": {
+          "spatial": "No new spatial or AI job; retain native owner mask",
+          "alpha": "Preserve native black RGB and graduated alpha/owner role; no flux conversion, feather or erosion",
+          "history": "projectiles/index/visual-assets.csv",
+          "fallback": "If another visible non-mask owner is discovered, qualify that owner separately; this decision is not global acceptance of every BAM use."
+        },
+        "reason": "Masques natifs propriétaires déjà classés côté projectiles ; noir et alpha font partie du rendu voulu."
+      }
+    },
+    {
+      "ordinal": 37,
+      "resref": "BUBBLES1",
+      "profile": "X-TINY",
+      "reason": "Très petits grains, flocons, points lumineux ou gouttes : conserver séparation et silhouette ; exception xBR à la priorité SeedVR demandée.",
+      "source": "effects/ressources/BUBBLES1/source.bam",
+      "source_sha256": "A7EBBBBEDC4557983C1093701E5443854710A797AC546210C6B8D2CA2AFA781E",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        64,
+        64
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "xBR4X, blend_colors=false, scale4",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4; feather0, erosion0; protect each particle",
+        "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+        "fallback": "SeedVR comparison only if xBR result is insufficient; no automatic blur or merging of grains."
+      },
+      "black_policy": "Light-only black-matte candidate: keep native-alpha witness; proposed normal preview A=max(P.r,P.g,P.b), P=round(A_native*C/255), straight RGB=round(255*P/A). Keep P exact, roundtrip<=1. Apply only to luminous layer; unknown owner blend is not established by this proposal.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 8,
+          "phases30": 16,
+          "duration_seconds": 0.5333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 1,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 2,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 3,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 4,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-PARTICLE",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0; preserve every particle and centre",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "If temporal merge/splitting occurs, retain native anchors and use alpha interpolation from the same anchor pair; do not add blur or reshape into discs."
+        },
+        "reason": "Grains/gouttes minuscules ; fidélité au nombre, à la séparation et au placement avant enrichissement de texture."
+      }
+    },
+    {
+      "ordinal": 38,
+      "resref": "BUBLES",
+      "profile": "A-BUBBLE",
+      "reason": "108 matrices indexées/alphas/centres/cycles identiques à AMOH7300 accepté ; seule la palette diffère.",
+      "source": "effects/ressources/BUBLES/source.bam",
+      "source_sha256": "F0E5D0CA21B2D6C5A8FB20D3B89160A191D938F501379AD31E568DF281BA3976",
+      "reuse_decision": "palette-variant-adaptation",
+      "canvas_x1": [
+        20,
+        71
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "Own BUBLES palette: xBR2 blend -> nearest2 to x4; reuse AMOH7300 method and exact matching source geometry",
+        "alpha": "Reuse matching native masks; xBR alpha as AMOH7300, no feather; premultiply once",
+        "history": "animations/index/qa-decisions/AMOH7300/2026-10-10-accepted-amoh7300-bulles-xbr2blend-apo8-premul-v1.json",
+        "fallback": "Do not recolor final green AMOH7300 RGB blindly: source palette contains color collapses; regenerate deterministic RGB from BUBLES palette. No new SeedVR."
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 108,
+          "phases30": 216,
+          "duration_seconds": 7.2,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "A-BUBBLE",
+        "recipe": {
+          "spatial": "Own BUBLES palette: xBR2 blend -> nearest2 to x4; reuse AMOH7300 method and exact matching source geometry",
+          "alpha": "Reuse matching native masks; xBR alpha as AMOH7300, no feather; premultiply once",
+          "history": "animations/index/qa-decisions/AMOH7300/2026-10-10-accepted-amoh7300-bulles-xbr2blend-apo8-premul-v1.json",
+          "fallback": "Do not recolor final green AMOH7300 RGB blindly: source palette contains color collapses; regenerate deterministic RGB from BUBLES palette. No new SeedVR."
+        },
+        "reason": "108 matrices indexées/alphas/centres/cycles identiques à AMOH7300 accepté ; seule la palette diffère."
+      }
+    },
+    {
+      "ordinal": 39,
+      "resref": "FOUNT2",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/FOUNT2/source.bam",
+      "source_sha256": "BE60C9DDCCEDD56141C9E4656605CF8543750FC40E07F4B259D46F43D12C2E45",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        104,
+        111
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR2x -> Gaussian sigma0.45 at x2 -> nearest2 to x4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 6,
+          "phases30": 12,
+          "duration_seconds": 0.4,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-WATER",
+        "recipe": {
+          "spatial": "xBR2x -> Gaussian sigma0.45 at x2 -> nearest2 to x4",
+          "alpha": "xBR2x twice; feather0 baseline for droplets; no FOUNT1 feather12/aura5 on thin components by default",
+          "history": "animations/ressources/FOUNT1/runs/fount1-xbr2x-gaussian045-30fps-contour-aura-accepted-20260915/manifest.json",
+          "fallback": "xBR4X/no RGB blur if spray vanishes. FOUNT1 aura gain0.9/sigma5, feather12 only as separate broad-mass comparison, not automatic transfer."
+        },
+        "reason": "Reprendre le lissage RGB léger éprouvé sur FOUNT1 sans appliquer son large feather/aura aux gouttelettes."
+      }
+    },
+    {
+      "ordinal": 40,
+      "resref": "FOUNTN",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/FOUNTN/source.bam",
+      "source_sha256": "F2FC559016B6B6E091C552B8F5731337EBA3D692EFDB27AFF6BED723518EF2DD",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        69,
+        83
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR2x -> Gaussian sigma0.45 at x2 -> nearest2 to x4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 18,
+          "phases30": 36,
+          "duration_seconds": 1.2,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-WATER",
+        "recipe": {
+          "spatial": "xBR2x -> Gaussian sigma0.45 at x2 -> nearest2 to x4",
+          "alpha": "xBR2x twice; feather0 baseline for droplets; no FOUNT1 feather12/aura5 on thin components by default",
+          "history": "animations/ressources/FOUNT1/runs/fount1-xbr2x-gaussian045-30fps-contour-aura-accepted-20260915/manifest.json",
+          "fallback": "xBR4X/no RGB blur if spray vanishes. FOUNT1 aura gain0.9/sigma5, feather12 only as separate broad-mass comparison, not automatic transfer."
+        },
+        "reason": "Reprendre le lissage RGB léger éprouvé sur FOUNT1 sans appliquer son large feather/aura aux gouttelettes."
+      }
+    },
+    {
+      "ordinal": 41,
+      "resref": "RIPPLE_1",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/RIPPLE_1/source.bam",
+      "source_sha256": "B54166C72ACC68F88CB00ED737A5FBB0816229E3133464FAB0F6079194341B5C",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        30,
+        25
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Light-only black-matte candidate: keep native-alpha witness; proposed normal preview A=max(P.r,P.g,P.b), P=round(A_native*C/255), straight RGB=round(255*P/A). Keep P exact, roundtrip<=1. Apply only to luminous layer; unknown owner blend is not established by this proposal.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 13,
+          "phases30": 26,
+          "duration_seconds": 0.8666666666666667,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 1,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 2,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 3,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 4,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 42,
+      "resref": "RIPPLE_2",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/RIPPLE_2/source.bam",
+      "source_sha256": "D933E4C6DD989AFEBE06F6E5BE2F1E7A7E7C686B9A581428741D4D7D7691BB37",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        128,
+        90
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 30,
+          "phases30": 60,
+          "duration_seconds": 2.0,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 5
+        },
+        {
+          "cycle": 1,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 2,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 3,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 4,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [
+        "Dark source is not evidence of a disposable matte; do not use global flux-alpha conversion."
+      ],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 43,
+      "resref": "RIPPLE_3",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/RIPPLE_3/source.bam",
+      "source_sha256": "4D8BD43C91ED8CC4DB2FEB4F71C74DD02CEDBDE32CEFCFA653F54935E7F8A2B7",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        64,
+        50
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 20,
+          "phases30": 40,
+          "duration_seconds": 1.3333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 8
+        },
+        {
+          "cycle": 1,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 2,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 3,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 4,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [
+        "Dark source is not evidence of a disposable matte; do not use global flux-alpha conversion."
+      ],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 44,
+      "resref": "SPLASH",
+      "profile": "X-TINY",
+      "reason": "Très petits grains, flocons, points lumineux ou gouttes : conserver séparation et silhouette ; exception xBR à la priorité SeedVR demandée.",
+      "source": "effects/ressources/SPLASH/source.bam",
+      "source_sha256": "7513620A0E7A2C59C7500009C2537E28CECC580277DAFF76FD96FD5F28F0152B",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        40,
+        40
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "xBR4X, blend_colors=false, scale4",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4; feather0, erosion0; protect each particle",
+        "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+        "fallback": "SeedVR comparison only if xBR result is insufficient; no automatic blur or merging of grains."
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 12,
+          "phases30": 24,
+          "duration_seconds": 0.8,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-PARTICLE",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0; preserve every particle and centre",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "If temporal merge/splitting occurs, retain native anchors and use alpha interpolation from the same anchor pair; do not add blur or reshape into discs."
+        },
+        "reason": "Grains/gouttes minuscules ; fidélité au nombre, à la séparation et au placement avant enrichissement de texture."
+      }
+    },
+    {
+      "ordinal": 45,
+      "resref": "WTRBODY2",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/WTRBODY2/source.bam",
+      "source_sha256": "DAE5F7E52D5FC97721EBBE57FEEBC53A761DF81CF7343CA3610899D55F11C6A6",
+      "reuse_decision": "new-source-proven-recipe",
+      "canvas_x1": [
+        32,
+        32
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR2x -> nearest2 to x4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 10,
+          "phases30": 20,
+          "duration_seconds": 0.6666666666666666,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 1,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 2,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 3,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 4,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [
+        "Dark source is not evidence of a disposable matte; do not use global flux-alpha conversion.",
+        "User priority SeedVR overrides previous xBR recommendation. WTRBODY1 xBR2->nearest2 remains fallback; own dark corpse/water and native10-slot timing preserved."
+      ],
+      "previous_recommendation": {
+        "profile": "X-BODY",
+        "recipe": {
+          "spatial": "xBR2x -> nearest2 to x4",
+          "alpha": "Native alpha retained, no threshold on dark corpse or water",
+          "history": "pipeline/recipes/wtrbody1-xbr-apo8-collapse-20261011-v1/build.py",
+          "fallback": "Own WTRBODY2 source and cycles; do not copy WTRBODY1 pixels, duplicate holds or 7.5 FPS input setting."
+        },
+        "reason": "Variante réelle de WTRBODY1, 10 poses propres ; conserver matière sombre et durée propre."
+      }
+    },
+    {
+      "ordinal": 46,
+      "resref": "WTRDROP1",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/WTRDROP1/source.bam",
+      "source_sha256": "D311DF1F02BD29075654334D48D653E7B6E90D44E8A7FA1AECFF6FDBC6A1AE8C",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        43,
+        61
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 7,
+          "phases30": 14,
+          "duration_seconds": 0.4666666666666667,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 47,
+      "resref": "TRBLOBA",
+      "profile": "A-BLOB",
+      "reason": "TRGOOYAA/BB déjà validés spatialement ; réemploi à vérifier avec dessins proches, contours/couleurs/centres/cycles différents.",
+      "source": "effects/ressources/TRBLOBA/source.bam",
+      "source_sha256": "E3EDC5007A03F3FA9C6D375869326CDFA8DAC0300195ECB0C35D31D431E5610A",
+      "reuse_decision": "spatial-reuse-candidate",
+      "canvas_x1": [
+        90,
+        112
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "Attempt existing accepted TRGOOY spatial anchors; adapt palette/contour/geometry from target source",
+        "alpha": "Target native alpha nearest4; target centres and rectangles; preserve dark outlines",
+        "history": "effects/index/processing.csv",
+        "fallback": "If spatial adaptation cannot preserve target drawing, produce own SeedVR7B INT8/LAB x4, sigma0, native alpha nearest4, then Apollo30 on target cycles. Do not copy parent retimed pack."
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 10,
+          "phases30": 20,
+          "duration_seconds": 0.6666666666666666,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 1,
+          "native_slots": 62,
+          "phases30": 124,
+          "duration_seconds": 4.133333333333334,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 2
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [
+        "Parent spatial TRGOOYAA SeedVR7B x4 accepted; rebuild temporal from target source cycles, never copy parent timing."
+      ],
+      "previous_recommendation": {
+        "profile": "A-BLOB",
+        "recipe": {
+          "spatial": "Attempt existing accepted TRGOOY spatial anchors; adapt palette/contour/geometry from target source",
+          "alpha": "Target native alpha nearest4; target centres and rectangles; preserve dark outlines",
+          "history": "effects/index/processing.csv",
+          "fallback": "Not a proven byte-equivalent reuse. If adaptation changes source drawing/contour, use target xBR4X+Apollo30; no SeedVR by default. Never substitute final retimed TRGOOY pack."
+        },
+        "reason": "TRGOOYAA/BB déjà validés spatialement ; réemploi à vérifier avec dessins proches, contours/couleurs/centres/cycles différents."
+      }
+    },
+    {
+      "ordinal": 48,
+      "resref": "TRBLOBB",
+      "profile": "A-BLOB",
+      "reason": "TRGOOYAA/BB déjà validés spatialement ; réemploi à vérifier avec dessins proches, contours/couleurs/centres/cycles différents.",
+      "source": "effects/ressources/TRBLOBB/source.bam",
+      "source_sha256": "484A36CC23071619BDF2A00CB3762B1C4F05A7446C752CA2447807FB51FFDF76",
+      "reuse_decision": "spatial-reuse-candidate",
+      "canvas_x1": [
+        83,
+        107
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "Attempt existing accepted TRGOOY spatial anchors; adapt palette/contour/geometry from target source",
+        "alpha": "Target native alpha nearest4; target centres and rectangles; preserve dark outlines",
+        "history": "effects/index/processing.csv",
+        "fallback": "If spatial adaptation cannot preserve target drawing, produce own SeedVR7B INT8/LAB x4, sigma0, native alpha nearest4, then Apollo30 on target cycles. Do not copy parent retimed pack."
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 10,
+          "phases30": 20,
+          "duration_seconds": 0.6666666666666666,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 1,
+          "native_slots": 60,
+          "phases30": 120,
+          "duration_seconds": 4.0,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [
+        "Parent spatial TRGOOYBB SeedVR7B x4 accepted; rebuild temporal from target source cycles, never copy parent timing."
+      ],
+      "previous_recommendation": {
+        "profile": "A-BLOB",
+        "recipe": {
+          "spatial": "Attempt existing accepted TRGOOY spatial anchors; adapt palette/contour/geometry from target source",
+          "alpha": "Target native alpha nearest4; target centres and rectangles; preserve dark outlines",
+          "history": "effects/index/processing.csv",
+          "fallback": "Not a proven byte-equivalent reuse. If adaptation changes source drawing/contour, use target xBR4X+Apollo30; no SeedVR by default. Never substitute final retimed TRGOOY pack."
+        },
+        "reason": "TRGOOYAA/BB déjà validés spatialement ; réemploi à vérifier avec dessins proches, contours/couleurs/centres/cycles différents."
+      }
+    },
+    {
+      "ordinal": 49,
+      "resref": "WEBBOMB",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/WEBBOMB/source.bam",
+      "source_sha256": "028720FE232E27C3992BE00E196787BB11578C0254B7071256B7F26E531C7788",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        102,
+        105
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 14,
+          "phases30": 28,
+          "duration_seconds": 0.9333333333333333,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    {
+      "ordinal": 50,
+      "resref": "WEBC",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/WEBC/source.bam",
+      "source_sha256": "B6AE8F3155D2C1005C62FD2D658C2766223141CE3DCF250C39FDE5DAF5825B3E",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        54,
+        52
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR4X, blend_colors=false, scale4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 16,
+          "phases30": 32,
+          "duration_seconds": 1.0666666666666667,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 1,
+          "native_slots": 16,
+          "phases30": 32,
+          "duration_seconds": 1.0666666666666667,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 1
+        },
+        {
+          "cycle": 2,
+          "native_slots": 6,
+          "phases30": 12,
+          "duration_seconds": 0.4,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    }
+  ],
+  "unchanged_authorities": {
+    "effects\\index\\processing.csv": "93C9D49757878E370D88376E98C89D4A11380D9E2D01B9E4E4F1D5BA2B0B7C5E",
+    "projectiles\\index\\work-tracking.json": "930E68D88C2694BC3EC0960588CE1743766866ECFCFD394AD65EA66E892A34D7",
+    "animations\\index\\animation_upscale_registry.csv": "FDAE236C0D41D0BA570116E8D8E1CA89A938F00B8B1A9E087A49E63C6F83E597"
+  },
+  "supersedes": "effects/batches/lot50-magic-water-recipes-20261108-v1/recipes.json",
+  "user_direction": "Most effects must use SeedVR; xBR reserved for very small elements such as bubbles. No new treatment execution requested in this correction."
+}

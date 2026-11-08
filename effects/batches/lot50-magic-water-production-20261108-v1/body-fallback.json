@@ -1,0 +1,614 @@
+{
+  "resref": "WTRBODY2",
+  "reason": "Observed SeedVR converts dark water/body pixels into decorative engraved patterns. Source32x32; preserve source appearance with proven WTRBODY1 xBR2/nearest2 method.",
+  "seedvr_preserved": true,
+  "asset": {
+    "ordinal": 45,
+    "resref": "WTRBODY2",
+    "asset_key": "effects:bam:WTRBODY2",
+    "group": "eau-bulles-ondes",
+    "source": "effects/ressources/WTRBODY2/source.bam",
+    "source_sha256": "DAE5F7E52D5FC97721EBBE57FEEBC53A761DF81CF7343CA3610899D55F11C6A6",
+    "canonical_sha256": "9900E1AE0EF097230A2F96DEBBB1C0905E07C477EBEC04007776CE54A45D79DD",
+    "strict_visual_sha256": "2F9FA9FE212A207575B349136874044A524CA1500361A1F79AC87D58C0B2DCB9",
+    "reuse_aliases": [],
+    "source_frames": 10,
+    "native_cycles": [
+      {
+        "cycle": 0,
+        "lookup_start": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "cycle": 1,
+        "lookup_start": 10,
+        "frame_indices": []
+      },
+      {
+        "cycle": 2,
+        "lookup_start": 10,
+        "frame_indices": []
+      },
+      {
+        "cycle": 3,
+        "lookup_start": 10,
+        "frame_indices": []
+      },
+      {
+        "cycle": 4,
+        "lookup_start": 10,
+        "frame_indices": []
+      }
+    ],
+    "native_fps": [],
+    "playback_hint": "unknown",
+    "native_canvas": [
+      32,
+      32
+    ],
+    "consumers": [],
+    "usage_evidence": "unresolved",
+    "normal_palette_alpha_levels": [
+      0,
+      255
+    ],
+    "native_graded_pixels": 0,
+    "nearblack_covered_percent": 77.275,
+    "exact_green_covered_percent": 0.0,
+    "production": {
+      "asset_key": "effects:bam:WTRBODY2",
+      "asset_directory": "effects/ressources/WTRBODY2",
+      "spatial_run": "",
+      "spatial_state": "not-started",
+      "interpolation_run": "",
+      "interpolation_state": "not-started",
+      "selected_run": "",
+      "qa_state": "not-assessed",
+      "qa_evidence": "",
+      "installation_state": "not-installed",
+      "installation_receipt": "",
+      "release_state": "not-evaluated",
+      "release_candidate": "",
+      "notes": ""
+    },
+    "processing_started": false,
+    "recipe_profile": "X-BODY",
+    "profile": "N",
+    "sigma_x4": 0,
+    "inner_feather_x4": 0,
+    "spatial_run": "wtrbody2-magic-xbr2-nearest2-x4-20261108-v1",
+    "interpolation_run": "wtrbody2-magic-xbr2-apollo30-20261108-v1",
+    "pack": "effects/ressources/WTRBODY2/packs/wtrbody2-magic-xbr2-initial-20261108-v1",
+    "green_index": null,
+    "recipe_plan": {
+      "ordinal": 45,
+      "resref": "WTRBODY2",
+      "profile": "S-DETAIL",
+      "reason": "SeedVR prioritaire selon correction utilisateur ; détail RGB SeedVR sans flou ajouté ; préserver dessin, palette et géométrie natives.",
+      "source": "effects/ressources/WTRBODY2/source.bam",
+      "source_sha256": "DAE5F7E52D5FC97721EBBE57FEEBC53A761DF81CF7343CA3610899D55F11C6A6",
+      "reuse_decision": "new-source-proven-recipe",
+      "canvas_x1": [
+        32,
+        32
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "SeedVR2 7B INT8/LAB x4",
+        "model": "seedvr2_7b_int8_convrot.safetensors",
+        "workflow": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4, feather0 and erosion0 baseline; retain per-asset matte and green derivations; premultiply once",
+        "history": "effects/batches/lot50-accepted-20261108-v1/acceptance.json",
+        "fallback": "Inspect new SeedVR anchors first. Earlier recipe is a fallback/comparison only, never automatic xBR substitution: xBR2x -> nearest2 to x4"
+      },
+      "black_policy": "Native alpha and RGB darkness preserved; no generic black key or luminance cutoff.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 10,
+          "phases30": 20,
+          "duration_seconds": 0.6666666666666666,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 1,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 2,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 3,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        },
+        {
+          "cycle": 4,
+          "native_slots": 0,
+          "phases30": 0,
+          "duration_seconds": 0.0,
+          "constant": false,
+          "empty": true,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [
+        "Dark source is not evidence of a disposable matte; do not use global flux-alpha conversion.",
+        "User priority SeedVR overrides previous xBR recommendation. WTRBODY1 xBR2->nearest2 remains fallback; own dark corpse/water and native10-slot timing preserved."
+      ],
+      "previous_recommendation": {
+        "profile": "X-BODY",
+        "recipe": {
+          "spatial": "xBR2x -> nearest2 to x4",
+          "alpha": "Native alpha retained, no threshold on dark corpse or water",
+          "history": "pipeline/recipes/wtrbody1-xbr-apo8-collapse-20261011-v1/build.py",
+          "fallback": "Own WTRBODY2 source and cycles; do not copy WTRBODY1 pixels, duplicate holds or 7.5 FPS input setting."
+        },
+        "reason": "Variante réelle de WTRBODY1, 10 poses propres ; conserver matière sombre et durée propre."
+      }
+    },
+    "final_pack": "effects/ressources/WTRBODY2/packs/wtrbody2-magic-xbr2-apollo30-profiles-20261108-v1"
+  },
+  "result": {
+    "resref": "WTRBODY2",
+    "passed": true,
+    "pack": "effects/ressources/WTRBODY2/packs/wtrbody2-magic-xbr2-apollo30-profiles-20261108-v1",
+    "pack_manifest_sha256": "72D5ACFDE7F23AF8FF1D11C1445DED24276F57C9FB2F31AD1D47AF2FAA1E7E85",
+    "registry_version": 3,
+    "source_cycles": 5,
+    "runtime_cycles": 1,
+    "source_empty_cycles_retained": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "profiles": 2,
+    "phases": 40,
+    "backings": 21,
+    "native_contracts": 80,
+    "raw_bytes": 1376256,
+    "source_interpolation_run": "wtrbody2-magic-xbr2-apollo30-20261108-v1",
+    "catalogue_probe": "effects/batches/lot50-magic-water-production-20261108-v1/alternatives/wtrbody2-xbr2-20261108-v1/runtime-verification/WTRBODY2.log",
+    "installed": false,
+    "qa": "pending-user-review"
+  },
+  "card": {
+    "ordinal": 45,
+    "resref": "WTRBODY2",
+    "profile": "X-BODY",
+    "sigma": 0,
+    "feather": 0,
+    "width": 128,
+    "height": 128,
+    "native": {
+      "image": "alternatives/wtrbody2-xbr2/native/WTRBODY2.png",
+      "width": 32,
+      "height": 32,
+      "cols": 10
+    },
+    "profiles": [
+      {
+        "id": "cycle000-once",
+        "cycle": 0,
+        "loop": false,
+        "native": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "duration": 0.6666666666666666
+      },
+      {
+        "id": "cycle000-loop",
+        "cycle": 0,
+        "loop": true,
+        "native": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "frames": [
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39
+        ],
+        "duration": 0.6666666666666666
+      }
+    ],
+    "frames": [
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/eb4d8404f791ce8b2c5b50f622349970621bb25b937267c90dd622b0f3f7ee60.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/dab4a636c4f7ec8a000351510561ed6609678096f0139942f5e1ef45212bbcfd.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/6cfa0045109a02e764267e66283be68f8a18742f5cbc7898e53ad513757d2559.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/4e56541c58d5832c54f7afe8eb2faf16cc09d31727a6320ce67a754c4a58950b.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/4883806544656375cd2ff75f525d33d2d20f31e2a881d77751b97d06ee411a12.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/df52692212552b539a32f84de0bfe089a8f74eb5d4d39aa1840fa0c16dc0e865.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/ba485a378d7697c4d1fe0189de0ce2cbd7a4690674be85e72bf7eb98da3c7adf.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/c77be484c7826a7829f08589feaf18dc61cbb428d50c83ddb8bb9953ebf21ef6.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/063f154f74bd5aa77c9977a83fef697a8764853b26738123d7f0c3356dd850b2.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/b9c8af1b8b04949273b29305077819c06c5fd1f69e9afd2945f6ea426fceb088.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/7153b5c20417ed7987011c44d9bbab599a36fc37513f6491025bcf0ff8e8a96f.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/ca05ea3f19afa00de4ba49d1d76b64935042659fca1aea1930d7453578f31743.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/f6018197cfa0bf6b590f6554a8c15ad340d5783753c3692de313104611072435.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/0fcf8eb6e8c666f0de2aa1d54d1cb620b030b00c3de97712e296ece35f61e91a.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/cefcc7dea62c65d605151e248226cf40a3fc18481753b395ec8b65615d3863bf.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/672b1502d34b691b9286cec2510c71a215bf8083077735a6dbc7a415129fb6ae.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/cb204af3ec677d2bcf29c9bf2e50cf8a666db3c9785d906265215cd1a6668dcf.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/5cfa02d06543c17dfc0c98c8a9ffeff8d8c9ce87b02c27f0379fbd3aff043f91.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/7c6fbe8e02d8ff103f2524cd012f979f83ba04c9deded863344ba4e2a697abf7.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/7c6fbe8e02d8ff103f2524cd012f979f83ba04c9deded863344ba4e2a697abf7.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/eb4d8404f791ce8b2c5b50f622349970621bb25b937267c90dd622b0f3f7ee60.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/dab4a636c4f7ec8a000351510561ed6609678096f0139942f5e1ef45212bbcfd.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/6cfa0045109a02e764267e66283be68f8a18742f5cbc7898e53ad513757d2559.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/4e56541c58d5832c54f7afe8eb2faf16cc09d31727a6320ce67a754c4a58950b.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/4883806544656375cd2ff75f525d33d2d20f31e2a881d77751b97d06ee411a12.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/df52692212552b539a32f84de0bfe089a8f74eb5d4d39aa1840fa0c16dc0e865.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/ba485a378d7697c4d1fe0189de0ce2cbd7a4690674be85e72bf7eb98da3c7adf.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/c77be484c7826a7829f08589feaf18dc61cbb428d50c83ddb8bb9953ebf21ef6.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/063f154f74bd5aa77c9977a83fef697a8764853b26738123d7f0c3356dd850b2.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/b9c8af1b8b04949273b29305077819c06c5fd1f69e9afd2945f6ea426fceb088.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/7153b5c20417ed7987011c44d9bbab599a36fc37513f6491025bcf0ff8e8a96f.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/ca05ea3f19afa00de4ba49d1d76b64935042659fca1aea1930d7453578f31743.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/f6018197cfa0bf6b590f6554a8c15ad340d5783753c3692de313104611072435.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/0fcf8eb6e8c666f0de2aa1d54d1cb620b030b00c3de97712e296ece35f61e91a.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/cefcc7dea62c65d605151e248226cf40a3fc18481753b395ec8b65615d3863bf.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/672b1502d34b691b9286cec2510c71a215bf8083077735a6dbc7a415129fb6ae.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/cb204af3ec677d2bcf29c9bf2e50cf8a666db3c9785d906265215cd1a6668dcf.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/332c13268cccc4539ae7f43e66299b3836148dea0b917f9d3bea7b3dc35c7d13.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/7c6fbe8e02d8ff103f2524cd012f979f83ba04c9deded863344ba4e2a697abf7.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      {
+        "image": "alternatives/wtrbody2-xbr2/images/50d32ca0744cabc6fe9d0a3a878a86df85cb0c99adbddea41dbc33965c7b13b0.png",
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    ],
+    "green": null,
+    "method": "xBR2 → nearest2 x4 · Apollo30 · repli fidèle",
+    "nativeOnly": false
+  },
+  "verification": "effects\\batches\\lot50-magic-water-production-20261108-v1\\alternatives\\wtrbody2-xbr2-20261108-v1\\verification\\WTRBODY2.json",
+  "runtime_verification": "effects\\batches\\lot50-magic-water-production-20261108-v1\\alternatives\\wtrbody2-xbr2-20261108-v1\\runtime-verification\\WTRBODY2.json"
+}

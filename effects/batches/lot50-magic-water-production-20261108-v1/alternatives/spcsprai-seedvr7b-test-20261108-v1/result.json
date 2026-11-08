@@ -1,0 +1,1147 @@
+{
+  "asset": {
+    "ordinal": 20,
+    "resref": "SPCSPRAI",
+    "asset_key": "effects:bam:SPCSPRAI",
+    "group": "rayons-impacts-protections",
+    "source": "effects/ressources/SPCSPRAI/source.bam",
+    "source_sha256": "00B136EFF5385E3299696D28202FF1C9113C6DCDF6D00D26A47763322CCE25CB",
+    "canonical_sha256": "F6C7063EDF7FAF7A49F94ECA39D9A5C4D49C4001DE7C1BDAF0A35DD5E806240F",
+    "strict_visual_sha256": "BD0D32D1992230C5CC6369A069DB5882618912572FA11FF9641F5DB42503DF14",
+    "reuse_aliases": [],
+    "source_frames": 24,
+    "native_cycles": [
+      {
+        "cycle": 0,
+        "lookup_start": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ]
+      }
+    ],
+    "native_fps": [],
+    "playback_hint": "unknown",
+    "native_canvas": [
+      36,
+      41
+    ],
+    "consumers": [],
+    "usage_evidence": "unresolved",
+    "normal_palette_alpha_levels": [
+      0,
+      255
+    ],
+    "native_graded_pixels": 0,
+    "nearblack_covered_percent": 0.0,
+    "exact_green_covered_percent": 0.0,
+    "production": {
+      "asset_key": "effects:bam:SPCSPRAI",
+      "asset_directory": "effects/ressources/SPCSPRAI",
+      "spatial_run": "",
+      "spatial_state": "not-started",
+      "interpolation_run": "",
+      "interpolation_state": "not-started",
+      "selected_run": "",
+      "qa_state": "not-assessed",
+      "qa_evidence": "",
+      "installation_state": "not-installed",
+      "installation_receipt": "",
+      "release_state": "not-evaluated",
+      "release_candidate": "",
+      "notes": ""
+    },
+    "processing_started": false,
+    "recipe_profile": "S-DETAIL",
+    "profile": "H",
+    "sigma_x4": 0,
+    "inner_feather_x4": 0,
+    "spatial_run": "spcsprai-seedvr7b-test-x4-20261108-v1",
+    "interpolation_run": "spcsprai-seedvr7b-test-apollo30-20261108-v1",
+    "pack": "effects/ressources/SPCSPRAI/packs/spcsprai-seedvr7b-test-initial-20261108-v1",
+    "green_index": null,
+    "recipe_plan": {
+      "ordinal": 20,
+      "resref": "SPCSPRAI",
+      "profile": "X-TINY",
+      "reason": "Très petits grains, flocons, points lumineux ou gouttes : conserver séparation et silhouette ; exception xBR à la priorité SeedVR demandée.",
+      "source": "effects/ressources/SPCSPRAI/source.bam",
+      "source_sha256": "00B136EFF5385E3299696D28202FF1C9113C6DCDF6D00D26A47763322CCE25CB",
+      "reuse_decision": "new-source-no-reuse-found",
+      "canvas_x1": [
+        36,
+        41
+      ],
+      "alpha_levels": 2,
+      "recipe": {
+        "spatial": "xBR4X, blend_colors=false, scale4",
+        "rgb_gauss_sigma_x4": 0,
+        "alpha": "Native alpha nearest4; feather0, erosion0; protect each particle",
+        "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+        "fallback": "SeedVR comparison only if xBR result is insufficient; no automatic blur or merging of grains."
+      },
+      "black_policy": "Light-only black-matte candidate: keep native-alpha witness; proposed normal preview A=max(P.r,P.g,P.b), P=round(A_native*C/255), straight RGB=round(255*P/A). Keep P exact, roundtrip<=1. Apply only to luminous layer; unknown owner blend is not established by this proposal.",
+      "green_derivation": null,
+      "cycles": [
+        {
+          "cycle": 0,
+          "native_slots": 24,
+          "phases30": 48,
+          "duration_seconds": 1.6,
+          "constant": false,
+          "empty": false,
+          "repeated_slots": 0
+        }
+      ],
+      "used_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "temporal": {
+        "target_fps": 30,
+        "model": "apo-8",
+        "input_fps": 15,
+        "rate_basis": "15 FPS compatibility assumption; runtime rate not measured",
+        "status": "planned",
+        "preserve_native_holds": true,
+        "closed_loop": "Only loop profile interpolates last-to-first; separate once profile when owner unresolved",
+        "constant_cycle": "Store one image, preserve native duration; no hallucinated motion",
+        "empty_cycle": "Preserve source carrier entry, no inference or playable profile",
+        "tiny_frame": "Temporary Apollo padding min128/multiple32, exact crop; world origin unchanged"
+      },
+      "extra": [],
+      "previous_recommendation": {
+        "profile": "X-STRUCT",
+        "recipe": {
+          "spatial": "xBR4X, blend_colors=false, scale4",
+          "rgb_gauss_sigma_x4": 0,
+          "alpha": "Native alpha nearest4, feather0, erosion0",
+          "history": "effects/batches/lot50-xbr-small-20261108-v1/production.json",
+          "fallback": "Keep xBR; no generative repair of tiny glyphs, spokes, lightning or lattices."
+        },
+        "reason": "Dessins structurés, fins ou sensibles : préserver anneaux, runes, rayons, pointes, ondes et croisements ; éviter les inventions SeedVR observées au lot précédent."
+      }
+    },
+    "final_pack": "effects/ressources/SPCSPRAI/packs/spcsprai-seedvr7b-test-apollo30-profiles-20261108-v1"
+  },
+  "result": {
+    "resref": "SPCSPRAI",
+    "passed": true,
+    "pack": "effects/ressources/SPCSPRAI/packs/spcsprai-seedvr7b-test-apollo30-profiles-20261108-v1",
+    "pack_manifest_sha256": "2D1CECB7740A8B29FDA51DE8F7141C7B2D51CABF5BD018E18C665937A3104C2F",
+    "registry_version": 3,
+    "source_cycles": 1,
+    "runtime_cycles": 1,
+    "source_empty_cycles_retained": [],
+    "profiles": 2,
+    "phases": 96,
+    "backings": 49,
+    "native_contracts": 192,
+    "raw_bytes": 2718208,
+    "source_interpolation_run": "spcsprai-seedvr7b-test-apollo30-20261108-v1",
+    "catalogue_probe": "effects/batches/lot50-magic-water-production-20261108-v1/alternatives/spcsprai-seedvr7b-test-20261108-v1/runtime-verification/SPCSPRAI.log",
+    "installed": false,
+    "qa": "pending-user-review"
+  },
+  "card": {
+    "ordinal": 20,
+    "resref": "SPCSPRAI",
+    "profile": "S-DETAIL",
+    "sigma": 0,
+    "feather": 0,
+    "width": 144,
+    "height": 164,
+    "native": {
+      "image": "alternatives/spcsprai-seedvr7b-test/native/SPCSPRAI.png",
+      "width": 36,
+      "height": 41,
+      "cols": 24
+    },
+    "profiles": [
+      {
+        "id": "cycle000-once",
+        "cycle": 0,
+        "loop": false,
+        "native": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47
+        ],
+        "duration": 1.6
+      },
+      {
+        "id": "cycle000-loop",
+        "cycle": 0,
+        "loop": true,
+        "native": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "frames": [
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95
+        ],
+        "duration": 1.6
+      }
+    ],
+    "frames": [
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/6ccb65dae63f4cb721a176c776cf6d2e9ab8efdf98a9e31a9a5f53e7b80d526d.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/fbd93fa66d48e0ef6a279889db4ec1eae6d9b5a97a716283796dde3c1c1af5ac.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/6766c761fd53fda413f2628b91c8e903da55ee049665d3645c9e74f7b0e7a470.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/3d9adc38bf164d9186d66036cc64073f599ded582002122a13db62b3d6aea69e.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/283d996230ece204359cf4924893e99e1c3b4b01811d58ba6fb466c1a280b232.png",
+        "x": 24,
+        "y": 28,
+        "w": 96,
+        "h": 112,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/c246676eb0176e17618250d504267264c8d20d8187ec362887e9fcd4ef151c45.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/e56c977f6fdf018ded4e88b75f80da849564d3cf4bf06a8fce05986c4c5d6c80.png",
+        "x": 24,
+        "y": 28,
+        "w": 96,
+        "h": 112,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/39b041f072bba7ef883c57cdd0945379a9bd9fd453cdc6b560849ae022399472.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/145364ae49d5fecce2f21f58dc8bdda10e65f5112641b6b66cf5e30e53b1f1a6.png",
+        "x": 32,
+        "y": 44,
+        "w": 76,
+        "h": 80,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/c12abe24035b266fe2b00f89eb9f3fd8864388484ac73b768ff2f2a87f6a56d1.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/8d8b4aee090dc4458a5321971c79f912c8293f1e78fbebd4884c3458889509e6.png",
+        "x": 32,
+        "y": 44,
+        "w": 76,
+        "h": 80,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/5fb6fe5da755d33141e4b3825fb78c0924abe983804e27142f234bb9f81e7c9a.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/c576e1a8c25a71d239774146636facca4de9564bd425dfac7aaaf5068650ccee.png",
+        "x": 28,
+        "y": 36,
+        "w": 88,
+        "h": 96,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/19d5790b460c77ae57ce9bf3874d3b241519a3ddbb1e51f600929d6d1f4be7d5.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/ed6b14040b2f18ad36712385fe9e3ac02cc4874d955f952e90187c314fc3ebfe.png",
+        "x": 28,
+        "y": 36,
+        "w": 88,
+        "h": 96,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/0558368712c35b8bb7be65df909dcc0ef9610fff08b9bf4001ee0c5fa30a2d56.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/e04c65516ea214736fe241555e819d62ae0ee131bcb0e0361c0f0bec943c5369.png",
+        "x": 24,
+        "y": 32,
+        "w": 96,
+        "h": 104,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/c93e74a9ec7c68c9651edcaf98929a97a58bda1d49a0de280d8ef677f8a81084.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/1c3c2439d4330abe7b9128c46c91df337b6a29e93020c523b67b3d98843800c5.png",
+        "x": 24,
+        "y": 32,
+        "w": 96,
+        "h": 104,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/8b98c6f5779bd9d7a64ea7b35ec7ad1cdbae0a422ea6f4a77c05c32a2e4bb9e2.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/6f4bb2e35dc9317323a26261c409a8c9f0676792ba1cf157106deef3aef52a6e.png",
+        "x": 24,
+        "y": 32,
+        "w": 96,
+        "h": 104,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/e9aba52d1eac692fbc6024964393977b2be513ae9b290ceac7705528a9f8b02e.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/17d9b84eb8bdcd0d7554f3978693efc6975d634aefcdad1ff63077d6fb482967.png",
+        "x": 24,
+        "y": 32,
+        "w": 96,
+        "h": 104,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/df817914eb366271131279dd348885201ea56a0e6f539883a2d1d0e50018a813.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/cf5996d77598d4960c1199a6b509805b3f194a1028e3b336c037b90d28ad3dc5.png",
+        "x": 28,
+        "y": 36,
+        "w": 88,
+        "h": 96,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/ddceed760ac5dc257b1156ad5bc106feebb96a675ae79d77e9d4b557d653e350.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/4dfee18452ca61b1972da32e2c4f712502b35bf937d17b291b36b337c9a7aadd.png",
+        "x": 28,
+        "y": 36,
+        "w": 88,
+        "h": 96,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/4d9567de48f7d09ce0c3bcc2bb5f4be66d73c93ed0ed2760c4e5fb361d5a6204.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/d3be105a73db2784370402b431c444a3d331e155f1230e971eda97fb7a014981.png",
+        "x": 36,
+        "y": 44,
+        "w": 72,
+        "h": 76,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/0b4047b1eac4e7c605baa098e1646b472a3f3b2366bb9c8049eba3cbc1f5c16b.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/ef550bd581645c4ea0634c5f8bc07011517b60e8075d7adf3d1a536b4002a2e4.png",
+        "x": 36,
+        "y": 44,
+        "w": 72,
+        "h": 76,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/499d0c05420668603660758492ae7581b30fa76ef5390c9081b415626d04d851.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/14acc7a0e62225c520343aff673024884d69794f57d48b2e5aa214fa08445c22.png",
+        "x": 36,
+        "y": 44,
+        "w": 72,
+        "h": 80,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/cdefabd76f2e55be99f0734203b7528296ecd148aa7a71537500162d492cfb52.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/7b0f265dfcb34be2b466effbb341a2e3e591a96eab9c39f33e5bd8b02d3d0775.png",
+        "x": 36,
+        "y": 44,
+        "w": 72,
+        "h": 80,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/374079a2247ece17fc5f5201657b26ff6e335f2e4168278b12e06c50c958dbc1.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/06aefb25994aa613083e493450edf1e0fe21bca23c8feaeb6bb0999e9785fc6d.png",
+        "x": 28,
+        "y": 36,
+        "w": 88,
+        "h": 96,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/1f90738cb8dc8749a943fc6bbf6f8cc65aa5f4da5335040f785c44f2956828ba.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/9e21d61b27ccbd259daf44250e12ec50dd1f14c40c20307457c076f6f109416c.png",
+        "x": 28,
+        "y": 36,
+        "w": 88,
+        "h": 96,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/a3a1e233766b99b696a3b2258b95cd01fd1ac1390cf758d401ad1024ebb2f2be.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/05c14ebb2305e8171e8a0f68451c117481ad25157038e9019e7ef97d240bc01d.png",
+        "x": 24,
+        "y": 32,
+        "w": 96,
+        "h": 104,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/af52be97c690b95aacabdffa8ec180a74bf4326dd0775d83319b39b767b73ad3.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/73ff2b8d2c5a44b59c67e761675c50892764b49c6d5f171cbc84715941198cc4.png",
+        "x": 24,
+        "y": 32,
+        "w": 96,
+        "h": 104,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/bb1e6fa3cf2b13cfcf6f2b6668164a4ef4d36c4025e27c89760e469d51d25128.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/a2417eb1c987f57912701bb019b44befc564c7edf8f680f50370d51120ae3cc4.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/43edb119ecf125fce5087701abac411d84a731bb41a8384ac102f2562c80fd3b.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/8d61d4e692e05ee9c33bcade8998136eaad80634a0e4775a44190a4fa40e78e2.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/bc9050c8c100ed46d605d07fc8c809004b2dab8a18e0201748c8f90267242f89.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/67022797c332e35598a6e7dec949d57cf6ebeb2ce64300b3c761f293b215d392.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/7addaa71125b6201f90e9d87ef6f0d304b9de36e3b2bcebc99fcfc9c1fd0549d.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/a05c7c0d854bd3f55b22ad159c7f54c2a5a4de09093e7f40f8504f789670dd82.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/46c189237f09d7574d4e7d8bdf2e09e01bd4d99bb8052b13e2184be24520e65b.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/7cd6886193fbcc54575b79f1db62883cbcec8b9f949d0261cb845398220081a2.png",
+        "x": 24,
+        "y": 32,
+        "w": 96,
+        "h": 104,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/ecceb46939dd86814d20b43636e24570bf32d96a4c97aa9a99ad7d32adc12326.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/7e0fa859679accfc72430dde76c9f6a8ba07c90d7a3191101131eb3baf7052df.png",
+        "x": 24,
+        "y": 32,
+        "w": 96,
+        "h": 104,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/3ebef2e7fb541c8fa0620c56df53e9868178ef84b6122150acc78063bbe3eeda.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/c1b2036b3a8160d94e7b7e7fd6e056b69e820b9088710ebab53971aced488504.png",
+        "x": 24,
+        "y": 28,
+        "w": 96,
+        "h": 108,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/7f488bb0ac07fec78df48c0ce666bc6c45f353c23a8c1f845d7a13b5e32010ea.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/7d30574331abbe917024dea236fe85e75605ff208c267473772ca94ed376351b.png",
+        "x": 24,
+        "y": 28,
+        "w": 96,
+        "h": 108,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/49540b5d9fc2c6b4dc610def43be1d5d5ca9c3226c96289a4b1ebfd934e4c063.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/e9f3c1e9691939832e0803b554601e968fc4a41d850689d25083a81c8cec3061.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/ecf0debcde6408f5f3908a3a3d8c5b17efbb3b56aec78353b575144d8d365e78.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/15436a31f84c15055c2b5186d7307491807b017a15c70df10bb8adb30bc0a7da.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/51451a908ab50087c55a505c360dd6dcd59399891668f7230975fc7481615227.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/b52572a3cd82746241c22d1f7c72fa11c99b1b047634e9549621d1e1323c4981.png",
+        "x": 0,
+        "y": 4,
+        "w": 144,
+        "h": 160,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/c99bd137ee2a6bfa6e270350ce1e29aaaf575eaa4e0ee4697e855624b214bd94.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/bb79316e7a6aa788ee0b01d241ebd8e4d76b0ba354ec90fcf9a0f0532d6f96b2.png",
+        "x": 0,
+        "y": 4,
+        "w": 144,
+        "h": 160,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/d082665749626dc69b151030f06c09ab89af28a583c0bc99c39d2356ac466c4c.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/15b871fbaef3ef21cb0da284f44b840d44b819bc47a978e679c238cce3249d3a.png",
+        "x": 0,
+        "y": 4,
+        "w": 144,
+        "h": 160,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/a347700a2bd52cea62187757b19c4dd825e0b1b7c1cef175b9efbfb09a63d1af.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/7bb486fbbe671c8f2564acd113029590743cd86eced6007701baa34d550fd327.png",
+        "x": 0,
+        "y": 4,
+        "w": 144,
+        "h": 160,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/b955d2bccf18c4ade2a3363625764696e8b4f10389b35f993c3501827d624a61.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/7fd36daa97da262aa77c1d8edc1a9784d52d75250241c3361ff7a2e6c63b9f0c.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/b133ca0c8507ab3628ae507346894a96640cc910cb1b9c79be0d8d4ec04d4d6c.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/da681105642d319de0f0d90fd77e804f759f94c37ee8a7a4501e57fa8583d304.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/c22204d44121a4a3bd14c789a4ac342275771edd64d9d2c6f0490a9bf9aedf9f.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/3a05a12619e314c7ae11d716f1baa32ff3dfe6891ecdcc4ef25ad1463b400a32.png",
+        "x": 24,
+        "y": 32,
+        "w": 96,
+        "h": 104,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/3ec96dadbf85e70085f5867c7769aab55fea7bdf76435f3a267f786e9acee6a0.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/7172fca96981a87ddd34750658b9f34cd32245243ad4443ad394dbb4a040524c.png",
+        "x": 24,
+        "y": 32,
+        "w": 96,
+        "h": 104,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/f3b8a905a776118738a9108e689ae9f82e579b54c7db4d66b5614e854a62cac2.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/eb5939813103de7fe1c215fa81b966e6fb13caa9c18ccc5e7af59adc2cf3125e.png",
+        "x": 24,
+        "y": 28,
+        "w": 96,
+        "h": 108,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/099b6bc8e1f5f1ec9f33a3c56c35605dba72f6d688d392223395a5e89b2836c4.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/024748c2fa25b7e5fed5615b9b6a1ee275f78bd0a2ab400d86bada0d35d81052.png",
+        "x": 24,
+        "y": 28,
+        "w": 96,
+        "h": 108,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/2fdf420b3570c987ed0c3a20404657f8dd14ab7db68672239d371aef8a76db35.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/9587033a0193ec5dcb476a57ccf0063fb5962433212b491b3070cd2d9dfb5543.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/a785f694b49c6dc9f6189865dad9c110e2a1585f2362680bb96365742a396db0.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/6f6d1f05d711dacf61e7bf649258869e3b030cb1ec0e8b0894cc31813ad55fde.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/c698e9efe58b1539141227d1c0f472538872beddf86853dca15a2928faea0631.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/5234c7ef0974a18f004cfd1c89221d7ef766354db0575aaadc5089e6e9bfcf2a.png",
+        "x": 0,
+        "y": 0,
+        "w": 144,
+        "h": 164,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/84983a6448cb7404eae06a663fada17fa42613537635ed8a59d9a0034ff27226.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/ca0e30085f187521ac2eb6ccb9b6d21ea78d5f74e69fb26ef090354bea6a20c4.png",
+        "x": 0,
+        "y": 0,
+        "w": 144,
+        "h": 164,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/19fae21dc3afa1c62492515f70bd4243ae1b4100ab95a9d31daa42125a39f5ab.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/f57a9bbb6e34632aa3114ee643bdb9533aa261783b50c284960e651ee8e2c337.png",
+        "x": 0,
+        "y": 0,
+        "w": 144,
+        "h": 164,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/689149bd115e75d5ca7a8d0975eaed621b17e820e90690b8a552477b87f37df6.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/f57a9bbb6e34632aa3114ee643bdb9533aa261783b50c284960e651ee8e2c337.png",
+        "x": 0,
+        "y": 0,
+        "w": 144,
+        "h": 164,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/689149bd115e75d5ca7a8d0975eaed621b17e820e90690b8a552477b87f37df6.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/6ccb65dae63f4cb721a176c776cf6d2e9ab8efdf98a9e31a9a5f53e7b80d526d.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/fbd93fa66d48e0ef6a279889db4ec1eae6d9b5a97a716283796dde3c1c1af5ac.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/6766c761fd53fda413f2628b91c8e903da55ee049665d3645c9e74f7b0e7a470.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/3d9adc38bf164d9186d66036cc64073f599ded582002122a13db62b3d6aea69e.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/283d996230ece204359cf4924893e99e1c3b4b01811d58ba6fb466c1a280b232.png",
+        "x": 24,
+        "y": 28,
+        "w": 96,
+        "h": 112,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/c246676eb0176e17618250d504267264c8d20d8187ec362887e9fcd4ef151c45.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/e56c977f6fdf018ded4e88b75f80da849564d3cf4bf06a8fce05986c4c5d6c80.png",
+        "x": 24,
+        "y": 28,
+        "w": 96,
+        "h": 112,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/39b041f072bba7ef883c57cdd0945379a9bd9fd453cdc6b560849ae022399472.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/145364ae49d5fecce2f21f58dc8bdda10e65f5112641b6b66cf5e30e53b1f1a6.png",
+        "x": 32,
+        "y": 44,
+        "w": 76,
+        "h": 80,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/c12abe24035b266fe2b00f89eb9f3fd8864388484ac73b768ff2f2a87f6a56d1.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/8d8b4aee090dc4458a5321971c79f912c8293f1e78fbebd4884c3458889509e6.png",
+        "x": 32,
+        "y": 44,
+        "w": 76,
+        "h": 80,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/5fb6fe5da755d33141e4b3825fb78c0924abe983804e27142f234bb9f81e7c9a.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/c576e1a8c25a71d239774146636facca4de9564bd425dfac7aaaf5068650ccee.png",
+        "x": 28,
+        "y": 36,
+        "w": 88,
+        "h": 96,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/19d5790b460c77ae57ce9bf3874d3b241519a3ddbb1e51f600929d6d1f4be7d5.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/ed6b14040b2f18ad36712385fe9e3ac02cc4874d955f952e90187c314fc3ebfe.png",
+        "x": 28,
+        "y": 36,
+        "w": 88,
+        "h": 96,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/0558368712c35b8bb7be65df909dcc0ef9610fff08b9bf4001ee0c5fa30a2d56.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/e04c65516ea214736fe241555e819d62ae0ee131bcb0e0361c0f0bec943c5369.png",
+        "x": 24,
+        "y": 32,
+        "w": 96,
+        "h": 104,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/c93e74a9ec7c68c9651edcaf98929a97a58bda1d49a0de280d8ef677f8a81084.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/1c3c2439d4330abe7b9128c46c91df337b6a29e93020c523b67b3d98843800c5.png",
+        "x": 24,
+        "y": 32,
+        "w": 96,
+        "h": 104,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/8b98c6f5779bd9d7a64ea7b35ec7ad1cdbae0a422ea6f4a77c05c32a2e4bb9e2.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/6f4bb2e35dc9317323a26261c409a8c9f0676792ba1cf157106deef3aef52a6e.png",
+        "x": 24,
+        "y": 32,
+        "w": 96,
+        "h": 104,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/e9aba52d1eac692fbc6024964393977b2be513ae9b290ceac7705528a9f8b02e.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/17d9b84eb8bdcd0d7554f3978693efc6975d634aefcdad1ff63077d6fb482967.png",
+        "x": 24,
+        "y": 32,
+        "w": 96,
+        "h": 104,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/df817914eb366271131279dd348885201ea56a0e6f539883a2d1d0e50018a813.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/cf5996d77598d4960c1199a6b509805b3f194a1028e3b336c037b90d28ad3dc5.png",
+        "x": 28,
+        "y": 36,
+        "w": 88,
+        "h": 96,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/ddceed760ac5dc257b1156ad5bc106feebb96a675ae79d77e9d4b557d653e350.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/4dfee18452ca61b1972da32e2c4f712502b35bf937d17b291b36b337c9a7aadd.png",
+        "x": 28,
+        "y": 36,
+        "w": 88,
+        "h": 96,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/4d9567de48f7d09ce0c3bcc2bb5f4be66d73c93ed0ed2760c4e5fb361d5a6204.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/d3be105a73db2784370402b431c444a3d331e155f1230e971eda97fb7a014981.png",
+        "x": 36,
+        "y": 44,
+        "w": 72,
+        "h": 76,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/0b4047b1eac4e7c605baa098e1646b472a3f3b2366bb9c8049eba3cbc1f5c16b.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/ef550bd581645c4ea0634c5f8bc07011517b60e8075d7adf3d1a536b4002a2e4.png",
+        "x": 36,
+        "y": 44,
+        "w": 72,
+        "h": 76,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/499d0c05420668603660758492ae7581b30fa76ef5390c9081b415626d04d851.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/14acc7a0e62225c520343aff673024884d69794f57d48b2e5aa214fa08445c22.png",
+        "x": 36,
+        "y": 44,
+        "w": 72,
+        "h": 80,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/cdefabd76f2e55be99f0734203b7528296ecd148aa7a71537500162d492cfb52.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/7b0f265dfcb34be2b466effbb341a2e3e591a96eab9c39f33e5bd8b02d3d0775.png",
+        "x": 36,
+        "y": 44,
+        "w": 72,
+        "h": 80,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/374079a2247ece17fc5f5201657b26ff6e335f2e4168278b12e06c50c958dbc1.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/06aefb25994aa613083e493450edf1e0fe21bca23c8feaeb6bb0999e9785fc6d.png",
+        "x": 28,
+        "y": 36,
+        "w": 88,
+        "h": 96,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/1f90738cb8dc8749a943fc6bbf6f8cc65aa5f4da5335040f785c44f2956828ba.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/9e21d61b27ccbd259daf44250e12ec50dd1f14c40c20307457c076f6f109416c.png",
+        "x": 28,
+        "y": 36,
+        "w": 88,
+        "h": 96,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/a3a1e233766b99b696a3b2258b95cd01fd1ac1390cf758d401ad1024ebb2f2be.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/05c14ebb2305e8171e8a0f68451c117481ad25157038e9019e7ef97d240bc01d.png",
+        "x": 24,
+        "y": 32,
+        "w": 96,
+        "h": 104,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/af52be97c690b95aacabdffa8ec180a74bf4326dd0775d83319b39b767b73ad3.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/73ff2b8d2c5a44b59c67e761675c50892764b49c6d5f171cbc84715941198cc4.png",
+        "x": 24,
+        "y": 32,
+        "w": 96,
+        "h": 104,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/bb1e6fa3cf2b13cfcf6f2b6668164a4ef4d36c4025e27c89760e469d51d25128.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/a2417eb1c987f57912701bb019b44befc564c7edf8f680f50370d51120ae3cc4.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/43edb119ecf125fce5087701abac411d84a731bb41a8384ac102f2562c80fd3b.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/8d61d4e692e05ee9c33bcade8998136eaad80634a0e4775a44190a4fa40e78e2.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/bc9050c8c100ed46d605d07fc8c809004b2dab8a18e0201748c8f90267242f89.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/67022797c332e35598a6e7dec949d57cf6ebeb2ce64300b3c761f293b215d392.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/7addaa71125b6201f90e9d87ef6f0d304b9de36e3b2bcebc99fcfc9c1fd0549d.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/a05c7c0d854bd3f55b22ad159c7f54c2a5a4de09093e7f40f8504f789670dd82.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/46c189237f09d7574d4e7d8bdf2e09e01bd4d99bb8052b13e2184be24520e65b.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/7cd6886193fbcc54575b79f1db62883cbcec8b9f949d0261cb845398220081a2.png",
+        "x": 24,
+        "y": 32,
+        "w": 96,
+        "h": 104,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/ecceb46939dd86814d20b43636e24570bf32d96a4c97aa9a99ad7d32adc12326.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/7e0fa859679accfc72430dde76c9f6a8ba07c90d7a3191101131eb3baf7052df.png",
+        "x": 24,
+        "y": 32,
+        "w": 96,
+        "h": 104,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/3ebef2e7fb541c8fa0620c56df53e9868178ef84b6122150acc78063bbe3eeda.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/c1b2036b3a8160d94e7b7e7fd6e056b69e820b9088710ebab53971aced488504.png",
+        "x": 24,
+        "y": 28,
+        "w": 96,
+        "h": 108,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/7f488bb0ac07fec78df48c0ce666bc6c45f353c23a8c1f845d7a13b5e32010ea.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/7d30574331abbe917024dea236fe85e75605ff208c267473772ca94ed376351b.png",
+        "x": 24,
+        "y": 28,
+        "w": 96,
+        "h": 108,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/49540b5d9fc2c6b4dc610def43be1d5d5ca9c3226c96289a4b1ebfd934e4c063.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/e9f3c1e9691939832e0803b554601e968fc4a41d850689d25083a81c8cec3061.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/ecf0debcde6408f5f3908a3a3d8c5b17efbb3b56aec78353b575144d8d365e78.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/15436a31f84c15055c2b5186d7307491807b017a15c70df10bb8adb30bc0a7da.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/51451a908ab50087c55a505c360dd6dcd59399891668f7230975fc7481615227.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/b52572a3cd82746241c22d1f7c72fa11c99b1b047634e9549621d1e1323c4981.png",
+        "x": 0,
+        "y": 4,
+        "w": 144,
+        "h": 160,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/c99bd137ee2a6bfa6e270350ce1e29aaaf575eaa4e0ee4697e855624b214bd94.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/bb79316e7a6aa788ee0b01d241ebd8e4d76b0ba354ec90fcf9a0f0532d6f96b2.png",
+        "x": 0,
+        "y": 4,
+        "w": 144,
+        "h": 160,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/d082665749626dc69b151030f06c09ab89af28a583c0bc99c39d2356ac466c4c.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/15b871fbaef3ef21cb0da284f44b840d44b819bc47a978e679c238cce3249d3a.png",
+        "x": 0,
+        "y": 4,
+        "w": 144,
+        "h": 160,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/a347700a2bd52cea62187757b19c4dd825e0b1b7c1cef175b9efbfb09a63d1af.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/7bb486fbbe671c8f2564acd113029590743cd86eced6007701baa34d550fd327.png",
+        "x": 0,
+        "y": 4,
+        "w": 144,
+        "h": 160,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/b955d2bccf18c4ade2a3363625764696e8b4f10389b35f993c3501827d624a61.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/7fd36daa97da262aa77c1d8edc1a9784d52d75250241c3361ff7a2e6c63b9f0c.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/b133ca0c8507ab3628ae507346894a96640cc910cb1b9c79be0d8d4ec04d4d6c.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/da681105642d319de0f0d90fd77e804f759f94c37ee8a7a4501e57fa8583d304.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/c22204d44121a4a3bd14c789a4ac342275771edd64d9d2c6f0490a9bf9aedf9f.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/3a05a12619e314c7ae11d716f1baa32ff3dfe6891ecdcc4ef25ad1463b400a32.png",
+        "x": 24,
+        "y": 32,
+        "w": 96,
+        "h": 104,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/3ec96dadbf85e70085f5867c7769aab55fea7bdf76435f3a267f786e9acee6a0.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/7172fca96981a87ddd34750658b9f34cd32245243ad4443ad394dbb4a040524c.png",
+        "x": 24,
+        "y": 32,
+        "w": 96,
+        "h": 104,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/f3b8a905a776118738a9108e689ae9f82e579b54c7db4d66b5614e854a62cac2.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/eb5939813103de7fe1c215fa81b966e6fb13caa9c18ccc5e7af59adc2cf3125e.png",
+        "x": 24,
+        "y": 28,
+        "w": 96,
+        "h": 108,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/099b6bc8e1f5f1ec9f33a3c56c35605dba72f6d688d392223395a5e89b2836c4.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/024748c2fa25b7e5fed5615b9b6a1ee275f78bd0a2ab400d86bada0d35d81052.png",
+        "x": 24,
+        "y": 28,
+        "w": 96,
+        "h": 108,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/2fdf420b3570c987ed0c3a20404657f8dd14ab7db68672239d371aef8a76db35.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/9587033a0193ec5dcb476a57ccf0063fb5962433212b491b3070cd2d9dfb5543.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/a785f694b49c6dc9f6189865dad9c110e2a1585f2362680bb96365742a396db0.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/6f6d1f05d711dacf61e7bf649258869e3b030cb1ec0e8b0894cc31813ad55fde.png",
+        "x": 8,
+        "y": 12,
+        "w": 128,
+        "h": 144,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/c698e9efe58b1539141227d1c0f472538872beddf86853dca15a2928faea0631.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/5234c7ef0974a18f004cfd1c89221d7ef766354db0575aaadc5089e6e9bfcf2a.png",
+        "x": 0,
+        "y": 0,
+        "w": 144,
+        "h": 164,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/84983a6448cb7404eae06a663fada17fa42613537635ed8a59d9a0034ff27226.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/c0408ca32eacc82d4ec2ca6b2c1bd4f4289e422b16aa34e9069d1bac7321d878.png",
+        "x": 0,
+        "y": 0,
+        "w": 144,
+        "h": 164,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/8cdbfebda3c969e1f2dbe7d21b6004d94ae0d06ef65f8946f86627e25391be9e.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/f57a9bbb6e34632aa3114ee643bdb9533aa261783b50c284960e651ee8e2c337.png",
+        "x": 0,
+        "y": 0,
+        "w": 144,
+        "h": 164,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/689149bd115e75d5ca7a8d0975eaed621b17e820e90690b8a552477b87f37df6.png"
+      },
+      {
+        "image": "alternatives/spcsprai-seedvr7b-test/images/61a48e2ca2bd92f1218094ea39195f3dc67af20de2f073540bdd3c4c544b5d85.png",
+        "x": 0,
+        "y": 0,
+        "w": 144,
+        "h": 164,
+        "neutral": "alternatives/spcsprai-seedvr7b-test/images/3b407f71da2cb540b98ac011b612db76ad0d1beff14dc04da57ecf5e541816bc.png"
+      }
+    ],
+    "green": null,
+    "method": "Test SeedVR7B/LAB x4 · Apollo30",
+    "nativeOnly": false
+  },
+  "active_tracking_unchanged": true,
+  "qa": "pending-user-choice",
+  "installed": false
+}
