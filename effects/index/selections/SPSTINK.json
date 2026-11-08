@@ -1,0 +1,137 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPSTINK",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 13,
+    "source": {
+      "interpolation_run": "spstink-apollo30-native-anchors-20261108-v1",
+      "interpolation_run_descriptor_sha256": "912142A64BEB80678A7BC9AE35F6ACC2B0D84B5C2AA215FEBA015D2371E3F9EF",
+      "source_bam_sha256": "422a0c7b6ff225de8a16bb1a1ff1ccd9b7c6e1177d52f722209da48bd53d85fd",
+      "spatial_manifest_sha256": "D9E14473C23D51E2FBBB4C5DB62CB97DEF526C82708B9C0BBD7B4900D0593F74",
+      "spatial_run": "spstink-seedvr7b-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "ED2BE7040FB73A5B8BD03706142412AB762FD7B90C7AEF5FBB87628E13ACFC3C"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          10
+        ]
+      ],
+      "phase_count": 12,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          11,
+          10,
+          12
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-08",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 922,
+    "path": "effects/index/qa-decisions/SPSTINK/2026-11-08-accepted-b81d996099cc.json",
+    "sha256": "B81D996099CC6D2B2EADBE9A934893DB958C076E99CA094BBF493A795A0EC7E4"
+  },
+  "resref": "SPSTINK",
+  "run_descriptor": {
+    "bytes": 2019,
+    "path": "effects/ressources/SPSTINK/runs/spstink-apollo30-native-anchors-20261108-v1/run.json",
+    "sha256": "912142A64BEB80678A7BC9AE35F6ACC2B0D84B5C2AA215FEBA015D2371E3F9EF"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 10965,
+      "path": "effects/ressources/SPSTINK/packs/spstink-7b-x4-apollo30-native-profiles-20261108-v2/manifest.json",
+      "sha256": "70A074CE02FB30D78C6B33C5F5F31379A45AC26E7B94EAEC5F3CA8808B853679"
+    },
+    "registry": {
+      "bytes": 300,
+      "path": "effects/ressources/SPSTINK/packs/spstink-7b-x4-apollo30-native-profiles-20261108-v2/EffectAnimations-X4.registry",
+      "sha256": "A077D3326704552C866902F9C5ED488EBDB7B2AEA4B8098EF0EC5D9EFEF63B47"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spstink-apollo30-native-anchors-20261108-v1",
+  "source": {
+    "bytes": 1222,
+    "path": "effects/ressources/SPSTINK/source.bam",
+    "sha256": "422A0C7B6FF225DE8A16BB1A1FF1CCD9B7C6E1177D52F722209DA48BD53D85FD"
+  }
+}

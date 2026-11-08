@@ -1,0 +1,167 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPFLSTRI",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 23,
+    "source": {
+      "interpolation_run": "spflstri-apollo30-native-anchors-20261108-v1",
+      "interpolation_run_descriptor_sha256": "57C6A4AED9DF1D5B21EFBED0D8919E999CE7B4A597A6FD921B510694EBC4F275",
+      "source_bam_sha256": "a56bc292efeb7873381a0a753249a8f81ac7eb9ebb1ee52dd2c61b3b75bf5790",
+      "spatial_manifest_sha256": "D0519AA6A7EDB4A608AC3DA55C2FFD89E32A74439C846C8D4645B7BD9DB50D57",
+      "spatial_run": "spflstri-seedvr7b-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "C70F8C59BE017C64826FAFA9BAACCCE97AC0E4856109AE1996CD218D7D1ABE76"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        22
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          20
+        ]
+      ],
+      "phase_count": 22,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          21,
+          20,
+          22
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-08",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 929,
+    "path": "effects/index/qa-decisions/SPFLSTRI/2026-11-08-accepted-efd813d208b9.json",
+    "sha256": "EFD813D208B9FAFD4ACB3B6A91DA71204A3FAA5CCEA31977AD8F78AB0E342A9D"
+  },
+  "resref": "SPFLSTRI",
+  "run_descriptor": {
+    "bytes": 1978,
+    "path": "effects/ressources/SPFLSTRI/runs/spflstri-apollo30-native-anchors-20261108-v1/run.json",
+    "sha256": "57C6A4AED9DF1D5B21EFBED0D8919E999CE7B4A597A6FD921B510694EBC4F275"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 17611,
+      "path": "effects/ressources/SPFLSTRI/packs/spflstri-7b-x4-apollo30-native-profiles-20261108-v2/manifest.json",
+      "sha256": "B940E23E19D4C0BE3432703236E01C2A99B6C89184FD7C259D3C34B2C190ED2A"
+    },
+    "registry": {
+      "bytes": 480,
+      "path": "effects/ressources/SPFLSTRI/packs/spflstri-7b-x4-apollo30-native-profiles-20261108-v2/EffectAnimations-X4.registry",
+      "sha256": "96F451EAB3ED1F19DBA2E69775C3AA9F693A0AB1A28731151705ABEFD3286395"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spflstri-apollo30-native-anchors-20261108-v1",
+  "source": {
+    "bytes": 41525,
+    "path": "effects/ressources/SPFLSTRI/source.bam",
+    "sha256": "A56BC292EFEB7873381A0A753249A8F81AC7EB9EBB1EE52DD2C61B3B75BF5790"
+  }
+}

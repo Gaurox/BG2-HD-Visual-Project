@@ -1,0 +1,209 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPSMOLD",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          2,
+          2,
+          2,
+          3,
+          3,
+          3,
+          4,
+          4,
+          4,
+          5,
+          5,
+          5
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 13,
+    "source": {
+      "interpolation_run": "spsmold-xbr4x-apollo30-native-20261108-v1",
+      "interpolation_run_descriptor_sha256": "9CDD296F4E4DBF1FCB418F8B1847E96E810A3DB0DB3B2C1F1BD786E1261538B7",
+      "source_bam_sha256": "3be89ba870213a8ef4d4205dbee6bccdc1feaa76df3f1f0c4499775b17ab4631",
+      "spatial_manifest_sha256": "95CDE309C494D1927A6B4AE8DB89F61417A487DEB5C7C7B9D7C1EA35562AF6DE",
+      "spatial_run": "spsmold-xbr4x-nativealpha-20261108-v1",
+      "spatial_run_descriptor_sha256": "F8DD766D2EBF72647F22917B9FBADB42FB4EE3E087806DC0D5B5E990A2C5A095"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        36
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          0,
+          0,
+          2,
+          2,
+          2,
+          4,
+          4,
+          4,
+          6,
+          6,
+          6,
+          8,
+          8,
+          8,
+          10,
+          10,
+          10
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          2,
+          2,
+          2,
+          2,
+          2,
+          3,
+          4,
+          4,
+          4,
+          4,
+          4,
+          5,
+          6,
+          6,
+          6,
+          6,
+          6,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          9,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ]
+      ],
+      "phase_count": 36,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          2,
+          2,
+          2,
+          2,
+          2,
+          3,
+          4,
+          4,
+          4,
+          4,
+          4,
+          5,
+          6,
+          6,
+          6,
+          6,
+          6,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          11,
+          10,
+          10,
+          10,
+          10,
+          10,
+          12
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-08",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 918,
+    "path": "effects/index/qa-decisions/SPSMOLD/2026-11-08-accepted-641d725b25dc.json",
+    "sha256": "641D725B25DC3709C097A5DA75241E19A6DD28F544EDBCD65EF2EAA2AA9FBBFC"
+  },
+  "resref": "SPSMOLD",
+  "run_descriptor": {
+    "bytes": 2031,
+    "path": "effects/ressources/SPSMOLD/runs/spsmold-xbr4x-apollo30-native-20261108-v1/run.json",
+    "sha256": "9CDD296F4E4DBF1FCB418F8B1847E96E810A3DB0DB3B2C1F1BD786E1261538B7"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 11777,
+      "path": "effects/ressources/SPSMOLD/packs/spsmold-xbr4x-apollo30-native-profiles-20261108-v1/manifest.json",
+      "sha256": "DB860B9A3323D08BC0087B848FABF20C75040E6BA056952D482A05D38FC2799B"
+    },
+    "registry": {
+      "bytes": 540,
+      "path": "effects/ressources/SPSMOLD/packs/spsmold-xbr4x-apollo30-native-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "6DABB7721E854F154D1BF6BCB4F8B30AE12A732D5CA672B726ED0A8BA65D8812"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spsmold-xbr4x-apollo30-native-20261108-v1",
+  "source": {
+    "bytes": 579,
+    "path": "effects/ressources/SPSMOLD/source.bam",
+    "sha256": "3BE89BA870213A8EF4D4205DBEE6BCCDC1FEAA76DF3F1F0C4499775B17AB4631"
+  }
+}

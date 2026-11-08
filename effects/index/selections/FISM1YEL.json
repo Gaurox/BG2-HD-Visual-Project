@@ -1,0 +1,161 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:FISM1YEL",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          9,
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 21,
+    "source": {
+      "interpolation_run": "fism1yel-xbr4x-apollo30-native-20261108-v1",
+      "interpolation_run_descriptor_sha256": "59056D27E63548B637BFCDEABC6755D6DD0199421557ED267693035DD3BDDC9B",
+      "source_bam_sha256": "91d7b4ed849cfeca27fdb7bca589458d1f05904e641e95ef7681d8ae5902c3a7",
+      "spatial_manifest_sha256": "5416300467BB4F8691B609E2B491C7FD300F3FF134BDE6B53924B47971A5AB37",
+      "spatial_run": "fism1yel-xbr4x-nativealpha-20261108-v1",
+      "spatial_run_descriptor_sha256": "A8C8FA67A6764719E48C0F02B8E6319699EA091AC0FF62D118778BD97EF25D34"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        20
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          18
+        ]
+      ],
+      "phase_count": 20,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          19,
+          18,
+          20
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-08",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 925,
+    "path": "effects/index/qa-decisions/FISM1YEL/2026-11-08-accepted-9fa03eee2ed0.json",
+    "sha256": "9FA03EEE2ED06A9D4F76914550ACB3A63556DF72042125808B6FC0AA2E849486"
+  },
+  "resref": "FISM1YEL",
+  "run_descriptor": {
+    "bytes": 2046,
+    "path": "effects/ressources/FISM1YEL/runs/fism1yel-xbr4x-apollo30-native-20261108-v1/run.json",
+    "sha256": "59056D27E63548B637BFCDEABC6755D6DD0199421557ED267693035DD3BDDC9B"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 16133,
+      "path": "effects/ressources/FISM1YEL/packs/fism1yel-xbr4x-apollo30-native-profiles-20261108-v1/manifest.json",
+      "sha256": "9C38CCD6C77597CD274F0E9FBEDA632311E72BC9101F953CD76247467A0FD2AD"
+    },
+    "registry": {
+      "bytes": 444,
+      "path": "effects/ressources/FISM1YEL/packs/fism1yel-xbr4x-apollo30-native-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "2C7F94EC256EAAD658ADDAF6C22ADE74BDD1056AE8D5320DCBE4F9782CB677BD"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "fism1yel-xbr4x-apollo30-native-20261108-v1",
+  "source": {
+    "bytes": 1383,
+    "path": "effects/ressources/FISM1YEL/source.bam",
+    "sha256": "91D7B4ED849CFECA27FDB7BCA589458D1F05904E641E95EF7681D8AE5902C3A7"
+  }
+}

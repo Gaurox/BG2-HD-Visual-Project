@@ -1,0 +1,11 @@
+# Lot50 · noir transparent7 · 2026-11-08
+
+- Demande :29SPFINODI,31SPFIRET,35SPPFIRAI,36SPPFIRXI,50SPOUTA ; vérifier aussi41STEAM1/42STEAM4.7BAM distincts, SPFIRET cité plusieurs fois compté une fois.
+- Constat :5H avaient un companion neutre optionnel, pas le pack/aperçu par défaut ; STEAM1/4 aucun. Alpha natif binaire sur les7, contrairement au correctif des4nuages dont l'alpha palette gradué avait été perdu.
+- **Corrigé dans7nouveaux runs/packs**, sans inférence : `A'=max(Rp,Gp,Bp)` depuis RGBA prémultiplié ; RGBp exact ; RGB droit reconstruit, erreur de prémultiplication≤1octet. Noir exact→RGBA0, quasi-noir→alpha faible ; aucune clé à seuil dur. Vapeur claire progressive sur terrain, pas de matte noire opaque.
+- Autorité50 courante : `production.json.assets[]`. Les43autres entrées sont identiques à la production précédente ; `parent_production` lie son hash. Précédente `../lot50-seedvr7b-apollo30-20261108-v1/production.json` et runs/packs conservés.
+- Vérification : `verification.json`,7reçus `verification/<BAM>.json`,1340phases/22profils ;2680contrats lecteur natif passent. RGBp identiques toutes phases ; palette/carrier, registresv3, dimensions/centres/cycles/timings inchangés ; alpha uniquement. QA utilisateur en attente ; aucune installation/release.
+- [Planche50 corrigée](http://127.0.0.1:8797/revisions/black-transparent-20261108-v1/index.html?v=alpha7) :7corrections par défaut, boutons avant/corrigé ;43autres cartes conservées. Ancien index sauvegardé `../lot50-seedvr7b-apollo30-20261108-v1/review/index-before-black-transparent-20261108-v1.html`, racine8797 redirige vers nouveau namespace.
+- [Avant/après terrain](before-after-terrain.png) inspecté ; vapeur1/4 visible sans masse noire. PlancheJS compilée, HTTP200. Aucune équivalence de mélange normal/additif sur tout décor ni cadence ingame mesurée déduite.
+- Suivi :7pointeurs d'interpolation actualisés via `effect_workflow.register_run` ; spatiaux,QA/install/release indépendants. Packs `effects/ressources/<BAM>/packs/<bam>-black-transparent-profiles-20261108-v1` ; runs `<bam>-black-transparent-apollo30-20261108-v1`.
+- Recette : `pipeline/recipes/effects-lot50-black-transparent-20261108-v1/{correct,publish}.py`. Dérivation depuis les versions courantes25SeedVR/25xBR ; aucune relance SeedVR/Apollo, aucune installation ni reconstruction globale.

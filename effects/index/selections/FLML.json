@@ -1,0 +1,137 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:FLML",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 13,
+    "source": {
+      "interpolation_run": "flml-xbr4x-apollo30-native-20261108-v1",
+      "interpolation_run_descriptor_sha256": "93261FBBBFC297FEB1947C5C0DD105C32D1B3C5EFEA75B2FE7AB3AA8B692FE6F",
+      "source_bam_sha256": "08247d3823959477a2e775551a15f08ecb267c1440898b42367d4382a736e4fc",
+      "spatial_manifest_sha256": "848C765712A8B06009F089856AD78BEB47A3DBE30E3E56D245DFD2C9E6BECFAF",
+      "spatial_run": "flml-xbr4x-nativealpha-20261108-v1",
+      "spatial_run_descriptor_sha256": "BDE705504F875D808F31DA20B1D552F0A65A1C7601AAC58393CE8AC9C5FC5867"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          10
+        ]
+      ],
+      "phase_count": 12,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          11,
+          10,
+          12
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-08",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 897,
+    "path": "effects/index/qa-decisions/FLML/2026-11-08-accepted-4c356bb2982d.json",
+    "sha256": "4C356BB2982DD5637A8FEF13B01C23ADA07D7CFE7D09DA742DEBE696ECB0923B"
+  },
+  "resref": "FLML",
+  "run_descriptor": {
+    "bytes": 1985,
+    "path": "effects/ressources/FLML/runs/flml-xbr4x-apollo30-native-20261108-v1/run.json",
+    "sha256": "93261FBBBFC297FEB1947C5C0DD105C32D1B3C5EFEA75B2FE7AB3AA8B692FE6F"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 10779,
+      "path": "effects/ressources/FLML/packs/flml-xbr4x-apollo30-native-profiles-20261108-v1/manifest.json",
+      "sha256": "5061A47A17BD0739B3E99F8A80F337855F0C93A89AC817EE3CFFFE4F2BE53300"
+    },
+    "registry": {
+      "bytes": 300,
+      "path": "effects/ressources/FLML/packs/flml-xbr4x-apollo30-native-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "9CFF2ADFD104296042085496A5334E28D2BEBD276028237514180A76B0465CB8"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "flml-xbr4x-apollo30-native-20261108-v1",
+  "source": {
+    "bytes": 955,
+    "path": "effects/ressources/FLML/source.bam",
+    "sha256": "08247D3823959477A2E775551A15F08ECB267C1440898B42367D4382A736E4FC"
+  }
+}

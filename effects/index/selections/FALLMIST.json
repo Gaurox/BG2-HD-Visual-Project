@@ -1,0 +1,155 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:FALLMIST",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 19,
+    "source": {
+      "interpolation_run": "fallmist-xbr4x-apollo30-native-20261108-v1",
+      "interpolation_run_descriptor_sha256": "1A5F0BE552364B2BA25122AEB8B9F35191FABA296BACC483208D18E9AD56506D",
+      "source_bam_sha256": "941413e7b7e05c73aee9aa24e460b4be5cd2ad49ee822420c20e3c25f67f541a",
+      "spatial_manifest_sha256": "F2CA4D869B232691DAAF3F2F6A5A19B28F04F95976F88133798865D105ECB81E",
+      "spatial_run": "fallmist-xbr4x-nativealpha-20261108-v1",
+      "spatial_run_descriptor_sha256": "8B03B2D7AE0E76B04D169DAAC14685AE29375D442EBEA57C1D01BD74EA979523"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        18
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          16
+        ]
+      ],
+      "phase_count": 18,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          17,
+          16,
+          18
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-08",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 925,
+    "path": "effects/index/qa-decisions/FALLMIST/2026-11-08-accepted-8162844bea6d.json",
+    "sha256": "8162844BEA6D79A7211941B4F63B755523D284B5FFF21397C5887AB1D02EB6D3"
+  },
+  "resref": "FALLMIST",
+  "run_descriptor": {
+    "bytes": 2046,
+    "path": "effects/ressources/FALLMIST/runs/fallmist-xbr4x-apollo30-native-20261108-v1/run.json",
+    "sha256": "1A5F0BE552364B2BA25122AEB8B9F35191FABA296BACC483208D18E9AD56506D"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 14912,
+      "path": "effects/ressources/FALLMIST/packs/fallmist-xbr4x-apollo30-native-profiles-20261108-v1/manifest.json",
+      "sha256": "D6B5E16267545D3A98AB3646B38FCE58D86994EE7C4DF56D71442FB912CFB798"
+    },
+    "registry": {
+      "bytes": 408,
+      "path": "effects/ressources/FALLMIST/packs/fallmist-xbr4x-apollo30-native-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "C2CC9C65DA3B36862FBA46EBB396E981F7450523FBFCF45A5EA6869640F777A4"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "fallmist-xbr4x-apollo30-native-20261108-v1",
+  "source": {
+    "bytes": 7405,
+    "path": "effects/ressources/FALLMIST/source.bam",
+    "sha256": "941413E7B7E05C73AEE9AA24E460B4BE5CD2AD49EE822420C20E3C25F67F541A"
+  }
+}

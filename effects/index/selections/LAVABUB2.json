@@ -1,0 +1,221 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:LAVABUB2",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [],
+        "lookup_start": 15
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [],
+        "lookup_start": 15
+      },
+      {
+        "cycle": 3,
+        "frame_indices": [],
+        "lookup_start": 15
+      },
+      {
+        "cycle": 4,
+        "frame_indices": [],
+        "lookup_start": 15
+      }
+    ],
+    "frame_count": 17,
+    "source": {
+      "interpolation_run": "lavabub2-xbr4x-apollo30-native-20261108-v2",
+      "interpolation_run_descriptor_sha256": "48349FB9CF9181A67E5A2A4BB6E9C1AD2586BA44C0F5007CB85405CC1A24AB4D",
+      "source_bam_sha256": "970855675dc1d815e563e4bc72c02eee21b0d4ef831d359eb145f5a0cc2617f3",
+      "spatial_manifest_sha256": "6F18F99341D8F75F1B1E8B13AEC0063B1D431FA6B8F028EC396855B497F46BEA",
+      "spatial_run": "lavabub2-xbr4x-nativealpha-20261108-v1",
+      "spatial_run_descriptor_sha256": "022157494D422B43AC08D783B0D4AE5ECD49375B4CEE90FED4936C1D33F2FA58"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        30
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "excluded_empty_source_cycles": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 5,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14
+        ]
+      ],
+      "phase_count": 30,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          15,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          16
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-08",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 925,
+    "path": "effects/index/qa-decisions/LAVABUB2/2026-11-08-accepted-0445f26ede20.json",
+    "sha256": "0445F26EDE20A3737988D8A27C7D8AC2196B54CF2573023D43EEC2CE70193F50"
+  },
+  "resref": "LAVABUB2",
+  "run_descriptor": {
+    "bytes": 2047,
+    "path": "effects/ressources/LAVABUB2/runs/lavabub2-xbr4x-apollo30-native-20261108-v2/run.json",
+    "sha256": "48349FB9CF9181A67E5A2A4BB6E9C1AD2586BA44C0F5007CB85405CC1A24AB4D"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 14593,
+      "path": "effects/ressources/LAVABUB2/packs/lavabub2-xbr4x-apollo30-native-profiles-20261108-v1/manifest.json",
+      "sha256": "DDEF3524542199907F451930C666E3B5A1BFA45C22009B2A1D477D040313A34E"
+    },
+    "registry": {
+      "bytes": 512,
+      "path": "effects/ressources/LAVABUB2/packs/lavabub2-xbr4x-apollo30-native-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "F4440C0CFE91805A29D85DD6981E8968FC54DAC725B59A79C8578C8D0A04E4DF"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "lavabub2-xbr4x-apollo30-native-20261108-v2",
+  "source": {
+    "bytes": 1389,
+    "path": "effects/ressources/LAVABUB2/source.bam",
+    "sha256": "970855675DC1D815E563E4BC72C02EEE21B0D4EF831D359EB145F5A0CC2617F3"
+  }
+}

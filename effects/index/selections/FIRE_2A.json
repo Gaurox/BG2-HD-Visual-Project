@@ -1,0 +1,227 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:FIRE_2A",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [],
+        "lookup_start": 16
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [],
+        "lookup_start": 16
+      },
+      {
+        "cycle": 3,
+        "frame_indices": [],
+        "lookup_start": 16
+      },
+      {
+        "cycle": 4,
+        "frame_indices": [],
+        "lookup_start": 16
+      }
+    ],
+    "frame_count": 33,
+    "source": {
+      "interpolation_run": "fire_2a-apollo30-native-anchors-20261108-v1",
+      "interpolation_run_descriptor_sha256": "43023BBCCD7697761B0288753E64F7ED0A8E148590B5445CC599D152AB78F834",
+      "source_bam_sha256": "1504d75a99f317ad01ed80f97b7a247af2f27bd4f657edbc8600fa5206996890",
+      "spatial_manifest_sha256": "2AC9FF4207AF5CA425C571C0272CC60C977E018CFE3BC04A2520E029A5075F36",
+      "spatial_run": "fire_2a-seedvr7b-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "A2AA756B62BE5E42C9A10964FA61EEC4F8A0403F9958C51BBD21FBE15D13A978"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        32
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "excluded_empty_source_cycles": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 5,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          30
+        ]
+      ],
+      "phase_count": 32,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          31,
+          30,
+          32
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-08",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 922,
+    "path": "effects/index/qa-decisions/FIRE_2A/2026-11-08-accepted-e56d63f1f203.json",
+    "sha256": "E56D63F1F20353FA6E3E86454017E6EBCC1982D26A119F211A622CF6FA156AC3"
+  },
+  "resref": "FIRE_2A",
+  "run_descriptor": {
+    "bytes": 1963,
+    "path": "effects/ressources/FIRE_2A/runs/fire_2a-apollo30-native-anchors-20261108-v1/run.json",
+    "sha256": "43023BBCCD7697761B0288753E64F7ED0A8E148590B5445CC599D152AB78F834"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 24488,
+      "path": "effects/ressources/FIRE_2A/packs/fire_2a-7b-x4-apollo30-native-profiles-20261108-v2/manifest.json",
+      "sha256": "ADCFE9EC2DB03F27FF9387EF6EF27D39044C76E3FFA1D768FF356E0284641F23"
+    },
+    "registry": {
+      "bytes": 660,
+      "path": "effects/ressources/FIRE_2A/packs/fire_2a-7b-x4-apollo30-native-profiles-20261108-v2/EffectAnimations-X4.registry",
+      "sha256": "6D77A4A2C04DE3A9E2A413996F3DBB1DD4694BF348B3601A48B4D96E90C7A412"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "fire_2a-apollo30-native-anchors-20261108-v1",
+  "source": {
+    "bytes": 29639,
+    "path": "effects/ressources/FIRE_2A/source.bam",
+    "sha256": "1504D75A99F317AD01ED80F97B7A247AF2F27BD4F657EDBC8600FA5206996890"
+  }
+}

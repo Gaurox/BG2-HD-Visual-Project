@@ -1,0 +1,179 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPFIRET",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 27,
+    "source": {
+      "interpolation_run": "spfiret-black-transparent-apollo30-20261108-v1",
+      "interpolation_run_descriptor_sha256": "766DA90E48B3C1F190E204BBAA9EED78B0A7CEC7489E8AEA939CEC31AA86E196",
+      "source_bam_sha256": "7c3cc28b4a9b1f508b812746752344771c847e21c52f1ea15254751c653af474",
+      "spatial_manifest_sha256": "DC1FD92E02160D56026C81C65C8218998802D44911B9B18703A5F3760C25CFB1",
+      "spatial_run": "spfiret-xbr4x-nativealpha-20261108-v1",
+      "spatial_run_descriptor_sha256": "61D192E683F608115174FC0E43A09033B5ABDFCC102E40F4DAC31DDB2926EB8B"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        26
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          24
+        ]
+      ],
+      "phase_count": 26,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          25,
+          24,
+          26
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-08",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 924,
+    "path": "effects/index/qa-decisions/SPFIRET/2026-11-08-accepted-0422d11f83c0.json",
+    "sha256": "0422D11F83C0E273D8937F6D24D2E4358051D5968E8BEF7A3E8037910D06C4FF"
+  },
+  "resref": "SPFIRET",
+  "run_descriptor": {
+    "bytes": 2146,
+    "path": "effects/ressources/SPFIRET/runs/spfiret-black-transparent-apollo30-20261108-v1/run.json",
+    "sha256": "766DA90E48B3C1F190E204BBAA9EED78B0A7CEC7489E8AEA939CEC31AA86E196"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 20243,
+      "path": "effects/ressources/SPFIRET/packs/spfiret-black-transparent-profiles-20261108-v1/manifest.json",
+      "sha256": "F1DF0B984AE040B5EC3A02CDA229E1057A53E0F38944B6F3CB9DACD417D2B0F7"
+    },
+    "registry": {
+      "bytes": 552,
+      "path": "effects/ressources/SPFIRET/packs/spfiret-black-transparent-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "2102B0178E5F7F57177FA3B4CC9E1C39ADEECA3B020F764A6FF3167436F6F076"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spfiret-black-transparent-apollo30-20261108-v1",
+  "source": {
+    "bytes": 9818,
+    "path": "effects/ressources/SPFIRET/source.bam",
+    "sha256": "7C3CC28B4A9B1F508B812746752344771C847E21C52F1EA15254751C653AF474"
+  }
+}

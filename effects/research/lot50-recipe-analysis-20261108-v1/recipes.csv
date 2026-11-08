@@ -1,0 +1,51 @@
+﻿ordinal,resref,profile,reason,nearest_historical_analogue,canvas_x1,source_records,used_records,opaque_nearblack_percent,opaque_exact_green_percent,temporal_special
+1,FIM1YEL,F,"Petite flamme, protéger pointes et scintillement.",SPBRNHND,"[25, 25]",16,16,0.0,0.0,False
+2,FIM2YEL,F,"Flamme jaune-verte compacte, même précaution sur les bords.",SPBRNHND,"[40, 40]",16,16,0.0,0.0,False
+3,FIRE_1B,T,Flamme avec traîne sombre ; garder le brun de fumée en alpha normal.,SPBURN,"[25, 50]",15,15,4.07,0.0,False
+4,FIRE_1C,T,Flamme étroite avec traîne ; pas de fondu interne large.,SPBURN,"[23, 47]",15,15,3.223,0.0,False
+5,FIRE_1GR,H,Flamme verte sur matte sombre rectangulaire ; compagnon normal neutre conditionnel.,SPSCHGI,"[50, 50]",15,15,52.037,0.0,False
+6,FIRE_1GS,H,Flamme et halo sur matte noire ; ne pas mélanger la matte avec le décor en normal.,SPSCHGI,"[50, 50]",15,15,50.323,0.0,False
+7,FIRE_2,H,Boule verte texturée et halo sombre ; conserver énergie lumineuse.,SPENTACI,"[57, 69]",16,16,15.956,0.0,False
+8,FIRE_2A,H,"Variante verte brillante ; palette indépendante, même géométrie à conserver.",SPENTACI,"[57, 69]",16,16,16.12,0.0,False
+9,FIRE_4BL,F,"Petite flamme cyan, faible épaisseur ; aucun feather12.",SPBRNHND,"[16, 32]",14,14,9.677,0.0,False
+10,FIRE_4G2,H,"Petite flamme verte, majorité sombre ; RGB sans gauss sur ce petit motif.",SPSCHGI,"[16, 32]",14,14,58.984,0.0,False
+11,FIRE_4GR,F,Petite flamme verte-jaune ; préserver franges et variations de teinte.,SPBRNHND,"[16, 32]",14,14,9.677,0.0,False
+12,FISM1YEL,F,"Très petite flamme, le flou peut la faire disparaître.",SPBRNHND,"[20, 20]",10,10,0.0,0.0,False
+13,FLLGBLU,F,Flamme orange malgré le nom ; se baser sur la palette réellement extraite.,SPBRNHND,"[27, 36]",16,16,0.0,0.0,False
+14,FLLGBLUE,G,Fond vert opaque index47 ; essai de masque indexé exact avant toute inférence.,SPBRNHND,"[40, 40]",16,16,0.0,71.516,False
+15,FLLGRED,T,Flamme orange plus large ; préserver les petits fragments détachés.,SPBURN,"[50, 50]",16,16,0.0,0.0,False
+16,FLM1PUR,F,"Flamme violette minuscule, garder la silhouette et la couleur.",SPBRNHND,"[14, 18]",16,16,0.0,0.0,False
+17,FLM1RED,F,Petite flamme orange ; traitement sans flou additionnel.,SPBRNHND,"[20, 20]",16,16,0.0,0.0,False
+18,FLM2RED,F,Flamme compacte ; conserver détail et variations de taille.,SPBRNHND,"[40, 40]",16,16,0.0,0.0,False
+19,FLMDBLU,G,"Fond vert opaque index39, plus de90% du support ; ne pas envoyer ce fond au modèle.",SPBRNHND,"[40, 40]",16,16,0.0,91.328,False
+20,FLML,F,"Flamme très étroite, six poses ; protéger la structure verticale.",SPBRNHND,"[11, 21]",6,6,0.0,0.0,False
+21,FLSM1PUR,G,"Fond vert opaque index245 ; masque dérivé conditionnel, source conservée.",SPBRNHND,"[20, 20]",10,10,0.0,88.472,False
+22,FLSM1RED,F,"Flamme minuscule, priorité à la couverture des pixels lumineux.",SPBRNHND,"[20, 20]",10,10,0.0,0.0,False
+23,LAVAFIR1,H,Lave et pointes sur grande matte noire ; pas de détourage par seuil de luminance.,SPENTACI,"[126, 126]",10,10,83.741,0.0,False
+24,EXPLODE,T,Explosion dense avec grains périphériques ; feather0 initial pour garder ces grains.,SPBOOM,"[75, 71]",12,12,0.032,0.0,False
+25,SPBDBUR,F,Petit impact vert clair ; pas de retrait ni feather large.,SPBRNHND,"[17, 25]",15,15,0.0,0.0,False
+26,SPBDBURS,H,Neuf directions et réserves vides ; corriger le temps avant de juger la texture.,SPRDRABU,"[152, 234]",73,73,14.529,0.0,True
+27,SPBURNS1,T,"Trois cycles de feu ; préserver alternatives et couleurs, pas de concaténation.",SPBURN,"[43, 62]",24,24,0.0,0.0,False
+28,SPFBSMAL,P,Petit jet de particules blanches ; ne pas fusionner les grains.,SPSPARKS,"[28, 25]",30,30,0.0,0.0,False
+29,SPFINODI,H,"Éclat rose avec cœur, trait vertical et halo ; ne pas vectoriser le halo.",SPENTACI,"[84, 100]",28,28,0.122,0.0,False
+30,SPFIRE,P,Petites bouffées espacées ; conserver séparation et placement.,SPSMPUFF,"[22, 64]",6,6,0.0,0.0,False
+31,SPFIRET,H,Petite boule lumineuse à bord sombre ; pas de feather supplémentaire sur le halo.,SPSCHGI,"[40, 44]",13,13,27.671,0.0,False
+32,SPFLADOW,T,"Grande colonne de feu, dents et particules à conserver.",SPBRNHND,"[74, 182]",11,11,0.01,0.0,False
+33,SPFLSTRI,T,Colonne similaire mais BAM distinct ; aucun réemploi déduit de la seule ressemblance.,SPBRNHND,"[74, 182]",11,11,0.01,0.0,False
+34,SPFSTRMI,H,Feu diffus sur fond noir et dernière pose noire ; préserver la fin d'extinction.,SPENTACI,"[157, 171]",50,50,16.117,0.0,True
+35,SPPFIRAI,H,Masse de feu avec bord noir ; vérifier séparément les trois cycles.,SPENTACI,"[98, 74]",89,89,0.0,0.0,False
+36,SPPFIRXI,H,"Grande colonne vive, régions sombres et langues fines ; ne pas éroder.",SPENTACI,"[120, 171]",28,28,0.0,0.0,False
+37,SPRDRAEX,D,Explosion feu-fumée diffuse ; feather12 plafonné par épaisseur pour garder les franges.,SPRDRASI,"[100, 92]",11,11,0.0,0.0,False
+38,SPMETSWN,P,"Météores et nombreuses particules ; centres/trajectoires natifs, jamais de fusion.",SPMETSWM,"[156, 207]",45,45,10.263,0.0,False
+39,DSTDVL2A,D,"Nuage de poussière large ;17poses visibles puis90slots transparents, ne pas étirer le mouvement sur107slots.",STNKCLDD,"[128, 128]",18,18,0.0,0.0,True
+40,FALLMIST,S,"Petit nuage de31px ; feather2x4 de départ, pas12.",SPSMPUFF,"[31, 31]",9,9,0.0,0.0,False
+41,STEAM1,D,"Grande vapeur avec zones noires ; conserver la fumée sombre, pas de neutralisation globale.",SPHORPUF,"[73, 125]",9,9,34.828,0.0,False
+42,STEAM4,D,"Vapeur large, même protection des creux et teintes sombres.",SPHORPUF,"[81, 128]",9,9,30.143,0.0,False
+43,SPSMOLD,S,"Fumée de9px de large ; feather0, chaque pose tenue trois slots.",SPSMKJET,"[9, 52]",6,6,0.0,0.0,True
+44,SPSTINK,S,"Petites volutes séparées ; feather2x4 plafonné, ne pas remplir les trous.",SPSMPUFF,"[27, 52]",6,6,0.0,0.0,False
+45,SPAGSCHO,P,Traînée blanche granuleuse ; masque fin sans feather12 ni vectorisation globale.,SPSPARKS,"[65, 61]",30,30,0.0,0.0,False
+46,SPGREACI,H,"Nappe violette avec halo ; conserver la structure interne, ne pas tracer le halo en Bézier.",SPENTACI,"[48, 37]",16,16,0.0,0.0,False
+47,ACIDDTH,H,Petite flamme verte sur noir ; seuls21des63records sont utilisés par les deux cycles.,SPSCHGI,"[16, 43]",63,21,42.508,0.0,False
+48,LAVABUB1,P,Quelques gouttes orange sur grand canevas ; pas de crop qui déplace les centres.,SPSPARKS,"[128, 128]",15,15,0.0,0.0,False
+49,LAVABUB2,P,Gouttes minuscules puis huit poses noires ; préserver cette pause.,SPSPARKS,"[32, 32]",15,15,0.0,0.0,True
+50,SPOUTA,H,Trois phases d'éruption et pauses décalées ; garder la position temporelle des apparitions.,SPRDRABU,"[68, 119]",24,24,22.071,0.0,True

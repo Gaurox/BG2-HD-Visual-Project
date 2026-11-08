@@ -1,0 +1,161 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:FLSM1PUR",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          9,
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 21,
+    "source": {
+      "interpolation_run": "flsm1pur-xbr4x-apollo30-native-20261108-v1",
+      "interpolation_run_descriptor_sha256": "84D2AFFDA99F042720D3FEE7B0E309696B0AAA3743B5B01812781339F7ED6562",
+      "source_bam_sha256": "43549e1f6ae6f2eb48e57478eee0c80d2ccf36559ab1d38bf53b6087d7a966e7",
+      "spatial_manifest_sha256": "05675E911BE9B3465F62210479B906B78F6609E526D81BC82460B5C351F5E136",
+      "spatial_run": "flsm1pur-xbr4x-nativealpha-20261108-v1",
+      "spatial_run_descriptor_sha256": "81E82651E5249CC0AE6991EADD2AB833E47401D840F5EEA98122330E5DFCA141"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        20
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          18
+        ]
+      ],
+      "phase_count": 20,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          19,
+          18,
+          20
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-08",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 925,
+    "path": "effects/index/qa-decisions/FLSM1PUR/2026-11-08-accepted-bb4d61984dc2.json",
+    "sha256": "BB4D61984DC2CEF08B29F87D49B17A922E94DC4DD408E8B3F947BCAD9A21ED23"
+  },
+  "resref": "FLSM1PUR",
+  "run_descriptor": {
+    "bytes": 2046,
+    "path": "effects/ressources/FLSM1PUR/runs/flsm1pur-xbr4x-apollo30-native-20261108-v1/run.json",
+    "sha256": "84D2AFFDA99F042720D3FEE7B0E309696B0AAA3743B5B01812781339F7ED6562"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 16133,
+      "path": "effects/ressources/FLSM1PUR/packs/flsm1pur-xbr4x-apollo30-native-profiles-20261108-v1/manifest.json",
+      "sha256": "88DB961B9DAD6001D051FB1AA366349265987D07722E99478EC6BBDF1A29C6B2"
+    },
+    "registry": {
+      "bytes": 444,
+      "path": "effects/ressources/FLSM1PUR/packs/flsm1pur-xbr4x-apollo30-native-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "4E72FB13A0F384C51F6239E2A4FFC2E9AC80377C1C60B92B00A8C57A0BC68BD1"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "flsm1pur-xbr4x-apollo30-native-20261108-v1",
+  "source": {
+    "bytes": 1511,
+    "path": "effects/ressources/FLSM1PUR/source.bam",
+    "sha256": "43549E1F6AE6F2EB48E57478EEE0C80D2CCF36559AB1D38BF53B6087D7A966E7"
+  }
+}

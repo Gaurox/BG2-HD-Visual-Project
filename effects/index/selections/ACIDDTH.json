@@ -1,0 +1,243 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:ACIDDTH",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62
+        ],
+        "lookup_start": 9
+      }
+    ],
+    "frame_count": 44,
+    "source": {
+      "interpolation_run": "aciddth-xbr4x-apollo30-native-20261108-v1",
+      "interpolation_run_descriptor_sha256": "0C5BE10C54AAF662C7E81E1B70FEEEB117938A2E93227665D79C9691B7ED9C0C",
+      "source_bam_sha256": "1b25f6ac0161a7059d025f1bbc56855bada5b7b8b9b89de0210522d05058d512",
+      "spatial_manifest_sha256": "225EF51FB9972B4C058D4487B14E9ED342A422F936FB85DB506DB8F39B15CABB",
+      "spatial_run": "aciddth-xbr4x-nativealpha-20261108-v1",
+      "spatial_run_descriptor_sha256": "0D981841A1821E1907EAA31CA0C855C260041D32786458CDD1E0D048FB0920C2"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        18,
+        24
+      ],
+      "alternate_profiles": [
+        "cycle000-once",
+        "cycle001-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16
+        ],
+        [
+          19,
+          21,
+          23,
+          25,
+          27,
+          29,
+          31,
+          33,
+          35,
+          37,
+          39,
+          41
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 2,
+      "once_cycle_profiles": [
+        "cycle000-once",
+        "cycle001-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          16
+        ],
+        [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          41
+        ]
+      ],
+      "phase_count": 24,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 2,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          17,
+          16,
+          18
+        ],
+        [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          42,
+          41,
+          43
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-08",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 918,
+    "path": "effects/index/qa-decisions/ACIDDTH/2026-11-08-accepted-7ed349fa3386.json",
+    "sha256": "7ED349FA338692436031F6DAE19B432B495DA7FFEDA83D2B644EEF0389A4961C"
+  },
+  "resref": "ACIDDTH",
+  "run_descriptor": {
+    "bytes": 2033,
+    "path": "effects/ressources/ACIDDTH/runs/aciddth-xbr4x-apollo30-native-20261108-v1/run.json",
+    "sha256": "0C5BE10C54AAF662C7E81E1B70FEEEB117938A2E93227665D79C9691B7ED9C0C"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 31166,
+      "path": "effects/ressources/ACIDDTH/packs/aciddth-xbr4x-apollo30-native-profiles-20261108-v1/manifest.json",
+      "sha256": "047E6BA66D3B3A520F37508BB3C476D4C61DE557A8AEA05346CFA25FA1E4CC2D"
+    },
+    "registry": {
+      "bytes": 884,
+      "path": "effects/ressources/ACIDDTH/packs/aciddth-xbr4x-apollo30-native-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "9CE686AB2510149BDE4A5860B12B97A0FE6244DC0029022176389868562A94AD"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "aciddth-xbr4x-apollo30-native-20261108-v1",
+  "source": {
+    "bytes": 18750,
+    "path": "effects/ressources/ACIDDTH/source.bam",
+    "sha256": "1B25F6AC0161A7059D025F1BBC56855BADA5B7B8B9B89DE0210522D05058D512"
+  }
+}

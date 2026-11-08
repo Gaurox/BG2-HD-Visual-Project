@@ -1,0 +1,167 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPRDRAEX",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 23,
+    "source": {
+      "interpolation_run": "sprdraex-apollo30-native-anchors-20261108-v1",
+      "interpolation_run_descriptor_sha256": "7D1828AEF9A909F43B932F4CB93873BE5D036B53898DE14C6BFC09E87F2B5CA0",
+      "source_bam_sha256": "72bcf72870bcd9102c52c22ac6afbb1bbb006f2c6b51a8859702890bf2e45925",
+      "spatial_manifest_sha256": "C02B50CB9328840B26E485EE99947979634B823C8880A115132C9F4FE80ACE5C",
+      "spatial_run": "sprdraex-seedvr7b-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "2B4EC394D3B93FD8C95D6EBD7F7FAA37DF2ECFAC46D31D86B9BA6C04FF3A7A8B"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        22
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          20
+        ]
+      ],
+      "phase_count": 22,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          21,
+          20,
+          22
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-08",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 929,
+    "path": "effects/index/qa-decisions/SPRDRAEX/2026-11-08-accepted-47d460fb6b48.json",
+    "sha256": "47D460FB6B4833B2795C7146971DDD28F1250B681DFA4BA89D58370D636E17F9"
+  },
+  "resref": "SPRDRAEX",
+  "run_descriptor": {
+    "bytes": 2035,
+    "path": "effects/ressources/SPRDRAEX/runs/sprdraex-apollo30-native-anchors-20261108-v1/run.json",
+    "sha256": "7D1828AEF9A909F43B932F4CB93873BE5D036B53898DE14C6BFC09E87F2B5CA0"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 17593,
+      "path": "effects/ressources/SPRDRAEX/packs/sprdraex-7b-x4-apollo30-native-profiles-20261108-v2/manifest.json",
+      "sha256": "25A5D37375744D8A2A64803C73E47BDE81F5DD554B95BF07C667B719888DE46B"
+    },
+    "registry": {
+      "bytes": 480,
+      "path": "effects/ressources/SPRDRAEX/packs/sprdraex-7b-x4-apollo30-native-profiles-20261108-v2/EffectAnimations-X4.registry",
+      "sha256": "9AAD22F92DDE986BC9D7FCCE6DAF9FC9246F44735710E79DCC44261990D8A084"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "sprdraex-apollo30-native-anchors-20261108-v1",
+  "source": {
+    "bytes": 36603,
+    "path": "effects/ressources/SPRDRAEX/source.bam",
+    "sha256": "72BCF72870BCD9102C52C22AC6AFBB1BBB006F2C6B51A8859702890BF2E45925"
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPFLADOW",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 23,
+    "source": {
+      "interpolation_run": "spfladow-apollo30-native-anchors-20261108-v1",
+      "interpolation_run_descriptor_sha256": "42304068E2D0494E5D0A3E7B73249E1349DFB89984C2B82BA2BA08B9CECB69B8",
+      "source_bam_sha256": "10a2f5b44bf0b92116371a7667088b4307f282876735c7106b66f6d33d0f7417",
+      "spatial_manifest_sha256": "E1990B4B4711793A19C029AA92B74A8FB71C850AC31A494A6D9FEDE0E7AD950F",
+      "spatial_run": "spfladow-seedvr7b-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "E494AD9FAF639F5B3C65B830C7BEF3787CB2C2833EBBBBBF1EB0CA9D3CE3653C"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        22
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          20
+        ]
+      ],
+      "phase_count": 22,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          21,
+          20,
+          22
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-08",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 929,
+    "path": "effects/index/qa-decisions/SPFLADOW/2026-11-08-accepted-fb16abae8eb7.json",
+    "sha256": "FB16ABAE8EB7E77F57DAC4E6234C04B0A14665043E547B1AA8FC78EAB5737DDE"
+  },
+  "resref": "SPFLADOW",
+  "run_descriptor": {
+    "bytes": 1978,
+    "path": "effects/ressources/SPFLADOW/runs/spfladow-apollo30-native-anchors-20261108-v1/run.json",
+    "sha256": "42304068E2D0494E5D0A3E7B73249E1349DFB89984C2B82BA2BA08B9CECB69B8"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 17611,
+      "path": "effects/ressources/SPFLADOW/packs/spfladow-7b-x4-apollo30-native-profiles-20261108-v2/manifest.json",
+      "sha256": "F822BE9E652ED0C1C58D936EA9585A9A031B31E41737063C13E4810960F01DCF"
+    },
+    "registry": {
+      "bytes": 480,
+      "path": "effects/ressources/SPFLADOW/packs/spfladow-7b-x4-apollo30-native-profiles-20261108-v2/EffectAnimations-X4.registry",
+      "sha256": "B8D4CA92A86E62B37E1F1DFF9334E1A8897D616C24571258C812F17099CD7EAC"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spfladow-apollo30-native-anchors-20261108-v1",
+  "source": {
+    "bytes": 38585,
+    "path": "effects/ressources/SPFLADOW/source.bam",
+    "sha256": "10A2F5B44BF0B92116371A7667088B4307F282876735C7106B66F6D33D0F7417"
+  }
+}

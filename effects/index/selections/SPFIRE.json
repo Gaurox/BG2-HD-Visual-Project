@@ -1,0 +1,137 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPFIRE",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 13,
+    "source": {
+      "interpolation_run": "spfire-xbr4x-apollo30-native-20261108-v1",
+      "interpolation_run_descriptor_sha256": "7A596D00B2AE2AD9C027C767361182812BE58B922A69367CBFF2DBDDEC71E4A3",
+      "source_bam_sha256": "61a3d4d437fcef7c49543b8295e2790a045b51662cb91f74164651409b32b046",
+      "spatial_manifest_sha256": "6169DF31882226162194298B069E9A5F8B654D3E15420805725C3A08BB8F6B5B",
+      "spatial_run": "spfire-xbr4x-nativealpha-20261108-v1",
+      "spatial_run_descriptor_sha256": "9EC9E6A1024C538F146A4F03B868B9D2EB46679A12A33C46C0FC000F193F22F3"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          10
+        ]
+      ],
+      "phase_count": 12,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          11,
+          10,
+          12
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-08",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 911,
+    "path": "effects/index/qa-decisions/SPFIRE/2026-11-08-accepted-3ff31552b3ae.json",
+    "sha256": "3FF31552B3AE9F103E9E55C63E8E97A5E183FAF90F877B2FFA5039BF78587C26"
+  },
+  "resref": "SPFIRE",
+  "run_descriptor": {
+    "bytes": 2015,
+    "path": "effects/ressources/SPFIRE/runs/spfire-xbr4x-apollo30-native-20261108-v1/run.json",
+    "sha256": "7A596D00B2AE2AD9C027C767361182812BE58B922A69367CBFF2DBDDEC71E4A3"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 10891,
+      "path": "effects/ressources/SPFIRE/packs/spfire-xbr4x-apollo30-native-profiles-20261108-v1/manifest.json",
+      "sha256": "106B0C8DD8E679927E400E63C7A1DF6D32DA6E448B2ED389235158A7364CF180"
+    },
+    "registry": {
+      "bytes": 300,
+      "path": "effects/ressources/SPFIRE/packs/spfire-xbr4x-apollo30-native-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "76908522D0EAB16B53C97BE6414E3E06BD0B1F3FA1EB93D7DFAA834D7998E3D0"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spfire-xbr4x-apollo30-native-20261108-v1",
+  "source": {
+    "bytes": 1300,
+    "path": "effects/ressources/SPFIRE/source.bam",
+    "sha256": "61A3D4D437FCEF7C49543B8295E2790A045B51662CB91F74164651409B32B046"
+  }
+}

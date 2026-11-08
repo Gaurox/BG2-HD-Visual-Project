@@ -1,0 +1,155 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:STEAM1",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 19,
+    "source": {
+      "interpolation_run": "steam1-black-transparent-apollo30-20261108-v1",
+      "interpolation_run_descriptor_sha256": "6962E5D9423C7170C8761D03BF76C6DE39BD36EFEB1B592D1DD75EDA14692E2C",
+      "source_bam_sha256": "8cd825567eed4345407548e6d19ca8058892d822dbed59fd4a03c060b790c4d8",
+      "spatial_manifest_sha256": "03F5C5389A0EDF75AC8DB7007C028F0FC9F2BD10C70142080E45B90439C777EE",
+      "spatial_run": "steam1-seedvr7b-x4-20261108-v1",
+      "spatial_run_descriptor_sha256": "1573C4C65E0CC1E9431295A5DCCD05C6E36BB679953AFC4459967A1F54261FB4"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        18
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          16
+        ]
+      ],
+      "phase_count": 18,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          17,
+          16,
+          18
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-08",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 917,
+    "path": "effects/index/qa-decisions/STEAM1/2026-11-08-accepted-0e709852b701.json",
+    "sha256": "0E709852B701149A939D14C2339F7D5FBC84AACF16D6036ABC375AE119867AD0"
+  },
+  "resref": "STEAM1",
+  "run_descriptor": {
+    "bytes": 2121,
+    "path": "effects/ressources/STEAM1/runs/steam1-black-transparent-apollo30-20261108-v1/run.json",
+    "sha256": "6962E5D9423C7170C8761D03BF76C6DE39BD36EFEB1B592D1DD75EDA14692E2C"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 14962,
+      "path": "effects/ressources/STEAM1/packs/steam1-black-transparent-profiles-20261108-v1/manifest.json",
+      "sha256": "E3DE0B8B20895B0F9F9ED2777DC9C56204BFBE8FC3A29D779943A6DFBA4E6C01"
+    },
+    "registry": {
+      "bytes": 408,
+      "path": "effects/ressources/STEAM1/packs/steam1-black-transparent-profiles-20261108-v1/EffectAnimations-X4.registry",
+      "sha256": "77FE88BC35F00C47B83CB4037B4836AB8D042A15AED168E98C8D8F96963A33CD"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "steam1-black-transparent-apollo30-20261108-v1",
+  "source": {
+    "bytes": 25352,
+    "path": "effects/ressources/STEAM1/source.bam",
+    "sha256": "8CD825567EED4345407548E6D19CA8058892D822DBED59FD4A03C060B790C4D8"
+  }
+}

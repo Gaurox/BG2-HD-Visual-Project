@@ -1,0 +1,3892 @@
+{
+  "date": "2026-11-08",
+  "status": "analysis-only-no-inference",
+  "proposal": "effects\\batches\\lot50-fire-smoke-proposal-20261028-v1",
+  "profile_counts": {
+    "F": 12,
+    "T": 7,
+    "H": 15,
+    "G": 3,
+    "P": 6,
+    "D": 4,
+    "S": 3
+  },
+  "profiles": {
+    "F": {
+      "name": "Flammes fines",
+      "spatial": "SeedVR2 7B INT8 / LAB x4",
+      "rgb_gauss_sigma_x4": 0,
+      "inner_feather_x4": 0,
+      "mask": "alpha natif nearest4, interpolation alpha selon ancres temporelles",
+      "alternative": "Contour continu0.60 seulement si marches visibles ; adaptation à comparer, pas encore validée sur ces flammes."
+    },
+    "T": {
+      "name": "Feu texturé",
+      "spatial": "SeedVR2 7B INT8 / LAB x4",
+      "rgb_gauss_sigma_x4": 1.2,
+      "inner_feather_x4": 0,
+      "mask": "alpha natif nearest4 ; particules natives protégées",
+      "alternative": "Réduire gauss à0 si disparition de grains ; contour continu local si silhouette crénelée."
+    },
+    "H": {
+      "name": "Énergie / halo",
+      "spatial": "SeedVR2 7B INT8 / LAB x4",
+      "rgb_gauss_sigma_x4": 1.2,
+      "inner_feather_x4": 0,
+      "mask": "support natif ; dégradé lumineux conservé dans RGB",
+      "normal_variant": "Si propriétaire lumineux établi : alpha de flux A2=round(A*max(RGB)/255), RGB droit reconstruit ; vérifier énergie prémultipliée erreur<=1. Sinon témoin alpha natif conservé.",
+      "alternative": "Jamais de clé noire globale ni Bézier du halo ; conversion de flux en alpha est une variante conditionnelle."
+    },
+    "D": {
+      "name": "Grand diffus",
+      "spatial": "SeedVR2 7B INT8 / LAB x4",
+      "rgb_gauss_sigma_x4": 1.2,
+      "inner_feather_x4": 12,
+      "mask": "alpha natif, feather interne12 limité localement aux grosses masses",
+      "alternative": "Témoin feather0 et couverture des petites composantes ; plafonnement local = adaptation à comparer."
+    },
+    "S": {
+      "name": "Fumée fine",
+      "spatial": "SeedVR2 7B INT8 / LAB x4",
+      "rgb_gauss_sigma_x4": 0,
+      "inner_feather_x4": 2,
+      "mask": "fondu2x4 de départ, borné par épaisseur ; pas de retrait",
+      "alternative": "Paramètre2 adapté, pas une recette déjà acceptée ; témoin0. SPSMOLD impose0."
+    },
+    "P": {
+      "name": "Particules / gouttes",
+      "spatial": "SeedVR2 7B INT8 / LAB x4",
+      "rgb_gauss_sigma_x4": 0,
+      "inner_feather_x4": 0,
+      "mask": "alpha natif nearest4 ; chaque composante/centre conservé",
+      "alternative": "Essai continu0.60 hérité des nuées seulement si escalier gênant ; évaluer grains et masse alpha, pas de disques ni micro-flou."
+    },
+    "G": {
+      "name": "Fond vert à résoudre",
+      "spatial": "Préparer une dérivation source ; ensuite profilF SeedVR7B x4",
+      "rgb_gauss_sigma_x4": 0,
+      "inner_feather_x4": 0,
+      "mask": "hypothèse : seul index vert exact connecté au bord devient transparent dans une copie de travail",
+      "alternative": "Conserver source et témoin inchangés. Hypothèse non validée par usage/blend natif ; ne pas lancer directement sur le rectangle vert."
+    }
+  },
+  "assets": [
+    {
+      "ordinal": 1,
+      "resref": "FIM1YEL",
+      "profile": "F",
+      "recipe": {
+        "name": "Flammes fines",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4, interpolation alpha selon ancres temporelles",
+        "alternative": "Contour continu0.60 seulement si marches visibles ; adaptation à comparer, pas encore validée sur ces flammes."
+      },
+      "reason": "Petite flamme, protéger pointes et scintillement.",
+      "nearest_historical_analogue": "SPBRNHND",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FIM1YEL/source.bam",
+      "source_sha256": "61B334077D4CDDB6A575DC1332305754E3EE004FDE8171CC7E77C59ABAF132D7",
+      "canvas_x1": [
+        25,
+        25
+      ],
+      "source_records": 16,
+      "used_records": 16,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 16,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.115,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Apollo : padding temporaire min128 et multiple32, recadrage exact ; aucun déplacement monde."
+      ]
+    },
+    {
+      "ordinal": 2,
+      "resref": "FIM2YEL",
+      "profile": "F",
+      "recipe": {
+        "name": "Flammes fines",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4, interpolation alpha selon ancres temporelles",
+        "alternative": "Contour continu0.60 seulement si marches visibles ; adaptation à comparer, pas encore validée sur ces flammes."
+      },
+      "reason": "Flamme jaune-verte compacte, même précaution sur les bords.",
+      "nearest_historical_analogue": "SPBRNHND",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FIM2YEL/source.bam",
+      "source_sha256": "ABE89FABA2279D9E3913041DDAE0BBE122EB6168AEA3FE84C5C6DC088C843BC0",
+      "canvas_x1": [
+        40,
+        40
+      ],
+      "source_records": 16,
+      "used_records": 16,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 16,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.345,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": []
+    },
+    {
+      "ordinal": 3,
+      "resref": "FIRE_1B",
+      "profile": "T",
+      "recipe": {
+        "name": "Feu texturé",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4 ; particules natives protégées",
+        "alternative": "Réduire gauss à0 si disparition de grains ; contour continu local si silhouette crénelée."
+      },
+      "reason": "Flamme avec traîne sombre ; garder le brun de fumée en alpha normal.",
+      "nearest_historical_analogue": "SPBURN",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FIRE_1B/source.bam",
+      "source_sha256": "1E4E99E9339DB3E68AD592BECC24D6BE8D004F5EC42B8441BD57851EF599192C",
+      "canvas_x1": [
+        25,
+        50
+      ],
+      "source_records": 15,
+      "used_records": 15,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 15,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 1,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 2,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 3,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 4,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 4.07,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        1
+      ],
+      "tiny_component_pixel_percent": 0.103,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Cycles vides conservés dans carrier, exclus de l’inférence et des profils animés.",
+        "Apollo : padding temporaire min128 et multiple32, recadrage exact ; aucun déplacement monde."
+      ]
+    },
+    {
+      "ordinal": 4,
+      "resref": "FIRE_1C",
+      "profile": "T",
+      "recipe": {
+        "name": "Feu texturé",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4 ; particules natives protégées",
+        "alternative": "Réduire gauss à0 si disparition de grains ; contour continu local si silhouette crénelée."
+      },
+      "reason": "Flamme étroite avec traîne ; pas de fondu interne large.",
+      "nearest_historical_analogue": "SPBURN",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FIRE_1C/source.bam",
+      "source_sha256": "E5B94689788F120DF584475E636299D7BAE5FE05FE68A39A1EC9143AA3B91407",
+      "canvas_x1": [
+        23,
+        47
+      ],
+      "source_records": 15,
+      "used_records": 15,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 15,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 1,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 2,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 3,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 4,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 3.223,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.067,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Cycles vides conservés dans carrier, exclus de l’inférence et des profils animés.",
+        "Apollo : padding temporaire min128 et multiple32, recadrage exact ; aucun déplacement monde."
+      ]
+    },
+    {
+      "ordinal": 5,
+      "resref": "FIRE_1GR",
+      "profile": "H",
+      "recipe": {
+        "name": "Énergie / halo",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 0,
+        "mask": "support natif ; dégradé lumineux conservé dans RGB",
+        "normal_variant": "Si propriétaire lumineux établi : alpha de flux A2=round(A*max(RGB)/255), RGB droit reconstruit ; vérifier énergie prémultipliée erreur<=1. Sinon témoin alpha natif conservé.",
+        "alternative": "Jamais de clé noire globale ni Bézier du halo ; conversion de flux en alpha est une variante conditionnelle."
+      },
+      "reason": "Flamme verte sur matte sombre rectangulaire ; compagnon normal neutre conditionnel.",
+      "nearest_historical_analogue": "SPSCHGI",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FIRE_1GR/source.bam",
+      "source_sha256": "F577EFB33F7F2A087C897EE34D964BB5E522530C88C238B0A9FE3EB90011B411",
+      "canvas_x1": [
+        50,
+        50
+      ],
+      "source_records": 15,
+      "used_records": 15,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 15,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 1,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 2,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 3,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 4,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 52.037,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Cycles vides conservés dans carrier, exclus de l’inférence et des profils animés."
+      ]
+    },
+    {
+      "ordinal": 6,
+      "resref": "FIRE_1GS",
+      "profile": "H",
+      "recipe": {
+        "name": "Énergie / halo",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 0,
+        "mask": "support natif ; dégradé lumineux conservé dans RGB",
+        "normal_variant": "Si propriétaire lumineux établi : alpha de flux A2=round(A*max(RGB)/255), RGB droit reconstruit ; vérifier énergie prémultipliée erreur<=1. Sinon témoin alpha natif conservé.",
+        "alternative": "Jamais de clé noire globale ni Bézier du halo ; conversion de flux en alpha est une variante conditionnelle."
+      },
+      "reason": "Flamme et halo sur matte noire ; ne pas mélanger la matte avec le décor en normal.",
+      "nearest_historical_analogue": "SPSCHGI",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FIRE_1GS/source.bam",
+      "source_sha256": "E9B93E1012676A49C81AEC701598DB6D597BAD4675B7E4AAAB11C9765208BF54",
+      "canvas_x1": [
+        50,
+        50
+      ],
+      "source_records": 15,
+      "used_records": 15,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 15,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 1,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 2,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 3,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 4,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 50.323,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Cycles vides conservés dans carrier, exclus de l’inférence et des profils animés."
+      ]
+    },
+    {
+      "ordinal": 7,
+      "resref": "FIRE_2",
+      "profile": "H",
+      "recipe": {
+        "name": "Énergie / halo",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 0,
+        "mask": "support natif ; dégradé lumineux conservé dans RGB",
+        "normal_variant": "Si propriétaire lumineux établi : alpha de flux A2=round(A*max(RGB)/255), RGB droit reconstruit ; vérifier énergie prémultipliée erreur<=1. Sinon témoin alpha natif conservé.",
+        "alternative": "Jamais de clé noire globale ni Bézier du halo ; conversion de flux en alpha est une variante conditionnelle."
+      },
+      "reason": "Boule verte texturée et halo sombre ; conserver énergie lumineuse.",
+      "nearest_historical_analogue": "SPENTACI",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FIRE_2/source.bam",
+      "source_sha256": "694578D328B896E2FB614261B33E605324C4642CCA61FD57030903E3BD70C4EA",
+      "canvas_x1": [
+        57,
+        69
+      ],
+      "source_records": 16,
+      "used_records": 16,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 16,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 1,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 2,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 3,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 4,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 15.956,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        1
+      ],
+      "tiny_component_pixel_percent": 0.037,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Cycles vides conservés dans carrier, exclus de l’inférence et des profils animés."
+      ]
+    },
+    {
+      "ordinal": 8,
+      "resref": "FIRE_2A",
+      "profile": "H",
+      "recipe": {
+        "name": "Énergie / halo",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 0,
+        "mask": "support natif ; dégradé lumineux conservé dans RGB",
+        "normal_variant": "Si propriétaire lumineux établi : alpha de flux A2=round(A*max(RGB)/255), RGB droit reconstruit ; vérifier énergie prémultipliée erreur<=1. Sinon témoin alpha natif conservé.",
+        "alternative": "Jamais de clé noire globale ni Bézier du halo ; conversion de flux en alpha est une variante conditionnelle."
+      },
+      "reason": "Variante verte brillante ; palette indépendante, même géométrie à conserver.",
+      "nearest_historical_analogue": "SPENTACI",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FIRE_2A/source.bam",
+      "source_sha256": "1504D75A99F317AD01ED80F97B7A247AF2F27BD4F657EDBC8600FA5206996890",
+      "canvas_x1": [
+        57,
+        69
+      ],
+      "source_records": 16,
+      "used_records": 16,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 16,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 1,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 2,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 3,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 4,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 16.12,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        1
+      ],
+      "tiny_component_pixel_percent": 0.037,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Cycles vides conservés dans carrier, exclus de l’inférence et des profils animés."
+      ]
+    },
+    {
+      "ordinal": 9,
+      "resref": "FIRE_4BL",
+      "profile": "F",
+      "recipe": {
+        "name": "Flammes fines",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4, interpolation alpha selon ancres temporelles",
+        "alternative": "Contour continu0.60 seulement si marches visibles ; adaptation à comparer, pas encore validée sur ces flammes."
+      },
+      "reason": "Petite flamme cyan, faible épaisseur ; aucun feather12.",
+      "nearest_historical_analogue": "SPBRNHND",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FIRE_4BL/source.bam",
+      "source_sha256": "4A32D607DB4FA6848D9169D006274076E759D51B5327034BC8F02767A18D8A41",
+      "canvas_x1": [
+        16,
+        32
+      ],
+      "source_records": 14,
+      "used_records": 14,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 14,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 1,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 2,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 3,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 4,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 9.677,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [],
+      "tiny_component_pixel_percent": 0.061,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Cycles vides conservés dans carrier, exclus de l’inférence et des profils animés.",
+        "Apollo : padding temporaire min128 et multiple32, recadrage exact ; aucun déplacement monde."
+      ]
+    },
+    {
+      "ordinal": 10,
+      "resref": "FIRE_4G2",
+      "profile": "H",
+      "recipe": {
+        "name": "Énergie / halo",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "support natif ; dégradé lumineux conservé dans RGB",
+        "normal_variant": "Si propriétaire lumineux établi : alpha de flux A2=round(A*max(RGB)/255), RGB droit reconstruit ; vérifier énergie prémultipliée erreur<=1. Sinon témoin alpha natif conservé.",
+        "alternative": "Jamais de clé noire globale ni Bézier du halo ; conversion de flux en alpha est une variante conditionnelle."
+      },
+      "reason": "Petite flamme verte, majorité sombre ; RGB sans gauss sur ce petit motif.",
+      "nearest_historical_analogue": "SPSCHGI",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FIRE_4G2/source.bam",
+      "source_sha256": "BC0CAC6A475740EF429846B3F3F5F5D42311A3D4D688C7EC3FAEC408F5E771FB",
+      "canvas_x1": [
+        16,
+        32
+      ],
+      "source_records": 14,
+      "used_records": 14,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 14,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 1,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 2,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 3,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 4,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 58.984,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Cycles vides conservés dans carrier, exclus de l’inférence et des profils animés.",
+        "Apollo : padding temporaire min128 et multiple32, recadrage exact ; aucun déplacement monde."
+      ]
+    },
+    {
+      "ordinal": 11,
+      "resref": "FIRE_4GR",
+      "profile": "F",
+      "recipe": {
+        "name": "Flammes fines",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4, interpolation alpha selon ancres temporelles",
+        "alternative": "Contour continu0.60 seulement si marches visibles ; adaptation à comparer, pas encore validée sur ces flammes."
+      },
+      "reason": "Petite flamme verte-jaune ; préserver franges et variations de teinte.",
+      "nearest_historical_analogue": "SPBRNHND",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FIRE_4GR/source.bam",
+      "source_sha256": "AA479EC1AC4082EF9A92664D66DE91C393B956CD71796B248BAC09B597EEC852",
+      "canvas_x1": [
+        16,
+        32
+      ],
+      "source_records": 14,
+      "used_records": 14,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 14,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 1,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 2,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 3,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 4,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 9.677,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [],
+      "tiny_component_pixel_percent": 0.061,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Cycles vides conservés dans carrier, exclus de l’inférence et des profils animés.",
+        "Apollo : padding temporaire min128 et multiple32, recadrage exact ; aucun déplacement monde."
+      ]
+    },
+    {
+      "ordinal": 12,
+      "resref": "FISM1YEL",
+      "profile": "F",
+      "recipe": {
+        "name": "Flammes fines",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4, interpolation alpha selon ancres temporelles",
+        "alternative": "Contour continu0.60 seulement si marches visibles ; adaptation à comparer, pas encore validée sur ces flammes."
+      },
+      "reason": "Très petite flamme, le flou peut la faire disparaître.",
+      "nearest_historical_analogue": "SPBRNHND",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FISM1YEL/source.bam",
+      "source_sha256": "91D7B4ED849CFECA27FDB7BCA589458D1F05904E641E95EF7681D8AE5902C3A7",
+      "canvas_x1": [
+        20,
+        20
+      ],
+      "source_records": 10,
+      "used_records": 10,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 10,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Apollo : padding temporaire min128 et multiple32, recadrage exact ; aucun déplacement monde."
+      ]
+    },
+    {
+      "ordinal": 13,
+      "resref": "FLLGBLU",
+      "profile": "F",
+      "recipe": {
+        "name": "Flammes fines",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4, interpolation alpha selon ancres temporelles",
+        "alternative": "Contour continu0.60 seulement si marches visibles ; adaptation à comparer, pas encore validée sur ces flammes."
+      },
+      "reason": "Flamme orange malgré le nom ; se baser sur la palette réellement extraite.",
+      "nearest_historical_analogue": "SPBRNHND",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FLLGBLU/source.bam",
+      "source_sha256": "FCB32862194CFD9151FF081E459831893FFDC140AD3AABD97C7E8C6714A4B68F",
+      "canvas_x1": [
+        27,
+        36
+      ],
+      "source_records": 16,
+      "used_records": 16,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 16,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.298,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Apollo : padding temporaire min128 et multiple32, recadrage exact ; aucun déplacement monde."
+      ]
+    },
+    {
+      "ordinal": 14,
+      "resref": "FLLGBLUE",
+      "profile": "G",
+      "recipe": {
+        "name": "Fond vert à résoudre",
+        "spatial": "Préparer une dérivation source ; ensuite profilF SeedVR7B x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "hypothèse : seul index vert exact connecté au bord devient transparent dans une copie de travail",
+        "alternative": "Conserver source et témoin inchangés. Hypothèse non validée par usage/blend natif ; ne pas lancer directement sur le rectangle vert."
+      },
+      "reason": "Fond vert opaque index47 ; essai de masque indexé exact avant toute inférence.",
+      "nearest_historical_analogue": "SPBRNHND",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FLLGBLUE/source.bam",
+      "source_sha256": "65F3226FF563D4B8B540E0B4FDFA2F9BF57C5E07602FB80309936327F17CE2CE",
+      "canvas_x1": [
+        40,
+        40
+      ],
+      "source_records": 16,
+      "used_records": 16,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 16,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 71.516,
+      "green_palette_indices": [
+        0,
+        47
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": []
+    },
+    {
+      "ordinal": 15,
+      "resref": "FLLGRED",
+      "profile": "T",
+      "recipe": {
+        "name": "Feu texturé",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4 ; particules natives protégées",
+        "alternative": "Réduire gauss à0 si disparition de grains ; contour continu local si silhouette crénelée."
+      },
+      "reason": "Flamme orange plus large ; préserver les petits fragments détachés.",
+      "nearest_historical_analogue": "SPBURN",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FLLGRED/source.bam",
+      "source_sha256": "7966CFDD36CB49AC70A99B9B4143365A48E23CF0DDCFAD65F2F72549C2B314BF",
+      "canvas_x1": [
+        50,
+        50
+      ],
+      "source_records": 16,
+      "used_records": 16,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 16,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.298,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": []
+    },
+    {
+      "ordinal": 16,
+      "resref": "FLM1PUR",
+      "profile": "F",
+      "recipe": {
+        "name": "Flammes fines",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4, interpolation alpha selon ancres temporelles",
+        "alternative": "Contour continu0.60 seulement si marches visibles ; adaptation à comparer, pas encore validée sur ces flammes."
+      },
+      "reason": "Flamme violette minuscule, garder la silhouette et la couleur.",
+      "nearest_historical_analogue": "SPBRNHND",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FLM1PUR/source.bam",
+      "source_sha256": "2C41BC027BF4DAC2189455C4004A8E8B1D690E213327F1BC279378C0A563A87C",
+      "canvas_x1": [
+        14,
+        18
+      ],
+      "source_records": 16,
+      "used_records": 16,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 16,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.151,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Apollo : padding temporaire min128 et multiple32, recadrage exact ; aucun déplacement monde."
+      ]
+    },
+    {
+      "ordinal": 17,
+      "resref": "FLM1RED",
+      "profile": "F",
+      "recipe": {
+        "name": "Flammes fines",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4, interpolation alpha selon ancres temporelles",
+        "alternative": "Contour continu0.60 seulement si marches visibles ; adaptation à comparer, pas encore validée sur ces flammes."
+      },
+      "reason": "Petite flamme orange ; traitement sans flou additionnel.",
+      "nearest_historical_analogue": "SPBRNHND",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FLM1RED/source.bam",
+      "source_sha256": "5F0D479BBB96946D19E9C9436F5828CEF85A01F1104F5C2733030F3D3EC2B503",
+      "canvas_x1": [
+        20,
+        20
+      ],
+      "source_records": 16,
+      "used_records": 16,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 16,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.151,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Apollo : padding temporaire min128 et multiple32, recadrage exact ; aucun déplacement monde."
+      ]
+    },
+    {
+      "ordinal": 18,
+      "resref": "FLM2RED",
+      "profile": "F",
+      "recipe": {
+        "name": "Flammes fines",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4, interpolation alpha selon ancres temporelles",
+        "alternative": "Contour continu0.60 seulement si marches visibles ; adaptation à comparer, pas encore validée sur ces flammes."
+      },
+      "reason": "Flamme compacte ; conserver détail et variations de taille.",
+      "nearest_historical_analogue": "SPBRNHND",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FLM2RED/source.bam",
+      "source_sha256": "8A0ACA453DF888FDA0530F02420EB9C4DDA4F7D5791CDC5BD6D4081088E14FA5",
+      "canvas_x1": [
+        40,
+        40
+      ],
+      "source_records": 16,
+      "used_records": 16,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 16,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.345,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": []
+    },
+    {
+      "ordinal": 19,
+      "resref": "FLMDBLU",
+      "profile": "G",
+      "recipe": {
+        "name": "Fond vert à résoudre",
+        "spatial": "Préparer une dérivation source ; ensuite profilF SeedVR7B x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "hypothèse : seul index vert exact connecté au bord devient transparent dans une copie de travail",
+        "alternative": "Conserver source et témoin inchangés. Hypothèse non validée par usage/blend natif ; ne pas lancer directement sur le rectangle vert."
+      },
+      "reason": "Fond vert opaque index39, plus de90% du support ; ne pas envoyer ce fond au modèle.",
+      "nearest_historical_analogue": "SPBRNHND",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FLMDBLU/source.bam",
+      "source_sha256": "B8506C448A7AF9C17E5AB5EB46E21F0D281B51D174789D4573D1DE9BB5E3EDEB",
+      "canvas_x1": [
+        40,
+        40
+      ],
+      "source_records": 16,
+      "used_records": 16,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 16,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 91.328,
+      "green_palette_indices": [
+        0,
+        39
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": []
+    },
+    {
+      "ordinal": 20,
+      "resref": "FLML",
+      "profile": "F",
+      "recipe": {
+        "name": "Flammes fines",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4, interpolation alpha selon ancres temporelles",
+        "alternative": "Contour continu0.60 seulement si marches visibles ; adaptation à comparer, pas encore validée sur ces flammes."
+      },
+      "reason": "Flamme très étroite, six poses ; protéger la structure verticale.",
+      "nearest_historical_analogue": "SPBRNHND",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FLML/source.bam",
+      "source_sha256": "08247D3823959477A2E775551A15F08ECB267C1440898B42367D4382A736E4FC",
+      "canvas_x1": [
+        11,
+        21
+      ],
+      "source_records": 6,
+      "used_records": 6,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 6,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Apollo : padding temporaire min128 et multiple32, recadrage exact ; aucun déplacement monde."
+      ]
+    },
+    {
+      "ordinal": 21,
+      "resref": "FLSM1PUR",
+      "profile": "G",
+      "recipe": {
+        "name": "Fond vert à résoudre",
+        "spatial": "Préparer une dérivation source ; ensuite profilF SeedVR7B x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "hypothèse : seul index vert exact connecté au bord devient transparent dans une copie de travail",
+        "alternative": "Conserver source et témoin inchangés. Hypothèse non validée par usage/blend natif ; ne pas lancer directement sur le rectangle vert."
+      },
+      "reason": "Fond vert opaque index245 ; masque dérivé conditionnel, source conservée.",
+      "nearest_historical_analogue": "SPBRNHND",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FLSM1PUR/source.bam",
+      "source_sha256": "43549E1F6AE6F2EB48E57478EEE0C80D2CCF36559AB1D38BF53B6087D7A966E7",
+      "canvas_x1": [
+        20,
+        20
+      ],
+      "source_records": 10,
+      "used_records": 10,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 10,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 88.472,
+      "green_palette_indices": [
+        245
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Apollo : padding temporaire min128 et multiple32, recadrage exact ; aucun déplacement monde."
+      ]
+    },
+    {
+      "ordinal": 22,
+      "resref": "FLSM1RED",
+      "profile": "F",
+      "recipe": {
+        "name": "Flammes fines",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4, interpolation alpha selon ancres temporelles",
+        "alternative": "Contour continu0.60 seulement si marches visibles ; adaptation à comparer, pas encore validée sur ces flammes."
+      },
+      "reason": "Flamme minuscule, priorité à la couverture des pixels lumineux.",
+      "nearest_historical_analogue": "SPBRNHND",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FLSM1RED/source.bam",
+      "source_sha256": "4B5F1E6D5C38250D073B7BDD87EC22BF6D261494900A5C9513543A0EBE9DA4FB",
+      "canvas_x1": [
+        20,
+        20
+      ],
+      "source_records": 10,
+      "used_records": 10,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 10,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Apollo : padding temporaire min128 et multiple32, recadrage exact ; aucun déplacement monde."
+      ]
+    },
+    {
+      "ordinal": 23,
+      "resref": "LAVAFIR1",
+      "profile": "H",
+      "recipe": {
+        "name": "Énergie / halo",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 0,
+        "mask": "support natif ; dégradé lumineux conservé dans RGB",
+        "normal_variant": "Si propriétaire lumineux établi : alpha de flux A2=round(A*max(RGB)/255), RGB droit reconstruit ; vérifier énergie prémultipliée erreur<=1. Sinon témoin alpha natif conservé.",
+        "alternative": "Jamais de clé noire globale ni Bézier du halo ; conversion de flux en alpha est une variante conditionnelle."
+      },
+      "reason": "Lave et pointes sur grande matte noire ; pas de détourage par seuil de luminance.",
+      "nearest_historical_analogue": "SPENTACI",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/LAVAFIR1/source.bam",
+      "source_sha256": "A5CC256491E22B508020B0D8FBD1F1FA24294B57E92CF3D2E636A1CDBF572D45",
+      "canvas_x1": [
+        126,
+        126
+      ],
+      "source_records": 10,
+      "used_records": 10,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 10,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 1,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 2,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 3,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 4,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 83.741,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Cycles vides conservés dans carrier, exclus de l’inférence et des profils animés."
+      ]
+    },
+    {
+      "ordinal": 24,
+      "resref": "EXPLODE",
+      "profile": "T",
+      "recipe": {
+        "name": "Feu texturé",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4 ; particules natives protégées",
+        "alternative": "Réduire gauss à0 si disparition de grains ; contour continu local si silhouette crénelée."
+      },
+      "reason": "Explosion dense avec grains périphériques ; feather0 initial pour garder ces grains.",
+      "nearest_historical_analogue": "SPBOOM",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/EXPLODE/source.bam",
+      "source_sha256": "2A6B43BC61CDD631506EC048F06DB7EE2F9CAD609E2B6A4EE731C8A8F4B559CC",
+      "canvas_x1": [
+        75,
+        71
+      ],
+      "source_records": 12,
+      "used_records": 12,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 12,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.032,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        127
+      ],
+      "tiny_component_pixel_percent": 0.021,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": []
+    },
+    {
+      "ordinal": 25,
+      "resref": "SPBDBUR",
+      "profile": "F",
+      "recipe": {
+        "name": "Flammes fines",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4, interpolation alpha selon ancres temporelles",
+        "alternative": "Contour continu0.60 seulement si marches visibles ; adaptation à comparer, pas encore validée sur ces flammes."
+      },
+      "reason": "Petit impact vert clair ; pas de retrait ni feather large.",
+      "nearest_historical_analogue": "SPBRNHND",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/SPBDBUR/source.bam",
+      "source_sha256": "B54BF8B22C9165AEFA5169B61BC9C81DE1D44929819A9D9AF71CE5EC3A5C9A4E",
+      "canvas_x1": [
+        17,
+        25
+      ],
+      "source_records": 15,
+      "used_records": 15,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 15,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Apollo : padding temporaire min128 et multiple32, recadrage exact ; aucun déplacement monde."
+      ]
+    },
+    {
+      "ordinal": 26,
+      "resref": "SPBDBURS",
+      "profile": "H",
+      "recipe": {
+        "name": "Énergie / halo",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 0,
+        "mask": "support natif ; dégradé lumineux conservé dans RGB",
+        "normal_variant": "Si propriétaire lumineux établi : alpha de flux A2=round(A*max(RGB)/255), RGB droit reconstruit ; vérifier énergie prémultipliée erreur<=1. Sinon témoin alpha natif conservé.",
+        "alternative": "Jamais de clé noire globale ni Bézier du halo ; conversion de flux en alpha est une variante conditionnelle."
+      },
+      "reason": "Neuf directions et réserves vides ; corriger le temps avant de juger la texture.",
+      "nearest_historical_analogue": "SPRDRABU",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/SPBDBURS/source.bam",
+      "source_sha256": "D77A0D26B024C5C2E03DE12594B94DE88F174ECFF373BC2019ED28D4D557EEF9",
+      "canvas_x1": [
+        152,
+        234
+      ],
+      "source_records": 73,
+      "used_records": 73,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 20,
+          "black_or_transparent_slots": [
+            0,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "fully_transparent_slots": [
+            0,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "adjacent_equal_pairs": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "returns_after_intervening_pose": true
+        },
+        {
+          "cycle": 1,
+          "slots": 20,
+          "black_or_transparent_slots": [
+            0,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "fully_transparent_slots": [
+            0,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "adjacent_equal_pairs": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "returns_after_intervening_pose": true
+        },
+        {
+          "cycle": 2,
+          "slots": 20,
+          "black_or_transparent_slots": [
+            0,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "fully_transparent_slots": [
+            0,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "adjacent_equal_pairs": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "returns_after_intervening_pose": true
+        },
+        {
+          "cycle": 3,
+          "slots": 20,
+          "black_or_transparent_slots": [
+            0,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "fully_transparent_slots": [
+            0,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "adjacent_equal_pairs": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "returns_after_intervening_pose": true
+        },
+        {
+          "cycle": 4,
+          "slots": 20,
+          "black_or_transparent_slots": [
+            0,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "fully_transparent_slots": [
+            0,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "adjacent_equal_pairs": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "returns_after_intervening_pose": true
+        },
+        {
+          "cycle": 5,
+          "slots": 20,
+          "black_or_transparent_slots": [
+            0,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "fully_transparent_slots": [
+            0,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "adjacent_equal_pairs": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "returns_after_intervening_pose": true
+        },
+        {
+          "cycle": 6,
+          "slots": 20,
+          "black_or_transparent_slots": [
+            0,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "fully_transparent_slots": [
+            0,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "adjacent_equal_pairs": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "returns_after_intervening_pose": true
+        },
+        {
+          "cycle": 7,
+          "slots": 20,
+          "black_or_transparent_slots": [
+            0,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "fully_transparent_slots": [
+            0,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "adjacent_equal_pairs": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "returns_after_intervening_pose": true
+        },
+        {
+          "cycle": 8,
+          "slots": 20,
+          "black_or_transparent_slots": [
+            0,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "fully_transparent_slots": [
+            0,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "adjacent_equal_pairs": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "returns_after_intervening_pose": true
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 14.529,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.01,
+      "repeated_slots_anchored": 108,
+      "temporal_special": true,
+      "notes": [
+        "Ancres15->30, poses vides/holds à leur place ; pas de redistribution uniforme des poses distinctes."
+      ]
+    },
+    {
+      "ordinal": 27,
+      "resref": "SPBURNS1",
+      "profile": "T",
+      "recipe": {
+        "name": "Feu texturé",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4 ; particules natives protégées",
+        "alternative": "Réduire gauss à0 si disparition de grains ; contour continu local si silhouette crénelée."
+      },
+      "reason": "Trois cycles de feu ; préserver alternatives et couleurs, pas de concaténation.",
+      "nearest_historical_analogue": "SPBURN",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/SPBURNS1/source.bam",
+      "source_sha256": "906AFF960F6DF32DDFB09F547EFCA4D8E8091911FEAE74EF24260EBFB9A55C82",
+      "canvas_x1": [
+        43,
+        62
+      ],
+      "source_records": 24,
+      "used_records": 24,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 8,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 1,
+          "slots": 8,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 2,
+          "slots": 8,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.004,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": []
+    },
+    {
+      "ordinal": 28,
+      "resref": "SPFBSMAL",
+      "profile": "P",
+      "recipe": {
+        "name": "Particules / gouttes",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4 ; chaque composante/centre conservé",
+        "alternative": "Essai continu0.60 hérité des nuées seulement si escalier gênant ; évaluer grains et masse alpha, pas de disques ni micro-flou."
+      },
+      "reason": "Petit jet de particules blanches ; ne pas fusionner les grains.",
+      "nearest_historical_analogue": "SPSPARKS",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/SPFBSMAL/source.bam",
+      "source_sha256": "81DBBFD664FC865B8C8336820DAE2FBD775166B0223E0C83A4776CC679976C58",
+      "canvas_x1": [
+        28,
+        25
+      ],
+      "source_records": 30,
+      "used_records": 30,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 6,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 1,
+          "slots": 6,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 2,
+          "slots": 6,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 3,
+          "slots": 6,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 4,
+          "slots": 6,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.036,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Apollo : padding temporaire min128 et multiple32, recadrage exact ; aucun déplacement monde."
+      ]
+    },
+    {
+      "ordinal": 29,
+      "resref": "SPFINODI",
+      "profile": "H",
+      "recipe": {
+        "name": "Énergie / halo",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 0,
+        "mask": "support natif ; dégradé lumineux conservé dans RGB",
+        "normal_variant": "Si propriétaire lumineux établi : alpha de flux A2=round(A*max(RGB)/255), RGB droit reconstruit ; vérifier énergie prémultipliée erreur<=1. Sinon témoin alpha natif conservé.",
+        "alternative": "Jamais de clé noire globale ni Bézier du halo ; conversion de flux en alpha est une variante conditionnelle."
+      },
+      "reason": "Éclat rose avec cœur, trait vertical et halo ; ne pas vectoriser le halo.",
+      "nearest_historical_analogue": "SPENTACI",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/SPFINODI/source.bam",
+      "source_sha256": "1D743D698047A5345D94A3F14E09915B7D9200A087D39DCA737890354C157EFB",
+      "canvas_x1": [
+        84,
+        100
+      ],
+      "source_records": 28,
+      "used_records": 28,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 28,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.122,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [],
+      "tiny_component_pixel_percent": 0.006,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": []
+    },
+    {
+      "ordinal": 30,
+      "resref": "SPFIRE",
+      "profile": "P",
+      "recipe": {
+        "name": "Particules / gouttes",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4 ; chaque composante/centre conservé",
+        "alternative": "Essai continu0.60 hérité des nuées seulement si escalier gênant ; évaluer grains et masse alpha, pas de disques ni micro-flou."
+      },
+      "reason": "Petites bouffées espacées ; conserver séparation et placement.",
+      "nearest_historical_analogue": "SPSMPUFF",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/SPFIRE/source.bam",
+      "source_sha256": "61A3D4D437FCEF7C49543B8295E2790A045B51662CB91F74164651409B32B046",
+      "canvas_x1": [
+        22,
+        64
+      ],
+      "source_records": 6,
+      "used_records": 6,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 6,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Apollo : padding temporaire min128 et multiple32, recadrage exact ; aucun déplacement monde."
+      ]
+    },
+    {
+      "ordinal": 31,
+      "resref": "SPFIRET",
+      "profile": "H",
+      "recipe": {
+        "name": "Énergie / halo",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "support natif ; dégradé lumineux conservé dans RGB",
+        "normal_variant": "Si propriétaire lumineux établi : alpha de flux A2=round(A*max(RGB)/255), RGB droit reconstruit ; vérifier énergie prémultipliée erreur<=1. Sinon témoin alpha natif conservé.",
+        "alternative": "Jamais de clé noire globale ni Bézier du halo ; conversion de flux en alpha est une variante conditionnelle."
+      },
+      "reason": "Petite boule lumineuse à bord sombre ; pas de feather supplémentaire sur le halo.",
+      "nearest_historical_analogue": "SPSCHGI",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/SPFIRET/source.bam",
+      "source_sha256": "7C3CC28B4A9B1F508B812746752344771C847E21C52F1EA15254751C653AF474",
+      "canvas_x1": [
+        40,
+        44
+      ],
+      "source_records": 13,
+      "used_records": 13,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 13,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 27.671,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": []
+    },
+    {
+      "ordinal": 32,
+      "resref": "SPFLADOW",
+      "profile": "T",
+      "recipe": {
+        "name": "Feu texturé",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4 ; particules natives protégées",
+        "alternative": "Réduire gauss à0 si disparition de grains ; contour continu local si silhouette crénelée."
+      },
+      "reason": "Grande colonne de feu, dents et particules à conserver.",
+      "nearest_historical_analogue": "SPBRNHND",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/SPFLADOW/source.bam",
+      "source_sha256": "10A2F5B44BF0B92116371A7667088B4307F282876735C7106B66F6D33D0F7417",
+      "canvas_x1": [
+        74,
+        182
+      ],
+      "source_records": 11,
+      "used_records": 11,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 11,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.01,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.03,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": []
+    },
+    {
+      "ordinal": 33,
+      "resref": "SPFLSTRI",
+      "profile": "T",
+      "recipe": {
+        "name": "Feu texturé",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4 ; particules natives protégées",
+        "alternative": "Réduire gauss à0 si disparition de grains ; contour continu local si silhouette crénelée."
+      },
+      "reason": "Colonne similaire mais BAM distinct ; aucun réemploi déduit de la seule ressemblance.",
+      "nearest_historical_analogue": "SPBRNHND",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/SPFLSTRI/source.bam",
+      "source_sha256": "A56BC292EFEB7873381A0A753249A8F81AC7EB9EBB1EE52DD2C61B3B75BF5790",
+      "canvas_x1": [
+        74,
+        182
+      ],
+      "source_records": 11,
+      "used_records": 11,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 11,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.01,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.03,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": []
+    },
+    {
+      "ordinal": 34,
+      "resref": "SPFSTRMI",
+      "profile": "H",
+      "recipe": {
+        "name": "Énergie / halo",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 0,
+        "mask": "support natif ; dégradé lumineux conservé dans RGB",
+        "normal_variant": "Si propriétaire lumineux établi : alpha de flux A2=round(A*max(RGB)/255), RGB droit reconstruit ; vérifier énergie prémultipliée erreur<=1. Sinon témoin alpha natif conservé.",
+        "alternative": "Jamais de clé noire globale ni Bézier du halo ; conversion de flux en alpha est une variante conditionnelle."
+      },
+      "reason": "Feu diffus sur fond noir et dernière pose noire ; préserver la fin d'extinction.",
+      "nearest_historical_analogue": "SPENTACI",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/SPFSTRMI/source.bam",
+      "source_sha256": "CFBA3C885EA9930AF05653CB4E7DD80C433DB2829AD51D6459F39A2EE1A24B12",
+      "canvas_x1": [
+        157,
+        171
+      ],
+      "source_records": 50,
+      "used_records": 50,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 50,
+          "black_or_transparent_slots": [
+            49
+          ],
+          "fully_transparent_slots": [
+            49
+          ],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 16.117,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.029,
+      "repeated_slots_anchored": 0,
+      "temporal_special": true,
+      "notes": [
+        "Ancres15->30, poses vides/holds à leur place ; pas de redistribution uniforme des poses distinctes."
+      ]
+    },
+    {
+      "ordinal": 35,
+      "resref": "SPPFIRAI",
+      "profile": "H",
+      "recipe": {
+        "name": "Énergie / halo",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 0,
+        "mask": "support natif ; dégradé lumineux conservé dans RGB",
+        "normal_variant": "Si propriétaire lumineux établi : alpha de flux A2=round(A*max(RGB)/255), RGB droit reconstruit ; vérifier énergie prémultipliée erreur<=1. Sinon témoin alpha natif conservé.",
+        "alternative": "Jamais de clé noire globale ni Bézier du halo ; conversion de flux en alpha est une variante conditionnelle."
+      },
+      "reason": "Masse de feu avec bord noir ; vérifier séparément les trois cycles.",
+      "nearest_historical_analogue": "SPENTACI",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/SPPFIRAI/source.bam",
+      "source_sha256": "EF24DF1460A6DBBBCF4078535275B4FDA7F26BD4011617FB8BAF421FA7657FF5",
+      "canvas_x1": [
+        98,
+        74
+      ],
+      "source_records": 89,
+      "used_records": 89,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 30,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 1,
+          "slots": 20,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 2,
+          "slots": 39,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.001,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": []
+    },
+    {
+      "ordinal": 36,
+      "resref": "SPPFIRXI",
+      "profile": "H",
+      "recipe": {
+        "name": "Énergie / halo",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 0,
+        "mask": "support natif ; dégradé lumineux conservé dans RGB",
+        "normal_variant": "Si propriétaire lumineux établi : alpha de flux A2=round(A*max(RGB)/255), RGB droit reconstruit ; vérifier énergie prémultipliée erreur<=1. Sinon témoin alpha natif conservé.",
+        "alternative": "Jamais de clé noire globale ni Bézier du halo ; conversion de flux en alpha est une variante conditionnelle."
+      },
+      "reason": "Grande colonne vive, régions sombres et langues fines ; ne pas éroder.",
+      "nearest_historical_analogue": "SPENTACI",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/SPPFIRXI/source.bam",
+      "source_sha256": "3E671D211B00E8AB9DA63FEE62D0D5AF6BAAC45B6F10FCA9955E208830F69441",
+      "canvas_x1": [
+        120,
+        171
+      ],
+      "source_records": 28,
+      "used_records": 28,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 28,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": []
+    },
+    {
+      "ordinal": 37,
+      "resref": "SPRDRAEX",
+      "profile": "D",
+      "recipe": {
+        "name": "Grand diffus",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 12,
+        "mask": "alpha natif, feather interne12 limité localement aux grosses masses",
+        "alternative": "Témoin feather0 et couverture des petites composantes ; plafonnement local = adaptation à comparer."
+      },
+      "reason": "Explosion feu-fumée diffuse ; feather12 plafonné par épaisseur pour garder les franges.",
+      "nearest_historical_analogue": "SPRDRASI",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/SPRDRAEX/source.bam",
+      "source_sha256": "72BCF72870BCD9102C52C22AC6AFBB1BBB006F2C6B51A8859702890BF2E45925",
+      "canvas_x1": [
+        100,
+        92
+      ],
+      "source_records": 11,
+      "used_records": 11,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 11,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.004,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": []
+    },
+    {
+      "ordinal": 38,
+      "resref": "SPMETSWN",
+      "profile": "P",
+      "recipe": {
+        "name": "Particules / gouttes",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4 ; chaque composante/centre conservé",
+        "alternative": "Essai continu0.60 hérité des nuées seulement si escalier gênant ; évaluer grains et masse alpha, pas de disques ni micro-flou."
+      },
+      "reason": "Météores et nombreuses particules ; centres/trajectoires natifs, jamais de fusion.",
+      "nearest_historical_analogue": "SPMETSWM",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/SPMETSWN/source.bam",
+      "source_sha256": "9763053C851ADAADDD789C3810028D91557F4DFDEF88991AF4DA757554F5C86E",
+      "canvas_x1": [
+        156,
+        207
+      ],
+      "source_records": 45,
+      "used_records": 45,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 12,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 1,
+          "slots": 15,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 2,
+          "slots": 18,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 10.263,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 1.235,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": []
+    },
+    {
+      "ordinal": 39,
+      "resref": "DSTDVL2A",
+      "profile": "D",
+      "recipe": {
+        "name": "Grand diffus",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 12,
+        "mask": "alpha natif, feather interne12 limité localement aux grosses masses",
+        "alternative": "Témoin feather0 et couverture des petites composantes ; plafonnement local = adaptation à comparer."
+      },
+      "reason": "Nuage de poussière large ;17poses visibles puis90slots transparents, ne pas étirer le mouvement sur107slots.",
+      "nearest_historical_analogue": "STNKCLDD",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/DSTDVL2A/source.bam",
+      "source_sha256": "C1D754E64CC7D9669516586741F36D0E802F34BCB811026CA7D76F90B29EA432",
+      "canvas_x1": [
+        128,
+        128
+      ],
+      "source_records": 18,
+      "used_records": 18,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 107,
+          "black_or_transparent_slots": [
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "fully_transparent_slots": [
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "adjacent_equal_pairs": [
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.068,
+      "repeated_slots_anchored": 89,
+      "temporal_special": true,
+      "notes": [
+        "Ancres15->30, poses vides/holds à leur place ; pas de redistribution uniforme des poses distinctes."
+      ]
+    },
+    {
+      "ordinal": 40,
+      "resref": "FALLMIST",
+      "profile": "S",
+      "recipe": {
+        "name": "Fumée fine",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 2,
+        "mask": "fondu2x4 de départ, borné par épaisseur ; pas de retrait",
+        "alternative": "Paramètre2 adapté, pas une recette déjà acceptée ; témoin0. SPSMOLD impose0."
+      },
+      "reason": "Petit nuage de31px ; feather2x4 de départ, pas12.",
+      "nearest_historical_analogue": "SPSMPUFF",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/FALLMIST/source.bam",
+      "source_sha256": "941413E7B7E05C73AEE9AA24E460B4BE5CD2AD49EE822420C20E3C25F67F541A",
+      "canvas_x1": [
+        31,
+        31
+      ],
+      "source_records": 9,
+      "used_records": 9,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 9,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Apollo : padding temporaire min128 et multiple32, recadrage exact ; aucun déplacement monde."
+      ]
+    },
+    {
+      "ordinal": 41,
+      "resref": "STEAM1",
+      "profile": "D",
+      "recipe": {
+        "name": "Grand diffus",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 12,
+        "mask": "alpha natif, feather interne12 limité localement aux grosses masses",
+        "alternative": "Témoin feather0 et couverture des petites composantes ; plafonnement local = adaptation à comparer."
+      },
+      "reason": "Grande vapeur avec zones noires ; conserver la fumée sombre, pas de neutralisation globale.",
+      "nearest_historical_analogue": "SPHORPUF",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/STEAM1/source.bam",
+      "source_sha256": "8CD825567EED4345407548E6D19CA8058892D822DBED59FD4A03C060B790C4D8",
+      "canvas_x1": [
+        73,
+        125
+      ],
+      "source_records": 9,
+      "used_records": 9,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 9,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 34.828,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.211,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": []
+    },
+    {
+      "ordinal": 42,
+      "resref": "STEAM4",
+      "profile": "D",
+      "recipe": {
+        "name": "Grand diffus",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 12,
+        "mask": "alpha natif, feather interne12 limité localement aux grosses masses",
+        "alternative": "Témoin feather0 et couverture des petites composantes ; plafonnement local = adaptation à comparer."
+      },
+      "reason": "Vapeur large, même protection des creux et teintes sombres.",
+      "nearest_historical_analogue": "SPHORPUF",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/STEAM4/source.bam",
+      "source_sha256": "F8A311F7B59B1C22AF134ABE127B8BAE7187B974791893BA725580DEB98BC5C7",
+      "canvas_x1": [
+        81,
+        128
+      ],
+      "source_records": 9,
+      "used_records": 9,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 9,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 30.143,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.24,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": []
+    },
+    {
+      "ordinal": 43,
+      "resref": "SPSMOLD",
+      "profile": "S",
+      "recipe": {
+        "name": "Fumée fine",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "fondu2x4 de départ, borné par épaisseur ; pas de retrait",
+        "alternative": "Paramètre2 adapté, pas une recette déjà acceptée ; témoin0. SPSMOLD impose0."
+      },
+      "reason": "Fumée de9px de large ; feather0, chaque pose tenue trois slots.",
+      "nearest_historical_analogue": "SPSMKJET",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/SPSMOLD/source.bam",
+      "source_sha256": "3BE89BA870213A8EF4D4205DBEE6BCCDC1FEAA76DF3F1F0C4499775B17AB4631",
+      "canvas_x1": [
+        9,
+        52
+      ],
+      "source_records": 6,
+      "used_records": 6,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 18,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [
+            1,
+            2,
+            4,
+            5,
+            7,
+            8,
+            10,
+            11,
+            13,
+            14,
+            16,
+            17
+          ],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 12,
+      "temporal_special": true,
+      "notes": [
+        "Ancres15->30, poses vides/holds à leur place ; pas de redistribution uniforme des poses distinctes.",
+        "Apollo : padding temporaire min128 et multiple32, recadrage exact ; aucun déplacement monde."
+      ]
+    },
+    {
+      "ordinal": 44,
+      "resref": "SPSTINK",
+      "profile": "S",
+      "recipe": {
+        "name": "Fumée fine",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 2,
+        "mask": "fondu2x4 de départ, borné par épaisseur ; pas de retrait",
+        "alternative": "Paramètre2 adapté, pas une recette déjà acceptée ; témoin0. SPSMOLD impose0."
+      },
+      "reason": "Petites volutes séparées ; feather2x4 plafonné, ne pas remplir les trous.",
+      "nearest_historical_analogue": "SPSMPUFF",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/SPSTINK/source.bam",
+      "source_sha256": "422A0C7B6FF225DE8A16BB1A1FF1CCD9B7C6E1177D52F722209DA48BD53D85FD",
+      "canvas_x1": [
+        27,
+        52
+      ],
+      "source_records": 6,
+      "used_records": 6,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 6,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Apollo : padding temporaire min128 et multiple32, recadrage exact ; aucun déplacement monde."
+      ]
+    },
+    {
+      "ordinal": 45,
+      "resref": "SPAGSCHO",
+      "profile": "P",
+      "recipe": {
+        "name": "Particules / gouttes",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4 ; chaque composante/centre conservé",
+        "alternative": "Essai continu0.60 hérité des nuées seulement si escalier gênant ; évaluer grains et masse alpha, pas de disques ni micro-flou."
+      },
+      "reason": "Traînée blanche granuleuse ; masque fin sans feather12 ni vectorisation globale.",
+      "nearest_historical_analogue": "SPSPARKS",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/SPAGSCHO/source.bam",
+      "source_sha256": "D4FDAC9CD5EDF72BFE596136C94CC4A4CE70B544C732AFB2484EF41EA661FB43",
+      "canvas_x1": [
+        65,
+        61
+      ],
+      "source_records": 30,
+      "used_records": 30,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 6,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 1,
+          "slots": 6,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 2,
+          "slots": 6,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 3,
+          "slots": 6,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 4,
+          "slots": 6,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": []
+    },
+    {
+      "ordinal": 46,
+      "resref": "SPGREACI",
+      "profile": "H",
+      "recipe": {
+        "name": "Énergie / halo",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 0,
+        "mask": "support natif ; dégradé lumineux conservé dans RGB",
+        "normal_variant": "Si propriétaire lumineux établi : alpha de flux A2=round(A*max(RGB)/255), RGB droit reconstruit ; vérifier énergie prémultipliée erreur<=1. Sinon témoin alpha natif conservé.",
+        "alternative": "Jamais de clé noire globale ni Bézier du halo ; conversion de flux en alpha est une variante conditionnelle."
+      },
+      "reason": "Nappe violette avec halo ; conserver la structure interne, ne pas tracer le halo en Bézier.",
+      "nearest_historical_analogue": "SPENTACI",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/SPGREACI/source.bam",
+      "source_sha256": "8504402E04BD9EA4B341FC2BC226723B8F3C4E98C02F27ADE9151E28428FEFC5",
+      "canvas_x1": [
+        48,
+        37
+      ],
+      "source_records": 16,
+      "used_records": 16,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 16,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": []
+    },
+    {
+      "ordinal": 47,
+      "resref": "ACIDDTH",
+      "profile": "H",
+      "recipe": {
+        "name": "Énergie / halo",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "support natif ; dégradé lumineux conservé dans RGB",
+        "normal_variant": "Si propriétaire lumineux établi : alpha de flux A2=round(A*max(RGB)/255), RGB droit reconstruit ; vérifier énergie prémultipliée erreur<=1. Sinon témoin alpha natif conservé.",
+        "alternative": "Jamais de clé noire globale ni Bézier du halo ; conversion de flux en alpha est une variante conditionnelle."
+      },
+      "reason": "Petite flamme verte sur noir ; seuls21des63records sont utilisés par les deux cycles.",
+      "nearest_historical_analogue": "SPSCHGI",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/ACIDDTH/source.bam",
+      "source_sha256": "1B25F6AC0161A7059D025F1BBC56855BADA5B7B8B9B89DE0210522D05058D512",
+      "canvas_x1": [
+        16,
+        43
+      ],
+      "source_records": 63,
+      "used_records": 21,
+      "unreferenced_records": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41
+      ],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 9,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 1,
+          "slots": 12,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 42.508,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "42 records non référencés : préserver source/carrier, ne pas inventer de cycle.",
+        "Apollo : padding temporaire min128 et multiple32, recadrage exact ; aucun déplacement monde."
+      ]
+    },
+    {
+      "ordinal": 48,
+      "resref": "LAVABUB1",
+      "profile": "P",
+      "recipe": {
+        "name": "Particules / gouttes",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4 ; chaque composante/centre conservé",
+        "alternative": "Essai continu0.60 hérité des nuées seulement si escalier gênant ; évaluer grains et masse alpha, pas de disques ni micro-flou."
+      },
+      "reason": "Quelques gouttes orange sur grand canevas ; pas de crop qui déplace les centres.",
+      "nearest_historical_analogue": "SPSPARKS",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/LAVABUB1/source.bam",
+      "source_sha256": "9B5626AB5763A4E743EDB67543B6D2691F8E60804E3CB62374A866C4A9E33FF6",
+      "canvas_x1": [
+        128,
+        128
+      ],
+      "source_records": 15,
+      "used_records": 15,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 15,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 1,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 2,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 3,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 4,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 0,
+      "temporal_special": false,
+      "notes": [
+        "Cycles vides conservés dans carrier, exclus de l’inférence et des profils animés."
+      ]
+    },
+    {
+      "ordinal": 49,
+      "resref": "LAVABUB2",
+      "profile": "P",
+      "recipe": {
+        "name": "Particules / gouttes",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 0,
+        "inner_feather_x4": 0,
+        "mask": "alpha natif nearest4 ; chaque composante/centre conservé",
+        "alternative": "Essai continu0.60 hérité des nuées seulement si escalier gênant ; évaluer grains et masse alpha, pas de disques ni micro-flou."
+      },
+      "reason": "Gouttes minuscules puis huit poses noires ; préserver cette pause.",
+      "nearest_historical_analogue": "SPSPARKS",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/LAVABUB2/source.bam",
+      "source_sha256": "970855675DC1D815E563E4BC72C02EEE21B0D4EF831D359EB145F5A0CC2617F3",
+      "canvas_x1": [
+        32,
+        32
+      ],
+      "source_records": 15,
+      "used_records": 15,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 15,
+          "black_or_transparent_slots": [
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "fully_transparent_slots": [
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "adjacent_equal_pairs": [
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 1,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 2,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 3,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 4,
+          "slots": 0,
+          "black_or_transparent_slots": [],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 0.0,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.0,
+      "repeated_slots_anchored": 7,
+      "temporal_special": true,
+      "notes": [
+        "Ancres15->30, poses vides/holds à leur place ; pas de redistribution uniforme des poses distinctes.",
+        "Cycles vides conservés dans carrier, exclus de l’inférence et des profils animés."
+      ]
+    },
+    {
+      "ordinal": 50,
+      "resref": "SPOUTA",
+      "profile": "H",
+      "recipe": {
+        "name": "Énergie / halo",
+        "spatial": "SeedVR2 7B INT8 / LAB x4",
+        "rgb_gauss_sigma_x4": 1.2,
+        "inner_feather_x4": 0,
+        "mask": "support natif ; dégradé lumineux conservé dans RGB",
+        "normal_variant": "Si propriétaire lumineux établi : alpha de flux A2=round(A*max(RGB)/255), RGB droit reconstruit ; vérifier énergie prémultipliée erreur<=1. Sinon témoin alpha natif conservé.",
+        "alternative": "Jamais de clé noire globale ni Bézier du halo ; conversion de flux en alpha est une variante conditionnelle."
+      },
+      "reason": "Trois phases d'éruption et pauses décalées ; garder la position temporelle des apparitions.",
+      "nearest_historical_analogue": "SPRDRABU",
+      "confidence": "analogie historique ; nouvelle QA nécessaire",
+      "source": "effects/ressources/SPOUTA/source.bam",
+      "source_sha256": "F91AF1762E84FD2FEBD44BC7B99DA6B879FF74F6959D24C85EAFCE3E0EB8BECA",
+      "canvas_x1": [
+        68,
+        119
+      ],
+      "source_records": 24,
+      "used_records": 24,
+      "unreferenced_records": [],
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "slots": 53,
+          "black_or_transparent_slots": [
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52
+          ],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52
+          ],
+          "returns_after_intervening_pose": false
+        },
+        {
+          "cycle": 1,
+          "slots": 53,
+          "black_or_transparent_slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52
+          ],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52
+          ],
+          "returns_after_intervening_pose": true
+        },
+        {
+          "cycle": 2,
+          "slots": 53,
+          "black_or_transparent_slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29
+          ],
+          "fully_transparent_slots": [],
+          "adjacent_equal_pairs": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29
+          ],
+          "returns_after_intervening_pose": false
+        }
+      ],
+      "normal_graded_pixels": 0,
+      "opaque_nearblack_percent": 22.071,
+      "opaque_exact_green_percent": 0.0,
+      "green_palette_indices": [
+        0
+      ],
+      "tiny_component_pixel_percent": 0.005,
+      "repeated_slots_anchored": 87,
+      "temporal_special": true,
+      "notes": [
+        "Ancres15->30, poses vides/holds à leur place ; pas de redistribution uniforme des poses distinctes."
+      ]
+    }
+  ],
+  "temporal_policy": "Apollo apo-8 30FPS, independent native cycles and once/loop profiles;15FPS compatibility only; preserve every native anchor/hold/blank and nonadjacent returns. Decode/storage deduplication must not redistribute timeline.",
+  "integration_policy": "Native source/palette/centres/cycles/carrier preserved. Straight/premultiplied variants explicit. Owner/tint/blend/cadence unresolved; no installation/release/QA inferred."
+}
