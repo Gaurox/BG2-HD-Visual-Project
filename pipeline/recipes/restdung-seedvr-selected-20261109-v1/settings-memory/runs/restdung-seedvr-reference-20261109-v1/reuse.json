@@ -1,0 +1,57 @@
+{
+  "state": "comparison-ready",
+  "qa": "pending",
+  "video_parent": "video\\restdung\\runs\\restdung-comfyui-experiment-20260814\\ComfyUI_00001_.mp4",
+  "audio_parent": "video\\restdung\\restdung.wbm",
+  "model": "seedvr2_ema_3b_fp16.safetensors",
+  "color_correction": "lab",
+  "inference": "historical-existing-20260814",
+  "video_stream_copied": true,
+  "new_inference": false,
+  "probe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_type": "video",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "15/1",
+        "nb_read_frames": "91"
+      },
+      {
+        "codec_type": "audio",
+        "r_frame_rate": "0/0",
+        "nb_read_frames": "153"
+      }
+    ],
+    "format": {
+      "duration": "7.076009"
+    }
+  },
+  "command": [
+    "C:\\ffmpeg\\bin\\ffmpeg.exe",
+    "-hide_banner",
+    "-v",
+    "error",
+    "-nostdin",
+    "-n",
+    "-i",
+    "video\\restdung\\runs\\restdung-comfyui-experiment-20260814\\ComfyUI_00001_.mp4",
+    "-i",
+    "video\\restdung\\restdung.wbm",
+    "-map",
+    "0:v:0",
+    "-map",
+    "1:a:0",
+    "-c:v",
+    "copy",
+    "-c:a",
+    "aac",
+    "-b:a",
+    "192k",
+    "-movflags",
+    "+faststart",
+    "video\\restdung\\runs\\restdung-seedvr-reference-20261109-v1\\SeedVR2-RESTDUNG-3B-FP16-LAB-1080p15.mp4"
+  ]
+}

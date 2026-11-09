@@ -1,0 +1,91 @@
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'G:\AI\BG2_Upscale\video\restdung\runs\restdung-topaz-ab-20261109-v1\B-gaia-cg-1440p15-native.mov':
+  Metadata:
+    major_brand     : qt  
+    minor_version   : 512
+    compatible_brands: qt  
+    encoder         : Lavf62.0.102
+  Duration: 00:00:06.07, start: 0.000000, bitrate: 139719 kb/s
+  Stream #0:0[0x1](eng): Video: prores (HQ) (apch / 0x68637061), yuv422p10le(progressive), 2560x1440, 139717 kb/s, SAR 1:1 DAR 16:9, 15 fps, 15 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : FFMP
+      encoder         : Lavc62.3.101 prores_ks
+Stream mapping:
+  Stream #0:0 -> #0:0 (prores (native) -> prores (prores_ks))
+Output #0, mov, to 'G:\AI\BG2_Upscale\video\restdung\runs\restdung-topaz-ab-20261109-v1\B-gaia-cg-1080p15-master.mov':
+  Metadata:
+    major_brand     : qt  
+    minor_version   : 512
+    compatible_brands: qt  
+    encoder         : Lavf62.0.100
+  Stream #0:0(eng): Video: prores (HQ) (apch / 0x68637061), yuv422p10le(tv, bt470bg/unknown/unknown, progressive), 1920x1080 [SAR 1:1 DAR 16:9], q=2-31, 200 kb/s, 15 fps, 15360 tbn (default)
+    Metadata:
+      encoder         : Lavc62.0.101 prores_ks
+      handler_name    : VideoHandler
+      vendor_id       : FFMP
+frame=   33 fps=0.0 q=-0.0 size=   18176KiB time=00:00:02.20 bitrate=67680.9kbits/s speed=4.28x    [out#0/mov @ 000001e398946e40] video:58382KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.002464%
+frame=   91 fps=0.0 q=-0.0 Lsize=   58383KiB time=00:00:06.06 bitrate=78836.2kbits/s speed=7.29x    
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'G:\AI\BG2_Upscale\video\restdung\runs\restdung-topaz-ab-20261109-v1\B-gaia-cg-1080p15-master.mov':
+  Metadata:
+    major_brand     : qt  
+    minor_version   : 512
+    compatible_brands: qt  
+    encoder         : Lavf62.0.100
+  Duration: 00:00:06.07, start: 0.000000, bitrate: 78836 kb/s
+  Stream #0:0[0x1](eng): Video: prores (HQ) (apch / 0x68637061), yuv422p10le(progressive), 1920x1080, 78834 kb/s, SAR 1:1 DAR 16:9, 15 fps, 15 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : FFMP
+      encoder         : Lavc62.0.101 prores_ks
+Input #1, matroska,webm, from 'G:\AI\BG2_Upscale\video\restdung\restdung.wbm':
+  Metadata:
+    encoder         : Lavf53.24.2
+  Duration: 00:00:07.05, start: 0.000000, bitrate: 1701 kb/s
+  Stream #1:0(eng): Video: vp8, yuv420p(progressive), 1280x720, SAR 1:1 DAR 16:9, 15 fps, 15 tbr, 1k tbn (default)
+  Stream #1:1: Audio: vorbis, 22050 Hz, stereo, fltp (default)
+Stream mapping:
+  Stream #0:0 -> #0:0 (prores (native) -> h264 (libx264))
+  Stream #1:1 -> #0:1 (vorbis (native) -> aac (native))
+[libx264 @ 00000229dc9c2d40] using SAR=1/1
+[libx264 @ 00000229dc9c2d40] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2
+[libx264 @ 00000229dc9c2d40] profile High, level 5.0, 4:2:0, 8-bit
+[libx264 @ 00000229dc9c2d40] 264 - core 165 r3215 32c3b80 - H.264/MPEG-4 AVC codec - Copyleft 2003-2025 - http://www.videolan.org/x264.html - options: cabac=1 ref=5 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=8 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=2 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=34 lookahead_threads=5 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=3 b_pyramid=2 b_adapt=1 b_bias=0 direct=3 weightb=1 open_gop=0 weightp=2 keyint=250 keyint_min=15 scenecut=40 intra_refresh=0 rc_lookahead=50 rc=crf mbtree=1 crf=16.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00
+Output #0, mp4, to 'G:\AI\BG2_Upscale\video\restdung\runs\restdung-topaz-ab-20261109-v1\B-gaia-cg-1080p15.mp4':
+  Metadata:
+    major_brand     : qt  
+    minor_version   : 512
+    compatible_brands: qt  
+    encoder         : Lavf62.0.100
+  Stream #0:0(eng): Video: h264 (avc1 / 0x31637661), yuv420p(tv, bt470bg/unknown/unknown, progressive), 1920x1080 [SAR 1:1 DAR 16:9], q=2-31, 15 fps, 15360 tbn (default)
+    Metadata:
+      encoder         : Lavc62.0.101 libx264
+      handler_name    : VideoHandler
+      vendor_id       : FFMP
+    Side data:
+      cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A
+  Stream #0:1: Audio: aac (LC) (mp4a / 0x6134706D), 22050 Hz, stereo, fltp, 192 kb/s (default)
+    Metadata:
+      encoder         : Lavc62.0.101 aac
+frame=    3 fps=0.0 q=20.0 size=       0KiB time=00:00:05.68 bitrate=   0.1kbits/s speed=11.2x    frame=   65 fps= 63 q=-1.0 size=    1792KiB time=N/A bitrate=N/A speed=N/A    [mp4 @ 00000229dc9e6100] Starting second pass: moving the moov atom to the beginning of the file
+[out#0/mp4 @ 00000229dc9e6000] video:2791KiB audio:116KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.182834%
+frame=   91 fps= 73 q=-1.0 Lsize=    2912KiB time=00:00:05.93 bitrate=4020.5kbits/s speed=4.73x    
+[libx264 @ 00000229dc9c2d40] frame I:1     Avg QP: 5.04  size:  4227
+[libx264 @ 00000229dc9c2d40] frame P:29    Avg QP:11.77  size: 63408
+[libx264 @ 00000229dc9c2d40] frame B:61    Avg QP:14.68  size: 16621
+[libx264 @ 00000229dc9c2d40] consecutive B-frames:  9.9%  2.2%  0.0% 87.9%
+[libx264 @ 00000229dc9c2d40] mb I  I16..4:  0.2% 99.8%  0.0%
+[libx264 @ 00000229dc9c2d40] mb P  I16..4:  1.2% 24.0%  1.1%  P16..4: 29.5% 10.3%  5.3%  0.0%  0.0%    skip:28.5%
+[libx264 @ 00000229dc9c2d40] mb B  I16..4:  0.1%  1.2%  0.0%  B16..8: 27.0%  5.2%  2.1%  direct:13.8%  skip:50.4%  L0:43.7% L1:45.9% BI:10.4%
+[libx264 @ 00000229dc9c2d40] 8x8 transform intra:91.6% inter:50.6%
+[libx264 @ 00000229dc9c2d40] direct mvs  spatial:70.5% temporal:29.5%
+[libx264 @ 00000229dc9c2d40] coded y,uvDC,uvAC intra: 75.0% 66.3% 54.9% inter: 21.6% 18.4% 2.0%
+[libx264 @ 00000229dc9c2d40] i16 v,h,dc,p: 48% 25%  8% 19%
+[libx264 @ 00000229dc9c2d40] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 16% 14% 33%  5%  5%  5%  7%  6%  9%
+[libx264 @ 00000229dc9c2d40] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 15% 12%  7% 11% 12% 11% 13%  9% 11%
+[libx264 @ 00000229dc9c2d40] i8c dc,h,v,p: 39% 35% 17%  8%
+[libx264 @ 00000229dc9c2d40] Weighted P-Frames: Y:65.5% UV:58.6%
+[libx264 @ 00000229dc9c2d40] ref P L0: 58.6% 12.8% 18.9%  4.9%  3.2%  1.2%  0.5%
+[libx264 @ 00000229dc9c2d40] ref B L0: 90.7%  7.1%  1.8%  0.5%
+[libx264 @ 00000229dc9c2d40] ref B L1: 95.7%  4.3%
+[libx264 @ 00000229dc9c2d40] kb/s:3767.36
+[aac @ 00000229dc9ece80] Qavg: 63331.504

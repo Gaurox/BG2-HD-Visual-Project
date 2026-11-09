@@ -1,0 +1,20 @@
+Input #0, matroska,webm, from 'G:\AI\BG2_Upscale\video\restdung\runs\restdung-topaz-six-shared-20261109-v1\source-rgb709-15.mkv':
+  Metadata:
+    ENCODER         : Lavf62.0.102
+  Duration: 00:00:06.07, start: 0.000000, bitrate: 179486 kb/s
+  Stream #0:0(eng): Video: ffv1, gbrp16le(pc, gbr/unknown/unknown, progressive), 1280x720, SAR 1:1 DAR 16:9, 15 fps, 15 tbr, 1k tbn (default)
+    Metadata:
+      ENCODER         : Lavc62.3.101 ffv1
+      DURATION        : 00:00:06.067000000
+Stream mapping:
+  Stream #0:0 -> #0:0 (ffv1 (native) -> ffv1 (native))
+[ffv1 @ 000001EFFFE198C0] high bits_per_raw_sample, forcing range coder
+Output #0, matroska, to 'G:\AI\BG2_Upscale\video\restdung\runs\restdung-topaz-six-shared-20261109-v1\Csoft-proteus720.mkv':
+  Metadata:
+    encoder         : Lavf62.0.102
+  Stream #0:0(eng): Video: ffv1 (FFV1 / 0x31564646), gbrp16le(pc, gbr/unknown/unknown, progressive), 1280x720 [SAR 1:1 DAR 16:9], q=2-31, 200 kb/s, 15 fps, 1k tbn (default)
+    Metadata:
+      encoder         : Lavc62.3.101 ffv1
+      DURATION        : 00:00:06.067000000
+frame=   15 fps=9.8 q=-0.0 size=   20224KiB time=00:00:01.00 bitrate=165675.0kbits/s speed=0.656x elapsed=0:00:01.52    frame=   35 fps= 17 q=-0.0 size=   70656KiB time=00:00:02.33 bitrate=248063.2kbits/s speed=1.15x elapsed=0:00:02.03    frame=   57 fps= 22 q=-0.0 size=  130304KiB time=00:00:03.80 bitrate=280908.0kbits/s speed=1.49x elapsed=0:00:02.54    frame=   81 fps= 27 q=-0.0 size=  193280KiB time=00:00:05.40 bitrate=293212.9kbits/s speed=1.77x elapsed=0:00:03.05    frame=   90 fps= 25 q=-0.0 size=  214272KiB time=00:00:06.00 bitrate=292552.7kbits/s speed=1.68x elapsed=0:00:03.56    [out#0/matroska @ 000001EFFFE15040] video:221014KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.001064%
+frame=   91 fps= 22 q=-0.0 Lsize=  221016KiB time=00:00:06.06 bitrate=298444.3kbits/s speed=1.49x elapsed=0:00:04.08    

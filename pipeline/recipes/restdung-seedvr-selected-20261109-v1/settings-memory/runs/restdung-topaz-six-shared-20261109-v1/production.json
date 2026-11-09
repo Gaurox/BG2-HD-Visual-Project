@@ -1,0 +1,1124 @@
+{
+  "state": "completed",
+  "qa": "pending",
+  "stages": {
+    "source-rgb709-15": {
+      "state": "verified",
+      "parent": "video\\restdung\\restdung.wbm",
+      "command": [
+        "C:\\Program Files\\Topaz Labs LLC\\Topaz Video AI\\ffmpeg.exe",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\restdung.wbm",
+        "-map",
+        "0:v:0",
+        "-an",
+        "-vf",
+        "scale=in_range=tv:in_color_matrix=bt601:out_range=pc,format=gbrp16le,setpts=N/(15*TB),format=gbrp16le",
+        "-c:v",
+        "ffv1",
+        "-level",
+        "3",
+        "-fps_mode",
+        "passthrough",
+        "-color_range",
+        "pc",
+        "-colorspace",
+        "rgb",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\source-rgb709-15.mkv"
+      ],
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1280,
+            "height": 720,
+            "pix_fmt": "gbrp16le",
+            "color_range": "pc",
+            "color_space": "gbr",
+            "r_frame_rate": "15/1",
+            "nb_read_frames": "91"
+          }
+        ],
+        "format": {
+          "duration": "6.067000"
+        }
+      },
+      "seconds": 1.22
+    },
+    "C-proteus720": {
+      "state": "verified",
+      "parent": "video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\source-rgb709-15.mkv",
+      "command": [
+        "C:\\Program Files\\Topaz Labs LLC\\Topaz Video AI\\ffmpeg.exe",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\source-rgb709-15.mkv",
+        "-map",
+        "0:v:0",
+        "-an",
+        "-vf",
+        "tvai_up=model=prob-4:scale=1:w=1280:h=720:preblur=-0.03:noise=0.02:details=0:halo=0.03:blur=0:compression=0.20:blend=0.25:grain=0:estimate=0:device=0:vram=0.8:instances=0:download=0,format=gbrp16le",
+        "-c:v",
+        "ffv1",
+        "-level",
+        "3",
+        "-fps_mode",
+        "passthrough",
+        "-color_range",
+        "pc",
+        "-colorspace",
+        "rgb",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-proteus720.mkv"
+      ],
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1280,
+            "height": 720,
+            "pix_fmt": "gbrp16le",
+            "color_range": "pc",
+            "color_space": "gbr",
+            "r_frame_rate": "15/1",
+            "nb_read_frames": "91"
+          }
+        ],
+        "format": {
+          "duration": "6.067000"
+        }
+      },
+      "seconds": 4.26
+    },
+    "Csoft-proteus720": {
+      "state": "verified",
+      "parent": "video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\source-rgb709-15.mkv",
+      "command": [
+        "C:\\Program Files\\Topaz Labs LLC\\Topaz Video AI\\ffmpeg.exe",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\source-rgb709-15.mkv",
+        "-map",
+        "0:v:0",
+        "-an",
+        "-vf",
+        "tvai_up=model=prob-4:scale=1:w=1280:h=720:preblur=-0.03:noise=0.01:details=0:halo=0.03:blur=0:compression=0.12:blend=0.45:grain=0:estimate=0:device=0:vram=0.8:instances=0:download=0,format=gbrp16le",
+        "-c:v",
+        "ffv1",
+        "-level",
+        "3",
+        "-fps_mode",
+        "passthrough",
+        "-color_range",
+        "pc",
+        "-colorspace",
+        "rgb",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\Csoft-proteus720.mkv"
+      ],
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1280,
+            "height": 720,
+            "pix_fmt": "gbrp16le",
+            "color_range": "pc",
+            "color_space": "gbr",
+            "r_frame_rate": "15/1",
+            "nb_read_frames": "91"
+          }
+        ],
+        "format": {
+          "duration": "6.067000"
+        }
+      },
+      "seconds": 4.17
+    },
+    "C-U1080-15": {
+      "state": "verified",
+      "parent": "video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-proteus720.mkv",
+      "command": [
+        "C:\\Program Files\\Topaz Labs LLC\\Topaz Video AI\\ffmpeg.exe",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-proteus720.mkv",
+        "-map",
+        "0:v:0",
+        "-an",
+        "-vf",
+        "tvai_up=model=prob-4:scale=2:w=2560:h=1440:preblur=-0.03:noise=0:details=0.12:halo=0.05:blur=0.06:compression=0.15:blend=0.20:grain=0:estimate=0:device=0:vram=0.8:instances=0:download=0,scale=1920:1080:flags=lanczos,format=gbrp16le",
+        "-c:v",
+        "ffv1",
+        "-level",
+        "3",
+        "-fps_mode",
+        "passthrough",
+        "-color_range",
+        "pc",
+        "-colorspace",
+        "rgb",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-U1080-15.mkv"
+      ],
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1920,
+            "height": 1080,
+            "pix_fmt": "gbrp16le",
+            "color_range": "pc",
+            "color_space": "gbr",
+            "r_frame_rate": "15/1",
+            "nb_read_frames": "91"
+          }
+        ],
+        "format": {
+          "duration": "6.067000"
+        }
+      },
+      "seconds": 7.91
+    },
+    "C-G1080-15": {
+      "state": "verified",
+      "parent": "video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-proteus720.mkv",
+      "command": [
+        "C:\\Program Files\\Topaz Labs LLC\\Topaz Video AI\\ffmpeg.exe",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-proteus720.mkv",
+        "-map",
+        "0:v:0",
+        "-an",
+        "-vf",
+        "tvai_up=model=gcg-5:scale=2:w=2560:h=1440:grain=0:estimate=0:device=0:vram=0.8:instances=0:download=0,scale=1920:1080:flags=lanczos,format=gbrp16le",
+        "-c:v",
+        "ffv1",
+        "-level",
+        "3",
+        "-fps_mode",
+        "passthrough",
+        "-color_range",
+        "pc",
+        "-colorspace",
+        "rgb",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-G1080-15.mkv"
+      ],
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1920,
+            "height": 1080,
+            "pix_fmt": "gbrp16le",
+            "color_range": "pc",
+            "color_space": "gbr",
+            "r_frame_rate": "15/1",
+            "nb_read_frames": "91"
+          }
+        ],
+        "format": {
+          "duration": "6.067000"
+        }
+      },
+      "seconds": 6.2
+    },
+    "Csoft-G1080-15": {
+      "state": "verified",
+      "parent": "video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\Csoft-proteus720.mkv",
+      "command": [
+        "C:\\Program Files\\Topaz Labs LLC\\Topaz Video AI\\ffmpeg.exe",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\Csoft-proteus720.mkv",
+        "-map",
+        "0:v:0",
+        "-an",
+        "-vf",
+        "tvai_up=model=gcg-5:scale=2:w=2560:h=1440:grain=0:estimate=0:device=0:vram=0.8:instances=0:download=0,scale=1920:1080:flags=lanczos,format=gbrp16le",
+        "-c:v",
+        "ffv1",
+        "-level",
+        "3",
+        "-fps_mode",
+        "passthrough",
+        "-color_range",
+        "pc",
+        "-colorspace",
+        "rgb",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\Csoft-G1080-15.mkv"
+      ],
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1920,
+            "height": 1080,
+            "pix_fmt": "gbrp16le",
+            "color_range": "pc",
+            "color_space": "gbr",
+            "r_frame_rate": "15/1",
+            "nb_read_frames": "91"
+          }
+        ],
+        "format": {
+          "duration": "6.067000"
+        }
+      },
+      "seconds": 6.2
+    },
+    "C-Lanczos1080-15": {
+      "state": "verified",
+      "parent": "video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-proteus720.mkv",
+      "command": [
+        "C:\\Program Files\\Topaz Labs LLC\\Topaz Video AI\\ffmpeg.exe",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-proteus720.mkv",
+        "-map",
+        "0:v:0",
+        "-an",
+        "-vf",
+        "scale=1920:1080:flags=lanczos,format=gbrp16le",
+        "-c:v",
+        "ffv1",
+        "-level",
+        "3",
+        "-fps_mode",
+        "passthrough",
+        "-color_range",
+        "pc",
+        "-colorspace",
+        "rgb",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-Lanczos1080-15.mkv"
+      ],
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1920,
+            "height": 1080,
+            "pix_fmt": "gbrp16le",
+            "color_range": "pc",
+            "color_space": "gbr",
+            "r_frame_rate": "15/1",
+            "nb_read_frames": "91"
+          }
+        ],
+        "format": {
+          "duration": "6.067000"
+        }
+      },
+      "seconds": 2.78
+    },
+    "T1-Apollo1080": {
+      "state": "verified",
+      "parent": "video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-U1080-15.mkv",
+      "command": [
+        "C:\\Program Files\\Topaz Labs LLC\\Topaz Video AI\\ffmpeg.exe",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-U1080-15.mkv",
+        "-map",
+        "0:v:0",
+        "-an",
+        "-vf",
+        "tvai_fi=model=apo-8:fps=30:slowmo=1:rdt=-0.01:device=0:vram=0.8:instances=0:download=0,setpts=N/(30*TB),format=gbrp16le",
+        "-c:v",
+        "ffv1",
+        "-level",
+        "3",
+        "-fps_mode",
+        "passthrough",
+        "-color_range",
+        "pc",
+        "-colorspace",
+        "rgb",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\T1-Apollo1080.mkv"
+      ],
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1920,
+            "height": 1080,
+            "pix_fmt": "gbrp16le",
+            "color_range": "pc",
+            "color_space": "gbr",
+            "r_frame_rate": "30/1",
+            "nb_read_frames": "181"
+          }
+        ],
+        "format": {
+          "duration": "6.033000"
+        }
+      },
+      "seconds": 14.78
+    },
+    "T2-Apollo1080": {
+      "state": "verified",
+      "parent": "video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-G1080-15.mkv",
+      "command": [
+        "C:\\Program Files\\Topaz Labs LLC\\Topaz Video AI\\ffmpeg.exe",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-threads",
+        "8",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-G1080-15.mkv",
+        "-map",
+        "0:v:0",
+        "-an",
+        "-vf",
+        "tvai_fi=model=apo-8:fps=30:slowmo=1:rdt=-0.01:device=0:vram=0.8:instances=0:download=0,setpts=N/(30*TB),format=gbrp16le",
+        "-c:v",
+        "ffv1",
+        "-level",
+        "3",
+        "-fps_mode",
+        "passthrough",
+        "-color_range",
+        "pc",
+        "-colorspace",
+        "rgb",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\T2-Apollo1080.mkv"
+      ],
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1920,
+            "height": 1080,
+            "pix_fmt": "gbrp16le",
+            "color_range": "pc",
+            "color_space": "gbr",
+            "r_frame_rate": "30/1",
+            "nb_read_frames": "181"
+          }
+        ],
+        "format": {
+          "duration": "6.033000"
+        }
+      },
+      "seconds": 14.69
+    },
+    "T3-Apollo1080": {
+      "state": "verified",
+      "parent": "video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\Csoft-G1080-15.mkv",
+      "command": [
+        "C:\\Program Files\\Topaz Labs LLC\\Topaz Video AI\\ffmpeg.exe",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-threads",
+        "8",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\Csoft-G1080-15.mkv",
+        "-map",
+        "0:v:0",
+        "-an",
+        "-vf",
+        "tvai_fi=model=apo-8:fps=30:slowmo=1:rdt=-0.01:device=0:vram=0.8:instances=0:download=0,setpts=N/(30*TB),format=gbrp16le",
+        "-c:v",
+        "ffv1",
+        "-level",
+        "3",
+        "-fps_mode",
+        "passthrough",
+        "-color_range",
+        "pc",
+        "-colorspace",
+        "rgb",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\T3-Apollo1080.mkv"
+      ],
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1920,
+            "height": 1080,
+            "pix_fmt": "gbrp16le",
+            "color_range": "pc",
+            "color_space": "gbr",
+            "r_frame_rate": "30/1",
+            "nb_read_frames": "181"
+          }
+        ],
+        "format": {
+          "duration": "6.033000"
+        }
+      },
+      "seconds": 14.48
+    },
+    "T4-Apollo1080": {
+      "state": "verified",
+      "parent": "video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-Lanczos1080-15.mkv",
+      "command": [
+        "C:\\Program Files\\Topaz Labs LLC\\Topaz Video AI\\ffmpeg.exe",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-threads",
+        "8",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-Lanczos1080-15.mkv",
+        "-map",
+        "0:v:0",
+        "-an",
+        "-vf",
+        "tvai_fi=model=apo-8:fps=30:slowmo=1:rdt=-0.01:device=0:vram=0.8:instances=0:download=0,setpts=N/(30*TB),format=gbrp16le",
+        "-c:v",
+        "ffv1",
+        "-level",
+        "3",
+        "-fps_mode",
+        "passthrough",
+        "-color_range",
+        "pc",
+        "-colorspace",
+        "rgb",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\T4-Apollo1080.mkv"
+      ],
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1920,
+            "height": 1080,
+            "pix_fmt": "gbrp16le",
+            "color_range": "pc",
+            "color_space": "gbr",
+            "r_frame_rate": "30/1",
+            "nb_read_frames": "181"
+          }
+        ],
+        "format": {
+          "duration": "6.033000"
+        }
+      },
+      "seconds": 14.26
+    },
+    "C-Apollo720-30": {
+      "state": "verified",
+      "parent": "video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-proteus720.mkv",
+      "command": [
+        "C:\\Program Files\\Topaz Labs LLC\\Topaz Video AI\\ffmpeg.exe",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-threads",
+        "8",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-proteus720.mkv",
+        "-map",
+        "0:v:0",
+        "-an",
+        "-vf",
+        "tvai_fi=model=apo-8:fps=30:slowmo=1:rdt=-0.01:device=0:vram=0.8:instances=0:download=0,setpts=N/(30*TB),format=gbrp16le",
+        "-c:v",
+        "ffv1",
+        "-level",
+        "3",
+        "-fps_mode",
+        "passthrough",
+        "-color_range",
+        "pc",
+        "-colorspace",
+        "rgb",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-Apollo720-30.mkv"
+      ],
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1280,
+            "height": 720,
+            "pix_fmt": "gbrp16le",
+            "color_range": "pc",
+            "color_space": "gbr",
+            "r_frame_rate": "30/1",
+            "nb_read_frames": "181"
+          }
+        ],
+        "format": {
+          "duration": "6.033000"
+        }
+      },
+      "seconds": 9.78
+    },
+    "T5-Gaia1080-30": {
+      "state": "verified",
+      "parent": "video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-Apollo720-30.mkv",
+      "command": [
+        "C:\\Program Files\\Topaz Labs LLC\\Topaz Video AI\\ffmpeg.exe",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-threads",
+        "8",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-Apollo720-30.mkv",
+        "-map",
+        "0:v:0",
+        "-an",
+        "-vf",
+        "tvai_up=model=gcg-5:scale=2:w=2560:h=1440:grain=0:estimate=0:device=0:vram=0.8:instances=0:download=0,scale=1920:1080:flags=lanczos,format=gbrp16le",
+        "-c:v",
+        "ffv1",
+        "-level",
+        "3",
+        "-fps_mode",
+        "passthrough",
+        "-color_range",
+        "pc",
+        "-colorspace",
+        "rgb",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\T5-Gaia1080-30.mkv"
+      ],
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1920,
+            "height": 1080,
+            "pix_fmt": "gbrp16le",
+            "color_range": "pc",
+            "color_space": "gbr",
+            "r_frame_rate": "30/1",
+            "nb_read_frames": "181"
+          }
+        ],
+        "format": {
+          "duration": "6.033000"
+        }
+      },
+      "seconds": 10.28
+    },
+    "T6-Aion1080": {
+      "state": "verified",
+      "parent": "video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-G1080-15.mkv",
+      "command": [
+        "C:\\Program Files\\Topaz Labs LLC\\Topaz Video AI\\ffmpeg.exe",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-threads",
+        "8",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\C-G1080-15.mkv",
+        "-map",
+        "0:v:0",
+        "-an",
+        "-vf",
+        "tvai_fi=model=aion-1:fps=30:slowmo=1:rdt=-0.01:device=0:vram=0.8:instances=0:download=0,setpts=N/(30*TB),format=gbrp16le",
+        "-c:v",
+        "ffv1",
+        "-level",
+        "3",
+        "-fps_mode",
+        "passthrough",
+        "-color_range",
+        "pc",
+        "-colorspace",
+        "rgb",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\T6-Aion1080.mkv"
+      ],
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1920,
+            "height": 1080,
+            "pix_fmt": "gbrp16le",
+            "color_range": "pc",
+            "color_space": "gbr",
+            "r_frame_rate": "30/1",
+            "nb_read_frames": "181"
+          }
+        ],
+        "format": {
+          "duration": "6.033000"
+        }
+      },
+      "seconds": 52.48
+    }
+  },
+  "finals": {
+    "T1": {
+      "state": "verified",
+      "qa": "pending",
+      "path": "video\\restdung\\runs\\restdung-T1-20261109-v1\\T1-RESTDUNG-Proteus-Proteus-Apollo-1080p30.mp4",
+      "parent": "video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\T1-Apollo1080.mkv",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1920,
+            "height": 1080,
+            "pix_fmt": "yuv420p",
+            "color_range": "tv",
+            "color_space": "bt709",
+            "r_frame_rate": "30/1",
+            "nb_read_frames": "181"
+          }
+        ],
+        "format": {
+          "duration": "7.076009"
+        }
+      },
+      "command": [
+        "C:\\ffmpeg\\bin\\ffmpeg.EXE",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-threads",
+        "8",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\T1-Apollo1080.mkv",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\restdung.wbm",
+        "-map",
+        "0:v:0",
+        "-map",
+        "1:a:0?",
+        "-vf",
+        "scale=in_range=pc:out_range=tv:out_color_matrix=bt709,format=yuv420p",
+        "-c:v",
+        "libx264",
+        "-crf",
+        "16",
+        "-preset",
+        "slow",
+        "-fps_mode",
+        "passthrough",
+        "-c:a",
+        "aac",
+        "-b:a",
+        "192k",
+        "-color_range",
+        "tv",
+        "-colorspace",
+        "bt709",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "-movflags",
+        "+faststart",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-T1-20261109-v1\\T1-RESTDUNG-Proteus-Proteus-Apollo-1080p30.mp4"
+      ]
+    },
+    "T2": {
+      "state": "verified",
+      "qa": "pending",
+      "path": "video\\restdung\\runs\\restdung-T2-20261109-v1\\T2-RESTDUNG-Proteus-Gaia-Apollo-1080p30.mp4",
+      "parent": "video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\T2-Apollo1080.mkv",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1920,
+            "height": 1080,
+            "pix_fmt": "yuv420p",
+            "color_range": "tv",
+            "color_space": "bt709",
+            "r_frame_rate": "30/1",
+            "nb_read_frames": "181"
+          }
+        ],
+        "format": {
+          "duration": "7.076009"
+        }
+      },
+      "command": [
+        "C:\\ffmpeg\\bin\\ffmpeg.EXE",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-threads",
+        "8",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\T2-Apollo1080.mkv",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\restdung.wbm",
+        "-map",
+        "0:v:0",
+        "-map",
+        "1:a:0?",
+        "-vf",
+        "scale=in_range=pc:out_range=tv:out_color_matrix=bt709,format=yuv420p",
+        "-c:v",
+        "libx264",
+        "-crf",
+        "16",
+        "-preset",
+        "slow",
+        "-fps_mode",
+        "passthrough",
+        "-c:a",
+        "aac",
+        "-b:a",
+        "192k",
+        "-color_range",
+        "tv",
+        "-colorspace",
+        "bt709",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "-movflags",
+        "+faststart",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-T2-20261109-v1\\T2-RESTDUNG-Proteus-Gaia-Apollo-1080p30.mp4"
+      ]
+    },
+    "T3": {
+      "state": "verified",
+      "qa": "pending",
+      "path": "video\\restdung\\runs\\restdung-T3-20261109-v1\\T3-RESTDUNG-Proteus-doux-Gaia-Apollo-1080p30.mp4",
+      "parent": "video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\T3-Apollo1080.mkv",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1920,
+            "height": 1080,
+            "pix_fmt": "yuv420p",
+            "color_range": "tv",
+            "color_space": "bt709",
+            "r_frame_rate": "30/1",
+            "nb_read_frames": "181"
+          }
+        ],
+        "format": {
+          "duration": "7.076009"
+        }
+      },
+      "command": [
+        "C:\\ffmpeg\\bin\\ffmpeg.EXE",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-threads",
+        "8",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\T3-Apollo1080.mkv",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\restdung.wbm",
+        "-map",
+        "0:v:0",
+        "-map",
+        "1:a:0?",
+        "-vf",
+        "scale=in_range=pc:out_range=tv:out_color_matrix=bt709,format=yuv420p",
+        "-c:v",
+        "libx264",
+        "-crf",
+        "16",
+        "-preset",
+        "slow",
+        "-fps_mode",
+        "passthrough",
+        "-c:a",
+        "aac",
+        "-b:a",
+        "192k",
+        "-color_range",
+        "tv",
+        "-colorspace",
+        "bt709",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "-movflags",
+        "+faststart",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-T3-20261109-v1\\T3-RESTDUNG-Proteus-doux-Gaia-Apollo-1080p30.mp4"
+      ]
+    },
+    "T4": {
+      "state": "verified",
+      "qa": "pending",
+      "path": "video\\restdung\\runs\\restdung-T4-20261109-v1\\T4-RESTDUNG-Proteus-Lanczos-Apollo-1080p30.mp4",
+      "parent": "video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\T4-Apollo1080.mkv",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1920,
+            "height": 1080,
+            "pix_fmt": "yuv420p",
+            "color_range": "tv",
+            "color_space": "bt709",
+            "r_frame_rate": "30/1",
+            "nb_read_frames": "181"
+          }
+        ],
+        "format": {
+          "duration": "7.076009"
+        }
+      },
+      "command": [
+        "C:\\ffmpeg\\bin\\ffmpeg.EXE",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-threads",
+        "8",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\T4-Apollo1080.mkv",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\restdung.wbm",
+        "-map",
+        "0:v:0",
+        "-map",
+        "1:a:0?",
+        "-vf",
+        "scale=in_range=pc:out_range=tv:out_color_matrix=bt709,format=yuv420p",
+        "-c:v",
+        "libx264",
+        "-crf",
+        "16",
+        "-preset",
+        "slow",
+        "-fps_mode",
+        "passthrough",
+        "-c:a",
+        "aac",
+        "-b:a",
+        "192k",
+        "-color_range",
+        "tv",
+        "-colorspace",
+        "bt709",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "-movflags",
+        "+faststart",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-T4-20261109-v1\\T4-RESTDUNG-Proteus-Lanczos-Apollo-1080p30.mp4"
+      ]
+    },
+    "T5": {
+      "state": "verified",
+      "qa": "pending",
+      "path": "video\\restdung\\runs\\restdung-T5-20261109-v1\\T5-RESTDUNG-Proteus-Apollo-Gaia-1080p30.mp4",
+      "parent": "video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\T5-Gaia1080-30.mkv",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1920,
+            "height": 1080,
+            "pix_fmt": "yuv420p",
+            "color_range": "tv",
+            "color_space": "bt709",
+            "r_frame_rate": "30/1",
+            "nb_read_frames": "181"
+          }
+        ],
+        "format": {
+          "duration": "7.076009"
+        }
+      },
+      "command": [
+        "C:\\ffmpeg\\bin\\ffmpeg.EXE",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-threads",
+        "8",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\T5-Gaia1080-30.mkv",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\restdung.wbm",
+        "-map",
+        "0:v:0",
+        "-map",
+        "1:a:0?",
+        "-vf",
+        "scale=in_range=pc:out_range=tv:out_color_matrix=bt709,format=yuv420p",
+        "-c:v",
+        "libx264",
+        "-crf",
+        "16",
+        "-preset",
+        "slow",
+        "-fps_mode",
+        "passthrough",
+        "-c:a",
+        "aac",
+        "-b:a",
+        "192k",
+        "-color_range",
+        "tv",
+        "-colorspace",
+        "bt709",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "-movflags",
+        "+faststart",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-T5-20261109-v1\\T5-RESTDUNG-Proteus-Apollo-Gaia-1080p30.mp4"
+      ]
+    },
+    "T6": {
+      "state": "verified",
+      "qa": "pending",
+      "path": "video\\restdung\\runs\\restdung-T6-20261109-v1\\T6-RESTDUNG-Proteus-Gaia-Aion-1080p30.mp4",
+      "parent": "video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\T6-Aion1080.mkv",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1920,
+            "height": 1080,
+            "pix_fmt": "yuv420p",
+            "color_range": "tv",
+            "color_space": "bt709",
+            "r_frame_rate": "30/1",
+            "nb_read_frames": "181"
+          }
+        ],
+        "format": {
+          "duration": "7.076009"
+        }
+      },
+      "command": [
+        "C:\\ffmpeg\\bin\\ffmpeg.EXE",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-threads",
+        "8",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\T6-Aion1080.mkv",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\restdung.wbm",
+        "-map",
+        "0:v:0",
+        "-map",
+        "1:a:0?",
+        "-vf",
+        "scale=in_range=pc:out_range=tv:out_color_matrix=bt709,format=yuv420p",
+        "-c:v",
+        "libx264",
+        "-crf",
+        "16",
+        "-preset",
+        "slow",
+        "-fps_mode",
+        "passthrough",
+        "-c:a",
+        "aac",
+        "-b:a",
+        "192k",
+        "-color_range",
+        "tv",
+        "-colorspace",
+        "bt709",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "-movflags",
+        "+faststart",
+        "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-T6-20261109-v1\\T6-RESTDUNG-Proteus-Gaia-Aion-1080p30.mp4"
+      ]
+    }
+  }
+}

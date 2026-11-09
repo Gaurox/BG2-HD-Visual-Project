@@ -1,0 +1,21 @@
+{
+  "asset_key": "movie:default:RESTDUNG",
+  "scope": "visual-comparison",
+  "decision": "accepted",
+  "user_decision": "SeedVR gagne haut la main ; garder seulement SeedVR et installer ingame",
+  "selected_file": "video/restdung/runs/restdung-seedvr-reference-20261109-v1/SeedVR2-RESTDUNG-3B-FP16-LAB-1080p15.mp4",
+  "sha256": "3a76e06a0d0d4ab2438c13736485e97b58c88f46926491bad85bc4d6eaf1fdde",
+  "contract": {
+    "width": 1920,
+    "height": 1080,
+    "fps": "15/1",
+    "frames": 91,
+    "interpolation": false,
+    "model": "seedvr2_ema_3b_fp16.safetensors",
+    "color_correction": "lab"
+  },
+  "settings_memory": "pipeline/recipes/restdung-seedvr-selected-20261109-v1",
+  "qa_ingame": "pending-user",
+  "installation_receipt": "video/installations/restdung-seedvr-20261109-v1/installation.json",
+  "release_integration": false
+}

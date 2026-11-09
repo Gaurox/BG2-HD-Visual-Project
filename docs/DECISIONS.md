@@ -143,6 +143,8 @@ occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans
 | Audio après interpolation | exclu ; synchronisation et encodage définis dans une étape ultérieure | définition de l'encodage final |
 | Organisation des runs | `video/<asset>/runs/<run-id>` ; aucun nouveau run global | jamais |
 | Sélection | `video/index/processing.csv` sépare runs validés par étape et run du patch | changement explicite de sélection ou d'intégration |
+| RESTDUNG (2026-11-09) | SeedVR2 3B FP16 LAB historique, Full HD15, retenu visuellement ; essais Topaz supprimés (8,89 Gio), réglages conservés dans `pipeline/recipes/restdung-seedvr-selected-20261109-v1/` ; WBM VP8/Vorbis installé localement, QA ingame en attente, aucune intégration release | demande de modification ou défaut constaté en jeu |
+| Repos SeedVR30 (2026-11-09) | RESTDUNG et RESTINN SeedVR2 3B FP16 LAB → Apollo8 FullHD30 acceptés en comparaison ; décisions sous `video/index/qa-decisions/` ; RESTDUNG installé reste15fps, RESTINN non installé | demande utilisateur ou défaut visuel |
 
 ## Release et workspace
 

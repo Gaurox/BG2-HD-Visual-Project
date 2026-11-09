@@ -1,0 +1,65 @@
+{
+  "state": "verified",
+  "qa": "pending",
+  "path": "video\\restdung\\runs\\restdung-T5-20261109-v1\\T5-RESTDUNG-Proteus-Apollo-Gaia-1080p30.mp4",
+  "parent": "video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\T5-Gaia1080-30.mkv",
+  "probe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "color_range": "tv",
+        "color_space": "bt709",
+        "r_frame_rate": "30/1",
+        "nb_read_frames": "181"
+      }
+    ],
+    "format": {
+      "duration": "7.076009"
+    }
+  },
+  "command": [
+    "C:\\ffmpeg\\bin\\ffmpeg.EXE",
+    "-hide_banner",
+    "-nostdin",
+    "-n",
+    "-threads",
+    "8",
+    "-i",
+    "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1\\T5-Gaia1080-30.mkv",
+    "-i",
+    "G:\\AI\\BG2_Upscale\\video\\restdung\\restdung.wbm",
+    "-map",
+    "0:v:0",
+    "-map",
+    "1:a:0?",
+    "-vf",
+    "scale=in_range=pc:out_range=tv:out_color_matrix=bt709,format=yuv420p",
+    "-c:v",
+    "libx264",
+    "-crf",
+    "16",
+    "-preset",
+    "slow",
+    "-fps_mode",
+    "passthrough",
+    "-c:a",
+    "aac",
+    "-b:a",
+    "192k",
+    "-color_range",
+    "tv",
+    "-colorspace",
+    "bt709",
+    "-color_primaries",
+    "bt709",
+    "-color_trc",
+    "iec61966-2-1",
+    "-movflags",
+    "+faststart",
+    "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-T5-20261109-v1\\T5-RESTDUNG-Proteus-Apollo-Gaia-1080p30.mp4"
+  ]
+}

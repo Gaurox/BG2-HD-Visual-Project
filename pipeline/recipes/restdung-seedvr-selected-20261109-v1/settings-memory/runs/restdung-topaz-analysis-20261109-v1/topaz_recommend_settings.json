@@ -1,0 +1,39 @@
+{
+  "model": "iris-2",
+  "model_display_name": "Iris v2 (Face Restoration)",
+  "model_selection_reason": "Se detectaron rostros/personas en el metraje. Iris restaura ojos, expresiones y piel sin distorsión plástica.",
+  "scale_mode": "x2",
+  "scale_reason": "Resolución de entrada (1280x720) es menor a 1080p -> Escalado x2 a 2560x1440 (alineado a mod 16 para aceleración QSV).",
+  "input_resolution": "1280x720",
+  "target_resolution": "2560x1440",
+  "target_width": 2560,
+  "target_height": 1440,
+  "parameters": {
+    "preblur": -0.08,
+    "noise": 0.03,
+    "details": 0.25,
+    "halo": 0.08,
+    "blur": 0.25,
+    "compression": 0.52,
+    "blend": 0.25,
+    "grain": 0.018,
+    "gsize": 1.0
+  },
+  "anti_plastic_guarantee": [
+    "Ruido muy sutil (0.03) para evitar el efecto piel de cera/plástico.",
+    "Mezcla con original (25%) para preservar microporos y textura real del sensor.",
+    "Desenfocado y dehalo moderados para evitar halos o líneas dobles artificiales.",
+    "Micrograno cinematográfico (0.018) que rompe la apariencia digital de IA."
+  ],
+  "render_time_estimate": {
+    "selected_model": "iris-2",
+    "estimated_time": "2m 8s",
+    "expected_fps": 0.82,
+    "faster_alternative": {
+      "model": "prob-4",
+      "estimated_time": "1m 3s",
+      "speedup_percentage": "101% más rápido"
+    }
+  },
+  "ffmpeg_filter_complex": "tvai_up=model=iris-2:scale=2:w=2560:h=1440:preblur=-0.0800:noise=0.0300:details=0.2500:halo=0.0800:blur=0.2500:compression=0.5200:blend=0.2500:grain=0.0180:gsize=1.00:device=-2:vram=1:instances=0"
+}

@@ -1,0 +1,69 @@
+{
+  "state": "runtime-encoded",
+  "qa_ingame": "not-performed",
+  "source": "video\\restdung\\runs\\restdung-seedvr-reference-20261109-v1\\SeedVR2-RESTDUNG-3B-FP16-LAB-1080p15.mp4",
+  "source_sha256": "3a76e06a0d0d4ab2438c13736485e97b58c88f46926491bad85bc4d6eaf1fdde",
+  "output": "video/restdung/runs/restdung-seedvr-ingame-20261109-v1/restdung.wbm",
+  "output_sha256": "98e98838208b6fd44ded83e51917bf605ed255376409a620a088371266b20047",
+  "probe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "vp8",
+        "codec_type": "video",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "15/1",
+        "nb_read_frames": "91"
+      },
+      {
+        "codec_name": "vorbis",
+        "codec_type": "audio",
+        "r_frame_rate": "0/0",
+        "nb_read_frames": "385"
+      }
+    ],
+    "format": {
+      "format_name": "matroska,webm",
+      "duration": "7.076000"
+    }
+  },
+  "command": [
+    "C:\\ffmpeg\\bin\\ffmpeg.EXE",
+    "-hide_banner",
+    "-nostdin",
+    "-n",
+    "-i",
+    "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-seedvr-reference-20261109-v1\\SeedVR2-RESTDUNG-3B-FP16-LAB-1080p15.mp4",
+    "-i",
+    "G:\\AI\\BG2_Upscale\\video\\restdung\\restdung.wbm",
+    "-map",
+    "0:v:0",
+    "-map",
+    "1:a:0",
+    "-c:v",
+    "libvpx",
+    "-crf",
+    "4",
+    "-b:v",
+    "20M",
+    "-qmin",
+    "0",
+    "-qmax",
+    "12",
+    "-deadline",
+    "good",
+    "-cpu-used",
+    "0",
+    "-pix_fmt",
+    "yuv420p",
+    "-fps_mode",
+    "passthrough",
+    "-c:a",
+    "copy",
+    "-f",
+    "webm",
+    "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-seedvr-ingame-20261109-v1\\restdung.wbm"
+  ]
+}

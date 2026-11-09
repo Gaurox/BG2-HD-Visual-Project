@@ -1,0 +1,81 @@
+{
+  "scope": "RESTDUNG only",
+  "selected": {
+    "path": "video/restdung/runs/restdung-seedvr-reference-20261109-v1/SeedVR2-RESTDUNG-3B-FP16-LAB-1080p15.mp4",
+    "sha256": "3a76e06a0d0d4ab2438c13736485e97b58c88f46926491bad85bc4d6eaf1fdde",
+    "historical_parent_sha256": "d68aa2565b6b514a01de981b6fcda5a161366594c1ba2499542166a43c563f38"
+  },
+  "source": {
+    "path": "video/restdung/restdung.wbm",
+    "sha256": "5ea4565b2a7959a89d3671987afa5ef9b639527c1578b0666d421eed29c133e3"
+  },
+  "discarded_test_directories": [
+    {
+      "path": "video/restdung/runs/legacy-webm-conversion-20260814",
+      "bytes": 1499791
+    },
+    {
+      "path": "video/restdung/runs/restdung-comfyui-experiment-20260814",
+      "bytes": 1367556
+    },
+    {
+      "path": "video/restdung/runs/restdung-preclean-ab-20261110-v1",
+      "bytes": 168961527
+    },
+    {
+      "path": "video/restdung/runs/restdung-T1-20261109-v1",
+      "bytes": 3794444
+    },
+    {
+      "path": "video/restdung/runs/restdung-T2-20261109-v1",
+      "bytes": 3271737
+    },
+    {
+      "path": "video/restdung/runs/restdung-T3-20261109-v1",
+      "bytes": 3259679
+    },
+    {
+      "path": "video/restdung/runs/restdung-T4-20261109-v1",
+      "bytes": 3637570
+    },
+    {
+      "path": "video/restdung/runs/restdung-T5-20261109-v1",
+      "bytes": 2922461
+    },
+    {
+      "path": "video/restdung/runs/restdung-T6-20261109-v1",
+      "bytes": 3224744
+    },
+    {
+      "path": "video/restdung/runs/restdung-topaz-ab-20261109-v1",
+      "bytes": 333751128
+    },
+    {
+      "path": "video/restdung/runs/restdung-topaz-analysis-20261109-v1",
+      "bytes": 3287
+    },
+    {
+      "path": "video/restdung/runs/restdung-topaz-six-shared-20261109-v1",
+      "bytes": 9012640456
+    }
+  ],
+  "text_memory": "pipeline/recipes/restdung-seedvr-selected-20261109-v1/settings-memory",
+  "status": "deleted",
+  "removed_bytes": 9540454395.0,
+  "removed_targets": [
+    "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\legacy-webm-conversion-20260814",
+    "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-comfyui-experiment-20260814",
+    "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-preclean-ab-20261110-v1",
+    "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-T1-20261109-v1",
+    "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-T2-20261109-v1",
+    "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-T3-20261109-v1",
+    "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-T4-20261109-v1",
+    "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-T5-20261109-v1",
+    "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-T6-20261109-v1",
+    "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-ab-20261109-v1",
+    "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-analysis-20261109-v1",
+    "G:\\AI\\BG2_Upscale\\video\\restdung\\runs\\restdung-topaz-six-shared-20261109-v1",
+    "G:\\AI\\BG2_Upscale\\video\\restdung\\analysis"
+  ],
+  "scope_audit": "All removed paths exactly match the approved RESTDUNG manifest plus RESTDUNG analysis; selected MP4, source and installed WBM verified after cleanup."
+}

@@ -7,6 +7,15 @@ zone restent sous l'autorité de `animations/index/occurrences.csv` et sont excl
 `index/processing.csv` sélectionne les runs validés par étape et le run utilisé par le patch.
 `patch_run` vide signifie qu'aucun artefact vidéo n'est intégré au patch.
 
+RESTDUNG : SeedVR2 3B FP16 LAB Full HD15 retenu le 2026-11-09 ; installé localement en WBM
+VP8/Vorbis, QA ingame en attente. Sélection : `index/qa-decisions/RESTDUNG/` ; reçu :
+`installations/restdung-seedvr-20261109-v1/installation.json`. Réglages des essais supprimés et
+restauration : [`mémoire RESTDUNG`](../pipeline/recipes/restdung-seedvr-selected-20261109-v1/README.md).
+
+RESTDUNG30 et RESTINN SeedVR15/Apollo30 acceptés en comparaison ; décisions immuables sous
+`index/qa-decisions/`. RESTINN n'est pas installé. Recette :
+[`RESTINN SeedVR + Apollo`](../pipeline/recipes/restinn-seedvr-apollo-20261109-v1/README.md).
+
 ## Organisation
 
 ```text

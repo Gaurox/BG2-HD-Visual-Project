@@ -1,0 +1,34 @@
+Input #0, matroska,webm, from 'G:\AI\BG2_Upscale\video\restdung\restdung.wbm':
+  Metadata:
+    encoder         : Lavf53.24.2
+  Duration: 00:00:07.05, start: 0.000000, bitrate: 1701 kb/s
+  Stream #0:0(eng): Video: vp8, yuv420p(progressive), 1280x720, SAR 1:1 DAR 16:9, 15 fps, 15 tbr, 1k tbn (default)
+  Stream #0:1: Audio: vorbis, 22050 Hz, stereo, fltp (default)
+Stream mapping:
+  Stream #0:0 -> #0:0 (vp8 (native) -> ffv1 (native))
+[swscaler @ 000002759BEB0840] No accelerated colorspace conversion found from yuv420p to gbrp16le.
+[swscaler @ 000002759BEB0840] [swscaler @ 000002759BEF6B40] No accelerated colorspace conversion found from yuv420p to gbrp16le.
+[swscaler @ 000002759BEB0840] [swscaler @ 000002759BF44180] No accelerated colorspace conversion found from yuv420p to gbrp16le.
+[swscaler @ 000002759BEB0840] [swscaler @ 000002759BFBB4C0] No accelerated colorspace conversion found from yuv420p to gbrp16le.
+[swscaler @ 000002759BEB0840] [swscaler @ 000002759C02E040] No accelerated colorspace conversion found from yuv420p to gbrp16le.
+[swscaler @ 000002759BEB0840] [swscaler @ 000002759C07CDC0] No accelerated colorspace conversion found from yuv420p to gbrp16le.
+[swscaler @ 000002759BEB0840] [swscaler @ 000002759C0966C0] No accelerated colorspace conversion found from yuv420p to gbrp16le.
+[swscaler @ 000002759BEB0840] [swscaler @ 000002759C0F4D80] No accelerated colorspace conversion found from yuv420p to gbrp16le.
+[swscaler @ 000002759BEB0840] [swscaler @ 000002759C150040] No accelerated colorspace conversion found from yuv420p to gbrp16le.
+[swscaler @ 000002759BEB0840] [swscaler @ 000002759C1DF040] No accelerated colorspace conversion found from yuv420p to gbrp16le.
+[swscaler @ 000002759BEB0840] [swscaler @ 000002759C1FD400] No accelerated colorspace conversion found from yuv420p to gbrp16le.
+[swscaler @ 000002759BEB0840] [swscaler @ 000002759C24C040] No accelerated colorspace conversion found from yuv420p to gbrp16le.
+[swscaler @ 000002759BEB0840] [swscaler @ 000002759C29C040] No accelerated colorspace conversion found from yuv420p to gbrp16le.
+[swscaler @ 000002759BEB0840] [swscaler @ 000002759C2A9080] No accelerated colorspace conversion found from yuv420p to gbrp16le.
+[swscaler @ 000002759BEB0840] [swscaler @ 000002759C8E4040] No accelerated colorspace conversion found from yuv420p to gbrp16le.
+[swscaler @ 000002759BEB0840] [swscaler @ 000002759C933040] No accelerated colorspace conversion found from yuv420p to gbrp16le.
+[swscaler @ 000002759BEB0840] [swscaler @ 000002759C960080] No accelerated colorspace conversion found from yuv420p to gbrp16le.
+[ffv1 @ 00000275995A4000] high bits_per_raw_sample, forcing range coder
+Output #0, matroska, to 'G:\AI\BG2_Upscale\video\restdung\runs\restdung-topaz-six-shared-20261109-v1\source-rgb709-15.mkv':
+  Metadata:
+    encoder         : Lavf62.0.102
+  Stream #0:0(eng): Video: ffv1 (FFV1 / 0x31564646), gbrp16le(pc, gbr/unknown/unknown, progressive), 1280x720 [SAR 1:1 DAR 16:9], q=2-31, 200 kb/s, 15 fps, 1k tbn (default)
+    Metadata:
+      encoder         : Lavc62.3.101 ffv1
+frame=   44 fps=0.0 q=-0.0 size=   51456KiB time=00:00:02.93 bitrate=143702.6kbits/s speed=5.77x elapsed=0:00:00.50    frame=   76 fps= 75 q=-0.0 size=  112128KiB time=00:00:05.06 bitrate=181293.3kbits/s speed=4.97x elapsed=0:00:01.01    [out#0/matroska @ 000002759959D900] video:132925KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.001538%
+frame=   91 fps= 78 q=-0.0 Lsize=  132927KiB time=00:00:06.06 bitrate=179495.9kbits/s speed= 5.2x elapsed=0:00:01.16    

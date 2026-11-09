@@ -1,0 +1,20 @@
+Input #0, matroska,webm, from 'G:\AI\BG2_Upscale\video\restdung\runs\restdung-topaz-six-shared-20261109-v1\source-rgb709-15.mkv':
+  Metadata:
+    ENCODER         : Lavf62.0.102
+  Duration: 00:00:06.07, start: 0.000000, bitrate: 179486 kb/s
+  Stream #0:0(eng): Video: ffv1, gbrp16le(pc, gbr/unknown/unknown, progressive), 1280x720, SAR 1:1 DAR 16:9, 15 fps, 15 tbr, 1k tbn (default)
+    Metadata:
+      ENCODER         : Lavc62.3.101 ffv1
+      DURATION        : 00:00:06.067000000
+Stream mapping:
+  Stream #0:0 -> #0:0 (ffv1 (native) -> ffv1 (native))
+[ffv1 @ 0000017AB079B100] high bits_per_raw_sample, forcing range coder
+Output #0, matroska, to 'G:\AI\BG2_Upscale\video\restdung\runs\restdung-topaz-six-shared-20261109-v1\C-proteus720.mkv':
+  Metadata:
+    encoder         : Lavf62.0.102
+  Stream #0:0(eng): Video: ffv1 (FFV1 / 0x31564646), gbrp16le(pc, gbr/unknown/unknown, progressive), 1280x720 [SAR 1:1 DAR 16:9], q=2-31, 200 kb/s, 15 fps, 1k tbn (default)
+    Metadata:
+      encoder         : Lavc62.3.101 ffv1
+      DURATION        : 00:00:06.067000000
+frame=   13 fps=8.5 q=-0.0 size=   17920KiB time=00:00:00.86 bitrate=169385.3kbits/s speed=0.566x elapsed=0:00:01.53    frame=   31 fps= 15 q=-0.0 size=   60928KiB time=00:00:02.06 bitrate=241510.7kbits/s speed=1.01x elapsed=0:00:02.03    frame=   53 fps= 21 q=-0.0 size=  121088KiB time=00:00:03.53 bitrate=280741.4kbits/s speed=1.39x elapsed=0:00:02.54    frame=   75 fps= 25 q=-0.0 size=  181504KiB time=00:00:05.00 bitrate=297376.2kbits/s speed=1.63x elapsed=0:00:03.05    frame=   84 fps= 24 q=-0.0 size=  201472KiB time=00:00:05.60 bitrate=294724.8kbits/s speed=1.57x elapsed=0:00:03.56    frame=   84 fps= 21 q=-0.0 size=  201472KiB time=00:00:05.60 bitrate=294724.8kbits/s speed=1.37x elapsed=0:00:04.07    [out#0/matroska @ 0000017AB0781640] video:224377KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.001063%
+frame=   91 fps= 22 q=-0.0 Lsize=  224379KiB time=00:00:06.06 bitrate=302985.8kbits/s speed=1.45x elapsed=0:00:04.18    

@@ -1,0 +1,33 @@
+Input #0, matroska,webm, from 'G:\AI\BG2_Upscale\video\restdung\restdung.wbm':
+  Metadata:
+    encoder         : Lavf53.24.2
+  Duration: 00:00:07.05, start: 0.000000, bitrate: 1701 kb/s
+  Stream #0:0(eng): Video: vp8, yuv420p(progressive), 1280x720, SAR 1:1 DAR 16:9, 15 fps, 15 tbr, 1k tbn (default)
+  Stream #0:1: Audio: vorbis, 22050 Hz, stereo, fltp (default)
+Stream mapping:
+  Stream #0:0 -> #0:0 (vp8 (native) -> ffv1 (native))
+[swscaler @ 000001AE61422480] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000001AE61422480] [swscaler @ 000001AE6145D8C0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000001AE61422480] [swscaler @ 000001AE6146A900] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000001AE61422480] [swscaler @ 000001AE61477940] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000001AE61422480] [swscaler @ 000001AE61484980] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000001AE61422480] [swscaler @ 000001AE614919C0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000001AE61422480] [swscaler @ 000001AE6149EA00] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000001AE61422480] [swscaler @ 000001AE614ACF00] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000001AE61422480] [swscaler @ 000001AE614BB440] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000001AE61422480] [swscaler @ 000001AE614C9980] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000001AE61422480] [swscaler @ 000001AE614D8700] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000001AE61422480] [swscaler @ 000001AE614E7480] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000001AE61422480] [swscaler @ 000001AE614F6200] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000001AE61422480] [swscaler @ 000001AE61504F80] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000001AE61422480] [swscaler @ 000001AE61513D00] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000001AE61422480] [swscaler @ 000001AE61522A80] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000001AE61422480] [swscaler @ 000001AE61531800] No accelerated colorspace conversion found from yuv420p to rgb48le.
+Output #0, matroska, to 'G:\AI\BG2_Upscale\video\restdung\runs\restdung-preclean-ab-20261110-v1\N1-proteus-nettoyage-720p15.mkv':
+  Metadata:
+    encoder         : Lavf62.0.102
+  Stream #0:0(eng): Video: ffv1 (FFV1 / 0x31564646), yuv420p(tv, bt470bg/unknown/unknown, progressive), 1280x720 [SAR 1:1 DAR 16:9], q=2-31, 200 kb/s, 15 fps, 1k tbn (default)
+    Metadata:
+      encoder         : Lavc62.3.101 ffv1
+frame=   28 fps= 18 q=-0.0 size=    4608KiB time=00:00:01.86 bitrate=20222.5kbits/s speed=1.22x elapsed=0:00:01.53    frame=   64 fps= 31 q=-0.0 size=   15616KiB time=00:00:04.26 bitrate=29982.7kbits/s speed=2.09x elapsed=0:00:02.04    frame=   74 fps= 29 q=-0.0 size=   19200KiB time=00:00:04.93 bitrate=31882.4kbits/s speed=1.93x elapsed=0:00:02.55    frame=   74 fps= 24 q=-0.0 size=   19200KiB time=00:00:04.93 bitrate=31882.4kbits/s speed=1.61x elapsed=0:00:03.06    [out#0/matroska @ 000001AE184048C0] video:23251KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.006729%
+frame=   91 fps= 28 q=-0.0 Lsize=   23252KiB time=00:00:06.06 bitrate=31398.2kbits/s speed=1.84x elapsed=0:00:03.28    

@@ -1,0 +1,59 @@
+{
+  "method": "Frames33..63 input vs66..126 output; gray640x360, central content only. Original/even anchor error and odd-frame novelty; novelty is not proof of motion quality.",
+  "interpolation": {
+    "T1-Apollo1080": {
+      "input_frames": 31,
+      "output_frames": 61,
+      "novel_odd_frames_of_30": 30,
+      "odd_to_previous_mae": 0.34911537170410156,
+      "odd_to_next_mae": 0.2993715703487396,
+      "even_anchor_mae": 0.2648833096027374,
+      "odd_to_linear_blend_mae": 0.2243340015411377
+    },
+    "T2-Apollo1080": {
+      "input_frames": 31,
+      "output_frames": 61,
+      "novel_odd_frames_of_30": 30,
+      "odd_to_previous_mae": 0.31915807723999023,
+      "odd_to_next_mae": 0.28157350420951843,
+      "even_anchor_mae": 0.23140180110931396,
+      "odd_to_linear_blend_mae": 0.20018087327480316
+    },
+    "T3-Apollo1080": {
+      "input_frames": 31,
+      "output_frames": 61,
+      "novel_odd_frames_of_30": 30,
+      "odd_to_previous_mae": 0.32057106494903564,
+      "odd_to_next_mae": 0.28118202090263367,
+      "even_anchor_mae": 0.23040220141410828,
+      "odd_to_linear_blend_mae": 0.2002863585948944
+    },
+    "T4-Apollo1080": {
+      "input_frames": 31,
+      "output_frames": 61,
+      "novel_odd_frames_of_30": 30,
+      "odd_to_previous_mae": 0.34739950299263,
+      "odd_to_next_mae": 0.2936273217201233,
+      "even_anchor_mae": 0.2989913523197174,
+      "odd_to_linear_blend_mae": 0.214762881398201
+    },
+    "C-Apollo720-30": {
+      "input_frames": 31,
+      "output_frames": 61,
+      "novel_odd_frames_of_30": 30,
+      "odd_to_previous_mae": 0.41653114557266235,
+      "odd_to_next_mae": 0.3552654981613159,
+      "even_anchor_mae": 0.3160819709300995,
+      "odd_to_linear_blend_mae": 0.29026052355766296
+    },
+    "T6-Aion1080": {
+      "input_frames": 31,
+      "output_frames": 61,
+      "novel_odd_frames_of_30": 30,
+      "odd_to_previous_mae": 0.35842078924179077,
+      "odd_to_next_mae": 0.31299909949302673,
+      "even_anchor_mae": 0.5738137364387512,
+      "odd_to_linear_blend_mae": 0.23872223496437073
+    }
+  }
+}

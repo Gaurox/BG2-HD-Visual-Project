@@ -1,0 +1,20 @@
+Input #0, matroska,webm, from 'G:\AI\BG2_Upscale\video\restdung\runs\restdung-topaz-six-shared-20261109-v1\C-proteus720.mkv':
+  Metadata:
+    ENCODER         : Lavf62.0.102
+  Duration: 00:00:06.07, start: 0.000000, bitrate: 302969 kb/s
+  Stream #0:0(eng): Video: ffv1, gbrp16le(pc, gbr/unknown/unknown, progressive), 1280x720, SAR 1:1 DAR 16:9, 15 fps, 15 tbr, 1k tbn (default)
+    Metadata:
+      ENCODER         : Lavc62.3.101 ffv1
+      DURATION        : 00:00:06.067000000
+Stream mapping:
+  Stream #0:0 -> #0:0 (ffv1 (native) -> ffv1 (native))
+[ffv1 @ 0000026ACF9494C0] high bits_per_raw_sample, forcing range coder
+Output #0, matroska, to 'G:\AI\BG2_Upscale\video\restdung\runs\restdung-topaz-six-shared-20261109-v1\C-U1080-15.mkv':
+  Metadata:
+    encoder         : Lavf62.0.102
+  Stream #0:0(eng): Video: ffv1 (FFV1 / 0x31564646), gbrp16le(pc, gbr/unknown/unknown, progressive), 1920x1080 [SAR 1:1 DAR 16:9], q=2-31, 200 kb/s, 15 fps, 1k tbn (default)
+    Metadata:
+      encoder         : Lavc62.3.101 ffv1
+      DURATION        : 00:00:06.067000000
+frame=    7 fps=3.4 q=-0.0 size=    5632KiB time=00:00:00.46 bitrate=98865.7kbits/s speed=0.229x elapsed=0:00:02.03    frame=   16 fps=6.3 q=-0.0 size=   48896KiB time=00:00:01.06 bitrate=375521.2kbits/s speed=0.419x elapsed=0:00:02.54    frame=   26 fps=8.5 q=-0.0 size=  102400KiB time=00:00:01.73 bitrate=483958.2kbits/s speed=0.567x elapsed=0:00:03.05    frame=   35 fps=9.8 q=-0.0 size=  153856KiB time=00:00:02.33 bitrate=540166.5kbits/s speed=0.654x elapsed=0:00:03.56    frame=   44 fps= 11 q=-0.0 size=  206592KiB time=00:00:02.93 bitrate=576955.2kbits/s speed=0.72x elapsed=0:00:04.07    frame=   53 fps= 12 q=-0.0 size=  259840KiB time=00:00:03.53 bitrate=602436.6kbits/s speed=0.771x elapsed=0:00:04.58    frame=   63 fps= 12 q=-0.0 size=  319744KiB time=00:00:04.20 bitrate=623653.1kbits/s speed=0.824x elapsed=0:00:05.09    frame=   73 fps= 13 q=-0.0 size=  377600KiB time=00:00:04.86 bitrate=635609.4kbits/s speed=0.868x elapsed=0:00:05.60    frame=   74 fps= 12 q=-0.0 size=  382976KiB time=00:00:04.93 bitrate=635947.2kbits/s speed=0.807x elapsed=0:00:06.11    frame=   74 fps= 11 q=-0.0 size=  382976KiB time=00:00:04.93 bitrate=635947.2kbits/s speed=0.745x elapsed=0:00:06.62    frame=   74 fps= 10 q=-0.0 size=  382976KiB time=00:00:04.93 bitrate=635947.2kbits/s speed=0.691x elapsed=0:00:07.13    frame=   83 fps= 11 q=-0.0 size=  430848KiB time=00:00:05.53 bitrate=637862.7kbits/s speed=0.724x elapsed=0:00:07.64    [out#0/matroska @ 0000026ACF5B0300] video:471931KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.000652%
+frame=   91 fps= 12 q=-0.0 Lsize=  471934KiB time=00:00:06.06 bitrate=637266.9kbits/s speed=0.777x elapsed=0:00:07.81    

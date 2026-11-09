@@ -1,0 +1,33 @@
+Input #0, matroska,webm, from 'G:\AI\BG2_Upscale\video\restdung\restdung.wbm':
+  Metadata:
+    encoder         : Lavf53.24.2
+  Duration: 00:00:07.05, start: 0.000000, bitrate: 1701 kb/s
+  Stream #0:0(eng): Video: vp8, yuv420p(progressive), 1280x720, SAR 1:1 DAR 16:9, 15 fps, 15 tbr, 1k tbn (default)
+  Stream #0:1: Audio: vorbis, 22050 Hz, stereo, fltp (default)
+Stream mapping:
+  Stream #0:0 -> #0:0 (vp8 (native) -> prores (prores_ks))
+[swscaler @ 0000025251E79F80] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 0000025251E79F80] [swscaler @ 0000025251E86FC0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 0000025251E79F80] [swscaler @ 0000025251E94000] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 0000025251E79F80] [swscaler @ 0000025251EA1040] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 0000025251E79F80] [swscaler @ 0000025251EAE080] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 0000025251E79F80] [swscaler @ 0000025251EBB0C0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 0000025251E79F80] [swscaler @ 0000025251EC9600] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 0000025251E79F80] [swscaler @ 0000025251ED7B40] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 0000025251E79F80] [swscaler @ 0000025251F9FF40] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 0000025251E79F80] [swscaler @ 0000025251FACF80] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 0000025251E79F80] [swscaler @ 0000025251FB9FC0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 0000025251E79F80] [swscaler @ 0000025251FC8500] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 0000025251E79F80] [swscaler @ 0000025251FD6A00] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 0000025251E79F80] [swscaler @ 0000025251FE4F40] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 0000025251E79F80] [swscaler @ 0000025251FF3480] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 0000025251E79F80] [swscaler @ 00000252520019C0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 0000025251E79F80] [swscaler @ 000002525200FEC0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+Output #0, mov, to 'G:\AI\BG2_Upscale\video\restdung\runs\restdung-topaz-ab-20261109-v1\A-proteus-doux-1080p15-master.mov':
+  Metadata:
+    encoder         : Lavf62.0.102
+  Stream #0:0(eng): Video: prores (HQ) (apch / 0x68637061), yuv422p10le(tv, bt470bg/unknown/unknown, progressive), 2560x1440 [SAR 1:1 DAR 16:9], q=2-31, 200 kb/s, 15 fps, 15360 tbn (default)
+    Metadata:
+      encoder         : Lavc62.3.101 prores_ks
+frame=    0 fps=0.0 q=0.0 size=       0KiB time=N/A bitrate=N/A speed=N/A elapsed=0:00:01.53    frame=    6 fps=2.9 q=-0.0 size=     512KiB time=00:00:00.40 bitrate=10486.5kbits/s speed=0.196x elapsed=0:00:02.04    frame=   16 fps=6.3 q=-0.0 size=    8960KiB time=00:00:01.06 bitrate=68813.0kbits/s speed=0.418x elapsed=0:00:02.55    frame=   28 fps=9.1 q=-0.0 size=   23552KiB time=00:00:01.86 bitrate=103359.8kbits/s speed=0.609x elapsed=0:00:03.06    frame=   39 fps= 11 q=-0.0 size=   37632KiB time=00:00:02.60 bitrate=118569.9kbits/s speed=0.727x elapsed=0:00:03.57    frame=   49 fps= 12 q=-0.0 size=   50432KiB time=00:00:03.26 bitrate=126471.2kbits/s speed=0.799x elapsed=0:00:04.08    frame=   60 fps= 13 q=-0.0 size=   64512KiB time=00:00:04.00 bitrate=132120.6kbits/s speed=0.87x elapsed=0:00:04.59    frame=   67 fps= 13 q=-0.0 size=   73472KiB time=00:00:04.46 bitrate=134749.9kbits/s speed=0.874x elapsed=0:00:05.10    frame=   67 fps= 12 q=-0.0 size=   73472KiB time=00:00:04.46 bitrate=134749.9kbits/s speed=0.795x elapsed=0:00:05.62    frame=   67 fps= 11 q=-0.0 size=   73472KiB time=00:00:04.46 bitrate=134749.9kbits/s speed=0.728x elapsed=0:00:06.13    frame=   74 fps= 11 q=-0.0 size=   82432KiB time=00:00:04.93 bitrate=136881.7kbits/s speed=0.743x elapsed=0:00:06.64    [out#0/mov @ 0000025203046480] video:98153KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.001462%
+frame=   91 fps= 13 q=-0.0 Lsize=   98155KiB time=00:00:06.06 bitrate=132541.3kbits/s speed=0.881x elapsed=0:00:06.88    

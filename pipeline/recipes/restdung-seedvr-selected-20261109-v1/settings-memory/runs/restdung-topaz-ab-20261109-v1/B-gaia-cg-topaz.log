@@ -1,0 +1,33 @@
+Input #0, matroska,webm, from 'G:\AI\BG2_Upscale\video\restdung\restdung.wbm':
+  Metadata:
+    encoder         : Lavf53.24.2
+  Duration: 00:00:07.05, start: 0.000000, bitrate: 1701 kb/s
+  Stream #0:0(eng): Video: vp8, yuv420p(progressive), 1280x720, SAR 1:1 DAR 16:9, 15 fps, 15 tbr, 1k tbn (default)
+  Stream #0:1: Audio: vorbis, 22050 Hz, stereo, fltp (default)
+Stream mapping:
+  Stream #0:0 -> #0:0 (vp8 (native) -> prores (prores_ks))
+[swscaler @ 00000281A2412E80] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 00000281A2412E80] [swscaler @ 00000281A24213C0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 00000281A2412E80] [swscaler @ 00000281A2430140] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 00000281A2412E80] [swscaler @ 00000281A243EEC0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 00000281A2412E80] [swscaler @ 00000281A244DC40] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 00000281A2412E80] [swscaler @ 00000281A245C9C0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 00000281A2412E80] [swscaler @ 00000281A246B740] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 00000281A2412E80] [swscaler @ 00000281A247A4C0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 00000281A2412E80] [swscaler @ 00000281A2489240] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 00000281A2412E80] [swscaler @ 00000281A2497FC0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 00000281A2412E80] [swscaler @ 00000281A24A6D40] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 00000281A2412E80] [swscaler @ 00000281A24B5AC0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 00000281A2412E80] [swscaler @ 00000281A24C4840] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 00000281A2412E80] [swscaler @ 00000281A24D35C0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 00000281A2412E80] [swscaler @ 00000281A24E2340] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 00000281A2412E80] [swscaler @ 00000281A24F10C0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 00000281A2412E80] [swscaler @ 00000281A24FFE40] No accelerated colorspace conversion found from yuv420p to rgb48le.
+Output #0, mov, to 'G:\AI\BG2_Upscale\video\restdung\runs\restdung-topaz-ab-20261109-v1\B-gaia-cg-1080p15-master.mov':
+  Metadata:
+    encoder         : Lavf62.0.102
+  Stream #0:0(eng): Video: prores (HQ) (apch / 0x68637061), yuv422p10le(tv, bt470bg/unknown/unknown, progressive), 2560x1440 [SAR 1:1 DAR 16:9], q=2-31, 200 kb/s, 15 fps, 15360 tbn (default)
+    Metadata:
+      encoder         : Lavc62.3.101 prores_ks
+frame=    9 fps=4.4 q=-0.0 size=    3328KiB time=00:00:00.60 bitrate=45438.8kbits/s speed=0.293x elapsed=0:00:02.04    frame=   24 fps=9.4 q=-0.0 size=   21248KiB time=00:00:01.60 bitrate=108789.9kbits/s speed=0.625x elapsed=0:00:02.55    frame=   38 fps= 12 q=-0.0 size=   39424KiB time=00:00:02.53 bitrate=127484.9kbits/s speed=0.825x elapsed=0:00:03.07    frame=   52 fps= 15 q=-0.0 size=   57856KiB time=00:00:03.46 bitrate=136718.2kbits/s speed=0.967x elapsed=0:00:03.58    frame=   67 fps= 16 q=-0.0 size=   77312KiB time=00:00:04.46 bitrate=141792.6kbits/s speed=1.09x elapsed=0:00:04.09    frame=   73 fps= 16 q=-0.0 size=   85248KiB time=00:00:04.86 bitrate=143497.0kbits/s speed=1.06x elapsed=0:00:04.60    frame=   73 fps= 14 q=-0.0 size=   85248KiB time=00:00:04.86 bitrate=143497.0kbits/s speed=0.952x elapsed=0:00:05.11    [out#0/mov @ 000002815FE0F000] video:103469KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.001383%
+frame=   91 fps= 16 q=-0.0 Lsize=  103470KiB time=00:00:06.06 bitrate=139719.1kbits/s speed=1.08x elapsed=0:00:05.61    
