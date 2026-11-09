@@ -1,0 +1,116 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:WEBENTH",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 22,
+    "source": {
+      "installed_binding": {
+        "bytes": 14843,
+        "path": "effects/batches/qa52-accepted-20261109-v1/bindings/WEBENTH.json",
+        "sha256": "8AD7065321D856DB26E8821EF33254B4AE82CCC9DD03A3E9DFD1BD5E8361EE0B"
+      },
+      "interpolation_run": "webenth-installed-reuse30-20261109-v1",
+      "interpolation_run_descriptor_sha256": "3FD8BF01429A47D9ACAB9E033D9D8DC608B6D69BFCB7F93651E092DAA74B4064",
+      "no_new_inference": true,
+      "original_runtime_ref": "Y31N097",
+      "source_bam_sha256": "61807B9D78DD217C448C0AFF86CD7A33C3232D6ECBFE1BAAFE344F1531970E50",
+      "spatial_manifest_sha256": "8AD7065321D856DB26E8821EF33254B4AE82CCC9DD03A3E9DFD1BD5E8361EE0B",
+      "spatial_run": "webenth-installed-reuse-spatial-20261109-v1",
+      "spatial_run_descriptor_sha256": "3EF4154006D88A6150CBD5C127DF6E88CC79E3964711A2C98DD487CA0079C245"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          13,
+          15,
+          17,
+          19,
+          11
+        ]
+      ],
+      "once_profiles": [
+        "cycle000-once"
+      ],
+      "phase_count": 12,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          11,
+          21
+        ]
+      ]
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1205,
+    "path": "effects/index/qa-decisions/WEBENTH/2026-11-09-accepted-0047e2bcc1ba.json",
+    "sha256": "0047E2BCC1BA500699F6AC4AE939A860EE50718F1C25C1BA8B7415A335F40F1F"
+  },
+  "resref": "WEBENTH",
+  "run_descriptor": {
+    "bytes": 1441,
+    "path": "effects/ressources/WEBENTH/runs/webenth-installed-reuse30-20261109-v1/run.json",
+    "sha256": "3FD8BF01429A47D9ACAB9E033D9D8DC608B6D69BFCB7F93651E092DAA74B4064"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 15288,
+      "path": "effects/ressources/WEBENTH/packs/webenth-installed-accepted-20261109-v1/manifest.json",
+      "sha256": "8AEEFE7F2B44E0E4A15FD1BCE08A6E7E6874A8DB620FA73D8EBA14756E2EA491"
+    },
+    "registry": {
+      "bytes": 372,
+      "path": "effects/ressources/WEBENTH/packs/webenth-installed-accepted-20261109-v1/EffectAnimations-X4.registry",
+      "sha256": "BBBE7621DED81F67A649EE5623088F5590782082679903565D29684026C46A0D"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "webenth-installed-reuse30-20261109-v1",
+  "source": {
+    "bytes": 2798,
+    "path": "effects/ressources/WEBENTH/source.bam",
+    "sha256": "61807B9D78DD217C448C0AFF86CD7A33C3232D6ECBFE1BAAFE344F1531970E50"
+  }
+}

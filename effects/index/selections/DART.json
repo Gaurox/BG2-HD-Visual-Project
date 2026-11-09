@@ -1,0 +1,264 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:DART",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 6
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "lookup_start": 12
+      },
+      {
+        "cycle": 3,
+        "frame_indices": [
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "lookup_start": 18
+      },
+      {
+        "cycle": 4,
+        "frame_indices": [
+          24,
+          25,
+          26,
+          27,
+          28,
+          29
+        ],
+        "lookup_start": 24
+      }
+    ],
+    "frame_count": 110,
+    "source": {
+      "installed_binding": {
+        "bytes": 66602,
+        "path": "effects/batches/qa52-accepted-20261109-v1/bindings/DART.json",
+        "sha256": "756033C15A7AA5E7720491689D6B5DAE986FEE5169D2EB34F6877F3D2874295D"
+      },
+      "interpolation_run": "dart-installed-reuse30-20261109-v1",
+      "interpolation_run_descriptor_sha256": "461CF71A242EE30E3D4A1CD4F3DB8AED2CD876062AB118E079B416E399536178",
+      "no_new_inference": true,
+      "original_runtime_ref": "DART",
+      "source_bam_sha256": "516A8B8E4FBD5424E4C28D6AF550BA54DE5822D64869CDE8B20A69ED4E487DB5",
+      "spatial_manifest_sha256": "756033C15A7AA5E7720491689D6B5DAE986FEE5169D2EB34F6877F3D2874295D",
+      "spatial_run": "dart-installed-reuse-spatial-20261109-v1",
+      "spatial_run_descriptor_sha256": "F21B75D55BC5587E026F2B272CA943A39F3D0E7828E46E545A9453C67245C113"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12,
+        12,
+        12,
+        12,
+        12
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop",
+        "cycle002-loop",
+        "cycle003-loop",
+        "cycle004-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          13,
+          15,
+          17,
+          19,
+          11
+        ],
+        [
+          22,
+          35,
+          37,
+          39,
+          41,
+          33
+        ],
+        [
+          44,
+          57,
+          59,
+          61,
+          63,
+          55
+        ],
+        [
+          66,
+          79,
+          81,
+          83,
+          85,
+          77
+        ],
+        [
+          88,
+          101,
+          103,
+          105,
+          107,
+          99
+        ]
+      ],
+      "once_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "phase_count": 12,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          11,
+          21
+        ],
+        [
+          22,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          33,
+          43
+        ],
+        [
+          44,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          55,
+          65
+        ],
+        [
+          66,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          77,
+          87
+        ],
+        [
+          88,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          99,
+          109
+        ]
+      ]
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1184,
+    "path": "effects/index/qa-decisions/DART/2026-11-09-accepted-ee2ffb5ea209.json",
+    "sha256": "EE2FFB5EA209398248666EB89C558677BE9F48F199750F04FB6A7EF235ABE4EF"
+  },
+  "resref": "DART",
+  "run_descriptor": {
+    "bytes": 1420,
+    "path": "effects/ressources/DART/runs/dart-installed-reuse30-20261109-v1/run.json",
+    "sha256": "461CF71A242EE30E3D4A1CD4F3DB8AED2CD876062AB118E079B416E399536178"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 67094,
+      "path": "effects/ressources/DART/packs/dart-installed-accepted-20261109-v1/manifest.json",
+      "sha256": "840230720E873E1FBB825354B4259AD8E0D7A1B54752D544DF89CCF802159CBB"
+    },
+    "registry": {
+      "bytes": 1604,
+      "path": "effects/ressources/DART/packs/dart-installed-accepted-20261109-v1/EffectAnimations-X4.registry",
+      "sha256": "3503406A3851102CA40824AB4F10126AE58CEECB685AF86B053012F4E3862505"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "dart-installed-reuse30-20261109-v1",
+  "source": {
+    "bytes": 1322,
+    "path": "effects/ressources/DART/source.bam",
+    "sha256": "516A8B8E4FBD5424E4C28D6AF550BA54DE5822D64869CDE8B20A69ED4E487DB5"
+  }
+}

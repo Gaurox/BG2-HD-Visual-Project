@@ -1,0 +1,156 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPIPLARI",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 62,
+    "source": {
+      "installed_binding": {
+        "bytes": 37470,
+        "path": "effects/batches/qa52-accepted-20261109-v1/bindings/SPIPLARI.json",
+        "sha256": "B2C5D52ADEAC909F281BB5BDF6FDD97D12CF748A27DF3B5E8DD50643DFAA44A0"
+      },
+      "interpolation_run": "spiplari-installed-reuse30-20261109-v1",
+      "interpolation_run_descriptor_sha256": "630DD8725DD932136563826B3743EDC3EAF866FCB2916F370D63BA5882937F99",
+      "no_new_inference": true,
+      "original_runtime_ref": "SPIPLARI",
+      "source_bam_sha256": "5CE9CF15E26185FE27274E263778B4E7677176C9C48C980C6A3563FCA70F857B",
+      "spatial_manifest_sha256": "B2C5D52ADEAC909F281BB5BDF6FDD97D12CF748A27DF3B5E8DD50643DFAA44A0",
+      "spatial_run": "spiplari-installed-reuse-spatial-20261109-v1",
+      "spatial_run_descriptor_sha256": "FADBDAA48D2E23B90C7E0F190C8C1ADCD4A02336B863541994FA337120E167E2"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        32
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          33,
+          35,
+          37,
+          39,
+          41,
+          43,
+          45,
+          47,
+          49,
+          51,
+          53,
+          55,
+          57,
+          59,
+          31
+        ]
+      ],
+      "once_profiles": [
+        "cycle000-once"
+      ],
+      "phase_count": 32,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          31,
+          61
+        ]
+      ]
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1212,
+    "path": "effects/index/qa-decisions/SPIPLARI/2026-11-09-accepted-6be3498118eb.json",
+    "sha256": "6BE3498118EB85693E4C72DFF9063C9D281F15E92799E25D0CAEEB5263DD46AD"
+  },
+  "resref": "SPIPLARI",
+  "run_descriptor": {
+    "bytes": 1448,
+    "path": "effects/ressources/SPIPLARI/runs/spiplari-installed-reuse30-20261109-v1/run.json",
+    "sha256": "630DD8725DD932136563826B3743EDC3EAF866FCB2916F370D63BA5882937F99"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 37856,
+      "path": "effects/ressources/SPIPLARI/packs/spiplari-installed-accepted-20261109-v1/manifest.json",
+      "sha256": "D4F179E17890CA3A33897CCE839431522BCA5861DB63863905819DE45B69C893"
+    },
+    "registry": {
+      "bytes": 892,
+      "path": "effects/ressources/SPIPLARI/packs/spiplari-installed-accepted-20261109-v1/EffectAnimations-X4.registry",
+      "sha256": "2701916946E70DDFEAC3FD4F2E54986D771F376311A6AE198C778562B268E35F"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spiplari-installed-reuse30-20261109-v1",
+  "source": {
+    "bytes": 34825,
+    "path": "effects/ressources/SPIPLARI/source.bam",
+    "sha256": "5CE9CF15E26185FE27274E263778B4E7677176C9C48C980C6A3563FCA70F857B"
+  }
+}

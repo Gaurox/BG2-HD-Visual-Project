@@ -1,0 +1,140 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SANCTRY",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 25,
+    "source": {
+      "installed_binding": {
+        "bytes": 17042,
+        "path": "effects/batches/qa52-accepted-20261109-v1/bindings/SANCTRY.json",
+        "sha256": "7F2AD931B884CA25EDE4F1CF4F2E6352CD8758B5B98EA6C6310DF54308E582FA"
+      },
+      "interpolation_run": "sanctry-installed-reuse30-20261109-v1",
+      "interpolation_run_descriptor_sha256": "5B50883F3C071AB3778631FFBA134B7EF9A68EEE02AD04EA92A7A6A3B9E962E5",
+      "no_new_inference": true,
+      "original_runtime_ref": "Y31N098",
+      "source_bam_sha256": "1C9E7A29DFF872489594133C86D6481B5C15B1EEA39A18036F0469781118985B",
+      "spatial_manifest_sha256": "7F2AD931B884CA25EDE4F1CF4F2E6352CD8758B5B98EA6C6310DF54308E582FA",
+      "spatial_run": "sanctry-installed-reuse-spatial-20261109-v1",
+      "spatial_run_descriptor_sha256": "090A2E58687E46A57865E08A59DB46C195496177E2F6765266FBD57C6CEE3653"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        24
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22
+        ]
+      ],
+      "once_profiles": [
+        "cycle000-once"
+      ],
+      "phase_count": 24,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          23,
+          22,
+          24
+        ]
+      ]
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1205,
+    "path": "effects/index/qa-decisions/SANCTRY/2026-11-09-accepted-e3e437ca9837.json",
+    "sha256": "E3E437CA9837878BF64E334A3AE26CEAB9C405CDB074929F161AC3111D9146BF"
+  },
+  "resref": "SANCTRY",
+  "run_descriptor": {
+    "bytes": 1441,
+    "path": "effects/ressources/SANCTRY/runs/sanctry-installed-reuse30-20261109-v1/run.json",
+    "sha256": "5B50883F3C071AB3778631FFBA134B7EF9A68EEE02AD04EA92A7A6A3B9E962E5"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 17387,
+      "path": "effects/ressources/SANCTRY/packs/sanctry-installed-accepted-20261109-v1/manifest.json",
+      "sha256": "DC90D3308EE039787C8228F16AA8B7A39CC5014C17246EA38D6A165E2DABA2C0"
+    },
+    "registry": {
+      "bytes": 516,
+      "path": "effects/ressources/SANCTRY/packs/sanctry-installed-accepted-20261109-v1/EffectAnimations-X4.registry",
+      "sha256": "30E3C273BE0D685CF78D60BD10D9B3E276AECE8EA6104E432F2802EDD47A7FC1"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "sanctry-installed-reuse30-20261109-v1",
+  "source": {
+    "bytes": 95540,
+    "path": "effects/ressources/SANCTRY/source.bam",
+    "sha256": "1C9E7A29DFF872489594133C86D6481B5C15B1EEA39A18036F0469781118985B"
+  }
+}

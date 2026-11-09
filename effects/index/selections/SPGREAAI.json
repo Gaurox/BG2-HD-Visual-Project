@@ -1,0 +1,156 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPGREAAI",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 62,
+    "source": {
+      "installed_binding": {
+        "bytes": 38207,
+        "path": "effects/batches/qa52-accepted-20261109-v1/bindings/SPGREAAI.json",
+        "sha256": "F77B994997AE30054AADC85743BCBD881DC09C05C360EEA586306FF68FB2F0C1"
+      },
+      "interpolation_run": "spgreaai-installed-reuse30-20261109-v1",
+      "interpolation_run_descriptor_sha256": "60FC5AC8C410D6F428FF38D67C6C88A155A2B943B0E5364B5A361DC4B865CC32",
+      "no_new_inference": true,
+      "original_runtime_ref": "Y31N085",
+      "source_bam_sha256": "A865632839EF2BD46F2A08C74149330432E2C29B7A70C79EC2E3DC37A2670CC9",
+      "spatial_manifest_sha256": "F77B994997AE30054AADC85743BCBD881DC09C05C360EEA586306FF68FB2F0C1",
+      "spatial_run": "spgreaai-installed-reuse-spatial-20261109-v1",
+      "spatial_run_descriptor_sha256": "40909488EC695C86BD6AE67E3EE31609DE4628E60D7D33253829838EE2EAE426"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        32
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          33,
+          35,
+          37,
+          39,
+          41,
+          43,
+          45,
+          47,
+          49,
+          51,
+          53,
+          55,
+          57,
+          59,
+          31
+        ]
+      ],
+      "once_profiles": [
+        "cycle000-once"
+      ],
+      "phase_count": 32,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          31,
+          61
+        ]
+      ]
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1212,
+    "path": "effects/index/qa-decisions/SPGREAAI/2026-11-09-accepted-d0755af00434.json",
+    "sha256": "D0755AF004345365CEC39F5DB5E64E7EE7F4A0D66494509E7E615FBD57E3F505"
+  },
+  "resref": "SPGREAAI",
+  "run_descriptor": {
+    "bytes": 1448,
+    "path": "effects/ressources/SPGREAAI/runs/spgreaai-installed-reuse30-20261109-v1/run.json",
+    "sha256": "60FC5AC8C410D6F428FF38D67C6C88A155A2B943B0E5364B5A361DC4B865CC32"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 38736,
+      "path": "effects/ressources/SPGREAAI/packs/spgreaai-installed-accepted-20261109-v1/manifest.json",
+      "sha256": "CB077E10EAE43D317C5B18C53A07E58EF285AA179EEA650A4651DFC94CE91A85"
+    },
+    "registry": {
+      "bytes": 892,
+      "path": "effects/ressources/SPGREAAI/packs/spgreaai-installed-accepted-20261109-v1/EffectAnimations-X4.registry",
+      "sha256": "95BBFB52ACBBF94D0A099AD70507504C566ABB5C2C8D945250ED576D122D5DEE"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spgreaai-installed-reuse30-20261109-v1",
+  "source": {
+    "bytes": 14005,
+    "path": "effects/ressources/SPGREAAI/source.bam",
+    "sha256": "A865632839EF2BD46F2A08C74149330432E2C29B7A70C79EC2E3DC37A2670CC9"
+  }
+}

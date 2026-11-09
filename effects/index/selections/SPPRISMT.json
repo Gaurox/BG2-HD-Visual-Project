@@ -1,0 +1,224 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPPRISMT",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          28,
+          27,
+          1
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 131,
+    "source": {
+      "installed_binding": {
+        "bytes": 77318,
+        "path": "effects/batches/qa52-accepted-20261109-v1/bindings/SPPRISMT.json",
+        "sha256": "F02C87D11D283F31AFBA3756F1C37E8179A9158C1BB80E1B1CE3664F3225F802"
+      },
+      "interpolation_run": "spprismt-installed-reuse30-20261109-v1",
+      "interpolation_run_descriptor_sha256": "1751F9DCF62F817A3417E2C8CE4D7A7441C2C6D0B05FF73B6AF2E040BC51A131",
+      "no_new_inference": true,
+      "original_runtime_ref": "SPPRISMT",
+      "source_bam_sha256": "77CBCE6274B5CFCCFCB1482943752ECD2A0B50E80DB4BBE82F220286FCE2EF16",
+      "spatial_manifest_sha256": "F02C87D11D283F31AFBA3756F1C37E8179A9158C1BB80E1B1CE3664F3225F802",
+      "spatial_run": "spprismt-installed-reuse-spatial-20261109-v1",
+      "spatial_run_descriptor_sha256": "82793FEB6CFB11960A9E98854B14B88405CAFB5A10DE1A1262970092B6C0D49D"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        66
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          67,
+          69,
+          71,
+          73,
+          75,
+          77,
+          79,
+          81,
+          83,
+          85,
+          87,
+          89,
+          91,
+          93,
+          95,
+          97,
+          99,
+          101,
+          103,
+          105,
+          107,
+          109,
+          111,
+          113,
+          115,
+          117,
+          119,
+          121,
+          123,
+          125,
+          127,
+          129
+        ]
+      ],
+      "once_profiles": [
+        "cycle000-once"
+      ],
+      "phase_count": 66,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          115,
+          116,
+          117,
+          118,
+          119,
+          120,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126,
+          127,
+          128,
+          129,
+          130
+        ]
+      ]
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1212,
+    "path": "effects/index/qa-decisions/SPPRISMT/2026-11-09-accepted-db7c7dcaea7c.json",
+    "sha256": "DB7C7DCAEA7CF7A0B65FD334DE0793303F9913839397C900B3D5A7DD512A39C4"
+  },
+  "resref": "SPPRISMT",
+  "run_descriptor": {
+    "bytes": 1448,
+    "path": "effects/ressources/SPPRISMT/runs/spprismt-installed-reuse30-20261109-v1/run.json",
+    "sha256": "1751F9DCF62F817A3417E2C8CE4D7A7441C2C6D0B05FF73B6AF2E040BC51A131"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 77644,
+      "path": "effects/ressources/SPPRISMT/packs/spprismt-installed-accepted-20261109-v1/manifest.json",
+      "sha256": "D92F67A64CC7BC85B3C9DE1F964A50471D8F4E3AEB260270DA908FAAADC728A0"
+    },
+    "registry": {
+      "bytes": 1784,
+      "path": "effects/ressources/SPPRISMT/packs/spprismt-installed-accepted-20261109-v1/EffectAnimations-X4.registry",
+      "sha256": "F2A2AA30CF7C59EE612FC02F64CFC00FEC19C61EA08355520E4D69809B29EA0A"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spprismt-installed-reuse30-20261109-v1",
+  "source": {
+    "bytes": 11234,
+    "path": "effects/ressources/SPPRISMT/source.bam",
+    "sha256": "77CBCE6274B5CFCCFCB1482943752ECD2A0B50E80DB4BBE82F220286FCE2EF16"
+  }
+}

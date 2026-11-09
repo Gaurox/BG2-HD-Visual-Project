@@ -1,0 +1,116 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:GREASEH",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 22,
+    "source": {
+      "installed_binding": {
+        "bytes": 14843,
+        "path": "effects/batches/qa52-accepted-20261109-v1/bindings/GREASEH.json",
+        "sha256": "E6FE927A59161830D8ED38EE8C83BBD7860D0117F703CDE23FAF8C5FDFA38259"
+      },
+      "interpolation_run": "greaseh-installed-reuse30-20261109-v1",
+      "interpolation_run_descriptor_sha256": "643CE87168E13493943315040D44B7C66B2F4ADEC77964A416C515E2ABBD1A65",
+      "no_new_inference": true,
+      "original_runtime_ref": "Y31N093",
+      "source_bam_sha256": "3100F7A46793072D49AFCB8972E2D6023BD940E4F05ED71BEFF1661FF8F7D2B4",
+      "spatial_manifest_sha256": "E6FE927A59161830D8ED38EE8C83BBD7860D0117F703CDE23FAF8C5FDFA38259",
+      "spatial_run": "greaseh-installed-reuse-spatial-20261109-v1",
+      "spatial_run_descriptor_sha256": "2718D7E1A0A9A752F71C530E3D3832F41B14D7E2CFCEB21C78F5D99F58923838"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          13,
+          15,
+          17,
+          19,
+          11
+        ]
+      ],
+      "once_profiles": [
+        "cycle000-once"
+      ],
+      "phase_count": 12,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          11,
+          21
+        ]
+      ]
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1205,
+    "path": "effects/index/qa-decisions/GREASEH/2026-11-09-accepted-8c3ce9e050a1.json",
+    "sha256": "8C3CE9E050A123F90D4FBB2482F0E1DF65BBF22FAE4D6EC6F5D8ABE028DDE7CD"
+  },
+  "resref": "GREASEH",
+  "run_descriptor": {
+    "bytes": 1441,
+    "path": "effects/ressources/GREASEH/runs/greaseh-installed-reuse30-20261109-v1/run.json",
+    "sha256": "643CE87168E13493943315040D44B7C66B2F4ADEC77964A416C515E2ABBD1A65"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 15288,
+      "path": "effects/ressources/GREASEH/packs/greaseh-installed-accepted-20261109-v1/manifest.json",
+      "sha256": "9BF6530551AAD759809C5B4CB0D9B420A8A3082758D527BAA8AD0E9CAB9B1772"
+    },
+    "registry": {
+      "bytes": 372,
+      "path": "effects/ressources/GREASEH/packs/greaseh-installed-accepted-20261109-v1/EffectAnimations-X4.registry",
+      "sha256": "63F0C5FDC9A8E0EB1EF04D4AE44A5DB40599395EE6F1D15915A8DE86EE912A6E"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "greaseh-installed-reuse30-20261109-v1",
+  "source": {
+    "bytes": 8464,
+    "path": "effects/ressources/GREASEH/source.bam",
+    "sha256": "3100F7A46793072D49AFCB8972E2D6023BD940E4F05ED71BEFF1661FF8F7D2B4"
+  }
+}

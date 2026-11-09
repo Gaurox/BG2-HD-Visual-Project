@@ -1,5 +1,7 @@
 # Projectiles — source, production réutilisable, travail restant
 
+**QA52 acceptée — 2026-11-09** : [décision et périmètre](analysis/components-qa52-20261109-v1/README.md). 52 images acceptées le 2026-11-09 : 31 anciens effets, 18 réemplois, 3 effets 1WDC. 17 images liées à 138 PRO ; validation des composants seule. SANCTRY/SPPR109 et SPSHIELD/SPWI311 : transparence confirmée avec les vrais sorts. Packs mono-BAM figés sur les versions installées testées ; 0 inférence/interpolation nouvelle. Autres QA, installation et release préservées ; GPU en pause.
+
 - **Suivi courant : [validations manuelles](SUIVI_MANUEL.md)**. 29 PRO avec acceptation visuelle limitée aux composants observés ; 3 décisions historiques conservées séparément. États explicites `index/work-tracking.json:projectiles.<PRO>.qa` ; [32 décisions et sources figées](analysis/validations-manuelles-consolidees-20261028-v1/decisions.json). Pas de QA intégrale des243PRO déduite.
 - **CourantV14 accepté : [preuve finale Projectile magique](analysis/projectile-magique-v14-valide-20261028-v1/README.md)**. 28dessinsHD/masqués,12phasesdistinctes,13dessinsimpairs,0rejet ;canevasnatifvariable64×79confirmé,0imageretraitée. Trace temporairedésactivée,jeu/loaderarrêtés ;DLLV14conservée. Aucun retestdemandé surlescomposantsobservésdecettesérie.
 - **[V13 : éclairs et vol de Semence confirmés](analysis/validation-v13-20261028-v1/README.md)**. Trois traînées93dessinsHD/89masqués/50phasesimpaires ; SPFIRSE2 volHD+masque sur3dessins,phases0/2 seulement. Ne pas rejouercesdeuxessais. RéserveProjectilemagiqueV13 levée parvalidationfinaleV14.
@@ -19,6 +21,7 @@
 | Image produite/acceptée | Autorités effets, animations ou sprites ; liens explicites dans `contexts.json` |
 | Intégration de chaque PRO | `index/work-tracking.json:projectiles.<RESREF>.integration` + référence locale |
 | QA de chaque PRO | Même fichier, `.qa` + décision explicite/preuve ; aucune promotion depuis la QA d’un BAM |
+| QA des images partagées | Même fichier, `.component_visual_qa.<lot>` : `accepted-assets-only`, assets et preuve effets ; ne modifie pas `.qa` du PRO |
 | Installation | Même fichier, `.installation` + reçu propre au périmètre ; catalogue seul = observation distincte |
 | Release | Même fichier, `.release` + référence explicite ; aucune déduction depuis les autres états |
 

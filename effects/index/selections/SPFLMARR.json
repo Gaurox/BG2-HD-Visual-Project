@@ -1,0 +1,264 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPFLMARR",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 6
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "lookup_start": 12
+      },
+      {
+        "cycle": 3,
+        "frame_indices": [
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "lookup_start": 18
+      },
+      {
+        "cycle": 4,
+        "frame_indices": [
+          24,
+          25,
+          26,
+          27,
+          28,
+          29
+        ],
+        "lookup_start": 24
+      }
+    ],
+    "frame_count": 110,
+    "source": {
+      "installed_binding": {
+        "bytes": 67410,
+        "path": "effects/batches/qa52-accepted-20261109-v1/bindings/SPFLMARR.json",
+        "sha256": "F55905020A90967B59AAD3A1FB00E7B85549BE7B567F0A4E0CFBC282C522DF77"
+      },
+      "interpolation_run": "spflmarr-installed-reuse30-20261109-v1",
+      "interpolation_run_descriptor_sha256": "6F514FFE8D30C194744A3DBD2E9F2D0DD78CFBA604629B4B09DA3FE23DE4BE88",
+      "no_new_inference": true,
+      "original_runtime_ref": "SPFLMARR",
+      "source_bam_sha256": "ECA45907DE0E20ABB39880D7EAC2C0790D728A88EA0BC3E705A1C7F3589BBD19",
+      "spatial_manifest_sha256": "F55905020A90967B59AAD3A1FB00E7B85549BE7B567F0A4E0CFBC282C522DF77",
+      "spatial_run": "spflmarr-installed-reuse-spatial-20261109-v1",
+      "spatial_run_descriptor_sha256": "508099C7251913DFBF91A41BAB1FB39A812A45CF45BD58A0D8D5A0EDF7EDE1EC"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12,
+        12,
+        12,
+        12,
+        12
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop",
+        "cycle002-loop",
+        "cycle003-loop",
+        "cycle004-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          13,
+          15,
+          17,
+          19,
+          11
+        ],
+        [
+          22,
+          35,
+          37,
+          39,
+          41,
+          33
+        ],
+        [
+          44,
+          57,
+          59,
+          61,
+          63,
+          55
+        ],
+        [
+          66,
+          79,
+          81,
+          83,
+          85,
+          77
+        ],
+        [
+          88,
+          101,
+          103,
+          105,
+          107,
+          99
+        ]
+      ],
+      "once_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "phase_count": 12,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          11,
+          21
+        ],
+        [
+          22,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          33,
+          43
+        ],
+        [
+          44,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          55,
+          65
+        ],
+        [
+          66,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          77,
+          87
+        ],
+        [
+          88,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          99,
+          109
+        ]
+      ]
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1212,
+    "path": "effects/index/qa-decisions/SPFLMARR/2026-11-09-accepted-dcd33c073117.json",
+    "sha256": "DCD33C07311739DE772780E5D1D8B56DA39E120A0101E2ECFC942CAD1549D87B"
+  },
+  "resref": "SPFLMARR",
+  "run_descriptor": {
+    "bytes": 1448,
+    "path": "effects/ressources/SPFLMARR/runs/spflmarr-installed-reuse30-20261109-v1/run.json",
+    "sha256": "6F514FFE8D30C194744A3DBD2E9F2D0DD78CFBA604629B4B09DA3FE23DE4BE88"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 67898,
+      "path": "effects/ressources/SPFLMARR/packs/spflmarr-installed-accepted-20261109-v1/manifest.json",
+      "sha256": "1283A221A00E1FD515D07C5B1C84DAE3C1A6E09EC048259F7FC2B518062A0A8E"
+    },
+    "registry": {
+      "bytes": 1604,
+      "path": "effects/ressources/SPFLMARR/packs/spflmarr-installed-accepted-20261109-v1/EffectAnimations-X4.registry",
+      "sha256": "302C434923B13022B43DCBA96066B226F9F97F90551751A1278A067A1991220B"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spflmarr-installed-reuse30-20261109-v1",
+  "source": {
+    "bytes": 9219,
+    "path": "effects/ressources/SPFLMARR/source.bam",
+    "sha256": "ECA45907DE0E20ABB39880D7EAC2C0790D728A88EA0BC3E705A1C7F3589BBD19"
+  }
+}

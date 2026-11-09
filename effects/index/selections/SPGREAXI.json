@@ -1,0 +1,172 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPGREAXI",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 78,
+    "source": {
+      "installed_binding": {
+        "bytes": 47707,
+        "path": "effects/batches/qa52-accepted-20261109-v1/bindings/SPGREAXI.json",
+        "sha256": "F463DE10171E4F179545D8CE0798748520397381B50D95F5954C8CC813FF6C97"
+      },
+      "interpolation_run": "spgreaxi-installed-reuse30-20261109-v1",
+      "interpolation_run_descriptor_sha256": "350E2856D2E69BC39E68DFD398F6167B6979309ECECE7BF2F05614EF54F7E59F",
+      "no_new_inference": true,
+      "original_runtime_ref": "Y31N086",
+      "source_bam_sha256": "D9E835172E8AEF475E07F5DE08CFDBA5D8DA8702F850D6B06CEBB71BB5622191",
+      "spatial_manifest_sha256": "F463DE10171E4F179545D8CE0798748520397381B50D95F5954C8CC813FF6C97",
+      "spatial_run": "spgreaxi-installed-reuse-spatial-20261109-v1",
+      "spatial_run_descriptor_sha256": "29D983B73AC65C051036C072EF0EEDCF68FD367DE8A12B0E1C257D39759E464B"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        40
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          41,
+          43,
+          45,
+          47,
+          49,
+          51,
+          53,
+          55,
+          57,
+          59,
+          61,
+          63,
+          65,
+          67,
+          69,
+          71,
+          73,
+          75,
+          39
+        ]
+      ],
+      "once_profiles": [
+        "cycle000-once"
+      ],
+      "phase_count": 40,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          39,
+          77
+        ]
+      ]
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1212,
+    "path": "effects/index/qa-decisions/SPGREAXI/2026-11-09-accepted-dac6e7399844.json",
+    "sha256": "DAC6E7399844C0F56DDE570B4F6AB653B4DC133E675C13CE9957085804E9EA67"
+  },
+  "resref": "SPGREAXI",
+  "run_descriptor": {
+    "bytes": 1448,
+    "path": "effects/ressources/SPGREAXI/runs/spgreaxi-installed-reuse30-20261109-v1/run.json",
+    "sha256": "350E2856D2E69BC39E68DFD398F6167B6979309ECECE7BF2F05614EF54F7E59F"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 48253,
+      "path": "effects/ressources/SPGREAXI/packs/spgreaxi-installed-accepted-20261109-v1/manifest.json",
+      "sha256": "B76EAB45CD8F0D9E0B8C79C09176D355EA9B15EB3BBB2C511E932A0DDFB3932F"
+    },
+    "registry": {
+      "bytes": 1100,
+      "path": "effects/ressources/SPGREAXI/packs/spgreaxi-installed-accepted-20261109-v1/EffectAnimations-X4.registry",
+      "sha256": "6CACAF720CE12580675D979034432BDC6C503A115A858E671675BDDBC3F26557"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spgreaxi-installed-reuse30-20261109-v1",
+  "source": {
+    "bytes": 51282,
+    "path": "effects/ressources/SPGREAXI/source.bam",
+    "sha256": "D9E835172E8AEF475E07F5DE08CFDBA5D8DA8702F850D6B06CEBB71BB5622191"
+  }
+}

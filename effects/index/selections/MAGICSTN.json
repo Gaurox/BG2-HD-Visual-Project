@@ -1,0 +1,116 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:MAGICSTN",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          2,
+          1,
+          0
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 22,
+    "source": {
+      "installed_binding": {
+        "bytes": 14787,
+        "path": "effects/batches/qa52-accepted-20261109-v1/bindings/MAGICSTN.json",
+        "sha256": "8526870F65E0032D9268F65E11ECD1EB5248E52C2D6C9016D99AFCFDD1A880E2"
+      },
+      "interpolation_run": "magicstn-installed-reuse30-20261109-v1",
+      "interpolation_run_descriptor_sha256": "BBBC2004CE477B2B3291461A3DEFFFE3464C67644A8402C9625A8B992A5F2ECA",
+      "no_new_inference": true,
+      "original_runtime_ref": "MAGICSTN",
+      "source_bam_sha256": "03CDC1776460D2E274346CDBB797211F4375F5D9260EFB5FC2C6E168E14E3CD6",
+      "spatial_manifest_sha256": "8526870F65E0032D9268F65E11ECD1EB5248E52C2D6C9016D99AFCFDD1A880E2",
+      "spatial_run": "magicstn-installed-reuse-spatial-20261109-v1",
+      "spatial_run_descriptor_sha256": "3DD7C2EE94A82CB1A58F36F2625AFE1D32CEB02337B956A1234A220267F7EC73"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          13,
+          15,
+          17,
+          11,
+          20
+        ]
+      ],
+      "once_profiles": [
+        "cycle000-once"
+      ],
+      "phase_count": 12,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          11,
+          19,
+          20,
+          21
+        ]
+      ]
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1212,
+    "path": "effects/index/qa-decisions/MAGICSTN/2026-11-09-accepted-fff64441aee3.json",
+    "sha256": "FFF64441AEE34E9027909742108DFFAA501AE7D8AC2963CF6BDA0FCB8A431400"
+  },
+  "resref": "MAGICSTN",
+  "run_descriptor": {
+    "bytes": 1448,
+    "path": "effects/ressources/MAGICSTN/runs/magicstn-installed-reuse30-20261109-v1/run.json",
+    "sha256": "BBBC2004CE477B2B3291461A3DEFFFE3464C67644A8402C9625A8B992A5F2ECA"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 15231,
+      "path": "effects/ressources/MAGICSTN/packs/magicstn-installed-accepted-20261109-v1/manifest.json",
+      "sha256": "3F5EC432EC21A5D06DD5E3A67C2703A127AB89E7A50F7A96C5F4D17ABC7C6254"
+    },
+    "registry": {
+      "bytes": 372,
+      "path": "effects/ressources/MAGICSTN/packs/magicstn-installed-accepted-20261109-v1/EffectAnimations-X4.registry",
+      "sha256": "40A0F2CE2E06F18A972DB9FBFFE9A0427D66A94774B5A2EAF06B6AF9BC503974"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "magicstn-installed-reuse30-20261109-v1",
+  "source": {
+    "bytes": 182,
+    "path": "effects/ressources/MAGICSTN/source.bam",
+    "sha256": "03CDC1776460D2E274346CDBB797211F4375F5D9260EFB5FC2C6E168E14E3CD6"
+  }
+}

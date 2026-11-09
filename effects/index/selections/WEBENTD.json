@@ -1,0 +1,150 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:WEBENTD",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          5
+        ],
+        "lookup_start": 6
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [
+          5
+        ],
+        "lookup_start": 7
+      }
+    ],
+    "frame_count": 22,
+    "source": {
+      "installed_binding": {
+        "bytes": 15355,
+        "path": "effects/batches/qa52-accepted-20261109-v1/bindings/WEBENTD.json",
+        "sha256": "69CD96F7B87A94493C3DAFF196D4A9E605B67F71F6EC98C65827F1BC47D01B5C"
+      },
+      "interpolation_run": "webentd-installed-reuse30-20261109-v1",
+      "interpolation_run_descriptor_sha256": "3A148193DBD5B9AB7317FCE182DEAFD5383A92174833C1B45E24179C47F8031D",
+      "no_new_inference": true,
+      "original_runtime_ref": "Y31N096",
+      "source_bam_sha256": "28EBF51FC9B0E0D53A1A18479051D61D33308B394ACAF0ECF0A7EE87E34B4303",
+      "spatial_manifest_sha256": "69CD96F7B87A94493C3DAFF196D4A9E605B67F71F6EC98C65827F1BC47D01B5C",
+      "spatial_run": "webentd-installed-reuse-spatial-20261109-v1",
+      "spatial_run_descriptor_sha256": "28C2C24311B31A08470F588308D2FC71A659FE8F355BF2BD678D89A5FFD4A80D"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12,
+        2,
+        2
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop",
+        "cycle002-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          13,
+          15,
+          17,
+          19,
+          11
+        ],
+        [
+          11
+        ],
+        [
+          11
+        ]
+      ],
+      "once_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once"
+      ],
+      "phase_count": 12,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          11,
+          21
+        ],
+        [
+          11,
+          11
+        ],
+        [
+          11,
+          11
+        ]
+      ]
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1205,
+    "path": "effects/index/qa-decisions/WEBENTD/2026-11-09-accepted-e884c4afcbfc.json",
+    "sha256": "E884C4AFCBFC2A0A6567D4F4764A2FB9E4B3D2BC53C539A1FDDC7D1808D03A9A"
+  },
+  "resref": "WEBENTD",
+  "run_descriptor": {
+    "bytes": 1441,
+    "path": "effects/ressources/WEBENTD/runs/webentd-installed-reuse30-20261109-v1/run.json",
+    "sha256": "3A148193DBD5B9AB7317FCE182DEAFD5383A92174833C1B45E24179C47F8031D"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 15868,
+      "path": "effects/ressources/WEBENTD/packs/webentd-installed-accepted-20261109-v1/manifest.json",
+      "sha256": "1425756F6E2F9D5049328FFE9660727DFAC0985A842DF3C435FD9851DB224A05"
+    },
+    "registry": {
+      "bytes": 516,
+      "path": "effects/ressources/WEBENTD/packs/webentd-installed-accepted-20261109-v1/EffectAnimations-X4.registry",
+      "sha256": "2AED72C176D86290750F8237CCBD0AB90DA520CC489BA55E13E1646013E9C290"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "webentd-installed-reuse30-20261109-v1",
+  "source": {
+    "bytes": 2491,
+    "path": "effects/ressources/WEBENTD/source.bam",
+    "sha256": "28EBF51FC9B0E0D53A1A18479051D61D33308B394ACAF0ECF0A7EE87E34B4303"
+  }
+}

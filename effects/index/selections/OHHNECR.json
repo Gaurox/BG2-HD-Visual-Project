@@ -1,0 +1,169 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:OHHNECR",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          9,
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 31,
+    "source": {
+      "installed_binding": {
+        "bytes": 19222,
+        "path": "effects/batches/qa52-accepted-20261109-v1/bindings/OHHNECR.json",
+        "sha256": "6580CC3086521E0E50A252CA353718FF3ABE08E5C346815990A99879CF5E7986"
+      },
+      "interpolation_run": "ohhnecr-installed-reuse30-20261109-v1",
+      "interpolation_run_descriptor_sha256": "3700913FF1EB3081A97529CDA603B02D298722845BC9248870FEF650B771B02F",
+      "no_new_inference": true,
+      "original_runtime_ref": "OHHNECR",
+      "source_bam_sha256": "B391A767F9581400980C8217E116B39B1D4962764697C6B0FF721C14EAADE874",
+      "spatial_manifest_sha256": "6580CC3086521E0E50A252CA353718FF3ABE08E5C346815990A99879CF5E7986",
+      "spatial_run": "ohhnecr-installed-reuse-spatial-20261109-v1",
+      "spatial_run_descriptor_sha256": "6101704ABAD781A7E1957DA722A7858706BF1518147633A97B204A66A4FF69B9"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        40
+      ],
+      "cycle_profiles": [
+        "retained-area-cycle0"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          9,
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1
+        ]
+      ],
+      "phase_count": 40,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          11,
+          1,
+          12,
+          2,
+          13,
+          3,
+          14,
+          4,
+          15,
+          5,
+          16,
+          6,
+          17,
+          7,
+          18,
+          8,
+          19,
+          9,
+          20,
+          10,
+          21,
+          9,
+          22,
+          8,
+          23,
+          7,
+          24,
+          6,
+          25,
+          5,
+          26,
+          4,
+          27,
+          3,
+          28,
+          2,
+          29,
+          1,
+          30
+        ]
+      ]
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1205,
+    "path": "effects/index/qa-decisions/OHHNECR/2026-11-09-accepted-213dcbc18cb5.json",
+    "sha256": "213DCBC18CB53C33256E42E1E271572944949780664333B01B8554714EE1A126"
+  },
+  "resref": "OHHNECR",
+  "run_descriptor": {
+    "bytes": 1441,
+    "path": "effects/ressources/OHHNECR/runs/ohhnecr-installed-reuse30-20261109-v1/run.json",
+    "sha256": "3700913FF1EB3081A97529CDA603B02D298722845BC9248870FEF650B771B02F"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 19749,
+      "path": "effects/ressources/OHHNECR/packs/ohhnecr-installed-accepted-20261109-v1/manifest.json",
+      "sha256": "835387DB0EAED5BE9581F2ED33C57ED88242347F9C9B64F4CCA99776E43332DF"
+    },
+    "registry": {
+      "bytes": 556,
+      "path": "effects/ressources/OHHNECR/packs/ohhnecr-installed-accepted-20261109-v1/EffectAnimations-X4.registry",
+      "sha256": "82CB95182AC60618FC08DAB6EB8C3A7BE361F673C5CC8BAC9747B268D7D4BFCE"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "ohhnecr-installed-reuse30-20261109-v1",
+  "source": {
+    "bytes": 46758,
+    "path": "effects/ressources/OHHNECR/source.bam",
+    "sha256": "B391A767F9581400980C8217E116B39B1D4962764697C6B0FF721C14EAADE874"
+  }
+}

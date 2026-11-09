@@ -183,11 +183,23 @@ def validate_tracking(data, pro_names):
                 raise ValueError(f'Unknown PRO decision: {name}')
             if namespace == 'engine_projectiles' and (not name.isdecimal() or int(name) > 65535):
                 raise ValueError(f'Invalid engine projectile ID: {name}')
-            allowed = {'priority', 'notes', 'historical_evidence', 'integration', 'qa', 'installation', 'release'}
+            allowed = {'priority', 'notes', 'historical_evidence', 'integration', 'qa', 'installation', 'release', 'component_visual_qa'}
             if not isinstance(item, dict) or set(item) - allowed:
                 raise ValueError(f'Invalid tracking decision fields: {name}')
             if 'priority' in item and (type(item['priority']) is not int or not 0 <= item['priority'] <= 999):
                 raise ValueError(f'Invalid priority: {name}')
+            # Image QA can be linked without granting native projectile QA.
+            components = item.get('component_visual_qa', {})
+            if not isinstance(components, dict):
+                raise ValueError(f'Invalid component visual QA: {name}')
+            for batch, component in components.items():
+                if (not isinstance(component, dict)
+                    or component.get('state') != 'accepted-assets-only'
+                    or not component.get('evidence') or not component.get('assets')
+                    or not isinstance(component['assets'], list)
+                    or not all(isinstance(asset, str) and asset for asset in component['assets'])
+                    or not component.get('limits') or not component.get('reviewed_on')):
+                    raise ValueError(f'Invalid component visual QA: {name}/{batch}')
             for field in ('integration', 'qa', 'installation', 'release'):
                 if field in item:
                     value = item[field]

@@ -71,6 +71,22 @@ class ProjectileTrackingTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Unknown PRO'):
             tracking.validate_tracking(data, {'OTHER'})
 
+    def test_component_visual_qa_does_not_promote_native_projectile_qa(self):
+        node = {'qa': {'state': 'not-assessed'}, 'component_visual_qa': {'batch': {
+            'state': 'accepted-assets-only', 'evidence': ['effects/acceptance.json'],
+            'assets': ['ARARROW'], 'reviewed_on': '2026-11-09',
+            'limits': 'Primary VVC only; no native PRO test.'}}}
+        data = {'schema': 'bg2-projectiles-work-tracking-v1', 'projectiles': {'ARROW': node}}
+        tracking.validate_tracking(data, {'ARROW'})
+        self.assertEqual(node['qa'], {'state': 'not-assessed'})
+        node['component_visual_qa']['batch']['state'] = 'accepted'
+        with self.assertRaisesRegex(ValueError, 'component visual QA'):
+            tracking.validate_tracking(data, {'ARROW'})
+        node['component_visual_qa']['batch']['state'] = 'accepted-assets-only'
+        node['component_visual_qa']['batch']['evidence'] = []
+        with self.assertRaisesRegex(ValueError, 'component visual QA'):
+            tracking.validate_tracking(data, {'ARROW'})
+
 
 if __name__ == '__main__':
     unittest.main()

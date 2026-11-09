@@ -1,0 +1,116 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:STNKCLDT",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 22,
+    "source": {
+      "installed_binding": {
+        "bytes": 14875,
+        "path": "effects/batches/qa52-accepted-20261109-v1/bindings/STNKCLDT.json",
+        "sha256": "F30195D6EBD90E0E4EDB829CA8251C6B491147C96ADD1D3E05457C9B031B9243"
+      },
+      "interpolation_run": "stnkcldt-installed-reuse30-20261109-v1",
+      "interpolation_run_descriptor_sha256": "A28A5427A5439A2A5601BCE0CBF0F2553A97D13B6BF92142C1CCA885FDAD16BE",
+      "no_new_inference": true,
+      "original_runtime_ref": "STNKCLDT",
+      "source_bam_sha256": "6F00CB7C03E2CDB0FDA8801011C7F70636895898D4DA176734E5CD63C93ACE56",
+      "spatial_manifest_sha256": "F30195D6EBD90E0E4EDB829CA8251C6B491147C96ADD1D3E05457C9B031B9243",
+      "spatial_run": "stnkcldt-installed-reuse-spatial-20261109-v1",
+      "spatial_run_descriptor_sha256": "035AEDAAAF2D5243D5C5575B52FCA0CB1259FFE34E10C7976C0B79D1143F3994"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          13,
+          15,
+          17,
+          19,
+          11
+        ]
+      ],
+      "once_profiles": [
+        "cycle000-once"
+      ],
+      "phase_count": 12,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          11,
+          21
+        ]
+      ]
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1212,
+    "path": "effects/index/qa-decisions/STNKCLDT/2026-11-09-accepted-db04b7b51c27.json",
+    "sha256": "DB04B7B51C27DAF00309CCC0478AD8EAE82D2CCC8E19112A94845A760682161F"
+  },
+  "resref": "STNKCLDT",
+  "run_descriptor": {
+    "bytes": 1448,
+    "path": "effects/ressources/STNKCLDT/runs/stnkcldt-installed-reuse30-20261109-v1/run.json",
+    "sha256": "A28A5427A5439A2A5601BCE0CBF0F2553A97D13B6BF92142C1CCA885FDAD16BE"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 15319,
+      "path": "effects/ressources/STNKCLDT/packs/stnkcldt-installed-accepted-20261109-v1/manifest.json",
+      "sha256": "A47D71C1F8671B086BA6518887E62A5B02DA07B1F10E02F31C8A679EA8F84EEC"
+    },
+    "registry": {
+      "bytes": 372,
+      "path": "effects/ressources/STNKCLDT/packs/stnkcldt-installed-accepted-20261109-v1/EffectAnimations-X4.registry",
+      "sha256": "36FEB3D734B5C40E4A355498086849AB060D116D106FB93858453A145C7E3666"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "stnkcldt-installed-reuse30-20261109-v1",
+  "source": {
+    "bytes": 1655,
+    "path": "effects/ressources/STNKCLDT/source.bam",
+    "sha256": "6F00CB7C03E2CDB0FDA8801011C7F70636895898D4DA176734E5CD63C93ACE56"
+  }
+}

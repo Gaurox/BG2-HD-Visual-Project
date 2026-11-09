@@ -1,5 +1,7 @@
 # Effets BG2EE
 
+**QA52 acceptée — 2026-11-09** : [décision et périmètre](batches/qa52-accepted-20261109-v1/README.md). 52 images acceptées le 2026-11-09 : 31 anciens effets, 18 réemplois, 3 effets 1WDC. 17 images liées à 138 PRO ; validation des composants seule. SANCTRY/SPPR109 et SPSHIELD/SPWI311 : transparence confirmée avec les vrais sorts. Packs mono-BAM figés sur les versions installées testées ; 0 inférence/interpolation nouvelle. Autres QA, installation et release préservées ; GPU en pause.
+
 **Magie/eau50 accepté — 2026-11-09** : [décision et preuves](batches/magic-water50-accepted-20261109-v1/README.md).44x4/30FPS +6natifs,36SeedVR7B/8xBR ;06xBR/CPU30,13vert corrigé,34cycle1,35natif.50liaisons primaires installées exactes ;47QA nouvelles/3antérieures préservées. SPCSPRAI SeedVR accepté sousaliasM3SPCS/ZMWT20, canonique reste comparatifxBR ; aliasSP_DEMGT nonvalidé indépendamment. Installation/release et autres lignes conservées ; GPUenpause.
 
 **Retours magie/eau06/13/34/35** : [résultat et CLUA](batches/lot50-magic-water-production-20261108-v1/review-feedback-0634-20261108-v1/README.md), [planche50](http://127.0.0.1:8799/).06xBR4X/CPU-motion30 installé ;13WHIRLY corrigé accepté ;35SPSHADOW natif accepté.34invisible = cycle0frame19 entièrement transparent ; contrôleurs corrigéscycle1, cycle2/témoinRGBA disponibles, pauses intactes, durée12s.24936contrats passants, DLL/INI inchangés, GPUenpause. Production courantev4 ; autres QA/release inchangées.

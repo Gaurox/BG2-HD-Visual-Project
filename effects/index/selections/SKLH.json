@@ -1,0 +1,301 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SKLH",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      },
+      {
+        "cycle": 1,
+        "frame_indices": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "lookup_start": 6
+      },
+      {
+        "cycle": 2,
+        "frame_indices": [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "lookup_start": 12
+      },
+      {
+        "cycle": 3,
+        "frame_indices": [
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "lookup_start": 18
+      },
+      {
+        "cycle": 4,
+        "frame_indices": [
+          24,
+          25,
+          26,
+          27,
+          28,
+          29
+        ],
+        "lookup_start": 24
+      },
+      {
+        "cycle": 5,
+        "frame_indices": [
+          30,
+          31,
+          32,
+          33,
+          34,
+          35
+        ],
+        "lookup_start": 30
+      }
+    ],
+    "frame_count": 132,
+    "source": {
+      "installed_binding": {
+        "bytes": 80143,
+        "path": "effects/batches/qa52-accepted-20261109-v1/bindings/SKLH.json",
+        "sha256": "D1D9EC9A21036BE8C97741D18627B86A542CE105D7315DBEDC91F4A13C66E279"
+      },
+      "interpolation_run": "sklh-installed-reuse30-20261109-v1",
+      "interpolation_run_descriptor_sha256": "B405E3FE72DD19B8ACBB5D0829D257FE8409F22D2ABA55B2C37538CC148EC658",
+      "no_new_inference": true,
+      "original_runtime_ref": "Y31N094",
+      "source_bam_sha256": "51B6D0D169FCB8912A09DCF26CB63A7C659E659023EB71765C396C40C2EF2CA0",
+      "spatial_manifest_sha256": "D1D9EC9A21036BE8C97741D18627B86A542CE105D7315DBEDC91F4A13C66E279",
+      "spatial_run": "sklh-installed-reuse-spatial-20261109-v1",
+      "spatial_run_descriptor_sha256": "BD07A6C156FDF6E859CB94F252193CDFF655139D83CD43899C3E4438D1FBBBE1"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12,
+        12,
+        12,
+        12,
+        12,
+        12
+      ],
+      "cycle_profiles": [
+        "cycle000-loop",
+        "cycle001-loop",
+        "cycle002-loop",
+        "cycle003-loop",
+        "cycle004-loop",
+        "cycle005-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          13,
+          15,
+          17,
+          19,
+          11
+        ],
+        [
+          22,
+          35,
+          37,
+          39,
+          41,
+          33
+        ],
+        [
+          44,
+          57,
+          59,
+          61,
+          63,
+          55
+        ],
+        [
+          66,
+          79,
+          81,
+          83,
+          85,
+          77
+        ],
+        [
+          88,
+          101,
+          103,
+          105,
+          107,
+          99
+        ],
+        [
+          110,
+          123,
+          125,
+          127,
+          129,
+          121
+        ]
+      ],
+      "once_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once",
+        "cycle005-once"
+      ],
+      "phase_count": 12,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          11,
+          21
+        ],
+        [
+          22,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          33,
+          43
+        ],
+        [
+          44,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          55,
+          65
+        ],
+        [
+          66,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          77,
+          87
+        ],
+        [
+          88,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          99,
+          109
+        ],
+        [
+          110,
+          122,
+          123,
+          124,
+          125,
+          126,
+          127,
+          128,
+          129,
+          130,
+          121,
+          131
+        ]
+      ]
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1184,
+    "path": "effects/index/qa-decisions/SKLH/2026-11-09-accepted-d3e6d97b7508.json",
+    "sha256": "D3E6D97B7508B66FDD299EEBFDC740214C7ADF93618B1F6BB440406FBB01D6ED"
+  },
+  "resref": "SKLH",
+  "run_descriptor": {
+    "bytes": 1420,
+    "path": "effects/ressources/SKLH/runs/sklh-installed-reuse30-20261109-v1/run.json",
+    "sha256": "B405E3FE72DD19B8ACBB5D0829D257FE8409F22D2ABA55B2C37538CC148EC658"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 79870,
+      "path": "effects/ressources/SKLH/packs/sklh-installed-accepted-20261109-v1/manifest.json",
+      "sha256": "08740DEB8D05AEF49D99843C636ADD9FFED442ADF75DF1283A134B60FBBC43A3"
+    },
+    "registry": {
+      "bytes": 1912,
+      "path": "effects/ressources/SKLH/packs/sklh-installed-accepted-20261109-v1/EffectAnimations-X4.registry",
+      "sha256": "0EB07856FD889CAA19F7644EA172600942C7B3D576F0DBA9F0D1F5483D247079"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "sklh-installed-reuse30-20261109-v1",
+  "source": {
+    "bytes": 2469,
+    "path": "effects/ressources/SKLH/source.bam",
+    "sha256": "51B6D0D169FCB8912A09DCF26CB63A7C659E659023EB71765C396C40C2EF2CA0"
+  }
+}

@@ -1,5 +1,7 @@
 # Validations manuelles des projectiles — 2026-10-28
 
+**QA52 acceptée — 2026-11-09** : [décision et périmètre](analysis/components-qa52-20261109-v1/README.md). 52 images acceptées le 2026-11-09 : 31 anciens effets, 18 réemplois, 3 effets 1WDC. 17 images liées à 138 PRO ; validation des composants seule. SANCTRY/SPPR109 et SPSHIELD/SPWI311 : transparence confirmée avec les vrais sorts. Packs mono-BAM figés sur les versions installées testées ; 0 inférence/interpolation nouvelle. Autres QA, installation et release préservées ; GPU en pause.
+
 - Autorité par PRO : [`index/work-tracking.json:qa`](index/work-tracking.json). [Décisions figées](analysis/validations-manuelles-consolidees-20261028-v1/decisions.json), [validation finale V14](analysis/projectile-magique-v14-valide-20261028-v1/acceptance.json).
 - 29 PRO avec acceptation visuelle des composants observés ; 3 décisions historiques conservées séparément. Ces nombres ne sont pas des chaînes intégrales acceptées.
 - 100 chaînes `integration=verified-static` conservées : validation technique distincte, pas 100 essais visuels ajoutés. Production/installation/release inchangées par cette consolidation.

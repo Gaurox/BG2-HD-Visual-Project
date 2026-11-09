@@ -1,0 +1,140 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPSHIELD",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 45,
+    "source": {
+      "installed_binding": {
+        "bytes": 28483,
+        "path": "effects/batches/qa52-accepted-20261109-v1/bindings/SPSHIELD.json",
+        "sha256": "1C5F74A9EB0F35E4AACB2ECECAE5CC5CE7EB4C307CC87B08B6AE9A300F6F49C9"
+      },
+      "interpolation_run": "spshield-installed-reuse30-20261109-v1",
+      "interpolation_run_descriptor_sha256": "0BA6D08484B34FA9E9073E6C0C95C558FB9882824BE127AD93094085C0447DE3",
+      "no_new_inference": true,
+      "original_runtime_ref": "Y31N099",
+      "source_bam_sha256": "F2916CF508DA13DA5BAC954F2B7F62D0C529DA91FE9EB5A3954EBEEA20FC6279",
+      "spatial_manifest_sha256": "1C5F74A9EB0F35E4AACB2ECECAE5CC5CE7EB4C307CC87B08B6AE9A300F6F49C9",
+      "spatial_run": "spshield-installed-reuse-spatial-20261109-v1",
+      "spatial_run_descriptor_sha256": "78625FE0FA118C5C649F15BF6D7E11CB5E93189C7B6D18F20454CFEA4E9EDA91"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        24
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          25,
+          27,
+          29,
+          31,
+          33,
+          35,
+          37,
+          39,
+          41,
+          42,
+          23
+        ]
+      ],
+      "once_profiles": [
+        "cycle000-once"
+      ],
+      "phase_count": 24,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          20,
+          42,
+          43,
+          23,
+          44
+        ]
+      ]
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1212,
+    "path": "effects/index/qa-decisions/SPSHIELD/2026-11-09-accepted-a6f70591a30f.json",
+    "sha256": "A6F70591A30F21B34A804B4952C21F13E85519A2D8A5F7E5B37A102FD8AAA992"
+  },
+  "resref": "SPSHIELD",
+  "run_descriptor": {
+    "bytes": 1448,
+    "path": "effects/ressources/SPSHIELD/runs/spshield-installed-reuse30-20261109-v1/run.json",
+    "sha256": "0BA6D08484B34FA9E9073E6C0C95C558FB9882824BE127AD93094085C0447DE3"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 28858,
+      "path": "effects/ressources/SPSHIELD/packs/spshield-installed-accepted-20261109-v1/manifest.json",
+      "sha256": "A2D0F0931937A7C81EAA95B14E50B8DD366850369C279DB63E961AE7E207D5E4"
+    },
+    "registry": {
+      "bytes": 676,
+      "path": "effects/ressources/SPSHIELD/packs/spshield-installed-accepted-20261109-v1/EffectAnimations-X4.registry",
+      "sha256": "B41FDB25F4A96030841C64C7147872DB74D069A8A7BEA0031FB930ACE81200A8"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spshield-installed-reuse30-20261109-v1",
+  "source": {
+    "bytes": 77356,
+    "path": "effects/ressources/SPSHIELD/source.bam",
+    "sha256": "F2916CF508DA13DA5BAC954F2B7F62D0C529DA91FE9EB5A3954EBEEA20FC6279"
+  }
+}

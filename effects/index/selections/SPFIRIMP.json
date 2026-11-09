@@ -1,0 +1,143 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPFIRIMP",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 31,
+    "source": {
+      "installed_binding": {
+        "bytes": 29460,
+        "path": "effects/batches/qa52-accepted-20261109-v1/bindings/SPFIRIMP.json",
+        "sha256": "CBCCB6F914300EBEE96A7FCA231AADE854437D81109A247196C9DCF760B7644E"
+      },
+      "interpolation_run": "spfirimp-installed-reuse30-20261109-v1",
+      "interpolation_run_descriptor_sha256": "7A9F79E19A14C56261E07458FA0C369FAEE6DD4AC981722900E6CC8AD46D0027",
+      "no_new_inference": true,
+      "original_runtime_ref": "SPFIRIMP",
+      "source_bam_sha256": "AD37CF20A2180863F1BB91081DDEFEE77465E3FFFA67FEBE77F17533334C858C",
+      "spatial_manifest_sha256": "CBCCB6F914300EBEE96A7FCA231AADE854437D81109A247196C9DCF760B7644E",
+      "spatial_run": "spfirimp-installed-reuse-spatial-20261109-v1",
+      "spatial_run_descriptor_sha256": "5C0FB4940E258F23D70FED86A4EB10DFED666D5C8B0CF396EEF3B23975F1551F"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "phase_count": 32,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        30
+      ]
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1212,
+    "path": "effects/index/qa-decisions/SPFIRIMP/2026-11-09-accepted-d409c541c1ed.json",
+    "sha256": "D409C541C1ED5E00B659E712566D2B2781265802F5EA66C9CD75033A676105EA"
+  },
+  "resref": "SPFIRIMP",
+  "run_descriptor": {
+    "bytes": 1448,
+    "path": "effects/ressources/SPFIRIMP/runs/spfirimp-installed-reuse30-20261109-v1/run.json",
+    "sha256": "7A9F79E19A14C56261E07458FA0C369FAEE6DD4AC981722900E6CC8AD46D0027"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 29335,
+      "path": "effects/ressources/SPFIRIMP/packs/spfirimp-installed-accepted-20261109-v1/manifest.json",
+      "sha256": "60948BC876EE77CC6D5FDD4EF6413A2B255F14C82CD43851C82FB77456DBF857"
+    },
+    "registry": {
+      "bytes": 508,
+      "path": "effects/ressources/SPFIRIMP/packs/spfirimp-installed-accepted-20261109-v1/EffectAnimations-X4.registry",
+      "sha256": "9DAA703BB7CD56CF2BC1491BC96C04A07EFA50536714AC913A28D97D6998385A"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spfirimp-installed-reuse30-20261109-v1",
+  "source": {
+    "bytes": 33191,
+    "path": "effects/ressources/SPFIRIMP/source.bam",
+    "sha256": "AD37CF20A2180863F1BB91081DDEFEE77465E3FFFA67FEBE77F17533334C858C"
+  }
+}

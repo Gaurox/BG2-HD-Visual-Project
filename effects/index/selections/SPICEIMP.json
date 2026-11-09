@@ -1,0 +1,143 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPICEIMP",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 31,
+    "source": {
+      "installed_binding": {
+        "bytes": 29463,
+        "path": "effects/batches/qa52-accepted-20261109-v1/bindings/SPICEIMP.json",
+        "sha256": "6A5354F6E4EBB1CC1BC6E0D023895C87C65A1EBA01FDA1B3D5AF811E05A4E6F8"
+      },
+      "interpolation_run": "spiceimp-installed-reuse30-20261109-v1",
+      "interpolation_run_descriptor_sha256": "68BE9CBDD682F165FBBA8D13E9B2193FFFA77C377292D66073D1E5B715C61580",
+      "no_new_inference": true,
+      "original_runtime_ref": "SPICEIMP",
+      "source_bam_sha256": "F3658B79AFBFF8481DD9C8483BAB27A304E1663C48ADB8D3B5CE1BA8BBC1A5F6",
+      "spatial_manifest_sha256": "6A5354F6E4EBB1CC1BC6E0D023895C87C65A1EBA01FDA1B3D5AF811E05A4E6F8",
+      "spatial_run": "spiceimp-installed-reuse-spatial-20261109-v1",
+      "spatial_run_descriptor_sha256": "F1BAF52C3E68449215E65A6ED151FFDCF3A5E45C0C0B0F7E7B716A8ECFB1A5DA"
+    },
+    "timeline": {
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "phase_count": 32,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        30
+      ]
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1212,
+    "path": "effects/index/qa-decisions/SPICEIMP/2026-11-09-accepted-4d9dda125765.json",
+    "sha256": "4D9DDA125765DD17DFAC9D614D74042E269B4808C1695C6C8C8D75D0B1F5B002"
+  },
+  "resref": "SPICEIMP",
+  "run_descriptor": {
+    "bytes": 1448,
+    "path": "effects/ressources/SPICEIMP/runs/spiceimp-installed-reuse30-20261109-v1/run.json",
+    "sha256": "68BE9CBDD682F165FBBA8D13E9B2193FFFA77C377292D66073D1E5B715C61580"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 29338,
+      "path": "effects/ressources/SPICEIMP/packs/spiceimp-installed-accepted-20261109-v1/manifest.json",
+      "sha256": "7854A3E753A3CB1B3F8F9BD0A4EE8934B2B80E7829CA795D878AC6243AACDA06"
+    },
+    "registry": {
+      "bytes": 508,
+      "path": "effects/ressources/SPICEIMP/packs/spiceimp-installed-accepted-20261109-v1/EffectAnimations-X4.registry",
+      "sha256": "670877A00B708F2A8F87AC5FB12302439F924D830F446B53A4424B3FD239780D"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spiceimp-installed-reuse30-20261109-v1",
+  "source": {
+    "bytes": 38975,
+    "path": "effects/ressources/SPICEIMP/source.bam",
+    "sha256": "F3658B79AFBFF8481DD9C8483BAB27A304E1663C48ADB8D3B5CE1BA8BBC1A5F6"
+  }
+}

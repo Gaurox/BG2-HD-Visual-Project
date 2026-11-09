@@ -1,0 +1,116 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:TRAVEL",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 22,
+    "source": {
+      "installed_binding": {
+        "bytes": 14794,
+        "path": "effects/batches/qa52-accepted-20261109-v1/bindings/TRAVEL.json",
+        "sha256": "7651D749C05A32B40BD8243DB7338BEC349F7691C619902D10058A235927C81C"
+      },
+      "interpolation_run": "travel-installed-reuse30-20261109-v1",
+      "interpolation_run_descriptor_sha256": "ED4D4BB57B6C3C257F1AB2095BD96FBA2631637EE0244907A315565F11C79EC9",
+      "no_new_inference": true,
+      "original_runtime_ref": "TRAVEL",
+      "source_bam_sha256": "9B52906662E5993B2FC72C346ACF94C79A864FC6E2E2C4B5B0320C67CBD6B9A3",
+      "spatial_manifest_sha256": "7651D749C05A32B40BD8243DB7338BEC349F7691C619902D10058A235927C81C",
+      "spatial_run": "travel-installed-reuse-spatial-20261109-v1",
+      "spatial_run_descriptor_sha256": "5F33ED4E87A80DDF4B9409B288CB9E26ED0C88A8B1F2083C81AA099BD5EEEB79"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        12
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          13,
+          15,
+          17,
+          19,
+          11
+        ]
+      ],
+      "once_profiles": [
+        "cycle000-once"
+      ],
+      "phase_count": 12,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          11,
+          21
+        ]
+      ]
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1198,
+    "path": "effects/index/qa-decisions/TRAVEL/2026-11-09-accepted-2b4d6939e878.json",
+    "sha256": "2B4D6939E878DFEDB0FC4260411A72CAF93714EFAAC20A88C64CBF75AE5A6A00"
+  },
+  "resref": "TRAVEL",
+  "run_descriptor": {
+    "bytes": 1434,
+    "path": "effects/ressources/TRAVEL/runs/travel-installed-reuse30-20261109-v1/run.json",
+    "sha256": "ED4D4BB57B6C3C257F1AB2095BD96FBA2631637EE0244907A315565F11C79EC9"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 15240,
+      "path": "effects/ressources/TRAVEL/packs/travel-installed-accepted-20261109-v1/manifest.json",
+      "sha256": "2B0A11A6579A2DBFC326E38B397AFBDEF3C812A04EB798FADA7D42667E264C9B"
+    },
+    "registry": {
+      "bytes": 372,
+      "path": "effects/ressources/TRAVEL/packs/travel-installed-accepted-20261109-v1/EffectAnimations-X4.registry",
+      "sha256": "EC7711639E004F645789E4821CC6B449FC5DA77EBD66F72B649CAD2FA39BF9DD"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "travel-installed-reuse30-20261109-v1",
+  "source": {
+    "bytes": 7802,
+    "path": "effects/ressources/TRAVEL/source.bam",
+    "sha256": "9B52906662E5993B2FC72C346ACF94C79A864FC6E2E2C4B5B0320C67CBD6B9A3"
+  }
+}

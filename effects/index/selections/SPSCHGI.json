@@ -1,0 +1,164 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPSCHGI",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 70,
+    "source": {
+      "installed_binding": {
+        "bytes": 43088,
+        "path": "effects/batches/qa52-accepted-20261109-v1/bindings/SPSCHGI.json",
+        "sha256": "065B9AEB58B45C79D9AA3D917886A69ECB9BE87295B253C3979321E8DD670D84"
+      },
+      "interpolation_run": "spschgi-installed-reuse30-20261109-v1",
+      "interpolation_run_descriptor_sha256": "29F16106D0720A473E05D8D3817D0F43336C9339BF8846E4D90B6A74DDECC4DB",
+      "no_new_inference": true,
+      "original_runtime_ref": "SPSCHGI",
+      "source_bam_sha256": "A67A948C03E96BC7428AC8A4A76072ED6F4E98D8797F64FD3767DA5FAA57668A",
+      "spatial_manifest_sha256": "065B9AEB58B45C79D9AA3D917886A69ECB9BE87295B253C3979321E8DD670D84",
+      "spatial_run": "spschgi-installed-reuse-spatial-20261109-v1",
+      "spatial_run_descriptor_sha256": "46535B14D9A08ACA913228BD642430AD72251DC586133BD122AE1935C8359D2C"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        36
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          37,
+          39,
+          41,
+          43,
+          45,
+          47,
+          49,
+          51,
+          53,
+          55,
+          57,
+          59,
+          61,
+          63,
+          65,
+          67,
+          35
+        ]
+      ],
+      "once_profiles": [
+        "cycle000-once"
+      ],
+      "phase_count": 36,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          35,
+          69
+        ]
+      ]
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1205,
+    "path": "effects/index/qa-decisions/SPSCHGI/2026-11-09-accepted-b80607a22400.json",
+    "sha256": "B80607A224008C27F62A4C655382DF4B7220D4C77E0C746A078805E6B03AF459"
+  },
+  "resref": "SPSCHGI",
+  "run_descriptor": {
+    "bytes": 1441,
+    "path": "effects/ressources/SPSCHGI/runs/spschgi-installed-reuse30-20261109-v1/run.json",
+    "sha256": "29F16106D0720A473E05D8D3817D0F43336C9339BF8846E4D90B6A74DDECC4DB"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 43485,
+      "path": "effects/ressources/SPSCHGI/packs/spschgi-installed-accepted-20261109-v1/manifest.json",
+      "sha256": "B124A3E1976E63CFB7BF15537636DCFA3F28F4A4B52EB5578A5530BFC9C61171"
+    },
+    "registry": {
+      "bytes": 996,
+      "path": "effects/ressources/SPSCHGI/packs/spschgi-installed-accepted-20261109-v1/EffectAnimations-X4.registry",
+      "sha256": "4B88795014055ACFD098D7C6742393342397EF9C4AAFEBACF9E3F229E68AA97F"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spschgi-installed-reuse30-20261109-v1",
+  "source": {
+    "bytes": 19642,
+    "path": "effects/ressources/SPSCHGI/source.bam",
+    "sha256": "A67A948C03E96BC7428AC8A4A76072ED6F4E98D8797F64FD3767DA5FAA57668A"
+  }
+}
