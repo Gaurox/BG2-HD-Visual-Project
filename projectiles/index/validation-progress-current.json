@@ -3,16 +3,17 @@
   "as_of_local_date": "2026-11-10",
   "latest_user_confirmation": "non mais je ml'en fou je voulais juste m'assurer que c'etait normal. valide donc lmes 3 et mj le suivi. puis fais moi un état d'avancement des validation projectiles. et committe",
   "authorities": {
-    "work_tracking_sha256": "A27A240C957298B778B7B83826E0B97635F8095703E78C8F016CD9CFB2BA6053",
+    "work_tracking_sha256": "E0DD0A5C3F930F56181A76892C3247E5D35AFA9E2A2F53C5C03D40859F587AD4",
     "analysis_snapshot": "projectiles/analysis/20261109-bilan-validations-v13",
     "analysis_sha256": "153DECFFE9065026E4932025698B620D77E2ACB46638BCBA0633844B50834E23"
   },
   "source_inventory": {
     "PRO": 243,
     "engine_IDs_without_PRO_tracked": 77,
-    "engine_IDs_referenced": 33,
+    "engine_IDs_referenced": 60,
     "BAM_names": 107,
-    "visual_contexts": 175
+    "visual_contexts": 175,
+    "engine_driver_scan": "Abilities + PRO children + active SPL/ITM/EFF op140/op141;32 opcode-targeted engineIDs,27 additional to the33 previously counted."
   },
   "images": {
     "reusable_outputs": 167,
@@ -63,13 +64,15 @@
       "native-or-non-raster-route-review": 27,
       "resolve-missing-dependency": 1
     },
-    "meaning": "Conservative source projection; shared native route evidence not fully reconciled. These counts are not broken links or a manual test queue."
+    "meaning": "Historical conservative projection. Current per-owner technical disposition: owner-reconciliation-current.json; generic source tasks are not actionable exceptions or manual tests."
   },
   "remaining_work": [
-    "Reconcile exact shared route/pack/palette/blend/geometry/cycle/timing evidence with remaining owner records automatically.",
-    "LIGHTSTO/MAGMIS: absent native dependency, no normal SPL/ITM/incoming-PRO driver identified; preserve native, no speculative production.",
-    "Manual review only for a genuinely new visual variant or a reproducible anomaly.",
-    "Position interpolation PROJ-MOTION-001 remains deferred; release separate."
+    "SHWATER: Register the native SpellHit FX cell; add source-specific realized-palette transfer for SHWATER1..7 before enabling coloured HD.",
+    "FLMSTRK: Register and qualify the existing FLMSTRK pack on the native SkyStrike route; ID66 shares this image but has no scanned driver.",
+    "SPDIMDR1-SPDIMDR2: Register both native DimensionDoor phases and qualify the 2->1->2 occurrence lifecycle; images already produced/accepted.",
+    "SPBOOM-palettes: Preserve the accepted neutral/fireball route. Qualify/apply native range0 colours67/65/69 to the private GPU upload for opcode141 variants32/33/34.",
+    "Eight native gaps without scanned drivers retained separately, including LIGHTSTO/MAGMIS. No speculative asset production or test request.",
+    "Manual QA only for genuine new visual differences after technical fixes. Position interpolation remains deferred; release separate."
   ],
   "whole_chain_acceptance_percentage": null,
   "evidence": [
@@ -85,5 +88,32 @@
       "path": "projectiles/analysis/final-four-colours-accepted-20261109-v1/acceptance.json",
       "sha256": "1D5B32518087ABD1623E601432BDD39FEE2A6A67C57E46F64B733DE79C42B1EE"
     }
-  ]
+  ],
+  "automatic_owner_reconciliation": {
+    "schema": "bg2-projectile-owner-reconciliation-current-v1",
+    "date": "2026-11-10",
+    "report": "projectiles/analysis/owner-contracts-20261110-v1/README.md",
+    "summary": {
+      "path": "projectiles/analysis/owner-contracts-20261110-v1/summary.json",
+      "sha256": "BEE77686D3613335FC56CE9D7B2692EC8C1B2DDCB088CBF6E1FAB0951AAB859F"
+    },
+    "owners": {
+      "path": "projectiles/analysis/owner-contracts-20261110-v1/owners.json",
+      "sha256": "BFAA0EF6C9A2D860ED0AD5738ED806587C0EE3C8B3F17550EB8F15B7ABF602EC"
+    },
+    "exceptions": {
+      "path": "projectiles/analysis/owner-contracts-20261110-v1/exceptions.json",
+      "sha256": "E495899B642B8548A12187550935B29A39DB749FF161EFCB7A20CEC36A68CDA9"
+    },
+    "states": {
+      "reconciled-compatible-contracts": 299,
+      "documented-native-gap-no-static-driver": 8,
+      "exception-to-treat": 13
+    },
+    "actionable_families": 4,
+    "actionable_engine_IDs": 13,
+    "deferred_native_gaps": 8,
+    "new_manual_tests": 0,
+    "meaning": "Technical reconciliation only. Existing visual QA and installation/release decisions remain separate."
+  }
 }

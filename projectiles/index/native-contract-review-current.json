@@ -36,6 +36,33 @@
   },
   "current_summary": {
     "path": "projectiles/index/validation-progress-current.json",
-    "sha256": "C8E933AC95210D7B7D86D8FCC71E4367495F670BEEED06DF76796117212CE129"
+    "sha256": "5796C24B9ABF1CFB131CD0A931A208A5DAA2240CE5CEB5356A212F30A08AEF97"
+  },
+  "owner_reconciliation": {
+    "schema": "bg2-projectile-owner-reconciliation-current-v1",
+    "date": "2026-11-10",
+    "report": "projectiles/analysis/owner-contracts-20261110-v1/README.md",
+    "summary": {
+      "path": "projectiles/analysis/owner-contracts-20261110-v1/summary.json",
+      "sha256": "BEE77686D3613335FC56CE9D7B2692EC8C1B2DDCB088CBF6E1FAB0951AAB859F"
+    },
+    "owners": {
+      "path": "projectiles/analysis/owner-contracts-20261110-v1/owners.json",
+      "sha256": "BFAA0EF6C9A2D860ED0AD5738ED806587C0EE3C8B3F17550EB8F15B7ABF602EC"
+    },
+    "exceptions": {
+      "path": "projectiles/analysis/owner-contracts-20261110-v1/exceptions.json",
+      "sha256": "E495899B642B8548A12187550935B29A39DB749FF161EFCB7A20CEC36A68CDA9"
+    },
+    "states": {
+      "reconciled-compatible-contracts": 299,
+      "documented-native-gap-no-static-driver": 8,
+      "exception-to-treat": 13
+    },
+    "actionable_families": 4,
+    "actionable_engine_IDs": 13,
+    "deferred_native_gaps": 8,
+    "new_manual_tests": 0,
+    "meaning": "Technical reconciliation only. Existing visual QA and installation/release decisions remain separate."
   }
 }

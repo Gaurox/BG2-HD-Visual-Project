@@ -1,5 +1,7 @@
 # Validations manuelles des projectiles — 2026-10-28
 
+**Réconciliation technique2026-11-10 : [4 exceptions actives](analysis/owner-contracts-20261110-v1/README.md).** Preuves communes reliées aux320 propriétaires,299 contrats compatibles ;aucun accord visuel élargi ou révoqué. SHWATER,FLMSTRK,SPDIMDR1/2,SPBOOM recoloré demandent un travail technique avant toute nouvelle observation utile ;**0 nouveau test manuel préparé**,0 campagne PRO par PRO. Les8 écarts sans pilote scanné restent natifs.
+
 **État courant2026-11-09 : [bilan des validations](ETAT_VALIDATIONS.md).**39PRO et10IDs moteur avec accords visuels bornés aux composants observés. Les10raccords secondaires repérés sont installés :6routesHD acceptées+3couleurs acceptées ;SPSCORIC qualifié statiquement9cycles etaccord visuel antérieur conservé.0test de couleur en attente,trace désactivée. Les mentions «raccords ouverts» ci-dessous décrivent les étapes historiques.
 
 **Mise à jour2026-11-09** : [tous les essais CLUA acceptés](analysis/native-clua-accepted-20261109-v1/README.md),18entrées/17pilotes distincts.39PRO avec acceptation des composants observés ;PFIRE2/TRAPSKUL/CHROMORB confirmés sur le rendu courant. Les10pilotes secondaires sont aussi acceptés visuellement, sans nouvelle preuve de substitutionHD ;leurs raccords restent ouverts. Commandes/sources/runtime figés dans `acceptance.json` ;aucune installation/release modifiée.

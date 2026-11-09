@@ -1,0 +1,118 @@
+[
+  {
+    "id": "SHWATER",
+    "state": "technical-exception-to-treat",
+    "resources": [
+      "SHWATER"
+    ],
+    "engine_IDs": [
+      120,
+      123,
+      126,
+      129,
+      132,
+      135,
+      138,
+      141
+    ],
+    "owners": [
+      "engine-id:120",
+      "engine-id:123",
+      "engine-id:126",
+      "engine-id:129",
+      "engine-id:132",
+      "engine-id:135",
+      "engine-id:138",
+      "engine-id:141"
+    ],
+    "errors": [
+      "missing-secondary-scope",
+      "native-BMP-palette-not-transferred"
+    ],
+    "action": "Register the native SpellHit FX cell; add source-specific realized-palette transfer for SHWATER1..7 before enabling coloured HD.",
+    "new_inference_required": false,
+    "new_manual_tests_prepared": false,
+    "source_evidence": [
+      "opcode-references.csv",
+      "engine-owners.json",
+      "components.json"
+    ]
+  },
+  {
+    "id": "FLMSTRK",
+    "state": "technical-exception-to-treat",
+    "resources": [
+      "FLMSTRK"
+    ],
+    "engine_IDs": [
+      145
+    ],
+    "owners": [
+      "engine-id:145"
+    ],
+    "errors": [
+      "missing-secondary-scope"
+    ],
+    "action": "Register and qualify the existing FLMSTRK pack on the native SkyStrike route; ID66 shares this image but has no scanned driver.",
+    "new_inference_required": false,
+    "new_manual_tests_prepared": false,
+    "source_evidence": [
+      "opcode-references.csv",
+      "engine-owners.json",
+      "components.json"
+    ]
+  },
+  {
+    "id": "SPDIMDR1-SPDIMDR2",
+    "state": "technical-exception-to-treat",
+    "resources": [
+      "SPDIMDR1",
+      "SPDIMDR2"
+    ],
+    "engine_IDs": [
+      109
+    ],
+    "owners": [
+      "engine-id:109"
+    ],
+    "errors": [
+      "missing-secondary-scope"
+    ],
+    "action": "Register both native DimensionDoor phases and qualify the 2->1->2 occurrence lifecycle; images already produced/accepted.",
+    "new_inference_required": false,
+    "new_manual_tests_prepared": false,
+    "source_evidence": [
+      "opcode-references.csv",
+      "engine-owners.json",
+      "components.json"
+    ]
+  },
+  {
+    "id": "SPBOOM-palettes",
+    "state": "technical-exception-to-treat",
+    "resources": [
+      "SPBOOM"
+    ],
+    "engine_IDs": [
+      142,
+      143,
+      144
+    ],
+    "owners": [
+      "engine-id:142",
+      "engine-id:143",
+      "engine-id:144"
+    ],
+    "errors": [
+      "native-range-palette-not-transferred"
+    ],
+    "action": "Preserve the accepted neutral/fireball route. Qualify/apply native range0 colours67/65/69 to the private GPU upload for opcode141 variants32/33/34.",
+    "new_inference_required": false,
+    "new_manual_tests_prepared": false,
+    "source_evidence": [
+      "opcode-references.csv",
+      "engine-owners.json",
+      "components.json"
+    ]
+  }
+]

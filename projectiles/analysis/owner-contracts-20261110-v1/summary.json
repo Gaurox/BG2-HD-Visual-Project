@@ -1,0 +1,40 @@
+{
+  "schema": "bg2-projectile-owner-reconciliation-v1",
+  "date": "2026-11-10",
+  "recipe_sha256": "7A328C0CF6487692B0B2FD232E4135C6AF4DBFF3ADD6CF13A442464D0294A40D",
+  "snapshot": "projectiles/analysis/20261109-bilan-validations-v13",
+  "PROs": 243,
+  "engine_IDs": 77,
+  "owner_states": {
+    "reconciled-compatible-contracts": 299,
+    "documented-native-gap-no-static-driver": 8,
+    "exception-to-treat": 13
+  },
+  "component_states": {
+    "compatible-shared-technical-evidence": 361,
+    "native-procedural-preserved": 68,
+    "native-mask-preserved": 16,
+    "exception": 22,
+    "inactive-or-metadata-preserved": 1
+  },
+  "component_error_counts": {
+    "missing-native-BAM": 1,
+    "missing-secondary-scope": 18,
+    "missing-installed-raster": 1,
+    "native-BMP-palette-not-transferred": 7,
+    "native-range-palette-not-transferred": 3
+  },
+  "unexplained_PRO_changes": [],
+  "runtime_contracts": 31668,
+  "physical_backings_checked": 25017,
+  "physical_bytes_checked": 13080150976,
+  "opcode_references": 1400,
+  "engine_IDs_with_static_drivers": 60,
+  "scope": "Current stock owners, active overrides, controller leaves, native factory/child edges and FIREBALL modes. Technical reuse only; immutable visual QA and release unchanged.",
+  "limits": [
+    "Bounded constructor CFG retains both conditional branches; not a new live draw claim.",
+    "Native fallback for unsupported compositing/palette/opacity remains part of runtime contract.",
+    "No per-owner manual QA inferred from image or shared route evidence.",
+    "No game writes, inference, installation, release or new test commands."
+  ]
+}
