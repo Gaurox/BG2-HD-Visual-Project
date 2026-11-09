@@ -1,0 +1,161 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:SPCL236U",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 21,
+    "source": {
+      "interpolation_run": "spcl236u-apollo30-20261109-v1",
+      "interpolation_run_descriptor_sha256": "94B6414198945E734B38852AE2D692DD1374D8055B75188546E363036C261E04",
+      "source_bam_sha256": "6a6182618850d14ca293238570d9d3d683b33c7fda6da8747214630710ed351b",
+      "spatial_manifest_sha256": "F2DC188A4E7F47900127BF45CBDC495AA5A8F0665002479B0CA035C9A80B7275",
+      "spatial_run": "spcl236u-seedvr7b-x4-20261109-v1",
+      "spatial_run_descriptor_sha256": "EF6A2F28C992540BFE1438CB36DA33B83AB657E215426AE4FBD963A612158F26"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        20
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          18
+        ]
+      ],
+      "phase_count": 20,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          19,
+          18,
+          20
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1161,
+    "path": "effects/index/qa-decisions/SPCL236U/2026-11-09-accepted-4760f64df83e.json",
+    "sha256": "4760F64DF83EF8EBE456769C03A214E8E5D31D13AF1FAD22237F5FF145573E99"
+  },
+  "resref": "SPCL236U",
+  "run_descriptor": {
+    "bytes": 1894,
+    "path": "effects/ressources/SPCL236U/runs/spcl236u-apollo30-20261109-v1/run.json",
+    "sha256": "94B6414198945E734B38852AE2D692DD1374D8055B75188546E363036C261E04"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 15923,
+      "path": "effects/ressources/SPCL236U/packs/spcl236u-x4-apollo30-profiles-20261109-v1/manifest.json",
+      "sha256": "3F2C44700C0E1F60549BA52C1CE9FDE84FAB1909760C2AA87C3BBA0D4C0E87FD"
+    },
+    "registry": {
+      "bytes": 444,
+      "path": "effects/ressources/SPCL236U/packs/spcl236u-x4-apollo30-profiles-20261109-v1/EffectAnimations-X4.registry",
+      "sha256": "AEDAFA7FBFC4C38F72EF6C0D4C60D743B167A8FAF042EED5101E8745089FE5EC"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "spcl236u-apollo30-20261109-v1",
+  "source": {
+    "bytes": 5692,
+    "path": "effects/ressources/SPCL236U/source.bam",
+    "sha256": "6A6182618850D14CA293238570D9D3D683B33C7FDA6DA8747214630710ED351B"
+  }
+}

@@ -1,9 +1,6 @@
 # Suivi projectiles — analyse des travaux
 
-- Validation manuelle courante : [suivi détaillé](SUIVI_MANUEL.md), [acceptation finale V14](analysis/projectile-magique-v14-valide-20261028-v1/acceptance.json). 29 PRO acceptés pour les composants observés ; 3 accords historiques antérieurs à un correctif conservés. Les 37 groupes secondaires partagent une preuve technique, sans validation globale des PRO ni de leurs variantes.
-- Projectile magique V14 : 28 dessins HD masqués, 12 phases distinctes, aucun rejet ; trace temporaire désactivée. Interpolation du déplacement reportée : [PROJ-MOTION-001](../pipeline/PROBLEMES_A_RESOUDRE.md#proj-motion-001).
-
-- Instantané UTC : `2026-10-28T17:23:14.108449+00:00` ; [rapport figé](analysis/20261028-validation-v14-acceptee-v1/analysis.json).
+- Instantané UTC : `2026-11-09T21:18:24.347160+00:00` ; [rapport figé](analysis/20261109-projectiles3-cow-valides-v6/analysis.json).
 - Projection générée ; décisions métier : `index/work-tracking.json`. Ne pas éditer les CSV générés.
 - Cette analyse conserve les autorités effets/animations/sprites ; aucune production, QA, installation ou release accordée.
 
@@ -22,23 +19,20 @@
 
 | État observé du contexte | Nombre | Action |
 |---|---:|---|
-| Asset accepté, source et métadonnées liées vérifiées | 80 | Réutiliser le résultat exact ; préserver la portée QA. |
-| Pack de palette vérifié, pas de QA projectile déduite | 84 | Réutiliser ; raccord propriétaire/palette et QA restent distincts. |
+| Asset accepté, source et métadonnées liées vérifiées | 86 | Réutiliser le résultat exact ; préserver la portée QA. |
+| Pack de palette vérifié, pas de QA projectile déduite | 81 | Réutiliser ; raccord propriétaire/palette et QA restent distincts. |
 | Upscale spatial présent | 0 | Terminer/reprendre temporalité et pack ; ne pas relancer SeedVR. |
 | Job réservé sans sortie spatiale complète | 0 | Reprendre le job existant ; aucun lot en doublon. |
 | Masque noir natif | 8 | Aucun upscale IA ; préserver indices/alpha/mélange natifs. |
-| Source sans sortie correspondante trouvée | 3 | Confirmer chemin moteur puis produire seulement ce manque. |
+| Source sans sortie correspondante trouvée | 0 | Confirmer chemin moteur puis produire seulement ce manque. |
 
 ### Sources nouvelles candidates
 
 | BAM | Appels PRO/rôle | Source | Poses natives uniques / correspondances exactes existantes |
 |---|---|---|---|
-| BGLRYU | BGLRY/smoke-animation | sprite `effect`, inventorié, hors campagne Q3m | 20 / 0 |
-| SPCL236U | SPCL236/smoke-animation | sprite `effect`, inventorié, hors campagne Q3m | 10 / 0 |
-| SPGLYPHI | TRAPGLPN/fragment-animation, TRAPGLYP/fragment-animation | sprite `effect`, inventorié, hors campagne Q3m | 60 / 0 |
 
 - Ces trois BAM ne sont ni des équipements superposés ni des sprites multipart Q3m : animations moteur de classe `effect`. Le rendu de ces propriétaires reste à raccorder/confirmer.
-- Planche : `analysis/20261028-validation-v14-acceptee-v1/new-source-candidates.png`.
+- Planche : `analysis/20261109-projectiles3-cow-valides-v6/new-source-candidates.png`.
 
 ### Cas à préserver
 
@@ -52,8 +46,7 @@
 | Prochaine action statique dominante | PRO |
 |---|---:|
 | `native-or-non-raster-route-review` | 13 |
-| `prepare-missing-visual-contexts` | 4 |
-| `resolve-engine-visual-routes` | 87 |
+| `resolve-engine-visual-routes` | 91 |
 | `resolve-missing-dependency` | 1 |
 | `reuse-outputs-and-check-owner-contract` | 138 |
 
@@ -70,7 +63,7 @@
 - `hooks.cpp:resolve_effect_animation_cell` : recherche par RESREF/séquence/slot/géométrie ; aucun choix de pack par palette PRO dans cette résolution.
 - Un RESREF partagé par plusieurs palettes/contextes ne peut pas être couvert par la simple présence d’une entrée du registre. Prévoir dispatch par propriétaire/palette ou représentation compatible ; conserver les sorties existantes.
 - Fumées/fragments, ombres/traînées et autres classes : ne pas déduire leur prise en charge du seul hook de la cellule primaire. Vérifier le chemin final et préserver le fallback natif.
-- Catalogue installé : 538 noms, SHA registre/manifeste concordants ; aucune observation de draw ni validation palette/propriétaire actuelle déduite.
+- Catalogue installé : 743 noms, SHA registre/manifeste concordants ; aucune observation de draw ni validation palette/propriétaire actuelle déduite.
 
 ## Fichiers et commandes
 
@@ -81,8 +74,8 @@
 | Déduplication des BAM + alias exacts | `index/visual-assets.csv` |
 | Une ligne par source canonique + palette réalisée | `index/visual-contexts.csv` |
 | Décisions explicites, notes/priorités humaines | `index/work-tracking.json` |
-| Dépendances développées, PRO secondaires, usages, contrats natifs | `analysis/20261028-validation-v14-acceptee-v1/` |
-| Source/QA/run/pack/palette et SHA des entrées | `analysis/20261028-validation-v14-acceptee-v1/analysis.json`, `contexts.json` |
+| Dépendances développées, PRO secondaires, usages, contrats natifs | `analysis/20261109-projectiles3-cow-valides-v6/` |
+| Source/QA/run/pack/palette et SHA des entrées | `analysis/20261109-projectiles3-cow-valides-v6/analysis.json`, `contexts.json` |
 
 ```powershell
 python -B pipeline/scripts/projectile_tracking.py status

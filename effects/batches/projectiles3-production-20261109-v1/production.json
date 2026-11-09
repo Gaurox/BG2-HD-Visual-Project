@@ -1,0 +1,144 @@
+{
+  "schema": "bg2-effects-production-batch-result-v1",
+  "status": "completed-production-pending-visual-QA",
+  "summary": {
+    "assets": 3,
+    "native_frames": 90,
+    "native_cycles": 7,
+    "profiles": 14,
+    "phases": 360,
+    "backings": 187,
+    "native_contracts": 720,
+    "native_contracts_all_three_encodings": 2160,
+    "target_fps": [
+      30,
+      1
+    ],
+    "native_fps_basis": "15FPS compatibility, not measured ingame"
+  },
+  "assets": [
+    {
+      "resref": "BGLRYU",
+      "source": "effects/ressources/BGLRYU/source.bam",
+      "source_sha256": "23F8F910198177091FFE6E0E365A5A4F415B2B4EB695492A022B0ED77E7370E2",
+      "spatial_run": "bglryu-seedvr7b-x4-20261109-v1",
+      "interpolation_run": "bglryu-apollo30-20261109-v1",
+      "pack": "effects/ressources/BGLRYU/packs/bglryu-x4-apollo30-profiles-20261109-v1",
+      "pack_manifest_sha256": "8B1F744176DFC3B55A3FB84920099CEFFE6E38099A0FB1D1DEAC5FB4E0A74FB6",
+      "native_cycles": 1,
+      "profiles": 2,
+      "phases": 80,
+      "backings": 41,
+      "native_contracts": 160,
+      "raw_bytes": 3939712,
+      "companions": [
+        {
+          "kind": "normal",
+          "pack": "effects/ressources/BGLRYU/packs/bglryu-x4-apollo30-normal-20261109-v1",
+          "manifest_sha256": "1AB4ADA79B71A65EA45CA4D10912D54CB4A876007E305E26E298121C31D9FFC9",
+          "encoding": "straight",
+          "native_probe": "effects/batches/projectiles3-production-20261109-v1/runtime-verification/BGLRYU-normal.log",
+          "installed": false
+        },
+        {
+          "kind": "neutral",
+          "pack": "effects/ressources/BGLRYU/packs/bglryu-x4-apollo30-neutral-20261109-v1",
+          "manifest_sha256": "F61EF7BAC3608CC9B6AB2AD8CBBABD17A8F5B0F38DD029AEE913D5BA93DAD744",
+          "encoding": "straight",
+          "native_probe": "effects/batches/projectiles3-production-20261109-v1/runtime-verification/BGLRYU-neutral.log",
+          "installed": false
+        }
+      ],
+      "visual_qa": "pending-user-review",
+      "installed": false,
+      "release": "not-evaluated",
+      "owners": [
+        "BGLRY"
+      ],
+      "animation_id": "0x0101"
+    },
+    {
+      "resref": "SPCL236U",
+      "source": "effects/ressources/SPCL236U/source.bam",
+      "source_sha256": "6A6182618850D14CA293238570D9D3D683B33C7FDA6DA8747214630710ED351B",
+      "spatial_run": "spcl236u-seedvr7b-x4-20261109-v1",
+      "interpolation_run": "spcl236u-apollo30-20261109-v1",
+      "pack": "effects/ressources/SPCL236U/packs/spcl236u-x4-apollo30-profiles-20261109-v1",
+      "pack_manifest_sha256": "3F2C44700C0E1F60549BA52C1CE9FDE84FAB1909760C2AA87C3BBA0D4C0E87FD",
+      "native_cycles": 1,
+      "profiles": 2,
+      "phases": 40,
+      "backings": 21,
+      "native_contracts": 80,
+      "raw_bytes": 2004992,
+      "companions": [
+        {
+          "kind": "normal",
+          "pack": "effects/ressources/SPCL236U/packs/spcl236u-x4-apollo30-normal-20261109-v1",
+          "manifest_sha256": "AC508CCCE307A0218304B71CFA2D64DA12C609879D338F1EC02AF1CC14645952",
+          "encoding": "straight",
+          "native_probe": "effects/batches/projectiles3-production-20261109-v1/runtime-verification/SPCL236U-normal.log",
+          "installed": false
+        },
+        {
+          "kind": "neutral",
+          "pack": "effects/ressources/SPCL236U/packs/spcl236u-x4-apollo30-neutral-20261109-v1",
+          "manifest_sha256": "C7218CD96425F1149DF9CAEF3E16F5834C1DBC25625C73D47A86C852FD6E40FB",
+          "encoding": "straight",
+          "native_probe": "effects/batches/projectiles3-production-20261109-v1/runtime-verification/SPCL236U-neutral.log",
+          "installed": false
+        }
+      ],
+      "visual_qa": "pending-user-review",
+      "installed": false,
+      "release": "not-evaluated",
+      "owners": [
+        "SPCL236"
+      ],
+      "animation_id": "0x0102"
+    },
+    {
+      "resref": "SPGLYPHI",
+      "source": "effects/ressources/SPGLYPHI/source.bam",
+      "source_sha256": "5EA558EDF498C82C9137943D6C23430879A44AD13763A87B8ECCF3939665197E",
+      "spatial_run": "spglyphi-seedvr7b-x4-20261109-v1",
+      "interpolation_run": "spglyphi-apollo30-20261109-v1",
+      "pack": "effects/ressources/SPGLYPHI/packs/spglyphi-x4-apollo30-profiles-20261109-v1",
+      "pack_manifest_sha256": "7BB284B940377EF464496513BAD1EE2223B208A723E887FE3DEDB4C1C390D1A0",
+      "native_cycles": 5,
+      "profiles": 10,
+      "phases": 240,
+      "backings": 125,
+      "native_contracts": 480,
+      "raw_bytes": 10054784,
+      "companions": [
+        {
+          "kind": "normal",
+          "pack": "effects/ressources/SPGLYPHI/packs/spglyphi-x4-apollo30-normal-20261109-v1",
+          "manifest_sha256": "A3B745DFCA318D538FAC5FDEBB1987DEDB9353D90062441FA5614BC89232258C",
+          "encoding": "straight",
+          "native_probe": "effects/batches/projectiles3-production-20261109-v1/runtime-verification/SPGLYPHI-normal.log",
+          "installed": false
+        },
+        {
+          "kind": "neutral",
+          "pack": "effects/ressources/SPGLYPHI/packs/spglyphi-x4-apollo30-neutral-20261109-v1",
+          "manifest_sha256": "3DFA44B347197B694DBFC47EB38501C34C56F3842FA6AD291CBFDDEDF7264DEF",
+          "encoding": "straight",
+          "native_probe": "effects/batches/projectiles3-production-20261109-v1/runtime-verification/SPGLYPHI-neutral.log",
+          "installed": false
+        }
+      ],
+      "visual_qa": "pending-user-review",
+      "installed": false,
+      "release": "not-evaluated",
+      "owners": [
+        "TRAPGLPN",
+        "TRAPGLYP"
+      ],
+      "animation_id": "0x0410"
+    }
+  ],
+  "board": "http://127.0.0.1:8800/",
+  "scope": "Three authorized projectile animation BAMs only; no visual acceptance, game installation or release. Secondary whitelist source prepared; DLL not built or installed."
+}

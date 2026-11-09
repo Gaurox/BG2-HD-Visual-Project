@@ -47,6 +47,7 @@ effects:bam:BDSPWARD,effect:vvc:BDSPWARD,animation,,50DAFBC8AACE50BB9C6046445225
 effects:bam:BDWOFOGA,projectile:BDWOFOG,spread-animation,,8B5FAAFE3FC53B08602D6FB8A3B2F1FD804FA0EABA6F3009532F66CD97C39991,projectile,,,,,,,,,,
 effects:bam:BGLRYH,effect:vvc:BGLRYH,animation,,F31FCAD718AF7F442B1AA37639AA87D24D7248E2372FD06CF9427318F6B3C547,vvc,15,0,0;0;0,1,,1,,,,"{""color"": 0, ""continuous"": 0, ""display"": 520, ""duration"": 4294967295, ""sequence"": 8}"
 effects:bam:BGLRYT,projectile:BGLRY,travel-animation,,58A793E22AC3CE3593CA7C5FAB03476076B731D20C1B93A266EB78D9A480FCA6,projectile,,,0,,1,,,0,0;0;0;0;0;0;0,"{""bam"": 962, ""extended"": 0}"
+effects:bam:BGLRYU,projectile:BGLRY,smoke-animation,ANIMATE:0x0101,58A793E22AC3CE3593CA7C5FAB03476076B731D20C1B93A266EB78D9A480FCA6,projectile-animation,,,,,,,,,,"{""animation_id"": ""0x0101"", ""rate_basis"": ""15FPS compatibility; not measured ingame""}"
 effects:bam:BOLT,projectile:1BOLT01,travel-animation,,04B9B1FF574007DD994CB3A2015985FDE7078A76534920478418EE3C6A5E4AB5,projectile,,,0,,5,,,1,0;0;159;0;160;27;0,"{""bam"": 9, ""extended"": 0}"
 effects:bam:BOLT,projectile:1BOLT02,travel-animation,,6F76BDCB0BAD27DF77DB7C33776D34A3E7DDA38FDAFD9F38A028704FC07792D1,projectile,,,0,,5,,,1,0;0;207;0;38;90;0,"{""bam"": 9, ""extended"": 0}"
 effects:bam:BOLT,projectile:1BOLT03,travel-animation,,36E7289EEF309906AC0851FD42A3F34D6E5A3097CF5C6CDD5923363562288EF7,projectile,,,0,,5,,,1,0;0;68;0;244;231;0,"{""bam"": 9, ""extended"": 0}"
@@ -216,6 +217,7 @@ effects:bam:SPCHRORB,projectile:CHROMORB,shadow-animation,,9B7F1ABEAA3A278A1864C
 effects:bam:SPCHRORB,projectile:CHROMORB,travel-animation,,9B7F1ABEAA3A278A1864CDEB5497C90E2CB1A2F3B3DCEF46FF2E0FFF0E8F6D73,projectile,,,0,,1,,,0,27;0;0;0;0;0;0,"{""bam"": 176, ""extended"": 0}"
 effects:bam:SPCHRORB,projectile:SPGREORB,shadow-animation,,74B5EF2AD4A4DFA9756F12F1691913DDFB4B04D05D172110D52B704645B71C35,native-shadow,,,,,,,,,,
 effects:bam:SPCL236,projectile:SPCL236,travel-animation,,296C83A01B598AC59066C70D14FDF4766C5E4A544F024625E1D0677C97DB9367,projectile,,,0,,1,,,0,0;0;0;0;0;0;0,"{""bam"": 962, ""extended"": 0}"
+effects:bam:SPCL236U,projectile:SPCL236,smoke-animation,ANIMATE:0x0102,296C83A01B598AC59066C70D14FDF4766C5E4A544F024625E1D0677C97DB9367,projectile-animation,,,,,,,,,,"{""animation_id"": ""0x0102"", ""rate_basis"": ""15FPS compatibility; not measured ingame""}"
 effects:bam:SPCL239,effect:vvc:SPCL239,animation,,090CC235EC2E05BA1D26FB2FF57DAE82B1461583591732351BFE9CF9B0B9A3AB,vvc,15,0,1;3;0,1,,1,,,,"{""color"": 640, ""continuous"": 0, ""display"": 10, ""duration"": 30, ""sequence"": 12}"
 effects:bam:SPCL239R,projectile:SPCL239,ring-animation,,CA83493D09AA299974865E17934A90B9FD15E1C69D2DF20A8222A245EBA80DC0,projectile,,,,,,,,,,
 effects:bam:SPCL239R,projectile:SPCL239,spread-animation,,CA83493D09AA299974865E17934A90B9FD15E1C69D2DF20A8222A245EBA80DC0,projectile,,,,,,,,,,
@@ -335,6 +337,8 @@ effects:bam:SPFLSRIN,effect:vvc:SPFLSRIN,animation,,4795754BC4094AC94E50BBCD0CE9
 effects:bam:SPFRACTI,effect:vvc:ICFRACTI,animation,,061293EC23CCAAC573731CD1095B307DAE8D22D5F6B4AABEF12E3635F3B98325,vvc,15,0,0;0;0,1,,1,,,,"{""color"": 0, ""continuous"": 0, ""display"": 520, ""duration"": 4294967295, ""sequence"": 392}"
 effects:bam:SPGFLSH1,effect:vvc:SPGFLSH1,animation,,C99BCC9C754A4F9E1EB15E49A8DAC808A1D54AEA0148B7646C33B89E48A3DFBB,vvc,15,0,0;0;0,1,,1,,,,"{""color"": 0, ""continuous"": 0, ""display"": 520, ""duration"": 4294967295, ""sequence"": 8}"
 effects:bam:SPGLBBLD,effect:vvc:SPGLBBLD,animation,,2F5B3782131E346869ADF2BFBF7A6B46E51B6497BF896E72FEB8BE0005CED116,vvc,15,1,2;1;3,1,,0,,,,"{""color"": 0, ""continuous"": 0, ""display"": 0, ""duration"": 4294967295, ""sequence"": 9}"
+effects:bam:SPGLYPHI,projectile:TRAPGLPN,fragment-animation,ANIMATE:0x0410,4E78347063D053C0B18925C38B66C54935D155DCA3FEF5507AFE1CEA547EB1E0,projectile-animation,,,,,,,,,,"{""animation_id"": ""0x0410"", ""rate_basis"": ""15FPS compatibility; not measured ingame""}"
+effects:bam:SPGLYPHI,projectile:TRAPGLYP,fragment-animation,ANIMATE:0x0410,23A9AAF27E26B6EE897DEED519E55265699F8BFDB72DB9EC3F2466A895338118,projectile-animation,,,,,,,,,,"{""animation_id"": ""0x0410"", ""rate_basis"": ""15FPS compatibility; not measured ingame""}"
 effects:bam:SPGLYPTI,projectile:ICEGLYP,travel-animation,,2AFDE7C82CD8C3767EAD93554B13A1154A3B22397C6E2D27910826EE6531DCCB,projectile,,,0,,1,,,0,0;0;0;0;0;0;0,"{""bam"": 640, ""extended"": 0}"
 effects:bam:SPGLYPTI,projectile:OHSYMBOL,travel-animation,,D931605F7BB677E29FF2E6B8A7ED46BFBD0B27BCFA13E8E2E47E80CBDA71C744,projectile,,,0,,1,,,0,0;0;0;0;0;0;0,"{""bam"": 640, ""extended"": 0}"
 effects:bam:SPGLYPTI,projectile:TRAPGLYP,travel-animation,,23A9AAF27E26B6EE897DEED519E55265699F8BFDB72DB9EC3F2466A895338118,projectile,,,0,,1,,,0,0;0;0;0;0;0;0,"{""bam"": 640, ""extended"": 0}"

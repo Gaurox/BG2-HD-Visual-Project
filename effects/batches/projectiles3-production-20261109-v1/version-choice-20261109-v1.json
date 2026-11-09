@@ -1,0 +1,48 @@
+{
+  "assets": [
+    {
+      "interpolation_run": "bglryu-apollo30-20261109-v1",
+      "pack": {
+        "bytes": 28487,
+        "path": "effects/ressources/BGLRYU/packs/bglryu-x4-apollo30-profiles-20261109-v1/manifest.json",
+        "sha256": "8B1F744176DFC3B55A3FB84920099CEFFE6E38099A0FB1D1DEAC5FB4E0A74FB6"
+      },
+      "resref": "BGLRYU",
+      "spatial_run": "bglryu-seedvr7b-x4-20261109-v1",
+      "version": "SeedVR7B"
+    },
+    {
+      "interpolation_run": "spcl236u-apollo30-20261109-v1",
+      "pack": {
+        "bytes": 15923,
+        "path": "effects/ressources/SPCL236U/packs/spcl236u-x4-apollo30-profiles-20261109-v1/manifest.json",
+        "sha256": "3F2C44700C0E1F60549BA52C1CE9FDE84FAB1909760C2AA87C3BBA0D4C0E87FD"
+      },
+      "resref": "SPCL236U",
+      "spatial_run": "spcl236u-seedvr7b-x4-20261109-v1",
+      "version": "SeedVR7B"
+    },
+    {
+      "interpolation_run": "spglyphi-xbr-apollo30-20261109-v1",
+      "pack": {
+        "bytes": 83828,
+        "path": "effects/ressources/SPGLYPHI/packs/spglyphi-xbr4x-apollo30-profiles-20261109-v1/manifest.json",
+        "sha256": "BD7546E4E311B74F4C26599B9694F62AC4E3A9D40929A653601A538BF791A9F2"
+      },
+      "resref": "SPGLYPHI",
+      "spatial_run": "spglyphi-xbr4x-20261109-v1",
+      "version": "xBR4X"
+    }
+  ],
+  "choices": {
+    "BGLRYU": "SeedVR7B",
+    "SPCL236U": "SeedVR7B",
+    "SPGLYPHI": "xBR4X"
+  },
+  "clarification_question": "Le deuxième BGLRYU désigne-t-il SPCL236U, également à garder en SeedVR ?",
+  "date": "2026-11-09",
+  "schema": "bg2-projectiles-visual-version-choice-v1",
+  "scope": "User retained spatial versions on animated board. No ingame test, native owner contract, alpha companion selection, installation or release acceptance inferred.",
+  "user_clarification": "Oui, SPCL236U en SeedVR",
+  "user_message": "garde BGLRYU et BGLRYU en seedVR et SPGLYPHI en XBR"
+}

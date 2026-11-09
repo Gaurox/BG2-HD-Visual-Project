@@ -1,5 +1,9 @@
 # Projectiles — source, production réutilisable, travail restant
 
+**Projectiles3 et COW acceptés —2026-11-09** : [QA3](../effects/batches/projectiles3-accepted-20261109-v1/README.md) — BGLRYU/SPCL236U SeedVR, SPGLYPHI xBR. [QA COW188](analysis/cow-accepted-20261109-v1/README.md) — ACOWG1 Q3m x2 déjà produit,22frames/40cycles réemployés,0inférence/interpolation. Runtime743ressources/72563backings, sprites/PRO/INI natifs conservés ; [CLUA](../effects/installations/cow-sprite-bridge-20261109-v1/CLUA.md). États QA/intégration/install explicites ; aucune QA globale243 ni release déduite.
+
+- [Analyse de départ](analysis/20261109-finalisation-analyse-v1/README.md) historique : les3sources manquantes et le raccordCOW sont maintenant résolus ; LIGHTCHA9/LIGHTSTO et autres branches moteur restent distincts.
+
 **QA52 acceptée — 2026-11-09** : [décision et périmètre](analysis/components-qa52-20261109-v1/README.md). 52 images acceptées le 2026-11-09 : 31 anciens effets, 18 réemplois, 3 effets 1WDC. 17 images liées à 138 PRO ; validation des composants seule. SANCTRY/SPPR109 et SPSHIELD/SPWI311 : transparence confirmée avec les vrais sorts. Packs mono-BAM figés sur les versions installées testées ; 0 inférence/interpolation nouvelle. Autres QA, installation et release préservées ; GPU en pause.
 
 - **Suivi courant : [validations manuelles](SUIVI_MANUEL.md)**. 29 PRO avec acceptation visuelle limitée aux composants observés ; 3 décisions historiques conservées séparément. États explicites `index/work-tracking.json:projectiles.<PRO>.qa` ; [32 décisions et sources figées](analysis/validations-manuelles-consolidees-20261028-v1/decisions.json). Pas de QA intégrale des243PRO déduite.

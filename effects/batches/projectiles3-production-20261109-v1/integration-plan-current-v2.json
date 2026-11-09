@@ -1,0 +1,42 @@
+{
+  "state": "prepared-not-installed",
+  "source": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/effect_secondary_scope.h",
+  "assets": [
+    {
+      "resref": "BGLRYU",
+      "animation_id": "0x0101",
+      "role": "smoke-animation",
+      "owners": [
+        "BGLRY"
+      ],
+      "pack": "effects/ressources/BGLRYU/packs/bglryu-xbr4x-apollo30-profiles-20261109-v1"
+    },
+    {
+      "resref": "SPCL236U",
+      "animation_id": "0x0102",
+      "role": "smoke-animation",
+      "owners": [
+        "SPCL236"
+      ],
+      "pack": "effects/ressources/SPCL236U/packs/spcl236u-xbr4x-apollo30-profiles-20261109-v1"
+    },
+    {
+      "resref": "SPGLYPHI",
+      "animation_id": "0x0410",
+      "role": "fragment-animation",
+      "owners": [
+        "TRAPGLPN",
+        "TRAPGLYP"
+      ],
+      "pack": "effects/ressources/SPGLYPHI/packs/spglyphi-xbr4x-apollo30-profiles-20261109-v1"
+    }
+  ],
+  "requirements": [
+    "Choose blend/alpha companion from native owner contract",
+    "Build/install targeted runtime only for authorized ingame review",
+    "Keep original ANIMATE IDs and native PROs; SPGLYPHI shared by two owners"
+  ],
+  "qa": "pending",
+  "current_production": "effects/batches/projectiles3-production-20261109-v1/production-current-v2.json",
+  "default_method": "xBR4X"
+}

@@ -180,6 +180,19 @@ def build_consumers(root: Path) -> list[dict[str, Any]]:
                          "relation": dep["relation"], "via": via,
                          "source_sha256": record["source_sha256"],
                          "owner_route": "vvc" if via else "native-shadow" if dep["relation"] == "shadow-animation" else "projectile"})
+    extra_path = root / "effects/index/projectile-animation-sources.json"
+    if extra_path.is_file():
+        for asset in json.loads(extra_path.read_text(encoding="utf-8-sig"))["assets"]:
+            for owner in asset["projectiles"]:
+                record = projectiles[f"projectile:{owner}"]
+                rows.append({**dict.fromkeys(CONSUMER_FIELDS, ""),
+                    "asset_key": f"effects:bam:{asset['resref']}",
+                    "consumer_key": record["asset_key"], "relation": asset["role"],
+                    "via": f"ANIMATE:{asset['animation_id']}",
+                    "source_sha256": record["source_sha256"],
+                    "owner_route": "projectile-animation",
+                    "flags_json": json.dumps({"animation_id": asset["animation_id"],
+                        "rate_basis": "15FPS compatibility; not measured ingame"}, sort_keys=True)})
     unique = {tuple(str(r[f]) for f in CONSUMER_FIELDS): r for r in rows}
     return [unique[k] for k in sorted(unique)]
 

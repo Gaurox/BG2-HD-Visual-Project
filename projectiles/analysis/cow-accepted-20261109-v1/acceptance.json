@@ -1,0 +1,43 @@
+{
+  "decision_date": "2026-11-09",
+  "installation": {
+    "bytes": 943,
+    "path": "effects/installations/cow-sprite-bridge-20261109-v1/installation.json",
+    "sha256": "1D0202E950410DF0E88EC45F07C4A867BCAD189DCF033061FA8C1DC87D218328"
+  },
+  "installed_dll_sha256": "009A345785B5378E72B7726941C8D617A4209C5B04B10F92021E22C281E5C60D",
+  "installed_manifest_sha256": "4ED0F7CDD1374F74001B45FCCD6063F8275783BE7F1B11839B0BBFDAAF85B5B9",
+  "limits": [
+    "Observed use only; not every cycle/palette/scene-lighting combination",
+    "Native displacement retained; no position interpolation or 30FPS native-motion measurement inferred",
+    "No release acceptance or modification"
+  ],
+  "missile_id": 189,
+  "new_inference": 0,
+  "new_interpolation": 0,
+  "projectile_id": 188,
+  "resource": "ACOWG1",
+  "reuse": {
+    "bytes": 10618,
+    "path": "projectiles/analysis/cow-sprite-reuse-20261109-v1/reuse.json",
+    "sha256": "4501BEF294425D663A62001866CE4ACEBC6F724F91C693420781DAEFCD1D46CE"
+  },
+  "schema": "bg2-projectile-scoped-acceptance-v1",
+  "scope": [
+    "Observed COW188 projectile and reused ACOWG1 image ingame"
+  ],
+  "selected_pack": {
+    "bytes": 42211,
+    "path": "projectiles/analysis/cow-sprite-reuse-20261109-v1/pack/manifest.json",
+    "sha256": "BD29EBE49658189E9217CAC120515E0875C367113891F15B6EB56AED9281EB70"
+  },
+  "source_sprite_QA": {
+    "bytes": 18654,
+    "path": "sprite/index/qa-decisions/ambient_static/2026-10-04-accepted-full-ambient-static-horse-eye-v3-q3m-v7-x2-catmullrom-v1.json",
+    "sha256": "EDC145B5A8F2EFBE3F34A9196EE829FA0C4F86C1EB53D9C5613464C11596B7B6"
+  },
+  "source_sprite_unchanged": true,
+  "status": "accepted",
+  "user_decision": "ok validé. maj le suivi et committe",
+  "verified_backings": 22
+}

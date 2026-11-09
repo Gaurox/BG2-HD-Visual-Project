@@ -8,6 +8,25 @@
 #include <cstdlib>
 static void require(bool value) { if (!value) std::abort(); }
 int main() {
+  // Engine COW188 shares CProjectileBAM::Render, but its image is a sprite BAM.
+  const std::array<char,8> cow{'A','C','O','W','G','1'};
+  require(iee::core::effect_secondary_scope::enabled(cow));
+  require(iee::core::effect_texture_resref(cow,true)==cow);
+  require(iee::core::effect_surface_layout(cow,67,61,false)==
+          iee::core::EffectSurfaceLayout::SourcePlacement);
+  {
+    constexpr std::array<std::array<char,8>,3> sources{{
+      {'B','G','L','R','Y','U'}, {'S','P','C','L','2','3','6','U'},
+      {'S','P','G','L','Y','P','H','I'}}};
+    for(unsigned i=0;i<sources.size();++i) {
+      const std::array<char,8> expected{'X','3','N','0','0',char('1'+i)};
+      require(iee::core::effect_texture_resref(sources[i],false)==sources[i]);
+      require(iee::core::effect_texture_resref(sources[i],true)==expected);
+      require(iee::core::effect_texture_resref(expected,true)==expected);
+      require(iee::core::effect_secondary_scope::enabled(sources[i]));
+      require(iee::core::effect_secondary_scope::enabled(expected));
+    }
+  }
   {
     using namespace iee::core;
     const std::array<char,8> missile{'S','P','M','A','G','M','I','S'};

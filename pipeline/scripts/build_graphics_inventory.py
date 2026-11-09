@@ -1053,6 +1053,12 @@ def build_effect_bam_assets(
         return members
 
     projectiles_by_bam: dict[str, set[str]] = defaultdict(set)
+    # Explicitly resolved ANIMATE leaves are not direct BAM fields in a PRO.
+    extra_path = ROOT / "effects/index/projectile-animation-sources.json"
+    if extra_path.is_file():
+        for row in json.loads(extra_path.read_text(encoding="utf-8-sig"))["assets"]:
+            projectiles_by_bam[row["resref"]].update(
+                f"projectile:{owner}" for owner in row["projectiles"])
     for dependency in projectile_dependencies:
         projectile = str(dependency["asset_key"])
         resref = str(dependency["dependency_resref"]).upper()

@@ -1,0 +1,221 @@
+{
+  "$schema": "../../schemas/effect-selection.schema.json",
+  "asset_id": "effects:bam:BGLRYU",
+  "contract": {
+    "cycles": [
+      {
+        "cycle": 0,
+        "frame_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "lookup_start": 0
+      }
+    ],
+    "frame_count": 41,
+    "source": {
+      "interpolation_run": "bglryu-apollo30-20261109-v1",
+      "interpolation_run_descriptor_sha256": "E908041E749AA7C775FC1EEC8A7473DD747F5BED87A6D65AA7938965350FD8E9",
+      "source_bam_sha256": "23f8f910198177091ffe6e0e365a5a4f415b2b4eb695492a022b0ed77e7370e2",
+      "spatial_manifest_sha256": "6A4A88765D4494FAE47DA251C5C2321A0ACF12DBC904BF1D5B34FE43DA72CEBE",
+      "spatial_run": "bglryu-seedvr7b-x4-20261109-v1",
+      "spatial_run_descriptor_sha256": "B9602668D199181C08D414E4304B10912AC827B91D42A7FC2F0E4420393ABEF7"
+    },
+    "timeline": {
+      "actual_phase_counts_by_cycle": [
+        40
+      ],
+      "alternate_profiles": [
+        "cycle000-once"
+      ],
+      "cycle_profiles": [
+        "cycle000-loop"
+      ],
+      "empty_cycle_policy": "Unchanged source/carrier retains trailing zero-length cycles; runtime registry omits unplayable trailing entries without renumbering playable cycles.",
+      "empty_native_cycles": [],
+      "excluded_empty_source_cycles": [],
+      "native_clock_policy": "Every native tick retained at even30FPS phase; holds and invisible reserves unchanged.",
+      "native_fps": [
+        15,
+        1
+      ],
+      "native_frame_indices_by_cycle": [
+        [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30,
+          32,
+          34,
+          36,
+          38
+        ]
+      ],
+      "native_rate_basis": "15 FPS compatibility default; runtime cadence not measured",
+      "native_source_cycle_count": 1,
+      "once_cycle_profiles": [
+        "cycle000-once"
+      ],
+      "once_timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          38
+        ]
+      ],
+      "phase_count": 40,
+      "render_profile_policy": "Blended/PRO compatibility premultiplied default pack; native-palette alpha straight companions for normal consumers; separate routing required for mixed owners",
+      "runtime_cycle_count": 1,
+      "target_fps": [
+        30,
+        1
+      ],
+      "timeline_frame_indices_by_cycle": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          39,
+          38,
+          40
+        ]
+      ],
+      "unreachable_tail_policy": "v2 equal-width tables padded only beyond ceil(native duration*30); last 8 FPS interval truncated to exact native duration"
+    }
+  },
+  "decision_date": "2026-11-09",
+  "mode": "x4",
+  "qa_evidence": {
+    "bytes": 1147,
+    "path": "effects/index/qa-decisions/BGLRYU/2026-11-09-accepted-d6eb5de1d931.json",
+    "sha256": "D6EB5DE1D9313A782A182B233918BD0FACFEF0B9CA97944809158927705FA419"
+  },
+  "resref": "BGLRYU",
+  "run_descriptor": {
+    "bytes": 1865,
+    "path": "effects/ressources/BGLRYU/runs/bglryu-apollo30-20261109-v1/run.json",
+    "sha256": "E908041E749AA7C775FC1EEC8A7473DD747F5BED87A6D65AA7938965350FD8E9"
+  },
+  "runtime_pack": {
+    "manifest": {
+      "bytes": 28487,
+      "path": "effects/ressources/BGLRYU/packs/bglryu-x4-apollo30-profiles-20261109-v1/manifest.json",
+      "sha256": "8B1F744176DFC3B55A3FB84920099CEFFE6E38099A0FB1D1DEAC5FB4E0A74FB6"
+    },
+    "registry": {
+      "bytes": 804,
+      "path": "effects/ressources/BGLRYU/packs/bglryu-x4-apollo30-profiles-20261109-v1/EffectAnimations-X4.registry",
+      "sha256": "E5F109F988FA4A2C1B78AACC3356A9226902ABC4B5045987FD2292D325F03F0C"
+    },
+    "registry_version": 3
+  },
+  "schema": "bg2-effects-selection-v1",
+  "schema_version": 1,
+  "selected_run": "bglryu-apollo30-20261109-v1",
+  "source": {
+    "bytes": 15686,
+    "path": "effects/ressources/BGLRYU/source.bam",
+    "sha256": "23F8F910198177091FFE6E0E365A5A4F415B2B4EB695492A022B0ED77E7370E2"
+  }
+}

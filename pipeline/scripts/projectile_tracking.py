@@ -507,6 +507,10 @@ class Analysis:
                 ps = processing[alias]
                 sel = self.optional(f'effects/index/selections/{alias}.json')
                 palette_sha = digest(bam(alias)['palette'].tobytes())
+                # Accepted native masks have no runtime pack. Their native
+                # disposition is computed from the consumer pixels below.
+                if sel and sel.get('mode') == 'native':
+                    continue
                 if sel:
                     refs = [sel.get('source', {}), sel.get('qa_evidence', {}), sel.get('run_descriptor', {}),
                             sel.get('runtime_pack', {}).get('manifest', {}), sel.get('runtime_pack', {}).get('registry', {})]

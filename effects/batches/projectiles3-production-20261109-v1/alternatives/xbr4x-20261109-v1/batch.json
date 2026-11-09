@@ -1,0 +1,226 @@
+{
+  "schema": "bg2-effects-production-batch-v1",
+  "date": "2026-11-09",
+  "authorization": "User: ok vas y pour les 3; BGLRYU/SPCL236U/SPGLYPHI production only.",
+  "assets": [
+    {
+      "ordinal": 1,
+      "resref": "BGLRYU",
+      "source": "effects/ressources/BGLRYU/source.bam",
+      "source_sha256": "23F8F910198177091FFE6E0E365A5A4F415B2B4EB695492A022B0ED77E7370E2",
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ]
+        }
+      ],
+      "native_fps": [],
+      "profile": "H",
+      "sigma_x4": 0,
+      "inner_feather_x4": 0,
+      "mask_alpha_authoritative": true,
+      "green_index": null,
+      "reuse_aliases": [],
+      "spatial_run": "bglryu-xbr4x-20261109-v1",
+      "interpolation_run": "bglryu-xbr-apollo30-20261109-v1",
+      "pack": "effects/ressources/BGLRYU/packs/bglryu-xbr-apollo30-initial-20261109-v1",
+      "final_pack": "effects/ressources/BGLRYU/packs/bglryu-xbr4x-apollo30-profiles-20261109-v1",
+      "animation_id": "0x0101",
+      "role": "smoke-animation",
+      "owners": [
+        "BGLRY"
+      ],
+      "source_alpha_levels": [
+        0,
+        255
+      ]
+    },
+    {
+      "ordinal": 2,
+      "resref": "SPCL236U",
+      "source": "effects/ressources/SPCL236U/source.bam",
+      "source_sha256": "6A6182618850D14CA293238570D9D3D683B33C7FDA6DA8747214630710ED351B",
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ]
+        }
+      ],
+      "native_fps": [],
+      "profile": "H",
+      "sigma_x4": 0,
+      "inner_feather_x4": 0,
+      "mask_alpha_authoritative": true,
+      "green_index": null,
+      "reuse_aliases": [],
+      "spatial_run": "spcl236u-xbr4x-20261109-v1",
+      "interpolation_run": "spcl236u-xbr-apollo30-20261109-v1",
+      "pack": "effects/ressources/SPCL236U/packs/spcl236u-xbr-apollo30-initial-20261109-v1",
+      "final_pack": "effects/ressources/SPCL236U/packs/spcl236u-xbr4x-apollo30-profiles-20261109-v1",
+      "animation_id": "0x0102",
+      "role": "smoke-animation",
+      "owners": [
+        "SPCL236"
+      ],
+      "source_alpha_levels": [
+        0,
+        255
+      ]
+    },
+    {
+      "ordinal": 3,
+      "resref": "SPGLYPHI",
+      "source": "effects/ressources/SPGLYPHI/source.bam",
+      "source_sha256": "5EA558EDF498C82C9137943D6C23430879A44AD13763A87B8ECCF3939665197E",
+      "native_cycles": [
+        {
+          "cycle": 0,
+          "lookup_start": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        },
+        {
+          "cycle": 1,
+          "lookup_start": 12,
+          "frame_indices": [
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23
+          ]
+        },
+        {
+          "cycle": 2,
+          "lookup_start": 24,
+          "frame_indices": [
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35
+          ]
+        },
+        {
+          "cycle": 3,
+          "lookup_start": 36,
+          "frame_indices": [
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47
+          ]
+        },
+        {
+          "cycle": 4,
+          "lookup_start": 48,
+          "frame_indices": [
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59
+          ]
+        }
+      ],
+      "native_fps": [],
+      "profile": "H",
+      "sigma_x4": 0,
+      "inner_feather_x4": 0,
+      "mask_alpha_authoritative": true,
+      "green_index": null,
+      "reuse_aliases": [],
+      "spatial_run": "spglyphi-xbr4x-20261109-v1",
+      "interpolation_run": "spglyphi-xbr-apollo30-20261109-v1",
+      "pack": "effects/ressources/SPGLYPHI/packs/spglyphi-xbr-apollo30-initial-20261109-v1",
+      "final_pack": "effects/ressources/SPGLYPHI/packs/spglyphi-xbr4x-apollo30-profiles-20261109-v1",
+      "animation_id": "0x0410",
+      "role": "fragment-animation",
+      "owners": [
+        "TRAPGLPN",
+        "TRAPGLYP"
+      ],
+      "source_alpha_levels": [
+        0,
+        255
+      ]
+    }
+  ],
+  "native_masks": [],
+  "scope": "New sources only; no prior QA, installation or release promotion."
+}

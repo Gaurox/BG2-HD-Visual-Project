@@ -8,6 +8,14 @@ namespace iee::core {
 // Resolve this same identity at prefetch, selection and final draw boundaries.
 [[nodiscard]] constexpr std::array<char,8> effect_texture_resref(
     const std::array<char,8>& native, bool normalProfile=false) noexcept {
+  // Projectile3 luminous sources keep their premultiplied native blend. Normal
+  // FX draws use the retained straight black-neutral companion (same energy).
+  if(normalProfile && native==std::array<char,8>{'B','G','L','R','Y','U'})
+    return {'X','3','N','0','0','1'};
+  if(normalProfile && native==std::array<char,8>{'S','P','C','L','2','3','6','U'})
+    return {'X','3','N','0','0','2'};
+  if(normalProfile && native==std::array<char,8>{'S','P','G','L','Y','P','H','I'})
+    return {'X','3','N','0','0','3'};
   // WRITHING also has accepted Blended consumers. Its existing native-alpha
   // straight companion is selected only for normal native FX draws.
   if(normalProfile && native==std::array<char,8>{'W','R','I','T','H','I','N','G'})

@@ -1,0 +1,20 @@
+{
+  "installation": {
+    "evidence": [
+      "effects/installations/cow-sprite-bridge-20261109-v1/transaction.json"
+    ],
+    "resources": [
+      "ACOWG1"
+    ],
+    "state": "installed"
+  },
+  "integration": {
+    "evidence": [
+      "effects/installations/cow-sprite-bridge-20261109-v1/installation.json",
+      "projectiles/analysis/cow-sprite-reuse-20261109-v1/native-route.json"
+    ],
+    "scope": "ACOWG1 source sprite x2 reused through existing CProjectileBAM Render; 40 native cycles, no movement interpolation",
+    "state": "installed-shared-BAM-render-awaiting-observation"
+  },
+  "notes": "COW188/missile189: accepted Q3m x2 pixels reused. No new inference/interpolation. Native palette neutral, shadow alpha127, exact native centres/cycles. Sprite QA retained; projectile QA awaits user test."
+}

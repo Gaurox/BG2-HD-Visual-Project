@@ -1,0 +1,41 @@
+22e20e: mov ecx, 0x3e0
+22e213: call 0x4f7a88
+22e218: mov rbx, rax
+22e21b: test rax, rax
+22e21e: je 0x22e277
+22e220: lea rdx, [rip + 0x36e77d] ; b'ACOWG1'
+22e227: lea rcx, [rbp - 8]
+22e22b: call 0x3ff7c0
+22e230: mov rcx, rbx
+22e233: mov rdx, qword ptr [rax]
+22e236: call 0x227600
+22e23b: mov dword ptr [rsp + 0x40], 0xffffffff
+22e243: lea rax, [rip + 0x36d9fe] ; b'\xe0\x82"@\x01'
+22e24a: mov byte ptr [rsp + 0x38], dil
+22e24f: lea rcx, [rbx + 0x3c8]
+22e256: mov byte ptr [rsp + 0x30], dil
+22e25b: xor r9d, r9d
+22e25e: mov byte ptr [rsp + 0x28], dil
+22e263: xor r8d, r8d
+22e266: xor edx, edx
+22e268: mov byte ptr [rsp + 0x20], dil
+22e26d: mov qword ptr [rbx], rax
+22e270: call 0x11ba20
+22e275: jmp 0x22e279
+22e277: xor ebx, ebx
+22e279: lea rcx, [rbx + 0x140]
+22e280: mov word ptr [rbx + 0x214], r14w
+22e288: lea r8, [rip + 0x36e721] ; b'AMB_E42A'
+22e28f: lea rdx, [rbp - 0x20]
+22e293: call 0x3ff960
+22e298: lea rcx, [rbx + 0x14c]
+22e29f: lea r8, [rip + 0x36e70a] ; b'AMB_E42A'
+22e2a6: lea rdx, [rbp - 0x18]
+22e2aa: call 0x3ff960
+22e2af: movzx eax, word ptr [rbx + 0x64]
+22e2b3: add ax, ax
+22e2b6: mov byte ptr [rbx + 0x158], r14b
+22e2bd: mov word ptr [rbx + 0x64], ax
+22e2c1: mov dword ptr [rbx + 0x3b8], edi
+22e2c7: mov dword ptr [rbx + 0x3bc], 0xa
+22e2d1: jmp 0x22e8ec
