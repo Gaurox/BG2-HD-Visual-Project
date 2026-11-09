@@ -1,4 +1,5 @@
 #include "effect_sharea_palette_fixtures.h"
+#include "effect_native_projectile_palette_fixtures.h"
 // Exercise the production effect uploader on a real hidden WGL context and
 // a finite native descriptor allocator. A long spell sequence must leave a
 // slot for the next Character composite, and recycled frames must stay exact.
@@ -293,7 +294,26 @@ bool exercise(const std::filesystem::path& root) {
     api.paletteTransfer=nullptr;api.indexedPaletteTransfer=nullptr;
     if(!verifyFrame(2))return false;
   }
-  api.canvasWidth=4;api.canvasHeight=5;api.offsetX=1;api.offsetY=2;
+    // Reuse one GPU backing across different source-palette families; returning
+    // to a previous tint or neutral must never retain another family's colors.
+    using iee::core::effect_indexed_palette::SourceKind;
+    for(const auto kind:{SourceKind::Air,SourceKind::Earth,SourceKind::HolyMight,SourceKind::Air}) {
+      auto realized=kind==SourceKind::Air ? fixtureSHAIR4 :
+                    kind==SourceKind::Earth ? fixtureSHEARTH6 : fixtureHLYMITE;
+      if(kind==SourceKind::HolyMight) for(auto& value:realized)value&=0xffff0000u;
+      auto transfer=iee::core::effect_indexed_palette::derive(realized,true,kind);
+      if(!transfer.valid)return false;
+      api.indexedPaletteTransfer=&transfer;
+      if(!iee::effect_animation_x4::bind_frame_texture({0,2},api,previous))return false;
+      glBindTexture(GL_TEXTURE_2D,names[boundSlot]);
+      glGetTexImage(GL_TEXTURE_2D,0,GL_RGBA,GL_UNSIGNED_BYTE,tinted.data());
+      const auto expected=iee::core::effect_indexed_palette::recolor({2,0,0},transfer);
+      if(tinted[0]!=expected[0] || tinted[1]!=expected[1] || tinted[2]!=expected[2] || tinted[3]!=255)return false;
+      iee::effect_animation_x4::restore_texture(api,previous);
+      api.indexedPaletteTransfer=nullptr;
+      if(!verifyFrame(2))return false;
+    }
+    api.canvasWidth=4;api.canvasHeight=5;api.offsetX=1;api.offsetY=2;
   if (!iee::effect_animation_x4::bind_frame_texture({0,2},api,previous)) return false;
   glBindTexture(GL_TEXTURE_2D,names[boundSlot]);
   std::vector<unsigned char> canvas(4*5*64);

@@ -1,0 +1,34 @@
+﻿projectl_id,missile_id,symbol,effective_projectl_id,factory_case,classification,BAMs,palettes,children,BAMs_in_catalogue,direct_ability_references,PRO_references,limits
+0,1,NONE,0,0x22bfbc,native-instant-no-raster,,,,True,4332,13,Static constructor names and native table resolution; per-owner visual QA remains separate.
+13,14,BOLT_FLAMING,3,0x22e8f5,native-id-normalization-to-PRO,,,PROJECTL3:ARROWFLM,True,4,0,Static constructor names and native table resolution; per-owner visual QA remains separate.
+65,66,HOLY_MIGHT,65,0x22c3bd,named-native-constructor,HLYMITE,,,True,37,0,Static constructor names and native table resolution; per-owner visual QA remains separate.
+67,68,MAGIC_MISSILES_1,67,0x22c44f,named-native-constructor,SPMAGMIS,,,True,3,0,Static constructor names and native table resolution; per-owner visual QA remains separate.
+68,69,MAGIC_MISSILES_2,68,0x22c44f,named-native-constructor,SPMAGMIS,,,True,3,0,Static constructor names and native table resolution; per-owner visual QA remains separate.
+69,70,MAGIC_MISSILES_3,69,0x22c44f,named-native-constructor,SPMAGMIS,,,True,4,0,Static constructor names and native table resolution; per-owner visual QA remains separate.
+70,71,MAGIC_MISSILES_4,70,0x22c44f,named-native-constructor,SPMAGMIS,,,True,2,0,Static constructor names and native table resolution; per-owner visual QA remains separate.
+71,72,MAGIC_MISSILES_5,71,0x22c44f,named-native-constructor,SPMAGMIS,,,True,3,0,Static constructor names and native table resolution; per-owner visual QA remains separate.
+72,73,MAGIC_MISSILES_6,72,0x22c44f,named-native-constructor,SPMAGMIS,,,True,2,1,Static constructor names and native table resolution; per-owner visual QA remains separate.
+75,76,MAGIC_MISSILES_9,75,0x22c44f,named-native-constructor,SPMAGMIS,,,True,0,1,Static constructor names and native table resolution; per-owner visual QA remains separate.
+77,78,MAGIC_MISSILES_11,77,0x22c44f,named-native-constructor,SPMAGMIS,,,True,0,1,Static constructor names and native table resolution; per-owner visual QA remains separate.
+78,79,INVISIBLE_TRAVELLING,78,0x22c654,native-invisible-travelling,,,,True,8,48,227a40 allocates SPFIREBL then sets object+21c=0 at227ac0; Render233f85 skips raster. Native delay/gameplay retained.
+80,81,CALL_LIGHTNING_CHAIN_1,80,0x22c677,native-lightning-controller-with-SKYBOLT-child,,,PROJECTL22:SKYBOLT,True,3,0,"SPMAGMIS constructor placeholder is not final visible asset: vtable59c5e0 Render slot98=1e1e0 (ret); child3c0=22, factory input23 at22c761 and229064."
+81,82,CALL_LIGHTNING_CHAIN_2,81,0x22c677,native-lightning-controller-with-SKYBOLT-child,,,PROJECTL22:SKYBOLT,True,4,0,"SPMAGMIS constructor placeholder is not final visible asset: vtable59c5e0 Render slot98=1e1e0 (ret); child3c0=22, factory input23 at22c761 and229064."
+82,83,CALL_LIGHTNING_CHAIN_3,82,0x22c677,native-lightning-controller-with-SKYBOLT-child,,,PROJECTL22:SKYBOLT,True,5,0,"SPMAGMIS constructor placeholder is not final visible asset: vtable59c5e0 Render slot98=1e1e0 (ret); child3c0=22, factory input23 at22c761 and229064."
+83,84,CALL_LIGHTNING_CHAIN_4,83,0x22c677,native-lightning-controller-with-SKYBOLT-child,,,PROJECTL22:SKYBOLT,True,4,0,"SPMAGMIS constructor placeholder is not final visible asset: vtable59c5e0 Render slot98=1e1e0 (ret); child3c0=22, factory input23 at22c761 and229064."
+84,85,CALL_LIGHTNING_CHAIN_5,84,0x22c677,native-lightning-controller-with-SKYBOLT-child,,,PROJECTL22:SKYBOLT,True,2,0,"SPMAGMIS constructor placeholder is not final visible asset: vtable59c5e0 Render slot98=1e1e0 (ret); child3c0=22, factory input23 at22c761 and229064."
+118,119,HIT_NECROMANCY_AIR,118,0x22cb77,named-native-constructor,SHAIR,,,True,1,0,Static constructor names and native table resolution; per-owner visual QA remains separate.
+119,120,HIT_NECROMANCY_EARTH,119,0x22cc98,named-native-constructor,SHEARTH,,,True,1,0,Static constructor names and native table resolution; per-owner visual QA remains separate.
+130,131,HIT_ILLUSION_AIR,130,0x22d59e,named-native-constructor,SHAIR,SHAIR4,,True,1,0,Static constructor names and native table resolution; per-owner visual QA remains separate.
+137,138,HIT_INVOCATION_EARTH,137,0x22dbc6,named-native-constructor,SHEARTH,SHEARTH6,,True,2,0,Static constructor names and native table resolution; per-owner visual QA remains separate.
+188,189,COW,188,0x22e20e,existing-accepted-COW-bridge,ACOWG1,,,True,3,0,Static constructor names and native table resolution; per-owner visual QA remains separate.
+190,191,SCORCHER_ICE,190,0x22e2d6,named-native-constructor,SPSCORIC,,,True,4,0,Static constructor names and native table resolution; per-owner visual QA remains separate.
+194,195,RED_HOLY_MIGHT,194,0x22e3cb,named-native-constructor,HLYMITE,,,True,12,0,Static constructor names and native table resolution; per-owner visual QA remains separate.
+196,197,HIT_ALTERATION_AREA,196,0x22e4e0,named-native-constructor,SHAREA,SHAREA1,,True,0,4,Static constructor names and native table resolution; per-owner visual QA remains separate.
+197,198,HIT_ENCHANTMENT_AREA,197,0x22e46f,named-native-constructor,SHAREA,,,True,0,6,Static constructor names and native table resolution; per-owner visual QA remains separate.
+198,199,HIT_ABJURATION_AREA,198,0x22e551,named-native-constructor,SHAREA,SHAREA3,,True,0,3,Static constructor names and native table resolution; per-owner visual QA remains separate.
+199,200,HIT_ILLUSION_AREA,199,0x22e5c2,named-native-constructor,SHAREA,SHAREA4,,True,0,6,Static constructor names and native table resolution; per-owner visual QA remains separate.
+200,201,HIT_CONJURE_AREA,200,0x22e633,named-native-constructor,SHAREA,SHAREA5,,True,0,3,Static constructor names and native table resolution; per-owner visual QA remains separate.
+201,202,HIT_INVOCATION_AREA,201,0x22e6a4,named-native-constructor,SHAREA,SHAREA6,,True,0,3,Static constructor names and native table resolution; per-owner visual QA remains separate.
+202,203,HIT_DIVINATION_AREA,202,0x22e715,named-native-constructor,SHAREA,SHAREA2,,True,0,6,Static constructor names and native table resolution; per-owner visual QA remains separate.
+207,208,HIT_FINGER_OF_DEATH,207,0x22e786,named-native-constructor,SPFDEATH,,,True,2,0,Static constructor names and native table resolution; per-owner visual QA remains separate.
+254,255,HOLYLIGHT_PILLAR,254,0x22e83c,named-native-constructor,SPGENHLA,,,True,57,0,Static constructor names and native table resolution; per-owner visual QA remains separate.

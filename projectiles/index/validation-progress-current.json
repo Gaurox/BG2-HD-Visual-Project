@@ -1,0 +1,89 @@
+{
+  "schema": "bg2-projectile-validation-progress-v1",
+  "as_of_local_date": "2026-11-10",
+  "latest_user_confirmation": "non mais je ml'en fou je voulais juste m'assurer que c'etait normal. valide donc lmes 3 et mj le suivi. puis fais moi un état d'avancement des validation projectiles. et committe",
+  "authorities": {
+    "work_tracking_sha256": "A27A240C957298B778B7B83826E0B97635F8095703E78C8F016CD9CFB2BA6053",
+    "analysis_snapshot": "projectiles/analysis/20261109-bilan-validations-v13",
+    "analysis_sha256": "153DECFFE9065026E4932025698B620D77E2ACB46638BCBA0633844B50834E23"
+  },
+  "source_inventory": {
+    "PRO": 243,
+    "engine_IDs_without_PRO_tracked": 77,
+    "engine_IDs_referenced": 33,
+    "BAM_names": 107,
+    "visual_contexts": 175
+  },
+  "images": {
+    "reusable_outputs": 167,
+    "accepted_source_contexts": 86,
+    "verified_palette_contexts": 81,
+    "native_masks": 8,
+    "known_missing_outputs": 0,
+    "new_inference_queued": 0
+  },
+  "scoped_visual_QA": {
+    "PRO_observed_components_accepted": 39,
+    "engine_IDs_observed_components_accepted": 10,
+    "historical_PRE_FIX_PRO_approvals_remaining": 0,
+    "new_colour_variants_accepted": 3,
+    "prepared_manual_tests_pending": 0,
+    "meaning": "Observed components and compatible shared evidence; not complete chains or an exhaustive one-by-one manual campaign."
+  },
+  "known_secondary_gate_backlog": {
+    "identified": 10,
+    "registered_and_installed": 10,
+    "observed_HD_resources": 9,
+    "beam_static_qualified_resources": [
+      "SPSCORIC"
+    ],
+    "beam_native_cycles_qualified": 9,
+    "beam_prior_visual_QA_retained": true,
+    "beam_new_live_HD_claimed": false,
+    "gate_omissions_remaining": 0
+  },
+  "runtime": {
+    "dll_sha256": "5A1559B5C16A7BA4614D96DF2B5E9CF9F6A629273A008B26708351063106612B",
+    "trace_enabled": false,
+    "catalogue_resources": 743,
+    "backing_files": 72563,
+    "source_images_PROs_and_registry_preserved": true,
+    "release_changed": false
+  },
+  "technical_projection": {
+    "integration_states": {
+      "verified-static": 99,
+      "not-assessed": 136,
+      "installed-runtime-path-awaiting-observation": 4,
+      "accepted-observed-component-route": 4
+    },
+    "dominant_actions": {
+      "reuse-outputs-and-check-owner-contract": 161,
+      "resolve-engine-visual-routes": 54,
+      "native-or-non-raster-route-review": 27,
+      "resolve-missing-dependency": 1
+    },
+    "meaning": "Conservative source projection; shared native route evidence not fully reconciled. These counts are not broken links or a manual test queue."
+  },
+  "remaining_work": [
+    "Reconcile exact shared route/pack/palette/blend/geometry/cycle/timing evidence with remaining owner records automatically.",
+    "LIGHTSTO/MAGMIS: absent native dependency, no normal SPL/ITM/incoming-PRO driver identified; preserve native, no speculative production.",
+    "Manual review only for a genuinely new visual variant or a reproducible anomaly.",
+    "Position interpolation PROJ-MOTION-001 remains deferred; release separate."
+  ],
+  "whole_chain_acceptance_percentage": null,
+  "evidence": [
+    {
+      "path": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+      "sha256": "A707FA3BA46D53F04317C87DF7AEF9525F48DA959D3D9A9579AFC59755E83E57"
+    },
+    {
+      "path": "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json",
+      "sha256": "A79A16F0371FA4D5847DBB370240CEC40374C51207ADBFBC3E3EF0FE861F6B24"
+    },
+    {
+      "path": "projectiles/analysis/final-four-colours-accepted-20261109-v1/acceptance.json",
+      "sha256": "1D5B32518087ABD1623E601432BDD39FEE2A6A67C57E46F64B733DE79C42B1EE"
+    }
+  ]
+}

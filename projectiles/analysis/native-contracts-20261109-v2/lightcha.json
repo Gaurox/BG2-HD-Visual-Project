@@ -1,0 +1,636 @@
+{
+  "conclusion": "resolved-emission-periods-not-cycle-ids",
+  "periods": [
+    5,
+    7,
+    9
+  ],
+  "file_offsets": [
+    "0x14e",
+    "0x150",
+    "0x152"
+  ],
+  "resource_header_bytes": 8,
+  "constructor": "0x227569..0x22758c: file+8 base -> object+36c/36e/370",
+  "update": "0x228d73..0x228e1a: increment counter, idiv(period), remainder==0, first eligible trail, CreateVisualEffect",
+  "schedule_first_315_updates": [
+    {
+      "tick": 5,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 7,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 9,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 10,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 14,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 15,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 18,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 20,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 21,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 25,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 27,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 28,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 30,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 35,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 36,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 40,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 42,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 45,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 49,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 50,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 54,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 55,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 56,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 60,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 63,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 65,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 70,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 72,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 75,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 77,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 80,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 81,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 84,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 85,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 90,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 91,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 95,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 98,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 99,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 100,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 105,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 108,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 110,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 112,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 115,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 117,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 119,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 120,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 125,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 126,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 130,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 133,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 135,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 140,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 144,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 145,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 147,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 150,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 153,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 154,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 155,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 160,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 161,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 162,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 165,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 168,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 170,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 171,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 175,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 180,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 182,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 185,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 189,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 190,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 195,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 196,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 198,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 200,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 203,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 205,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 207,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 210,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 215,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 216,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 217,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 220,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 224,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 225,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 230,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 231,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 234,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 235,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 238,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 240,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 243,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 245,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 250,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 252,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 255,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 259,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 260,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 261,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 265,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 266,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 270,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 273,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 275,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 279,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 280,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 285,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 287,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 288,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 290,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 294,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 295,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 297,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 300,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 301,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 305,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 306,
+      "trail": 3,
+      "resref": "SPCHLGT3"
+    },
+    {
+      "tick": 308,
+      "trail": 2,
+      "resref": "SPCHLGT2"
+    },
+    {
+      "tick": 310,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    },
+    {
+      "tick": 315,
+      "trail": 1,
+      "resref": "SPCHLGT1"
+    }
+  ],
+  "result": "No required SPCHLGT3 cycle9; no new image or runtime change; existing observed cycle QA retained.",
+  "historical_correction": "Earlier audits treating these words as sequence IDs were incorrect; immutable evidence retained.",
+  "limits": "Static scheduling proof; frame rate in seconds and all native draws not remeasured."
+}

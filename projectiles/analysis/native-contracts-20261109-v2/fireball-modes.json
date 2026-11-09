@@ -1,0 +1,601 @@
+[
+  {
+    "mode": 0,
+    "symbol": "FIRE",
+    "factory_case": "0x1e8c66",
+    "PRO_owners": [
+      "RDMIDDLE",
+      "SMLLAREA"
+    ],
+    "BAMs": [
+      "SPBOOM",
+      "SPFIREPI"
+    ],
+    "sounds": [
+      "EFF_M21"
+    ],
+    "absent_legacy_literals": [],
+    "classification": "native-mode-with-named-raster",
+    "literal_graph": {
+      "strings": {
+        "EFF_M21": "0x5995a0",
+        "SPFIREPI": "0x5995a8",
+        "SPBOOM": "0x5995b4"
+      },
+      "calls": [
+        "0x14d080",
+        "0x3fd810",
+        "0x3ff7c0",
+        "0x40ede0",
+        "0x411610",
+        "0x412380",
+        "0x412390",
+        "0x4f77a0"
+      ],
+      "instructions": 71
+    },
+    "limits": "Constructor CFG only, both conditional paths retained; explicit ring/spread/children and procedural particles remain native. Raster draw not inferred from catalog presence."
+  },
+  {
+    "mode": 1,
+    "symbol": "CLOUD",
+    "factory_case": "0x1e9039",
+    "PRO_owners": [],
+    "BAMs": [],
+    "sounds": [
+      "ARE_M02",
+      "EFF_M18A"
+    ],
+    "absent_legacy_literals": [],
+    "classification": "native-mode-no-named-raster-in-constructor",
+    "literal_graph": {
+      "strings": {
+        "EFF_M18A": "0x5995f0",
+        "ARE_M02": "0x599600"
+      },
+      "calls": [
+        "0x3fd810",
+        "0x3ff7c0",
+        "0x40ede0",
+        "0x4f77a0"
+      ],
+      "instructions": 33
+    },
+    "limits": "Constructor CFG only, both conditional paths retained; explicit ring/spread/children and procedural particles remain native. Raster draw not inferred from catalog presence."
+  },
+  {
+    "mode": 2,
+    "symbol": "CLOUDKILL",
+    "factory_case": "0x1e9039",
+    "PRO_owners": [
+      "1PGSPORE",
+      "1PICECLD",
+      "1PMANEGS",
+      "1PSLEEPC"
+    ],
+    "BAMs": [],
+    "sounds": [
+      "ARE_M02",
+      "EFF_M18A"
+    ],
+    "absent_legacy_literals": [],
+    "classification": "native-mode-no-named-raster-in-constructor",
+    "literal_graph": {
+      "strings": {
+        "EFF_M18A": "0x5995f0",
+        "ARE_M02": "0x599600"
+      },
+      "calls": [
+        "0x3fd810",
+        "0x3ff7c0",
+        "0x40ede0",
+        "0x4f77a0"
+      ],
+      "instructions": 33
+    },
+    "limits": "Constructor CFG only, both conditional paths retained; explicit ring/spread/children and procedural particles remain native. Raster draw not inferred from catalog presence."
+  },
+  {
+    "mode": 3,
+    "symbol": "STORM",
+    "factory_case": "0x1e9099",
+    "PRO_owners": [
+      "ICESTORM",
+      "OHBICEW"
+    ],
+    "BAMs": [
+      "SPBOOM"
+    ],
+    "sounds": [
+      "ARE_M04",
+      "EFF_M34"
+    ],
+    "absent_legacy_literals": [],
+    "classification": "native-mode-with-named-raster",
+    "literal_graph": {
+      "strings": {
+        "EFF_M34": "0x599608",
+        "ARE_M04": "0x599610",
+        "SPBOOM": "0x5995b4"
+      },
+      "calls": [
+        "0x14d080",
+        "0x3fd810",
+        "0x3ff7c0",
+        "0x40ede0",
+        "0x411610",
+        "0x412380",
+        "0x412390",
+        "0x4f77a0"
+      ],
+      "instructions": 52
+    },
+    "limits": "Constructor CFG only, both conditional paths retained; explicit ring/spread/children and procedural particles remain native. Raster draw not inferred from catalog presence."
+  },
+  {
+    "mode": 4,
+    "symbol": "GREASE",
+    "factory_case": "0x1e914f",
+    "PRO_owners": [
+      "GREASE"
+    ],
+    "BAMs": [],
+    "sounds": [
+      "ARE_M01",
+      "EFF_M31B"
+    ],
+    "absent_legacy_literals": [],
+    "classification": "native-mode-no-named-raster-in-constructor",
+    "literal_graph": {
+      "strings": {
+        "EFF_M31B": "0x599618",
+        "ARE_M01": "0x599628"
+      },
+      "calls": [
+        "0x3fd810",
+        "0x3ff7c0",
+        "0x40ede0",
+        "0x4f77a0"
+      ],
+      "instructions": 34
+    },
+    "limits": "Constructor CFG only, both conditional paths retained; explicit ring/spread/children and procedural particles remain native. Raster draw not inferred from catalog presence."
+  },
+  {
+    "mode": 5,
+    "symbol": "WEB",
+    "factory_case": "0x1e91b5",
+    "PRO_owners": [
+      "WEB"
+    ],
+    "BAMs": [],
+    "sounds": [
+      "ARE_M03",
+      "EFF_M19"
+    ],
+    "absent_legacy_literals": [],
+    "classification": "native-mode-no-named-raster-in-constructor",
+    "literal_graph": {
+      "strings": {
+        "EFF_M19": "0x599630",
+        "ARE_M03": "0x599638"
+      },
+      "calls": [
+        "0x3fd810",
+        "0x3ff7c0",
+        "0x40ede0",
+        "0x4f77a0"
+      ],
+      "instructions": 32
+    },
+    "limits": "Constructor CFG only, both conditional paths retained; explicit ring/spread/children and procedural particles remain native. Raster draw not inferred from catalog presence."
+  },
+  {
+    "mode": 6,
+    "symbol": "METEOR",
+    "factory_case": "0x1e9215",
+    "PRO_owners": [
+      "METSWARM",
+      "OHRROCK"
+    ],
+    "BAMs": [],
+    "sounds": [
+      "ARE_P14",
+      "EFF_M34"
+    ],
+    "absent_legacy_literals": [],
+    "classification": "native-mode-no-named-raster-in-constructor",
+    "literal_graph": {
+      "strings": {
+        "EFF_M34": "0x599608",
+        "ARE_P14": "0x599640"
+      },
+      "calls": [
+        "0x3fd810",
+        "0x3ff7c0",
+        "0x40ede0",
+        "0x4f77a0"
+      ],
+      "instructions": 33
+    },
+    "limits": "Constructor CFG only, both conditional paths retained; explicit ring/spread/children and procedural particles remain native. Raster draw not inferred from catalog presence."
+  },
+  {
+    "mode": 7,
+    "symbol": "WILTING",
+    "factory_case": "0x1e92c6",
+    "PRO_owners": [],
+    "BAMs": [
+      "SPHORWIL"
+    ],
+    "sounds": [
+      "EFF_M34"
+    ],
+    "absent_legacy_literals": [],
+    "classification": "native-mode-with-named-raster",
+    "literal_graph": {
+      "strings": {
+        "EFF_M34": "0x599608",
+        "SPHORWIL": "0x599648"
+      },
+      "calls": [
+        "0x14d080",
+        "0x3fd810",
+        "0x3ff7c0",
+        "0x40ede0",
+        "0x411610",
+        "0x412380",
+        "0x4f77a0"
+      ],
+      "instructions": 46
+    },
+    "limits": "Constructor CFG only, both conditional paths retained; explicit ring/spread/children and procedural particles remain native. Raster draw not inferred from catalog presence."
+  },
+  {
+    "mode": 8,
+    "symbol": "WEIRD",
+    "factory_case": "0x1e9360",
+    "PRO_owners": [
+      "PFIELD",
+      "WILDZONE"
+    ],
+    "BAMs": [
+      "SPWRDFLD"
+    ],
+    "sounds": [
+      "ARE_M11",
+      "EFF_M34"
+    ],
+    "absent_legacy_literals": [],
+    "classification": "native-mode-with-named-raster",
+    "literal_graph": {
+      "strings": {
+        "EFF_M34": "0x599608",
+        "ARE_M11": "0x599658",
+        "SPWRDFLD": "0x599660"
+      },
+      "calls": [
+        "0x14d080",
+        "0x3fd810",
+        "0x3ff7c0",
+        "0x40ede0",
+        "0x411610",
+        "0x412380",
+        "0x4f77a0"
+      ],
+      "instructions": 50
+    },
+    "limits": "Constructor CFG only, both conditional paths retained; explicit ring/spread/children and procedural particles remain native. Raster draw not inferred from catalog presence."
+  },
+  {
+    "mode": 9,
+    "symbol": "ENTANGLE",
+    "factory_case": "0x1e93cd",
+    "PRO_owners": [
+      "ENTANG2"
+    ],
+    "BAMs": [
+      "SPGFLSH1"
+    ],
+    "sounds": [
+      "ARE_P01",
+      "EFF_M19"
+    ],
+    "absent_legacy_literals": [],
+    "classification": "native-mode-with-named-raster",
+    "literal_graph": {
+      "strings": {
+        "EFF_M19": "0x599630",
+        "ARE_P01": "0x599670",
+        "SPGFLSH1": "0x599678"
+      },
+      "calls": [
+        "0x14d080",
+        "0x3fd810",
+        "0x3ff7c0",
+        "0x40ede0",
+        "0x411610",
+        "0x412380",
+        "0x4f77a0"
+      ],
+      "instructions": 48
+    },
+    "limits": "Constructor CFG only, both conditional paths retained; explicit ring/spread/children and procedural particles remain native. Raster draw not inferred from catalog presence."
+  },
+  {
+    "mode": 10,
+    "symbol": "COLORSPRAY",
+    "factory_case": "0x1e9475",
+    "PRO_owners": [
+      "CSPRAY"
+    ],
+    "BAMs": [],
+    "sounds": [
+      "EFF_M19"
+    ],
+    "absent_legacy_literals": [],
+    "classification": "native-mode-no-named-raster-in-constructor",
+    "literal_graph": {
+      "strings": {
+        "EFF_M19": "0x599630"
+      },
+      "calls": [
+        "0x3fd810",
+        "0x3ff7c0",
+        "0x40ede0",
+        "0x4f77a0"
+      ],
+      "instructions": 30
+    },
+    "limits": "Constructor CFG only, both conditional paths retained; explicit ring/spread/children and procedural particles remain native. Raster draw not inferred from catalog presence."
+  },
+  {
+    "mode": 11,
+    "symbol": "CONECOLD",
+    "factory_case": "0x1e94bb",
+    "PRO_owners": [
+      "CONECOLD"
+    ],
+    "BAMs": [],
+    "sounds": [
+      "EFF_M19"
+    ],
+    "absent_legacy_literals": [],
+    "classification": "native-mode-no-named-raster-in-constructor",
+    "literal_graph": {
+      "strings": {
+        "EFF_M19": "0x599630"
+      },
+      "calls": [
+        "0x3fd810",
+        "0x3ff7c0",
+        "0x40ede0",
+        "0x4f77a0"
+      ],
+      "instructions": 35
+    },
+    "limits": "Constructor CFG only, both conditional paths retained; explicit ring/spread/children and procedural particles remain native. Raster draw not inferred from catalog presence."
+  },
+  {
+    "mode": 12,
+    "symbol": "HOLYSMITE",
+    "factory_case": "0x1e9519",
+    "PRO_owners": [
+      "PHOLYST"
+    ],
+    "BAMs": [],
+    "sounds": [
+      "EFF_M34"
+    ],
+    "absent_legacy_literals": [],
+    "classification": "native-mode-no-named-raster-in-constructor",
+    "literal_graph": {
+      "strings": {
+        "EFF_M34": "0x599608"
+      },
+      "calls": [
+        "0x3fd810",
+        "0x3ff7c0",
+        "0x40ede0",
+        "0x4f77a0"
+      ],
+      "instructions": 32
+    },
+    "limits": "Constructor CFG only, both conditional paths retained; explicit ring/spread/children and procedural particles remain native. Raster draw not inferred from catalog presence."
+  },
+  {
+    "mode": 13,
+    "symbol": "UNHOLYSMITE",
+    "factory_case": "0x1e9578",
+    "PRO_owners": [
+      "PUNHLST"
+    ],
+    "BAMs": [],
+    "sounds": [
+      "EFF_M34"
+    ],
+    "absent_legacy_literals": [],
+    "classification": "native-mode-no-named-raster-in-constructor",
+    "literal_graph": {
+      "strings": {
+        "EFF_M34": "0x599608"
+      },
+      "calls": [
+        "0x3fd810",
+        "0x3ff7c0",
+        "0x40ede0",
+        "0x4f77a0"
+      ],
+      "instructions": 32
+    },
+    "limits": "Constructor CFG only, both conditional paths retained; explicit ring/spread/children and procedural particles remain native. Raster draw not inferred from catalog presence."
+  },
+  {
+    "mode": 14,
+    "symbol": "PRISMATICSPRAY",
+    "factory_case": "0x1e95d4",
+    "PRO_owners": [
+      "PSPRAY"
+    ],
+    "BAMs": [],
+    "sounds": [
+      "EFF_M34"
+    ],
+    "absent_legacy_literals": [],
+    "classification": "native-mode-no-named-raster-in-constructor",
+    "literal_graph": {
+      "strings": {
+        "EFF_M34": "0x599608"
+      },
+      "calls": [
+        "0x3fd810",
+        "0x3ff7c0",
+        "0x40ede0",
+        "0x4f77a0"
+      ],
+      "instructions": 29
+    },
+    "limits": "Constructor CFG only, both conditional paths retained; explicit ring/spread/children and procedural particles remain native. Raster draw not inferred from catalog presence."
+  },
+  {
+    "mode": 15,
+    "symbol": "DRAGONFIRE",
+    "factory_case": "0x1e8ed1",
+    "PRO_owners": [],
+    "BAMs": [],
+    "sounds": [
+      "EFF_M21"
+    ],
+    "absent_legacy_literals": [
+      "SPRDRDE2",
+      "SPRDRDEX"
+    ],
+    "classification": "native-mode-no-named-raster-in-constructor",
+    "literal_graph": {
+      "strings": {
+        "EFF_M21": "0x5995a0",
+        "SPRDRDEX": "0x5995d0",
+        "SPRDRDE2": "0x5995e0"
+      },
+      "calls": [
+        "0x14d080",
+        "0x3fd810",
+        "0x3ff7c0",
+        "0x40ede0",
+        "0x411610",
+        "0x412380",
+        "0x4f77a0"
+      ],
+      "instructions": 65
+    },
+    "limits": "Constructor CFG only, both conditional paths retained; explicit ring/spread/children and procedural particles remain native. Raster draw not inferred from catalog presence."
+  },
+  {
+    "mode": 16,
+    "symbol": "STORMOFVENGEANCE",
+    "factory_case": "0x1e927b",
+    "PRO_owners": [
+      "STRMVENG"
+    ],
+    "BAMs": [],
+    "sounds": [],
+    "absent_legacy_literals": [],
+    "classification": "native-mode-no-named-raster-in-constructor",
+    "literal_graph": {
+      "strings": {},
+      "calls": [
+        "0x3fd810",
+        "0x4f77a0"
+      ],
+      "instructions": 27
+    },
+    "limits": "Constructor CFG only, both conditional paths retained; explicit ring/spread/children and procedural particles remain native. Raster draw not inferred from catalog presence."
+  },
+  {
+    "mode": 17,
+    "symbol": "DRAGONPURPLEFIRE",
+    "factory_case": "0x1e8d12",
+    "PRO_owners": [],
+    "BAMs": [
+      "SPBOOM",
+      "SPFIREPI"
+    ],
+    "sounds": [
+      "EFF_M21"
+    ],
+    "absent_legacy_literals": [],
+    "classification": "native-mode-with-named-raster",
+    "literal_graph": {
+      "strings": {
+        "EFF_M21": "0x5995a0",
+        "SPFIREPI": "0x5995a8",
+        "SPFIREPB": "0x5995c0",
+        "SPBOOM": "0x5995b4"
+      },
+      "calls": [
+        "0x14d080",
+        "0x1e1e0",
+        "0x3fd810",
+        "0x3ff7c0",
+        "0x3ff880",
+        "0x3ff960",
+        "0x3ffa80",
+        "0x3ffb60",
+        "0x403790",
+        "0x40ede0",
+        "0x411610",
+        "0x412380",
+        "0x412390",
+        "0x4f77a0"
+      ],
+      "instructions": 113
+    },
+    "limits": "Constructor CFG only, both conditional paths retained; explicit ring/spread/children and procedural particles remain native. Raster draw not inferred from catalog presence."
+  },
+  {
+    "mode": 18,
+    "symbol": "DRAGONACID",
+    "factory_case": "0x1e8fb2",
+    "PRO_owners": [],
+    "BAMs": [],
+    "sounds": [
+      "EFF_M21"
+    ],
+    "absent_legacy_literals": [],
+    "classification": "native-mode-no-named-raster-in-constructor",
+    "literal_graph": {
+      "strings": {
+        "EFF_M21": "0x5995a0"
+      },
+      "calls": [
+        "0x3fd810",
+        "0x3ff7c0",
+        "0x40ede0",
+        "0x411610",
+        "0x412380",
+        "0x4f77a0"
+      ],
+      "instructions": 42
+    },
+    "limits": "Constructor CFG only, both conditional paths retained; explicit ring/spread/children and procedural particles remain native. Raster draw not inferred from catalog presence."
+  },
+  {
+    "mode": 254,
+    "symbol": "CUSTOM",
+    "factory_case": "0x1e8c39",
+    "PRO_owners": [],
+    "BAMs": [],
+    "sounds": [],
+    "absent_legacy_literals": [],
+    "classification": "native-mode-no-named-raster-in-constructor",
+    "literal_graph": {
+      "strings": {},
+      "calls": [
+        "0x3fd810",
+        "0x4f77a0"
+      ],
+      "instructions": 21
+    },
+    "limits": "Constructor CFG only, both conditional paths retained; explicit ring/spread/children and procedural particles remain native. Raster draw not inferred from catalog presence."
+  }
+]

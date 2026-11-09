@@ -1,0 +1,656 @@
+[
+  {
+    "id": "QA01",
+    "wave": 1,
+    "resource": "SPWI304.spl",
+    "source_sha256": "DB37B85C7C79C1F992022C7C4866CB239DCA400E76D5EEA93F20DA351A3B81B8",
+    "entry_projectile": "PFIRE2",
+    "command": "C:Eval('ForceSpellRES(\"SPWI304\",Player2)',0)",
+    "watch": "Boule de feu : vol, impact, transparence ; accord historique avant correctifs.",
+    "ability_references": [
+      {
+        "resource": "SPWI304",
+        "format": "SPL",
+        "ability": "0",
+        "offset": "0x98",
+        "raw_missile_id": "234",
+        "projectl_id": "233",
+        "projectile": "PFIRE2",
+        "source_sha256": "DB37B85C7C79C1F992022C7C4866CB239DCA400E76D5EEA93F20DA351A3B81B8"
+      },
+      {
+        "resource": "SPWI304",
+        "format": "SPL",
+        "ability": "1",
+        "offset": "0xc0",
+        "raw_missile_id": "234",
+        "projectl_id": "233",
+        "projectile": "PFIRE2",
+        "source_sha256": "DB37B85C7C79C1F992022C7C4866CB239DCA400E76D5EEA93F20DA351A3B81B8"
+      },
+      {
+        "resource": "SPWI304",
+        "format": "SPL",
+        "ability": "2",
+        "offset": "0xe8",
+        "raw_missile_id": "234",
+        "projectl_id": "233",
+        "projectile": "PFIRE2",
+        "source_sha256": "DB37B85C7C79C1F992022C7C4866CB239DCA400E76D5EEA93F20DA351A3B81B8"
+      },
+      {
+        "resource": "SPWI304",
+        "format": "SPL",
+        "ability": "3",
+        "offset": "0x110",
+        "raw_missile_id": "234",
+        "projectl_id": "233",
+        "projectile": "PFIRE2",
+        "source_sha256": "DB37B85C7C79C1F992022C7C4866CB239DCA400E76D5EEA93F20DA351A3B81B8"
+      },
+      {
+        "resource": "SPWI304",
+        "format": "SPL",
+        "ability": "4",
+        "offset": "0x138",
+        "raw_missile_id": "234",
+        "projectl_id": "233",
+        "projectile": "PFIRE2",
+        "source_sha256": "DB37B85C7C79C1F992022C7C4866CB239DCA400E76D5EEA93F20DA351A3B81B8"
+      },
+      {
+        "resource": "SPWI304",
+        "format": "SPL",
+        "ability": "5",
+        "offset": "0x160",
+        "raw_missile_id": "234",
+        "projectl_id": "233",
+        "projectile": "PFIRE2",
+        "source_sha256": "DB37B85C7C79C1F992022C7C4866CB239DCA400E76D5EEA93F20DA351A3B81B8"
+      }
+    ],
+    "state": "prepared-not-run",
+    "scope": "Visual result of tested runtime route only; no global PRO/ID/phase acceptance."
+  },
+  {
+    "id": "QA02",
+    "wave": 1,
+    "resource": "SPWI313.spl",
+    "source_sha256": "AC8B17B60D49D9DB25A0A17FDA3FAE1527C316C23AF20D2433F6838B9853B239",
+    "entry_projectile": "TRAPSKUL",
+    "command": "C:Eval('ForceSpellRES(\"SPWI313\",Player2)',0)",
+    "watch": "Piège à crâne : vol, crâne posé, fragments à déclenchement ; accord historique avant correctifs.",
+    "ability_references": [
+      {
+        "resource": "SPWI313",
+        "format": "SPL",
+        "ability": "0",
+        "offset": "0x98",
+        "raw_missile_id": "96",
+        "projectl_id": "95",
+        "projectile": "TRAPSKUL",
+        "source_sha256": "AC8B17B60D49D9DB25A0A17FDA3FAE1527C316C23AF20D2433F6838B9853B239"
+      },
+      {
+        "resource": "SPWI313",
+        "format": "SPL",
+        "ability": "1",
+        "offset": "0xc0",
+        "raw_missile_id": "96",
+        "projectl_id": "95",
+        "projectile": "TRAPSKUL",
+        "source_sha256": "AC8B17B60D49D9DB25A0A17FDA3FAE1527C316C23AF20D2433F6838B9853B239"
+      },
+      {
+        "resource": "SPWI313",
+        "format": "SPL",
+        "ability": "2",
+        "offset": "0xe8",
+        "raw_missile_id": "96",
+        "projectl_id": "95",
+        "projectile": "TRAPSKUL",
+        "source_sha256": "AC8B17B60D49D9DB25A0A17FDA3FAE1527C316C23AF20D2433F6838B9853B239"
+      },
+      {
+        "resource": "SPWI313",
+        "format": "SPL",
+        "ability": "3",
+        "offset": "0x110",
+        "raw_missile_id": "96",
+        "projectl_id": "95",
+        "projectile": "TRAPSKUL",
+        "source_sha256": "AC8B17B60D49D9DB25A0A17FDA3FAE1527C316C23AF20D2433F6838B9853B239"
+      },
+      {
+        "resource": "SPWI313",
+        "format": "SPL",
+        "ability": "4",
+        "offset": "0x138",
+        "raw_missile_id": "96",
+        "projectl_id": "95",
+        "projectile": "TRAPSKUL",
+        "source_sha256": "AC8B17B60D49D9DB25A0A17FDA3FAE1527C316C23AF20D2433F6838B9853B239"
+      },
+      {
+        "resource": "SPWI313",
+        "format": "SPL",
+        "ability": "5",
+        "offset": "0x160",
+        "raw_missile_id": "96",
+        "projectl_id": "95",
+        "projectile": "TRAPSKUL",
+        "source_sha256": "AC8B17B60D49D9DB25A0A17FDA3FAE1527C316C23AF20D2433F6838B9853B239"
+      },
+      {
+        "resource": "SPWI313",
+        "format": "SPL",
+        "ability": "6",
+        "offset": "0x188",
+        "raw_missile_id": "96",
+        "projectl_id": "95",
+        "projectile": "TRAPSKUL",
+        "source_sha256": "AC8B17B60D49D9DB25A0A17FDA3FAE1527C316C23AF20D2433F6838B9853B239"
+      },
+      {
+        "resource": "SPWI313",
+        "format": "SPL",
+        "ability": "7",
+        "offset": "0x1b0",
+        "raw_missile_id": "96",
+        "projectl_id": "95",
+        "projectile": "TRAPSKUL",
+        "source_sha256": "AC8B17B60D49D9DB25A0A17FDA3FAE1527C316C23AF20D2433F6838B9853B239"
+      },
+      {
+        "resource": "SPWI313",
+        "format": "SPL",
+        "ability": "8",
+        "offset": "0x1d8",
+        "raw_missile_id": "96",
+        "projectl_id": "95",
+        "projectile": "TRAPSKUL",
+        "source_sha256": "AC8B17B60D49D9DB25A0A17FDA3FAE1527C316C23AF20D2433F6838B9853B239"
+      },
+      {
+        "resource": "SPWI313",
+        "format": "SPL",
+        "ability": "9",
+        "offset": "0x200",
+        "raw_missile_id": "96",
+        "projectl_id": "95",
+        "projectile": "TRAPSKUL",
+        "source_sha256": "AC8B17B60D49D9DB25A0A17FDA3FAE1527C316C23AF20D2433F6838B9853B239"
+      },
+      {
+        "resource": "SPWI313",
+        "format": "SPL",
+        "ability": "10",
+        "offset": "0x228",
+        "raw_missile_id": "96",
+        "projectl_id": "95",
+        "projectile": "TRAPSKUL",
+        "source_sha256": "AC8B17B60D49D9DB25A0A17FDA3FAE1527C316C23AF20D2433F6838B9853B239"
+      },
+      {
+        "resource": "SPWI313",
+        "format": "SPL",
+        "ability": "11",
+        "offset": "0x250",
+        "raw_missile_id": "96",
+        "projectl_id": "95",
+        "projectile": "TRAPSKUL",
+        "source_sha256": "AC8B17B60D49D9DB25A0A17FDA3FAE1527C316C23AF20D2433F6838B9853B239"
+      },
+      {
+        "resource": "SPWI313",
+        "format": "SPL",
+        "ability": "12",
+        "offset": "0x278",
+        "raw_missile_id": "96",
+        "projectl_id": "95",
+        "projectile": "TRAPSKUL",
+        "source_sha256": "AC8B17B60D49D9DB25A0A17FDA3FAE1527C316C23AF20D2433F6838B9853B239"
+      },
+      {
+        "resource": "SPWI313",
+        "format": "SPL",
+        "ability": "13",
+        "offset": "0x2a0",
+        "raw_missile_id": "96",
+        "projectl_id": "95",
+        "projectile": "TRAPSKUL",
+        "source_sha256": "AC8B17B60D49D9DB25A0A17FDA3FAE1527C316C23AF20D2433F6838B9853B239"
+      },
+      {
+        "resource": "SPWI313",
+        "format": "SPL",
+        "ability": "14",
+        "offset": "0x2c8",
+        "raw_missile_id": "96",
+        "projectl_id": "95",
+        "projectile": "TRAPSKUL",
+        "source_sha256": "AC8B17B60D49D9DB25A0A17FDA3FAE1527C316C23AF20D2433F6838B9853B239"
+      },
+      {
+        "resource": "SPWI313",
+        "format": "SPL",
+        "ability": "15",
+        "offset": "0x2f0",
+        "raw_missile_id": "96",
+        "projectl_id": "95",
+        "projectile": "TRAPSKUL",
+        "source_sha256": "AC8B17B60D49D9DB25A0A17FDA3FAE1527C316C23AF20D2433F6838B9853B239"
+      }
+    ],
+    "state": "prepared-not-run",
+    "scope": "Visual result of tested runtime route only; no global PRO/ID/phase acceptance."
+  },
+  {
+    "id": "QA03",
+    "wave": 1,
+    "resource": "SPWI118.spl",
+    "source_sha256": "79F2E89E4D97E8C2226514B851613C7F09DF435D3C372FB5A557A5643F4F9C5D",
+    "entry_projectile": "CHROMORB",
+    "command": "C:Eval('ForceSpellRES(\"SPWI118\",Player2)',0)",
+    "watch": "Orbe chromatique : vol/couches, alpha et disparition ; accord historique avant correctifs.",
+    "ability_references": [
+      {
+        "resource": "SPWI118",
+        "format": "SPL",
+        "ability": "0",
+        "offset": "0x98",
+        "raw_missile_id": "24",
+        "projectl_id": "23",
+        "projectile": "CHROMORB",
+        "source_sha256": "79F2E89E4D97E8C2226514B851613C7F09DF435D3C372FB5A557A5643F4F9C5D"
+      },
+      {
+        "resource": "SPWI118",
+        "format": "SPL",
+        "ability": "1",
+        "offset": "0xc0",
+        "raw_missile_id": "24",
+        "projectl_id": "23",
+        "projectile": "CHROMORB",
+        "source_sha256": "79F2E89E4D97E8C2226514B851613C7F09DF435D3C372FB5A557A5643F4F9C5D"
+      },
+      {
+        "resource": "SPWI118",
+        "format": "SPL",
+        "ability": "2",
+        "offset": "0xe8",
+        "raw_missile_id": "24",
+        "projectl_id": "23",
+        "projectile": "CHROMORB",
+        "source_sha256": "79F2E89E4D97E8C2226514B851613C7F09DF435D3C372FB5A557A5643F4F9C5D"
+      },
+      {
+        "resource": "SPWI118",
+        "format": "SPL",
+        "ability": "3",
+        "offset": "0x110",
+        "raw_missile_id": "24",
+        "projectl_id": "23",
+        "projectile": "CHROMORB",
+        "source_sha256": "79F2E89E4D97E8C2226514B851613C7F09DF435D3C372FB5A557A5643F4F9C5D"
+      },
+      {
+        "resource": "SPWI118",
+        "format": "SPL",
+        "ability": "4",
+        "offset": "0x138",
+        "raw_missile_id": "24",
+        "projectl_id": "23",
+        "projectile": "CHROMORB",
+        "source_sha256": "79F2E89E4D97E8C2226514B851613C7F09DF435D3C372FB5A557A5643F4F9C5D"
+      },
+      {
+        "resource": "SPWI118",
+        "format": "SPL",
+        "ability": "5",
+        "offset": "0x160",
+        "raw_missile_id": "24",
+        "projectl_id": "23",
+        "projectile": "CHROMORB",
+        "source_sha256": "79F2E89E4D97E8C2226514B851613C7F09DF435D3C372FB5A557A5643F4F9C5D"
+      },
+      {
+        "resource": "SPWI118",
+        "format": "SPL",
+        "ability": "6",
+        "offset": "0x188",
+        "raw_missile_id": "24",
+        "projectl_id": "23",
+        "projectile": "CHROMORB",
+        "source_sha256": "79F2E89E4D97E8C2226514B851613C7F09DF435D3C372FB5A557A5643F4F9C5D"
+      },
+      {
+        "resource": "SPWI118",
+        "format": "SPL",
+        "ability": "7",
+        "offset": "0x1b0",
+        "raw_missile_id": "24",
+        "projectl_id": "23",
+        "projectile": "CHROMORB",
+        "source_sha256": "79F2E89E4D97E8C2226514B851613C7F09DF435D3C372FB5A557A5643F4F9C5D"
+      },
+      {
+        "resource": "SPWI118",
+        "format": "SPL",
+        "ability": "8",
+        "offset": "0x1d8",
+        "raw_missile_id": "24",
+        "projectl_id": "23",
+        "projectile": "CHROMORB",
+        "source_sha256": "79F2E89E4D97E8C2226514B851613C7F09DF435D3C372FB5A557A5643F4F9C5D"
+      }
+    ],
+    "state": "prepared-not-run",
+    "scope": "Visual result of tested runtime route only; no global PRO/ID/phase acceptance."
+  },
+  {
+    "id": "QA04",
+    "wave": 1,
+    "resource": "SPWM157.spl",
+    "source_sha256": "A1FAA6AB1684F62C5F53FC4DD1D8989728623D83ECB253E2C4912FDAA3374BC1",
+    "entry_projectile": "SPKLARST",
+    "command": "C:Eval('ForceSpellRES(\"SPWM157\",Player2)',0)",
+    "watch": "Anneau202 SHAREA2 via SPKLARST ; cible ennemie, petrification possible.",
+    "ability_references": [
+      {
+        "resource": "SPWM157",
+        "format": "SPL",
+        "ability": "0",
+        "offset": "0x98",
+        "raw_missile_id": "153",
+        "projectl_id": "152",
+        "projectile": "SPKLARST",
+        "source_sha256": "A1FAA6AB1684F62C5F53FC4DD1D8989728623D83ECB253E2C4912FDAA3374BC1"
+      }
+    ],
+    "state": "prepared-not-run",
+    "scope": "Visual result of tested runtime route only; no global PRO/ID/phase acceptance."
+  },
+  {
+    "id": "QA05",
+    "wave": 1,
+    "resource": "BOLT07.itm",
+    "source_sha256": "04AA492EEB3027E3C5CAA6175961D271742F2C758AFCE83CFF5F7F37FD381237",
+    "entry_projectile": "TSKULLNP",
+    "command": "C:CreateItem(\"BOLT07\",5)",
+    "watch": "Tir réel BOLT07 : vol SKLT, impact/fragments SKLH ; équiper une arbalète compatible, tirer sur ennemi vivant.",
+    "ability_references": [
+      {
+        "resource": "BOLT07",
+        "format": "ITM",
+        "ability": "0",
+        "offset": "0x9c",
+        "raw_missile_id": "240",
+        "projectl_id": "239",
+        "projectile": "TSKULLNP",
+        "source_sha256": "04AA492EEB3027E3C5CAA6175961D271742F2C758AFCE83CFF5F7F37FD381237"
+      }
+    ],
+    "state": "prepared-not-run",
+    "scope": "Visual result of tested runtime route only; no global PRO/ID/phase acceptance."
+  },
+  {
+    "id": "QA06",
+    "wave": 2,
+    "resource": "SPPR302.spl",
+    "source_sha256": "ABF2A76864ECBFED725CB50F23B5B2D2EBCB3A6C9EEA47E0247DCFC91FB1EE85",
+    "entry_projectile": "engine-id:80",
+    "command": "C:Eval('ForceSpellRES(\"SPPR302\",Player2)',0)",
+    "watch": "Extérieur : Appel de la foudre ; contrôleur80..83 selon niveau -> enfant SKYBOLT. Visuel distinct de LIGHTCHA.",
+    "ability_references": [
+      {
+        "resource": "SPPR302",
+        "format": "SPL",
+        "ability": "0",
+        "offset": "0x98",
+        "raw_missile_id": "81",
+        "projectl_id": "80",
+        "projectile": "engine-id:80",
+        "source_sha256": "ABF2A76864ECBFED725CB50F23B5B2D2EBCB3A6C9EEA47E0247DCFC91FB1EE85"
+      },
+      {
+        "resource": "SPPR302",
+        "format": "SPL",
+        "ability": "1",
+        "offset": "0xc0",
+        "raw_missile_id": "81",
+        "projectl_id": "80",
+        "projectile": "engine-id:80",
+        "source_sha256": "ABF2A76864ECBFED725CB50F23B5B2D2EBCB3A6C9EEA47E0247DCFC91FB1EE85"
+      },
+      {
+        "resource": "SPPR302",
+        "format": "SPL",
+        "ability": "2",
+        "offset": "0xe8",
+        "raw_missile_id": "81",
+        "projectl_id": "80",
+        "projectile": "engine-id:80",
+        "source_sha256": "ABF2A76864ECBFED725CB50F23B5B2D2EBCB3A6C9EEA47E0247DCFC91FB1EE85"
+      },
+      {
+        "resource": "SPPR302",
+        "format": "SPL",
+        "ability": "3",
+        "offset": "0x110",
+        "raw_missile_id": "82",
+        "projectl_id": "81",
+        "projectile": "engine-id:81",
+        "source_sha256": "ABF2A76864ECBFED725CB50F23B5B2D2EBCB3A6C9EEA47E0247DCFC91FB1EE85"
+      },
+      {
+        "resource": "SPPR302",
+        "format": "SPL",
+        "ability": "4",
+        "offset": "0x138",
+        "raw_missile_id": "82",
+        "projectl_id": "81",
+        "projectile": "engine-id:81",
+        "source_sha256": "ABF2A76864ECBFED725CB50F23B5B2D2EBCB3A6C9EEA47E0247DCFC91FB1EE85"
+      },
+      {
+        "resource": "SPPR302",
+        "format": "SPL",
+        "ability": "5",
+        "offset": "0x160",
+        "raw_missile_id": "82",
+        "projectl_id": "81",
+        "projectile": "engine-id:81",
+        "source_sha256": "ABF2A76864ECBFED725CB50F23B5B2D2EBCB3A6C9EEA47E0247DCFC91FB1EE85"
+      },
+      {
+        "resource": "SPPR302",
+        "format": "SPL",
+        "ability": "6",
+        "offset": "0x188",
+        "raw_missile_id": "82",
+        "projectl_id": "81",
+        "projectile": "engine-id:81",
+        "source_sha256": "ABF2A76864ECBFED725CB50F23B5B2D2EBCB3A6C9EEA47E0247DCFC91FB1EE85"
+      },
+      {
+        "resource": "SPPR302",
+        "format": "SPL",
+        "ability": "7",
+        "offset": "0x1b0",
+        "raw_missile_id": "83",
+        "projectl_id": "82",
+        "projectile": "engine-id:82",
+        "source_sha256": "ABF2A76864ECBFED725CB50F23B5B2D2EBCB3A6C9EEA47E0247DCFC91FB1EE85"
+      },
+      {
+        "resource": "SPPR302",
+        "format": "SPL",
+        "ability": "8",
+        "offset": "0x1d8",
+        "raw_missile_id": "83",
+        "projectl_id": "82",
+        "projectile": "engine-id:82",
+        "source_sha256": "ABF2A76864ECBFED725CB50F23B5B2D2EBCB3A6C9EEA47E0247DCFC91FB1EE85"
+      },
+      {
+        "resource": "SPPR302",
+        "format": "SPL",
+        "ability": "9",
+        "offset": "0x200",
+        "raw_missile_id": "83",
+        "projectl_id": "82",
+        "projectile": "engine-id:82",
+        "source_sha256": "ABF2A76864ECBFED725CB50F23B5B2D2EBCB3A6C9EEA47E0247DCFC91FB1EE85"
+      },
+      {
+        "resource": "SPPR302",
+        "format": "SPL",
+        "ability": "10",
+        "offset": "0x228",
+        "raw_missile_id": "83",
+        "projectl_id": "82",
+        "projectile": "engine-id:82",
+        "source_sha256": "ABF2A76864ECBFED725CB50F23B5B2D2EBCB3A6C9EEA47E0247DCFC91FB1EE85"
+      },
+      {
+        "resource": "SPPR302",
+        "format": "SPL",
+        "ability": "11",
+        "offset": "0x250",
+        "raw_missile_id": "84",
+        "projectl_id": "83",
+        "projectile": "engine-id:83",
+        "source_sha256": "ABF2A76864ECBFED725CB50F23B5B2D2EBCB3A6C9EEA47E0247DCFC91FB1EE85"
+      },
+      {
+        "resource": "SPPR302",
+        "format": "SPL",
+        "ability": "12",
+        "offset": "0x278",
+        "raw_missile_id": "84",
+        "projectl_id": "83",
+        "projectile": "engine-id:83",
+        "source_sha256": "ABF2A76864ECBFED725CB50F23B5B2D2EBCB3A6C9EEA47E0247DCFC91FB1EE85"
+      },
+      {
+        "resource": "SPPR302",
+        "format": "SPL",
+        "ability": "13",
+        "offset": "0x2a0",
+        "raw_missile_id": "84",
+        "projectl_id": "83",
+        "projectile": "engine-id:83",
+        "source_sha256": "ABF2A76864ECBFED725CB50F23B5B2D2EBCB3A6C9EEA47E0247DCFC91FB1EE85"
+      }
+    ],
+    "state": "prepared-not-run",
+    "scope": "Visual result of tested runtime route only; no global PRO/ID/phase acceptance."
+  },
+  {
+    "id": "QA07",
+    "wave": 2,
+    "resource": "SPWI399.spl",
+    "source_sha256": "FEFF00E12820CFBB272EA91D57F7F7E47C6D797FF97966DECADCDC500068DEBB",
+    "entry_projectile": "FIRESTOR",
+    "command": "C:Eval('ForceSpellRES(\"SPWI399\",Player2)',0)",
+    "watch": "FIRESTOR -> enfant37 FIREBALL ; pas ICE_FRAGMENTS. Sort interne, pas Tempete de feu standard.",
+    "ability_references": [
+      {
+        "resource": "SPWI399",
+        "format": "SPL",
+        "ability": "0",
+        "offset": "0x98",
+        "raw_missile_id": "92",
+        "projectl_id": "91",
+        "projectile": "FIRESTOR",
+        "source_sha256": "FEFF00E12820CFBB272EA91D57F7F7E47C6D797FF97966DECADCDC500068DEBB"
+      },
+      {
+        "resource": "SPWI399",
+        "format": "SPL",
+        "ability": "1",
+        "offset": "0xc0",
+        "raw_missile_id": "92",
+        "projectl_id": "91",
+        "projectile": "FIRESTOR",
+        "source_sha256": "FEFF00E12820CFBB272EA91D57F7F7E47C6D797FF97966DECADCDC500068DEBB"
+      },
+      {
+        "resource": "SPWI399",
+        "format": "SPL",
+        "ability": "2",
+        "offset": "0xe8",
+        "raw_missile_id": "92",
+        "projectl_id": "91",
+        "projectile": "FIRESTOR",
+        "source_sha256": "FEFF00E12820CFBB272EA91D57F7F7E47C6D797FF97966DECADCDC500068DEBB"
+      },
+      {
+        "resource": "SPWI399",
+        "format": "SPL",
+        "ability": "3",
+        "offset": "0x110",
+        "raw_missile_id": "92",
+        "projectl_id": "91",
+        "projectile": "FIRESTOR",
+        "source_sha256": "FEFF00E12820CFBB272EA91D57F7F7E47C6D797FF97966DECADCDC500068DEBB"
+      },
+      {
+        "resource": "SPWI399",
+        "format": "SPL",
+        "ability": "4",
+        "offset": "0x138",
+        "raw_missile_id": "92",
+        "projectl_id": "91",
+        "projectile": "FIRESTOR",
+        "source_sha256": "FEFF00E12820CFBB272EA91D57F7F7E47C6D797FF97966DECADCDC500068DEBB"
+      },
+      {
+        "resource": "SPWI399",
+        "format": "SPL",
+        "ability": "5",
+        "offset": "0x160",
+        "raw_missile_id": "92",
+        "projectl_id": "91",
+        "projectile": "FIRESTOR",
+        "source_sha256": "FEFF00E12820CFBB272EA91D57F7F7E47C6D797FF97966DECADCDC500068DEBB"
+      }
+    ],
+    "state": "prepared-not-run",
+    "scope": "Visual result of tested runtime route only; no global PRO/ID/phase acceptance."
+  },
+  {
+    "id": "QA08",
+    "wave": 2,
+    "resource": "XBOW15.itm",
+    "source_sha256": "0D3CA43F6A8A275B4137F0EE6997CBEAD9609B94658C71A6C8C84108475F7A7E",
+    "entry_projectile": "engine-id:13",
+    "command": "C:CreateItem(\"XBOW15\",5)",
+    "watch": "Tir réel XBOW15 avec sa capacité utilisant missile14 : normalisation native vers ARROWFLM ; ne pas assimiler création objet et tir.",
+    "ability_references": [
+      {
+        "resource": "XBOW15",
+        "format": "ITM",
+        "ability": "0",
+        "offset": "0x9c",
+        "raw_missile_id": "14",
+        "projectl_id": "13",
+        "projectile": "engine-id:13",
+        "source_sha256": "0D3CA43F6A8A275B4137F0EE6997CBEAD9609B94658C71A6C8C84108475F7A7E"
+      },
+      {
+        "resource": "XBOW15",
+        "format": "ITM",
+        "ability": "1",
+        "offset": "0xd4",
+        "raw_missile_id": "14",
+        "projectl_id": "13",
+        "projectile": "engine-id:13",
+        "source_sha256": "0D3CA43F6A8A275B4137F0EE6997CBEAD9609B94658C71A6C8C84108475F7A7E"
+      }
+    ],
+    "state": "prepared-not-run",
+    "scope": "Visual result of tested runtime route only; no global PRO/ID/phase acceptance."
+  }
+]

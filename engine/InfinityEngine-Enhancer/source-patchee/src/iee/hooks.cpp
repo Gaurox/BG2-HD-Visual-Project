@@ -3926,7 +3926,8 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
         core::area_lighting::Palette realized{};
         if(core::safe_read(realizedOutput,realized))
           g_effectSurfaceIndexedPalette=core::effect_indexed_palette::derive(
-              realized,encoding.externalFormat==game::gl::BGRA);
+              realized,encoding.externalFormat==game::gl::BGRA,
+              core::effect_indexed_palette::source_kind(ref));
       }
     }
     if (paletteRefRead && ref == std::array<char,8>{'S','P','S','M','P','U','F','F'}) {

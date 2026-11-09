@@ -1,0 +1,48 @@
+{
+  "resources": {
+    "HLYMITE": {
+      "HD_draws": 216,
+      "masked_HD_draws": 216,
+      "odd_HD_draws": 111,
+      "palette_bindings": [
+        "[2026-11-09 23:51:08.560] [info] EFX_PALETTE_BOUND resref=HLYMITE fingerprint=365B62F341A21C31 opacity=255 sequence=0 phase=2 backing=13 canvas=100x256; native palette at HD upload"
+      ],
+      "outcomes": {
+        "1": 1,
+        "0": 216
+      },
+      "scope": "Observed new coloured route only; mask not claimed when absent from trace."
+    },
+    "SHAIR": {
+      "HD_draws": 138,
+      "masked_HD_draws": 32,
+      "odd_HD_draws": 68,
+      "palette_bindings": [
+        "[2026-11-09 23:51:16.978] [info] EFX_PALETTE_BOUND resref=SHAIR fingerprint=332380E06C1B33FE opacity=255 sequence=0 phase=0 backing=0 canvas=22x61; native palette at HD upload"
+      ],
+      "outcomes": {
+        "0": 138
+      },
+      "scope": "Observed new coloured route only; mask not claimed when absent from trace."
+    },
+    "SHEARTH": {
+      "HD_draws": 67,
+      "masked_HD_draws": 0,
+      "odd_HD_draws": 34,
+      "palette_bindings": [
+        "[2026-11-09 23:51:26.273] [info] EFX_PALETTE_BOUND resref=SHEARTH fingerprint=9815C0CC3A2556CC opacity=255 sequence=0 phase=2 backing=37 canvas=27x26; native palette at HD upload"
+      ],
+      "outcomes": {
+        "1": 1,
+        "0": 67
+      },
+      "scope": "Observed new coloured route only; mask not claimed when absent from trace."
+    }
+  },
+  "local_cutoff": "[2026-11-09 23:45:58",
+  "limits": [
+    "Sampled HD/odd phase/palette bindings, not every cycle/owner/frame.",
+    "SHEARTH had zero masked trace rows: no new occlusion-mask proof claimed.",
+    "SPSCORIC not requested or observed again; its prior visual QA and nine-cycle static qualification remain separate."
+  ]
+}

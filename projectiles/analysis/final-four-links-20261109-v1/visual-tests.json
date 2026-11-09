@@ -1,0 +1,96 @@
+{
+  "manual_tests": [
+    {
+      "id": "F4-C1",
+      "resource": "HLYMITE",
+      "variant": "Native RED_HOLY_MIGHT tint",
+      "source_spell": "SPWI985",
+      "source_sha256": "DBF81D4C5FCEF27C384117D69EE896367BFC41668E82C2E09F2C7C5EB7151DC5",
+      "native_projectl": 194,
+      "command": "C:Eval('ForceSpellRES(\"SPWI985\",Player2)',0)",
+      "state": "pending-new-colour-review",
+      "inspect": "Colour only, plus obvious transparency/placement anomaly.",
+      "capability_references": [
+        {
+          "resource": "SPWI985",
+          "format": "SPL",
+          "ability": "0",
+          "offset": "0x98",
+          "raw_missile_id": "195",
+          "projectl_id": "194",
+          "projectile": "engine-id:194",
+          "source_sha256": "DBF81D4C5FCEF27C384117D69EE896367BFC41668E82C2E09F2C7C5EB7151DC5"
+        }
+      ]
+    },
+    {
+      "id": "F4-C2",
+      "resource": "SHAIR",
+      "variant": "Native SHAIR4 BMP palette",
+      "source_spell": "SPIN835",
+      "source_sha256": "83B61CF659A13526B77389D28A6688ADD1E55B6526C8B84F5B40AEA7DEB8E0C2",
+      "native_projectl": 130,
+      "command": "C:Eval('ForceSpellRES(\"SPIN835\",Player1)',0)",
+      "state": "pending-new-colour-review",
+      "inspect": "Colour only, plus obvious transparency/placement anomaly.",
+      "capability_references": [
+        {
+          "resource": "SPIN835",
+          "format": "SPL",
+          "ability": "0",
+          "offset": "0x98",
+          "raw_missile_id": "131",
+          "projectl_id": "130",
+          "projectile": "engine-id:130",
+          "source_sha256": "83B61CF659A13526B77389D28A6688ADD1E55B6526C8B84F5B40AEA7DEB8E0C2"
+        }
+      ]
+    },
+    {
+      "id": "F4-C3",
+      "resource": "SHEARTH",
+      "variant": "Native SHEARTH6 BMP palette",
+      "source_spell": "SPIN782",
+      "source_sha256": "1BC53984A3AB62A88BC480CFAA5FE7E57E8712E9F72907D4391BC6A34B68DB88",
+      "native_projectl": 137,
+      "command": "C:Eval('ForceSpellRES(\"SPIN782\",Player2)',0)",
+      "state": "pending-new-colour-review",
+      "inspect": "Colour only, plus obvious transparency/placement anomaly.",
+      "capability_references": [
+        {
+          "resource": "SPIN782",
+          "format": "SPL",
+          "ability": "0",
+          "offset": "0x98",
+          "raw_missile_id": "138",
+          "projectl_id": "137",
+          "projectile": "engine-id:137",
+          "source_sha256": "1BC53984A3AB62A88BC480CFAA5FE7E57E8712E9F72907D4391BC6A34B68DB88"
+        }
+      ]
+    }
+  ],
+  "manual_test_count": 3,
+  "automated_instead_of_retest": [
+    {
+      "resource": "HLYMITE",
+      "reason": "Neutral source-to-realized palette is identity; pixel copies unchanged and native loader geometry/cycles pass."
+    },
+    {
+      "resource": "SHAIR",
+      "reason": "Neutral source-to-realized palette is identity; pixel copies unchanged and native loader geometry/cycles pass."
+    },
+    {
+      "resource": "SHEARTH",
+      "reason": "Neutral source-to-realized palette is identity; pixel copies unchanged and native loader geometry/cycles pass."
+    },
+    {
+      "resource": "SPSCORIC",
+      "reason": "Existing visual approval retained; nine native orientation cycles and both phase profiles qualify automatically. No new artwork/geometry/motion; live HD draw not measured."
+    }
+  ],
+  "no_repeat_of_previous_six": true,
+  "beam_retest_requested": false,
+  "new_image_generation": 0,
+  "status": "installed-three-colour-checks-only"
+}

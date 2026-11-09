@@ -31,6 +31,389 @@
         ],
         "state": "accepted-observed-components"
       }
+    },
+    "202": {
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "QA04/SPWM157→SPKLARST→202 : SHAREA avec paletteSHAREA2 observé."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      }
+    },
+    "13": {
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "QA08/XBOW15 : alias natif projectile13/missile14→ARROWFLM3 observé."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      }
+    },
+    "65": {
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "CLUA SPPR214 : aspect courant HLYMITE observé ;raccord HD secondaire non accordé."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      },
+      "integration": {
+        "state": "verified-static-installed-component-route",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-final-four-links-20261109-v1/installation.json",
+          "projectiles/analysis/final-four-links-20261109-v1/qualification.json"
+        ],
+        "resources": [
+          "HLYMITE"
+        ],
+        "scope": "Actual specialized native FX cell; component only, not full projectile closure.",
+        "HD_review_state": "neutral-identity-verified-no-manual-retest-requested",
+        "previous_visual_QA_retained": true
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-final-four-links-20261109-v1/backups/20261109T224558291724Z-a0dccb7f/renderer-install-receipt.json"
+        ],
+        "resources": [
+          "HLYMITE"
+        ],
+        "scope": "Secondary-cell registration through DLL; existing image pack untouched."
+      }
+    },
+    "130": {
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "projectiles/analysis/final-four-colours-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "SHAIR coloured native route130: explicit visual approval and realized palette bound to HD upload."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Observed colour only; no QA of all owners/palettes/cycles or unobserved masks/cadence.",
+        "latest_manual_feedback": {
+          "text": "les 3 tests sont validé visuellement. le premier fait disparaitre le player 2 c'est normal ?",
+          "evidence": "projectiles/analysis/final-four-colours-accepted-20261109-v1/acceptance.json"
+        }
+      },
+      "integration": {
+        "state": "accepted-observed-colour-route",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-final-four-links-20261109-v1/installation.json",
+          "projectiles/analysis/final-four-links-20261109-v1/qualification.json",
+          "projectiles/analysis/final-four-colours-accepted-20261109-v1/acceptance.json"
+        ],
+        "resources": [
+          "SHAIR"
+        ],
+        "scope": "Actual specialized native FX cell; component only, not full projectile closure.",
+        "HD_review_state": "accepted-three-colour-variants",
+        "previous_visual_QA_retained": true
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-final-four-links-20261109-v1/backups/20261109T224558291724Z-a0dccb7f/renderer-install-receipt.json"
+        ],
+        "resources": [
+          "SHAIR"
+        ],
+        "scope": "Secondary-cell registration through DLL; existing image pack untouched."
+      }
+    },
+    "137": {
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "projectiles/analysis/final-four-colours-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "SHEARTH coloured native route137: explicit visual approval and realized palette bound to HD upload."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Observed colour only; no QA of all owners/palettes/cycles or unobserved masks/cadence.",
+        "latest_manual_feedback": {
+          "text": "les 3 tests sont validé visuellement. le premier fait disparaitre le player 2 c'est normal ?",
+          "evidence": "projectiles/analysis/final-four-colours-accepted-20261109-v1/acceptance.json"
+        }
+      },
+      "integration": {
+        "state": "accepted-observed-colour-route",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-final-four-links-20261109-v1/installation.json",
+          "projectiles/analysis/final-four-links-20261109-v1/qualification.json",
+          "projectiles/analysis/final-four-colours-accepted-20261109-v1/acceptance.json"
+        ],
+        "resources": [
+          "SHEARTH"
+        ],
+        "scope": "Actual specialized native FX cell; component only, not full projectile closure.",
+        "HD_review_state": "accepted-three-colour-variants",
+        "previous_visual_QA_retained": true
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-final-four-links-20261109-v1/backups/20261109T224558291724Z-a0dccb7f/renderer-install-receipt.json"
+        ],
+        "resources": [
+          "SHEARTH"
+        ],
+        "scope": "Secondary-cell registration through DLL; existing image pack untouched."
+      }
+    },
+    "207": {
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "CLUA SENDAIF1 : aspect courant SPFDEATH observé ;raccord HD secondaire non accordé.",
+          "SPFDEATH : nouveau pont secondaire accepté visuellement ;dessinsHD/masqués/phasesimpaires observés."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Composant observé sur le nouveau pontHD seulement ;pas de QA de tous propriétaires/palettes/cycles ni de cadence globale. Preuves antérieures conservées dans leurs décisions. HLYMITE/SHAIR/SHEARTH/SPSCORIC restent distincts.",
+        "latest_manual_feedback": {
+          "text": "ok les 6 tests sont bons, mais c'etait le meme qu'on a validé avant. a cette vitesse j'en ai poour 2 ans a valider les 400 projectiles non ?",
+          "evidence": "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json",
+          "rendering": "Six changed HD component routes accepted; shared technical evidence captured."
+        }
+      },
+      "integration": {
+        "state": "accepted-observed-component-route",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/installation.json",
+          "projectiles/analysis/native-six-links-20261109-v1/qualification.json",
+          "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json"
+        ],
+        "resources": [
+          "SPFDEATH"
+        ],
+        "scope": "Actual specialized native FX cell; component only, not full projectile closure.",
+        "HD_review_state": "accepted-observed",
+        "previous_visual_QA_retained": true
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/backups/20261109T222334309544Z-ea56fcee/renderer-install-receipt.json"
+        ],
+        "resources": [
+          "SPFDEATH"
+        ],
+        "scope": "Secondary-cell registration through DLL; existing image pack untouched."
+      }
+    },
+    "254": {
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "CLUA SPPR412 : aspect courant SPGENHLA observé ;raccord HD secondaire non accordé.",
+          "SPGENHLA : nouveau pont secondaire accepté visuellement ;dessinsHD/masqués/phasesimpaires observés."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Composant observé sur le nouveau pontHD seulement ;pas de QA de tous propriétaires/palettes/cycles ni de cadence globale. Preuves antérieures conservées dans leurs décisions. HLYMITE/SHAIR/SHEARTH/SPSCORIC restent distincts.",
+        "latest_manual_feedback": {
+          "text": "ok les 6 tests sont bons, mais c'etait le meme qu'on a validé avant. a cette vitesse j'en ai poour 2 ans a valider les 400 projectiles non ?",
+          "evidence": "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json",
+          "rendering": "Six changed HD component routes accepted; shared technical evidence captured."
+        }
+      },
+      "integration": {
+        "state": "accepted-observed-component-route",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/installation.json",
+          "projectiles/analysis/native-six-links-20261109-v1/qualification.json",
+          "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json"
+        ],
+        "resources": [
+          "SPGENHLA"
+        ],
+        "scope": "Actual specialized native FX cell; component only, not full projectile closure.",
+        "HD_review_state": "accepted-observed",
+        "previous_visual_QA_retained": true
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/backups/20261109T222334309544Z-ea56fcee/renderer-install-receipt.json"
+        ],
+        "resources": [
+          "SPGENHLA"
+        ],
+        "scope": "Secondary-cell registration through DLL; existing image pack untouched."
+      }
+    },
+    "190": {
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "CLUA SPWI015 : aspect courant SPSCORIC observé ;raccord HD secondaire non accordé."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      },
+      "integration": {
+        "state": "verified-static-installed-component-route",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-final-four-links-20261109-v1/installation.json",
+          "projectiles/analysis/final-four-links-20261109-v1/qualification.json"
+        ],
+        "resources": [
+          "SPSCORIC"
+        ],
+        "scope": "Actual specialized native FX cell; component only, not full projectile closure.",
+        "HD_review_state": "no-manual-retest-unchanged-visual-contract",
+        "previous_visual_QA_retained": true,
+        "automated_orientation_cycles": 9,
+        "live_HD_draw_observed": false
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-final-four-links-20261109-v1/backups/20261109T224558291724Z-a0dccb7f/renderer-install-receipt.json"
+        ],
+        "resources": [
+          "SPSCORIC"
+        ],
+        "scope": "Secondary-cell registration through DLL; existing image pack untouched."
+      }
+    },
+    "194": {
+      "integration": {
+        "state": "accepted-observed-colour-route",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-final-four-links-20261109-v1/installation.json",
+          "projectiles/analysis/final-four-links-20261109-v1/qualification.json",
+          "projectiles/analysis/final-four-colours-accepted-20261109-v1/acceptance.json"
+        ],
+        "resources": [
+          "HLYMITE"
+        ],
+        "scope": "Actual specialized native FX cell; component only, not full projectile closure.",
+        "HD_review_state": "accepted-three-colour-variants",
+        "previous_visual_QA_retained": true
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-final-four-links-20261109-v1/backups/20261109T224558291724Z-a0dccb7f/renderer-install-receipt.json"
+        ],
+        "resources": [
+          "HLYMITE"
+        ],
+        "scope": "Secondary-cell registration through DLL; existing image pack untouched."
+      },
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/final-four-colours-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "HLYMITE coloured native route194: explicit visual approval and realized palette bound to HD upload."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Observed colour only; no QA of all owners/palettes/cycles or unobserved masks/cadence.",
+        "latest_manual_feedback": {
+          "text": "les 3 tests sont validé visuellement. le premier fait disparaitre le player 2 c'est normal ?",
+          "evidence": "projectiles/analysis/final-four-colours-accepted-20261109-v1/acceptance.json"
+        }
+      }
+    },
+    "118": {
+      "integration": {
+        "state": "verified-static-installed-component-route",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-final-four-links-20261109-v1/installation.json",
+          "projectiles/analysis/final-four-links-20261109-v1/qualification.json"
+        ],
+        "resources": [
+          "SHAIR"
+        ],
+        "scope": "Actual specialized native FX cell; component only, not full projectile closure.",
+        "HD_review_state": "neutral-identity-verified-no-manual-retest-requested",
+        "previous_visual_QA_retained": true
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-final-four-links-20261109-v1/backups/20261109T224558291724Z-a0dccb7f/renderer-install-receipt.json"
+        ],
+        "resources": [
+          "SHAIR"
+        ],
+        "scope": "Secondary-cell registration through DLL; existing image pack untouched."
+      }
+    },
+    "119": {
+      "integration": {
+        "state": "verified-static-installed-component-route",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-final-four-links-20261109-v1/installation.json",
+          "projectiles/analysis/final-four-links-20261109-v1/qualification.json"
+        ],
+        "resources": [
+          "SHEARTH"
+        ],
+        "scope": "Actual specialized native FX cell; component only, not full projectile closure.",
+        "HD_review_state": "neutral-identity-verified-no-manual-retest-requested",
+        "previous_visual_QA_retained": true
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-final-four-links-20261109-v1/backups/20261109T224558291724Z-a0dccb7f/renderer-install-receipt.json"
+        ],
+        "resources": [
+          "SHEARTH"
+        ],
+        "scope": "Secondary-cell registration through DLL; existing image pack untouched."
+      }
     }
   },
   "production_authorities": [
@@ -1084,6 +1467,22 @@
           "reviewed_on": "2026-11-09",
           "state": "accepted-assets-only"
         }
+      },
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "QA08/XBOW15 : tir courant via normalisation native13→3, Y31P056/fuméeSPSMPUFF observés."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
       }
     },
     "ARROWHVY": {
@@ -1468,17 +1867,24 @@
       ],
       "notes": "V5 : SPCHRORB x4/phases interpolees finales confirme, 2couches/prefixe natif conserve. Preuve technique ciblee, pas d'acceptation visuelle globale PRO.",
       "qa": {
+        "state": "accepted-observed-components",
         "evidence": [
           "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
           "projectiles/analysis/six-tests-cloud-alpha-20261028-v1/evidence.json",
-          "projectiles/analysis/composition-retest-v5-20261028-v1/verification.json"
+          "projectiles/analysis/composition-retest-v5-20261028-v1/verification.json",
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
         ],
-        "limits": "Fragments SKLH : preuve technique distincte, aucune acceptation manuelle globale déduite.",
-        "reviewed_on": "2026-10-28",
         "scope": [
-          "SPCHRORB observé"
+          "SPCHRORB observé",
+          "QA03/SPWI118 : SPCHRORB, couches/transparence observées après correctifs."
         ],
-        "state": "historical-visual-acceptance-runtime-changed"
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts. Limite antérieure conservée : Fragments SKLH : preuve technique distincte, aucune acceptation manuelle globale déduite.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
       }
     },
     "CLOUD": {
@@ -1730,6 +2136,48 @@
           "reviewed_on": "2026-11-09",
           "state": "accepted-assets-only"
         }
+      },
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "CLUA SPPR105 : aspect courant SPGFLSH1 observé ;raccord HD secondaire non accordé.",
+          "SPGFLSH1 : nouveau pont secondaire accepté visuellement ;dessinsHD/masqués/phasesimpaires observés."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Composant observé sur le nouveau pontHD seulement ;pas de QA de tous propriétaires/palettes/cycles ni de cadence globale. Preuves antérieures conservées dans leurs décisions. HLYMITE/SHAIR/SHEARTH/SPSCORIC restent distincts.",
+        "latest_manual_feedback": {
+          "text": "ok les 6 tests sont bons, mais c'etait le meme qu'on a validé avant. a cette vitesse j'en ai poour 2 ans a valider les 400 projectiles non ?",
+          "evidence": "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json",
+          "rendering": "Six changed HD component routes accepted; shared technical evidence captured."
+        }
+      },
+      "integration": {
+        "state": "accepted-observed-component-route",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/installation.json",
+          "projectiles/analysis/native-six-links-20261109-v1/qualification.json",
+          "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json"
+        ],
+        "resources": [
+          "SPGFLSH1"
+        ],
+        "scope": "Actual specialized native FX cell; component only, not full projectile closure.",
+        "HD_review_state": "accepted-observed",
+        "previous_visual_QA_retained": true
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/backups/20261109T222334309544Z-ea56fcee/renderer-install-receipt.json"
+        ],
+        "resources": [
+          "SPGFLSH1"
+        ],
+        "scope": "Secondary-cell registration through DLL; existing image pack untouched."
       }
     },
     "FDAWN": {
@@ -1864,6 +2312,22 @@
           "reviewed_on": "2026-11-09",
           "state": "accepted-assets-only"
         }
+      },
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "QA07/SPWI399 : aspect courant de la route FIRESTOR→FIREBALL observé."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
       }
     },
     "GOLCLOUD": {
@@ -1981,17 +2445,50 @@
         }
       },
       "qa": {
+        "state": "accepted-observed-components",
         "evidence": [
           "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
-          "projectiles/analysis/six-tests-cloud-alpha-20261028-v1/evidence.json"
+          "projectiles/analysis/six-tests-cloud-alpha-20261028-v1/evidence.json",
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json"
         ],
-        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
-        "reviewed_on": "2026-10-28",
         "scope": [
           "Y31P067",
-          "COLDH"
+          "COLDH",
+          "CLUA SPWI404 : aspect courant SPBOOM observé ;raccord HD secondaire non accordé.",
+          "SPBOOM : nouveau pont secondaire accepté visuellement ;dessinsHD/masqués/phasesimpaires observés."
         ],
-        "state": "accepted-observed-components"
+        "reviewed_on": "2026-11-09",
+        "limits": "Composant observé sur le nouveau pontHD seulement ;pas de QA de tous propriétaires/palettes/cycles ni de cadence globale. Preuves antérieures conservées dans leurs décisions. HLYMITE/SHAIR/SHEARTH/SPSCORIC restent distincts.",
+        "latest_manual_feedback": {
+          "text": "ok les 6 tests sont bons, mais c'etait le meme qu'on a validé avant. a cette vitesse j'en ai poour 2 ans a valider les 400 projectiles non ?",
+          "evidence": "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json",
+          "rendering": "Six changed HD component routes accepted; shared technical evidence captured."
+        }
+      },
+      "integration": {
+        "state": "accepted-observed-component-route",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/installation.json",
+          "projectiles/analysis/native-six-links-20261109-v1/qualification.json",
+          "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json"
+        ],
+        "resources": [
+          "SPBOOM"
+        ],
+        "scope": "Actual specialized native FX cell; component only, not full projectile closure.",
+        "HD_review_state": "accepted-observed",
+        "previous_visual_QA_retained": true
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/backups/20261109T222334309544Z-ea56fcee/renderer-install-receipt.json"
+        ],
+        "resources": [
+          "SPBOOM"
+        ],
+        "scope": "Secondary-cell registration through DLL; existing image pack untouched."
       }
     },
     "INSEC1": {
@@ -2259,20 +2756,69 @@
           "reviewed_on": "2026-11-09",
           "state": "accepted-assets-only"
         }
+      },
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "CLUA SPWI421 : aspect courant SPWRDFLD observé ;raccord HD secondaire non accordé.",
+          "SPWRDFLD : nouveau pont secondaire accepté visuellement ;dessinsHD/masqués/phasesimpaires observés."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Composant observé sur le nouveau pontHD seulement ;pas de QA de tous propriétaires/palettes/cycles ni de cadence globale. Preuves antérieures conservées dans leurs décisions. HLYMITE/SHAIR/SHEARTH/SPSCORIC restent distincts.",
+        "latest_manual_feedback": {
+          "text": "ok les 6 tests sont bons, mais c'etait le meme qu'on a validé avant. a cette vitesse j'en ai poour 2 ans a valider les 400 projectiles non ?",
+          "evidence": "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json",
+          "rendering": "Six changed HD component routes accepted; shared technical evidence captured."
+        }
+      },
+      "integration": {
+        "state": "accepted-observed-component-route",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/installation.json",
+          "projectiles/analysis/native-six-links-20261109-v1/qualification.json",
+          "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json"
+        ],
+        "resources": [
+          "SPWRDFLD"
+        ],
+        "scope": "Actual specialized native FX cell; component only, not full projectile closure.",
+        "HD_review_state": "accepted-observed",
+        "previous_visual_QA_retained": true
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/backups/20261109T222334309544Z-ea56fcee/renderer-install-receipt.json"
+        ],
+        "resources": [
+          "SPWRDFLD"
+        ],
+        "scope": "Secondary-cell registration through DLL; existing image pack untouched."
       }
     },
     "PFIRE2": {
       "qa": {
+        "state": "accepted-observed-components",
         "evidence": [
           "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
-          "projectiles/analysis/boule-de-feu-retest-v3-20261028-v1/summary.json"
+          "projectiles/analysis/boule-de-feu-retest-v3-20261028-v1/summary.json",
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
         ],
-        "limits": "Conserver « boule de feu testée ca a l’air ok » comme retour historique ; pas de nouvelle QA visuelle après changement de contrat V3.",
-        "reviewed_on": "2026-10-28",
         "scope": [
-          "FIREBAT et effet de Boule de feu observé"
+          "FIREBAT et effet de Boule de feu observé",
+          "QA01/SPWI304 : vol FIREBAT et explosion observés après les correctifs de rendu."
         ],
-        "state": "historical-visual-acceptance-runtime-changed"
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts. Limite antérieure conservée : Conserver « boule de feu testée ca a l’air ok » comme retour historique ; pas de nouvelle QA visuelle après changement de contrat V3.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
       }
     },
     "PSKULLT": {
@@ -2353,10 +2899,46 @@
     },
     "SKYBOLT": {
       "integration": {
+        "state": "accepted-observed-component-route",
         "evidence": [
-          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/installation.json",
+          "projectiles/analysis/native-six-links-20261109-v1/qualification.json",
+          "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json"
         ],
-        "state": "verified-static"
+        "resources": [
+          "SKYBOLT"
+        ],
+        "scope": "Actual specialized native FX cell; component only, not full projectile closure.",
+        "HD_review_state": "accepted-observed",
+        "previous_visual_QA_retained": true
+      },
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "QA06/SPPR302 : aspect courant du résultat observé ;enregistrement secondaire HD encore absent.",
+          "SKYBOLT : nouveau pont secondaire accepté visuellement ;dessinsHD/masqués/phasesimpaires observés."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Composant observé sur le nouveau pontHD seulement ;pas de QA de tous propriétaires/palettes/cycles ni de cadence globale. Preuves antérieures conservées dans leurs décisions. HLYMITE/SHAIR/SHEARTH/SPSCORIC restent distincts.",
+        "latest_manual_feedback": {
+          "text": "ok les 6 tests sont bons, mais c'etait le meme qu'on a validé avant. a cette vitesse j'en ai poour 2 ans a valider les 400 projectiles non ?",
+          "evidence": "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json",
+          "rendering": "Six changed HD component routes accepted; shared technical evidence captured."
+        }
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/backups/20261109T222334309544Z-ea56fcee/renderer-install-receipt.json"
+        ],
+        "resources": [
+          "SKYBOLT"
+        ],
+        "scope": "Secondary-cell registration through DLL; existing image pack untouched."
       }
     },
     "SLEEP": {
@@ -3301,6 +3883,22 @@
           "reviewed_on": "2026-11-09",
           "state": "accepted-assets-only"
         }
+      },
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "QA04/SPWM157 : rendu courant et enfant202 SHAREA+SHAREA2 observés."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
       }
     },
     "STONE": {
@@ -3442,17 +4040,24 @@
       ],
       "notes": "V5 : vol SKLT x4/phases interpolees finales confirme, prefixe natif conserve ; SKLH lie HD+masque avec miss de chargement transitoire. Preuve technique ciblee, pas d'acceptation visuelle globale PRO.",
       "qa": {
+        "state": "accepted-observed-components",
         "evidence": [
           "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
           "projectiles/analysis/six-tests-cloud-alpha-20261028-v1/evidence.json",
-          "projectiles/analysis/composition-retest-v5-20261028-v1/verification.json"
+          "projectiles/analysis/composition-retest-v5-20261028-v1/verification.json",
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
         ],
-        "limits": "Fragments SKLH : preuve technique distincte, aucune acceptation manuelle globale déduite.",
-        "reviewed_on": "2026-10-28",
         "scope": [
-          "Vol SKLT observé"
+          "Vol SKLT observé",
+          "QA02/SPWI313 : vol SKLT, crâne posé et fragments SKLH observés."
         ],
-        "state": "historical-visual-acceptance-runtime-changed"
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts. Limite antérieure conservée : Fragments SKLH : preuve technique distincte, aucune acceptation manuelle globale déduite.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
       }
     },
     "WEB": {
@@ -3526,8 +4131,187 @@
         ],
         "state": "accepted-observed-components"
       }
+    },
+    "TSKULLNP": {
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "QA05/BOLT07 tiré avec XBOW12 par Jan : vol SKLT/impact-fragments SKLH observés."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      }
     }
   },
   "role": "Sparse projectile work decisions; generated analysis never grants production/QA/installation/release status",
-  "schema": "bg2-projectiles-work-tracking-v1"
+  "schema": "bg2-projectiles-work-tracking-v1",
+  "visual_test_batches": {
+    "native-clua-20261109-v1": {
+      "state": "accepted-observed-current-rendering",
+      "evidence": [
+        "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+      ],
+      "reviewed_on": "2026-11-09",
+      "tests": 18,
+      "unique_native_drivers": 17,
+      "lightning_family": "SPPR302 current observed result accepted; actual level-dependent ID80..83 unspecified",
+      "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts."
+    }
+  },
+  "runtime_route_installations": {
+    "native-six-links-20261109-v1": {
+      "state": "accepted-observed-HD-component-routes",
+      "resources": [
+        "SKYBOLT",
+        "SPBOOM",
+        "SPFDEATH",
+        "SPGENHLA",
+        "SPGFLSH1",
+        "SPWRDFLD"
+      ],
+      "evidence": [
+        "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/installation.json",
+        "projectiles/analysis/native-six-links-20261109-v1/qualification.json"
+      ],
+      "receipt": "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/backups/20261109T222334309544Z-ea56fcee/renderer-install-receipt.json",
+      "dll": {
+        "bytes": 3472384,
+        "sha256": "4F63EC610B9A4E70CF0A341C521F32F7458508BE055A6EB569A391D018469F95"
+      },
+      "trace_enabled": false,
+      "unchanged_image_QA": true,
+      "open_other_resources": [
+        "HLYMITE",
+        "SHAIR",
+        "SHEARTH",
+        "SPSCORIC"
+      ],
+      "acceptance": "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json",
+      "reusable_shared_evidence": true,
+      "trace_cleanup": "projectiles/analysis/native-six-links-accepted-20261109-v1/trace-cleanup.json"
+    },
+    "final-four-links-20261109-v1": {
+      "state": "four-routes-qualified-three-colours-accepted",
+      "resources": [
+        "HLYMITE",
+        "SHAIR",
+        "SHEARTH",
+        "SPSCORIC"
+      ],
+      "evidence": [
+        "engine/InfinityEngine-Enhancer/installations/projectiles-final-four-links-20261109-v1/installation.json",
+        "projectiles/analysis/final-four-links-20261109-v1/qualification.json"
+      ],
+      "receipt": "engine/InfinityEngine-Enhancer/installations/projectiles-final-four-links-20261109-v1/backups/20261109T224558291724Z-a0dccb7f/renderer-install-receipt.json",
+      "dll": {
+        "bytes": 3475968,
+        "sha256": "5A1559B5C16A7BA4614D96DF2B5E9CF9F6A629273A008B26708351063106612B"
+      },
+      "trace_enabled": false,
+      "unchanged_image_QA": true,
+      "open_other_resources": [],
+      "manual_review_scope": [
+        "HLYMITE red194",
+        "SHAIR4 palette130",
+        "SHEARTH6 palette137"
+      ],
+      "neutral_variants_verified_automatically": true,
+      "beam_validation": "Nine native cycles qualified automatically; prior visual QA retained, no new manual image review requested; live HD draw not measured.",
+      "acceptance": "projectiles/analysis/final-four-colours-accepted-20261109-v1/acceptance.json",
+      "remaining_manual_variants": [],
+      "beam_visual_approval_reused": true,
+      "trace_cleanup": "projectiles/analysis/final-four-colours-accepted-20261109-v1/trace-cleanup.json"
+    }
+  },
+  "shared_component_route_QA": {
+    "SKYBOLT": {
+      "state": "accepted-observed-HD-component-route",
+      "evidence": [
+        "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json"
+      ],
+      "runtime_class": "SkyStrike",
+      "reuse_policy": "Reuse exact pack plus compatible palette/blend/geometry/cycles/timing; audit aliases automatically, manual review only for real differences."
+    },
+    "SPBOOM": {
+      "state": "accepted-observed-HD-component-route",
+      "evidence": [
+        "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json"
+      ],
+      "runtime_class": "Fireball",
+      "reuse_policy": "Reuse exact pack plus compatible palette/blend/geometry/cycles/timing; audit aliases automatically, manual review only for real differences."
+    },
+    "SPFDEATH": {
+      "state": "accepted-observed-HD-component-route",
+      "evidence": [
+        "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json"
+      ],
+      "runtime_class": "SpellHit",
+      "reuse_policy": "Reuse exact pack plus compatible palette/blend/geometry/cycles/timing; audit aliases automatically, manual review only for real differences."
+    },
+    "SPGENHLA": {
+      "state": "accepted-observed-HD-component-route",
+      "evidence": [
+        "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json"
+      ],
+      "runtime_class": "SkyStrike",
+      "reuse_policy": "Reuse exact pack plus compatible palette/blend/geometry/cycles/timing; audit aliases automatically, manual review only for real differences."
+    },
+    "SPGFLSH1": {
+      "state": "accepted-observed-HD-component-route",
+      "evidence": [
+        "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json"
+      ],
+      "runtime_class": "Fireball",
+      "reuse_policy": "Reuse exact pack plus compatible palette/blend/geometry/cycles/timing; audit aliases automatically, manual review only for real differences."
+    },
+    "SPWRDFLD": {
+      "state": "accepted-observed-HD-component-route",
+      "evidence": [
+        "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json"
+      ],
+      "runtime_class": "Fireball",
+      "reuse_policy": "Reuse exact pack plus compatible palette/blend/geometry/cycles/timing; audit aliases automatically, manual review only for real differences."
+    },
+    "HLYMITE": {
+      "state": "accepted-observed-coloured-component-route",
+      "evidence": [
+        "projectiles/analysis/final-four-colours-accepted-20261109-v1/acceptance.json"
+      ],
+      "native_id": "194",
+      "limits": "Reuse only with matching palette/blend/geometry/cycles/timing; neutral variants qualified separately."
+    },
+    "SHAIR": {
+      "state": "accepted-observed-coloured-component-route",
+      "evidence": [
+        "projectiles/analysis/final-four-colours-accepted-20261109-v1/acceptance.json"
+      ],
+      "native_id": "130",
+      "limits": "Reuse only with matching palette/blend/geometry/cycles/timing; neutral variants qualified separately."
+    },
+    "SHEARTH": {
+      "state": "accepted-observed-coloured-component-route",
+      "evidence": [
+        "projectiles/analysis/final-four-colours-accepted-20261109-v1/acceptance.json"
+      ],
+      "native_id": "137",
+      "limits": "Reuse only with matching palette/blend/geometry/cycles/timing; neutral variants qualified separately."
+    }
+  },
+  "manual_QA_policy": {
+    "recorded_on": "2026-11-09",
+    "evidence": "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json",
+    "strategy": "Group by actual render contract and visual variant; reuse previous immutable QA and shared runtime evidence.",
+    "automated": "Source/pack identity, owner edges, palettes, geometry, cycles, blend and loader contracts.",
+    "manual": "New visual variants or reproducible anomalies; a representative route only when a changed contract needs observation.",
+    "avoid": "No exhaustive one-by-one manual pass over every PRO/engine alias; no repeat of unchanged accepted components.",
+    "test_driver_constraints": "Inspect gameplay opcodes before choosing a native visual driver; internal destructive spells target disposable creatures, never party members."
+  }
 }

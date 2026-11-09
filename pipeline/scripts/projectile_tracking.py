@@ -129,6 +129,21 @@ def parse_pro(raw):
     return data
 
 
+def projectile_child_id(role, raw):
+    """Return PROJECTL's zero-based ID, not the factory's one-based argument.
+
+    BG2EE B51093A4: secondary0x214 -> obj3f8 unchanged -> factory(raw+1);
+    explosion0x21a -> obj3c4=raw-1 -> factory(raw). Factory22bf00
+    subtracts one for both lookups. Native evidence: projectiles/analysis/
+    native-contracts-20261109-v2/native/child-index-conventions.asm.
+    """
+    if role == 'secondary-projectile':
+        return raw
+    if role == 'explosion-projectile':
+        return raw - 1 if raw else None
+    raise ValueError(f'Unknown projectile child role: {role}')
+
+
 def dependency_activity(pro, role):
     """Conservative conditions: retain uncertain paths instead of dropping them."""
     flags, ext = pro.get('bam_flags', 0), pro['extended_flags']
@@ -438,18 +453,18 @@ class Analysis:
                     expand(name, 'smoke-animation', sr['resref'], 1000, [f'ANIMATE:{aid:#06x}', sr['resref']],
                         'potential', 'sprite effect INI mapping; independent owner route needs checking')
             if 'area_flags' in pro:
-                for role, field, enabled, adjustment in (
-                    ('secondary-projectile', 'secondary_raw', bool(pro['area_flags'] & 16) and not pro['ray_count'], 1),
-                    ('explosion-projectile', 'explosion_projectile_raw', True, 0)):
+                for role, field, enabled, offset in (
+                    ('secondary-projectile', 'secondary_raw', bool(pro['area_flags'] & 16) and not pro['ray_count'], '0x214'),
+                    ('explosion-projectile', 'explosion_projectile_raw', True, '0x21a')):
                     value = pro[field]
                     if value or enabled and role == 'secondary-projectile':
-                        number = value + adjustment
+                        number = projectile_child_id(role, value)
                         child = projectl.get(number, '')
                         links.append({'projectile': name, 'relation': role, 'raw_value': value,
                             'projectl_id': number, 'target': child or f'engine-id:{number}',
                             'activity': 'potential' if enabled else 'disabled',
                             'resolution': 'PRO' if child in pros else 'engine-hardcoded-or-unmapped',
-                            'offset': '0x214' if adjustment else '0x21a'})
+                            'offset': offset})
                 if pro['extended_flags'] & 1024:
                     pass  # Multiple flag edges are added below for both PRO types.
                 if pro['area_flags'] & 32:
@@ -962,9 +977,12 @@ def report_markdown(result, projectiles, contexts, profiles):
         overlap = c['exact_pose_overlap']
         calls = ', '.join(sorted({u['projectile'] + '/' + u['role'] for u in c['uses']}))
         lines.append(f'| {name} | {calls} | sprite `effect`, inventorié, hors campagne Q3m | {overlap["unique_native_poses"]} / {overlap["matching_existing_poses"]} |')
-    lines += ['', '- Ces trois BAM ne sont ni des équipements superposés ni des sprites multipart Q3m : animations moteur de classe `effect`. Le rendu de ces propriétaires reste à raccorder/confirmer.',
-        '- Planche : `analysis/' + snap + '/new-source-candidates.png`.',
-        '', '### Cas à préserver', '',
+    if new:
+        lines += ['', '- Sources nouvelles ci-dessus : qualifier leur contrat moteur avant de produire uniquement les sorties manquantes.',
+                  '- Planche : `analysis/' + snap + '/new-source-candidates.png`.']
+    else:
+        lines += ['', '- Aucune nouvelle source sans sortie identifiée dans le graphe analysé.']
+    lines += ['', '### Cas à préserver', '',
         '- Masques sans IA : `' + '`, `'.join(masks) + '`.',
         '- Alias exact `SPIPLARI` → production `SPIPLAAI` : preuve `effects/batches/lot26-accepted-20261017-v1/acceptance.json:source_alias`. Ne pas produire SPIPLARI une seconde fois.',
         '- Missile magique : preuve historique ciblée `effects/index/qa-decisions/SPMAGMIS/2026-09-07-accepted-spmagmis-final-fx-r8.json`. Elle ne valide pas chaque ID moteur/compte de missiles.',

@@ -1,39 +1,72 @@
 #pragma once
 #include "iee/core/area_animation_lighting.h"
 #include "iee/core/effect_sharea_source_palette.h"
+#include "iee/core/effect_native_projectile_palettes.h"
 #include <limits>
 
 namespace iee::core::effect_indexed_palette {
-// SHAREA's six native BMP palettes change hue across RGB channels. A channel-wise
+// Native BMP/tint palettes change hue across RGB channels. A channel-wise
 // smoke ramp cannot represent them. Interpolate palette deltas in source RGB
 // space; exact native knots and identity palettes remain byte-exact. Only the
 // upload copy changes, never the production frame or its cached CPU bytes.
+enum class SourceKind { Sharea, Air, Earth, HolyMight };
+
+inline const std::array<std::uint32_t,256>& source_palette(SourceKind kind) noexcept {
+  switch(kind) {
+    case SourceKind::Air: return shairSource;
+    case SourceKind::Earth: return shearthSource;
+    case SourceKind::HolyMight: return hlymiteSource;
+    default: return source;
+  }
+}
+
+inline SourceKind source_kind(const std::array<char,8>& ref) noexcept {
+  if(ref==std::array<char,8>{'S','H','A','I','R'}) return SourceKind::Air;
+  if(ref==std::array<char,8>{'S','H','E','A','R','T','H'}) return SourceKind::Earth;
+  if(ref==std::array<char,8>{'H','L','Y','M','I','T','E'}) return SourceKind::HolyMight;
+  return SourceKind::Sharea;
+}
+
 struct Transfer {
   std::array<std::array<int,3>,256> delta{};
   std::uint64_t fingerprint{};
   unsigned opacity{255};
   bool valid{}, identity{true};
+  SourceKind sourceKind{SourceKind::Sharea};
 };
 
 inline bool enabled(const std::array<char,8>& ref) noexcept {
-  return ref==std::array<char,8>{'S','H','A','R','E','A','\0','\0'};
+  return ref==std::array<char,8>{'S','H','A','R','E','A','\0','\0'} ||
+         ref==std::array<char,8>{'S','H','A','I','R'} ||
+         ref==std::array<char,8>{'S','H','E','A','R','T','H'} ||
+         ref==std::array<char,8>{'H','L','Y','M','I','T','E'};
 }
 
-inline Transfer derive(const area_lighting::Palette& realized, bool bgra) noexcept {
+inline Transfer derive(const area_lighting::Palette& realized, bool bgra,
+                       SourceKind kind=SourceKind::Sharea) noexcept {
   Transfer out{};
+  out.sourceKind=kind;
+  const auto& knots=source_palette(kind);
   out.opacity=realized[2]>>24;
-  std::uint64_t hash=0x5348415245410008ull; // Distinct from smoke GPU variants.
-  for(unsigned i=2;i<256;++i) {
+  std::uint64_t hash=0x5348415245410008ull ^ static_cast<unsigned>(kind);
+  // SHAREA's black index1 keeps the established neutral policy. The other
+  // three BAMs have a colored index1 and must include it in the transfer.
+  for(unsigned i=kind==SourceKind::Sharea?2u:1u;i<256;++i) {
     if((realized[i]>>24)!=out.opacity) return {};
     for(unsigned c=0;c<3;++c) {
       const int value=(realized[i]>>((bgra?2-c:c)*8))&255;
-      const int base=(source[i]>>((2-c)*8))&255;
+      const int base=(knots[i]>>((2-c)*8))&255;
       out.delta[i][c]=value-base;
       out.identity=out.identity && value==base;
       hash=(hash^static_cast<unsigned>(value))*1099511628211ull;
     }
   }
-  // Native index1/black is the additive neutral, including outside the palette.
+  // HLYMITE has duplicate source RGB values. If a realized palette separates
+  // those indices, RGB-only HD pixels cannot represent it: retain native draw.
+  if(kind==SourceKind::HolyMight)
+    for(const auto [a,b]:hlymiteDuplicatePairs)
+      if((realized[a]&0xffffffu)!=(realized[b]&0xffffffu)) return {};
+  // Zero is the additive neutral, including outside each palette.
   out.fingerprint=(hash^out.opacity)*1099511628211ull;
   out.valid=true;
   return out;
@@ -50,24 +83,32 @@ struct Search {
   std::array<std::pair<unsigned,unsigned>,255> exact{};
   // Fixed memory; eight local candidates, four weighted knots per RGB sample.
   std::array<std::array<unsigned char,8>,4096> grid{};
-  Search() noexcept {
-    for(unsigned i=1;i<256;++i) exact[i-1]={source[i],i};
+  explicit Search(SourceKind kind) noexcept {
+    const auto& knots=source_palette(kind);
+    for(unsigned i=1;i<256;++i) exact[i-1]={knots[i],i};
     std::sort(exact.begin(),exact.end());
     for(unsigned bin=0;bin<4096;++bin) {
       const auto rgb=(((bin>>8)*16+8)<<16) |
           ((((bin>>4)&15)*16+8)<<8) | ((bin&15)*16+8);
       std::array<std::pair<unsigned,unsigned>,255> ranked{};
-      for(unsigned i=1;i<256;++i) ranked[i-1]={distance(rgb,source[i]),i};
+      for(unsigned i=1;i<256;++i) ranked[i-1]={distance(rgb,knots[i]),i};
       std::partial_sort(ranked.begin(),ranked.begin()+8,ranked.end());
       for(unsigned i=0;i<8;++i) grid[bin][i]=static_cast<unsigned char>(ranked[i].second);
     }
   }
 };
 
+inline const Search& search_for(SourceKind kind) noexcept {
+  if(kind==SourceKind::Air) { static const Search table{SourceKind::Air}; return table; }
+  if(kind==SourceKind::Earth) { static const Search table{SourceKind::Earth}; return table; }
+  if(kind==SourceKind::HolyMight) { static const Search table{SourceKind::HolyMight}; return table; }
+  static const Search table{SourceKind::Sharea}; return table;
+}
+
 inline std::array<unsigned,3> recolor(std::array<unsigned,3> rgb,
                                     const Transfer& transfer) noexcept {
   if(transfer.identity || (rgb[0]|rgb[1]|rgb[2])==0) return rgb;
-  static const Search search;
+  const auto& search=search_for(transfer.sourceKind);
   const unsigned packed=(rgb[0]<<16)|(rgb[1]<<8)|rgb[2];
   const auto found=std::lower_bound(search.exact.begin(),search.exact.end(),
                                   std::pair<unsigned,unsigned>{packed,0});

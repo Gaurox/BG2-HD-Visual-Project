@@ -1,0 +1,259 @@
+{
+  "schema": "bg2-projectile-scoped-acceptance-v1",
+  "status": "accepted-observed-current-rendering",
+  "recorded_utc": "2026-11-09T22:06:43.283204+00:00",
+  "decision_date": "2026-11-09",
+  "user_decision": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+  "command_file": {
+    "path": "projectiles/analysis/native-contracts-20261109-v2/CLUA.md",
+    "sha256": "0CF5F6658DB3D012D3A0B15CC1C6D925A7438508FD1C8E8D42C9B45A64E32FFB"
+  },
+  "prepared_tests": {
+    "path": "projectiles/analysis/native-contracts-20261109-v2/tests-ready.json",
+    "sha256": "E1622D5B68C55A3FC4AF7DB6D756681D1B1EE7FEACE13F74B91592186B39C3B7"
+  },
+  "additional_tests": {
+    "path": "projectiles/analysis/native-contracts-20261109-v2/tests-after-links.json",
+    "sha256": "7F960C71C1AB19842E67EFC024A6E789C4736903326049F28A9642A26CB04932"
+  },
+  "native_review": {
+    "path": "projectiles/analysis/native-contracts-20261109-v2/render-summary.json",
+    "sha256": "0253D6B0CF8912A17E853FD8F0B220F858068BA3777386374043577EEA15BD49"
+  },
+  "case_records": [
+    {
+      "id": "QA01",
+      "command": "C:Eval('ForceSpellRES(\"SPWI304\",Player2)',0)",
+      "entry": "PFIRE2",
+      "state": "accepted-observed-current-rendering",
+      "source_resource": "SPWI304.spl",
+      "source_sha256": "DB37B85C7C79C1F992022C7C4866CB239DCA400E76D5EEA93F20DA351A3B81B8",
+      "formerly_prepared_as": "ready-current-runtime"
+    },
+    {
+      "id": "QA02",
+      "command": "C:Eval('ForceSpellRES(\"SPWI313\",Player2)',0)",
+      "entry": "TRAPSKUL",
+      "state": "accepted-observed-current-rendering",
+      "source_resource": "SPWI313.spl",
+      "source_sha256": "AC8B17B60D49D9DB25A0A17FDA3FAE1527C316C23AF20D2433F6838B9853B239",
+      "formerly_prepared_as": "ready-current-runtime"
+    },
+    {
+      "id": "QA03",
+      "command": "C:Eval('ForceSpellRES(\"SPWI118\",Player2)',0)",
+      "entry": "CHROMORB",
+      "state": "accepted-observed-current-rendering",
+      "source_resource": "SPWI118.spl",
+      "source_sha256": "79F2E89E4D97E8C2226514B851613C7F09DF435D3C372FB5A557A5643F4F9C5D",
+      "formerly_prepared_as": "ready-current-runtime"
+    },
+    {
+      "id": "QA04",
+      "command": "C:Eval('ForceSpellRES(\"SPWM157\",NearestEnemyOf(Myself))',0)",
+      "entry": "SPKLARST",
+      "state": "accepted-observed-current-rendering",
+      "source_resource": "SPWM157.spl",
+      "source_sha256": "A1FAA6AB1684F62C5F53FC4DD1D8989728623D83ECB253E2C4912FDAA3374BC1",
+      "formerly_prepared_as": "ready-current-runtime"
+    },
+    {
+      "id": "QA05",
+      "command": "C:CreateItem(\"BOLT07\",5)",
+      "entry": "TSKULLNP",
+      "state": "accepted-observed-current-rendering",
+      "source_resource": "BOLT07.itm",
+      "source_sha256": "04AA492EEB3027E3C5CAA6175961D271742F2C758AFCE83CFF5F7F37FD381237",
+      "formerly_prepared_as": "ready-current-runtime"
+    },
+    {
+      "id": "QA06",
+      "command": "C:Eval('ForceSpellRES(\"SPPR302\",Player2)',0)",
+      "entry": "engine-id:80",
+      "state": "accepted-observed-current-rendering",
+      "source_resource": "SPPR302.spl",
+      "source_sha256": "ABF2A76864ECBFED725CB50F23B5B2D2EBCB3A6C9EEA47E0247DCFC91FB1EE85",
+      "formerly_prepared_as": "hold-HD-QA-until-SKYBOLT-registration"
+    },
+    {
+      "id": "QA07",
+      "command": "C:Eval('ForceSpellRES(\"SPWI399\",Player2)',0)",
+      "entry": "FIRESTOR",
+      "state": "accepted-observed-current-rendering",
+      "source_resource": "SPWI399.spl",
+      "source_sha256": "FEFF00E12820CFBB272EA91D57F7F7E47C6D797FF97966DECADCDC500068DEBB",
+      "formerly_prepared_as": "optional-FIRESTOR-owner-test-existing-FIREBALL-child"
+    },
+    {
+      "id": "QA08",
+      "command": "C:CreateItem(\"XBOW15\",5)",
+      "entry": "engine-id:13",
+      "state": "accepted-observed-current-rendering",
+      "source_resource": "XBOW15.itm",
+      "source_sha256": "0D3CA43F6A8A275B4137F0EE6997CBEAD9609B94658C71A6C8C84108475F7A7E",
+      "formerly_prepared_as": "ready-current-runtime"
+    },
+    {
+      "id": "native-HLYMITE",
+      "command": "C:Eval('ForceSpellRES(\"SPPR214\",Player2)',0)",
+      "entry": "engine-id:65",
+      "state": "accepted-observed-current-rendering",
+      "source_resource": "SPPR214.spl",
+      "source_sha256": "38C41A4E394A4361553FAB0B98B6C3C89B59A303C05CD2BE2167EB7029C92192",
+      "HD_route_state": "secondary-registration-still-open"
+    },
+    {
+      "id": "native-SHAIR",
+      "command": "C:Eval('ForceSpellRES(\"SPIN835\",Player2)',0)",
+      "entry": "engine-id:130",
+      "state": "accepted-observed-current-rendering",
+      "source_resource": "SPIN835.spl",
+      "source_sha256": "83B61CF659A13526B77389D28A6688ADD1E55B6526C8B84F5B40AEA7DEB8E0C2",
+      "HD_route_state": "secondary-registration-still-open"
+    },
+    {
+      "id": "native-SHEARTH",
+      "command": "C:Eval('ForceSpellRES(\"SPIN782\",Player2)',0)",
+      "entry": "engine-id:137",
+      "state": "accepted-observed-current-rendering",
+      "source_resource": "SPIN782.spl",
+      "source_sha256": "1BC53984A3AB62A88BC480CFAA5FE7E57E8712E9F72907D4391BC6A34B68DB88",
+      "HD_route_state": "secondary-registration-still-open"
+    },
+    {
+      "id": "native-SKYBOLT",
+      "command": "C:Eval('ForceSpellRES(\"SPPR302\",Player2)',0)",
+      "entry": "engine-id:80",
+      "state": "accepted-observed-current-rendering",
+      "source_resource": "SPPR302.spl",
+      "source_sha256": "ABF2A76864ECBFED725CB50F23B5B2D2EBCB3A6C9EEA47E0247DCFC91FB1EE85",
+      "HD_route_state": "secondary-registration-still-open"
+    },
+    {
+      "id": "native-SPBOOM",
+      "command": "C:Eval('ForceSpellRES(\"SPWI404\",Player2)',0)",
+      "entry": "ICESTORM",
+      "state": "accepted-observed-current-rendering",
+      "source_resource": "SPWI404.spl",
+      "source_sha256": "9006E9F3C592857E39B16DDE60A86BB403ED4BE5E540BE1E897AA1E382CE4735",
+      "HD_route_state": "secondary-registration-still-open"
+    },
+    {
+      "id": "native-SPFDEATH",
+      "command": "C:Eval('ForceSpellRES(\"SENDAIF1\",Player2)',0)",
+      "entry": "engine-id:207",
+      "state": "accepted-observed-current-rendering",
+      "source_resource": "SENDAIF1.spl",
+      "source_sha256": "196B6729C1C2706F4926F866993A9F133018725038B0585203C791DBDD7BCCC4",
+      "HD_route_state": "secondary-registration-still-open"
+    },
+    {
+      "id": "native-SPGENHLA",
+      "command": "C:Eval('ForceSpellRES(\"SPPR412\",Player2)',0)",
+      "entry": "engine-id:254",
+      "state": "accepted-observed-current-rendering",
+      "source_resource": "SPPR412.spl",
+      "source_sha256": "DA84FD4392A28508888BF0DE8B73AE0AC8B164FA48D47E8334B719DCDF88B4E5",
+      "HD_route_state": "secondary-registration-still-open"
+    },
+    {
+      "id": "native-SPGFLSH1",
+      "command": "C:Eval('ForceSpellRES(\"SPPR105\",Player2)',0)",
+      "entry": "ENTANG2",
+      "state": "accepted-observed-current-rendering",
+      "source_resource": "SPPR105.spl",
+      "source_sha256": "7C7251716641D7E71B6CF4085A4F034898C37336CB116250BBECCD1115E839A6",
+      "HD_route_state": "secondary-registration-still-open"
+    },
+    {
+      "id": "native-SPSCORIC",
+      "command": "C:Eval('ForceSpellRES(\"SPWI015\",Player2)',0)",
+      "entry": "engine-id:190",
+      "state": "accepted-observed-current-rendering",
+      "source_resource": "SPWI015.spl",
+      "source_sha256": "B697A35A24B9E6982EBA51C5C3BAC2E4A8623CA5E34FDE2EF2CAEE42306996BA",
+      "HD_route_state": "secondary-registration-still-open"
+    },
+    {
+      "id": "native-SPWRDFLD",
+      "command": "C:Eval('ForceSpellRES(\"SPWI421\",Player2)',0)",
+      "entry": "PFIELD",
+      "state": "accepted-observed-current-rendering",
+      "source_resource": "SPWI421.spl",
+      "source_sha256": "19B60E0493F080719F7AA0F25A2319316DB552ED7B3016D25AC07B26A7B9339D",
+      "HD_route_state": "secondary-registration-still-open"
+    }
+  ],
+  "declared_cases": 18,
+  "unique_native_drivers": 17,
+  "active_driver_sha256": {
+    "SPWI304.spl": "DB37B85C7C79C1F992022C7C4866CB239DCA400E76D5EEA93F20DA351A3B81B8",
+    "SPWI313.spl": "AC8B17B60D49D9DB25A0A17FDA3FAE1527C316C23AF20D2433F6838B9853B239",
+    "SPWI118.spl": "79F2E89E4D97E8C2226514B851613C7F09DF435D3C372FB5A557A5643F4F9C5D",
+    "SPWM157.spl": "A1FAA6AB1684F62C5F53FC4DD1D8989728623D83ECB253E2C4912FDAA3374BC1",
+    "BOLT07.itm": "04AA492EEB3027E3C5CAA6175961D271742F2C758AFCE83CFF5F7F37FD381237",
+    "SPPR302.spl": "ABF2A76864ECBFED725CB50F23B5B2D2EBCB3A6C9EEA47E0247DCFC91FB1EE85",
+    "SPWI399.spl": "FEFF00E12820CFBB272EA91D57F7F7E47C6D797FF97966DECADCDC500068DEBB",
+    "XBOW15.itm": "0D3CA43F6A8A275B4137F0EE6997CBEAD9609B94658C71A6C8C84108475F7A7E",
+    "SPPR214.spl": "38C41A4E394A4361553FAB0B98B6C3C89B59A303C05CD2BE2167EB7029C92192",
+    "SPIN835.spl": "83B61CF659A13526B77389D28A6688ADD1E55B6526C8B84F5B40AEA7DEB8E0C2",
+    "SPIN782.spl": "1BC53984A3AB62A88BC480CFAA5FE7E57E8712E9F72907D4391BC6A34B68DB88",
+    "SPWI404.spl": "9006E9F3C592857E39B16DDE60A86BB403ED4BE5E540BE1E897AA1E382CE4735",
+    "SENDAIF1.spl": "196B6729C1C2706F4926F866993A9F133018725038B0585203C791DBDD7BCCC4",
+    "SPPR412.spl": "DA84FD4392A28508888BF0DE8B73AE0AC8B164FA48D47E8334B719DCDF88B4E5",
+    "SPPR105.spl": "7C7251716641D7E71B6CF4085A4F034898C37336CB116250BBECCD1115E839A6",
+    "SPWI015.spl": "B697A35A24B9E6982EBA51C5C3BAC2E4A8623CA5E34FDE2EF2CAEE42306996BA",
+    "SPWI421.spl": "19B60E0493F080719F7AA0F25A2319316DB552ED7B3016D25AC07B26A7B9339D"
+  },
+  "installed_DLL_sha256": "009A345785B5378E72B7726941C8D617A4209C5B04B10F92021E22C281E5C60D",
+  "installed_manifest_sha256": "4ED0F7CDD1374F74001B45FCCD6063F8275783BE7F1B11839B0BBFDAAF85B5B9",
+  "installed_registry_sha256": "5994D9F9BD7FB08F63CDBA8BBBF6A78A44E0AB2E330F954A20E6B57725ABEC41",
+  "trace_setting": "EnableEffectStreamingTrace=false at preparation; no new trace capture analysed",
+  "QA_updated": {
+    "projectiles": [
+      "ARROWFLM",
+      "CHROMORB",
+      "ENTANG2",
+      "FIRESTOR",
+      "ICESTORM",
+      "PFIELD",
+      "PFIRE2",
+      "SKYBOLT",
+      "SPKLARST",
+      "TRAPSKUL",
+      "TSKULLNP"
+    ],
+    "engine_projectiles": [
+      "13",
+      "130",
+      "137",
+      "190",
+      "202",
+      "207",
+      "254",
+      "65"
+    ]
+  },
+  "secondary_registration_backlog": [
+    "HLYMITE",
+    "SHAIR",
+    "SHEARTH",
+    "SKYBOLT",
+    "SPBOOM",
+    "SPFDEATH",
+    "SPGENHLA",
+    "SPGFLSH1",
+    "SPSCORIC",
+    "SPWRDFLD"
+  ],
+  "new_HD_draw_proof": false,
+  "new_inference": 0,
+  "installation_changes": 0,
+  "release_changes": 0,
+  "limits": [
+    "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+    "Agreement covers all examples in the command file, including the previously reserved native drivers.",
+    "SPPR302 level/capability unspecified: no QA of every controller80..83 inferred.",
+    "Newly routed HD cells will have a changed runtime contract and need a targeted check after that change."
+  ]
+}

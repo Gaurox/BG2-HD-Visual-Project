@@ -1,0 +1,45 @@
+{
+  "schema": "bg2-projectile-native-render-review-v1",
+  "status": "analysis-complete-ready-tests-and-registration-backlog-separated",
+  "executable_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57",
+  "DLL_sha256": "009A345785B5378E72B7726941C8D617A4209C5B04B10F92021E22C281E5C60D",
+  "LIGHTCHA": "resolved-emission-periods-not-cycles",
+  "LIGHTSTO": "native-missing-BAM-no-normal-driver-in-inventoried-graph",
+  "source_hashes": {
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/effect_secondary_scope.h": "37E0D062D3C7BA68BDB849E9A3E0D62C5EA78D5B7E6EEB50D0DCD353867904F6",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/effect_indexed_palette.h": "A34AFCB85A30A0DFB073B12DDD6FF345E68FC99788C636391786FE230986C073",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp": "ECA2B475B7ED8BB88B2A10B691B14880918A576DADABC2430CD72C600BC4E277"
+  },
+  "missing_secondary_registrations": [
+    "HLYMITE",
+    "SHAIR",
+    "SHEARTH",
+    "SKYBOLT",
+    "SPBOOM",
+    "SPFDEATH",
+    "SPGENHLA",
+    "SPGFLSH1",
+    "SPSCORIC",
+    "SPWRDFLD"
+  ],
+  "new_neural_jobs": 0,
+  "ready_first_wave": [
+    "QA01",
+    "QA02",
+    "QA03",
+    "QA04",
+    "QA05"
+  ],
+  "extra_ready_weapon_test": "QA08",
+  "optional_native_observation": "QA07",
+  "held_lightning_test": "QA06",
+  "post_registration_drivers": 10,
+  "tests_executed_ingame": 0,
+  "installation_changes": 0,
+  "runtime_code_changes": 0,
+  "limits": [
+    "Registration gate review is static. Palette/alpha/composition qualification precedes broad enabling.",
+    "Indexed native palette adaptation currently covers SHAREA; SHAIR4/SHEARTH6 need their own contract.",
+    "No prior image QA revoked, no projectile acceptance inferred, no release change."
+  ]
+}

@@ -37,6 +37,17 @@ class ProjectileTrackingTest(unittest.TestCase):
         self.assertEqual(tracking.existing_action(False, [{'kind': 'spatial-only'}]), 'reuse-existing-output')
         self.assertEqual(tracking.existing_action(False, [], True), 'resume-existing-work')
 
+    def test_native_children_use_distinct_file_index_conventions(self):
+        # Native constructor + factory proofs, not old snapshot expectations:
+        # SPKLARRE201 -> SHAREA6/ID201, not SHAREA2/ID202;
+        # LIGHTCHA241 -> NEWBOLT1/ID240, not SPHOLYMT/ID241.
+        self.assertEqual(tracking.projectile_child_id('secondary-projectile', 201), 201)
+        self.assertEqual(tracking.projectile_child_id('secondary-projectile', 0), 0)
+        self.assertEqual(tracking.projectile_child_id('explosion-projectile', 241), 240)
+        self.assertEqual(tracking.projectile_child_id('explosion-projectile', 38), 37)
+        self.assertEqual(tracking.projectile_child_id('explosion-projectile', 23), 22)
+        self.assertIsNone(tracking.projectile_child_id('explosion-projectile', 0))
+
     def test_ability_offsets_are_not_the_same_for_items_and_spells(self):
         for fmt, size, field in [('SPL', 40, 0x26), ('ITM', 56, 0x2a)]:
             data = bytearray(0x72 + size)

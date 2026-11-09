@@ -1,6 +1,6 @@
 # Suivi projectiles — analyse des travaux
 
-- Instantané UTC : `2026-11-09T21:18:24.347160+00:00` ; [rapport figé](analysis/20261109-projectiles3-cow-valides-v6/analysis.json).
+- Instantané UTC : `2026-11-09T23:00:44.253835+00:00` ; [rapport figé](analysis/20261109-bilan-validations-v13/analysis.json).
 - Projection générée ; décisions métier : `index/work-tracking.json`. Ne pas éditer les CSV générés.
 - Cette analyse conserve les autorités effets/animations/sprites ; aucune production, QA, installation ou release accordée.
 
@@ -9,7 +9,7 @@
 | PRO stock vérifiés contre KEY/source/SHA | 243 |
 | Types 2 / 3 | 100 / 143 |
 | Entrées PROJECTL (incluant plusieurs IDs par PRO) | 253 |
-| IDs moteur sans PRO suivis, dont IDs non résolus | 78 |
+| IDs moteur sans PRO suivis, dont IDs non résolus | 77 |
 | BAM visuels explicites + INI fumées/fragments | 107 |
 | Contextes source canonique + palette RGB | 175 |
 | SPL / ITM / EFF parcourus | 1648 / 2867 / 559 |
@@ -31,8 +31,7 @@
 | BAM | Appels PRO/rôle | Source | Poses natives uniques / correspondances exactes existantes |
 |---|---|---|---|
 
-- Ces trois BAM ne sont ni des équipements superposés ni des sprites multipart Q3m : animations moteur de classe `effect`. Le rendu de ces propriétaires reste à raccorder/confirmer.
-- Planche : `analysis/20261109-projectiles3-cow-valides-v6/new-source-candidates.png`.
+- Aucune nouvelle source sans sortie identifiée dans le graphe analysé.
 
 ### Cas à préserver
 
@@ -45,10 +44,10 @@
 
 | Prochaine action statique dominante | PRO |
 |---|---:|
-| `native-or-non-raster-route-review` | 13 |
-| `resolve-engine-visual-routes` | 91 |
+| `native-or-non-raster-route-review` | 27 |
+| `resolve-engine-visual-routes` | 54 |
 | `resolve-missing-dependency` | 1 |
-| `reuse-outputs-and-check-owner-contract` | 138 |
+| `reuse-outputs-and-check-owner-contract` | 161 |
 
 - Ces classes sont exclusives par priorité ; les tâches détaillées peuvent se cumuler dans `index/work-items.csv:owner_contract_tasks`.
 - Couverture images ≠ couverture projectile : consulter `accepted_asset_contexts`, `verified_pack_contexts`, `spatial_only_contexts`, puis les états indépendants intégration/QA/installation/release.
@@ -74,8 +73,8 @@
 | Déduplication des BAM + alias exacts | `index/visual-assets.csv` |
 | Une ligne par source canonique + palette réalisée | `index/visual-contexts.csv` |
 | Décisions explicites, notes/priorités humaines | `index/work-tracking.json` |
-| Dépendances développées, PRO secondaires, usages, contrats natifs | `analysis/20261109-projectiles3-cow-valides-v6/` |
-| Source/QA/run/pack/palette et SHA des entrées | `analysis/20261109-projectiles3-cow-valides-v6/analysis.json`, `contexts.json` |
+| Dépendances développées, PRO secondaires, usages, contrats natifs | `analysis/20261109-bilan-validations-v13/` |
+| Source/QA/run/pack/palette et SHA des entrées | `analysis/20261109-bilan-validations-v13/analysis.json`, `contexts.json` |
 
 ```powershell
 python -B pipeline/scripts/projectile_tracking.py status

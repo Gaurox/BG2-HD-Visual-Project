@@ -4,10 +4,67 @@
 #include "iee/core/effect_texture_alias.h"
 #include "iee/core/effect_native_underlay.h"
 #include "effect_sharea_palette_fixtures.h"
+#include "effect_native_projectile_palette_fixtures.h"
 #include "iee/core/effect_indexed_palette.h"
 #include <cstdlib>
 static void require(bool value) { if (!value) std::abort(); }
 int main() {
+  // Native SkyStrike/SpellHit/Fireball renderers bypass CProjectileBAM::Render.
+  // Their real FX cell must survive a native prefix and retain its pack identity.
+  for (const std::array<char,8> ref : {
+       std::array<char,8>{'S','K','Y','B','O','L','T'},
+       std::array<char,8>{'S','P','B','O','O','M'},
+       std::array<char,8>{'S','P','F','D','E','A','T','H'},
+       std::array<char,8>{'S','P','G','E','N','H','L','A'},
+       std::array<char,8>{'S','P','G','F','L','S','H','1'},
+       std::array<char,8>{'S','P','W','R','D','F','L','D'}}) {
+    iee::core::EffectSurfaceOwner pass;
+    pass.begin(1); pass.submit(1,2,false);
+    pass.submit(1,3,iee::core::effect_secondary_scope::enabled(ref));
+    require(pass.candidate_cell(1)==3 && pass.submissions()==2);
+    require(iee::core::effect_texture_resref(ref,false)==ref);
+    require(iee::core::effect_texture_resref(ref,true)==ref);
+  }
+  for(const std::array<char,8> ref : {
+      std::array<char,8>{'H','L','Y','M','I','T','E'},
+      std::array<char,8>{'S','H','A','I','R'},
+      std::array<char,8>{'S','H','E','A','R','T','H'},
+      std::array<char,8>{'S','P','S','C','O','R','I','C'}}) {
+    require(iee::core::effect_secondary_scope::enabled(ref));
+    require(iee::core::effect_texture_resref(ref,true)==ref);
+  }
+  require(!iee::core::effect_secondary_scope::enabled({'S','P','H','O','L','Y','M','T'}));
+  {
+    using namespace iee::core::effect_indexed_palette;
+    const auto check=[](SourceKind kind,const auto& base,const auto& realized) {
+      const auto neutral=derive(base,true,kind), colored=derive(realized,true,kind);
+      require(neutral.valid && neutral.identity && colored.valid);
+      const auto& knots=source_palette(kind);
+      for(unsigned i=1;i<256;++i) {
+        const std::array<unsigned,3> input{(knots[i]>>16)&255,(knots[i]>>8)&255,knots[i]&255};
+        const std::array<unsigned,3> expected{(realized[i]>>16)&255,(realized[i]>>8)&255,realized[i]&255};
+        require(recolor(input,colored)==expected);
+        require(recolor(input,neutral)==input);
+      }
+      auto rgba=realized;
+      for(auto& value:rgba)value=(value&0xff00ff00u)|((value&255)<<16)|((value>>16)&255);
+      require(derive(rgba,false,kind).fingerprint==colored.fingerprint);
+      require(recolor({0,0,0},colored)==std::array<unsigned,3>{0,0,0});
+      auto varied=realized;varied[99]=0;
+      require(!derive(varied,true,kind).valid);
+    };
+    check(SourceKind::Air,fixtureSHAIR,fixtureSHAIR4);
+    check(SourceKind::Earth,fixtureSHEARTH,fixtureSHEARTH6);
+    auto red=fixtureHLYMITE;
+    for(auto& value:red)value=(value&0xffff0000u);
+    check(SourceKind::HolyMight,fixtureHLYMITE,red);
+    auto ambiguous=fixtureHLYMITE;
+    ambiguous[hlymiteDuplicatePairs[0].second]^=1;
+    require(!derive(ambiguous,true,SourceKind::HolyMight).valid);
+    require(source_kind({'S','H','A','I','R'})==SourceKind::Air);
+    require(source_kind({'S','H','E','A','R','T','H'})==SourceKind::Earth);
+    require(source_kind({'H','L','Y','M','I','T','E'})==SourceKind::HolyMight);
+  }
   // Engine COW188 shares CProjectileBAM::Render, but its image is a sprite BAM.
   const std::array<char,8> cow{'A','C','O','W','G','1'};
   require(iee::core::effect_secondary_scope::enabled(cow));

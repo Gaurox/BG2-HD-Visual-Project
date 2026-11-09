@@ -1,0 +1,71 @@
+{
+  "conclusion": "unreferenced-stock-PRO-with-genuine-missing-native-BAM",
+  "projectl_id": 92,
+  "missile_id": 93,
+  "parsed_source": {
+    "type": 3,
+    "speed": 40,
+    "sparking_flags": 2,
+    "particle_color": 0,
+    "extended_flags": 0,
+    "default_spell": "",
+    "success_spell": "",
+    "resources": [
+      [
+        "travel-animation",
+        260,
+        "MAGMIS",
+        [
+          1000
+        ]
+      ]
+    ],
+    "bam_flags": 0,
+    "travel_cycle": 0,
+    "shadow_cycle": 0,
+    "palette": "",
+    "colors": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "smoke_delay": 0,
+    "smoke_colors": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "orientations": 1,
+    "smoke_animation_id": 0,
+    "trailing_periods": [
+      0,
+      0,
+      0
+    ],
+    "trail_flags": 0,
+    "area_flags": 0,
+    "ray_count": 0,
+    "fragment_animation_id": 0,
+    "secondary_raw": 0,
+    "repetitions": 1,
+    "explosion_effect": 255,
+    "explosion_color": 67,
+    "explosion_projectile_raw": 23,
+    "area_extended_flags": 0
+  },
+  "direct_ability_references": [],
+  "incoming_PRO_edges": [],
+  "MAGMIS_KEY_BAM_present": false,
+  "MAGMIS_override_BAM_present": false,
+  "outgoing_child": "SKYBOLT PROJECTL22; file0x21a=23 is a one-based factory argument",
+  "decision": "Keep native bytes; do not substitute SPMAGMIS. No normal driver found in scanned SPL/ITM/PRO graph.",
+  "limits": "Scripts/opcodes/mods may construct an ID dynamically. No claim of universal unused status; synthetic test not needed for current QA lot."
+}

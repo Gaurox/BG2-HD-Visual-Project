@@ -1,9 +1,15 @@
 # Validations manuelles des projectiles — 2026-10-28
 
+**État courant2026-11-09 : [bilan des validations](ETAT_VALIDATIONS.md).**39PRO et10IDs moteur avec accords visuels bornés aux composants observés. Les10raccords secondaires repérés sont installés :6routesHD acceptées+3couleurs acceptées ;SPSCORIC qualifié statiquement9cycles etaccord visuel antérieur conservé.0test de couleur en attente,trace désactivée. Les mentions «raccords ouverts» ci-dessous décrivent les étapes historiques.
+
+**Mise à jour2026-11-09** : [tous les essais CLUA acceptés](analysis/native-clua-accepted-20261109-v1/README.md),18entrées/17pilotes distincts.39PRO avec acceptation des composants observés ;PFIRE2/TRAPSKUL/CHROMORB confirmés sur le rendu courant. Les10pilotes secondaires sont aussi acceptés visuellement, sans nouvelle preuve de substitutionHD ;leurs raccords restent ouverts. Commandes/sources/runtime figés dans `acceptance.json` ;aucune installation/release modifiée.
+
+**Correction technique2026-11-09** : [passe nativev2](analysis/native-contracts-20261109-v2/README.md). Les légendes d'enfants/IDs ci-dessous sont historiques :PRO0x214 donne PROJECTL=raw,0x21a donne PROJECTL=raw−1. LIGHTCHA5/7/9 sont des périodes, pas des cycles. Les retours sur les images réellement observées restent acquis ;aucune nouvelle validation ni révocation QA déduite de cette correction du graphe.
+
 **QA52 acceptée — 2026-11-09** : [décision et périmètre](analysis/components-qa52-20261109-v1/README.md). 52 images acceptées le 2026-11-09 : 31 anciens effets, 18 réemplois, 3 effets 1WDC. 17 images liées à 138 PRO ; validation des composants seule. SANCTRY/SPPR109 et SPSHIELD/SPWI311 : transparence confirmée avec les vrais sorts. Packs mono-BAM figés sur les versions installées testées ; 0 inférence/interpolation nouvelle. Autres QA, installation et release préservées ; GPU en pause.
 
 - Autorité par PRO : [`index/work-tracking.json:qa`](index/work-tracking.json). [Décisions figées](analysis/validations-manuelles-consolidees-20261028-v1/decisions.json), [validation finale V14](analysis/projectile-magique-v14-valide-20261028-v1/acceptance.json).
-- 29 PRO avec acceptation visuelle des composants observés ; 3 décisions historiques conservées séparément. Ces nombres ne sont pas des chaînes intégrales acceptées.
+- 39PRO avec acceptation visuelle des composants observés ;3anciens accords historiques confirmés par le lotCLUA2026-11-09. Ces nombres ne sont pas des chaînes intégrales acceptées.
 - 100 chaînes `integration=verified-static` conservées : validation technique distincte, pas 100 essais visuels ajoutés. Production/installation/release inchangées par cette consolidation.
 - États : `accepted-observed-components` = accord utilisateur limité aux effets vus ; `historical-visual-acceptance-runtime-changed` = accord antérieur au correctif de rendu ; `accepted-historical-asset` = ancien accord asset, contrat courant à examiner.
 - Matrice secondaire :37/37groupes avec preuve technique partagée aprèsV13, sansacceptationglobale de tousleurspropriétaires ; SPMAGMIS resteencontrôleV14 séparé.
@@ -38,10 +44,20 @@
 | ICESTORM | Tempête de glace / SPWI404 | Y31P067, COLDH | Accepté, portée observée | HD observée et masque COLDH ; tous les enfants/fragments non identifiés. |
 | LIGHTCHA | Éclairs en chaîne / SPWI615 | Éclairs/branches observés | Accepté, portée observée | V13 : trois traînéesHD+masque+phasesimpaires confirmées, pasQAcomplète de touslescycles. |
 | BOLT2 | Semence de feu / FIRESEED.ITM | Vol SPFIRSE2, explosion FSEEDX, dispersion FSEEDA, fumée SPSMPUFF | Accepté, portée observée | V13 : volHD+masque confirmé ;3dessins/phases0,2 seulement, pasdephaseimpaire mesurée. Effets déjàacquis conservés. |
-| PFIRE2 | Boule de feu / SPWI304 | FIREBAT et effet de Boule de feu observé | Historique avant correctif | Aspect positif signalé avant correctif du vol ; V3 HD/masque/phases confirmés techniquement, sans nouvel accord visuel V3 explicite. |
-| TRAPSKUL | Piège à crâne / SPWI313 | Vol SKLT observé | Historique avant correctif | Aspect positif V3 ; rendu V5 corrigé confirmé techniquement, sans nouvel accord visuel V5 explicite. |
-| CHROMORB | Orbe chromatique / SPWI118 | SPCHRORB observé | Historique avant correctif | Aspect positif V3 ; rendu V5 corrigé confirmé techniquement, sans nouvel accord visuel V5 explicite. |
+| PFIRE2 | Boule de feu / SPWI304 | FIREBAT et explosion observée | Accepté2026-11-09, rendu courant | Accord CLUA après correctifs ;preuves techniques V3 conservées, pas de nouvelle mesure phases/masque. |
+| TRAPSKUL | Piège à crâne / SPWI313 | Vol SKLT, crâne et fragmentsSKLH observés | Accepté2026-11-09, rendu courant | Accord CLUA après correctifs ;preuves V5 conservées, pas de nouvelle capture HD. |
+| CHROMORB | Orbe chromatique / SPWI118 | SPCHRORB, couches/transparence observées | Accepté2026-11-09, rendu courant | Accord CLUA après correctifs ;preuves V5 conservées, pas de nouvelle capture HD. |
 | MAGICMIS | Projectile magique / QA asset SPMAGMIS du 2026-09-07 | SPMAGMIS | Accepté, portée observée | V14 :28dessinsHD avecmasque,12phasesobservées dont13dessinsimpairs,0rejet ;QAasset7septembreconservée,autrescomptes/propriétaires nonextrapolés. |
+| SPKLARST | SPWM157 | Rendu courant, enfant202 SHAREA+SHAREA2 | Accepté2026-11-09, portée observée | Convention secondaire corrigée ;pas de nouvelle capture HD/masque. |
+| TSKULLNP | BOLT07 tiré parJan avecXBOW12 | VolSKLT,impact/fragmentsSKLH | Accepté2026-11-09, portée observée | Tir réel selon consigne corrigée ;pas de QA déduite depuis la seule création de munition. |
+| SKYBOLT | Appel de la foudre / SPPR302 | Résultat visuel courant | Accepté2026-11-09, portée observée | Raccord HD secondaire encore ouvert ;niveau/contrôleur80..83 non précisé. |
+| FIRESTOR | Sort interneSPWI399 | Route couranteFIRESTOR→FIREBALL | Accepté2026-11-09, portée observée | Enfant corrigé37,pas38 ;pas de validation de tous propriétairesFIREBALL. |
+| ARROWFLM | TirXBOW15 viaalias13→3 | Y31P056/fuméeSPSMPUFF observés | Accepté2026-11-09, portée observée | Alias moteur également enregistré sousengine13 ;pas de mesure cadence/masque nouvelle. |
+| ENTANG2 | SPPR105 | Aspect courantSPGFLSH1 | Accepté2026-11-09, portée observée | Enregistrement secondaire HD encore absent ;accord natif/courant, pas une preuve HD. |
+| PFIELD | SPWI421 | Aspect courantSPWRDFLD | Accepté2026-11-09, portée observée | Enregistrement secondaire HD encore absent ;pas de promotion des autres propriétaires. |
+
+- IDs moteur également mis à jour :13(XBOW15),65(HLYMITE),130(SHAIR4),137(SHEARTH6),190(SPSCORIC),202(SHAREA2),207(SPFDEATH),254(SPGENHLA). COW188 accepté conservé ;rendu courant seulement pour ce nouveau lot.
+- ICESTORM/SPWI404 :accord courantSPBOOM ajouté à sa QA existante ;raccord HD secondaireSPBOOM reste ouvert.
 
 ## État après validation finale
 

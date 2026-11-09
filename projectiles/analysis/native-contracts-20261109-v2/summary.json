@@ -1,0 +1,41 @@
+{
+  "schema": "bg2-projectile-native-contract-review-v1",
+  "status": "technical-analysis-complete-QA-prepared",
+  "executable_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57",
+  "installed_DLL_sha256": "009A345785B5378E72B7726941C8D617A4209C5B04B10F92021E22C281E5C60D",
+  "installed_manifest_sha256": "4ED0F7CDD1374F74001B45FCCD6063F8275783BE7F1B11839B0BBFDAAF85B5B9",
+  "installed_resources": 743,
+  "snapshot": "projectiles/analysis/20261109-native-child-indices-v7",
+  "LIGHTCHA": "resolved-periods-5-7-9",
+  "LIGHTSTO": "missing-MAGMIS-with-no-SPL-ITM-PRO-incoming-reference; preserve-native",
+  "native_used_ids": 33,
+  "native_classes": {
+    "native-instant-no-raster": 1,
+    "native-id-normalization-to-PRO": 1,
+    "named-native-constructor": 24,
+    "native-invisible-travelling": 1,
+    "native-lightning-controller-with-SKYBOLT-child": 5,
+    "existing-accepted-COW-bridge": 1
+  },
+  "FIREBALL_stock_PRO_occurrences": 21,
+  "FIREBALL_stock_modes": 14,
+  "FIREBALL_modes_analysed": 20,
+  "constructor_named_BAMs": [
+    "SPBOOM",
+    "SPFIREPI",
+    "SPGFLSH1",
+    "SPWRDFLD"
+  ],
+  "confirmed_new_image_jobs": [],
+  "tests_prepared": 8,
+  "completed_ingame_tests": 0,
+  "game_writes": 0,
+  "inference_jobs": 0,
+  "runtime_changes": 0,
+  "tracking_sha256_before": "EB6E5549663B539D4FEB68A3936959DBD498E29EF0EEB2D9B0D526FAE811D176",
+  "limits": [
+    "Static CFG is bounded to identified constructors; computed resources/runtime branches may require targeted observation.",
+    "Missing legacy literals in unused modes are not missing jobs for the current stock PRO graph.",
+    "No visual QA/installation/release states promoted; prior QA retained."
+  ]
+}

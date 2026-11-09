@@ -1,0 +1,27 @@
+{
+  "schema": "bg2-projectile-scoped-acceptance-v1",
+  "status": "accepted-observed-HD-component-routes",
+  "decision_date": "2026-11-09",
+  "user_decision": "ok les 6 tests sont bons, mais c'etait le meme qu'on a validé avant. a cette vitesse j'en ai poour 2 ans a valider les 400 projectiles non ?",
+  "resources": [
+    "SKYBOLT",
+    "SPBOOM",
+    "SPFDEATH",
+    "SPGENHLA",
+    "SPGFLSH1",
+    "SPWRDFLD"
+  ],
+  "installed_DLL_sha256": "4F63EC610B9A4E70CF0A341C521F32F7458508BE055A6EB569A391D018469F95",
+  "installation": "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/installation.json",
+  "trace_summary": "projectiles/analysis/native-six-links-accepted-20261109-v1/trace-summary.json",
+  "qualification": "projectiles/analysis/native-six-links-20261109-v1/qualification.json",
+  "user_visual_approval": true,
+  "HD_mask_and_odd_phase_draws_observed_for_all_six": true,
+  "shared_route_evidence": true,
+  "new_inference": 0,
+  "release_changed": false,
+  "limits": [
+    "Observed routes only; source/QA hashes and palette/blend/geometry/timing compatibility govern reuse.",
+    "No requirement for manual testing every PRO alias; no global243 visual acceptance invented."
+  ]
+}

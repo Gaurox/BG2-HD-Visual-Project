@@ -1,0 +1,3994 @@
+{
+  "created_on": "2026-10-18",
+  "dedup_key": "canonical native BAM bytes + realized consumer RGB palette; owner timing/blend/alpha/orientation tracked separately",
+  "engine_projectiles": {
+    "188": {
+      "installation": {
+        "evidence": [
+          "effects/installations/cow-sprite-bridge-20261109-v1/transaction.json"
+        ],
+        "resources": [
+          "ACOWG1"
+        ],
+        "state": "installed"
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/cow-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": "Existing CProjectileBAM Render0x233f20; retained Q3m x2 pixels adapted exactly to effect backing; native source/centres/cycles preserved.",
+        "state": "accepted-observed-runtime-route"
+      },
+      "notes": "COW188/missile189 accepted ingame2026-11-09. ACOWG1 Q3m V7 x2 reused,22frames/40cycles; exact2x storage duplication,0inference/interpolation. Native sprite/catalogue/QA and movement preserved. Other cycles/palettes/lighting and release independent.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/cow-accepted-20261109-v1/acceptance.json"
+        ],
+        "limits": "Observed projectile only; all cycles/palettes/scene lighting and displacement interpolation not inferred.",
+        "reviewed_on": "2026-11-09",
+        "scope": [
+          "COW188/ACOWG1 observed ingame"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "202": {
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "QA04/SPWM157→SPKLARST→202 : SHAREA avec paletteSHAREA2 observé."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      }
+    },
+    "13": {
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "QA08/XBOW15 : alias natif projectile13/missile14→ARROWFLM3 observé."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      }
+    },
+    "65": {
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "CLUA SPPR214 : aspect courant HLYMITE observé ;raccord HD secondaire non accordé."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      }
+    },
+    "130": {
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "CLUA SPIN835 : aspect courant SHAIR observé ;raccord HD secondaire non accordé."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      }
+    },
+    "137": {
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "CLUA SPIN782 : aspect courant SHEARTH observé ;raccord HD secondaire non accordé."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      }
+    },
+    "207": {
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "CLUA SENDAIF1 : aspect courant SPFDEATH observé ;raccord HD secondaire non accordé."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      },
+      "integration": {
+        "state": "installed-component-route-awaiting-HD-observation",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/installation.json",
+          "projectiles/analysis/native-six-links-20261109-v1/qualification.json"
+        ],
+        "resources": [
+          "SPFDEATH"
+        ],
+        "scope": "Actual specialized native FX cell; component only, not full projectile closure.",
+        "HD_review_state": "pending-user-review",
+        "previous_visual_QA_retained": true
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/backups/20261109T222334309544Z-ea56fcee/renderer-install-receipt.json"
+        ],
+        "resources": [
+          "SPFDEATH"
+        ],
+        "scope": "Secondary-cell registration through DLL; existing image pack untouched."
+      }
+    },
+    "254": {
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "CLUA SPPR412 : aspect courant SPGENHLA observé ;raccord HD secondaire non accordé."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      },
+      "integration": {
+        "state": "installed-component-route-awaiting-HD-observation",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/installation.json",
+          "projectiles/analysis/native-six-links-20261109-v1/qualification.json"
+        ],
+        "resources": [
+          "SPGENHLA"
+        ],
+        "scope": "Actual specialized native FX cell; component only, not full projectile closure.",
+        "HD_review_state": "pending-user-review",
+        "previous_visual_QA_retained": true
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/backups/20261109T222334309544Z-ea56fcee/renderer-install-receipt.json"
+        ],
+        "resources": [
+          "SPGENHLA"
+        ],
+        "scope": "Secondary-cell registration through DLL; existing image pack untouched."
+      }
+    },
+    "190": {
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "CLUA SPWI015 : aspect courant SPSCORIC observé ;raccord HD secondaire non accordé."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      }
+    }
+  },
+  "production_authorities": [
+    "effects/index/processing.csv",
+    "effects/index/selections/",
+    "animations/index/selections/",
+    "sprite/index/q3m-work-tracking.json"
+  ],
+  "projectiles": {
+    "1AROW01": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "ARARROW"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1AROW02": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "ARARROW"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1AROW03": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "ARARROW"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1AROW04": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "ARARROW"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1AROW05": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "ARARROW"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1AROW07": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "ARARROW"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1AROW10": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "ARARROW"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1AROW11": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "ARARROW"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1AROW15": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "ARARROW"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1AXE05": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "AXE"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1AXE08": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "AXE"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1AXE09": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "AXE"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1AXE10": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "AXE"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1AXE16": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "AXE"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1BOLT01": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "BOLT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1BOLT02": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "BOLT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1BOLT03": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "BOLT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1BOLT04": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "BOLT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1BOLT05": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "BOLT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1BOLT06": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "BOLT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1BOLT09": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "BOLT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1BULL02": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "MAGICSTN"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1BULL03": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "MAGICSTN"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1BULL04": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "MAGICSTN"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "1BULL05": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "MAGICSTN"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1BULL06": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "MAGICSTN"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1DAGG05": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "DART"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1DAGG11": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "DAGGER"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1DAGG12": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "DART"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "1DAGG16": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "DART"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1DART01": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "BOLT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1DART02": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "BOLT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1DART03": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "BOLT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1DART04": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "BOLT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1DART05": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "BOLT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1DART08": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "DART"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "1PDEATHF": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "STNKCLDT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "historical_evidence": [
+        "projectiles/analysis/nuages-v6-valides-20261028-v1/acceptance.json"
+      ],
+      "notes": "Brume mortelle SPDFOGA->X58DFOG : variante transparente V6 validee visuellement par utilisateur ; dessins finaux x4/phases impaires et cible30/1 confirmes, aucun repli masque observe. Acceptation du nuage teste uniquement.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/nuages-v6-valides-20261028-v1/acceptance.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "SPDFOGA→X58DFOG"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "1PGSPORE": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "STNKCLDT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "1PICECLD": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "STNKCLDT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "1PINCIND": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "STNKCLDT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "historical_evidence": [
+        "projectiles/analysis/validation-vague1-clouds-20261028-v1/accepted-components.json"
+      ],
+      "notes": "Nuage incendiaire SPINCINA : retour utilisateur positif vague1 et bindsHD/masque observes. Acceptation visuelle des composants testes uniquement ; pas de QA de tous les frames/enfants.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/validation-vague1-clouds-20261028-v1/accepted-components.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "SPINCINA"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "1PMANEGS": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "STNKCLDT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "1PSLEEPC": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "STNKCLDT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "ACIDBLGR": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "ACIDBLOB"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "ACIDBLMU": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "ACIDBLOB"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "ACIDBLOB": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "ACIDBLOB"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "ACIDBLOC": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "ACIDBLOB"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "ARROW": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "ARARROW"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "ARROWEX": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "SPFLMARR"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "ARROWFLB": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "SPFLMARR"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "ARROWFLG": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "SPFLMARR"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "ARROWFLI": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "SPFLMARR"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "ARROWFLM": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "SPFLMARR"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "QA08/XBOW15 : tir courant via normalisation native13→3, Y31P056/fuméeSPSMPUFF observés."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      }
+    },
+    "ARROWHVY": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "ARARROW"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "AURA10NS": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "AURA10PA": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "AXE": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "AXE"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "AXEEX": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "AXE"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "BDETHRET": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "BDETHREA"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "BDSPFIRE": {
+      "historical_evidence": [
+        "projectiles/analysis/validation-vague2-writhing-20261028-v1/evidence.json"
+      ],
+      "notes": "Feu spirituel : BDSFIRET/H/A : aspect juge correct par utilisateur vague2 et texturesHD liees dans les logs. Acceptation limitee aux composants observes ; pas de mesure finale de cadence ni de QA de tous les enfants.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/validation-vague2-writhing-20261028-v1/evidence.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "BDSFIRET",
+          "BDSFIREH",
+          "BDSFIREA"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "BDWOFOG": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "STNKCLDT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "historical_evidence": [
+        "projectiles/analysis/mur-brouillard-alpha-20261028-v1/feedback.json",
+        "projectiles/analysis/mur-brouillard-alpha-20261028-v1/alias-correspondence.json",
+        "projectiles/analysis/mur-brouillard-v10-valide-20261028-v1/acceptance.json"
+      ],
+      "notes": "V10 OHBWFOG accepted by user 2026-10-28. Normal BDWOFOGA->X58WFOG; final x4 and odd animation phases at target30/1, HD+mask confirmed. Scope: observed cloud transparency only; no full-PRO QA or movement interpolation inferred.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/mur-brouillard-v10-valide-20261028-v1/acceptance.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "BDWOFOGA→X58WFOG"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "BGLRY": {
+      "component_visual_qa": {
+        "projectiles3-20261109-v1": {
+          "assets": [
+            "BGLRYU"
+          ],
+          "evidence": [
+            "effects/batches/projectiles3-accepted-20261109-v1/acceptance.json"
+          ],
+          "limits": "Image tested via isolated VVC; native PRO owner, all profiles/palettes/alpha companions and displacement not inferred.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "installation": {
+        "assets": [
+          "BGLRYU"
+        ],
+        "evidence": [
+          "effects/installations/projectiles3-selected-20261109-v1/transaction.json"
+        ],
+        "scope": "New animation component only; native owner PRO and INI unchanged; no global PRO acceptance.",
+        "state": "installed-components-only"
+      },
+      "integration": {
+        "assets": [
+          "BGLRYU"
+        ],
+        "evidence": [
+          "effects/installations/projectiles3-selected-20261109-v1/installation.json"
+        ],
+        "scope": "Secondary animation whitelist + native-name HD pack and normal-alpha routing. No ingame draw observed.",
+        "state": "installed-runtime-path-awaiting-observation"
+      }
+    },
+    "BIGNAREA": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "BOLT": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "BOLT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "BOLT2": {
+      "historical_evidence": [
+        "projectiles/analysis/piege-semence-resultats-20261028-v1/verification.json",
+        "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/latest-feedback.json",
+        "projectiles/analysis/validation-v13-20261028-v1/evidence.json"
+      ],
+      "notes": "Vol Semence accepté visuellement ; V13 SPFIRSE2 troisdessinsHD dont2masqués, séquence4,phases0/2. LiaisonHD/masque duvol confirmée ; pasdephase impaire/cadence mesurée dansces3dessins. Explosion/dispersion/fumée déjàacceptées conservées.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/piege-semence-resultats-20261028-v1/verification.json",
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/latest-feedback.json",
+          "projectiles/analysis/validation-v13-20261028-v1/evidence.json"
+        ],
+        "latest_manual_feedback": {
+          "evidence": "projectiles/analysis/validation-v13-20261028-v1/evidence.json",
+          "renderer": "V13",
+          "text": "c4est ok vqlide"
+        },
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "Vol SPFIRSE2",
+          "explosion FSEEDX",
+          "dispersion FSEEDA",
+          "fumée SPSMPUFF"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "BOLTEX": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "BOLT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "BULLET": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "MAGICSTN"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "BULLETEX": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "MAGICSTN"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "BURNHAND": {
+      "historical_evidence": [
+        "projectiles/analysis/mur-brouillard-alpha-20261028-v1/feedback.json"
+      ],
+      "notes": "Mains ardentes SPBHANDI : aspect positif utilisateur, bindHD+masque observés. Composant testé acquis, pasQAglobale.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/mur-brouillard-alpha-20261028-v1/feedback.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "SPBHANDI"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "CDBEHBLA": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "CGABJURA": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "CGALTERA": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "CGCONJUR": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "CGDIVINA": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "CGENCHAN": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "CGILLUSI": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "CGINVOCA": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "CGNECROM": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "CHROMORB": {
+      "historical_evidence": [
+        "projectiles/analysis/composition-retest-v5-20261028-v1/verification.json"
+      ],
+      "notes": "V5 : SPCHRORB x4/phases interpolees finales confirme, 2couches/prefixe natif conserve. Preuve technique ciblee, pas d'acceptation visuelle globale PRO.",
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/six-tests-cloud-alpha-20261028-v1/evidence.json",
+          "projectiles/analysis/composition-retest-v5-20261028-v1/verification.json",
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "SPCHRORB observé",
+          "QA03/SPWI118 : SPCHRORB, couches/transparence observées après correctifs."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts. Limite antérieure conservée : Fragments SKLH : preuve technique distincte, aucune acceptation manuelle globale déduite.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      }
+    },
+    "CLOUD": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "STNKCLDT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "historical_evidence": [
+        "projectiles/analysis/nuages-v6-valides-20261028-v1/acceptance.json"
+      ],
+      "notes": "Nuage puant SPCLOUDS->X58CLS : variante transparente V6 validee visuellement par utilisateur ; dessins finaux x4/phases impaires et cible30/1 confirmes, aucun repli masque observe. Acceptation du nuage teste uniquement.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/nuages-v6-valides-20261028-v1/acceptance.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "SPCLOUDS→X58CLS"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "CLOUDKIL": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "STNKCLDT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "historical_evidence": [
+        "projectiles/analysis/nuage-valide-v4-20261028-v1/acceptance.json"
+      ],
+      "notes": "2026-10-28 : utilisateur valide le nuage apres raccord V4 SPCLOUDK->X58CLK/alpha palette natif. 128 traces finales x4 dont63phases impaires, cible30/1, aucun repli masque observe. Acceptation limitee au nuage visible de SPWI502 ; ne pas promouvoir toute la fermeture PRO, les124/243cas ou la release.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/nuage-valide-v4-20261028-v1/acceptance.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "SPCLOUDK→X58CLK"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "CLOUDPC": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "STNKCLDT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "COMET": {
+      "historical_evidence": [
+        "projectiles/analysis/validation-vague2-writhing-20261028-v1/evidence.json"
+      ],
+      "notes": "Comete : SPCOMTRV/EXP : aspect juge correct par utilisateur vague2 et texturesHD liees dans les logs. Acceptation limitee aux composants observes ; pas de mesure finale de cadence ni de QA de tous les enfants.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/validation-vague2-writhing-20261028-v1/evidence.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "SPCOMTRV",
+          "SPCOMEXP"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "DAGGER": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "DAGGER"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "DAGGEREX": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "DAGGER"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "DART": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "DART"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "DARTEX": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "DART"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "DDBREAT": {
+      "historical_evidence": [
+        "projectiles/analysis/validation-variantes-20261028-v1/evidence.json"
+      ],
+      "notes": "2026-10-28 : SPDD03 jugé correct ; HDFBRER bindHD+masque observés, chargement transitoire. Acceptation du composant visible, pas de QA globale DDBREAT/FIREBOLT.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/validation-variantes-20261028-v1/evidence.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "HDFBRER"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "DRAGGREE": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "SPRDRABU"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "DRAGRED": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "SPRDRABU"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "DRAGSILV": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "ENTANG2": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "WEBENTT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "CLUA SPPR105 : aspect courant SPGFLSH1 observé ;raccord HD secondaire non accordé."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      },
+      "integration": {
+        "state": "installed-component-route-awaiting-HD-observation",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/installation.json",
+          "projectiles/analysis/native-six-links-20261109-v1/qualification.json"
+        ],
+        "resources": [
+          "SPGFLSH1"
+        ],
+        "scope": "Actual specialized native FX cell; component only, not full projectile closure.",
+        "HD_review_state": "pending-user-review",
+        "previous_visual_QA_retained": true
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/backups/20261109T222334309544Z-ea56fcee/renderer-install-receipt.json"
+        ],
+        "resources": [
+          "SPGFLSH1"
+        ],
+        "scope": "Secondary-cell registration through DLL; existing image pack untouched."
+      }
+    },
+    "FDAWN": {
+      "historical_evidence": [
+        "projectiles/analysis/validation-vague2-writhing-20261028-v1/evidence.json"
+      ],
+      "notes": "Aube illusoire : FDAWNX/A : aspect juge correct par utilisateur vague2 et texturesHD liees dans les logs. Acceptation limitee aux composants observes ; pas de mesure finale de cadence ni de QA de tous les enfants.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/validation-vague2-writhing-20261028-v1/evidence.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "FDAWNX",
+          "FDAWNA"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "FIREBALL": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "SPFIREBL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "FIREBLGR": {
+      "historical_evidence": [
+        "projectiles/analysis/feu-vert-valide-20261028-v1/acceptance.json"
+      ],
+      "notes": "XPGREEN native FIREBLGR test accepted visually; FIREBGRT/FIREBGRX/FIREBGRR HD0x8+mask0x20 confirmed. Travel lookup24x16 attempts rejected but real-frame HD+mask observed. Does not accept every phase/cadence, FBFLAMGR or displacement.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/feu-vert-valide-20261028-v1/acceptance.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "FIREBGRT",
+          "FIREBGRX",
+          "FIREBGRR"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "FIREBLIC": {
+      "historical_evidence": [
+        "projectiles/analysis/validation-variantes-20261028-v1/evidence.json"
+      ],
+      "notes": "2026-10-28 : SPWI953 jugé correct par utilisateur ; FIREBICT/X/R bindHD+masque observés. Vol possède aussi des slots fallback24x16 ; pas de preuve tous frames ni QA globale de la fermeture.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/validation-variantes-20261028-v1/evidence.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "FIREBICT",
+          "FIREBICX",
+          "FIREBICR"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "FIREBLNS": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "SPFIREBL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "FIREBOLT": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "SPFIREBL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "FIREBTBL": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "SPFIREBL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "FIRESTOR": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "SPFIREBL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "QA07/SPWI399 : aspect courant de la route FIRESTOR→FIREBALL observé."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      }
+    },
+    "GOLCLOUD": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "STNKCLDT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "GREASE": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "ACIDBLOB"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "GREEHIT": {
+      "historical_evidence": [
+        "projectiles/analysis/mur-brouillard-alpha-20261028-v1/feedback.json"
+      ],
+      "notes": "Souffle dragon noir SPBDIMSP/SPBDRAE2 : aspect positif utilisateur, bindHD+masque observés. Composants testés acquis, pasQAglobale.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/mur-brouillard-alpha-20261028-v1/feedback.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "SPBDIMSP",
+          "SPBDRAE2"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "HOLD": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "HOLDNECR": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "HOLDSUMM": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "ICESTORM": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "STNKCLDT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/six-tests-cloud-alpha-20261028-v1/evidence.json",
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "Y31P067",
+          "COLDH",
+          "CLUA SPWI404 : aspect courant SPBOOM observé ;raccord HD secondaire non accordé."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts. Limite antérieure conservée : Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      },
+      "integration": {
+        "state": "installed-component-route-awaiting-HD-observation",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/installation.json",
+          "projectiles/analysis/native-six-links-20261109-v1/qualification.json"
+        ],
+        "resources": [
+          "SPBOOM"
+        ],
+        "scope": "Actual specialized native FX cell; component only, not full projectile closure.",
+        "HD_review_state": "pending-user-review",
+        "previous_visual_QA_retained": true
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/backups/20261109T222334309544Z-ea56fcee/renderer-install-receipt.json"
+        ],
+        "resources": [
+          "SPBOOM"
+        ],
+        "scope": "Secondary-cell registration through DLL; existing image pack untouched."
+      }
+    },
+    "INSEC1": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "SPIPLARI"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "INSEC2": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "SPIPLARI"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/six-tests-cloud-alpha-20261028-v1/evidence.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "X26PLAA",
+          "XIPLAUIN"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "INSEC3": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "SPIPLARI"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "INSEC4": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "LIGHTB": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "LIGHTBLT": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "LIGHTCHA": {
+      "historical_evidence": [
+        "projectiles/analysis/eclairs-v11-preparation-20261028-v1/contracts.json",
+        "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/latest-feedback.json",
+        "projectiles/analysis/validation-v13-20261028-v1/evidence.json"
+      ],
+      "notes": "V13 visuellement accepté : SPCHLGT1/2/3,93dessinsHD dont89masqués et50phases impaires ;3missCPU initiaux suivis de succès,0rejetmasque. Séquences5/7 observées, pasdecycle9 fabriqué ; pasQAcomplète duPRO.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/six-tests-cloud-alpha-20261028-v1/evidence.json",
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/latest-feedback.json",
+          "projectiles/analysis/validation-v13-20261028-v1/evidence.json"
+        ],
+        "latest_manual_feedback": {
+          "evidence": "projectiles/analysis/validation-v13-20261028-v1/evidence.json",
+          "renderer": "V13",
+          "text": "c4est ok vqlide"
+        },
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "SPCHLGT1",
+          "SPCHLGT2",
+          "SPCHLGT3"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "LIGHTGRN": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "LIGHTNB": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "MAGICMIS": {
+      "historical_evidence": [
+        "effects/index/qa-decisions/SPMAGMIS/2026-09-07-accepted-spmagmis-final-fx-r8.json",
+        "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/latest-feedback.json",
+        "projectiles/analysis/validation-v13-20261028-v1/evidence.json",
+        "projectiles/analysis/projectile-magique-v14-valide-20261028-v1/acceptance.json"
+      ],
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      },
+      "notes": "V14 accepté visuellement :28dessinsfinauxHD/masqués,12phasesdistinctes dont13dessinsdephasesimpaires,0rejetmasque/composition,0traceDropped. Canevasnatif64x79réelcompatibleavecpack64x78viazoneutile64x64enmémoire. Trace temporairecoupée ;QAasset7septembre conservée,pasdevalidationtouscomptes/propriétaires/déplacement/release.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/projectile-magique-v14-valide-20261028-v1/acceptance.json",
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "effects/index/qa-decisions/SPMAGMIS/2026-09-07-accepted-spmagmis-final-fx-r8.json",
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/latest-feedback.json",
+          "projectiles/analysis/validation-v13-20261028-v1/evidence.json"
+        ],
+        "latest_manual_feedback": {
+          "evidence": "projectiles/analysis/projectile-magique-v14-valide-20261028-v1/acceptance.json",
+          "renderer": "V14",
+          "text": "c'est validé. maj le suivi et committe"
+        },
+        "limits": "Observed test only; no every missile-count/owner, position interpolation, complete243 or release QA",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "SPMAGMIS observed V14 HD flight, native mask and12animation phases"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "METSWARM": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "STNKCLDT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "OHBICEW": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "STNKCLDT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "OHCL937": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "OHDETEVL": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "SPFIREBL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "OHVRNP": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "OHVRPO": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "PCOMETT": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "PFIELD": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "STNKCLDT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "CLUA SPWI421 : aspect courant SPWRDFLD observé ;raccord HD secondaire non accordé."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      },
+      "integration": {
+        "state": "installed-component-route-awaiting-HD-observation",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/installation.json",
+          "projectiles/analysis/native-six-links-20261109-v1/qualification.json"
+        ],
+        "resources": [
+          "SPWRDFLD"
+        ],
+        "scope": "Actual specialized native FX cell; component only, not full projectile closure.",
+        "HD_review_state": "pending-user-review",
+        "previous_visual_QA_retained": true
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/backups/20261109T222334309544Z-ea56fcee/renderer-install-receipt.json"
+        ],
+        "resources": [
+          "SPWRDFLD"
+        ],
+        "scope": "Secondary-cell registration through DLL; existing image pack untouched."
+      }
+    },
+    "PFIRE2": {
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/boule-de-feu-retest-v3-20261028-v1/summary.json",
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "FIREBAT et effet de Boule de feu observé",
+          "QA01/SPWI304 : vol FIREBAT et explosion observés après les correctifs de rendu."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts. Limite antérieure conservée : Conserver « boule de feu testée ca a l’air ok » comme retour historique ; pas de nouvelle QA visuelle après changement de contrat V3.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      }
+    },
+    "PSKULLT": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "PSPEART": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "PWILT": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "STNKCLDT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "historical_evidence": [
+        "projectiles/analysis/validation-vague1-clouds-20261028-v1/accepted-components.json"
+      ],
+      "notes": "Fletrissure SPHORWIL/SPHORWIA : retour utilisateur positif vague1 et bindsHD/masque observes. Acceptation visuelle des composants testes uniquement ; pas de QA de tous les frames/enfants.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/validation-vague1-clouds-20261028-v1/accepted-components.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "SPHORWIL",
+          "SPHORWIA"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "REDHIT": {
+      "historical_evidence": [
+        "projectiles/analysis/mur-brouillard-alpha-20261028-v1/feedback.json",
+        "projectiles/analysis/mur-brouillard-v10-valide-20261028-v1/acceptance.json"
+      ],
+      "notes": "SPIN693 red impact accepted by user; V10 log confirms SPRDRAIM/SPRDRAE2 HD binding0x8 and native mask0x20 after transient cold misses0x10. Prior technical gap closed; no full-PRO/global QA inferred.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/mur-brouillard-v10-valide-20261028-v1/acceptance.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "SPRDRAIM",
+          "SPRDRAE2"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "SCORCHER": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SKYBOLT": {
+      "integration": {
+        "state": "installed-component-route-awaiting-HD-observation",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/installation.json",
+          "projectiles/analysis/native-six-links-20261109-v1/qualification.json"
+        ],
+        "resources": [
+          "SKYBOLT"
+        ],
+        "scope": "Actual specialized native FX cell; component only, not full projectile closure.",
+        "HD_review_state": "pending-user-review",
+        "previous_visual_QA_retained": true
+      },
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "QA06/SPPR302 : aspect courant du résultat observé ;enregistrement secondaire HD encore absent."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/backups/20261109T222334309544Z-ea56fcee/renderer-install-receipt.json"
+        ],
+        "resources": [
+          "SKYBOLT"
+        ],
+        "scope": "Secondary-cell registration through DLL; existing image pack untouched."
+      }
+    },
+    "SLEEP": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "historical_evidence": [
+        "projectiles/analysis/sharea-palettes-validees-20261028-v1/evidence.json",
+        "projectiles/analysis/vol-animation-mouvement-20261028-v1/evidence.json"
+      ],
+      "notes": "Aspect V8 accepté ; cinqpalettesSHAREA,HD+masque desvols. V9 : TRAVEL12phases/6impaires réellement affichées,x4,cible30/1,médiane33,0253ms ; autresalias mêmecontrat/géométrie horspalette (preuvecommune, pas5mesures). Cela confirme l’animation desimages uniquement. Le correctif ne calcule aucune position intermédiaire ; déplacement natif non mesuré, nepas déclarer déplacementinterpolé.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/sharea-palettes-validees-20261028-v1/evidence.json",
+          "projectiles/analysis/vol-animation-mouvement-20261028-v1/evidence.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "Anneau SHAREA avec palette native",
+          "vol observé"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "SPARBKNP": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPARBKPA": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPARBLNP": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "historical_evidence": [
+        "projectiles/analysis/sharea-palettes-validees-20261028-v1/evidence.json",
+        "projectiles/analysis/vol-animation-mouvement-20261028-v1/evidence.json"
+      ],
+      "notes": "Aspect V8 accepté ; cinqpalettesSHAREA,HD+masque desvols. V9 : TRAVEL12phases/6impaires réellement affichées,x4,cible30/1,médiane33,0253ms ; autresalias mêmecontrat/géométrie horspalette (preuvecommune, pas5mesures). Cela confirme l’animation desimages uniquement. Le correctif ne calcule aucune position intermédiaire ; déplacement natif non mesuré, nepas déclarer déplacementinterpolé.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/sharea-palettes-validees-20261028-v1/evidence.json",
+          "projectiles/analysis/vol-animation-mouvement-20261028-v1/evidence.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "Anneau SHAREA avec palette native",
+          "vol observé"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "SPARBLPA": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPARCHNP": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPARCHPA": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPARGONP": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPARGOPA": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPARGRNP": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "historical_evidence": [
+        "projectiles/analysis/sharea-palettes-validees-20261028-v1/evidence.json",
+        "projectiles/analysis/vol-animation-mouvement-20261028-v1/evidence.json"
+      ],
+      "notes": "Aspect V8 accepté ; cinqpalettesSHAREA,HD+masque desvols. V9 : TRAVEL12phases/6impaires réellement affichées,x4,cible30/1,médiane33,0253ms ; autresalias mêmecontrat/géométrie horspalette (preuvecommune, pas5mesures). Cela confirme l’animation desimages uniquement. Le correctif ne calcule aucune position intermédiaire ; déplacement natif non mesuré, nepas déclarer déplacementinterpolé.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/sharea-palettes-validees-20261028-v1/evidence.json",
+          "projectiles/analysis/vol-animation-mouvement-20261028-v1/evidence.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "Anneau SHAREA avec palette native",
+          "vol observé"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "SPARGRPA": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPARICNP": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPARICPA": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPARKLBL": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPARKLCH": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPARKLGO": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPARKLGR": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPARKLIC": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPARKLMA": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPARKLOR": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPARKLPU": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPARKLRE": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPARKLST": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPARMANP": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "historical_evidence": [
+        "projectiles/analysis/sharea-palettes-validees-20261028-v1/evidence.json",
+        "projectiles/analysis/vol-animation-mouvement-20261028-v1/evidence.json"
+      ],
+      "notes": "Aspect V8 accepté ; cinqpalettesSHAREA,HD+masque desvols. V9 : TRAVEL12phases/6impaires réellement affichées,x4,cible30/1,médiane33,0253ms ; autresalias mêmecontrat/géométrie horspalette (preuvecommune, pas5mesures). Cela confirme l’animation desimages uniquement. Le correctif ne calcule aucune position intermédiaire ; déplacement natif non mesuré, nepas déclarer déplacementinterpolé.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/sharea-palettes-validees-20261028-v1/evidence.json",
+          "projectiles/analysis/vol-animation-mouvement-20261028-v1/evidence.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "Anneau SHAREA avec palette native",
+          "vol observé"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "SPARMAPA": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPARORNP": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPARORPA": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPARPUNP": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPARPUPA": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "historical_evidence": [
+        "projectiles/analysis/sharea-palettes-validees-20261028-v1/evidence.json",
+        "projectiles/analysis/vol-animation-mouvement-20261028-v1/evidence.json"
+      ],
+      "notes": "Aspect V8 accepté ; cinqpalettesSHAREA,HD+masque desvols. V9 : TRAVEL12phases/6impaires réellement affichées,x4,cible30/1,médiane33,0253ms ; autresalias mêmecontrat/géométrie horspalette (preuvecommune, pas5mesures). Cela confirme l’animation desimages uniquement. Le correctif ne calcule aucune position intermédiaire ; déplacement natif non mesuré, nepas déclarer déplacementinterpolé.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/sharea-palettes-validees-20261028-v1/evidence.json",
+          "projectiles/analysis/vol-animation-mouvement-20261028-v1/evidence.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "Anneau SHAREA avec palette native",
+          "vol observé"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "SPARRENP": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPARREPA": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPARSTNP": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPARSTPA": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPATTCK2": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPBEHBLA": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPCL236": {
+      "component_visual_qa": {
+        "projectiles3-20261109-v1": {
+          "assets": [
+            "SPCL236U"
+          ],
+          "evidence": [
+            "effects/batches/projectiles3-accepted-20261109-v1/acceptance.json"
+          ],
+          "limits": "Image tested via isolated VVC; native PRO owner, all profiles/palettes/alpha companions and displacement not inferred.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "installation": {
+        "assets": [
+          "SPCL236U"
+        ],
+        "evidence": [
+          "effects/installations/projectiles3-selected-20261109-v1/transaction.json"
+        ],
+        "scope": "New animation component only; native owner PRO and INI unchanged; no global PRO acceptance.",
+        "state": "installed-components-only"
+      },
+      "integration": {
+        "assets": [
+          "SPCL236U"
+        ],
+        "evidence": [
+          "effects/installations/projectiles3-selected-20261109-v1/installation.json"
+        ],
+        "scope": "Secondary animation whitelist + native-name HD pack and normal-alpha routing. No ingame draw observed.",
+        "state": "installed-runtime-path-awaiting-observation"
+      }
+    },
+    "SPCL239": {
+      "historical_evidence": [
+        "projectiles/analysis/validation-variantes-20261028-v1/evidence.json",
+        "projectiles/analysis/validation-spcl239-isole-20261028-v1/evidence.json"
+      ],
+      "notes": "2026-10-28 : retour visuel positif conservé ; essai isolé15:19 confirme SPCL239X/R bindHD+masque, aucun rejet masque/composition observé. Manque de traces antérieur levé. Acceptation des composants observés seulement ; pas de cadence finale ou QA globale déduite. Ne pas redemander le test.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/validation-variantes-20261028-v1/evidence.json",
+          "projectiles/analysis/validation-spcl239-isole-20261028-v1/evidence.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "SPCL239X",
+          "SPCL239R"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "SPDRBRTH": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPEAR": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "SPEAR"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPEAREX": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "SPEAR"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPENBLD": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPGREORB": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPKLARBK": {
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPKLARBL": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPKLARCH": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPKLARGO": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPKLARGR": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPKLARIC": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "SPKLARMA": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPKLAROR": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPKLARPU": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPKLARRE": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "SPKLARST": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRAVEL"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "QA04/SPWM157 : rendu courant et enfant202 SHAREA+SHAREA2 observés."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      }
+    },
+    "STONE": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "MAGICSTN"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "TRAPBOOM": {
+      "historical_evidence": [
+        "projectiles/analysis/piege-semence-resultats-20261028-v1/verification.json",
+        "projectiles/analysis/piege-zone-sauvage-valides-20261028-v1/acceptance.json"
+      ],
+      "notes": "Enemy OGRE01 test accepted visually; SPSETSCD/SPSETSH/SPFLAMES HD0x8+mask0x20 confirmed. Previous friendly-target condition gap closed. Accepted observed visuals only; no global/all-frames or release QA inferred.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/piege-zone-sauvage-valides-20261028-v1/acceptance.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "SPSETSCD",
+          "SPSETSH",
+          "SPFLAMES"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "TRAPDART": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "TRDARTST"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "TRAPGLPN": {
+      "component_visual_qa": {
+        "projectiles3-20261109-v1": {
+          "assets": [
+            "SPGLYPHI"
+          ],
+          "evidence": [
+            "effects/batches/projectiles3-accepted-20261109-v1/acceptance.json"
+          ],
+          "limits": "Image tested via isolated VVC; native PRO owner, all profiles/palettes/alpha companions and displacement not inferred.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "installation": {
+        "assets": [
+          "SPGLYPHI"
+        ],
+        "evidence": [
+          "effects/installations/projectiles3-selected-20261109-v1/transaction.json"
+        ],
+        "scope": "New animation component only; native owner PRO and INI unchanged; no global PRO acceptance.",
+        "state": "installed-components-only"
+      },
+      "integration": {
+        "assets": [
+          "SPGLYPHI"
+        ],
+        "evidence": [
+          "effects/installations/projectiles3-selected-20261109-v1/installation.json"
+        ],
+        "scope": "Secondary animation whitelist + native-name HD pack and normal-alpha routing. No ingame draw observed.",
+        "state": "installed-runtime-path-awaiting-observation"
+      }
+    },
+    "TRAPGLYP": {
+      "component_visual_qa": {
+        "projectiles3-20261109-v1": {
+          "assets": [
+            "SPGLYPHI"
+          ],
+          "evidence": [
+            "effects/batches/projectiles3-accepted-20261109-v1/acceptance.json"
+          ],
+          "limits": "Image tested via isolated VVC; native PRO owner, all profiles/palettes/alpha companions and displacement not inferred.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "installation": {
+        "assets": [
+          "SPGLYPHI"
+        ],
+        "evidence": [
+          "effects/installations/projectiles3-selected-20261109-v1/transaction.json"
+        ],
+        "scope": "New animation component only; native owner PRO and INI unchanged; no global PRO acceptance.",
+        "state": "installed-components-only"
+      },
+      "integration": {
+        "assets": [
+          "SPGLYPHI"
+        ],
+        "evidence": [
+          "effects/installations/projectiles3-selected-20261109-v1/installation.json"
+        ],
+        "scope": "Secondary animation whitelist + native-name HD pack and normal-alpha routing. No ingame draw observed.",
+        "state": "installed-runtime-path-awaiting-observation"
+      }
+    },
+    "TRAPSKUL": {
+      "historical_evidence": [
+        "projectiles/analysis/composition-retest-v5-20261028-v1/verification.json"
+      ],
+      "notes": "V5 : vol SKLT x4/phases interpolees finales confirme, prefixe natif conserve ; SKLH lie HD+masque avec miss de chargement transitoire. Preuve technique ciblee, pas d'acceptation visuelle globale PRO.",
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/six-tests-cloud-alpha-20261028-v1/evidence.json",
+          "projectiles/analysis/composition-retest-v5-20261028-v1/verification.json",
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "Vol SKLT observé",
+          "QA02/SPWI313 : vol SKLT, crâne posé et fragments SKLH observés."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts. Limite antérieure conservée : Fragments SKLH : preuve technique distincte, aucune acceptation manuelle globale déduite.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      }
+    },
+    "WEB": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "WEBENTT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      }
+    },
+    "WEB1P": {
+      "component_visual_qa": {
+        "qa52-20261109-v1": {
+          "assets": [
+            "WEBENTT"
+          ],
+          "evidence": [
+            "projectiles/analysis/components-qa52-20261109-v1/components.json"
+          ],
+          "limits": "QA des images via VVC ; QA native du PRO et déplacement inchangés.",
+          "reviewed_on": "2026-11-09",
+          "state": "accepted-assets-only"
+        }
+      },
+      "integration": {
+        "evidence": [
+          "projectiles/analysis/validation-produits-suite-20261028-v1/technical-100.json"
+        ],
+        "state": "verified-static"
+      }
+    },
+    "WILDZONE": {
+      "historical_evidence": [
+        "projectiles/analysis/piege-zone-sauvage-valides-20261028-v1/acceptance.json"
+      ],
+      "notes": "OHNROBE3 UseItem test accepted visually; SPGRWHRL HD0x8+mask0x20 confirmed. Scope: observed wild-zone graphic, no gameplay/all-frames/global QA inferred.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/piege-zone-sauvage-valides-20261028-v1/acceptance.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "SPGRWHRL"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "WRITHING": {
+      "historical_evidence": [
+        "projectiles/analysis/writhing-v7-valide-20261028-v1/acceptance.json"
+      ],
+      "notes": "V7 : utilisateur valide le nuage normal SPPR250/WRITHING->X28WRTH. 64 dessins x4/phases interpolées, cible30/1, aucun rejet observé. Acceptation du composant visible seulement ; pas de QA globale du PRO ou des124/243. Suite : trois variantes SPWI953/SPCL239/SPDD03 ; SHAREA en revue technique.",
+      "qa": {
+        "evidence": [
+          "projectiles/analysis/validations-manuelles-consolidees-20261028-v1/decisions.json",
+          "projectiles/analysis/writhing-v7-valide-20261028-v1/acceptance.json"
+        ],
+        "limits": "Composants observés seulement ; pas de QA complète du PRO ni de tous ses propriétaires.",
+        "reviewed_on": "2026-10-28",
+        "scope": [
+          "WRITHING→X28WRTH"
+        ],
+        "state": "accepted-observed-components"
+      }
+    },
+    "TSKULLNP": {
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+        ],
+        "scope": [
+          "QA05/BOLT07 tiré avec XBOW12 par Jan : vol SKLT/impact-fragments SKLH observés."
+        ],
+        "reviewed_on": "2026-11-09",
+        "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts.",
+        "latest_manual_feedback": {
+          "text": "ok tous les test présents dans le fichier commandes clua sont validés. MAJ le suivi et propose la suite",
+          "evidence": "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json",
+          "rendering": "Current installed runtime; visual acceptance, no new HD draw measurement"
+        }
+      }
+    }
+  },
+  "role": "Sparse projectile work decisions; generated analysis never grants production/QA/installation/release status",
+  "schema": "bg2-projectiles-work-tracking-v1",
+  "visual_test_batches": {
+    "native-clua-20261109-v1": {
+      "state": "accepted-observed-current-rendering",
+      "evidence": [
+        "projectiles/analysis/native-clua-accepted-20261109-v1/acceptance.json"
+      ],
+      "reviewed_on": "2026-11-09",
+      "tests": 18,
+      "unique_native_drivers": 17,
+      "lightning_family": "SPPR302 current observed result accepted; actual level-dependent ID80..83 unspecified",
+      "limits": "Accord visuel sur le rendu courant des commandes testées. Pas de nouvelle preuve de substitution HD/masque/phases, de tous niveaux/cycles/palettes, ni de release. Les10enregistrements secondaires manquants restent ouverts."
+    }
+  },
+  "runtime_route_installations": {
+    "native-six-links-20261109-v1": {
+      "state": "installed-awaiting-HD-observation",
+      "resources": [
+        "SKYBOLT",
+        "SPBOOM",
+        "SPFDEATH",
+        "SPGENHLA",
+        "SPGFLSH1",
+        "SPWRDFLD"
+      ],
+      "evidence": [
+        "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/installation.json",
+        "projectiles/analysis/native-six-links-20261109-v1/qualification.json"
+      ],
+      "receipt": "engine/InfinityEngine-Enhancer/installations/projectiles-native-six-links-20261109-v1/backups/20261109T222334309544Z-ea56fcee/renderer-install-receipt.json",
+      "dll": {
+        "bytes": 3472384,
+        "sha256": "4F63EC610B9A4E70CF0A341C521F32F7458508BE055A6EB569A391D018469F95"
+      },
+      "trace_enabled": true,
+      "unchanged_image_QA": true,
+      "open_other_resources": [
+        "HLYMITE",
+        "SHAIR",
+        "SHEARTH",
+        "SPSCORIC"
+      ]
+    }
+  }
+}
