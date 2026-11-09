@@ -1,5 +1,9 @@
 # Effets BG2EE
 
+**Effets : 100 % — 2026-11-09**. 494/494 entrées clôturées : 421productions x4 acceptées +6natifs acceptés +67«pas à traiter» par décision utilisateur. 0travail restant dans la file effets. [Clôture](index/completion.json), [décision67](index/completion-decisions/2026-11-09-residual67-not-required.json), [audit](research/residual-usage-audit-20261109-v2/README.md). Les2sources absentes restent absentes ; leur travail est exclu. QA/installation/release et chantier icônes distincts, GPUenpause.
+
+**Reliquat audité — 2026-11-09** : [décisions67](research/residual-usage-audit-20261109-v2/README.md). Audit2026-11-09 : 67entrées résiduelles examinées ; 0nouveau job d’effet du monde confirmé dans le graphe courant. 3cas dormants AM307TT2/3/MSOLG1 conservés ; 2BAM absents derrière contrôleurs sans appelant ; SPWI124B actif = icône, renvoi icons. Exclusions de production uniquement, aucune QA inventée.
+
 **QA52 acceptée — 2026-11-09** : [décision et périmètre](batches/qa52-accepted-20261109-v1/README.md). 52 images acceptées le 2026-11-09 : 31 anciens effets, 18 réemplois, 3 effets 1WDC. 17 images liées à 138 PRO ; validation des composants seule. SANCTRY/SPPR109 et SPSHIELD/SPWI311 : transparence confirmée avec les vrais sorts. Packs mono-BAM figés sur les versions installées testées ; 0 inférence/interpolation nouvelle. Autres QA, installation et release préservées ; GPU en pause.
 
 **Magie/eau50 accepté — 2026-11-09** : [décision et preuves](batches/magic-water50-accepted-20261109-v1/README.md).44x4/30FPS +6natifs,36SeedVR7B/8xBR ;06xBR/CPU30,13vert corrigé,34cycle1,35natif.50liaisons primaires installées exactes ;47QA nouvelles/3antérieures préservées. SPCSPRAI SeedVR accepté sousaliasM3SPCS/ZMWT20, canonique reste comparatifxBR ; aliasSP_DEMGT nonvalidé indépendamment. Installation/release et autres lignes conservées ; GPUenpause.
@@ -119,6 +123,7 @@ python -B pipeline/scripts/effect_workflow.py accept --resref <BAM> --pack <pack
 | `index/bam-assets.csv` | inventaire unifié des BAM d'effet, provenance, consommateurs et source | généré |
 | `index/work-items.csv`, `consumers.csv`, `source-work-plan.json` | géométrie/cycles, usages, coût x4, réutilisation ; aucun statut acquis | généré, refresh exceptionnel |
 | `index/classification.json` | overrides facultatifs : recette, tags, priorité, usage, note | uniquement les exceptions utiles |
+| `index/completion.json`, `completion-decisions/` | clôture du travail : acceptés + pas à traiter ; `effect_tracking.py queue` recalcule l’avancement courant | décision de périmètre explicite, indépendante de la QA et de la release |
 | `index/processing.csv` | derniers essais spatiaux/temporels ; références indépendantes QA/installation/release | commandes verrouillées |
 | `index/selections/<RESREF>.json` | résultat retenu exact, source, run, pack, alpha/géométrie et QA hashés | `accept`, transaction récupérable |
 | `index/qa-decisions/<RESREF>/*.json` | décisions QA ingame explicites et preuves hashées | immuable |

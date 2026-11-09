@@ -113,6 +113,25 @@ class EffectTrackingTests(unittest.TestCase):
         self.assertEqual(queued["items"][0]["queue_state"], "working")
         self.assertEqual(queued["items"][0]["acquired_qa"], "passed")
 
+    def test_excluded_missing_source_closes_work_without_granting_qa(self):
+        tracking.refresh(self.root, True)
+        before = (self.root / "effects/index/processing.csv").read_bytes()
+        for name in ("FXA", "FXB", "MISSING"):
+            tracking.classify(self.root, name, {"usage": "excluded", "notes": "User: no treatment required"}, True)
+        queued = tracking.queue(self.root)
+        self.assertEqual(queued["counts"], {"excluded": 3})
+        self.assertEqual(queued["items"], [])
+        self.assertEqual(queued["completion"]["percent"], 100)
+        self.assertEqual(queued["completion"]["remaining"], 0)
+        self.assertEqual((self.root / "effects/index/processing.csv").read_bytes(), before)
+
+    def test_missing_source_without_exclusion_stays_open(self):
+        tracking.refresh(self.root, True)
+        queued = tracking.queue(self.root)
+        self.assertEqual(queued["counts"]["blocked"], 1)
+        self.assertEqual(queued["completion"]["completed"], 0)
+        self.assertEqual(queued["completion"]["remaining"], 3)
+
     def test_projectile_role_and_palette_are_preserved_without_claiming_a_recipe(self):
         data = bytearray(512)
         data[:8] = b"PRO V1.0"

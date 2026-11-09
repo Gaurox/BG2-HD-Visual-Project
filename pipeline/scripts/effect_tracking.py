@@ -392,7 +392,9 @@ def queue(root: Path, limit: int = 20, write: bool = False) -> dict[str, Any]:
         selected = json.loads(selection_file.read_text(encoding="utf-8-sig")) if selection_file.is_file() else {}
         accepted_runs = selected.get("contract", {}).get("source", {})
         working = accepted and any(state[f"{stage}_run"] and state[f"{stage}_run"] != accepted_runs.get(f"{stage}_run") for stage in workflow.STAGES)
-        bucket = "working" if working else "accepted" if accepted else "blocked" if item["source_state"] != "available" else "excluded" if item["usage"] == "excluded" else "unresolved" if item["usage"] == "unresolved" else "pending"
+        # An explicit scope exclusion closes the work even when its source is absent.
+        # Source availability and acquired QA remain independent facts.
+        bucket = "working" if working else "accepted" if accepted else "excluded" if item["usage"] == "excluded" else "blocked" if item["source_state"] != "available" else "unresolved" if item["usage"] == "unresolved" else "pending"
         counts[bucket] += 1
         if bucket in {"accepted", "excluded"}:
             continue
@@ -401,7 +403,12 @@ def queue(root: Path, limit: int = 20, write: bool = False) -> dict[str, Any]:
             "queue_state": bucket, "acquired_qa": state["qa_state"],
             "selection": f"effects/index/selections/{item['resref']}.json" if (selections / f"{item['resref']}.json").is_file() else ""})
     rows.sort(key=lambda r: (0 if r["usage"] == "known" else 1, int(r["priority"]), r["resref"]))
-    return {"command": "queue", "counts": dict(counts), "items": rows[:limit],
+    total = sum(counts.values())
+    completed = counts.get("accepted", 0) + counts.get("excluded", 0)
+    completion = {"total": total, "completed": completed, "remaining": total - completed,
+                  "percent": round(100 * completed / total, 2) if total else 0,
+                  "basis": "accepted or explicitly excluded; does not grant QA, installation or release"}
+    return {"command": "queue", "counts": dict(counts), "completion": completion, "items": rows[:limit],
             "hint": "hints only; no automatic QA, installation, release or production gate"}
 
 
