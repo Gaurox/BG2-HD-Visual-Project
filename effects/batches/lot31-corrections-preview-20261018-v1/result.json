@@ -1,0 +1,90 @@
+{
+  "all_parent_durations_exact": true,
+  "assets": 31,
+  "black_neutral_assets": [
+    12,
+    14,
+    20
+  ],
+  "contexts": 99,
+  "corrected_assets": 27,
+  "corrected_contexts": 95,
+  "date": "2026-10-19",
+  "geometry": "20px x4 transparent pad, centre+5x1; world positions retained",
+  "installed": false,
+  "native_fps": "15FPS compatibility basis inherited; not an ingame cadence measurement",
+  "parent": {
+    "bytes": 124045,
+    "path": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/production.json",
+    "sha256": "5FF68F095B84D04F054A10434B8FEBF899CC8D489338189965E7244E97387178"
+  },
+  "phases": 9968,
+  "preview": "http://127.0.0.1:8794/?v=corrections31",
+  "production_registry_changed": false,
+  "profiles": 658,
+  "qa": "pending-user-preview",
+  "rebout_assets": 10,
+  "rebout_contexts": 41,
+  "recipe": [
+    {
+      "bytes": 1997,
+      "path": "pipeline/recipes/effects-lot31-corrections-20261018-v1/contact.py",
+      "sha256": "87100E96A80DB85C791DFEEEA94A3315C04FD727A29533387889994D7C98E567"
+    },
+    {
+      "bytes": 13509,
+      "path": "pipeline/recipes/effects-lot31-corrections-20261018-v1/correct.py",
+      "sha256": "44A11A01A86517AE9039069EE0B025AC219EBFD5123F99C6CE3840BE80FEBB55"
+    },
+    {
+      "bytes": 5768,
+      "path": "pipeline/recipes/effects-lot31-corrections-20261018-v1/finalize.py",
+      "sha256": "950BF435EF7D6006549F2AFDF123058327C80CAC9FEFC3FDB4E42E221E7DE357"
+    },
+    {
+      "bytes": 3211,
+      "path": "pipeline/recipes/effects-lot31-corrections-20261018-v1/masks.py",
+      "sha256": "522005BCDFA2F7C7F0341858A2D73165307DA4D3FAD182A2272B213BD5272395"
+    },
+    {
+      "bytes": 2457,
+      "path": "pipeline/recipes/effects-lot31-corrections-20261018-v1/prepare.py",
+      "sha256": "3E6819769410064E4D3644AF4C0FE0FC018CFD2EB063ABE93940FD50D23E4D4A"
+    },
+    {
+      "bytes": 2708,
+      "path": "pipeline/recipes/effects-lot31-corrections-20261018-v1/rebout.py",
+      "sha256": "E0C28A26DEFAFB645E0D0DBDCF9CB5D3ABB678D3606FC4AE06D1E9185DD41885"
+    },
+    {
+      "bytes": 9381,
+      "path": "pipeline/recipes/effects-lot31-corrections-20261018-v1/review.py",
+      "sha256": "FCD25C61E0FFC6074EE34DFF100D9D83BB55A5B026A75E3122F320EE53BDE055"
+    },
+    {
+      "bytes": 8627,
+      "path": "pipeline/recipes/effects-lot31-corrections-20261018-v1/verify.py",
+      "sha256": "431F94EFFBF4D27943F0E4B45217A27C6DD4646939DC1DB0323E2021CFFAD298"
+    }
+  ],
+  "release_changed": false,
+  "retimed_assets": [
+    12,
+    20,
+    30
+  ],
+  "schema": "bg2-effects-correction-preview-v1",
+  "smoothed_assets": 24,
+  "smoothed_contexts": 82,
+  "unchanged_assets": [
+    24,
+    25,
+    28,
+    29
+  ],
+  "verification": {
+    "bytes": 55571,
+    "path": "effects/batches/lot31-corrections-preview-20261018-v1/verification.json",
+    "sha256": "902A25918B3FC2C644C688EF026948ACF8E78F541CE6DFE85F5F06A8C2E6F371"
+  }
+}

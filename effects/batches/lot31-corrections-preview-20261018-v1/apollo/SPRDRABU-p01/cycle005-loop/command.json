@@ -1,0 +1,35 @@
+{
+  "command": [
+    "C:\\Program Files\\Topaz Labs LLC\\Topaz Video AI\\ffmpeg.exe",
+    "-hide_banner",
+    "-loglevel",
+    "error",
+    "-y",
+    "-framerate",
+    "15",
+    "-i",
+    "G:\\AI\\BG2_Upscale\\effects\\batches\\lot31-corrections-preview-20261018-v1\\apollo\\SPRDRABU-p01\\cycle005-loop\\input\\in_%03d.png",
+    "-vf",
+    "tvai_fi=model=apo-8:fps=30:rdt=-0.01:device=-2",
+    "-pix_fmt",
+    "rgb24",
+    "G:\\AI\\BG2_Upscale\\effects\\batches\\lot31-corrections-preview-20261018-v1\\apollo\\SPRDRABU-p01\\cycle005-loop\\output\\out_%04d.png"
+  ],
+  "keys": [
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    72
+  ],
+  "native_fps": 15,
+  "source_size": [
+    836,
+    1028
+  ],
+  "target_fps": 30
+}

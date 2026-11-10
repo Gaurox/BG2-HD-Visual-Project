@@ -1,0 +1,69 @@
+{
+  "resref": "MAGICSTN",
+  "job_id": "MAGICSTN-p06",
+  "palette_context_exact_at_input": true,
+  "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/MAGICSTN-p06.json",
+  "passed": true,
+  "native_cycles": 1,
+  "cycle_mode_variants": 2,
+  "phases": 24,
+  "cycles": [
+    {
+      "profile": "cycle000-once",
+      "cycle": 0,
+      "closed": false,
+      "source_slots": 6,
+      "output_phases": 12,
+      "duration": [
+        6,
+        15
+      ],
+      "unique_rgb": 12,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle000-loop",
+      "cycle": 0,
+      "closed": true,
+      "source_slots": 6,
+      "output_phases": 12,
+      "duration": [
+        6,
+        15
+      ],
+      "unique_rgb": 12,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    }
+  ],
+  "native_pixels_palette_world_geometry_preserved": true,
+  "source_model": "seedvr2_7b_int8_convrot.safetensors",
+  "scale": 4,
+  "target_fps": [
+    30,
+    1
+  ],
+  "filter": "NEAREST",
+  "pack_manifest_sha256": "FA01E348BD6C5FA13B129CBE0110C523FA9EB78A22BE3931BDFD6DD47819AC36",
+  "runtime_contract_rows": 24,
+  "native_input_keys_unique_before_apollo": true,
+  "native_fps": [
+    15,
+    1
+  ],
+  "native_rate_basis": "15 FPS compatibility default; runtime measurement pending",
+  "straight_alpha_companions_verified": true,
+  "native_palette_normal_alpha_exact": true,
+  "raw_bytes": 42240,
+  "visual_qa": "pending-user-review",
+  "installed": false
+}

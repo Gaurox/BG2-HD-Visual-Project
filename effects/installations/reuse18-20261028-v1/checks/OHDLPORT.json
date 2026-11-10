@@ -1,0 +1,420 @@
+{
+  "source_selection": {
+    "$schema": "../../schemas/animation-selection.schema.json",
+    "asset_id": "animations:bam:OHDLPORT",
+    "correction_id": "premultiply-once",
+    "lineage": {
+      "source_packs": [
+        {
+          "manifest_path": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/manifest.json",
+          "manifest_sha256": "52DB2AD2334384DA7D78EB7735F31EE81801387C3FB1D9B8B2833E99DFED710B",
+          "path": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split",
+          "schema": "bg2-upscale-area-animation-pack-index-v1",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/ressources/OHDLPORT/runs/ohdlport-apo8-portails-20261010-v1/03_runtime_pack/manifest.json",
+          "manifest_sha256": "1E057623C427E3E2992D999DA8F377B6FF709F70813125A3FBCDCC7ECACA2411",
+          "path": "animations/ressources/OHDLPORT/runs/ohdlport-apo8-portails-20261010-v1/03_runtime_pack",
+          "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/ressources/OHDLPORT/runs/ohdlport-xbr-spatial-20261010-v1/03_runtime_pack/manifest.json",
+          "manifest_sha256": "14B9100FE4A85FB000ED366CB19D587C2E65F48C6EB0FB1208BED677D324F2F9",
+          "path": "animations/ressources/OHDLPORT/runs/ohdlport-xbr-spatial-20261010-v1/03_runtime_pack",
+          "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+          "status": "completed"
+        }
+      ],
+      "source_runs": [
+        {
+          "manifest_path": "animations/ressources/OHDLPORT/runs/ohdlport-apo8-portails-20261010-v1/manifest.json",
+          "manifest_sha256": "36601A352A9F469D6A33F2AB60BD0B0B3A30E06A02DF431AA9B67A4EA1CCAD61",
+          "path": "animations/ressources/OHDLPORT/runs/ohdlport-apo8-portails-20261010-v1",
+          "schema": "bg2-upscale-area-animation-30fps-run-v2",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/ressources/OHDLPORT/runs/ohdlport-portails-final-20261010-v1/manifest.json",
+          "manifest_sha256": "BED85A7D6C2E4A89BAF76DB76C72A043BA46722CC30CEC85F45AB5B354B86E66",
+          "path": "animations/ressources/OHDLPORT/runs/ohdlport-portails-final-20261010-v1",
+          "schema": "bg2-upscale-animation-visual-treatment-v1",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/ressources/OHDLPORT/runs/ohdlport-xbr-spatial-20261010-v1/manifest.json",
+          "manifest_sha256": "8B4B12216224ECE03279DC6E108158331D42527DFAA8EC35F631FBD39D83E88E",
+          "path": "animations/ressources/OHDLPORT/runs/ohdlport-xbr-spatial-20261010-v1",
+          "schema": "bg2-upscale-area-animation-run-v1",
+          "status": "completed"
+        }
+      ]
+    },
+    "qa_decision": {
+      "decision_date": "2026-10-10",
+      "path": "animations/index/qa-decisions/OHDLPORT/2026-10-10-accepted-ohdlport-portails-final-v1.json",
+      "sha256": "11CD530BC5000C6C0C0757F4A84AC0166BF911C60FD5A25662DE04D2D7A03FC2",
+      "status": "accepted"
+    },
+    "recipe_id": "xbr2-blend-nearest2-apo8-premul",
+    "resref": "OHDLPORT",
+    "result_kind": "x4",
+    "schema_version": 1,
+    "selected_run": {
+      "manifest_path": "animations/ressources/OHDLPORT/runs/ohdlport-portails-accepted-20261010-v1/manifest.json",
+      "manifest_sha256": "A152CE20DD4383D04F7F4AF24E9692D3B721ED84F3AB9C69D113FE36481B6C90",
+      "path": "animations/ressources/OHDLPORT/runs/ohdlport-portails-accepted-20261010-v1",
+      "schema": "bg2-upscale-animation-final-selection-v1",
+      "status": "completed"
+    },
+    "source_pack": {
+      "areas": [
+        {
+          "area": "OH5400",
+          "manifest_path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/OH5400/manifest.json",
+          "manifest_sha256": "C6F8AD961F3240FA9D6078417EEF5D403B8A3D58A7F03315723008C815B35AAB",
+          "path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/OH5400",
+          "registry_sha256": "CEEEA2B5E2D5BF7381F25103A6B8BE028E74CA21F75BDEFE7A32D9139B910EEC",
+          "resource_entries": 1
+        },
+        {
+          "area": "OH5500",
+          "manifest_path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/OH5500/manifest.json",
+          "manifest_sha256": "73823A3EF93EC2A6B1EA372E808CF05B3442106C6C5B594B40A29A44E4169EFE",
+          "path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/OH5500",
+          "registry_sha256": "CEEEA2B5E2D5BF7381F25103A6B8BE028E74CA21F75BDEFE7A32D9139B910EEC",
+          "resource_entries": 1
+        }
+      ],
+      "manifest_path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/manifest.json",
+      "manifest_sha256": "3F5264FF63C6546E8F6936E52C3FF2A4B868BAF0CFC6206F68743E82099BF91C",
+      "path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete",
+      "schema": "bg2-upscale-area-animation-pack-index-v1",
+      "status": "completed"
+    },
+    "tested_areas": [
+      "OH5400",
+      "OH5500"
+    ],
+    "updated_at_utc": "2026-10-10T15:06:43Z"
+  },
+  "source_run": "animations/ressources/OHDLPORT/runs/ohdlport-portails-final-20261010-v1",
+  "padding_checks": [
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame000.rgba",
+      "source_sha256": "46ADAF48762BE614512E490D4DEFFBA1D188A517E090827FDD1A43F819DDC4D5",
+      "padded_sha256": "6B355F16D56F91FBA1BE1866D43646B1D4398A5422B53FE9E5D2978C9AE3269E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame001.rgba",
+      "source_sha256": "F1001E92C874733F0648BB6F87772F154B7334709FA557699F3D3145CED579EB",
+      "padded_sha256": "A6923092CE2CFEF432B5F55236EA7D538096E42E220A77CB5BB5E5B9E93D5205",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame002.rgba",
+      "source_sha256": "F1EF3D0D4D9E55043E1A3755C6C713351D41B39DD51A322613DC2687D7C3929F",
+      "padded_sha256": "72BA5C3E9DC5A26CC0FAC721005617A902BD0B24B7A91107F417D5A762925DF4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame003.rgba",
+      "source_sha256": "C213D653A5ADCE262F239943788BE8F887BFE41C6382EAD7768C21FB42C83D6D",
+      "padded_sha256": "FFDFD12890B82C390BA25D99F6D020C3F03CA904279605A57CC9B6ABD17C42C1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame004.rgba",
+      "source_sha256": "9AA664DBA99A590501B1A3C00B87C13B89C49E86E10589CEC9F7F738994473BB",
+      "padded_sha256": "5327D07A9EDCE12584945B0A4F969E3C97D632E790C33922BE06F4FE761EC583",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame005.rgba",
+      "source_sha256": "F5F0B696552B92DC08D93128B777404CF8AA4B12A499F59D1E85201067D731F2",
+      "padded_sha256": "A3FF5A8EC0013B02999C2C36C63CEBFA5790E69DD8A3F5B244AF9D893C5FC20E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame006.rgba",
+      "source_sha256": "B70AFE39E538D4C055EB0E43E3B789E976771CA26356C56118F9D224A06E61A7",
+      "padded_sha256": "87AD6DF15F79F3B7A5B570FDD385325B0C9AD99B88E7EDC1B84B69DE8F9F30F3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame007.rgba",
+      "source_sha256": "B2E93F52B2A6A906660107C56DF1D99A9B48DD7CD3FD1B8E8AFAFF3B676E5B96",
+      "padded_sha256": "4A8FE51C74D4F380DC30270C36548C7D7DB028E2E34E335EE265004385D4332E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame008.rgba",
+      "source_sha256": "917B9BE6911FA7F2A0313A8A55F0D0BCFE9E91716A298A894DDBD1C44C23CC60",
+      "padded_sha256": "30C200E9FD86E795237245FA3431FB60FBA5FC374C716B0A389637CF5BC03068",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame009.rgba",
+      "source_sha256": "6AA5F5A6CEAD343C9CD3C99F0600D4F574015D15CCCCF6D13479DA3F9DE87DBD",
+      "padded_sha256": "CE9B5D5DD1BC220C4783E6A9078C93E1CE4CD25772153FDF079DFEEDD94B7152",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame010.rgba",
+      "source_sha256": "12A6478DDC91C395C5FEADDAA31FF5FAB9129426723F87EA14BC89D71198CADF",
+      "padded_sha256": "4E8E2D660C963CAE8B9A5282D79F741003F3CD45FDB518235B8449A09FDF8140",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame011.rgba",
+      "source_sha256": "C99AE67E824B91067361BBF0A6928501C74347D92E53588839BF30E59D8E224E",
+      "padded_sha256": "D4FBECA77440C3A3BDEF7B2A4ED05C3D374522B228935C76C995846C17F6DA4E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame012.rgba",
+      "source_sha256": "5A06863C360CA335298FE329110B8F94C21A2FCD01E76B1198EEF248ADB722E7",
+      "padded_sha256": "C25B93E9A6312849CE4FD170494D1B0A7E09E36487A1481FEDD93F949EFFAB98",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame013.rgba",
+      "source_sha256": "102800A0FB10F0470639B663317C22A2D247D9A96DFEDBE0EB2E96090B33FA35",
+      "padded_sha256": "F7ABF9FC02401B63F44EE15EE5DF214E0831208242AB48B0EE0060AB26EA874C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame014.rgba",
+      "source_sha256": "56FF85D83251031D3C60352B36ECF41A4BA28F0E82236B305E8B930B0426C2D7",
+      "padded_sha256": "738520F23562CB5BD22B71293216B5247FEE36A3E812E8E4B0446DE41418B625",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame015.rgba",
+      "source_sha256": "299BAF4AF82D126DB61E244A0D68422D7C6DF83EA5DE6EBC4D0C5F650265771A",
+      "padded_sha256": "5E78EAFEB234D1D7921F81278357010E8E3D874D18C59DDBF33D4E66BB518505",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame016.rgba",
+      "source_sha256": "6B1FEE2E0A17F67F12852584E627557C668033A09CBDFCEA22477157C09EDC73",
+      "padded_sha256": "5375AF8B01A006CBCF182CA533B26368ED296AD8EBB947A82FDCAFFFE626EA36",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame017.rgba",
+      "source_sha256": "39ADB78A3F54013BA770756ACA732504EBA2035FDDE9BEA473134F448275E2D7",
+      "padded_sha256": "A4D0787697B13627564873538D7D48CFF5877921151B934A08E2C567E2ED5768",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame018.rgba",
+      "source_sha256": "6A2D95D51F53E58490102859ACF6517A9D5D8A619144FF1E0C8DD46682A813C4",
+      "padded_sha256": "E30FE0220F50723EE90F3B71CBFC1033037597D858B400274BD5B6F777073743",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame019.rgba",
+      "source_sha256": "4AA09B2F56BE9519A824DDCAFDE36CA2EE74E7297F1B408790E2A58837A234E0",
+      "padded_sha256": "DA8A6BC74226C975FFAE02FE334A4DABB5D17E0B11D113338938F30B2F92354B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame020.rgba",
+      "source_sha256": "0EE478B23B66636FCFB135AF06B2C9602D637E6EDDAB0C69C0D23D21584263E6",
+      "padded_sha256": "7FEEDD9AB658943FF910E261228BC26F7EEE5C3F6E644397E04F3CD71C900D2D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame021.rgba",
+      "source_sha256": "E1BAB67134A3C3E6DBD9BE39346DF12D276EAE3B6A16193912B55933A5A92771",
+      "padded_sha256": "E5C592B8D15CC075D851EC257CADE7F8F9BD44ADC20FDA88F89E76472C50A7F9",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame022.rgba",
+      "source_sha256": "E8D23112AE370D418D829D87326C67FFD927998CD6654245E63D4AFAC91C5E7F",
+      "padded_sha256": "DCFBCFD4CF5515EF9DEE502F1DADFAC9D447386D2EE10CDE3D3105B3572914B6",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame023.rgba",
+      "source_sha256": "E42F955F9E385781ECBBD05F0A24857A1892A7AAA094C5173F88C49FA74069D1",
+      "padded_sha256": "33E073847314091D7B5A21EAF2F86F646E15B2692EA4D98F3656437B5B3EF6D3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame024.rgba",
+      "source_sha256": "72D9257B488A7D3A8B3508EE2EF0CDB0C78BFD1779522456194BDC5FA933BA3C",
+      "padded_sha256": "36528758F6CBE88F2634E363F1098540A52C846E68E96AC387BC9894914FC0CA",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame025.rgba",
+      "source_sha256": "62A93CB01075A15A93FD3BB4858FCB2728F9BD5ED9511079AED5EF4647A7558C",
+      "padded_sha256": "6F6D1827AC6B261A87F8A8C4E5888DAA339F5C74E2A145C4A249BC0973CD3ADE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame026.rgba",
+      "source_sha256": "1DC83959B4705C81484571F725681DB45165A9E3CFD37EE20D0DA2E2DF850731",
+      "padded_sha256": "B3E8D7F0C44CCA855696FA39C3EF6096DB484CCDA71AF88BED2966721EF9BDD6",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame027.rgba",
+      "source_sha256": "F7353D2830E78CF7457532D82029ADC8D90583F546FE5B8007FA4017887AA464",
+      "padded_sha256": "D8C8CB29483668BE8EEC663EA9CB5E9328F8D2871D1C379217B0832C2F0A9D04",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame028.rgba",
+      "source_sha256": "6881EDF8B731AEFAADAA60CF13654C3C620DFCAAC01504BC3C7E2F31C57CC58C",
+      "padded_sha256": "A9667CE235F72253A3679B0505D3065E28764FD8851D56984B1A4E13146528DD",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame029.rgba",
+      "source_sha256": "73AEB187678A43251CA230EB0CB791FB539F5F2E8062CFD1C4A21D00B70703FF",
+      "padded_sha256": "EB759BAADBB4DC5D018E924AAF25D2B1CAADD2330A4D50C6629129BDCCE07C10",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame030.rgba",
+      "source_sha256": "565F47053F40CEE4B0F55991035EC1B36C4AA7D353A20771EFCACCA7F283BA65",
+      "padded_sha256": "3696DC93D00AE919556902562BFC784A07EF06FB7A72AB8D844A1737C968A2E8",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame031.rgba",
+      "source_sha256": "086D415849CBD4BA1F87ED1AC531B5C2B57D42F02EF9B9AE180373EA74C9E17B",
+      "padded_sha256": "89705E9D568850B76FDE0F69BC274DB885E05D1D511D08005C4B6F887698056C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame032.rgba",
+      "source_sha256": "B4D6FF6EA7B347886DA3F8FF7C53F22B8FBC0DED40543EB8BB7EB7BC7B6089DD",
+      "padded_sha256": "BDBE2E9BBF5FCB145443E2F039C8E8995283A410E254B38E78358795F6D68FDD",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame033.rgba",
+      "source_sha256": "1B4BA08421044C6FD59C9EE8AA27F2B8428C9CC266AF1887AD89806D4BCC2E0A",
+      "padded_sha256": "4FFA24B26041D1658C2F8AF58D7DBF1F1E1AD85E0007FD621468C59D36A05C01",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame034.rgba",
+      "source_sha256": "8E2BA0D275CB9DB4C98F23CD457963AD713BEB49CDEC86F7351E6235B4713718",
+      "padded_sha256": "F642BB42534184BCD54E4E22A7F6E1E34DF7563682B64900A9DEE6FF8E90252F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame035.rgba",
+      "source_sha256": "A8B653B96B36CD9266C55EF7260C73EEF79467009D2FF54661903A3EFF7C80F4",
+      "padded_sha256": "4FB73320D09AA894313F06702746A03591783248F3BEEFE8D128B1AFB083B4B4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame036.rgba",
+      "source_sha256": "9F958CED43101E81F1AE00A7DAD70B9FC8726AEB560D4B475C41ED68589B5929",
+      "padded_sha256": "C1F6983989CB8B9A9F5AA2DFD306AF03047D3F6FC15571AD061E1D33429F817E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame037.rgba",
+      "source_sha256": "7AFFBDF7C0BA703271E163C40EA4E3C54A504B72833F21CBE0979751ADAA858F",
+      "padded_sha256": "52C95652BF6FFBF1351B2AA57207F262FEB548F1AB87FA235EFBA67974BDF6CB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame038.rgba",
+      "source_sha256": "C5C53560912700C2E382328AEE270401C41FEA548DB8149814627E66B82E1383",
+      "padded_sha256": "11CE666C90B4FE91D60FA4F0D694AF03A3C482B19DEF94629D1AC911ED905849",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame039.rgba",
+      "source_sha256": "36FAD6DC790C0A54B45DC7B1105C97873833DF7FB467096095062C00192DB1C8",
+      "padded_sha256": "9EBC8F437CB591D1CD9BF146D96852C3E848475FD7549CFA4C98390CF8F96EAE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame040.rgba",
+      "source_sha256": "6345C3F874DB8967ED108E0484590286347A88066643F9DC9759ED53F4199289",
+      "padded_sha256": "BCBACECA4AD720DAFF479A5E44B8436755D7D040F6BB8428D5E85D108591110C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame041.rgba",
+      "source_sha256": "027DDCC5536EA84571A5C50CE345959F1F8B40D7BED5D5869A5DF5BA5E45E21C",
+      "padded_sha256": "CAB670443DA66C389999D3FCD0F6636AC11E560C108766A61B61967A42024EF0",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame042.rgba",
+      "source_sha256": "7E1D945A97256E855134E5F5FA2768063389EC18430BC7029699225827C3EB22",
+      "padded_sha256": "B873442119F7469D207FBDA0B98C8BE8031C087F358142915FB340C072545164",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame043.rgba",
+      "source_sha256": "CC72F099226B07870176ECF1D9E615009112AB96F1A11E1B4E09E3A078506842",
+      "padded_sha256": "CBFF7C3240CD89316C112EF57677F26B887A2FBED9F64B340F82A0B6ACE44759",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame044.rgba",
+      "source_sha256": "2CCB049A22B62EC86D616F2B220F53CFD456A17D8041C5290CFA2CBCCE98E429",
+      "padded_sha256": "7608695B5ECE395D7F61189255CD5369C8A2CD860E2304D27BA5506CE6B3A0B9",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame045.rgba",
+      "source_sha256": "CC543C90F70C9C6AC4E07D3D80E0206C5E7BD31B4492310D08279C5A093FC5C0",
+      "padded_sha256": "0D7CEB93454DCA17F944E6A4CA918DB3CBD8E01856EE26DC7D27D4F78D41A1C1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame046.rgba",
+      "source_sha256": "49D708E8CC779D7C6F5FFCC894DC1BFF141D3088DE6F9CE27D44337D078095EF",
+      "padded_sha256": "F0D0D33B5EEB1348312ED4431D07B38156FAD0F956DA8B684DAEE82D8D8566AE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame047.rgba",
+      "source_sha256": "A5F28C6A84D6B8022EEB45E2C3FF84E498F519F0B5850D58A85D5E1A40AE6E00",
+      "padded_sha256": "78EC2D6EC02390B0AE8CAD31DAD08790635BA647C0128EF10A74F44AD92DD568",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame048.rgba",
+      "source_sha256": "4301DBDF712EC84CD4E75323D1259F02177ED0535E1A669AE9760E95F50BC8E8",
+      "padded_sha256": "7EE97683625611D2F83EFA00ECF33DA75DC5526CA3ABD40C857A97DD8F067496",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame049.rgba",
+      "source_sha256": "2055155DF83BC9131F1E148F5AF6E522AEBAE3C2BA39549BAB1AE2CC38AC3C9F",
+      "padded_sha256": "D2D55BC1C89DEC0B99B1720117CCA10CC9B344879DAFDB03FD084204013531BF",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame050.rgba",
+      "source_sha256": "C4644BA68E44EA8C7F6A90E0995766EE957A030D4A7D17D5CBAA221F4FE3F233",
+      "padded_sha256": "5EF85CADE269F2AD1C7D106672AF88AF8A2DBE3AAE3A29CF8BBEC2A2C6D9B0D3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-20261010-v1/artifacts/OHDLPORT-final-split/OH5400/AAX4-OHDLPORT-frame051.rgba",
+      "source_sha256": "FABA3BB29CDE01E68E09A3FC42C26F76AC3FD7B2BBEDEF26B990E6A3CAE705BE",
+      "padded_sha256": "768F74AEEAA311D4C174E179F908F110F2FE01AFD201AC5FDE5E2C70F447B131",
+      "pixels_alpha_world_positions_exact": true
+    }
+  ],
+  "neural_inference": 0,
+  "new_interpolation": 0,
+  "area_specific_placement_not_applied": true
+}

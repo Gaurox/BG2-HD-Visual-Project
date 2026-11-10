@@ -1,0 +1,11 @@
+# Production lot31 — projectiles, manifestations et contrôle
+
+- **Production terminée31/31**, demande2026-10-18 ; [résultat final](production.json), [vérification99/99 sans échec](verification.json).9968phases/658profils cycle-mode,4248524864octets de packs RGBA ;309productions cumulées dans le suivi, QA indépendante.
+-31BAM distincts/792enregistrements natifs/97cycles ; SeedVR7B INT8 x4/LAB +Apollo8 à30FPS, directions/cycles conservés ; doublons avant inférence, durée rationnelle native conservée.
+- **99palettes réalisées**, soit31primaires +68secondaires ;15BAM à recoloration. Ranges MPALETTE/BMP natifs ; sources/carriers indexés inchangés. `palette-verification.json` :99/99 exactes, mélange comparé au fragment natif isolé de l'exécutable épinglé. PRO/consommateurs/identités dans `palettes/` et `batch.json`.
+- `input-palette-alpha-verification.json` :2032fichiers d'entrée modèle/99contextes, RGB visibles et alpha exacts ;1991calculs SeedVR distincts,41entrées identiques réutilisées. `palette-bindings.json` lie chaque contexte aux consommateurs/packs ; pas de sélection p01 universelle lors de l'intégration native.
+- Alpha source prioritaire ; alpha normal palette gradué séparé de l'encodage prémultiplié lumineux. Feather0 pour les31, aucune érosion ; GaussianRGB1.2 de la recette habituelle. Contextes normaux/lumineux à router selon owner lors d'une installation explicitement demandée.
+- FPS : VVC natif si renseigné, sinon15FPS de compatibilité ; pas de mesure ingame. Once/loop indépendants, cycles constants véritables conservés. Audit natif :176slots répétés sur7BAM/2cycles constants ; les nombres de variantes produites dépendent des palettes.
+- Suivi : `spatial-progress.json`, `temporal-progress.json`, `verification.json`, `review/review.json` :99/99terminés. [Galerie finale8793](http://127.0.0.1:8793/?v=complete31), `review/index.html` :31cartes/99palettes/658choix ; tous les médias liés existent.
+- Aucun asset installé, QA visuelle/release inchangées ; pas de dispatch dynamique de palettes prétendu depuis la production offline.
+- Recette/reprise : `pipeline/recipes/effects-lot31-projectiles-20261018-v1/README.md`. [Proposition et liste31](../lot31-projectiles-control-proposal-20261018-v1/README.md).

@@ -1,0 +1,2043 @@
+{
+  "source_selection": {
+    "$schema": "../../schemas/animation-selection.schema.json",
+    "asset_id": "animations:bam:SPDIMNDR",
+    "correction_id": "linear-cycles-0-2-3-4-innerfeather2-premultiply",
+    "lineage": {
+      "source_packs": [
+        {
+          "manifest_path": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/manifest.json",
+          "manifest_sha256": "6764AAFDA841D2B83320F71647D52092944456C7A2DBE78155F5B4ADF4DD161D",
+          "path": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split",
+          "schema": "bg2-upscale-area-animation-pack-index-v1",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/ressources/SPDIMNDR/runs/spdimndr-seedvr7b-apo8-20261010-v1/03_runtime_pack/manifest.json",
+          "manifest_sha256": "A02614C659E75963CB72A743ADF17C5D45B001333CDE10891BF3D4467ABB09FE",
+          "path": "animations/ressources/SPDIMNDR/runs/spdimndr-seedvr7b-apo8-20261010-v1/03_runtime_pack",
+          "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/ressources/SPDIMNDR/runs/spdimndr-seedvr7b-spatial-20261010-v1/03_runtime_pack/manifest.json",
+          "manifest_sha256": "93DE6594DCB7A76844181117B5D8F390F63CDC0E105E77F34A11C7018BDC134C",
+          "path": "animations/ressources/SPDIMNDR/runs/spdimndr-seedvr7b-spatial-20261010-v1/03_runtime_pack",
+          "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+          "status": "completed"
+        }
+      ],
+      "source_runs": [
+        {
+          "manifest_path": "animations/ressources/SPDIMNDR/runs/spdimndr-seedvr7b-apo8-20261010-v1/manifest.json",
+          "manifest_sha256": "9692303587A206674250FFECAE71D96311CE8B0F8A9AA7725F57D51A78E39EE7",
+          "path": "animations/ressources/SPDIMNDR/runs/spdimndr-seedvr7b-apo8-20261010-v1",
+          "schema": "bg2-upscale-area-animation-30fps-run-v2",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/ressources/SPDIMNDR/runs/spdimndr-seedvr7b-inner2-final-20261010-v1/manifest.json",
+          "manifest_sha256": "781A219F19D636DA9005E15C9021D8F34902A4D730FB37D1E0CA54437376C67E",
+          "path": "animations/ressources/SPDIMNDR/runs/spdimndr-seedvr7b-inner2-final-20261010-v1",
+          "schema": "bg2-upscale-animation-visual-treatment-v1",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/ressources/SPDIMNDR/runs/spdimndr-seedvr7b-spatial-20261010-v1/manifest.json",
+          "manifest_sha256": "ADE69DB03D31F8BF6FEADD96614B3CEBB3D55CD610D9E0816B774D5D56A045B9",
+          "path": "animations/ressources/SPDIMNDR/runs/spdimndr-seedvr7b-spatial-20261010-v1",
+          "schema": "bg2-upscale-area-animation-run-v1",
+          "status": "completed"
+        }
+      ]
+    },
+    "qa_decision": {
+      "decision_date": "2026-10-10",
+      "path": "animations/index/qa-decisions/SPDIMNDR/2026-10-10-accepted-spdimndr-portails-final-v1.json",
+      "sha256": "BCD556BC3CF9AB66E9E2B7840350834703837601EBE44E61AD834276AA14BD5B",
+      "status": "accepted"
+    },
+    "recipe_id": "seedvr7b-lab-apo8-linear-inner2-premul",
+    "resref": "SPDIMNDR",
+    "result_kind": "x4",
+    "schema_version": 1,
+    "selected_run": {
+      "manifest_path": "animations/ressources/SPDIMNDR/runs/spdimndr-portails-accepted-20261010-v1/manifest.json",
+      "manifest_sha256": "8E59FED9A5B0D1F61DED5C24A794FCD2DDBA1B54B0C61DAAE39C92C8F684F0ED",
+      "path": "animations/ressources/SPDIMNDR/runs/spdimndr-portails-accepted-20261010-v1",
+      "schema": "bg2-upscale-animation-final-selection-v1",
+      "status": "completed"
+    },
+    "source_pack": {
+      "areas": [
+        {
+          "area": "AR6108",
+          "manifest_path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/AR6108/manifest.json",
+          "manifest_sha256": "E96DAFB1269A554DA2E5FA534DAD8CE860F3AB2E82F364B2253217A2877C00DE",
+          "path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/AR6108",
+          "registry_sha256": "04CE53D1331F2FE66FBCA773E724373626AE8439C748A964283BCA49847B288D",
+          "resource_entries": 1
+        }
+      ],
+      "manifest_path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/manifest.json",
+      "manifest_sha256": "3F5264FF63C6546E8F6936E52C3FF2A4B868BAF0CFC6206F68743E82099BF91C",
+      "path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete",
+      "schema": "bg2-upscale-area-animation-pack-index-v1",
+      "status": "completed"
+    },
+    "tested_areas": [
+      "AR6108"
+    ],
+    "updated_at_utc": "2026-10-10T15:06:45Z"
+  },
+  "source_run": "animations/ressources/SPDIMNDR/runs/spdimndr-seedvr7b-inner2-final-20261010-v1",
+  "padding_checks": [
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame000.rgba",
+      "source_sha256": "33D508383A99F8850C2448842E6F391BD952CCA9EC90DFD5222B04FB77D58CB2",
+      "padded_sha256": "5C13A6D00F1E0944FF2E7DF1CA662C3228D0C9E52C0D57C84A01C538DA886DB3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame001.rgba",
+      "source_sha256": "0AC64AF87156F29552134C48B608B157B183AB89BF0BEC37E22E67F4CA186241",
+      "padded_sha256": "124D6133E872B1413F7BDE2362B382E03C8A4218415A636CB528A174A293C521",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame002.rgba",
+      "source_sha256": "7AE309AE65AC1E0F98474BD77325EDB2CB076BED93ABBAEDA00B81AC718F9A66",
+      "padded_sha256": "45385B89142B0F5621BD562BF6BA5A9C4328A746402CDA5A4BE59ABA3A6735BF",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame003.rgba",
+      "source_sha256": "E96B931FE6AB0AA9FD9FF797CEA0752F8712DE4385F82BD5F1D6249C83987572",
+      "padded_sha256": "D5254EA9FCC1DF79635786DA3E213BE2093E24330A7640438F6F9E69FDE686FA",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame004.rgba",
+      "source_sha256": "9F70101459A1460A35046DB51F7E4A10363FC44265240BA518B24A52FB7FF572",
+      "padded_sha256": "1A376FA9E91F7522B7D8F8843680B41CFBA90B6A8F0DC28BE0F7BB1E19FB4615",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame005.rgba",
+      "source_sha256": "5945BA11A0A84DCA938EBFF275296766E50B134F27F812057047EFE1209A778F",
+      "padded_sha256": "9FAF99139D2BD043D19CDB7FE8C3C016B3F3C915837A2D0BD7B469916CA5153F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame006.rgba",
+      "source_sha256": "BF32D7E2C5BEE7590F0C5A73EC9E7713892BCCF1D7425A1FA59FE5A01EE9BB4B",
+      "padded_sha256": "9A0375E56DB550ED3224D7F4D1DA1E09934848AEE811FA2498F43D3BD5E8AE68",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame007.rgba",
+      "source_sha256": "0A3AA0F788AAF3B92066E380F4AD7EB07FADC85984AA4C10BFB4BDCE126E50A6",
+      "padded_sha256": "CD66495E30FF7BF96FD743D256FB59C1CDD8F09314B43AB9CC1C342B947E5823",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame008.rgba",
+      "source_sha256": "BB963F690136B5880F778C30B17A1F7FD5D21B05DF669B5AAFD5F348D0E1DCD7",
+      "padded_sha256": "9338F0424C8CE0DA0465FCDF587685DA7E265C6C11538D320C03A3ABE9D9E5D3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame009.rgba",
+      "source_sha256": "B880FC82A85EF211836D4F4A7075F56DC0A9A7212F4B04791C7C814315D3AEA9",
+      "padded_sha256": "035329E8639DB686660440A92D730383781E7D115CDCB86807D541ED9355D231",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame010.rgba",
+      "source_sha256": "916086FF18C2EEC380A8DF5C6479B1A5F0C951FADC146C73298CE3F969F3F319",
+      "padded_sha256": "564DADD2D511312021E0F86F3519393FC4E7435890FC88AD9184668B391938E0",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame011.rgba",
+      "source_sha256": "DA4F3D3596F5764B3E4926A9BB93B44E73FBA0FDB1B27CA6F7A5C2C5C7A2AE0C",
+      "padded_sha256": "F9637B68CA9AC683E7EB334560F4425DDFDE53167AB20179041E9403037F2A25",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame012.rgba",
+      "source_sha256": "9416E5969D2A11B7292DE7FF0442E93471C29B7118EDB8EC2E12D570F96C7715",
+      "padded_sha256": "25182A799EBC8E826A2567CA0586DB8BD844D7628E2A4152C23C1360264B8AA1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame013.rgba",
+      "source_sha256": "73E8D50360C7CC5B4D195E5F5BAA7C0A81B1D7D3D4956A6D3C42E51CC319D766",
+      "padded_sha256": "FA1390412C0D9FF85936DA6BCDCB106BDCBBD220891409ADF65F925E5100C50A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame014.rgba",
+      "source_sha256": "BC9150A7190CB4850AC3ECFFD7B4BDBABE9129231C79A1C9DCDAAEF18DC9AFB0",
+      "padded_sha256": "AB50880E8DFC6C747941C8033D295C40869DAF5A185B96A03C78F0960B9DE89C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame015.rgba",
+      "source_sha256": "C504AE634DB19BBB5F0341168855269EEE66CAA4EA9D822BAD7B2FFCC10EE603",
+      "padded_sha256": "53B4B2A1F707A1B596BFC90C92A3CE4183903F118C7687806D9CBEE42E30190B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame016.rgba",
+      "source_sha256": "F99E9299082F28E60A3BC08B7A51F4C7C85686C7D58503D8007979BA83AE2B9D",
+      "padded_sha256": "1C926B23FC249F6F05476762349641F93B54D606080CD9231D2CFA53A633473D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame017.rgba",
+      "source_sha256": "D4EA56A0DA45CC0F601B61B5085974A588149DDFEF4DBD8352F3D829ECDC508B",
+      "padded_sha256": "22BDF8BDDC6F3473111D005CCBBC7A2C685928D0F9E043BAB3074CEACED8DD26",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame018.rgba",
+      "source_sha256": "50A62ACB3D6D56997B59B46A3DF8EC4971FC09FCAAAF7954765755DC2D2C1EE5",
+      "padded_sha256": "D2987F87D744AE8A317EC576EEE5C560C23BA2BEE03A2A4026D291DCEA8BB5EA",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame019.rgba",
+      "source_sha256": "01001A24CF0EF46C1B7B85B1C5BF968584915D02167F425ED5C3D50BD3E02A87",
+      "padded_sha256": "3F161A05211EF5A04F254576FF391D910C9BBBF3812D7528D09C08CDBECBBD2C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame020.rgba",
+      "source_sha256": "640373027A1007DA6D738911633C8CCDEFC86BC6408F3B39FDADE4CA2799A38B",
+      "padded_sha256": "7BE55E04C148BF02EFBF6C7653BEF07D311FDF41421E5AC36B39C791DF3ABA15",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame021.rgba",
+      "source_sha256": "38EC8AF3E967376CEB9E3E1621B7EAB7D1BC221340C402EB8C431AE00ED6C21A",
+      "padded_sha256": "3D8D6B7B941ECF3601631EA495CC2AF0C7C207347E0FDED070BEF1CB60C6D7F9",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame022.rgba",
+      "source_sha256": "F1271FEA03EA62478F012555922E5DA77D24B227417F238AC5840230254DBC3B",
+      "padded_sha256": "5E292E02AEA2D7735655A5E0D5926020237FFA52EF633E5A06ED6B516E5EF559",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame023.rgba",
+      "source_sha256": "336E3C071AC3D264B789501C2C385F81F741197A7A524F732BEF8A74D14466FE",
+      "padded_sha256": "DD10108B489D09740038B437F2F0EDB953DB73527D88E5DA944520D76F58539F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame024.rgba",
+      "source_sha256": "04BB730C0F709C103D76AA5418D5FF456904C3EF9851F605D288A2B5480F353F",
+      "padded_sha256": "8B734E2CE13D230DC719AAE0C6D8926962AA55F6351346FE1EA6B4F5C991AD1A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame025.rgba",
+      "source_sha256": "EC2E6F2A773995C34BCC1234A6420291AA1F63F7DEF8E3E538D5C282D9D6C381",
+      "padded_sha256": "F373C32BBD77D599BC85F1BB420B60E33D5A94521D8D119EDBE093D5C81BCFF8",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame026.rgba",
+      "source_sha256": "8A39757E2525CAC621C77E106790681DEDE0D298A6F782AF5DB8A9895BCEF98A",
+      "padded_sha256": "CEDBD118215D0D11073B9368F0737319BAEAC7F59D213462006A143088F16BBE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame027.rgba",
+      "source_sha256": "363FBF8264356961B3450D82B75B77D59596B181AE1348E252B6B49DF7C90FD8",
+      "padded_sha256": "30BB04777850801C28F8BE4D65B3FDC7CA3126C2843C1DB3CE2A7362ADF35A8A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame028.rgba",
+      "source_sha256": "C716B684BD7CD66F0633F4A1EDE06E6C3442A1B997931E824C5F76DCF8B057CA",
+      "padded_sha256": "4695DEBFB87688999BEC7B628BA15C03C8693E75ABB3F698DE3B9E38C9A5013D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame029.rgba",
+      "source_sha256": "8C25259D4DECED668BF6D69732BFB0276BB5C3218B2C772C9772FB67CC64CC5E",
+      "padded_sha256": "E7B5B05F3C80C68CA4766676DC03F9844D9CD66E26F232E98A003FD4F07A3AB2",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame030.rgba",
+      "source_sha256": "25387766FB7591011FBA2D457832E7FF7FF67207F504933FEDD1061EDF78A604",
+      "padded_sha256": "2983C82851C789477EB7A237A96C23C3FBFD4C0775B876418FD4431652C91648",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame031.rgba",
+      "source_sha256": "837D48846EC17303E8974A50AF2621AD76B5203856115DC314A605DD221FE59E",
+      "padded_sha256": "4E85E03121B97D9D58046FB89F7B1648764C9FEFDE082C4B6F2E2A251B3CA4C4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame032.rgba",
+      "source_sha256": "E439FB0ACA60D439778E265A8F08C5EAF01B12489B8FF740EBE2CA14E3CE5D07",
+      "padded_sha256": "31AB2B31C31C3D67B5614AE56F3D55E71E732359F27DE82B8B2CD8ADE9ABB9BC",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame033.rgba",
+      "source_sha256": "62FBD36CD2DF945B9EA77841D6CE7940A55D0DBACF4506C67869FF44F4F7D337",
+      "padded_sha256": "4EA3FE8B2687A16B533530EA7C2A2FCE8399AB058A56860BEC5A14327EDC39AE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame034.rgba",
+      "source_sha256": "46C54F07134BA4C65E40F588A2D5CD40D6AF734C05BCD921057F2EAED674EC83",
+      "padded_sha256": "621E0E7695FF9CEFDEEA670908ACACB35584CAE70A8887595E0CC676986E89A3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame035.rgba",
+      "source_sha256": "9427B933B147A4411555FF69DA966261A6A3B7AF2A564B6BB52612E2C811C1E1",
+      "padded_sha256": "97D9A129FCE4D0033BCE2E8DDE53F00D4AF8A005A2B12054B73F6281E333AF2D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame036.rgba",
+      "source_sha256": "9D8692EFC1687DC82DEC6228909690C0764C02C752C7DF152C2996C6A08B5E66",
+      "padded_sha256": "D5B2198F969776D736C95E4BF860CFD73531773D742D1265395F247DD853D7B0",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame037.rgba",
+      "source_sha256": "BA533F1F517B4838A3442B90C4B65C083C928C2F232A89E7556DD1A37D409DEF",
+      "padded_sha256": "51CDC267A5152A3A0D5D9F8AC773058E0F52F5F1C4F5722301A332B0A3F3E5CF",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame038.rgba",
+      "source_sha256": "92CAC274FC1ADBB2008B59FB722203D7450800206814C801BE4ABB5397433748",
+      "padded_sha256": "99A21D7209318DE865AE983714D27061B26C542812D61095F2DFF595C2AA4144",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame039.rgba",
+      "source_sha256": "F15C87F7419A5B5D03B380B4C825CD621FE8C77EC17588E302D1CD33B6DEFFDD",
+      "padded_sha256": "A2EA79687951AABCC88CA0789A566D62B72A5CB409427638CB504CD74FA24610",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame040.rgba",
+      "source_sha256": "E95CB801FE615E2E6789EB7159CE553E1255FCEF414ECF9765A73C98D67A8F55",
+      "padded_sha256": "E6C01EE0102D5D641B96B9D81C0AFADCAE819CB0C3424902E94F797D56A6C34A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame041.rgba",
+      "source_sha256": "C2EB4114AC65C2E8EDAA6BA92DA64244761F89E26AAA7B62C1301034BC217F5A",
+      "padded_sha256": "6B71E3EA1F6828DF669D82B9154FF045215A1F99D5F8AF9CB0951F49E2968688",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame042.rgba",
+      "source_sha256": "76E150C666905C0C2911019A9FE87FB19C7E3E0C33A81744C99676BB03E16D85",
+      "padded_sha256": "105412EE19B0EA47B1461CE2BD44BC9634B167AA431786977DDC91965784F208",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame043.rgba",
+      "source_sha256": "4CBD128E94EB11BFB3F0B136DD0E3FCEE40258E47A324DAF27CD60FA2D2CE140",
+      "padded_sha256": "B4B3C19E80E7B5508C0B159D1E216737600177CED178AF97666EACD8D4CBC3BB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame044.rgba",
+      "source_sha256": "9B28E802D2983E7159C73126DEF5B7A80D11E69689EC0516562487E16F468AE6",
+      "padded_sha256": "FA83DC7C9686344C8B1AD29609A6F2E14473815BB1E5289084AA44A380B64308",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame045.rgba",
+      "source_sha256": "3D20CF101470EEE933EC575B30D727BC6338E88107D12EBD14D6E0AEE11BC491",
+      "padded_sha256": "91DE5B6F524DFF015922597519AEDBCB7A8D683FA9266226D294BC0E2E634A1C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame046.rgba",
+      "source_sha256": "DE978571DEB31F6D530C18747C71AB6063F7FA2532DA0FCE738EC42D6D52FC01",
+      "padded_sha256": "8CD9BAD5620156E865C8D240BA8839B9F30D2AD71DBE0CBE8CCC395C65BD5273",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame047.rgba",
+      "source_sha256": "672A3092281DB87253B3B9711DE801C347E663C21BBAF1AE9384116BE4205800",
+      "padded_sha256": "67E4D87F89B1BAF62E55610EC3887DC3D8807E23B01B44ECCC85170BEACCE0D0",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame048.rgba",
+      "source_sha256": "FA3DDC6E984E8AFF8CBB97525F2EDE965669F61DD0BD9C9E874A8915CAD36BFD",
+      "padded_sha256": "CEB13742E11998A72ECC9A04E485E3711B0EE89885C0B05D26809AE96CDB2B05",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame049.rgba",
+      "source_sha256": "2F2DBF94C4B5D79E2B0260291DDCB4AE3146A0CE3201CB4AADFFC58106645F81",
+      "padded_sha256": "A51E074C0707817F64005C96DE39A3A858EEC297434CCCE38F178BA3C7458E13",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame050.rgba",
+      "source_sha256": "CAEE2BAC9DCFEC97C321997775B0CF73BFD993BF2D1D3E0D4D7FD2EBC038F85A",
+      "padded_sha256": "8A49B8CE550803B1277D610E1B7A798DDCDC787BA864A0A48A7F5ED02AE977A6",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame051.rgba",
+      "source_sha256": "DAEFDEF829418C0EEEDCFD4D0D4996C461C35276728278EA1C79E249B46CBBF7",
+      "padded_sha256": "B9967FE2F26B271AC396697F564225B71113C20D68698E96A3A88121E5D49D67",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame052.rgba",
+      "source_sha256": "E71D314033797240CFA00A4CD6B5FDD5E1788C632BD7FA76A51EFD8E84937E51",
+      "padded_sha256": "E1C6080C20A5C477EB0C845BBAAC09CAF4FACE07F6B4370F63CC89885E963E4C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame053.rgba",
+      "source_sha256": "B3FF7345DD276C473F5699A203702B13122FCB55F76DBB69BD79EFEEA7DA63F5",
+      "padded_sha256": "FA77F740C0EBBADA6FDF335DD6CDF0C7A265E5A1E8CDA68F4AD7A89C1EF030B3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame054.rgba",
+      "source_sha256": "D37764D615236EBF0D66CADDF7330D17A6BCA696F11BAA8ED42914F830C96CBE",
+      "padded_sha256": "752212B279B8EDD63A4BF872ADDED0F91F1A425756DFF852597DE0ACA6AD4445",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame055.rgba",
+      "source_sha256": "72F862C833662DCA316A5B283AEC3E6A2061AE379D649F440238F1AC3C59E4C1",
+      "padded_sha256": "08590E1F2CE17AB2F616BA9EA573361E8452A09B282DFABD4E5774EB032B824B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame056.rgba",
+      "source_sha256": "5F0B1E8C751D6E195F67F94010D0DD68C9A109B3F6AD350B32C6BFD59E68331A",
+      "padded_sha256": "061DA02004628D4EA1C98298B8D8E7A0662FB61EFD59F18141289E4F073D9275",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame057.rgba",
+      "source_sha256": "D52C336BFB4D46AE891E0DA2D47BC94F8ED3EA7E517D5B2E671633C032301771",
+      "padded_sha256": "0578FB5655EACA951D5534AF52D6A8384F3E95BC838D3247A557D1315C64248E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame058.rgba",
+      "source_sha256": "BC7B1791191B57C6A3D2F98AD9C3F8804FC265B4DDE0B97D376FE9BD846818B9",
+      "padded_sha256": "0E56D12D195EEF8380B4EE1BFFA68963DBECD814142018C69ADD99E13AD30A55",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame059.rgba",
+      "source_sha256": "F54A75DD3545762A2B5A561379CF68CBA1CC7225F2D50ECADD3366A3F4B91D2D",
+      "padded_sha256": "C469ABB9EC864CE4511C9C9536F46787F55FED0B86C1A7B57AE64612BF9A1D8E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame060.rgba",
+      "source_sha256": "F907677BA48EB2238A2EA8FB6E44E67F6E88A8C2543C4A3C7841ED3D25F0A924",
+      "padded_sha256": "844A2FD33BF484D3EAB45584F6FE20D4D33982C44FBF057FBC0C5D6BD3E9C12D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame061.rgba",
+      "source_sha256": "BF5019761459C096ED220A81DF28AFE0662BF8EEEA9EABDD7F792C24167CF43E",
+      "padded_sha256": "0872B6538CF73E157DD6DE6F84E0A1C01B67661FCC65F345D9D114BA6293E54F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame062.rgba",
+      "source_sha256": "C5B851868499D7524B3353C283645AD376D7F9234ACB5C6840A5CDDA76CE8649",
+      "padded_sha256": "F17B5D068E2339B48C58E105573C128A839F437BD511534C3F63635AADEF2E27",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame063.rgba",
+      "source_sha256": "8224975BDE2438C173E3AC74D2AD83D8FCEF87C9BCBBD331726B2382918B91FD",
+      "padded_sha256": "EC1E47514B4FEE645C6684956CAC46BA5F8D73559A9997DFDFAC44818FD54F41",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame064.rgba",
+      "source_sha256": "36EFE9E9B32B5547E2EA964CFFF2F87E9BC22073F377B488E80C3A03BC4DFF4C",
+      "padded_sha256": "082D276B1DD44462DB4DCDFCEED2D9696FA6F0FC4794155A38812499EF2D20DE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame065.rgba",
+      "source_sha256": "615786A7AA8151AF2225C305A5E32B0C30BE71491235C295942A4619E87DAE03",
+      "padded_sha256": "F217F3D7ADC6DAB3F577BDEF53BF15BF00438E840A1CED0E6E007EDEACFF4AE4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame066.rgba",
+      "source_sha256": "907D667169F69A695CFBE3DFE00CC7DFA2EAB2EBDAF39989BF7597B4394ABB19",
+      "padded_sha256": "430471C4DF9503E42BAEB4E164D346EB7444B529B9A8DE3C7ABCFBF659BB3675",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame067.rgba",
+      "source_sha256": "C716B684BD7CD66F0633F4A1EDE06E6C3442A1B997931E824C5F76DCF8B057CA",
+      "padded_sha256": "4695DEBFB87688999BEC7B628BA15C03C8693E75ABB3F698DE3B9E38C9A5013D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame068.rgba",
+      "source_sha256": "363FBF8264356961B3450D82B75B77D59596B181AE1348E252B6B49DF7C90FD8",
+      "padded_sha256": "30BB04777850801C28F8BE4D65B3FDC7CA3126C2843C1DB3CE2A7362ADF35A8A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame069.rgba",
+      "source_sha256": "8A39757E2525CAC621C77E106790681DEDE0D298A6F782AF5DB8A9895BCEF98A",
+      "padded_sha256": "CEDBD118215D0D11073B9368F0737319BAEAC7F59D213462006A143088F16BBE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame070.rgba",
+      "source_sha256": "EC2E6F2A773995C34BCC1234A6420291AA1F63F7DEF8E3E538D5C282D9D6C381",
+      "padded_sha256": "F373C32BBD77D599BC85F1BB420B60E33D5A94521D8D119EDBE093D5C81BCFF8",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame071.rgba",
+      "source_sha256": "04BB730C0F709C103D76AA5418D5FF456904C3EF9851F605D288A2B5480F353F",
+      "padded_sha256": "8B734E2CE13D230DC719AAE0C6D8926962AA55F6351346FE1EA6B4F5C991AD1A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame072.rgba",
+      "source_sha256": "336E3C071AC3D264B789501C2C385F81F741197A7A524F732BEF8A74D14466FE",
+      "padded_sha256": "DD10108B489D09740038B437F2F0EDB953DB73527D88E5DA944520D76F58539F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame073.rgba",
+      "source_sha256": "F1271FEA03EA62478F012555922E5DA77D24B227417F238AC5840230254DBC3B",
+      "padded_sha256": "5E292E02AEA2D7735655A5E0D5926020237FFA52EF633E5A06ED6B516E5EF559",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame074.rgba",
+      "source_sha256": "38EC8AF3E967376CEB9E3E1621B7EAB7D1BC221340C402EB8C431AE00ED6C21A",
+      "padded_sha256": "3D8D6B7B941ECF3601631EA495CC2AF0C7C207347E0FDED070BEF1CB60C6D7F9",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame075.rgba",
+      "source_sha256": "640373027A1007DA6D738911633C8CCDEFC86BC6408F3B39FDADE4CA2799A38B",
+      "padded_sha256": "7BE55E04C148BF02EFBF6C7653BEF07D311FDF41421E5AC36B39C791DF3ABA15",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame076.rgba",
+      "source_sha256": "01001A24CF0EF46C1B7B85B1C5BF968584915D02167F425ED5C3D50BD3E02A87",
+      "padded_sha256": "3F161A05211EF5A04F254576FF391D910C9BBBF3812D7528D09C08CDBECBBD2C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame077.rgba",
+      "source_sha256": "50A62ACB3D6D56997B59B46A3DF8EC4971FC09FCAAAF7954765755DC2D2C1EE5",
+      "padded_sha256": "D2987F87D744AE8A317EC576EEE5C560C23BA2BEE03A2A4026D291DCEA8BB5EA",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame078.rgba",
+      "source_sha256": "D4EA56A0DA45CC0F601B61B5085974A588149DDFEF4DBD8352F3D829ECDC508B",
+      "padded_sha256": "22BDF8BDDC6F3473111D005CCBBC7A2C685928D0F9E043BAB3074CEACED8DD26",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame079.rgba",
+      "source_sha256": "F99E9299082F28E60A3BC08B7A51F4C7C85686C7D58503D8007979BA83AE2B9D",
+      "padded_sha256": "1C926B23FC249F6F05476762349641F93B54D606080CD9231D2CFA53A633473D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame080.rgba",
+      "source_sha256": "C504AE634DB19BBB5F0341168855269EEE66CAA4EA9D822BAD7B2FFCC10EE603",
+      "padded_sha256": "53B4B2A1F707A1B596BFC90C92A3CE4183903F118C7687806D9CBEE42E30190B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame081.rgba",
+      "source_sha256": "BC9150A7190CB4850AC3ECFFD7B4BDBABE9129231C79A1C9DCDAAEF18DC9AFB0",
+      "padded_sha256": "AB50880E8DFC6C747941C8033D295C40869DAF5A185B96A03C78F0960B9DE89C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame082.rgba",
+      "source_sha256": "73E8D50360C7CC5B4D195E5F5BAA7C0A81B1D7D3D4956A6D3C42E51CC319D766",
+      "padded_sha256": "FA1390412C0D9FF85936DA6BCDCB106BDCBBD220891409ADF65F925E5100C50A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame083.rgba",
+      "source_sha256": "9416E5969D2A11B7292DE7FF0442E93471C29B7118EDB8EC2E12D570F96C7715",
+      "padded_sha256": "25182A799EBC8E826A2567CA0586DB8BD844D7628E2A4152C23C1360264B8AA1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame084.rgba",
+      "source_sha256": "DA4F3D3596F5764B3E4926A9BB93B44E73FBA0FDB1B27CA6F7A5C2C5C7A2AE0C",
+      "padded_sha256": "F9637B68CA9AC683E7EB334560F4425DDFDE53167AB20179041E9403037F2A25",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame085.rgba",
+      "source_sha256": "916086FF18C2EEC380A8DF5C6479B1A5F0C951FADC146C73298CE3F969F3F319",
+      "padded_sha256": "564DADD2D511312021E0F86F3519393FC4E7435890FC88AD9184668B391938E0",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame086.rgba",
+      "source_sha256": "B880FC82A85EF211836D4F4A7075F56DC0A9A7212F4B04791C7C814315D3AEA9",
+      "padded_sha256": "035329E8639DB686660440A92D730383781E7D115CDCB86807D541ED9355D231",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame087.rgba",
+      "source_sha256": "BB963F690136B5880F778C30B17A1F7FD5D21B05DF669B5AAFD5F348D0E1DCD7",
+      "padded_sha256": "9338F0424C8CE0DA0465FCDF587685DA7E265C6C11538D320C03A3ABE9D9E5D3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame088.rgba",
+      "source_sha256": "0A3AA0F788AAF3B92066E380F4AD7EB07FADC85984AA4C10BFB4BDCE126E50A6",
+      "padded_sha256": "CD66495E30FF7BF96FD743D256FB59C1CDD8F09314B43AB9CC1C342B947E5823",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame089.rgba",
+      "source_sha256": "BF32D7E2C5BEE7590F0C5A73EC9E7713892BCCF1D7425A1FA59FE5A01EE9BB4B",
+      "padded_sha256": "9A0375E56DB550ED3224D7F4D1DA1E09934848AEE811FA2498F43D3BD5E8AE68",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame090.rgba",
+      "source_sha256": "5945BA11A0A84DCA938EBFF275296766E50B134F27F812057047EFE1209A778F",
+      "padded_sha256": "9FAF99139D2BD043D19CDB7FE8C3C016B3F3C915837A2D0BD7B469916CA5153F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame091.rgba",
+      "source_sha256": "9F70101459A1460A35046DB51F7E4A10363FC44265240BA518B24A52FB7FF572",
+      "padded_sha256": "1A376FA9E91F7522B7D8F8843680B41CFBA90B6A8F0DC28BE0F7BB1E19FB4615",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame092.rgba",
+      "source_sha256": "E96B931FE6AB0AA9FD9FF797CEA0752F8712DE4385F82BD5F1D6249C83987572",
+      "padded_sha256": "D5254EA9FCC1DF79635786DA3E213BE2093E24330A7640438F6F9E69FDE686FA",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame093.rgba",
+      "source_sha256": "7AE309AE65AC1E0F98474BD77325EDB2CB076BED93ABBAEDA00B81AC718F9A66",
+      "padded_sha256": "45385B89142B0F5621BD562BF6BA5A9C4328A746402CDA5A4BE59ABA3A6735BF",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame094.rgba",
+      "source_sha256": "0AC64AF87156F29552134C48B608B157B183AB89BF0BEC37E22E67F4CA186241",
+      "padded_sha256": "124D6133E872B1413F7BDE2362B382E03C8A4218415A636CB528A174A293C521",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame095.rgba",
+      "source_sha256": "33D508383A99F8850C2448842E6F391BD952CCA9EC90DFD5222B04FB77D58CB2",
+      "padded_sha256": "5C13A6D00F1E0944FF2E7DF1CA662C3228D0C9E52C0D57C84A01C538DA886DB3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame096.rgba",
+      "source_sha256": "33D508383A99F8850C2448842E6F391BD952CCA9EC90DFD5222B04FB77D58CB2",
+      "padded_sha256": "5C13A6D00F1E0944FF2E7DF1CA662C3228D0C9E52C0D57C84A01C538DA886DB3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame097.rgba",
+      "source_sha256": "0AC64AF87156F29552134C48B608B157B183AB89BF0BEC37E22E67F4CA186241",
+      "padded_sha256": "124D6133E872B1413F7BDE2362B382E03C8A4218415A636CB528A174A293C521",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame098.rgba",
+      "source_sha256": "7AE309AE65AC1E0F98474BD77325EDB2CB076BED93ABBAEDA00B81AC718F9A66",
+      "padded_sha256": "45385B89142B0F5621BD562BF6BA5A9C4328A746402CDA5A4BE59ABA3A6735BF",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame099.rgba",
+      "source_sha256": "E96B931FE6AB0AA9FD9FF797CEA0752F8712DE4385F82BD5F1D6249C83987572",
+      "padded_sha256": "D5254EA9FCC1DF79635786DA3E213BE2093E24330A7640438F6F9E69FDE686FA",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame100.rgba",
+      "source_sha256": "9F70101459A1460A35046DB51F7E4A10363FC44265240BA518B24A52FB7FF572",
+      "padded_sha256": "1A376FA9E91F7522B7D8F8843680B41CFBA90B6A8F0DC28BE0F7BB1E19FB4615",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame101.rgba",
+      "source_sha256": "5945BA11A0A84DCA938EBFF275296766E50B134F27F812057047EFE1209A778F",
+      "padded_sha256": "9FAF99139D2BD043D19CDB7FE8C3C016B3F3C915837A2D0BD7B469916CA5153F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame102.rgba",
+      "source_sha256": "BF32D7E2C5BEE7590F0C5A73EC9E7713892BCCF1D7425A1FA59FE5A01EE9BB4B",
+      "padded_sha256": "9A0375E56DB550ED3224D7F4D1DA1E09934848AEE811FA2498F43D3BD5E8AE68",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame103.rgba",
+      "source_sha256": "0A3AA0F788AAF3B92066E380F4AD7EB07FADC85984AA4C10BFB4BDCE126E50A6",
+      "padded_sha256": "CD66495E30FF7BF96FD743D256FB59C1CDD8F09314B43AB9CC1C342B947E5823",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame104.rgba",
+      "source_sha256": "BB963F690136B5880F778C30B17A1F7FD5D21B05DF669B5AAFD5F348D0E1DCD7",
+      "padded_sha256": "9338F0424C8CE0DA0465FCDF587685DA7E265C6C11538D320C03A3ABE9D9E5D3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame105.rgba",
+      "source_sha256": "B880FC82A85EF211836D4F4A7075F56DC0A9A7212F4B04791C7C814315D3AEA9",
+      "padded_sha256": "035329E8639DB686660440A92D730383781E7D115CDCB86807D541ED9355D231",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame106.rgba",
+      "source_sha256": "916086FF18C2EEC380A8DF5C6479B1A5F0C951FADC146C73298CE3F969F3F319",
+      "padded_sha256": "564DADD2D511312021E0F86F3519393FC4E7435890FC88AD9184668B391938E0",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame107.rgba",
+      "source_sha256": "DA4F3D3596F5764B3E4926A9BB93B44E73FBA0FDB1B27CA6F7A5C2C5C7A2AE0C",
+      "padded_sha256": "F9637B68CA9AC683E7EB334560F4425DDFDE53167AB20179041E9403037F2A25",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame108.rgba",
+      "source_sha256": "9416E5969D2A11B7292DE7FF0442E93471C29B7118EDB8EC2E12D570F96C7715",
+      "padded_sha256": "25182A799EBC8E826A2567CA0586DB8BD844D7628E2A4152C23C1360264B8AA1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame109.rgba",
+      "source_sha256": "73E8D50360C7CC5B4D195E5F5BAA7C0A81B1D7D3D4956A6D3C42E51CC319D766",
+      "padded_sha256": "FA1390412C0D9FF85936DA6BCDCB106BDCBBD220891409ADF65F925E5100C50A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame110.rgba",
+      "source_sha256": "BC9150A7190CB4850AC3ECFFD7B4BDBABE9129231C79A1C9DCDAAEF18DC9AFB0",
+      "padded_sha256": "AB50880E8DFC6C747941C8033D295C40869DAF5A185B96A03C78F0960B9DE89C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame111.rgba",
+      "source_sha256": "C504AE634DB19BBB5F0341168855269EEE66CAA4EA9D822BAD7B2FFCC10EE603",
+      "padded_sha256": "53B4B2A1F707A1B596BFC90C92A3CE4183903F118C7687806D9CBEE42E30190B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame112.rgba",
+      "source_sha256": "F99E9299082F28E60A3BC08B7A51F4C7C85686C7D58503D8007979BA83AE2B9D",
+      "padded_sha256": "1C926B23FC249F6F05476762349641F93B54D606080CD9231D2CFA53A633473D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame113.rgba",
+      "source_sha256": "D4EA56A0DA45CC0F601B61B5085974A588149DDFEF4DBD8352F3D829ECDC508B",
+      "padded_sha256": "22BDF8BDDC6F3473111D005CCBBC7A2C685928D0F9E043BAB3074CEACED8DD26",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame114.rgba",
+      "source_sha256": "50A62ACB3D6D56997B59B46A3DF8EC4971FC09FCAAAF7954765755DC2D2C1EE5",
+      "padded_sha256": "D2987F87D744AE8A317EC576EEE5C560C23BA2BEE03A2A4026D291DCEA8BB5EA",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame115.rgba",
+      "source_sha256": "01001A24CF0EF46C1B7B85B1C5BF968584915D02167F425ED5C3D50BD3E02A87",
+      "padded_sha256": "3F161A05211EF5A04F254576FF391D910C9BBBF3812D7528D09C08CDBECBBD2C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame116.rgba",
+      "source_sha256": "640373027A1007DA6D738911633C8CCDEFC86BC6408F3B39FDADE4CA2799A38B",
+      "padded_sha256": "7BE55E04C148BF02EFBF6C7653BEF07D311FDF41421E5AC36B39C791DF3ABA15",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame117.rgba",
+      "source_sha256": "38EC8AF3E967376CEB9E3E1621B7EAB7D1BC221340C402EB8C431AE00ED6C21A",
+      "padded_sha256": "3D8D6B7B941ECF3601631EA495CC2AF0C7C207347E0FDED070BEF1CB60C6D7F9",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame118.rgba",
+      "source_sha256": "F1271FEA03EA62478F012555922E5DA77D24B227417F238AC5840230254DBC3B",
+      "padded_sha256": "5E292E02AEA2D7735655A5E0D5926020237FFA52EF633E5A06ED6B516E5EF559",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame119.rgba",
+      "source_sha256": "336E3C071AC3D264B789501C2C385F81F741197A7A524F732BEF8A74D14466FE",
+      "padded_sha256": "DD10108B489D09740038B437F2F0EDB953DB73527D88E5DA944520D76F58539F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame120.rgba",
+      "source_sha256": "04BB730C0F709C103D76AA5418D5FF456904C3EF9851F605D288A2B5480F353F",
+      "padded_sha256": "8B734E2CE13D230DC719AAE0C6D8926962AA55F6351346FE1EA6B4F5C991AD1A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame121.rgba",
+      "source_sha256": "EC2E6F2A773995C34BCC1234A6420291AA1F63F7DEF8E3E538D5C282D9D6C381",
+      "padded_sha256": "F373C32BBD77D599BC85F1BB420B60E33D5A94521D8D119EDBE093D5C81BCFF8",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame122.rgba",
+      "source_sha256": "8A39757E2525CAC621C77E106790681DEDE0D298A6F782AF5DB8A9895BCEF98A",
+      "padded_sha256": "CEDBD118215D0D11073B9368F0737319BAEAC7F59D213462006A143088F16BBE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame123.rgba",
+      "source_sha256": "363FBF8264356961B3450D82B75B77D59596B181AE1348E252B6B49DF7C90FD8",
+      "padded_sha256": "30BB04777850801C28F8BE4D65B3FDC7CA3126C2843C1DB3CE2A7362ADF35A8A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame124.rgba",
+      "source_sha256": "C716B684BD7CD66F0633F4A1EDE06E6C3442A1B997931E824C5F76DCF8B057CA",
+      "padded_sha256": "4695DEBFB87688999BEC7B628BA15C03C8693E75ABB3F698DE3B9E38C9A5013D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame125.rgba",
+      "source_sha256": "8C25259D4DECED668BF6D69732BFB0276BB5C3218B2C772C9772FB67CC64CC5E",
+      "padded_sha256": "E7B5B05F3C80C68CA4766676DC03F9844D9CD66E26F232E98A003FD4F07A3AB2",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame126.rgba",
+      "source_sha256": "25387766FB7591011FBA2D457832E7FF7FF67207F504933FEDD1061EDF78A604",
+      "padded_sha256": "2983C82851C789477EB7A237A96C23C3FBFD4C0775B876418FD4431652C91648",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame127.rgba",
+      "source_sha256": "837D48846EC17303E8974A50AF2621AD76B5203856115DC314A605DD221FE59E",
+      "padded_sha256": "4E85E03121B97D9D58046FB89F7B1648764C9FEFDE082C4B6F2E2A251B3CA4C4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame128.rgba",
+      "source_sha256": "E439FB0ACA60D439778E265A8F08C5EAF01B12489B8FF740EBE2CA14E3CE5D07",
+      "padded_sha256": "31AB2B31C31C3D67B5614AE56F3D55E71E732359F27DE82B8B2CD8ADE9ABB9BC",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame129.rgba",
+      "source_sha256": "62FBD36CD2DF945B9EA77841D6CE7940A55D0DBACF4506C67869FF44F4F7D337",
+      "padded_sha256": "4EA3FE8B2687A16B533530EA7C2A2FCE8399AB058A56860BEC5A14327EDC39AE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame130.rgba",
+      "source_sha256": "46C54F07134BA4C65E40F588A2D5CD40D6AF734C05BCD921057F2EAED674EC83",
+      "padded_sha256": "621E0E7695FF9CEFDEEA670908ACACB35584CAE70A8887595E0CC676986E89A3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame131.rgba",
+      "source_sha256": "9427B933B147A4411555FF69DA966261A6A3B7AF2A564B6BB52612E2C811C1E1",
+      "padded_sha256": "97D9A129FCE4D0033BCE2E8DDE53F00D4AF8A005A2B12054B73F6281E333AF2D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame132.rgba",
+      "source_sha256": "9D8692EFC1687DC82DEC6228909690C0764C02C752C7DF152C2996C6A08B5E66",
+      "padded_sha256": "D5B2198F969776D736C95E4BF860CFD73531773D742D1265395F247DD853D7B0",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame133.rgba",
+      "source_sha256": "BA533F1F517B4838A3442B90C4B65C083C928C2F232A89E7556DD1A37D409DEF",
+      "padded_sha256": "51CDC267A5152A3A0D5D9F8AC773058E0F52F5F1C4F5722301A332B0A3F3E5CF",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame134.rgba",
+      "source_sha256": "92CAC274FC1ADBB2008B59FB722203D7450800206814C801BE4ABB5397433748",
+      "padded_sha256": "99A21D7209318DE865AE983714D27061B26C542812D61095F2DFF595C2AA4144",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame135.rgba",
+      "source_sha256": "F15C87F7419A5B5D03B380B4C825CD621FE8C77EC17588E302D1CD33B6DEFFDD",
+      "padded_sha256": "A2EA79687951AABCC88CA0789A566D62B72A5CB409427638CB504CD74FA24610",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame136.rgba",
+      "source_sha256": "E95CB801FE615E2E6789EB7159CE553E1255FCEF414ECF9765A73C98D67A8F55",
+      "padded_sha256": "E6C01EE0102D5D641B96B9D81C0AFADCAE819CB0C3424902E94F797D56A6C34A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame137.rgba",
+      "source_sha256": "C2EB4114AC65C2E8EDAA6BA92DA64244761F89E26AAA7B62C1301034BC217F5A",
+      "padded_sha256": "6B71E3EA1F6828DF669D82B9154FF045215A1F99D5F8AF9CB0951F49E2968688",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame138.rgba",
+      "source_sha256": "76E150C666905C0C2911019A9FE87FB19C7E3E0C33A81744C99676BB03E16D85",
+      "padded_sha256": "105412EE19B0EA47B1461CE2BD44BC9634B167AA431786977DDC91965784F208",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame139.rgba",
+      "source_sha256": "4CBD128E94EB11BFB3F0B136DD0E3FCEE40258E47A324DAF27CD60FA2D2CE140",
+      "padded_sha256": "B4B3C19E80E7B5508C0B159D1E216737600177CED178AF97666EACD8D4CBC3BB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame140.rgba",
+      "source_sha256": "9B28E802D2983E7159C73126DEF5B7A80D11E69689EC0516562487E16F468AE6",
+      "padded_sha256": "FA83DC7C9686344C8B1AD29609A6F2E14473815BB1E5289084AA44A380B64308",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame141.rgba",
+      "source_sha256": "3D20CF101470EEE933EC575B30D727BC6338E88107D12EBD14D6E0AEE11BC491",
+      "padded_sha256": "91DE5B6F524DFF015922597519AEDBCB7A8D683FA9266226D294BC0E2E634A1C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame142.rgba",
+      "source_sha256": "DE978571DEB31F6D530C18747C71AB6063F7FA2532DA0FCE738EC42D6D52FC01",
+      "padded_sha256": "8CD9BAD5620156E865C8D240BA8839B9F30D2AD71DBE0CBE8CCC395C65BD5273",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame143.rgba",
+      "source_sha256": "672A3092281DB87253B3B9711DE801C347E663C21BBAF1AE9384116BE4205800",
+      "padded_sha256": "67E4D87F89B1BAF62E55610EC3887DC3D8807E23B01B44ECCC85170BEACCE0D0",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame144.rgba",
+      "source_sha256": "FA3DDC6E984E8AFF8CBB97525F2EDE965669F61DD0BD9C9E874A8915CAD36BFD",
+      "padded_sha256": "CEB13742E11998A72ECC9A04E485E3711B0EE89885C0B05D26809AE96CDB2B05",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame145.rgba",
+      "source_sha256": "2F2DBF94C4B5D79E2B0260291DDCB4AE3146A0CE3201CB4AADFFC58106645F81",
+      "padded_sha256": "A51E074C0707817F64005C96DE39A3A858EEC297434CCCE38F178BA3C7458E13",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame146.rgba",
+      "source_sha256": "CAEE2BAC9DCFEC97C321997775B0CF73BFD993BF2D1D3E0D4D7FD2EBC038F85A",
+      "padded_sha256": "8A49B8CE550803B1277D610E1B7A798DDCDC787BA864A0A48A7F5ED02AE977A6",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame147.rgba",
+      "source_sha256": "DAEFDEF829418C0EEEDCFD4D0D4996C461C35276728278EA1C79E249B46CBBF7",
+      "padded_sha256": "B9967FE2F26B271AC396697F564225B71113C20D68698E96A3A88121E5D49D67",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame148.rgba",
+      "source_sha256": "E71D314033797240CFA00A4CD6B5FDD5E1788C632BD7FA76A51EFD8E84937E51",
+      "padded_sha256": "E1C6080C20A5C477EB0C845BBAAC09CAF4FACE07F6B4370F63CC89885E963E4C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame149.rgba",
+      "source_sha256": "B3FF7345DD276C473F5699A203702B13122FCB55F76DBB69BD79EFEEA7DA63F5",
+      "padded_sha256": "FA77F740C0EBBADA6FDF335DD6CDF0C7A265E5A1E8CDA68F4AD7A89C1EF030B3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame150.rgba",
+      "source_sha256": "D37764D615236EBF0D66CADDF7330D17A6BCA696F11BAA8ED42914F830C96CBE",
+      "padded_sha256": "752212B279B8EDD63A4BF872ADDED0F91F1A425756DFF852597DE0ACA6AD4445",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame151.rgba",
+      "source_sha256": "72F862C833662DCA316A5B283AEC3E6A2061AE379D649F440238F1AC3C59E4C1",
+      "padded_sha256": "08590E1F2CE17AB2F616BA9EA573361E8452A09B282DFABD4E5774EB032B824B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame152.rgba",
+      "source_sha256": "5F0B1E8C751D6E195F67F94010D0DD68C9A109B3F6AD350B32C6BFD59E68331A",
+      "padded_sha256": "061DA02004628D4EA1C98298B8D8E7A0662FB61EFD59F18141289E4F073D9275",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame153.rgba",
+      "source_sha256": "D52C336BFB4D46AE891E0DA2D47BC94F8ED3EA7E517D5B2E671633C032301771",
+      "padded_sha256": "0578FB5655EACA951D5534AF52D6A8384F3E95BC838D3247A557D1315C64248E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame154.rgba",
+      "source_sha256": "BC7B1791191B57C6A3D2F98AD9C3F8804FC265B4DDE0B97D376FE9BD846818B9",
+      "padded_sha256": "0E56D12D195EEF8380B4EE1BFFA68963DBECD814142018C69ADD99E13AD30A55",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame155.rgba",
+      "source_sha256": "F54A75DD3545762A2B5A561379CF68CBA1CC7225F2D50ECADD3366A3F4B91D2D",
+      "padded_sha256": "C469ABB9EC864CE4511C9C9536F46787F55FED0B86C1A7B57AE64612BF9A1D8E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame156.rgba",
+      "source_sha256": "F907677BA48EB2238A2EA8FB6E44E67F6E88A8C2543C4A3C7841ED3D25F0A924",
+      "padded_sha256": "844A2FD33BF484D3EAB45584F6FE20D4D33982C44FBF057FBC0C5D6BD3E9C12D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame157.rgba",
+      "source_sha256": "BF5019761459C096ED220A81DF28AFE0662BF8EEEA9EABDD7F792C24167CF43E",
+      "padded_sha256": "0872B6538CF73E157DD6DE6F84E0A1C01B67661FCC65F345D9D114BA6293E54F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame158.rgba",
+      "source_sha256": "C5B851868499D7524B3353C283645AD376D7F9234ACB5C6840A5CDDA76CE8649",
+      "padded_sha256": "F17B5D068E2339B48C58E105573C128A839F437BD511534C3F63635AADEF2E27",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame159.rgba",
+      "source_sha256": "8224975BDE2438C173E3AC74D2AD83D8FCEF87C9BCBBD331726B2382918B91FD",
+      "padded_sha256": "EC1E47514B4FEE645C6684956CAC46BA5F8D73559A9997DFDFAC44818FD54F41",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame160.rgba",
+      "source_sha256": "36EFE9E9B32B5547E2EA964CFFF2F87E9BC22073F377B488E80C3A03BC4DFF4C",
+      "padded_sha256": "082D276B1DD44462DB4DCDFCEED2D9696FA6F0FC4794155A38812499EF2D20DE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame161.rgba",
+      "source_sha256": "615786A7AA8151AF2225C305A5E32B0C30BE71491235C295942A4619E87DAE03",
+      "padded_sha256": "F217F3D7ADC6DAB3F577BDEF53BF15BF00438E840A1CED0E6E007EDEACFF4AE4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame162.rgba",
+      "source_sha256": "907D667169F69A695CFBE3DFE00CC7DFA2EAB2EBDAF39989BF7597B4394ABB19",
+      "padded_sha256": "430471C4DF9503E42BAEB4E164D346EB7444B529B9A8DE3C7ABCFBF659BB3675",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame163.rgba",
+      "source_sha256": "7847A6F8A8DB585E76F080C6E1275D3CE64D2A06DD58BD16EFFA1DFE534DACFA",
+      "padded_sha256": "CE4019038A0DC3C799D460FCD8D394627D923F68A92603F4998811C68E70B4FF",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame164.rgba",
+      "source_sha256": "76B120034753F60DF422D1FD8135B559674F0903C5ED600B5E5992DF884E1505",
+      "padded_sha256": "40EEF301387936CD08081C8BD66B6F0BD145EF4E079CA3BE16F455211F06D65B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame165.rgba",
+      "source_sha256": "B4FC8EDE84645DBC3B61C242127158FAA795FA5D8A1301BCEE86BA2F8EE86405",
+      "padded_sha256": "18DEDAF2749E01486D844D09337663BA0BCB3BC1D31E4E07877CB89A924F005E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame166.rgba",
+      "source_sha256": "CD1530CDA23786AAD543C60F1F161354837B56C7347866FFD162D544DD598E56",
+      "padded_sha256": "8148885CC7C85C900BDC60BDB1E7CA520BD29AE8854B3B2D5DA7DCA8B4FDAB8B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame167.rgba",
+      "source_sha256": "931B446CFADAFE660AED64454FAA733ED980BB7278513C53F550E2274791E34D",
+      "padded_sha256": "DE2A5A9E39CF9F26260E199B69EE5DB4197D544F8D56238FA96817BFF076A653",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame168.rgba",
+      "source_sha256": "303BE8691D67EDEBE5248267554DD54AB48149BE6DD39D6D16BAA44BB2342BC5",
+      "padded_sha256": "2D0D7BAD034EB75FF1A138AE04F1EDE8CD8C1C3F3EC876A17C2A2DE2E44C5072",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame169.rgba",
+      "source_sha256": "F1B02540882A2481E2907C1468079F1608361E55270512FEC696F63135DC4CD9",
+      "padded_sha256": "97031BEC87A5E2A892146D32C525A3AF2B23EF0BFE94F350C4AA40C0D994FA07",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame170.rgba",
+      "source_sha256": "E87EEBF0FD9C788DF9C75092B9DFB1814E77911876231E34EFEFBA9C238EA90C",
+      "padded_sha256": "7FB8A9E8683A213DBAA42F9E1B894DE3BEE785A9C61EEEDB5CD842754322E7BE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame171.rgba",
+      "source_sha256": "2A8D5D55AF71D6B9FE21B481F9CE16A2778A6530675C329BF3161341FCFC73ED",
+      "padded_sha256": "8ABF70552EFF5E83550D31B7A00D70344EF76CF7A06F425EF2EC68BAF8BDE094",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame172.rgba",
+      "source_sha256": "89C33CADB6FCD754B277CC3FA44EF43830402AC9C13F935A5801A1F87B1C14B4",
+      "padded_sha256": "DCFAE056B3E7E1086B0ADC5A01DBD0DF768C8336178DDEA6AA10F6759720FF71",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame173.rgba",
+      "source_sha256": "9678A976ECCA07CA708ED61978E26364B1D001D12FFCEB9D91596F33B4D5B4D5",
+      "padded_sha256": "EBEAB6225E87D81340609B8977237C4EF9D116B1F2A959329CA14DA255B661CF",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame174.rgba",
+      "source_sha256": "DBBA5C9B0257B7C7F7FBDDDAE90EE3D9ED3866852FFCC5BADB716C1E8172C15C",
+      "padded_sha256": "DF2641A58107B667FE0CEF25D10782D4A95515999C87B44A98085C2BD8FAC1C6",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame175.rgba",
+      "source_sha256": "FFC0AAB5735C9CFEAF631E422E53AAB5D8D30C7F54BB2A49968047FA97C80F97",
+      "padded_sha256": "4C68BE4816C991F951377F56770DEF15E9C9DB2A733F0A41EF088DF0C0C99861",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame176.rgba",
+      "source_sha256": "C0A9A17E63420F1DC79F1C3DDD1CB11CAB9A7C512D7A07DBF24A29D4AF84518A",
+      "padded_sha256": "0FF0C8CD1FA8569A177BAEC48E40F4A5ABE4A2703B692EA8739E5454FB711534",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame177.rgba",
+      "source_sha256": "AD512DBCBABCE91818F1DB6A194C7562106BDD2FA37674F8EBC8E3FAC3CADC7B",
+      "padded_sha256": "93E7909F51BFAEC89A2C1F15ACF0347191C4EEB50C6C4DF82F7FD9BA016CD1D1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame178.rgba",
+      "source_sha256": "CF42709FAB9DE0C1796CBA541E5163F5D73C5C3E4C9ED5C17F38CF2D270A3482",
+      "padded_sha256": "33C5D094CEE34423517D37619FD4BEB3FFD565C512DA5CA08FAF14EF4C41F38C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame179.rgba",
+      "source_sha256": "8C8F8BB4730F5FCB2A1D33AD99BC8901BB675AD29A808B82D2B97E40E49BC9EB",
+      "padded_sha256": "3E85B3F25625502668C60F5F399060CE16103194BA91757CEABD6FD1DBA0CD4E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame180.rgba",
+      "source_sha256": "A6326626DDC68EA59406093206FE295F4323907E0C6ED08600C12BD6EDBEE155",
+      "padded_sha256": "DA9BECB57771B775992AD6F9FE9C4D9912562281B945F407264BFB85CD8AB48F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame181.rgba",
+      "source_sha256": "FE5407C411DEADB1189AC54271027EAD919025386E5AE29985BE1B33D95D22A8",
+      "padded_sha256": "6A059C360A7739B4AF18BFEFF618B9A719A1C7A8DA0721DC6B3451480FCF901E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame182.rgba",
+      "source_sha256": "091699D17CA6B7CD015ED21A78DBB9FE349D1B0F843FAA1C2591A8601F1A6D56",
+      "padded_sha256": "AF58B4E9E5EF97F2A56EAB830D7124C2902C14D86B82C4691776D462C2BD51ED",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame183.rgba",
+      "source_sha256": "57DECBC094044DB63A4323134D11F9BE6DC0E5DD2F3F0F342F89C4E82DFB1B47",
+      "padded_sha256": "CD93BF71BE32D5A2251188E086A724813AD544A702B3D861A7432B1091A26D92",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame184.rgba",
+      "source_sha256": "B0DD2200FA89B88E32D9183BB630BCCAA5D80E052FAF12340AACE35C922532ED",
+      "padded_sha256": "CFF9A46600375E5B888AF02BAC8220475E6650259B845FA0211B120BA722B9C5",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame185.rgba",
+      "source_sha256": "0688E11BEF9FA2D9538A97CD5E72F5761AD94793CF4EE18315187D8B04027174",
+      "padded_sha256": "598478C50C8090EE0D76676F9C2F005C019B91A1BC7DAB20B4D7181C7BEC988A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame186.rgba",
+      "source_sha256": "FA0FDE84ABCF90D7D8DE3C11AB605B3300274E177E4BD60DDB9CBB01F8A309BE",
+      "padded_sha256": "2CC9F1CE00DCC01C03986C24CEF161F206537FC7E5E2DA82B176A18BB37C7654",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame187.rgba",
+      "source_sha256": "58EB379AA99FB50CDA0CEA4D902C43BF959DFA53FCD657018647DE9B6D2762D4",
+      "padded_sha256": "D94B3347A8A862B058CD7476798CEC37DBCF73359F54A2E57B7F75D6DCB24C24",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame188.rgba",
+      "source_sha256": "8A81D39B1ACDC738AA54FB7473CAA385EC67CC7E3F53B0A7F6F5B6D3605BF48A",
+      "padded_sha256": "4F6DDCAE0C441E67B21C6236C7B25F35F01B91E06E3529C5D4F680D79EB255A1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame189.rgba",
+      "source_sha256": "3C79DA31A77EEE1F0D78B2D2C3FA22132FACFA62B3CA902783ECEBF66D630149",
+      "padded_sha256": "CC4CEDC86D837888004839D666A1009E64BF46F712FC828AE71FE76434EA1B8F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame190.rgba",
+      "source_sha256": "1C2845FE436EA86E015F10ABB78D70EC3959082A6BE0979B201904B707F14632",
+      "padded_sha256": "E24E2415B88414B94899C610C6853F01555F02F176FAC09D030D817157A3407D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame191.rgba",
+      "source_sha256": "944339BF27B1868F7495C158E5776D9E94B63BDB8B9829822529DA85C643BF16",
+      "padded_sha256": "AA6C8E968D732C28CB7D00AA712B9FD56694B3B44D6065D5A1CAD2A0EDF42E0A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame192.rgba",
+      "source_sha256": "74BA379A76924C52C2B2FE81A3AB70431854904B31F8EEC7EFA17C9E279F1C52",
+      "padded_sha256": "A7E38E93EF85227BB7CB0789DB8006586B02C00BA7785CCAF8F1CCB91DA115DA",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame193.rgba",
+      "source_sha256": "8AA9DB8FE3774F6EF8F8955A709925662616228AD202F3F1FB9109C6BE737401",
+      "padded_sha256": "E35F7D8837539339C497B242B05D0837E6177A3835B26BFE8BE31069BB2FE446",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame194.rgba",
+      "source_sha256": "464A42E461D58F007466ADBF98CDE53F181DC7BFA51239DA7374FDCC4AAD5A9C",
+      "padded_sha256": "C51110611FCC9742DF16A835DF40BDF6221661C2F2214DC7E6E4D948782EA906",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame195.rgba",
+      "source_sha256": "308F19FF7D49C919CDDEA9BD794D44072489BF3154B2CF28BD94765B918BAA47",
+      "padded_sha256": "07B555D32C00ECBB67C302A81A2769EA1F1C2096A5675B5D0A913AF01C9AA6E9",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame196.rgba",
+      "source_sha256": "37887BC5378DF94843133118A4FB13BA34E0AE4E4DE2CEEACD64E807FC17B373",
+      "padded_sha256": "15BB38B5F553647B132DA240A5EDA9AC094795A600EEFB2EF99D87C668728850",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame197.rgba",
+      "source_sha256": "D82AEDE35AFADB9DC54029D9616DB25C3DAC7ECAEBD4C282D290A7234620C1AC",
+      "padded_sha256": "981DF6665E82C668632281FE12D2AC6F6512F1533AB846CEF1153A5CB562F0DF",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame198.rgba",
+      "source_sha256": "AF5F1A57AC058EFD178F9115916014AF2A1F0C16CAAE7C7EC31FFC14C73B4088",
+      "padded_sha256": "C7849D9BB83018251BEF36A89F5C2D0DA1D6F4634237800866FDA4638A11205E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame199.rgba",
+      "source_sha256": "495BD5D178124B7DDCD6C36CE30A5CC747C91B4E5F4CA00BB9A56B6673D10D40",
+      "padded_sha256": "B81A4B2BF2B9B56555E5D5DA4AA7FF5D8C586A3D9D01F9AE74B2D78DDCF83059",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame200.rgba",
+      "source_sha256": "828B7092B3BA616B49C4315C2D18F04F74CB8233A78CE11DD612F0EEE3ACDE85",
+      "padded_sha256": "CBF65B42A2D8D0830DF76DA38CFECEC79E3AB69D3389551F81BD485E25BFD2BA",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame201.rgba",
+      "source_sha256": "AE4418521D92EA977852D1A5A669591F000AD6EE069DB8AC1848958AE9DA5B26",
+      "padded_sha256": "514F2EFBEEFDC004B43DCBC5F5B5EE2C7CF74EE26276C31CB94743A75E20FFE4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame202.rgba",
+      "source_sha256": "0D4247E95A8F9D3FBEB1EBE7EB976EE45970CB91081AC6E46C1B114FD4316CA6",
+      "padded_sha256": "E71F2539773942C7E0AF4357D08DF23363344F385E4D5B2669D6E8BA0AAF6C8E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame203.rgba",
+      "source_sha256": "108DB8AB4528CEA5F3800177670A4970714E91957C98866AC147AC86821AE403",
+      "padded_sha256": "B0A9C258BB8B9E7EA0FB53509AD5456CE1F67BD2E14E528D953DDC493305A58F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame204.rgba",
+      "source_sha256": "6A5220D64183588FBDCD39A7FC0A76E358F1B77DBE4E8322B9B61DB4C6374B3E",
+      "padded_sha256": "52F6FE5DF47502635A8B9685D6F0AAAFC98C7AA1C7F842A42579A3CDF2BE9EC2",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame205.rgba",
+      "source_sha256": "92B312C813AF5E4BEDD9656EF036BAD5D1CC121BF5D9FE908B6742018831BF46",
+      "padded_sha256": "CA1379548569D5F44E1F431EBDA1D94D44696D2391B4464FD2FB7DA276DBA82D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame206.rgba",
+      "source_sha256": "ED101758961C29D23F4C75B170EAF3C7E7534D93EC9603092DE8EC5887F4AFD5",
+      "padded_sha256": "A98AC35F70DB0673FD88FCFB58592CE00368F752655D9421CEA132F14BDE5BFC",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame207.rgba",
+      "source_sha256": "04D76D7302D24ED04807CE4A63B4041A989E9CF1B6CD3EDE1ADF2AB7CC46B2C7",
+      "padded_sha256": "2CED8B61E6F86C8B67BD1FBEB57744B3A49101D1FA3775F95D079137D37824E4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame208.rgba",
+      "source_sha256": "D5EE9A081611141A90C58FA5166724CC4EE2CD68288A89FD4320931777947FAA",
+      "padded_sha256": "AE749D828D9D2E402D471D1F8F08D07D6C353E467530A0DA447EF199E56D5097",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame209.rgba",
+      "source_sha256": "26AD911BDC7E96E7FFF93E06400FA0C9CA9928BF7EB54414D663B82892DF4ACA",
+      "padded_sha256": "E544B86A8B3D2780B8DF4FBA2E5509B14F237C1EF41B9B4D59737086182C4516",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame210.rgba",
+      "source_sha256": "1676E2B808471D4155F75FD2BF7E4E7289263AB41AB9D04453C7EE3F2C7EBBD4",
+      "padded_sha256": "63E969B60F05B4BF110BB2FE74623FB1E9621700316652FD99F11FA7E758E50F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame211.rgba",
+      "source_sha256": "5F09069188221DA73C04D70C7F67D6427E75FE3228D08BFAF949A2ACEFC1F26F",
+      "padded_sha256": "063E32D3F3DB528DC2E2A63A6E9769857D17CC1704D356E9640EBBBF0915CD4C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame212.rgba",
+      "source_sha256": "818B30A8953F675E28FF9F2682AB5ECF805B6F41BC0E7F5DD89E805590999F52",
+      "padded_sha256": "7059BA8DAA902E369A1BD81720DF0AECE178413D9DE855786E8475BB449A7B97",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame213.rgba",
+      "source_sha256": "C593472FD0885A270A5AD2D67CED0C9B353011445E7D5577AD9592610AE03B64",
+      "padded_sha256": "7BE03D75B56384804B4CC625BB00892F5E756D57C61F28DF6D0DCAD54BD8032D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame214.rgba",
+      "source_sha256": "C84ACCB62E20F1F45F1E8E86D2001ADE94A045AD8EEAE5DD4EBF374E2E97DCDE",
+      "padded_sha256": "BF804A681A5C48F9B5ABF9434A7889434C44C3AA3673B70C6407D264D710375F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame215.rgba",
+      "source_sha256": "112F4BB7BA329200B050072CCCBFBE5DEA12C26FAC3C5078A97DED31AD0806E4",
+      "padded_sha256": "16C61385995EE83DEF78A89B24E67DAEF38DE1BE3AF574DEA1FBF25B7E3F401C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame216.rgba",
+      "source_sha256": "523D15400267B246D7DD1156AF72392FAD6BE9C052A03F9C8F3003098E7257DD",
+      "padded_sha256": "E1371C42050977D870085513F93B27ADA81954F6DB1BEB2298E37AFE7D07391B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame217.rgba",
+      "source_sha256": "4748BEE58ED8D3927A81F41AE6C35811E37D81140CBD0E3FFDFC8E6A34C2991E",
+      "padded_sha256": "AF91A3334B319046C5CBA8D587CA54DDE693C00F2DFE57860B40B44369BAEA9B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame218.rgba",
+      "source_sha256": "5A735420B096AD65A5A7D4571F15C3F5274BBC233057989FF834F5A040BA8039",
+      "padded_sha256": "1061B6DB0BE512BAF7237236854E56D80B8F73B5E3DCF4A6FABE94F02B91EB0E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame219.rgba",
+      "source_sha256": "B71597BCABDEE9ACB88C74547A39F6C7AC7CB7AEA537CF5B3C440C2682BE8B7E",
+      "padded_sha256": "1463CCD3F568D91013E973AA71B248C1D54B470730DA65C75CABB329779FDAD4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame220.rgba",
+      "source_sha256": "A8F7F042A55720D6F733FA391E7B046783D7C13175EB9EF327FED7E84A9B009F",
+      "padded_sha256": "8BC6ED02CE2625F3177FAAB4A59DFC24BE0775F7DD0CFCBFA91A9DBB5873EE75",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame221.rgba",
+      "source_sha256": "31DED96AA37AE876E51014F97E8AA4CE9E01B795F0242E47393C520F1EB18399",
+      "padded_sha256": "E0B45E2FBB71001DE20DB1FC87B98CA3F1939B11B6D55368E69FE5D1D375CE13",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame222.rgba",
+      "source_sha256": "D405B70CDEEE7E1C39F442D45966E575225882308E9E158FDFF259464E08538A",
+      "padded_sha256": "FB30D1488591D6E713CD2305B44B9CFE46195CC9181480DB439790BC037B5844",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame223.rgba",
+      "source_sha256": "B223C11727E0A7104C5291ADFF83F570545BE294F759EB693CF4291D5D87C4B1",
+      "padded_sha256": "E8532F185F83C2AEF051F3817D0E27859F30714E320B1CDF13094CD7F150AD6D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame224.rgba",
+      "source_sha256": "F1E3F976F0CE7FD58A617D051AAE2B46843E08000F3F845BD9A61472D67BE6FC",
+      "padded_sha256": "2A65BC743E19BFAD9C1B23DC201812B950D87BDC45EE6754B45C7250F01175FB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame225.rgba",
+      "source_sha256": "C6BD016B0462DD35FC6DB2CB564F7123FA4EC174213CFB207547C89EE4DC131B",
+      "padded_sha256": "5C42DE4680889AE0326A78105F3CE35C3F1A2C88A47F53D0AD409918BB9941F0",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame226.rgba",
+      "source_sha256": "464A8E07B23676CDFC400E0671D624E25124C6BD0437247304F54E3BA837037F",
+      "padded_sha256": "B3C48C9837F38CE8AF75BC709AFA10281C94E249D453996850B0D367EA53FA71",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame227.rgba",
+      "source_sha256": "3E9CFCE3B502C61CCAA76E7E74031997D59331B13D4D0AA342050E8690644791",
+      "padded_sha256": "B6CFFB6B727F69DCD664B7F92F9ADC15B5302E984EB69CC952940D4253C12DF2",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame228.rgba",
+      "source_sha256": "16C617B9F3D80279491F18A05BA18DB55C68C3ACD94D15008E8E76CBBB7A0EC0",
+      "padded_sha256": "27B93F8F8C64CE48196FFDA420D83627C5638174FFD329BE638A10320DA52CF4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame229.rgba",
+      "source_sha256": "0C653E28715EB72F15D9642B9660B750E365379412D312F61F68B8821E1F2E95",
+      "padded_sha256": "C561E7146F100B09E5856F4C845147B22422E496C946D68286F0BDCBA636250C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame230.rgba",
+      "source_sha256": "82A50323990232E1153EF7FE7EC641FDA6B5793FDF53CE057C6445B711FB60F0",
+      "padded_sha256": "1C43566B89771C63D522D074192283BF255AC32D684DBB8526D0B64115A2AC24",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame231.rgba",
+      "source_sha256": "FFFE8E234193AE917F5C87810B9F3F86ABC57C089CDA13F4AF1629452FF88E2B",
+      "padded_sha256": "24FE62DAE377FB962CE256ED424381F0A455AB7BD8E53ABF519BA7A383726E67",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame232.rgba",
+      "source_sha256": "0C2FE6A9A6FB3DB19AB7040E0B5C95B19BE46B0F350E305646C7C1A202ECAB33",
+      "padded_sha256": "B409635AB73735202B11611181F75AF507A82E3FB47DB5D3CBFDB2E2A79BF237",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame233.rgba",
+      "source_sha256": "7669A4F9C48F9AC03B99419E491BEE585BB41E5768770E2732FE0612538EF2BC",
+      "padded_sha256": "56E9713CEF4B69C067857ECE90BDF3103AFE3EE004F215BF47BE6110C7D229BD",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame234.rgba",
+      "source_sha256": "3855E154CF0CCF347C0134176ABC79EDB62576B66D22A972251851AA6350B4BF",
+      "padded_sha256": "77AC98FB1A26608D7D824E15C737B81003ADC77590DC5885284A77FA630FFA7B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame235.rgba",
+      "source_sha256": "16235B2D8FA05C2C56DCB6F762C502068DE2BEB132B77FC480C4ACECC1F21B13",
+      "padded_sha256": "5E9C73EACD79DDD6091D6AB36C22C056AF9BA7439F33E1B98ECDF44C45FF34CE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame236.rgba",
+      "source_sha256": "42A20939BA712D1433F13A02C339C7704252340714B29CE412C31FFB6EE9DDA9",
+      "padded_sha256": "6FC064DBAE9CF36B3A459436DAC907BCE08A33066F4F3C351BE865460A66FD1F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame237.rgba",
+      "source_sha256": "0034D40A0EC89254D2195EBFE984A027E8D24ABDF8449E38401B787B75D3261B",
+      "padded_sha256": "7DEC2234F2D17C050EBA4FF5235F919C49A6943C195A0B1F612ED23F5E62EFB9",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame238.rgba",
+      "source_sha256": "C72E7BDA5B11DD89A4AD67174696FB0264243816EE85D5AFE86A2A35B13A0757",
+      "padded_sha256": "F5DE3415745F8BDF3D8AD09DC532649791BDE013F653881307700482945E61B4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame239.rgba",
+      "source_sha256": "79F1B2D5FCB45EBA07344D54429CAFE4AE74A389B658C14CC709CEAC8A45AC94",
+      "padded_sha256": "68E3874C52C52BD4D710B248616AFA97C9DE38C57C08078E003A3F2F4BDD5E89",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame240.rgba",
+      "source_sha256": "F68290C0C9300721981F076F91794FC08FD879DB7B740E0EF282326B88CCE330",
+      "padded_sha256": "09124DFFD9FDC210FD34083D4CBCD0CB66AE0FAE87A3DD9131350F1137A939C1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame241.rgba",
+      "source_sha256": "0FB457CAD82E1D1FDFD24413828B606F3C5A73C441F68ABCC531B502D85DAB52",
+      "padded_sha256": "E6B615C277BF87FE32BF92C3249AE8B5352BE90881E7DDD5EFB335DBACAB8C5A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame242.rgba",
+      "source_sha256": "E521AFC36471D300F2353980F897E6B75327A2B45CDA69DD095C7979FECA2B08",
+      "padded_sha256": "42DA5F01596F9ED2C54285DA67149719B1B7607D55B3A1BEB729481EA581BC92",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame243.rgba",
+      "source_sha256": "F87396B0250530317B77869FFA6DFA9AF00D2781E302585D88566917C3D50DA0",
+      "padded_sha256": "5F5063BF557BD6CDC896202C0D3DBB66D8B084528B29C99DCE1A4E4D5198ADF3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame244.rgba",
+      "source_sha256": "7FAE9A1729664EE78510EE7C333404DD8D85A7FD73A20B3BCF7B5CE6CF0B0BA4",
+      "padded_sha256": "8A96236473499DD7ACE6DE3A264A47CFF366253890AD416A66C01EA188429B83",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame245.rgba",
+      "source_sha256": "603FB1BA0BDDAFBD787C12E01447E93D42DD57B552FACC576750CC58E1186AAB",
+      "padded_sha256": "5FC31745F34D706987029BBA58EF68F098B2C45AC3CEC6B1D4A2010B41023F1E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame246.rgba",
+      "source_sha256": "D3F74E0FECC65BC437A0E6250A8EEA6A9CB9272E5DD4DB26BFDE86EB25032291",
+      "padded_sha256": "7DBC5DE0A6ABD5AAFE86FC645659DF8D4D55CB85B645D6DCD921A9921913FFCB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame247.rgba",
+      "source_sha256": "48B8CF7762559C1FC37D90CBB38D6D6FC21BA1EBC802A27C7CF2CA45697A7A97",
+      "padded_sha256": "9345C6FAF360650A207168F866B6AE41A240A04D51C5B281C4E536F432C22BD7",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame248.rgba",
+      "source_sha256": "0F82B30FD9EB2B8AAFB250AF1A604832B4EA9DB802F22CF013E171F2C6955895",
+      "padded_sha256": "3BD2916681A7BC2BF6F5690BC7428C184E8BB2079BCFF85C7E9134A0364D822B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame249.rgba",
+      "source_sha256": "A3EB92A8362DA76A3E5A9D8E1D0885323344CC7B835AE033745F8A711DD3B6A7",
+      "padded_sha256": "3A70BC949FA064C20E87D95015C5C5391803BE750CE04E476F28A443776E6285",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame250.rgba",
+      "source_sha256": "E0A5A43AAA565ED17A55400640D946EF3ECF6A633D8BD3292A8955BDBCCF2872",
+      "padded_sha256": "712DAEFF01A03A29B4CF8D299F8835DE8688A6765BF819066950016CA6B084C0",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame251.rgba",
+      "source_sha256": "86CED1E0EEE283C0C82414D1FBF130997234C5F16D0F5577FBD74FC861105100",
+      "padded_sha256": "5C152628FB53196467CDC50B6847EFE163A1E68E2B4F39D16CBAF8DAF4742C9E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame252.rgba",
+      "source_sha256": "2EA2FCE449A1E1F79EB49E9C911954374620740BB24229BFF6D5DD419F81BF21",
+      "padded_sha256": "0F7A2BFE3A49E23426DCA6805A438AFB5EF5CDDE0AA620CA97E0864DBFE38819",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame253.rgba",
+      "source_sha256": "99D82B87B586B7769F0FB3C3743F1EC8FC9A53B4B3D9BF76510D14A2ABBD2D8B",
+      "padded_sha256": "FC9BD117C64947170AE72BCC4D43DB6712C38586C6D2614A7101A49D1E6D6E65",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame254.rgba",
+      "source_sha256": "A5CFBD0AFBDEEE917E606D54CEE64C1C5B5A4B45773133235B8835388CB31682",
+      "padded_sha256": "6E3F52E408D167C789A47C5834533DBD32871C45DA2D318CC2FF402988EE81E3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame255.rgba",
+      "source_sha256": "24928C5AC8F49DF10BAA5063497E18E27EDBE79B80C366203AC27A325B9DC25C",
+      "padded_sha256": "764E3CA752DBCFC036BA304A89B34AD73BDA1605C5FE5EA6414AA91FCEE2DE20",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame256.rgba",
+      "source_sha256": "984AB7FA4693D030E23DED64F505C05A0B40D838274405A1DA4F0EE4C1C5058B",
+      "padded_sha256": "9FD31EB36B376FFAC09D1F4A0B52CDD36AE09CAB06B511592AA1C1AA11E9DEB8",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame257.rgba",
+      "source_sha256": "76B120034753F60DF422D1FD8135B559674F0903C5ED600B5E5992DF884E1505",
+      "padded_sha256": "40EEF301387936CD08081C8BD66B6F0BD145EF4E079CA3BE16F455211F06D65B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame258.rgba",
+      "source_sha256": "B4FC8EDE84645DBC3B61C242127158FAA795FA5D8A1301BCEE86BA2F8EE86405",
+      "padded_sha256": "18DEDAF2749E01486D844D09337663BA0BCB3BC1D31E4E07877CB89A924F005E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame259.rgba",
+      "source_sha256": "CD1530CDA23786AAD543C60F1F161354837B56C7347866FFD162D544DD598E56",
+      "padded_sha256": "8148885CC7C85C900BDC60BDB1E7CA520BD29AE8854B3B2D5DA7DCA8B4FDAB8B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame260.rgba",
+      "source_sha256": "931B446CFADAFE660AED64454FAA733ED980BB7278513C53F550E2274791E34D",
+      "padded_sha256": "DE2A5A9E39CF9F26260E199B69EE5DB4197D544F8D56238FA96817BFF076A653",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame261.rgba",
+      "source_sha256": "303BE8691D67EDEBE5248267554DD54AB48149BE6DD39D6D16BAA44BB2342BC5",
+      "padded_sha256": "2D0D7BAD034EB75FF1A138AE04F1EDE8CD8C1C3F3EC876A17C2A2DE2E44C5072",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame262.rgba",
+      "source_sha256": "F1B02540882A2481E2907C1468079F1608361E55270512FEC696F63135DC4CD9",
+      "padded_sha256": "97031BEC87A5E2A892146D32C525A3AF2B23EF0BFE94F350C4AA40C0D994FA07",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame263.rgba",
+      "source_sha256": "E87EEBF0FD9C788DF9C75092B9DFB1814E77911876231E34EFEFBA9C238EA90C",
+      "padded_sha256": "7FB8A9E8683A213DBAA42F9E1B894DE3BEE785A9C61EEEDB5CD842754322E7BE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame264.rgba",
+      "source_sha256": "2A8D5D55AF71D6B9FE21B481F9CE16A2778A6530675C329BF3161341FCFC73ED",
+      "padded_sha256": "8ABF70552EFF5E83550D31B7A00D70344EF76CF7A06F425EF2EC68BAF8BDE094",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame265.rgba",
+      "source_sha256": "89C33CADB6FCD754B277CC3FA44EF43830402AC9C13F935A5801A1F87B1C14B4",
+      "padded_sha256": "DCFAE056B3E7E1086B0ADC5A01DBD0DF768C8336178DDEA6AA10F6759720FF71",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame266.rgba",
+      "source_sha256": "9678A976ECCA07CA708ED61978E26364B1D001D12FFCEB9D91596F33B4D5B4D5",
+      "padded_sha256": "EBEAB6225E87D81340609B8977237C4EF9D116B1F2A959329CA14DA255B661CF",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame267.rgba",
+      "source_sha256": "DBBA5C9B0257B7C7F7FBDDDAE90EE3D9ED3866852FFCC5BADB716C1E8172C15C",
+      "padded_sha256": "DF2641A58107B667FE0CEF25D10782D4A95515999C87B44A98085C2BD8FAC1C6",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame268.rgba",
+      "source_sha256": "FFC0AAB5735C9CFEAF631E422E53AAB5D8D30C7F54BB2A49968047FA97C80F97",
+      "padded_sha256": "4C68BE4816C991F951377F56770DEF15E9C9DB2A733F0A41EF088DF0C0C99861",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame269.rgba",
+      "source_sha256": "C0A9A17E63420F1DC79F1C3DDD1CB11CAB9A7C512D7A07DBF24A29D4AF84518A",
+      "padded_sha256": "0FF0C8CD1FA8569A177BAEC48E40F4A5ABE4A2703B692EA8739E5454FB711534",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame270.rgba",
+      "source_sha256": "AD512DBCBABCE91818F1DB6A194C7562106BDD2FA37674F8EBC8E3FAC3CADC7B",
+      "padded_sha256": "93E7909F51BFAEC89A2C1F15ACF0347191C4EEB50C6C4DF82F7FD9BA016CD1D1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame271.rgba",
+      "source_sha256": "CF42709FAB9DE0C1796CBA541E5163F5D73C5C3E4C9ED5C17F38CF2D270A3482",
+      "padded_sha256": "33C5D094CEE34423517D37619FD4BEB3FFD565C512DA5CA08FAF14EF4C41F38C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame272.rgba",
+      "source_sha256": "8C8F8BB4730F5FCB2A1D33AD99BC8901BB675AD29A808B82D2B97E40E49BC9EB",
+      "padded_sha256": "3E85B3F25625502668C60F5F399060CE16103194BA91757CEABD6FD1DBA0CD4E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame273.rgba",
+      "source_sha256": "A6326626DDC68EA59406093206FE295F4323907E0C6ED08600C12BD6EDBEE155",
+      "padded_sha256": "DA9BECB57771B775992AD6F9FE9C4D9912562281B945F407264BFB85CD8AB48F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame274.rgba",
+      "source_sha256": "FE5407C411DEADB1189AC54271027EAD919025386E5AE29985BE1B33D95D22A8",
+      "padded_sha256": "6A059C360A7739B4AF18BFEFF618B9A719A1C7A8DA0721DC6B3451480FCF901E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame275.rgba",
+      "source_sha256": "091699D17CA6B7CD015ED21A78DBB9FE349D1B0F843FAA1C2591A8601F1A6D56",
+      "padded_sha256": "AF58B4E9E5EF97F2A56EAB830D7124C2902C14D86B82C4691776D462C2BD51ED",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame276.rgba",
+      "source_sha256": "57DECBC094044DB63A4323134D11F9BE6DC0E5DD2F3F0F342F89C4E82DFB1B47",
+      "padded_sha256": "CD93BF71BE32D5A2251188E086A724813AD544A702B3D861A7432B1091A26D92",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame277.rgba",
+      "source_sha256": "B0DD2200FA89B88E32D9183BB630BCCAA5D80E052FAF12340AACE35C922532ED",
+      "padded_sha256": "CFF9A46600375E5B888AF02BAC8220475E6650259B845FA0211B120BA722B9C5",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame278.rgba",
+      "source_sha256": "0688E11BEF9FA2D9538A97CD5E72F5761AD94793CF4EE18315187D8B04027174",
+      "padded_sha256": "598478C50C8090EE0D76676F9C2F005C019B91A1BC7DAB20B4D7181C7BEC988A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame279.rgba",
+      "source_sha256": "FA0FDE84ABCF90D7D8DE3C11AB605B3300274E177E4BD60DDB9CBB01F8A309BE",
+      "padded_sha256": "2CC9F1CE00DCC01C03986C24CEF161F206537FC7E5E2DA82B176A18BB37C7654",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame280.rgba",
+      "source_sha256": "58EB379AA99FB50CDA0CEA4D902C43BF959DFA53FCD657018647DE9B6D2762D4",
+      "padded_sha256": "D94B3347A8A862B058CD7476798CEC37DBCF73359F54A2E57B7F75D6DCB24C24",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame281.rgba",
+      "source_sha256": "8A81D39B1ACDC738AA54FB7473CAA385EC67CC7E3F53B0A7F6F5B6D3605BF48A",
+      "padded_sha256": "4F6DDCAE0C441E67B21C6236C7B25F35F01B91E06E3529C5D4F680D79EB255A1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame282.rgba",
+      "source_sha256": "3C79DA31A77EEE1F0D78B2D2C3FA22132FACFA62B3CA902783ECEBF66D630149",
+      "padded_sha256": "CC4CEDC86D837888004839D666A1009E64BF46F712FC828AE71FE76434EA1B8F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame283.rgba",
+      "source_sha256": "1C2845FE436EA86E015F10ABB78D70EC3959082A6BE0979B201904B707F14632",
+      "padded_sha256": "E24E2415B88414B94899C610C6853F01555F02F176FAC09D030D817157A3407D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame284.rgba",
+      "source_sha256": "8E92C1BF54BE1C2695DCB7F74687E4D110909B9DACCA157A364F26B27CF2A41A",
+      "padded_sha256": "BE48BC7590904D3816446ACC913907AB7C029ABEDE27A50B1EABF0E8559BB488",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame285.rgba",
+      "source_sha256": "2DF6B21EFFB9C52D2C59D529BAEFFBD9F0D20773F1380062426C11713CD9FB04",
+      "padded_sha256": "03A2508D4C7A868AD7040B04A3765ED82249F8B989879EDB10FF4EE01CB9FC0E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame286.rgba",
+      "source_sha256": "266DF6E7231771D5300ABE13E6599DBF5205A77E18D87189D3349BA05E9513B3",
+      "padded_sha256": "ABDD19052AE9E74801427053C85107CAB0D0EAC3103754D6485486778C71A233",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame287.rgba",
+      "source_sha256": "8AA9DB8FE3774F6EF8F8955A709925662616228AD202F3F1FB9109C6BE737401",
+      "padded_sha256": "E35F7D8837539339C497B242B05D0837E6177A3835B26BFE8BE31069BB2FE446",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame288.rgba",
+      "source_sha256": "464A42E461D58F007466ADBF98CDE53F181DC7BFA51239DA7374FDCC4AAD5A9C",
+      "padded_sha256": "C51110611FCC9742DF16A835DF40BDF6221661C2F2214DC7E6E4D948782EA906",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame289.rgba",
+      "source_sha256": "308F19FF7D49C919CDDEA9BD794D44072489BF3154B2CF28BD94765B918BAA47",
+      "padded_sha256": "07B555D32C00ECBB67C302A81A2769EA1F1C2096A5675B5D0A913AF01C9AA6E9",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame290.rgba",
+      "source_sha256": "37887BC5378DF94843133118A4FB13BA34E0AE4E4DE2CEEACD64E807FC17B373",
+      "padded_sha256": "15BB38B5F553647B132DA240A5EDA9AC094795A600EEFB2EF99D87C668728850",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame291.rgba",
+      "source_sha256": "D82AEDE35AFADB9DC54029D9616DB25C3DAC7ECAEBD4C282D290A7234620C1AC",
+      "padded_sha256": "981DF6665E82C668632281FE12D2AC6F6512F1533AB846CEF1153A5CB562F0DF",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame292.rgba",
+      "source_sha256": "AF5F1A57AC058EFD178F9115916014AF2A1F0C16CAAE7C7EC31FFC14C73B4088",
+      "padded_sha256": "C7849D9BB83018251BEF36A89F5C2D0DA1D6F4634237800866FDA4638A11205E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame293.rgba",
+      "source_sha256": "495BD5D178124B7DDCD6C36CE30A5CC747C91B4E5F4CA00BB9A56B6673D10D40",
+      "padded_sha256": "B81A4B2BF2B9B56555E5D5DA4AA7FF5D8C586A3D9D01F9AE74B2D78DDCF83059",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame294.rgba",
+      "source_sha256": "828B7092B3BA616B49C4315C2D18F04F74CB8233A78CE11DD612F0EEE3ACDE85",
+      "padded_sha256": "CBF65B42A2D8D0830DF76DA38CFECEC79E3AB69D3389551F81BD485E25BFD2BA",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame295.rgba",
+      "source_sha256": "AE4418521D92EA977852D1A5A669591F000AD6EE069DB8AC1848958AE9DA5B26",
+      "padded_sha256": "514F2EFBEEFDC004B43DCBC5F5B5EE2C7CF74EE26276C31CB94743A75E20FFE4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame296.rgba",
+      "source_sha256": "0D4247E95A8F9D3FBEB1EBE7EB976EE45970CB91081AC6E46C1B114FD4316CA6",
+      "padded_sha256": "E71F2539773942C7E0AF4357D08DF23363344F385E4D5B2669D6E8BA0AAF6C8E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame297.rgba",
+      "source_sha256": "108DB8AB4528CEA5F3800177670A4970714E91957C98866AC147AC86821AE403",
+      "padded_sha256": "B0A9C258BB8B9E7EA0FB53509AD5456CE1F67BD2E14E528D953DDC493305A58F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame298.rgba",
+      "source_sha256": "6A5220D64183588FBDCD39A7FC0A76E358F1B77DBE4E8322B9B61DB4C6374B3E",
+      "padded_sha256": "52F6FE5DF47502635A8B9685D6F0AAAFC98C7AA1C7F842A42579A3CDF2BE9EC2",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame299.rgba",
+      "source_sha256": "92B312C813AF5E4BEDD9656EF036BAD5D1CC121BF5D9FE908B6742018831BF46",
+      "padded_sha256": "CA1379548569D5F44E1F431EBDA1D94D44696D2391B4464FD2FB7DA276DBA82D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame300.rgba",
+      "source_sha256": "ED101758961C29D23F4C75B170EAF3C7E7534D93EC9603092DE8EC5887F4AFD5",
+      "padded_sha256": "A98AC35F70DB0673FD88FCFB58592CE00368F752655D9421CEA132F14BDE5BFC",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame301.rgba",
+      "source_sha256": "04D76D7302D24ED04807CE4A63B4041A989E9CF1B6CD3EDE1ADF2AB7CC46B2C7",
+      "padded_sha256": "2CED8B61E6F86C8B67BD1FBEB57744B3A49101D1FA3775F95D079137D37824E4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame302.rgba",
+      "source_sha256": "D5EE9A081611141A90C58FA5166724CC4EE2CD68288A89FD4320931777947FAA",
+      "padded_sha256": "AE749D828D9D2E402D471D1F8F08D07D6C353E467530A0DA447EF199E56D5097",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame303.rgba",
+      "source_sha256": "26AD911BDC7E96E7FFF93E06400FA0C9CA9928BF7EB54414D663B82892DF4ACA",
+      "padded_sha256": "E544B86A8B3D2780B8DF4FBA2E5509B14F237C1EF41B9B4D59737086182C4516",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame304.rgba",
+      "source_sha256": "1676E2B808471D4155F75FD2BF7E4E7289263AB41AB9D04453C7EE3F2C7EBBD4",
+      "padded_sha256": "63E969B60F05B4BF110BB2FE74623FB1E9621700316652FD99F11FA7E758E50F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame305.rgba",
+      "source_sha256": "5F09069188221DA73C04D70C7F67D6427E75FE3228D08BFAF949A2ACEFC1F26F",
+      "padded_sha256": "063E32D3F3DB528DC2E2A63A6E9769857D17CC1704D356E9640EBBBF0915CD4C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame306.rgba",
+      "source_sha256": "818B30A8953F675E28FF9F2682AB5ECF805B6F41BC0E7F5DD89E805590999F52",
+      "padded_sha256": "7059BA8DAA902E369A1BD81720DF0AECE178413D9DE855786E8475BB449A7B97",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame307.rgba",
+      "source_sha256": "C593472FD0885A270A5AD2D67CED0C9B353011445E7D5577AD9592610AE03B64",
+      "padded_sha256": "7BE03D75B56384804B4CC625BB00892F5E756D57C61F28DF6D0DCAD54BD8032D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame308.rgba",
+      "source_sha256": "C84ACCB62E20F1F45F1E8E86D2001ADE94A045AD8EEAE5DD4EBF374E2E97DCDE",
+      "padded_sha256": "BF804A681A5C48F9B5ABF9434A7889434C44C3AA3673B70C6407D264D710375F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame309.rgba",
+      "source_sha256": "112F4BB7BA329200B050072CCCBFBE5DEA12C26FAC3C5078A97DED31AD0806E4",
+      "padded_sha256": "16C61385995EE83DEF78A89B24E67DAEF38DE1BE3AF574DEA1FBF25B7E3F401C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame310.rgba",
+      "source_sha256": "523D15400267B246D7DD1156AF72392FAD6BE9C052A03F9C8F3003098E7257DD",
+      "padded_sha256": "E1371C42050977D870085513F93B27ADA81954F6DB1BEB2298E37AFE7D07391B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame311.rgba",
+      "source_sha256": "4748BEE58ED8D3927A81F41AE6C35811E37D81140CBD0E3FFDFC8E6A34C2991E",
+      "padded_sha256": "AF91A3334B319046C5CBA8D587CA54DDE693C00F2DFE57860B40B44369BAEA9B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame312.rgba",
+      "source_sha256": "5A735420B096AD65A5A7D4571F15C3F5274BBC233057989FF834F5A040BA8039",
+      "padded_sha256": "1061B6DB0BE512BAF7237236854E56D80B8F73B5E3DCF4A6FABE94F02B91EB0E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame313.rgba",
+      "source_sha256": "B71597BCABDEE9ACB88C74547A39F6C7AC7CB7AEA537CF5B3C440C2682BE8B7E",
+      "padded_sha256": "1463CCD3F568D91013E973AA71B248C1D54B470730DA65C75CABB329779FDAD4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame314.rgba",
+      "source_sha256": "6020B08916B335341A7B7405E14F0DF24E51C7B10CCBF1434CA105A898426D18",
+      "padded_sha256": "6F892BD5B787A6974FA6216BE8F0427E061B9072CDC2E2251BABA395B8F3F141",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame315.rgba",
+      "source_sha256": "DCC6AFB8E59DBE66BAC9BA7A5887382DBBFE555A2ABBD7F740E79514162ADD72",
+      "padded_sha256": "9842D53D5EE98E6A961612B8C387AB920E8068E058D3A7D969AF4E72038D9BD1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame316.rgba",
+      "source_sha256": "D65A022FB8AC0DAB4E3D407B4083577033D955C1117C4737BC205548C36FFF22",
+      "padded_sha256": "159F7D2D038942F1B76D6A7A0CA0DC615607AC29FBFA6D8357BDF5B4F74DEEB5",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame317.rgba",
+      "source_sha256": "B223C11727E0A7104C5291ADFF83F570545BE294F759EB693CF4291D5D87C4B1",
+      "padded_sha256": "E8532F185F83C2AEF051F3817D0E27859F30714E320B1CDF13094CD7F150AD6D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame318.rgba",
+      "source_sha256": "F1E3F976F0CE7FD58A617D051AAE2B46843E08000F3F845BD9A61472D67BE6FC",
+      "padded_sha256": "2A65BC743E19BFAD9C1B23DC201812B950D87BDC45EE6754B45C7250F01175FB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame319.rgba",
+      "source_sha256": "C6BD016B0462DD35FC6DB2CB564F7123FA4EC174213CFB207547C89EE4DC131B",
+      "padded_sha256": "5C42DE4680889AE0326A78105F3CE35C3F1A2C88A47F53D0AD409918BB9941F0",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame320.rgba",
+      "source_sha256": "464A8E07B23676CDFC400E0671D624E25124C6BD0437247304F54E3BA837037F",
+      "padded_sha256": "B3C48C9837F38CE8AF75BC709AFA10281C94E249D453996850B0D367EA53FA71",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame321.rgba",
+      "source_sha256": "3E9CFCE3B502C61CCAA76E7E74031997D59331B13D4D0AA342050E8690644791",
+      "padded_sha256": "B6CFFB6B727F69DCD664B7F92F9ADC15B5302E984EB69CC952940D4253C12DF2",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame322.rgba",
+      "source_sha256": "9700C9FB3AB57CD659493A4C11E9BD8EFE32262094C20446371746EE045A4B03",
+      "padded_sha256": "AD5E9E6F10F3F6E4B7FA2D54E54D2BC57BD3EE5441B6A5DF4EA05319CB435B9D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-cinq-seedvr-20261010-v1/artifacts/SPDIMNDR-final-split/AR6108/AAX4-SPDIMNDR-frame323.rgba",
+      "source_sha256": "8F01AD732112A2F899F1056418F8418D7FDC6F1BCF97364B1377F3944B358A9A",
+      "padded_sha256": "A527F37327397A3C1B41FB5C5FBE292F1B0E95EE0321853CA186CB9A7A71C1C9",
+      "pixels_alpha_world_positions_exact": true
+    }
+  ],
+  "neural_inference": 0,
+  "new_interpolation": 0,
+  "area_specific_placement_not_applied": true
+}

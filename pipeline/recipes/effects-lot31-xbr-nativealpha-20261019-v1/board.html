@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>31 effets · planche comparative animée</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#101720;color:#e9f0f9;font:14px system-ui,sans-serif}a{color:#9fcaff}header{padding:20px 24px 12px;background:#162130;border-bottom:1px solid #33435a}h1{margin:0 0 8px;font-size:26px}header p{margin:7px 0;color:#bacbdc}.toolbar{position:sticky;top:0;z-index:3;display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 24px;background:#162130f5;border-bottom:1px solid #33435a;backdrop-filter:blur(10px)}button,select{background:#22344b;color:#edf4fd;border:1px solid #4d6580;border-radius:6px;padding:7px 9px;font:inherit;cursor:pointer}label{display:inline-flex;gap:6px;align-items:center}input[type=color]{width:38px;height:32px;padding:2px;border:1px solid #597089;background:#22344b}main{padding:18px 24px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}article{background:#1a2636;border:1px solid #35475d;border-radius:10px;overflow:hidden;min-width:0}article h2{font-size:18px;margin:12px 14px 4px}.actions{color:#b9cce1;font-size:12px;min-height:17px;margin:0 14px 10px}.controls{display:flex;gap:6px;flex-wrap:wrap;padding:0 12px 10px}.controls select{font-size:12px;max-width:100%}.palette{flex:1 1 200px;min-width:0}.profile{flex:1 1 160px;min-width:0}.triplet{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:#445163}figure{margin:0;min-width:0;background:#172231}figcaption{text-align:center;color:#c5d5e8;font-size:12px;padding:7px 1px}canvas{width:100%;height:220px;display:block;background:#6e5e46;image-rendering:pixelated}.foot{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 12px}.seek{flex:1;min-width:90px}.status{font-size:11px;color:#bacbdc;font-variant-numeric:tabular-nums;min-width:128px}.detail{font-size:12px;white-space:nowrap}.error{color:#ffb4a7}#count{font-size:12px;color:#b9cce1;margin-left:auto}button:hover,select:hover{border-color:#9bc7f4}@media(min-width:1800px){canvas{height:260px}}@media(max-width:1050px){main{grid-template-columns:1fr}}@media(max-width:600px){header,.toolbar{padding-left:12px;padding-right:12px}main{padding:12px;gap:12px}canvas{height:180px}h1{font-size:21px}figcaption{font-size:10px}}
+</style>
+<header>
+  <h1>31 effets · comparatif animé</h1>
+  <p>Vanilla et les versions successives jouent directement côte à côte, au même instant et avec le même cadrage.</p>
+  <p>27 effets corrigés · 99 palettes disponibles · choisir la palette et le cycle sur chaque carte. Les pauses natives sont conservées.</p>
+</header>
+<div class="toolbar">
+  <button id="play">Tout mettre en pause</button><button id="restart">Recommencer</button>
+  <label>Vitesse <select id="speed"><option value=".5">×0,5</option><option value="1" selected>×1</option><option value="2">×2</option></select></label>
+  <label><input id="mask" type="checkbox">Masques alpha</label>
+  <label>Fond <input id="background" type="color" value="#6e5e46"></label>
+  <span id="count">Chargement de la planche…</span>
+</div>
+<main id="board"></main>
+<script>
+const $=id=>document.getElementById(id),cards=[],images=new Map(),requests=[];
+let running=0,bytes=0,playing=true,epoch=performance.now(),offset=0,speed=1,styleVersion=0;
+const BUDGET=256*1024*1024;
+function clock(now=performance.now()){return offset+(playing?(now-epoch)/1000*speed:0)}
+function trim(){for(const [key,entry] of images){if(bytes<=BUDGET)break;if(entry.ready){images.delete(key);bytes-=entry.bytes}}}
+function pump(){while(running<6&&requests.length){const [path,entry,resolve,reject]=requests.shift();running++;let im=new Image();im.onload=()=>{entry.image=im;entry.ready=true;entry.bytes=im.naturalWidth*im.naturalHeight*4;bytes+=entry.bytes;resolve(entry);running--;trim();pump()};im.onerror=()=>{images.delete(path);reject(new Error('Image indisponible : '+path));running--;pump()};im.src=path}}
+function pic(path){if(images.has(path)){let e=images.get(path);images.delete(path);images.set(path,e);return e.promise}let entry={path,ready:false,bytes:0};entry.promise=new Promise((resolve,reject)=>requests.push([path,entry,resolve,reject]));images.set(path,entry);pump();return entry.promise}
+function alphaImage(entry){if(entry.mask)return entry.mask;let im=entry.image,c=document.createElement('canvas');c.width=im.naturalWidth;c.height=im.naturalHeight;let ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(im,0,0);let pixels=ctx.getImageData(0,0,c.width,c.height);for(let i=0;i<pixels.data.length;i+=4){pixels.data[i]=pixels.data[i+1]=pixels.data[i+2]=pixels.data[i+3];pixels.data[i+3]=255}ctx.putImageData(pixels,0,0);entry.mask=c;entry.bytes+=c.width*c.height*4;if(images.get(entry.path)===entry)bytes+=c.width*c.height*4;trim();return c}
+function option(value,text){let o=document.createElement('option');o.value=value;o.textContent=text;return o}
+function fail(card,error){card.status.textContent=error.message;card.status.classList.add('error');console.error(error)}
+function draw(card,entries){const mask=$('mask').checked,bg=mask?'#000000':$('background').value;let [sx,sy,sw,sh]=card.crop;
+  for(let i=0;i<entries.length;i++){let canvas=card.canvases[i],ctx=canvas.getContext('2d'),im=mask?alphaImage(entries[i]):entries[i].image;ctx.globalCompositeOperation='source-over';ctx.fillStyle=bg;ctx.fillRect(0,0,canvas.width,canvas.height);ctx.imageSmoothingEnabled=false;let scale=Math.min((canvas.width-16)/sw,(canvas.height-16)/sh);let w=sw*scale,h=sh*scale;ctx.globalCompositeOperation=mask?'source-over':card.blend.value;ctx.drawImage(im,sx,sy,sw,sh,(canvas.width-w)/2,(canvas.height-h)/2,w,h)}
+}
+async function paint(card,now,force=false){if(!card.profile||card.busy||(!card.visible&&!force))return;
+  let t=card.held===null?clock(now)+card.shift:card.held,p=card.profile,dur=p.duration_rational[0]/p.duration_rational[1];t=((t%dur)+dur)%dur;
+  let phase=Math.min(p.phases-1,Math.floor(t*30+1e-7)),native=Math.min(p.native.length-1,Math.floor(t*15+1e-7)),key=card.generation+':'+phase+':'+styleVersion;
+  if(card.last===key&&!force)return;card.busy=true;let generation=card.generation;
+  try{let paths=p.initial?[p.native[native],p.initial[phase],p.before[phase],p.after[phase]]:[p.native[native],p.before[phase],p.after[phase]];let entries=await Promise.all(paths.map(pic));if(generation!==card.generation)return;draw(card,entries);card.last=key;card.seek.value=phase;card.status.textContent=t.toFixed(2)+' / '+dur.toFixed(2)+' s · '+phase+'/'+(p.phases-1);card.status.classList.remove('error');card.paints++}
+  catch(error){fail(card,error)}finally{card.busy=false}
+}
+function chooseProfile(card){card.generation++;card.profile=card.data.profiles[Number(card.profileSelect.value)];card.crop=card.bounds[card.profile.id]||[0,0,...card.data.size_x4];card.seek.max=card.profile.phases-1;card.shift=-clock();card.held=null;card.pause.textContent='Pause';card.last=null;paint(card,performance.now(),true)}
+async function choosePalette(card){let generation=++card.generation;card.profile=null;card.status.textContent='Chargement…';try{let data=await(await fetch(card.palette.value)).json();if(generation!==card.generation)return;card.data=data;let previous=card.profileSelect.selectedOptions[0]?.textContent;card.profileSelect.replaceChildren(...data.profiles.map((p,i)=>option(i,p.id)));let selected=data.profiles.findIndex(p=>p.id===previous);if(selected<0)selected=data.ordinal===30||data.ordinal===31?data.profiles.findIndex(p=>p.loop):0;card.profileSelect.value=Math.max(0,selected);card.blend.value=data.black_neutral?'lighter':'source-over';chooseProfile(card)}catch(error){fail(card,error)}}
+function createCard(asset,bounds){let el=document.createElement('article');el.dataset.asset=asset.ordinal;el.innerHTML='<h2></h2><p class="actions"></p><div class="controls"><select class="palette" aria-label="Palette"></select><select class="profile" aria-label="Cycle et mode"></select><select class="blend" aria-label="Mélange"><option value="source-over">Alpha normal</option><option value="lighter">Lumineux</option></select></div><div class="triplet"><figure><figcaption>Vanilla · 15 fps</figcaption><canvas width="360" height="260" aria-label="Vanilla"></canvas></figure><figure><figcaption>Précédent · 30 fps</figcaption><canvas width="360" height="260" aria-label="Version précédente"></canvas></figure><figure><figcaption>Corrigé · 30 fps</figcaption><canvas width="360" height="260" aria-label="Correction"></canvas></figure></div><div class="foot"><button class="pause">Pause</button><input class="seek" type="range" min="0" value="0" aria-label="Phase"><span class="status">Chargement…</span><a class="detail">Agrandir ↗</a></div>';
+  if(asset.history){let triplet=el.querySelector('.triplet');triplet.replaceChildren();triplet.style.gridTemplateColumns='repeat(4,minmax(0,1fr))';for(let text of asset.history){let fig=document.createElement('figure'),caption=document.createElement('figcaption'),canvas=document.createElement('canvas');caption.textContent=text;canvas.width=360;canvas.height=260;canvas.setAttribute('aria-label',text);fig.append(caption,canvas);triplet.append(fig)}}
+  el.querySelector('h2').textContent=String(asset.ordinal).padStart(2,'0')+' · '+asset.resref;el.querySelector('.actions').textContent=asset.actions;let link=el.querySelector('.detail');link.href='detail.html?asset='+asset.ordinal;link.target='_blank';link.rel='noopener';
+  let card={el,asset,bounds,canvases:[...el.querySelectorAll('canvas')],palette:el.querySelector('.palette'),profileSelect:el.querySelector('.profile'),blend:el.querySelector('.blend'),seek:el.querySelector('.seek'),status:el.querySelector('.status'),pause:el.querySelector('.pause'),generation:0,shift:0,held:null,visible:false,busy:false,paints:0};
+  card.palette.replaceChildren(...asset.contexts.map(c=>option(c.data,c.label)));card.palette.onchange=()=>choosePalette(card);card.profileSelect.onchange=()=>chooseProfile(card);card.blend.onchange=()=>{card.last=null;paint(card,performance.now(),true)};
+  card.pause.onclick=()=>{if(card.held===null){card.held=clock()+card.shift;card.pause.textContent='Lecture'}else{card.shift=card.held-clock();card.held=null;card.pause.textContent='Pause'}paint(card,performance.now(),true)};
+  card.seek.oninput=()=>{card.held=Number(card.seek.value)/30;card.pause.textContent='Lecture';paint(card,performance.now(),true)};
+  cards.push(card);$('board').append(el);observer.observe(el);choosePalette(card);
+}
+const observer=new IntersectionObserver(entries=>{for(let e of entries){let card=cards.find(c=>c.el===e.target);card.visible=e.isIntersecting;if(card.visible)paint(card,performance.now(),true)}},{rootMargin:'100px'});
+$('play').onclick=()=>{offset=clock();epoch=performance.now();playing=!playing;$('play').textContent=playing?'Tout mettre en pause':'Tout reprendre';styleVersion++};
+$('restart').onclick=()=>{offset=0;epoch=performance.now();for(let c of cards){c.held=null;c.shift=0;c.last=null;c.pause.textContent='Pause'}styleVersion++};
+$('speed').onchange=()=>{offset=clock();epoch=performance.now();speed=Number($('speed').value)};
+for(let id of ['mask','background'])$(id).oninput=()=>{styleVersion++;for(let c of cards)if(c.visible)paint(c,performance.now(),true)};
+function tick(now){for(let card of cards)if(card.visible)paint(card,now);requestAnimationFrame(tick)}
+(async()=>{try{const [catalog,bounds]=await Promise.all(['catalog.json','board-bounds.json'].map(p=>fetch(p).then(r=>r.json())));for(let a of catalog.assets)createCard(a,bounds[a.resref]);$('count').textContent=catalog.assets.length+' effets · '+catalog.contexts+' palettes';requestAnimationFrame(tick)}catch(error){$('count').textContent=error.message;console.error(error)}})();
+</script>
+</html>

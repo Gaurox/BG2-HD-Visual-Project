@@ -1,0 +1,2146 @@
+{
+  "source_selection": {
+    "$schema": "../../schemas/animation-selection.schema.json",
+    "asset_id": "animations:bam:BDFORCEW",
+    "correction_id": "splinefit1-inner16-native-wed-guard4-fade16-postmask-dx6",
+    "lineage": {
+      "source_packs": [
+        {
+          "manifest_path": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/manifest.json",
+          "manifest_sha256": "DD99AE78AD10F2A1E0345BCD1234CADFBEA9663DE573C4C8204E9DAF671FA825",
+          "path": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split",
+          "schema": "bg2-upscale-area-animation-pack-index-v1",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/ressources/BDFORCEW/runs/bdforcew-apo8-portails-20261010-v1/03_runtime_pack/manifest.json",
+          "manifest_sha256": "67154D27842A7E2ED285FC097ECE138B81FB9F74DC629293C31A0908228BF147",
+          "path": "animations/ressources/BDFORCEW/runs/bdforcew-apo8-portails-20261010-v1/03_runtime_pack",
+          "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/ressources/BDFORCEW/runs/bdforcew-rebout-spatial-20261010-v1/03_runtime_pack/manifest.json",
+          "manifest_sha256": "1F864A4E0BAD9BBBAA69B2AA450F2B4C109EEA4E63FBF2164ABA64D4D80FDDE4",
+          "path": "animations/ressources/BDFORCEW/runs/bdforcew-rebout-spatial-20261010-v1/03_runtime_pack",
+          "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/ressources/BDFORCEW/runs/bdforcew-splinefit1-20261010-v1/03_runtime_pack/manifest.json",
+          "manifest_sha256": "F70DABD8293E189735ED7ACE7B79A8EF3B06BF52256F970B54F967D133E3EF03",
+          "path": "animations/ressources/BDFORCEW/runs/bdforcew-splinefit1-20261010-v1/03_runtime_pack",
+          "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+          "status": "completed"
+        }
+      ],
+      "source_runs": [
+        {
+          "manifest_path": "animations/ressources/BDFORCEW/runs/bdforcew-apo8-portails-20261010-v1/manifest.json",
+          "manifest_sha256": "9BC3B44B1EDD78C74BC4D448FEFB1FCCF88F78F24459079A27883FF2C4C09AEE",
+          "path": "animations/ressources/BDFORCEW/runs/bdforcew-apo8-portails-20261010-v1",
+          "schema": "bg2-upscale-area-animation-30fps-run-v2",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/ressources/BDFORCEW/runs/bdforcew-rebout-spatial-20261010-v1/manifest.json",
+          "manifest_sha256": "7A0F7A8DAD45AE3AF2E4EC433A856F53E7617073483657599F4E666F42960862",
+          "path": "animations/ressources/BDFORCEW/runs/bdforcew-rebout-spatial-20261010-v1",
+          "schema": "bg2-upscale-area-animation-run-v1",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/ressources/BDFORCEW/runs/bdforcew-splinefit1-20261010-v1/manifest.json",
+          "manifest_sha256": "29D62812A31031F5E6014C37DEB9A69E9E528F0A57F004538355A0F3AA629EF3",
+          "path": "animations/ressources/BDFORCEW/runs/bdforcew-splinefit1-20261010-v1",
+          "schema": "bg2-upscale-area-animation-30fps-run-v2",
+          "status": "completed"
+        }
+      ]
+    },
+    "qa_decision": {
+      "decision_date": "2026-10-10",
+      "path": "animations/index/qa-decisions/BDFORCEW/2026-10-10-accepted-bdforcew-portails-final-v1.json",
+      "sha256": "7BB8E647A93AD7AA3AD11F310F25581395956B07989B1F1C0F475DE4DC664DDA",
+      "status": "accepted"
+    },
+    "recipe_id": "reboutcx-apo8-splinefit1-inner16-wed16-shift6",
+    "resref": "BDFORCEW",
+    "result_kind": "x4",
+    "schema_version": 1,
+    "selected_run": {
+      "manifest_path": "animations/ressources/BDFORCEW/runs/bdforcew-portails-accepted-20261010-v1/manifest.json",
+      "manifest_sha256": "34A24B95E420AB80C4B7F9F0EE3B30662E4A69906B3A663A572A78AD4F5EA9D1",
+      "path": "animations/ressources/BDFORCEW/runs/bdforcew-portails-accepted-20261010-v1",
+      "schema": "bg2-upscale-animation-final-selection-v1",
+      "status": "completed"
+    },
+    "source_pack": {
+      "areas": [
+        {
+          "area": "OH8100",
+          "manifest_path": "animations/packs-par-zone/portails-deux-correctif-20261010-v1-complete/OH8100/manifest.json",
+          "manifest_sha256": "1045E44C67A86FEA20AB42791949443CDD4BBA18D25A200CB6C8999BCF5180FA",
+          "path": "animations/packs-par-zone/portails-deux-correctif-20261010-v1-complete/OH8100",
+          "registry_sha256": "076A6B135F501291B8592479F3DBD7D763EEEAF8FA0B94D925338334505DCD2B",
+          "resource_entries": 1
+        }
+      ],
+      "manifest_path": "animations/packs-par-zone/portails-deux-correctif-20261010-v1-complete/manifest.json",
+      "manifest_sha256": "155CC828C5182E9B8517E650C9C955A3564A42200F75FA6E30D2A851388A0525",
+      "path": "animations/packs-par-zone/portails-deux-correctif-20261010-v1-complete",
+      "schema": "bg2-upscale-area-animation-pack-index-v1",
+      "status": "completed"
+    },
+    "tested_areas": [
+      "OH8100"
+    ],
+    "updated_at_utc": "2026-10-10T15:06:42Z"
+  },
+  "source_run": "animations/ressources/BDFORCEW/runs/bdforcew-splinefit1-20261010-v1",
+  "padding_checks": [
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame000.rgba",
+      "source_sha256": "EF14808C856B74EFC107E24485F4872A48931D749CC271220841718E50CBB6E7",
+      "padded_sha256": "6555E77FE6D0DE7EB7CFF66CC965BB8CC27028EE4AB55FE08B079ECD2916D425",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame001.rgba",
+      "source_sha256": "555CAF7016EADDFEFB761D96E157AA3A25D3A6819E2B1B7F7F10CE9B3BE03EB1",
+      "padded_sha256": "47CEE476732A54718D66ADC350F26270C209A404CE41B420F658F298AEBB102E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame002.rgba",
+      "source_sha256": "3D30DBC44C325FEF76086B4779722A163EE0655837EC9228C5594ED1D767EF5B",
+      "padded_sha256": "5296B22CDD18F0E6B2A7678720476F1459567B87F758A72D3AE251D55A4421BC",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame003.rgba",
+      "source_sha256": "B7B09B5CFE02FAB22879ADE14E5200A25DE77580514202BD83F633964051164D",
+      "padded_sha256": "F703A19CECE22EB1A825AF986ED9710DDA5C3610930961A4C298DD2234043287",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame004.rgba",
+      "source_sha256": "E71225648A7557A689035EE97B86A7BAA5447F1095AD044605BD16D2D6AAB989",
+      "padded_sha256": "E7D084BB351F447FDF72286663E48D4A370B807E3D2F3E1A314860C8C0A2D0F1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame005.rgba",
+      "source_sha256": "C096BB580F5FB52D48FB8B571B461D682C11DC2DB59610B7E56FC5A84B24F92A",
+      "padded_sha256": "00243896784BCE4FE46515F676F2D4625D2365E39DC59F48F31B742D175D456D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame006.rgba",
+      "source_sha256": "2EC8E5DD8BF9A8EEE8A43E56D070AB402D739E8C274C43531EBD87E1DE8E2F33",
+      "padded_sha256": "1C81865ADB53ABF9B414C7391C4FE1966CCBFC85D9E123990B910DBD0F278B95",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame007.rgba",
+      "source_sha256": "8B985A8DF55D901D6308C152FAEF607FDFCF2CDEA1E549574A70505E1B9F0C98",
+      "padded_sha256": "C1D376ABDE29FD505BDC12DDE9C2FAEE1E76DDAA2165C8DB8ECC45B919624D91",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame008.rgba",
+      "source_sha256": "27AB53DC6FA41CD2E063ADC421407E862942DA9A1A15A3725D01103B336B1053",
+      "padded_sha256": "AD248A98FDA60CC65B77AEDC09B77A2FF8B211416F21C2EC106BE8F39061FF2C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame009.rgba",
+      "source_sha256": "8C99C19CC6128AC5B71A09959A817583BF40F8C3A8539222C42F36683536148E",
+      "padded_sha256": "B9402320CE4BC83D60C61858A4D1F431E2304F9CF6B0E31EABEAC2B2259D2FFB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame010.rgba",
+      "source_sha256": "0E2404906FA827A8383E6C084BD53181AADA32FF069A015BA1ABCF8F6A1CA064",
+      "padded_sha256": "DB5433B151C7672A9F40690D8DFD370AE20538DA20E1B5F4C099EDCA3ABF8811",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame011.rgba",
+      "source_sha256": "D11CFABF4D9BA7D0908DB238A44DA60B7C0E1D1F9AACE9D7E04B7ECB1D35A0F5",
+      "padded_sha256": "B29C84AD127743B06DA13DB92EC0DDB6954D2BFF5DE75DE33320023D6BDED4ED",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame012.rgba",
+      "source_sha256": "C8BDD59E0F907254D3BAA84635AB2FFD11093301B0E570028F59C500E3A6C837",
+      "padded_sha256": "373777388A838566408F29A913BD63F9C1D9138F11F2E68B85B60A2BEB868194",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame013.rgba",
+      "source_sha256": "C98F6B0A1D6E35EEB058CE698F9A72865BB82C05F8E990DE326B4305181A050F",
+      "padded_sha256": "8058E32E9F7EA4F1A62C5BD8D3D5BCBC2A59603A549E536DD8336D70BD4566E4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame014.rgba",
+      "source_sha256": "57CAB75377D0D9A694783D9A8171A05B758CFB7915EF54AF40967F6B6309548D",
+      "padded_sha256": "B29A1D9F40E89FF68CB7FC02E4503A47111C722FB1F362BC327F39682E6655E0",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame015.rgba",
+      "source_sha256": "D774B638C5A3217EE77298721C3ADEBBF5A52AED627A7D6867BB81810A8E1387",
+      "padded_sha256": "3633A774BB0057FA9C9556FFB74CF125C18EA6AF3BF2A87C27C7881DEE44E390",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame016.rgba",
+      "source_sha256": "A451FFDA116F4D5EE89C53862B9BDA4BF82BEF41B424BF8991B1A4BF762551DD",
+      "padded_sha256": "10AD7FE5D666196168ADCF7296C34C52E173F243E45153678E5CF62072031338",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame017.rgba",
+      "source_sha256": "2E1AE589C1F5936D7DBEF32660728D32416B4235AC5657A2A4258EFF3B74608D",
+      "padded_sha256": "2FF08B926D7BE535F2141B137884E1480FC1CE64A63C57759703F08AAD5B8043",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame018.rgba",
+      "source_sha256": "AA94E5BED58A3E0A21D9A7BE1EAE5459ED41D5977C5EC76DC8DB3BF1379588C1",
+      "padded_sha256": "46EAE77B943B3726DB04A8076F9959D31D471C84C3B8CD0F9ABA85B5367CE45C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame019.rgba",
+      "source_sha256": "0658B9F7BF99BFF776BE073592BFB19F40A9DBA3099FA3C083162D0AD14656E6",
+      "padded_sha256": "C8CAADF44AE78348FAA91CA94A4DEF81C12F577318EC090FEDCA3E8A01AA0567",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame020.rgba",
+      "source_sha256": "F887AFC04AA19118F5F1384E1F3D71BC18B7CA970030C0B4DA5363D57EA7F2D0",
+      "padded_sha256": "CC49F43DAA1D0668AB187E27394F703EC24037C1A5EBE6EB7894F5CD23FA8157",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame021.rgba",
+      "source_sha256": "65F4A0AA0E01CB7A44D0066445D330D7F4A2170324754DF1CFC39B5F5718FAC5",
+      "padded_sha256": "5DE939A06CE4EB4D7522D80A0372F29D4B191A0FB9E8D7AC5C259311CE184943",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame022.rgba",
+      "source_sha256": "C7D071C986A788E0BDC55A1095E8B68A1C436A57A6A931ED4C732B361C21D96C",
+      "padded_sha256": "3E6C6D5F65941F66124C5B8D0C071913E1B03FD1A1D8129E398B9D0468288DE3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame023.rgba",
+      "source_sha256": "7310FFC8FD629B7C971E579E9BEC15734A00C87CD8D14A8B27C249CB9EFD2EDA",
+      "padded_sha256": "0F3E0A529A7E44FC33DF8331798AB1467BD1B7ED884F770225F87FCE48D320F7",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame024.rgba",
+      "source_sha256": "7483E7D7FF16AA6D06BE51ED7D66988E095D4E55F1D45052CBF64E4723A73B88",
+      "padded_sha256": "B937DD351BCB8E575498E254BFADC7C2F09928B8F7DC440C0A2947B091DCB563",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame025.rgba",
+      "source_sha256": "B8790AD2E08CD1B4FDD822E8223FA1AE9C9F3ED8126F1B9D3941F7B88EACDBA3",
+      "padded_sha256": "8CED7636744032A9AE2DFC44F9460632BE283C611F91F2B2BBFD8941C1C191AA",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame026.rgba",
+      "source_sha256": "63B5788C95B7BB3DCC841CED45E069E36FC8488C0E17BDB379281E0194838F58",
+      "padded_sha256": "3C6805ADE9CCF53CB06D50EF65DC52CF77BF20966A36D629727E3F1B167212AC",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame027.rgba",
+      "source_sha256": "D2FCED320C3DF50EE24A7A5787F70C0344E6D80720903D3DDD43575F180C9EFA",
+      "padded_sha256": "9E804E312DAD3BC36FB1432A95389FB0A782FFFED361EBB887ADDAC48689B0CE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame028.rgba",
+      "source_sha256": "C04A919B9FA2DC0E6C056FE588C5672680A18BC2CC5602C96AD8F0B1454E55D1",
+      "padded_sha256": "A2583F3192AC9B6130B651BEEF0FCE641B77148B41435B8E7B27984A69FD152D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame029.rgba",
+      "source_sha256": "2C2AE7BE3FD4DEE0A8CB4B68C1B17964F3667DE62E774EA13C267413A77824B5",
+      "padded_sha256": "FAFC775C066BF97ABA45C4CCAFB5EB02DC7EBE6082B230B546C6831B1B4BE722",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame030.rgba",
+      "source_sha256": "BBA1BEE91412EB9E72D98C7F9A5302878496A03ADB012DF64877D98981E25811",
+      "padded_sha256": "231457248B4E5A070CFBD99C100D939BF5392256E3D277678E827522D2FC4105",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame031.rgba",
+      "source_sha256": "99657F884EC3B1D892A440FBE53F46576CA844B4F2E9353C35A8B98CCBFADD5C",
+      "padded_sha256": "7B1C0358750915517678CCDD138F38683EDDD8C7101EBE294A97AC7B34BF90BE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame032.rgba",
+      "source_sha256": "E03A1887268B12009034F556750ADC798A9A1064B3A4D3E58F4EC671A0E64766",
+      "padded_sha256": "61378268D477FD065ED6C51606FE45018352CBC534DAB7F7DCDBF8F3C1293BBD",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame033.rgba",
+      "source_sha256": "683229AEEA75CDD51425C67F98F3DA7B8BACBADBCD48AE03FDFA0D7F6C1C8D67",
+      "padded_sha256": "A48CCB6FE64FD778ACB44D314D0AD21F186C8A006D6C8BC29F64111AD7D31E55",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame034.rgba",
+      "source_sha256": "1904D62C80B2A8E07C23F9AAE1E7669B1B170DBF165130AB6A344324C5E2AD2A",
+      "padded_sha256": "B323D53B9B90547939C2EE442077F0B5A46D4FA9270248C03A67B9A230A92EE3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame035.rgba",
+      "source_sha256": "CFE33EBCB23C0104A10F53600E2AD50DDBD80619C1E7BF18896F00AF616F09BA",
+      "padded_sha256": "F51A8A0C1A5ABBA7438941663A3B435EE2B581B3691216ED6623A0CF1F187C32",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame036.rgba",
+      "source_sha256": "A47992FEAEE34B47714E2757ABB19E629F3383C77BADBD07CB23F642BC8A2BD2",
+      "padded_sha256": "B2E6D08FF7760A3ED892A1AFD544C99766C14A9EFF4F16F53813905D6BF271D3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame037.rgba",
+      "source_sha256": "84706676D6A771FB90CC7D87476F6D02FDC16C8C338684617A79460487C3C712",
+      "padded_sha256": "57F7D59748BE18C65BD5EDFAD1DFD07FB1548EFE97BB00045DFA0450B05D192A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame038.rgba",
+      "source_sha256": "23B3D126E992C4F5483B77F8A51A284AAF2DBDA305BF853F0F951642970AF190",
+      "padded_sha256": "DE118AD6A3C2983EB8D2C916E17824C8D7856FCFA3A46C1D336B01ED8FE37207",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame039.rgba",
+      "source_sha256": "61EB8C8546CD1064A93F350CAD258F565877180A18E8D1AC4CBF02B8DCC6A6A8",
+      "padded_sha256": "FFAA533BCA088B2C8D121823706D0AE8901544D130585810F0092FE539878653",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame040.rgba",
+      "source_sha256": "BB5305137D0695961D2246FDB8D03EED082394D1C1DAD876B93406E3C6074EED",
+      "padded_sha256": "25824C46093B0A56466907A856E24977DB4CD693DA420418A3E80FCCF2BCEAEA",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame041.rgba",
+      "source_sha256": "381FFAE5939FD1670D6AB594BC072A797390FAB11764640DF254D5866CC4CAEB",
+      "padded_sha256": "66F7FEC1FBD7A197AB525E9ACACE8FB0B74AFEB2BA1E5CD6AEA05434FA5EC03F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame042.rgba",
+      "source_sha256": "7AE0D8A00037E240C6848C2B2AA4FFD0D5077C4973B00E32DED08163AC3A2F21",
+      "padded_sha256": "156E950C04BDAFCCEB9889876ECC197E999D8B440C1DB61E67EA30479299D82B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame043.rgba",
+      "source_sha256": "FF27F72789EC7A5008333EA22D7C0068F4C4370EEE975D6446CC4EA004790354",
+      "padded_sha256": "8C71F9D49AA5BE10103D6E582A95A403484465DB27C8E377C3B6F77C185C18B1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame044.rgba",
+      "source_sha256": "2FAF520E1AEBDFA5C13F565A494B3DF79E7F2E3BFCC0D7EACA90F55D1F3B4757",
+      "padded_sha256": "79932E6CE41576AAB460A8C3E119B9C76C78079482430138233A364143027D3A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame045.rgba",
+      "source_sha256": "A1FA5B1DEE5262FA95A94F591F59763E741E6FCBF19FCC9B9F4FC45E92A8773E",
+      "padded_sha256": "5A940A90EF212516EF637E697B8CD7A72872061F67D427B7A47F9DF14D65D648",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame046.rgba",
+      "source_sha256": "A30353F12B2A9C522AC113522AC9AC2A871BA303CF8ACA9185FDC23F8D343CE5",
+      "padded_sha256": "D677F756CC0C9D7466C1992D95B2B23BCFDFDE995BA30B9A34012107C4C217FE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame047.rgba",
+      "source_sha256": "5A03628774C70C5DC61888963802F15D57856774B6B4A91554A4EDD0A55A6E38",
+      "padded_sha256": "456DA1984A38186ED8DF4DF8EBBB6F853150A514830BC187CC0F2BB39089C5B4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame048.rgba",
+      "source_sha256": "98A54C7FDE220D4D6788E54FF3CEAF163071F0DFA385FBD231A5AE545DA3B961",
+      "padded_sha256": "9672D8793D729A76370A624BE49511CC12548BC54FDC9773063C60C4104EB6AD",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame049.rgba",
+      "source_sha256": "A7780D0EF23EE5EC24C1F15829885DE38FDE2704BDE1123D37C23B2AC6F16C56",
+      "padded_sha256": "212E6BD2936F71DFB5B9246585B3656C28D54EBDB2FBBC4AAAC60D988DA6851B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame050.rgba",
+      "source_sha256": "E7AC67DCE10813E1C5C7A456999E6BC6031F028FF151F94F132BA1776A6A2AD1",
+      "padded_sha256": "42339444546E8026949BFEB1CC92369119F28B25F7E4FD5428711791CEC9ECE2",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame051.rgba",
+      "source_sha256": "83518F81465F07BF14A1C0BA1445F94AC3F1523F4348AC9D34E12F7CA70D6448",
+      "padded_sha256": "FBD1A49BA46045757B20A5EC177E45BB2CFBFA5463A3C01FF0167182EF8FEA59",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame052.rgba",
+      "source_sha256": "BB43EC4F47A4E3ACA76EAD7590B96003C96EB3EA206CD770A6BA6EDE46201B7B",
+      "padded_sha256": "3D4C561190068843ACBAF8BEE19C668E90010EDFBEFBF1769F3F910F3221A29D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame053.rgba",
+      "source_sha256": "913453EF7D6A6A52D447E309AF77E6FF46C721CF358D345C788B9CAD1E1E5CF0",
+      "padded_sha256": "933AE5FAC70A3F480BDEC56F909D47B9552F7623C734153F18CED169086353BE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame054.rgba",
+      "source_sha256": "2170A53AA3FF3CC9E8823FC670D517D6291B78B7459D6AF1C97A8DBF76CFBBB2",
+      "padded_sha256": "D4EC9323AB19F376A62B11D2762FD13CA4AB5692FFD2B8EF94D15AF2278A14C0",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame055.rgba",
+      "source_sha256": "4984AC6D26629EBF4F97C8F469720633C34A126E94FE38CFFA1EEC4AB87D1C10",
+      "padded_sha256": "E710183342DADB6D27B766C4603DD1E1F9B1615E5694562B705D0B3C3E88039B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame056.rgba",
+      "source_sha256": "A47BFEA6DC891061A0E7199294AB453CF44497C03B73ED494C204D51DBE17933",
+      "padded_sha256": "13DA32FDD0EF84F3E82B2629E6EA8C43B86146A401F0AABAF2FC42E4531213A1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame057.rgba",
+      "source_sha256": "24C7D19FFA081258DF767B1754ED775511CD900AFDA19BF67E52269BC50101C3",
+      "padded_sha256": "37082BD613E1C68BDD3AD87EE33C0EAA743C80111B6DDBAFFEA17557B4064C2C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame058.rgba",
+      "source_sha256": "A793048BAB08C3BA54D19D3FFAE597B7EE734A1AABBE17DE466BA6AD3953F496",
+      "padded_sha256": "2DCF98AE8F98480FCA8D5F39290BF2C6AC05B9F75A5F9D31BD556C0B8B607472",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame059.rgba",
+      "source_sha256": "0F38C3C958A698F06902B58BEB30CE6A25F607D6EB9FC36FA6764BD9DBBA92A2",
+      "padded_sha256": "D14A27EFC5DE2066C34F6703D6163E84AEE3A196D5E07EEB97E908EAAD98149F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame060.rgba",
+      "source_sha256": "9513BE74F8F26E1FC889FA8B086AED074281F4C53008E8F6E47956368256353E",
+      "padded_sha256": "117EF9E69F9C6C3890B5C1ACE13288771205408C841BA7DCA9363B38739B1350",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame061.rgba",
+      "source_sha256": "633913A8647B4B6637BC5F4A8E751285232EA78110CB265838204410EA2E8B4D",
+      "padded_sha256": "96AE7E1A2874221C12FC839175FF21E6108D7CA54B39B0FE8A2A32E455687A6A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame062.rgba",
+      "source_sha256": "C6950304215C42479E445441A65C9FA819A21F7CBECEDFACD19575E6D9B87DC8",
+      "padded_sha256": "5753E806037181CEA26574EDB714AACA79EA4905E09CEC57005D7BE1C05157DF",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame063.rgba",
+      "source_sha256": "01575648F00F8B61E95DE155AA102D0FFF1291A9BD66117C97FD8D4BFB4D5764",
+      "padded_sha256": "DC97566C31EC18ADBA12B4E4885401D8D9C7469777A0C8C55AEA705F7C4CC1AB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame064.rgba",
+      "source_sha256": "514FC0B044D1EDFFE337D25B2A38D8E5EB56AA917CEAD86ABAE6968B95850240",
+      "padded_sha256": "82D1183DDA6DF753B6501416784BFF4C9650ADFCE2169D552734176C29303F4E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame065.rgba",
+      "source_sha256": "E2FDFA61506CBB6007E34141E8CD662C9EF26FD569FB7276A43A4B1B20793DD1",
+      "padded_sha256": "A2488452C486C813F24E0A7305F14584656D6BA5600E1FAD67AB81B0C7E3F28A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame066.rgba",
+      "source_sha256": "4DCB592CC5CD123C49D5E586A4474987B765CD21174789C2D24F273CC6988D0C",
+      "padded_sha256": "AE82E9C4CA4C47195B631AA800740F641F2AE64EFDFB61C261C1F716B5244065",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame067.rgba",
+      "source_sha256": "9A5997ECDEC9F2E42460A1556EAEF44BD2372CB11E35DF9325842FE0C44AEA56",
+      "padded_sha256": "564BBE216ACB7BFEA90BB0B0F8208590C7210F8CB42461F6DDF6747525ABF471",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame068.rgba",
+      "source_sha256": "DD328D1F86C2BF52D251DA3823A8BFAE80124E2D904C460FE7504AB63D43AF73",
+      "padded_sha256": "90BFFF8931315C553C36EE13127E82742ECACFA3D092597C2F12CE529D8D5B87",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame069.rgba",
+      "source_sha256": "F3E554F0525C28F50A81450BD17F32D59FF06F1DC52272351C73028037A53A27",
+      "padded_sha256": "1EC50CA85800D76D93F080BB0BCDC94362BAE9C59F04D42A2C70815D4720F821",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame070.rgba",
+      "source_sha256": "2BDAACDD88E26ACCD88B9E4009E347E945574C76026366A19D0B2FA270445BF1",
+      "padded_sha256": "545C10423E28999E0DBA06D6A10524AD6A4AB6CA06CED2FD523F07569FA9B458",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame071.rgba",
+      "source_sha256": "F06F47810D3B08C73A489C6C47D67A87E31986164F33B3370AC13458138B7889",
+      "padded_sha256": "2EAB34FB62DD84B462464951E9A024E196B99CC6441E6BD1595187610897E275",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame072.rgba",
+      "source_sha256": "9607975DC2AE7F845A2200A49E4709EBBFDC597E6D0408A1029BDD829672619F",
+      "padded_sha256": "443E8111C8F02A114391943D0E7F388B475CAA85431FBD753A114A8EE6202373",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame073.rgba",
+      "source_sha256": "A8111E0DD14779400299AED0D561EF2126377A54FDC4A20EA99C1F559BB2C5B3",
+      "padded_sha256": "ED6753779EEDFF01CBFB8431B659835E767B55413188C031CB7634849E289E3C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame074.rgba",
+      "source_sha256": "978AA15E30EA3972BA58EF6A653E002A056A352A25183DC429B7F558EB1CBA5F",
+      "padded_sha256": "8C4EF6FB3B4DE6A8A175F20B8E258292E7262151B8C1FD5C0415DBFCA4FB2006",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame075.rgba",
+      "source_sha256": "320EA862AB506F138A5F884678FDF9172FE94778CA53456231F5BD269BF54B4D",
+      "padded_sha256": "81B0F544F56FB55434C8D5860075655D1E5CFEADA1082A235BBEB38D2885F4B4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame076.rgba",
+      "source_sha256": "7A9D1895BCC121ED24EA9D24E682CFD3EEF03534472B44CEAE3BCDE0A427E59F",
+      "padded_sha256": "B4A3F7C7233AAC3B9457960301AE4A44282B5103E0DF26A64528C4998DB527EE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame077.rgba",
+      "source_sha256": "58718F4E9B7402272D622D785E9D349FC4404B02030EF76DF9E694422E0B50E6",
+      "padded_sha256": "78D5333A085B8438B71877F06DB86FD01ED817F6CD3867682A686B3D76EB5BD1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame078.rgba",
+      "source_sha256": "E6B28275441360C7E3A6DCFE5C16577FA227DB8AE81922FEB83E18D2F4B951C0",
+      "padded_sha256": "36EC0D88C260DE814080CFD9A23B61C97D44EEA1696263C602E1C031932EAFA4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame079.rgba",
+      "source_sha256": "6CEFD0D14BC5BA76C90F60F7D632422DFE7CA5110A85E3347E82B773B267E68C",
+      "padded_sha256": "C12C1547355FE64A2151294FBD5F892C249F281A17F4881A1916A75C9E52DB3D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame080.rgba",
+      "source_sha256": "76CC104CB4A21119C24CA406C5F01E8533DB54A1DF11EB9C4B1E9C30D9D1F7CF",
+      "padded_sha256": "1F8BB2CCEA54139D7BE430AA7E7FF18F296148008A517AA1D72259F78D0DC9C6",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame081.rgba",
+      "source_sha256": "08370F45B2992AB1176827FFC698EDF473111FB5A4FCB57272C60C178085765C",
+      "padded_sha256": "EC222F42E207CA8DE281A94AB8DEE271DFE3E360793B1C81750103828EB0A8C7",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame082.rgba",
+      "source_sha256": "B48111E9D9BC6C6D1F713817A7EFBF348FAF10E69789ABFE0BEC70BC305BC491",
+      "padded_sha256": "E124AC9A974DDB5415F88F7D97C667B75453A0CEA11F28076B71CA7E7FCA71C3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame083.rgba",
+      "source_sha256": "7A99A12E3E86D89578E518878ECF900BD405A26BD1F7147A2FB241369B70E26A",
+      "padded_sha256": "93B6B92EBB668CA9E24F2559C88E5563AC6BBA8156666A1175C1D35037A32287",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame084.rgba",
+      "source_sha256": "A098A9001DF15810BD1BD71131AF65E0D638EE4EAA71818D35E32A7F8B4C89E9",
+      "padded_sha256": "C510CF33BBDEB77BB9B4F05E23339BFA716A685699349426E57651B3BB645405",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame085.rgba",
+      "source_sha256": "7E182DE0A97ABA91D5F44367CDB0EDBC9AFB709A02767C98860E718A18E3B80D",
+      "padded_sha256": "6F2A11D3B51AEC338F6A2BF585C4F2BEF27FCBA2C163AA01E9DB702BCEC9FFAE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame086.rgba",
+      "source_sha256": "FABB818BB46C531F563932EAC34A35B389EF80A02427CF4EA2F5AF23250C2716",
+      "padded_sha256": "FB097082DAB63666A60DB1026EA8AB00E8FD6E31D286500399C6C6D05F535FAC",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame087.rgba",
+      "source_sha256": "78F03451AACBCA2E0BE41EA626E7D5493C2BE1C89A7A6CBDCEE4FC695135F845",
+      "padded_sha256": "2303A07E765CB8538A4799AACF8179C866ABD21DFC2314DC8F3E89D04452EC88",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame088.rgba",
+      "source_sha256": "3B6BD895C29BCC5C1727D2803730AA223CFA76D3BFBD6ADE60BDDC0575A928B3",
+      "padded_sha256": "7D66C9DA9DE938B9B4D56A2AEFB491838D06C0D0C0877824B9F4007B5727D154",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame089.rgba",
+      "source_sha256": "D670E2BBA22B66F1572B17EC5CAFD464736A7B4D119955A82DC66B4FE400EB43",
+      "padded_sha256": "D460FBC9535E46CA0AD2B13D65438BD643712F250F7231EA5831A4CA51DC3CE8",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame090.rgba",
+      "source_sha256": "EC997381389A5DA13C34DEAE70C4E413A50ABF9AD41A9D7846E369BF028FF363",
+      "padded_sha256": "C98150121E70E33CEBFD1C92E303BA9CF08B0B26285D74F9BBF9E2DE0DDC41D8",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame091.rgba",
+      "source_sha256": "F2D58849F76A0E21563786A44C0BEF256B813C77995E1E24A0EBF3C97A350BD9",
+      "padded_sha256": "50B386EC4A66A897EEA49FD68CEEB5C96B41F517B247E9F8E1501F2532B3FDB3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame092.rgba",
+      "source_sha256": "4746940B41CE4AB8D98B8F5FF3FE654099144BB58A40F427929FF66E88676D60",
+      "padded_sha256": "55449194A9A0B1FD6E9EE7AE5173D67EE6751B66BA39BA233E0A4ED41EE385DC",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame093.rgba",
+      "source_sha256": "BB30DFA1985FA4EA86DEE35FFF7C9F7FE8DCBD89F544728111356B94872F59BD",
+      "padded_sha256": "8D520AB055E1E3970369151F567B272BDE4554B6B723AFB2CE956EA3544DDDBB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame094.rgba",
+      "source_sha256": "396048F3D62C9E41B4EA7DEDAD5D83BFB4A5CD0DE760484D679684CE19C5852C",
+      "padded_sha256": "94328DDC6337D3D855A481EC071E8C9B4F34A3AD7CCD7AB8042F5FD20B8580DB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame095.rgba",
+      "source_sha256": "A5B7021FCAFA57D4E43DC56D3DAC5764D0FE5FC515B1D7602518504ABCD12A66",
+      "padded_sha256": "E9DEDDEE14BBBC5AE4984882872D7225687BB6AC3741C700BA8B981C1058396C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame096.rgba",
+      "source_sha256": "16B04B6BE5945419471FA4782D107D8D0592D78168FD891C8EA31F9A169EFDCA",
+      "padded_sha256": "DDBCC6311F430301538A2AF1D5CA86F94CF9E7480CB87F55573D0391B183EAB9",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame097.rgba",
+      "source_sha256": "83BC48E48BA87037D68AB1DD4C90FEA692BB775D1C97C4C618E630247C1967C1",
+      "padded_sha256": "DDFEFF30A912706E6CF4A2443BD2A34F00236880A3276950F23C687D42916551",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame098.rgba",
+      "source_sha256": "CC5E1A345A86AD11430A3EA8CD70E77041A6451E64A97CD3098A5559747E9404",
+      "padded_sha256": "2E4E277718803947B6880CE9D4F4AE9A8C48320C9B25B172A1C5693985F9B5F1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame099.rgba",
+      "source_sha256": "CC491637A07F2AA278002C819F8910B69F03B7043952BAB694BFFD1E8E5A0432",
+      "padded_sha256": "37283834CA33E45237B8897F192CB3C41C96D97F1DD4542323CF7125D585B674",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame100.rgba",
+      "source_sha256": "2F6B1088FF3BFEEF5C19D3006D94788C7CE747E32FC6EF073337B05B525251F2",
+      "padded_sha256": "CAA48DA63F47BD360FFE233CD5F6A7FDEF74FEE578F55468F7FAE978CE87363C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame101.rgba",
+      "source_sha256": "34F82D4BD1BD83BBABA44E5B070B8DB46D0BCEA4E9E8E955704B522F446E8794",
+      "padded_sha256": "9F1BCA4AE50B29B0308155416B22D3535CDB7EC208C28F2AF0DC8935D1FB1749",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame102.rgba",
+      "source_sha256": "69A127F103063CF814902A4FD62D879E8A8C923737D87D7334B47897E433B0F1",
+      "padded_sha256": "7E970CAE19E62AFD9049D9B871EE02EE34A6A8C4FB42E70C8A2EEFD415C6175A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame103.rgba",
+      "source_sha256": "793DD496851FCECA8378B2015F1129879D241380430EB92181CB58F22E72ED08",
+      "padded_sha256": "363B9CC1EC01F973D30C0510DCCD369557020D0513DDFD3C20754270193DFD47",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame104.rgba",
+      "source_sha256": "2C1C11538CAB15EE173857D58EA0AC8A0C7F66CA7A67ADF386EA65F0555D0139",
+      "padded_sha256": "B599F2FCCCE3DB23DE3903F163B2CE3E27A7059207369080DDE5571F06962736",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame105.rgba",
+      "source_sha256": "299D577010565E4123D1C41056A631DA8716E8641C499EFBC9EDA78366793A7C",
+      "padded_sha256": "657E1065DA4DD1796D3573D2C1CB15A75EF95C74E89FE20704923512555A297E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame106.rgba",
+      "source_sha256": "E88001AAB00949060E5B2E9456BC1C5FA0F5F8696DE8137856DB0830653C77BD",
+      "padded_sha256": "C85A5EB66DAF9974FA228949E49F3B663D6A7F6CF1B5F0A6B590934B3EAEFC66",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame107.rgba",
+      "source_sha256": "6EA5EB964771AE78977AE0D5346347B8C400F5776E9B8D2519863A95A5117C86",
+      "padded_sha256": "DC106FA0728DFB293212BA6A4B65013C9BD3387EDA4FD11E5D2A2B13B812FABB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame108.rgba",
+      "source_sha256": "2FDDA08475BAC86B5EC00EEA134B22F28231A20CED690E821429FF3A508EA053",
+      "padded_sha256": "474177780BE752567BC9DCDD1444833023F75B08156B983D973D47376FE12FEB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame109.rgba",
+      "source_sha256": "E2B2347CEA785E80C97EB1A1336147DA74A6F86FBAD9365344C65BB03E95CA03",
+      "padded_sha256": "05B71F55AD0D3A6E6B0318C17CAD8433E6B2E60629DEB513C58759DDF02F9AB9",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame110.rgba",
+      "source_sha256": "11F5A51AD9FEE255FD1BF9C5141EC8DFF75889DBB94F0F6D537399E4AB4A2851",
+      "padded_sha256": "ABE800EE2F5E3068D587340DF92064E85B3FC2221C9A31257F65020F7585CE2E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame111.rgba",
+      "source_sha256": "CCA8E0176D26C21014128A8064C39A355150E26EF755921A41F4E60B14143EC8",
+      "padded_sha256": "C12037A4D9ED221162997440557B2628071D0AF50AAB4E30DBDFED57AE8C9769",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame112.rgba",
+      "source_sha256": "9342E4F52734845D632AA56F19A4DA68ACC2AD07737C630A8B1C5E0DAC20544B",
+      "padded_sha256": "FE2797D50749853F411CF661007DE42C4CF52D0B0C0A664074B0DFF42C92E7EE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame113.rgba",
+      "source_sha256": "746FA8F3C0C6AB848FE168736FD4A8E32D9655B3A079FC02EAAAE53B4393BA70",
+      "padded_sha256": "69CB1A7D5909176730FB44A94903C20247F223E7FD6C032EF7FD628B56A07DC5",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame114.rgba",
+      "source_sha256": "478261578D6F2A9BB10A1AD2FF9253CFC87C119FDC4C583A918CE6FD6F0F7D27",
+      "padded_sha256": "CE544965331350D7E912EEB8B7A7D9491D7CE93BB64712F430D82D020076F2B0",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame115.rgba",
+      "source_sha256": "1445D67D5FCD10BB34BCCC2EBA05F725F987AD4A4004FE1B602B48CCB4221734",
+      "padded_sha256": "5B66F42EC652F9B343013C4FF1AA438C809BFB530982985CC00D789D43BC9E08",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame116.rgba",
+      "source_sha256": "C5CE23ABC7E914D496A1774D3E482B65981C174E426D2F1E8D34AC4E38821FFD",
+      "padded_sha256": "938580B73465710659E3AA43D177DADBC42377D74D621D6EF4021DE21C8B575A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame117.rgba",
+      "source_sha256": "4E12F4F29606209C8008717EE57D2124220ABCEAFE4AA089BC19629DBAF6C7FB",
+      "padded_sha256": "C47A2F7CFAB1805DAC5B4D2CE4FF35D3A3E4039A0956DE0369514325DBA20B57",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame118.rgba",
+      "source_sha256": "EC143A603C1F733559CB74F107074E0FFF3ABEE3FBEB6E4D4D383A481A541767",
+      "padded_sha256": "85D3C4FB498540480D39B3DC927DBCE870337CF0C237717EBB5A1BBFE0461FFD",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame119.rgba",
+      "source_sha256": "4E5D10B9567B7224D588871733F61771F9B371310FB262958DA7D5E010698CC8",
+      "padded_sha256": "F3295C3422712B7FCD5C57ED789979D0C1E4E965DB2B0559B8F9D03E123D2B1F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame120.rgba",
+      "source_sha256": "523C66B4582DE63CFB252827834FA2ADF66F581A2F0D28EE399844BFDD85CA16",
+      "padded_sha256": "D1C8690EA88652C9EAB6CECCD282E0C8C11D77C12104CB0910387BAAB9D817C6",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame121.rgba",
+      "source_sha256": "D1CAA68FBD3632D522253B38DCECD4D82AF7F78BEC65F5C9A2EDE626BFF789A0",
+      "padded_sha256": "90503AC9195032F79AC8ADCDFA11FDF51058DC043FBC6CAB89A29A5BDF018F42",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame122.rgba",
+      "source_sha256": "4A3F2FB27961155916F83EC90C2E809D34BAEEA6028B8C8ED92B5FD832C7CD84",
+      "padded_sha256": "CC3869DB186D388DBC1E01C2367FB45AFEDDCB4C3FBD0E4548E1A669E6ACF339",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame123.rgba",
+      "source_sha256": "926F3949B166421AB133242C0B419EE87C43852F36BC8BD64A735A3A55B0D34D",
+      "padded_sha256": "379E8461FC9D95BB05F2F839AF0ABAD8F401BA1EE04968B349EB3BBF76C500B1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame124.rgba",
+      "source_sha256": "A55887A35CEC3BCC85FCFDA7DFCC5421E65C0F94664995B2E1B2CC6878170207",
+      "padded_sha256": "26F2096B075F70603330A839292B23850A98392057A8DAC129E9CAF82B4DF51C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame125.rgba",
+      "source_sha256": "C6BDB3C2F6E1E3C25B67D9EC463B77DE7466719ABD91D6C7A01738452A51092C",
+      "padded_sha256": "44C6ED3E9F62EA822308EAD920801EFBEF9FC933BA1FF113830944D1B8199968",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame126.rgba",
+      "source_sha256": "FE060AF031CEF631CF7F3549559F788F33180050E120F1AC82527600D4EA1309",
+      "padded_sha256": "5B14FF35FD2F2018B4D244564C207DDF1727B298858A81B4C521CC4D85569987",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame127.rgba",
+      "source_sha256": "E215F089ACC8F2D8418C61827AA9253A2E5242F20087425D07F1710B7F5B6B6B",
+      "padded_sha256": "C446F8BB538426D6B85C56827ACC067F491A3841CA349F0C3E026B6C40032FBC",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame128.rgba",
+      "source_sha256": "90FAFEB164F3D09CC17C07C893351A05359702E1A8A18DB70CA209191AD4E5D4",
+      "padded_sha256": "676E890BFB66887E4C5031681044CEFCB9FD8784404D51DF6D679C175463222F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame129.rgba",
+      "source_sha256": "02882B2D3420A9A9316FE11F6CE40617FA67B45FACC1C1BD7AB2E6BD99C1E6CC",
+      "padded_sha256": "1C0C44C644FF710A451D28830C6B10176ED948A941D7D044084ECA4D76E3175E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame130.rgba",
+      "source_sha256": "339E99F1E71753BDA95C6C69AF2F0828FA6265390E286B1AEF2A97D610308C5D",
+      "padded_sha256": "8D5C06739C556FC06C57FA47CAF06B484B77B27CCEB19A1166DDEEDD5ECD2915",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame131.rgba",
+      "source_sha256": "EDC6986C1AF5231CD1CDA3BBC4A2E6A46BEB25C5AD7D470D998B1AC2030ADDFF",
+      "padded_sha256": "61CBDC6DF4087D349B39D32F9D56E999D8614384EF1BC44223E0AC68E3B86011",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame132.rgba",
+      "source_sha256": "FBDFB5118B81821767C8B9B0EB00B03CB7CD176750EDDED8AF58E9F357B3E2D9",
+      "padded_sha256": "C9095360C7DAD9AC4F10C0B337BF09FA8C496C8577C154177FD3B5CB667D9FE2",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame133.rgba",
+      "source_sha256": "593FDCEC8ED93DC1AA030B960F47E097D320BC3B8B8BFC37B3BD441567A2B8DE",
+      "padded_sha256": "5F55F02FA94CE8959A8316EF04076356055FB8F47AC969EEDD4727DFE6425BF2",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame134.rgba",
+      "source_sha256": "25C4636E747A90FF5F78398DC94DA062B319EE580C7C41F2D045372B8383FEC5",
+      "padded_sha256": "26DD50CEFD4E122888AC1E42FD49658F86775DCAA9E8587D5BF6CECD1CD8939D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame135.rgba",
+      "source_sha256": "86DE44D7250ADA15AF5012689F46C28C16652A9AA4168C38B746EA0DF9CCDF0F",
+      "padded_sha256": "18E515E8F25B3C9C65E4228E8D15B530EAB062A2B0596BCA8830214CA6F8D560",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame136.rgba",
+      "source_sha256": "61B52DF1BA211D0A614541EE2956380F03A55B927633FD426A5A60B9B890FB76",
+      "padded_sha256": "DB15C50A0D38F2E3BC144A82DC0567F1B1CB24C49CFA340CE7F1E0F6BAB14C19",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame137.rgba",
+      "source_sha256": "ED41DF29C03A0A430BB3395FF40BFB40BEA08A3E224517DD25C7FD295790DD98",
+      "padded_sha256": "37AF7C9AEDE2224DE988B5BC3D1AEDAB784BF99948B4FE62F82CDAA0B74190B9",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame138.rgba",
+      "source_sha256": "10AA8460A0D5BA04E4BBB53FAC0A398900BE05E9979D1818A3F1D343B934B519",
+      "padded_sha256": "BC98647B4741F457EF9E2EFD96D9D4828357E295D237B6C3CE2392AA28B8E228",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame139.rgba",
+      "source_sha256": "2189F64C243AAE12C172D3B63AFD1F6673D7D210B807C0D62A4C47FDB1B2C6FE",
+      "padded_sha256": "1A51353068005FABD23F17838F3CFFCDDEB1582D0F619F97372D478D75363DAB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame140.rgba",
+      "source_sha256": "F761B3EE579D919EED34D51C0BA5EF7784211E9FF68D91065500014AC04BDE51",
+      "padded_sha256": "7D4417AE28D599D399219E96C3B8B414D119E3CBD4F871C30C8CC73E24270257",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame141.rgba",
+      "source_sha256": "8D4E59089B7FBBA81C0763A976AE791BEEEB99B11FAB30243D7A3D6F56EE923E",
+      "padded_sha256": "8A727EDBEFB4FB7035569409116CFF0FE467BDB718E8ACDC4E8209049647A94F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame142.rgba",
+      "source_sha256": "8FDAE105719A6691112B6157EA27B01A8C255D79C4D08FDAA9A57B23B2DDCD36",
+      "padded_sha256": "060723733697E1C17B6B8BE62364CEFD180F8C19C43DEA54FAC5B6713EC89599",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame143.rgba",
+      "source_sha256": "4DFF2B752E7FCC2A729819146FD8D7A9A30E24783CCB51FC211D3FAA6857D2FF",
+      "padded_sha256": "86960131C6DC96E8553F549EB5A018D1438FEC90E25335768CB3D2C78FB96B8F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame144.rgba",
+      "source_sha256": "D9A43A7654999951503EEE47F79D5B42A060799358AFE9359097256016F3A7FA",
+      "padded_sha256": "7DF17CA1AB62FE70E9ABB40594C8393EFBCB09E21B20C5CDA7F4355A867534FF",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame145.rgba",
+      "source_sha256": "61E46CBA7B227E11094E851683D840513709A68367A1FCB58038FE5DF556D776",
+      "padded_sha256": "553537A5698AFE646F15317DDC3B8456490E0DA1671CE0105FE78A64DDEA69C2",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame146.rgba",
+      "source_sha256": "FBD69500414D961B87AC972F9DCFC7504123D6D6F29AA37D416C2A2A09E7B006",
+      "padded_sha256": "DD436B68A55A9A6C9E74E6FEDEC4EBB38A23F426290357850247334B3721CC85",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame147.rgba",
+      "source_sha256": "859E8FAF549AE260479E8A4A3AF329D5F2F5AA85EC472876AF1705AA3F336C28",
+      "padded_sha256": "82F50862956C7574F0CF01FD54FC4515AB3A8457BC8A836DBB97E553F7EE0FF0",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame148.rgba",
+      "source_sha256": "85F047056ECCCBD39C0CB4A9762BA674480126CD212F27F6ADCDC6B63B01B9B7",
+      "padded_sha256": "A9D49BF6475779B378204551ECF68A0C120086CE6150A1FEF6C63839A4105D4C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame149.rgba",
+      "source_sha256": "0B9D1EB757A50BDB2B7C4EA1948FDDEF3E2ECB1D6476D7D9EF56514D6960DECC",
+      "padded_sha256": "AECD8D93C1A3D27640615744195D0880A3BEFB540C4B98C9425804B72DB685DB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame150.rgba",
+      "source_sha256": "D92E880B8D17A653D55262DDA8118CB018447A741B58CD79AB19733355F913F3",
+      "padded_sha256": "E7F4A6984F407F656AE7519FFA0C8794BF44EFAB3CF0F277980D380600BCD9A2",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame151.rgba",
+      "source_sha256": "8B53DB3405DD7E8D8620BAF59E18481EDA87902FAAF6D64641618459FBF330DB",
+      "padded_sha256": "125EBCCDAD8801B5BACC736B9FCED850602C824E3841E701FC942845F1E799A4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame152.rgba",
+      "source_sha256": "67B05A4732EAFB6B04F7A042EBF11F33959291BA1DABF6A4283059748B9911FF",
+      "padded_sha256": "B9ACBA6FB7C55D3E2685855FA4FDC3A4502AF0B965C67341988E62D01ABB773C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame153.rgba",
+      "source_sha256": "40849006EBC3015FE71A668277B7C6339DE6E4D6D6FC83A825498197A6C49787",
+      "padded_sha256": "EAA372E38BCDC0B1EFBBB97E797E139AAB68F92252375DC7280BC0819D3DD38C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame154.rgba",
+      "source_sha256": "53F6D8A9F0A8387127CEDCA192EF568B1DFFB669BCF3B81CCE8EA566A61AA9BB",
+      "padded_sha256": "46CD689970FFA413E8A090484B83AE8328A542C2F43116508366EDC18F820CC9",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame155.rgba",
+      "source_sha256": "398291CFBA9DA24C9A51EDF95A462A850440126F0BD05AD166BF529B4CABFC51",
+      "padded_sha256": "6C0DDDD51F110AD8B1CA013559D24EFD950D65A8628D5F828623E401C78FC54F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame156.rgba",
+      "source_sha256": "E9C6D8916FF6F60225B367D3C5B9D78731FE88AD7540B5652C85FC268A444FEC",
+      "padded_sha256": "ED0ECEA4B89644C793907E503C1F5AC3BA1C2ECF906D3930A877A0D66871C9E5",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame157.rgba",
+      "source_sha256": "2A80A71AE82DF737F4D3EC67DFE441809C03691FCE53BD82592FB7BA53E6984A",
+      "padded_sha256": "BBB727EEC669F0D3951EE2BBBAF0C0B7D70FBA76DBDFF69032562CD8F5E0A122",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame158.rgba",
+      "source_sha256": "4E6F9991DCEE114778BF9FD28FD25D7395144C6809764A64BE4DFADE1DBC2198",
+      "padded_sha256": "A389E3EF0D7ECA20FD7A7985733ECD1F15DDF95E03C216C9A454819A8C96195C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame159.rgba",
+      "source_sha256": "60A34E66F6A016D344B0D0DFEF6878A948C99A7A64617BDE277F0FECF0F55111",
+      "padded_sha256": "2F72CA89ED0A460227942AC34106E7D8B93AD8CE6AB0CFB8FA636C84CEB5DA56",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame160.rgba",
+      "source_sha256": "4177A577F0DD5DFEFA89C82C51472F0F5F79CADA010A0958DA90F897521EFFA7",
+      "padded_sha256": "97405AC1BF5F4B3EFCA30EF8C3BBD60C94C29A867147442B78C04F70F6FE3296",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame161.rgba",
+      "source_sha256": "97A2AC81073D4081E2D704EDA94784217F059D6D3DE710E03B1E09E5C453B601",
+      "padded_sha256": "9015A5B0AB3611B2E5FD5AD6F508A920D2F4CC557BC376C51B747486BA34A3A5",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame162.rgba",
+      "source_sha256": "5ADED059A3E0D734D67E12BE298423FC8D6736EBC171BC4AF724D7A793E16A7A",
+      "padded_sha256": "D07E9ED9D0272BD6FAC09D5035A703725F3BFD131D6CFA45BCB666554A9CBDCB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame163.rgba",
+      "source_sha256": "08655EC3AB40ADC6E834217A2BB6537177D117125878F666D684B02E08386D57",
+      "padded_sha256": "CBD056B36017DD8AD596C7EB4FAE5418279D6A21A19A1E51277F19BA8E70296D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame164.rgba",
+      "source_sha256": "DD53955FCF8411E8034C7622ED837E6C5BA887E4456E770305886B3A1CF61A17",
+      "padded_sha256": "ECB7CBC12798EBE360A83D383EB1160A005DA0832C23EB739ABE84DBAF4FC878",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame165.rgba",
+      "source_sha256": "2949537A41C7691132CAADD829B9F0BE1A59746404BF6DC96EDE9C01E7C5984D",
+      "padded_sha256": "B1FAE79ABD51E95D9C327178FC6ED87127C0E7C369877971ECEDE1666135C385",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame166.rgba",
+      "source_sha256": "3B2926E4AF499A3884F000D68A25700725CB5B127BCFEADFE3E7D0421F37FADE",
+      "padded_sha256": "6B64460684A5A1F7B7475EF4C98874556A421064787E4F90D764D387C7C7E8CC",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame167.rgba",
+      "source_sha256": "8968A16992555FC6C64235AE20EA40F9E445836AA6506CC33705FA1B14D89D03",
+      "padded_sha256": "CD21B27C4B810323A22123C7CCF0EC80FD4B16BC6BFE87F4A3AC38C9F94EC5C2",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame168.rgba",
+      "source_sha256": "56337987B0602B81153B3C509234659EA2C8DAEE06D533A61BEE7B9592F192AE",
+      "padded_sha256": "54363491F57CBB7346502850D096C249BD161232C008D7E8DB974B90ECBDED5B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame169.rgba",
+      "source_sha256": "BC1D75FAFE0869EC492BA4F25E03767F9E0CA3BA3014F9FE5796A4682AF56D15",
+      "padded_sha256": "65439CF4F81A01436F3F5D90293C13D5F246B829CEEE0C36F4AAE29DAB172F25",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame170.rgba",
+      "source_sha256": "0D6158ECF1D5C7333B5331621A32547F6F9887DE62A920BBD96712AA838EA0AE",
+      "padded_sha256": "728C36A1CA53BFB33A14FCDA74777E5BC307A17662D9274A7B6344DCF0A6FFDB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame171.rgba",
+      "source_sha256": "84054B5B7024E4E3A73A8FFA4E79C89F1F8A3B6C5358F86868FE0950623FB0FC",
+      "padded_sha256": "0F713F4AA716E726E76F472AFD3E45CF493FA921086376C6FB6770E917B49E70",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame172.rgba",
+      "source_sha256": "4592B293D4A64462E3CF9DA1D99A6B7816B8F2D3578736C9D756299E369B84B6",
+      "padded_sha256": "5B102377C7D8E2ED1D7D044D5ACA3CB91BE1796E521E2FF8010178E9D044BDF5",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame173.rgba",
+      "source_sha256": "AED03C0A14BA2D15EC1405CF5DFFC330B25866B1A37BD671B6A5835E6D08B90D",
+      "padded_sha256": "A7583B1F815B586F1FFEC7CBD33CF264DC032CEF6935738C20007E19A9D8FA32",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame174.rgba",
+      "source_sha256": "203802C93240631178C86560B75521389027D5759E147321E6EA2EF7847245CA",
+      "padded_sha256": "C8B61804807F3E5A3842671AB20A06D855753385D34393506FF3EB3939CD8B3B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame175.rgba",
+      "source_sha256": "42A755613809BB839EA820A9349C6B2B6583220FBA345AAB87C66B80C112691E",
+      "padded_sha256": "A52CD4649D059EABA6B6C4F6081FD09A52A5B4C17E48BFDC05E36F0ED4B4138A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame176.rgba",
+      "source_sha256": "36A9CA9FB9703B1CE0A5B3DFAAC8968EFA6C5FAA285CEA5FC4A2978802791A94",
+      "padded_sha256": "1D3AAD2C7EEC15050FF7AC92F567F3954D7A9FD266D071073214B1609577EFC9",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame177.rgba",
+      "source_sha256": "0DC8306DAB116070AF57BE6B9E354ED19927CF91920848B824306BD7651879FA",
+      "padded_sha256": "81419D8FA20BAB19F8457DC2DA789067E89CF52DC14303899B6F376A749DEFEE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame178.rgba",
+      "source_sha256": "36C97D01C3ACE8CCCA9FCFD1AF9AFA5AB2D4781B3D028AA3EA90BB23C10D2E0A",
+      "padded_sha256": "D50A3854CB1C7901B9CF847A6CC88652596125637FEBF61A53F1A6BB62F8C90D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame179.rgba",
+      "source_sha256": "5E82BB046112F55A1480E586E42F02762C11328CA9C9556ED9F1A0E0137E3EAC",
+      "padded_sha256": "2BA0343F21EDE91E4954C64280C8A7DA5F76EF4E73EDAB1A864A46A1D7F320E4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame180.rgba",
+      "source_sha256": "E0B26641A882E92BAC9959ACC6190AFC683219D7423F19E7C7520CB97812B225",
+      "padded_sha256": "E9CF4F273BE437A1D9FCF7DA846E3654B6EEA649CB9E3787371CF61F40431FC6",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame181.rgba",
+      "source_sha256": "043035B72FF3C826A539647A98B8F2C475BD2BE2532444D0AAEC22C76D3417F8",
+      "padded_sha256": "2372C01D66343F60D6325EC7D95B27EDBC93BDA97F778AD0F0F9F8CFB6F640E9",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame182.rgba",
+      "source_sha256": "B70E540DE68E77FB001BC186D1F30BAF7B7B1742DCE8E8C99A02E66F49636119",
+      "padded_sha256": "10F64B250659BAD80AAF2873BF7D19BD7234FE2CE75B3BA1A64A6C61AECEDD26",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame183.rgba",
+      "source_sha256": "0D15E33F06E3403CE168AEF5B0E70EF8107B875BF851CDC9AEED698B609C7D60",
+      "padded_sha256": "54C5F4FDCAB14F2877BF5A28BBEE366D6142AE4A38E319FDCCAF922FEAF7713F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame184.rgba",
+      "source_sha256": "BF829E2ABF9BE3D2B2E42994950609048CA5C9FFA1B716FA6B46F00967F9A0EE",
+      "padded_sha256": "D8E693D99BB041D70C7CEE64A095E7A720B44138C0B224BE12746B8FB3E6E778",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame185.rgba",
+      "source_sha256": "FE6139F7DE6F85359A885EDE486A43C74FE5371581EAD8A5C6023D21FE0EEFEC",
+      "padded_sha256": "E0AC939B7C7B30F057827779C6BC63F97C03D6504061726D159C4D892F43DB98",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame186.rgba",
+      "source_sha256": "CB45D87FDC375D949489EE4289B49F88161181FD1801586ABD1F6E72AC664DCB",
+      "padded_sha256": "52FF7DD707386C28149A0556E9BAEAD023AE3F81536483A8384D1AC596502913",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame187.rgba",
+      "source_sha256": "C241E1BAB8733F1DF74B0DEC037CC160FE2FF6DB2A3330DA2E17B077149D241F",
+      "padded_sha256": "7FE05BF1A4E2146AFDCD00194137B822BB2C8FBECF88336D0C75B288A5AB6BB1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame188.rgba",
+      "source_sha256": "B81A5BE2068A2307CCD53F71665303A230BABE21E1A7D714C4F66EBBE9C59ED1",
+      "padded_sha256": "7EB875FE4A8E5D2F77C477D96DEEF06C9581B906082A9EA0AE347CB9B97CBD81",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame189.rgba",
+      "source_sha256": "04077E19A27A6330C969F21604336F22E48A380A460A7435D77FA7B1CF03FCEB",
+      "padded_sha256": "39D9E578060A718C1C133E9FC4ECA545E06843643196C4EBA864B937818560CF",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame190.rgba",
+      "source_sha256": "BCCAE8AF83A55DFA99E2E534A99E09B90E344D75A1BE762FE64E00D79A348791",
+      "padded_sha256": "B6E0CEBB1BD1AE600FC9BEB9734084173DA6BDDC75A5F96BF84E888A519F58E7",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame191.rgba",
+      "source_sha256": "BEAAB0A7A730DEA2F19248FB1750CD9FE9531F676A91AEEFFEEA8BB44BCD14D6",
+      "padded_sha256": "CE63D6DFD3ED0A49DA885348AD441D23D26EFB23A1AFFEBDBD36D039AFA6A5A8",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame192.rgba",
+      "source_sha256": "9F491EC7F000627CDA4419D06782B32177D7BEE71D6E5EDC7181231E43261DAE",
+      "padded_sha256": "0E9BE86303304406672353865B9AB670EDBFF7E94BFBF092AE220D4F41A5D53E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame193.rgba",
+      "source_sha256": "6E7B03FDE7964A09B033E786B6F55CADA560E5F815BE263D538D86CA999A331B",
+      "padded_sha256": "1ACDAD15456D26D8178B5616AF89193BAD93E8095E7A915FF81B7BF0C64284BB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame194.rgba",
+      "source_sha256": "1BD57C1A21A1DC7A7AB89ED98A311D4DF94DDF06EE9EE61274DA7D7552F9FFE0",
+      "padded_sha256": "24B3A9FF5A24BB8562DE18DC783256150ACC4529DF0894F0C3E1695AF4F10B3C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame195.rgba",
+      "source_sha256": "4445E379A6EB06575C1C8C55736D2886D1A7C460A12F5BCE3C011903B1A4270C",
+      "padded_sha256": "30BDB5CB3674CADD02CA4EC4679AFA97BE4843B41BEC57590B8064F3BF417F77",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame196.rgba",
+      "source_sha256": "9F228CCD79936C7AC6460BDBCE1395FF4D386607DD0657C2A5AAD429AEA8C71D",
+      "padded_sha256": "2B9117056AAF4B6921C3E4FBCE94EA6FD2106C0574B2F7A24A63A830C18B4B81",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame197.rgba",
+      "source_sha256": "A0594EC4B6E1125180873147FC97865827903CE4111DB5E510D87BC936F677D1",
+      "padded_sha256": "CD75AC2042D92DC1EE94E0A851AA45F93FC42CCFDC9081A45E428BEDF450B527",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame198.rgba",
+      "source_sha256": "C93C5C0F42765F5C8454A93DD3CD66C9C69F578880025EFD4995865D49314655",
+      "padded_sha256": "3CB9642AE280388C4E5A0838FCA25299B1384DCF062179001BB58E40569ACEA6",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame199.rgba",
+      "source_sha256": "7682E52A8CEBF37D0FA099FCEC64BE0E47170607B5C799A35733EBA4AED9091E",
+      "padded_sha256": "89AF0DD681F7E0BDAEFC2C4FEE794E9D4A7E3DAC0EDD2E994DE9D4D5160B7520",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame200.rgba",
+      "source_sha256": "951F32F84C46FCB28F18F8E0FA559E92B92E5FA0FBF07A95032A777EA447EBAE",
+      "padded_sha256": "8FE3F3523559A84354405A61238527919BE8AB25AD3B1EC836EE001FAABDF8FE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame201.rgba",
+      "source_sha256": "4BAD71687F0119C76D5F8C4B536265790D14321C0F5B28288F92034FDDDB7522",
+      "padded_sha256": "8A98AF441E6A0B49597D9679BFDF695EAAD143328C4EA7E8134CF0E9D78A43D7",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame202.rgba",
+      "source_sha256": "FD317DEB8EAB980C4132AAD55017F4F4A69FC507811FCDA1179955EEAF74CCE6",
+      "padded_sha256": "2B08BA8250E01D37D7A80CE42C2F02E15A90077B64CF1BCB5F2B809E197BDE92",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame203.rgba",
+      "source_sha256": "45559FB9BBE63A569961444E95346BB14B8FC414BCDA7D807A3EC8C0086B4146",
+      "padded_sha256": "604054C3AC1F1DD009F690DAEA947F1AD79C96E65FDD2C53BC30C88CBB028202",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame204.rgba",
+      "source_sha256": "ABE75A09F8B80F578314DED5421E15B0CAD99F427D1928DD07ACDA80326D6089",
+      "padded_sha256": "A81C7DE94EF23CAAF8A7A517B72E1D0B9D0E2DD310F22A70B8654711EBB853C9",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame205.rgba",
+      "source_sha256": "69744C9A276EB55B8F6158AB4700BFD4E5E59060773D5838F93426E7F2C1793E",
+      "padded_sha256": "409D4BE72FD0BA4082DF9216BE507A1B2715A8AF89B91D55361E1E0F35D7D0E8",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame206.rgba",
+      "source_sha256": "C2C7B3D5D8F48627F0A68D313A349DFD410C496055221638CD6AAC049AD19717",
+      "padded_sha256": "90D104ED6C2B91C92BF6539756030E6FA6E364821B0B50E165CB9B10427D9C56",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame207.rgba",
+      "source_sha256": "5FB4BA9271E7FA3B478421F6D6B6BC8625AFF4828A80D71048DD5B7AE7A91770",
+      "padded_sha256": "80DF1E0D7B1DDECD4EF7892D270F3A5394F0853EC17A2007ECFDC7DEC9241C17",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame208.rgba",
+      "source_sha256": "148C21255B8EBF44169091E62E8D98A885C4A8A93F34B5EFB5EBEFEC4E941811",
+      "padded_sha256": "BE2775944E0D1C2521ED620D1E7544A1486C877688E657D53CA62F62649A68EC",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame209.rgba",
+      "source_sha256": "71A4DF2AC5D5FBCD00F5C830E246D04A0FC315C0044EF1D20A77203214EA129D",
+      "padded_sha256": "EB626CFBCFD84EFC004422B8F76FE883AA6EF6178CF8B5BC90AEF5741C900A65",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame210.rgba",
+      "source_sha256": "7D8FA9097D9400B6CFD97CBE933B0624BEAC9E1569184EA64A43AF7880CD1A0E",
+      "padded_sha256": "E9219D013D37FE99C70A495FCCBA7F3192DFEAC3EB75FE33783313680A16B748",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame211.rgba",
+      "source_sha256": "2464BA94CDD7C1BEF42533AC402E674FD77801977B12CA4FAF8A8A6DA0ECEC54",
+      "padded_sha256": "E936B6A7A1CBCB63CB91D64693298A6AECB0C3907C70B091B9BFE96E283CCE0E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame212.rgba",
+      "source_sha256": "EEF3837A9D7DBB54286AB12292E9386EC2258BA1DCB9EE4FADBC5A5FD8633833",
+      "padded_sha256": "A1633BF93EE4244F90BE7FD54ED2E233233E66A3721F69718670EC6CF2E24AE5",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame213.rgba",
+      "source_sha256": "13F6623F2CF2104CBCCAD827514D59E3EC852175D678B085F6D09F9C5E69A2CC",
+      "padded_sha256": "DFFDBB72562AA35E9E0B0BA8020E997150E59030DA31165EFF7130A78098D5E8",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame214.rgba",
+      "source_sha256": "C447865DB58A8D68404EEAFB3A27BD07657ED12C0C92032C27C21A8AFEDB6848",
+      "padded_sha256": "461AEE14B8DD7159D71EE66E28968953D6AF5510ACC3C13FAE8C525E61AC8E46",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame215.rgba",
+      "source_sha256": "2BCBEB5909204018112227E3E3D32439884AF27FC0024C42E7A44B1D0D512EEE",
+      "padded_sha256": "CC2CD5803D0B928B14EE51C89B833AB9AADDE991DB4097437AE59B8C891B3D89",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame216.rgba",
+      "source_sha256": "3A22FD594B9152AF455641254D8479F62A5C1F070E4DBC6C60BF2491AD75F375",
+      "padded_sha256": "81E53802D8055E987C15E821D2E96E8A3373CD743BC031182E1B3E66E5DB3585",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame217.rgba",
+      "source_sha256": "1F1423DA0DFC4732148122017061AA8EF359199C6D2015765ECFB76E19CE00CD",
+      "padded_sha256": "690DE5192AD96F0923A0B766CCD126A517504675F3057FFBDE4A86CCE4D5805C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame218.rgba",
+      "source_sha256": "57A0036191D7048DE36AD60AA1BBB80E342B691CE750623536197F2F4D84C395",
+      "padded_sha256": "635995B08585DA3045E152F71A59540A8BBDF6264D8A8004E11387CF6F996380",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame219.rgba",
+      "source_sha256": "B8197763B323895B037443D8C62167FAFA492584BF87AEE6EF748EC24F732DCE",
+      "padded_sha256": "DE06E726626222790248C49E95B432BEFCC0161657C00669FC1DBED72460A720",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame220.rgba",
+      "source_sha256": "F9AA932A480028486D0E50FCEA9CEDC44E2CC5F852DD72C3E75A07D2168E7454",
+      "padded_sha256": "96F02CF90B40C06AAAFD025FC7635253BC1AF4ACA881622B1D3D3D483F7849C6",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame221.rgba",
+      "source_sha256": "55E941CF71CB99C91797AEE65CEDF53A292C1BFEE7D82B41BD76B46BA158C714",
+      "padded_sha256": "D8195432F41DDC5CB143D4AF5C99DE5C3CCF68F387F98568AFB922FA1AD42203",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame222.rgba",
+      "source_sha256": "73C408D88DBEDAB81BDA4DD79A821A665AD1C13BDA2853E41F7244108A44DA55",
+      "padded_sha256": "5F09003345985AD114721021B34E876386C4C2982ABD50B4464BAA2B4F0234AB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame223.rgba",
+      "source_sha256": "3FC50E52498B8F7841592661583BDD7CCE1355B3A3E72687B3883F3426365FE6",
+      "padded_sha256": "EFCB083234166F7FE4AB5723FDC000C8523C8EF6255D2AD517CB026997A5219D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame224.rgba",
+      "source_sha256": "0D994C71ECFF2E2FAA4FA6290025FC47423366BE257155321F5ECEE4A9AE1941",
+      "padded_sha256": "DBA6E3F3940E3B6A8D083F170170D6391AA378AEB41B2A6B525F8A946ECB6824",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame225.rgba",
+      "source_sha256": "DE6A6A162B006A9F11DE0055DBAD1ECF419EA42814EC2D4D2309E755E280DB19",
+      "padded_sha256": "F49F25343E7815049D7115760A44C5533F28A23D97C05A3222DDA59E0A380132",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame226.rgba",
+      "source_sha256": "EA293568DA176A1957F0EB490419544370088ED320F5D9D9E025DE37C2567164",
+      "padded_sha256": "72773FCD616C6A2239CB83A80645BE334C8159D7A6F74D233E939CBAEB75FA79",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame227.rgba",
+      "source_sha256": "A8B4FA714B3149DB3AA4D17EB64B5F703DE9EBF49E1E9F70D873C0B1E5832489",
+      "padded_sha256": "9F3570768376FC96AB6E7D6CD133A97CC37E93AB21244127910C1B900F912C73",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame228.rgba",
+      "source_sha256": "74E363159846D12CE590BB1FAC13F354D09EB6E28C6DBB92DF96554BEA002CB8",
+      "padded_sha256": "C9C09AAF43ACA44D12C34489807B868EB9912EDD6211B3BFB06138EE57591EB0",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame229.rgba",
+      "source_sha256": "563EFECF3DB6C94C032C0AD421E07F497E1C2C75136209BAF4DE6E572092A2B6",
+      "padded_sha256": "96BAC91A0A30F8A760DE320760B7A6D6E1648CDF6442550F4914F49D3F01DBD7",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame230.rgba",
+      "source_sha256": "9B7532E60996B6BA802B46745736C05179CC370B94B4FBCC390A6611B46ACE36",
+      "padded_sha256": "87AFE77DF16055A9849D618E942FDC5BABE9FC375A6931732943E80150DA4A58",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame231.rgba",
+      "source_sha256": "1888DDA38B4E7CA1D804C34793A928DA243B22652B897029AF7A0B27F5123EE9",
+      "padded_sha256": "E0B41E09FCDDE9A1996DDA133D1B551A0A9F79464C8069CC256C05A5BB8042F0",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame232.rgba",
+      "source_sha256": "0C90199EDC0A219B43E9EFD0D1C62B47DC83B99B91389BD8D91FFA77D30152C9",
+      "padded_sha256": "3C3F7B6FF117ECB2A8C8CE53982B68715B25F636D08CF771BB6169EB9552C999",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame233.rgba",
+      "source_sha256": "6E8219D7C5DB6B18E72B6852E6C7D67BD295752B567744F57876D8E6C1A87491",
+      "padded_sha256": "738568184D445B0ED11E0BEA00E7093CE283E84A3CB1A07E55D676B364D7393C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame234.rgba",
+      "source_sha256": "A1806D07CB36A17C92E4EB578C81620A3BB8355D17732DC8F94A1EA4A8E6AD3F",
+      "padded_sha256": "93D67D0886D01914C92048353D434053464CAB76A44099FED88F99ED9AF5A41D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame235.rgba",
+      "source_sha256": "FE491A6B314B04EA5A85EE6FD38AD8836AFC468FD5C66C62EF2BFDC4270D23E1",
+      "padded_sha256": "BD41158F99D7D1D5E52654D5208D1365A2C522E4D6E264A7AE2712397A474EEF",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame236.rgba",
+      "source_sha256": "FF92B94D98257B1396FCE8DBF0D38003839F23DDF6D77850518F07AD49F878A2",
+      "padded_sha256": "F5EDFBB886E1ED908229AD498F88306F57EB2F1DC17E025FFB6B08B3DCD6E248",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame237.rgba",
+      "source_sha256": "D9366197118AFAFC722C5D0705F07B927247302567462FD98BD604718FF5E66C",
+      "padded_sha256": "9A6360453319DD6562565F6159A909652D2EA2CC813598558252D164F31F8CCB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame238.rgba",
+      "source_sha256": "1527F483ECA03484FFA675BAC03EC8A6FC6F488EFE8A57D1368875C4C357AD2A",
+      "padded_sha256": "B89C7DDE6EC811FD9AE71C3EE5BF21A888CFA4005737AD91DDC9D6CB43F403DE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame239.rgba",
+      "source_sha256": "462184DCCCF0D74E31E60AC0939E935F565B8BB4169CFD98E760E4C6E1BA60D6",
+      "padded_sha256": "E537C071F61E8B9B8ACCCE110B6FF0C21405DB734ED72231E5BA570DE0086328",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame240.rgba",
+      "source_sha256": "BCBCD9C09FDD6C70A236D5071E70B34FAB65C073F8BFDDBB58F07078F5A36912",
+      "padded_sha256": "E4DFC66F545EF92982374A83BC29793709226CBDC31E1EA43BB9A59456064A1E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame241.rgba",
+      "source_sha256": "DD803E77D00290E29819D6ABD96E6DFBC03BDC470CC61826DA550DE74B3617EB",
+      "padded_sha256": "6F521F413DE3F61CAEC1C333E99EA278CB789F84016BB398C62BAD8B80D6FB4B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame242.rgba",
+      "source_sha256": "4A69DF72A238E884EAFDA7A2B771E95D52993D074725729B7D648C2C28B4399E",
+      "padded_sha256": "26E4BCDA5FDF70C41AB1F7EDAB4C774DEA424883BA18178B6D434444F393EBE7",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame243.rgba",
+      "source_sha256": "05AEDCC64F895F4497F328B064713344588FF8F7154964711B40BED0BABE388B",
+      "padded_sha256": "8FC19093A1A10D0965A9D3D5C1A2E46CAA532EC9B627209E61F4D6397C166384",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame244.rgba",
+      "source_sha256": "DECA4777F36DE658E8983E01B2FCCC301B159ED0884DCD02A1308E854E36E0B3",
+      "padded_sha256": "DC8210B63F02E616A7641805247F6A34E5AA768D14CD5E710A6BA5AFB10FC098",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame245.rgba",
+      "source_sha256": "C0E31971A97E7921B42E81B884E3B8CA97F75CE31C24C0B204E1265A72D7AFD1",
+      "padded_sha256": "D103A827CBA22E6289EA0843A322E55ED320D0E77CB3843A9E54F5696B9F092E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame246.rgba",
+      "source_sha256": "5BE553EC0ED63079494B7D1B64CEBDC96FB5C54ED33646BB8B95FAAAB4A4BABA",
+      "padded_sha256": "A2CC07919467F3898029DBFB8940B690208E1D440AF14607B7D634DFDCC2F78B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame247.rgba",
+      "source_sha256": "8A790576C547CC901B6858F379E6D65649A086547679FEED2F95581C46D0DC61",
+      "padded_sha256": "07E81224D002A9AC6AF27E349FF39F0F15FD46D463B8E9A9CF71789A1FB1F587",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame248.rgba",
+      "source_sha256": "42FE033DCF886C181287C81B3BBA87642AE184076BB8E810A183CBD9130C50AF",
+      "padded_sha256": "BFC2AFC14FC234FEC01B165BBFD2D6A966607B4F7BE899BDF75933C190A1E70A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame249.rgba",
+      "source_sha256": "2809474A57290C3D05833C54C3959DD6D5ADE2868449561DB248353179CCFA70",
+      "padded_sha256": "BF6665558B0EA41B6A519C6027C40B80CFE8D370AC678EF90D87D02159F9E5B5",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame250.rgba",
+      "source_sha256": "1A0F2F19D9D072D7FF5C606E65D08FC6879FB1837B69EE81350F011AC85E3726",
+      "padded_sha256": "F3D3A85A0B17BBCF7E7FFE41A1B63CF70C71AF654139F4E4576E0DE043FF0460",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame251.rgba",
+      "source_sha256": "E921878DE7A40C1F9A5F40712F82E055B635B8228A0913CC3115179CDBED4BB1",
+      "padded_sha256": "5B879AC4D6A916DE2213E39717381B112DB86FF11A658BFCD4B4048DD085AEE1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame252.rgba",
+      "source_sha256": "9CF0D9A5155EDC827526007C0E73AA658721D5BE24CD9963F0626E1A5DCD7A83",
+      "padded_sha256": "324FAC6FB5054B3D61D75CB0591A5D41CA4DB6F66293DDD4BB4517D7D302F5EC",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame253.rgba",
+      "source_sha256": "487CD782EAB6B3CB379B97834E49748D979FC2B897CA03C5E1EF1D804D44C12D",
+      "padded_sha256": "53A706679E11023393BB0D6194BA9EE019C921EFD13119BC91D1241E99AC7FB5",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame254.rgba",
+      "source_sha256": "94A3D66780A73CA3AFD55D490835AAF32CE2B117DE7CE06E2D24DB9CEFA40AC6",
+      "padded_sha256": "BB7FB8010B0C9A9B31B8954A11E10547FA95B84588F1FB31D96222A60DAD2E4B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame255.rgba",
+      "source_sha256": "76D0C3B2AFA8961C6362254A5B04A2C5573E71F42A1C5A6417D5C3A56D19D1E9",
+      "padded_sha256": "3CD221C03F8231F371E13D85E269FF5FEDE39D4E96951DA18F6932B8EC72F957",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame256.rgba",
+      "source_sha256": "D44C74971A4D4CC37C729FF7827CB348AB289E82F81B19840254AB697669FB62",
+      "padded_sha256": "CFBC2D521E8379169F11588B8C29AD2CBA20EF11057FC0181F5C585D419545AC",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame257.rgba",
+      "source_sha256": "A72AC7A2C18BF51095F9130E7222E5E8C172258F0A5F9BD5A9B4B709088B9547",
+      "padded_sha256": "D02DD16548F8F1524FC10A8DDEEA3BF1CD0AE73818684CC6A3922B48AFFF4539",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame258.rgba",
+      "source_sha256": "72B31B7B84769A2CD7EE5F2C6BC23D1407C0536A5C88F910390AC29547A3BA77",
+      "padded_sha256": "AC9284D647DDC9142ADB053FDE8EBE277FD007D909C474DFCAC1EA4A42E7D244",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame259.rgba",
+      "source_sha256": "C10D9F9DECED596E55D1F275E5DABA8FDF0345FED3E297AB2E41F67D48A58B7C",
+      "padded_sha256": "21D4CC69AFCAE9977BD895EBC130D8A7928D23C3A18E79125B96A7B6571E8FD0",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame260.rgba",
+      "source_sha256": "E6F36146EF3973126D3A7393CEB8A0C5F892DDBB9AC7E8D501325108894E94A3",
+      "padded_sha256": "53C6577929AE63AB2C7D9980F91788566E3C70F9E6723C39B6B9E1B850BAF009",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame261.rgba",
+      "source_sha256": "D4BECE3583FC204621BA342456AE6E40420DA48CA9E965A93435B150D7815757",
+      "padded_sha256": "3C2CE88602838600397B3F67904A580EF8DE58EB6007A766AE9754D3B8260025",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame262.rgba",
+      "source_sha256": "B33F760FCACD71268BF82328B977AEED44814D3D51933769793617541BED0DEB",
+      "padded_sha256": "24765E2424E8D9BF702088CCDCFAA0942A63E00A6DE7C952FA0852B189382890",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame263.rgba",
+      "source_sha256": "D9F1B9E364876033452D3273419162DA19BA745E5B606C7DF7FA13A3D395EDC6",
+      "padded_sha256": "D658A508C15C7F4F75CA2BC1D3B594A727B0F1D424C052B62EC66A123B2A562A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame264.rgba",
+      "source_sha256": "2F52E32BF45FCB02992F0E9419B9D00B2C193A56578B649FE12AC93537417DBE",
+      "padded_sha256": "9995060992591631E32189C1402406879CE3B93E5EDC56F67A3E3F0AC8DFD93A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame265.rgba",
+      "source_sha256": "F19EC72FB2AF02FD48360C35EEDBFEFB35786385ECA0889D3976CF87C6C2AD5C",
+      "padded_sha256": "33C71408076703B9B0D08960DAF110B7FFF666B110ABFC5776D15AE68C87809E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame266.rgba",
+      "source_sha256": "5DF6B0BADA949A7663F1E7C50D3B2A4A80160A2FD48B743C4DF8C466B62A3B5C",
+      "padded_sha256": "EBD60482C011A7B1E31532FC800ABB0628E6778008D08205F3D3AA417EA07399",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame267.rgba",
+      "source_sha256": "B0A96C830B0BC2CCB81E00DF9CD3E23D78850F028E5B759DAC7A07C78D569C7F",
+      "padded_sha256": "B128E626FBD7C66528C03C0032023A2127256633812F80AAA3496D1EEA2EA222",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame268.rgba",
+      "source_sha256": "616152D37E14EEA22DBED22BC3D269D274EE2DBA4B7C5161FC97D3FD70A1D444",
+      "padded_sha256": "00BFC1540B8E7C79F41E7FBCD3BD78426CB57207B1323B02A196778F40D12BF1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame269.rgba",
+      "source_sha256": "7AA9761AC2091E283AFBC34638D18215690E022B55A18F01F176DA7AFC7371D3",
+      "padded_sha256": "7806B8EB9F8AC8F73A5A9D4CD6C077DC0D8758B494811306ACD76D20DC38445F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame270.rgba",
+      "source_sha256": "C596146C46FD8CBD4823EADAC434CDF0E526C95B1FA97BEC4560500E975C620D",
+      "padded_sha256": "5A2C2A8AC044F6E9DA32B205F30E38E3FD8183EAFA4F3B773D31F69F5B4C501F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame271.rgba",
+      "source_sha256": "A9290184FAAE36DB4027FAADA3681B151A64961841FB4F4DD598F006C5BB08E1",
+      "padded_sha256": "D131103072AB991EAD284C79E99105C6B160813CE99E452FEDF4070535A60730",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame272.rgba",
+      "source_sha256": "FE4D0888CF36D26FCB2D7B61935681BCD388241140FD259DD5797B547C06060E",
+      "padded_sha256": "27D056971108D8D64B8E367E19A59A53539B8D3C837C775285920EF357FC2473",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame273.rgba",
+      "source_sha256": "C27845D364E66A7AFEAFC6389ABAD91A1E37B61CDAB5E854E4CC2512C5F1E720",
+      "padded_sha256": "9200DC0921FCE47AF605B646DA0038265EB1DECBEE25FDA4D98A26F45B81923F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame274.rgba",
+      "source_sha256": "60A2030A3CA66D3E8E430AA6CFC7F897391D8D3B0387A663C4296E268F6C5EA3",
+      "padded_sha256": "37F4818EC06C239202DDB5DC6145D45BD0226242CF2F23FE3E42C48C2ECFA321",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame275.rgba",
+      "source_sha256": "0616CB7387018917F49EB3CAA8AF3C82CF49BDBF0AD01394B4CF71F293E4EC29",
+      "padded_sha256": "FC0C7A9E10730333F8645E41651DD1DC069E8328A92790243D9ED7266B35E060",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame276.rgba",
+      "source_sha256": "8B6DA4AE1AEE958EF33D1CC0619C8B8997BDB181F84F25B2DB9249064351945A",
+      "padded_sha256": "1D16F056457EF8493A1C8EC1C40CF49130A9335363A91444EC71BEB32B7AFD7B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame277.rgba",
+      "source_sha256": "F36619C7CDCD34EC0E8F9A9B797855C6A6D0B9BA012963D21E63FADD355EE8AB",
+      "padded_sha256": "C54848E1BAFB102293239F49EF3518F81E9B050AC12A3E3E349F53F4EF3882F1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame278.rgba",
+      "source_sha256": "86417B6BEF98FDAA13E6C2D93C8C9931758BA3A4A73F3EAFCFA34CEC6B0418C2",
+      "padded_sha256": "EA777C6644029255FE923AAE46C6E1BE1DCBA67C47CE8A5341A19172C618B992",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame279.rgba",
+      "source_sha256": "73D2F0A8EE617E01D3E62E566BD75D94D0C754683B15BCFD6B9D4265C9235E9D",
+      "padded_sha256": "AF61F596B072C74ADAC9BBF0272D9031F22454521B8DDA951F3A335E45FC1DC8",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame280.rgba",
+      "source_sha256": "C4764BCC5487C11DDAC9D901DB6C898C308B6146CB07F557DFCC053A0F6B8969",
+      "padded_sha256": "E7E7B538AFB2BD4C2803057A4C463E316FAA10F6B4F5FA37336B817B3CE39E88",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame281.rgba",
+      "source_sha256": "FE28D792DCB5BF15C0E5AE0EB2FB5B02256549E2755E0A074C70ADA68992335A",
+      "padded_sha256": "788082BA455B50174B888FC07F330523D08918369580D23DBD798963291D38B9",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame282.rgba",
+      "source_sha256": "C04DB1602DE0E1418E61734A8C43BB86847AF802489F3790E2A9C468018939F1",
+      "padded_sha256": "0C0E2953125402506780876BB3CBB38A56399756FD5F7C1A801339029533B331",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame283.rgba",
+      "source_sha256": "917A3790CC74246E6A92AB8351F0A15FDA50DD73082A29D29EB0F0998C21F8AF",
+      "padded_sha256": "954839B9A51BA6EF8A4D65589BA623A95C0C4CA9BEC38C31BDF520CF89F3309B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame284.rgba",
+      "source_sha256": "496AC220033C97C92EB042D3B418454D06A3C4644E9E5BFBE53A3BA5771C540D",
+      "padded_sha256": "4CD0AC6E143CF6BC9835B260310DF5E205E5149A57315B2FB2B4369DB5B0EB6F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame285.rgba",
+      "source_sha256": "E4ADAA0EF7F385AA5422E14C8B794FCFA0AF715A4D1A30FFE4C7E8B482C39204",
+      "padded_sha256": "45B55ACD6FB637AC138605391C81A0FE0E72CF1CE4A9B0ED7E5CB6F3F3318820",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame286.rgba",
+      "source_sha256": "172451BD7EC98ABD9B7ED3086FFEBED63CBE0C98E71F2FA03090AC314B5A89D6",
+      "padded_sha256": "4660132629D5BB0AE9BD389ACB1FA5D6B269597E84EE93706B44692B487D9D22",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame287.rgba",
+      "source_sha256": "C9710021C1743763AD9C1B30FF91F38DABB1C9EC2F814773CA8A7B5765F3ABA2",
+      "padded_sha256": "759C6BC4189523B9B5B0395A13C7E97341F4F47B0175EEC6A367024750EB9C18",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame288.rgba",
+      "source_sha256": "9D09A663C07B9C946762BC2A872362254D84357BBBD880BCA4456CB3CB309E40",
+      "padded_sha256": "9BF3BFBC940AC7FE1AE82A149FD85516E98F6810BFE29105470E3F841A7C9492",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame289.rgba",
+      "source_sha256": "944BE4BDAAC643D17D00FB5046B797218DEB69274949807621E32C7FE7DB76E4",
+      "padded_sha256": "6FDE67BE519A33045D890C0BBC07C49FC2F17FE194D18712AB089FDAF8FE4F49",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame290.rgba",
+      "source_sha256": "81A82A3309000A3869B9E048188E6882BD89D429B77B44A02980342B56CDF248",
+      "padded_sha256": "27093188FE5AD30AAAAD7F15BCEEEDA1777F36311CF3C337858167EC6C805BD4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame291.rgba",
+      "source_sha256": "A03FC159235A61C0B6A1B71C983703FE8FE44DA66A5C8E979C208D7E229314F8",
+      "padded_sha256": "28FE37AE3BEF6EDC4AE0CED3DE07E3A31E77E3532547621E7735017F58CEED48",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame292.rgba",
+      "source_sha256": "F58BE0B167393A52C3E13B15C87EC8BE2B1F501D090D8CCE2C14AE6647A41251",
+      "padded_sha256": "6310AD1A7642F09D1C25E64314119992AFF4073982BA8E357B02835A3CADDAAE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame293.rgba",
+      "source_sha256": "3943902FF7885060DA4E39E392983F9C4C279119D9A1B79F41F9F92BED014015",
+      "padded_sha256": "C92E462DABDA3AF8C5DF116D6D539533D9149B20E2D59D2D458DD2D9FF903663",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame294.rgba",
+      "source_sha256": "933DA991256BAF89A4444BB0AFE51F04063A04AA44F04067CE87ABCA53224F8F",
+      "padded_sha256": "BB8626DB4BBF9B4E057A5133873897A297BD39D00F56727C7138B265561B4119",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame295.rgba",
+      "source_sha256": "1854AF983B7B107662AE8038290F6E0B6B099E7CE44BB938787760997E702739",
+      "padded_sha256": "8DDCAE35D31FEE886FCD56F6822107593CDD79F0C0088F4873EE088F884C1A61",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame296.rgba",
+      "source_sha256": "FF921BA8C9C633301293273EC1F9506D632EE28BAFCB4B25B2F23FCC32F21051",
+      "padded_sha256": "D944406A7B5D2D380232A7A593FA667B84767A79410231C3EAD9C81DC4169F18",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame297.rgba",
+      "source_sha256": "B2A71D2EF2465F02F1E88AD96A59D123CDD543033C997BBF422C2A6A7841EE82",
+      "padded_sha256": "E2CD2698BB7C9EA75A16585C87B908FDF62D21E07EA7FDD841D045553A914309",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame298.rgba",
+      "source_sha256": "EC4A43AB73FBCA51D7117210DE9F4145618EBC3111C8FC9D178F20DC2EDAF7E6",
+      "padded_sha256": "242EC1C4A82052EB99C4F86A28BBF42C123C7CF719E8C9D5A6BD0FEDE653908B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame299.rgba",
+      "source_sha256": "7C27A04EB49EE1176686FDD045EE94A231D42927D11467BA005E9941D273D2DB",
+      "padded_sha256": "CC1F2613AF9EC37B691B00A6CB39EBB0E3ADC0391197D0C6E83E94BD19886BAF",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame300.rgba",
+      "source_sha256": "6F62011601487DFF76AC2B47E7AB2B85FA18707909665E7FE30543731DCF1344",
+      "padded_sha256": "D2273868F22BDD8A78D991B1192ADE3263792FBDC630EA420C55820466A0038C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame301.rgba",
+      "source_sha256": "36F4CD0007CC6E4F995D4B804550B4232A6675E3794C299F3891F09F68663EAE",
+      "padded_sha256": "C8DA9A660A83FE567FF4FDE702D64E375DB0EB2AE96C6EB6F11BD3EEBFDD5F14",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame302.rgba",
+      "source_sha256": "CCDC15291D296C55890118A2313F819E8F5872B57131895D5377672957838AD8",
+      "padded_sha256": "7D67FBD3FB0A47483FA38D0685502C6AD678610E8FC97295D03CE508230FBCEF",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame303.rgba",
+      "source_sha256": "CEC71D161BD4C736F82ED9A8D6ED1BFE927B24C2A3A9D6F9E1EF52022C453D83",
+      "padded_sha256": "D89094D3B44848A77B4F9AAE970D68320357DBCC81A7407BB4C0A1FCD581E540",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame304.rgba",
+      "source_sha256": "749429EA10C797CBEE5E23784FCB84AC5FC1F8A4834BFC600EE33029BEB99F45",
+      "padded_sha256": "BE24ED94AF6A0A11C8CC5FB9FF6AE7E0E093142701CCD25352FC778C02528B91",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame305.rgba",
+      "source_sha256": "2BF93C83096856C6964DB73D8DDE3FB5D6B2816FD7D4A357EF9D0A1448B1F9C7",
+      "padded_sha256": "3744C74C77895B421358110F0A9D64E0B7600525B0B35B7B5AB411F628C8AEA3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame306.rgba",
+      "source_sha256": "430D6D9E543A2709512F274498AB981FD521D665D4345903926013C980C8121B",
+      "padded_sha256": "DE06950F1489D46B694C705FFFD0DD496712EF9800235B25F17E0EACFA3EC143",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame307.rgba",
+      "source_sha256": "494C6D42B5C0AF96467F8F69447B5F835460087572F3F94F4EC0DA54A4F0022E",
+      "padded_sha256": "E2A1EF2DFC9AE493862B84FAC73CCBDB83B0877514ADEE8167432B69F415E524",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame308.rgba",
+      "source_sha256": "C932046F7E7830788DDF756136F31E9AE3BF7C098F2346015A2B0FA69478FD0B",
+      "padded_sha256": "E4A66D1CD7E8040EE9DA485B129F1DBC16A111B04EC9D34A17F8B32B04143B3F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame309.rgba",
+      "source_sha256": "7DC0F6E00C7B766CD74BC789DA66C878330164E590E0787BF9AD8EFCC37231EC",
+      "padded_sha256": "CB88376723D85A8301C3B22854AABA2D1EC4E38318BA736B7AFD3E7D810D92C3",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame310.rgba",
+      "source_sha256": "1EC33EC69E35892921EFC7E77E618ED5FE69B987D12F026CED2C22BAFBACF756",
+      "padded_sha256": "7DBE196CD534F768A093DDB7FB07F677A37082CBDC79770730737562EA3D124C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame311.rgba",
+      "source_sha256": "F68E089610FDBE5CE050EE8DE149F1CD1C15F53435E0E9B75011C29654B360EC",
+      "padded_sha256": "266BF588E9365D6B6CC6F583199DADB63F409D1FC756AD0A4977CCFF0979D3AF",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame312.rgba",
+      "source_sha256": "848E4C4B5D408570F64E30B09AED1681F145A340BF238F05C94CC88BDE7B301D",
+      "padded_sha256": "B8682533E33338ACAF8716149ACF7A83985744B0C0B95FEE40C5868CACFFF3AC",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame313.rgba",
+      "source_sha256": "4A3AFFB125AFD3DE1177561BD6A0DF762DFF63F9530CC9562DBA2546C5786AD7",
+      "padded_sha256": "EDCD75E12E3C3045E8D8B3AB0B3EC909038FEC28325A1C6C1A67449D18C1BF7F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame314.rgba",
+      "source_sha256": "32D0AF0EC51078F99B558E92EE842AAE98D5348C88BDD9732415B05B176544B6",
+      "padded_sha256": "84094A78C3ABDBEB06150F236AE27B23AEFBF0A4640A8E3A62BC40C0B9E9C491",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame315.rgba",
+      "source_sha256": "2618B412DFD08288D44B66E7541F4E1138914B1FBA5E37674A36BEBADA399179",
+      "padded_sha256": "06891AF2F25D3D6817DA87868E08C666D7BC61CE4E55B4010B770DBFFCF01430",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame316.rgba",
+      "source_sha256": "7E6CAC32599F0CAA7BBBF5CC9B69166CA01551916FA5F5DEC97D6CD6F7546EB9",
+      "padded_sha256": "9548C8586B0AE99F93B087081A9A9185825F6400FC87E914E4A8CA9332145727",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame317.rgba",
+      "source_sha256": "16417A557D403EBE0BDE69E96FE57B2304EFD908EC895B7763719157704E02D1",
+      "padded_sha256": "A55EB0712113CDED3C099787BA2516DB0E28FBAF1E97FCF477891BFD793BEC64",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame318.rgba",
+      "source_sha256": "D3D5B34278E28BFF292533BBFC85CE1B6A98A3EB424FE38A5DF300534B578641",
+      "padded_sha256": "7FE92D670A4557DD6A8ECE716502D4DC97F8075D8BA2513791B03AB952E1ECAA",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame319.rgba",
+      "source_sha256": "87362EB4E830C739503F58DCC313E8951E7AEF1834EB1899B1DB032CD8A2D4B5",
+      "padded_sha256": "BA04B36C3A188327415BBFC0D78C13127EC3603F367EFD837CDD09A676031633",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame320.rgba",
+      "source_sha256": "4177A577F0DD5DFEFA89C82C51472F0F5F79CADA010A0958DA90F897521EFFA7",
+      "padded_sha256": "97405AC1BF5F4B3EFCA30EF8C3BBD60C94C29A867147442B78C04F70F6FE3296",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame321.rgba",
+      "source_sha256": "97A2AC81073D4081E2D704EDA94784217F059D6D3DE710E03B1E09E5C453B601",
+      "padded_sha256": "9015A5B0AB3611B2E5FD5AD6F508A920D2F4CC557BC376C51B747486BA34A3A5",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame322.rgba",
+      "source_sha256": "5ADED059A3E0D734D67E12BE298423FC8D6736EBC171BC4AF724D7A793E16A7A",
+      "padded_sha256": "D07E9ED9D0272BD6FAC09D5035A703725F3BFD131D6CFA45BCB666554A9CBDCB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame323.rgba",
+      "source_sha256": "08655EC3AB40ADC6E834217A2BB6537177D117125878F666D684B02E08386D57",
+      "padded_sha256": "CBD056B36017DD8AD596C7EB4FAE5418279D6A21A19A1E51277F19BA8E70296D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame324.rgba",
+      "source_sha256": "DD53955FCF8411E8034C7622ED837E6C5BA887E4456E770305886B3A1CF61A17",
+      "padded_sha256": "ECB7CBC12798EBE360A83D383EB1160A005DA0832C23EB739ABE84DBAF4FC878",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame325.rgba",
+      "source_sha256": "2949537A41C7691132CAADD829B9F0BE1A59746404BF6DC96EDE9C01E7C5984D",
+      "padded_sha256": "B1FAE79ABD51E95D9C327178FC6ED87127C0E7C369877971ECEDE1666135C385",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame326.rgba",
+      "source_sha256": "3B2926E4AF499A3884F000D68A25700725CB5B127BCFEADFE3E7D0421F37FADE",
+      "padded_sha256": "6B64460684A5A1F7B7475EF4C98874556A421064787E4F90D764D387C7C7E8CC",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame327.rgba",
+      "source_sha256": "8968A16992555FC6C64235AE20EA40F9E445836AA6506CC33705FA1B14D89D03",
+      "padded_sha256": "CD21B27C4B810323A22123C7CCF0EC80FD4B16BC6BFE87F4A3AC38C9F94EC5C2",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame328.rgba",
+      "source_sha256": "56337987B0602B81153B3C509234659EA2C8DAEE06D533A61BEE7B9592F192AE",
+      "padded_sha256": "54363491F57CBB7346502850D096C249BD161232C008D7E8DB974B90ECBDED5B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame329.rgba",
+      "source_sha256": "BC1D75FAFE0869EC492BA4F25E03767F9E0CA3BA3014F9FE5796A4682AF56D15",
+      "padded_sha256": "65439CF4F81A01436F3F5D90293C13D5F246B829CEEE0C36F4AAE29DAB172F25",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame330.rgba",
+      "source_sha256": "0D6158ECF1D5C7333B5331621A32547F6F9887DE62A920BBD96712AA838EA0AE",
+      "padded_sha256": "728C36A1CA53BFB33A14FCDA74777E5BC307A17662D9274A7B6344DCF0A6FFDB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame331.rgba",
+      "source_sha256": "84054B5B7024E4E3A73A8FFA4E79C89F1F8A3B6C5358F86868FE0950623FB0FC",
+      "padded_sha256": "0F713F4AA716E726E76F472AFD3E45CF493FA921086376C6FB6770E917B49E70",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame332.rgba",
+      "source_sha256": "4592B293D4A64462E3CF9DA1D99A6B7816B8F2D3578736C9D756299E369B84B6",
+      "padded_sha256": "5B102377C7D8E2ED1D7D044D5ACA3CB91BE1796E521E2FF8010178E9D044BDF5",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame333.rgba",
+      "source_sha256": "AED03C0A14BA2D15EC1405CF5DFFC330B25866B1A37BD671B6A5835E6D08B90D",
+      "padded_sha256": "A7583B1F815B586F1FFEC7CBD33CF264DC032CEF6935738C20007E19A9D8FA32",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame334.rgba",
+      "source_sha256": "203802C93240631178C86560B75521389027D5759E147321E6EA2EF7847245CA",
+      "padded_sha256": "C8B61804807F3E5A3842671AB20A06D855753385D34393506FF3EB3939CD8B3B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame335.rgba",
+      "source_sha256": "42A755613809BB839EA820A9349C6B2B6583220FBA345AAB87C66B80C112691E",
+      "padded_sha256": "A52CD4649D059EABA6B6C4F6081FD09A52A5B4C17E48BFDC05E36F0ED4B4138A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame336.rgba",
+      "source_sha256": "36A9CA9FB9703B1CE0A5B3DFAAC8968EFA6C5FAA285CEA5FC4A2978802791A94",
+      "padded_sha256": "1D3AAD2C7EEC15050FF7AC92F567F3954D7A9FD266D071073214B1609577EFC9",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame337.rgba",
+      "source_sha256": "0DC8306DAB116070AF57BE6B9E354ED19927CF91920848B824306BD7651879FA",
+      "padded_sha256": "81419D8FA20BAB19F8457DC2DA789067E89CF52DC14303899B6F376A749DEFEE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame338.rgba",
+      "source_sha256": "36C97D01C3ACE8CCCA9FCFD1AF9AFA5AB2D4781B3D028AA3EA90BB23C10D2E0A",
+      "padded_sha256": "D50A3854CB1C7901B9CF847A6CC88652596125637FEBF61A53F1A6BB62F8C90D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/portails-deux-correctif-20261010-v1/artifacts/BDFORCEW-final-split/OH8100/AAX4-BDFORCEW-frame339.rgba",
+      "source_sha256": "5E82BB046112F55A1480E586E42F02762C11328CA9C9556ED9F1A0E0137E3EAC",
+      "padded_sha256": "2BA0343F21EDE91E4954C64280C8A7DA5F76EF4E73EDAB1A864A46A1D7F320E4",
+      "pixels_alpha_world_positions_exact": true
+    }
+  ],
+  "neural_inference": 0,
+  "new_interpolation": 0,
+  "area_specific_placement_not_applied": true
+}

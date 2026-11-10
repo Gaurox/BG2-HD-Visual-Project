@@ -1,0 +1,468 @@
+{
+  "source_selection": {
+    "$schema": "../../schemas/animation-selection.schema.json",
+    "asset_id": "animations:bam:OHRSGATE",
+    "correction_id": "innerfeather16-premultiply",
+    "lineage": {
+      "source_packs": [
+        {
+          "manifest_path": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/manifest.json",
+          "manifest_sha256": "CF3AD9826F4B97F3E9CAC783DD557312BC37DC62BB88E73835B45D134E515B1F",
+          "path": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split",
+          "schema": "bg2-upscale-area-animation-pack-index-v1",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/ressources/OHRSGATE/runs/ohrsgate-seedvr7b-apo8-20261010-v1/03_runtime_pack/manifest.json",
+          "manifest_sha256": "925A014B0A432FF62F00635FA603A04AF2E13356D5DBEEAE76C40693DE614611",
+          "path": "animations/ressources/OHRSGATE/runs/ohrsgate-seedvr7b-apo8-20261010-v1/03_runtime_pack",
+          "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/ressources/OHRSGATE/runs/ohrsgate-seedvr7b-spatial-20261010-v1/03_runtime_pack/manifest.json",
+          "manifest_sha256": "76D597AB598D6D3637EA54425E158DF1BEF4A6BE34E237FBC2CB2400C1B876E2",
+          "path": "animations/ressources/OHRSGATE/runs/ohrsgate-seedvr7b-spatial-20261010-v1/03_runtime_pack",
+          "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+          "status": "completed"
+        }
+      ],
+      "source_runs": [
+        {
+          "manifest_path": "animations/ressources/OHRSGATE/runs/ohrsgate-seedvr7b-apo8-20261010-v1/manifest.json",
+          "manifest_sha256": "46FEFC2A9BD0F28E6A86CB9FD9CC17E9160EA916036B670E7400F18F63F7EBBC",
+          "path": "animations/ressources/OHRSGATE/runs/ohrsgate-seedvr7b-apo8-20261010-v1",
+          "schema": "bg2-upscale-area-animation-30fps-run-v2",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/ressources/OHRSGATE/runs/ohrsgate-seedvr7b-inner16-final-20261010-v1/manifest.json",
+          "manifest_sha256": "8309058F89901C73BBF2C9F6ED674F43C5F1DEA9D6F35DAFC1055AF6AED7BA96",
+          "path": "animations/ressources/OHRSGATE/runs/ohrsgate-seedvr7b-inner16-final-20261010-v1",
+          "schema": "bg2-upscale-animation-visual-treatment-v1",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/ressources/OHRSGATE/runs/ohrsgate-seedvr7b-spatial-20261010-v1/manifest.json",
+          "manifest_sha256": "19DCECA1B83D7464F38AFB515EA8E9B6BD86589CEDD4798994944C9BBEEE7C7B",
+          "path": "animations/ressources/OHRSGATE/runs/ohrsgate-seedvr7b-spatial-20261010-v1",
+          "schema": "bg2-upscale-area-animation-run-v1",
+          "status": "completed"
+        }
+      ]
+    },
+    "qa_decision": {
+      "decision_date": "2026-10-10",
+      "path": "animations/index/qa-decisions/OHRSGATE/2026-10-10-accepted-ohrsgate-portails-final-v1.json",
+      "sha256": "8606EF52DEFD9E4258597F78310A4777D212920369CBA45E23A1854F8904EDB9",
+      "status": "accepted"
+    },
+    "recipe_id": "seedvr7b-lab-apo8-inner16-premul",
+    "resref": "OHRSGATE",
+    "result_kind": "x4",
+    "schema_version": 1,
+    "selected_run": {
+      "manifest_path": "animations/ressources/OHRSGATE/runs/ohrsgate-portails-accepted-20261010-v1/manifest.json",
+      "manifest_sha256": "B0FE642FA169ED460417FD80BF4C1EE5736F7397EE60840FF720917D3177D345",
+      "path": "animations/ressources/OHRSGATE/runs/ohrsgate-portails-accepted-20261010-v1",
+      "schema": "bg2-upscale-animation-final-selection-v1",
+      "status": "completed"
+    },
+    "source_pack": {
+      "areas": [
+        {
+          "area": "OH4220",
+          "manifest_path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/OH4220/manifest.json",
+          "manifest_sha256": "8E4FA6591912419A2540D8EF20003B7CAAC68D0EE6E9A5EAFE5CD192E879C44E",
+          "path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/OH4220",
+          "registry_sha256": "8B38750C18E133AA3B0F78DA2B4124860776D03BA4080591DB11731EB35CD76B",
+          "resource_entries": 1
+        },
+        {
+          "area": "OH4230",
+          "manifest_path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/OH4230/manifest.json",
+          "manifest_sha256": "A3D2D5CE4743A50A9C05C57C08D917DC6030E7D671C64BACC231044B44112A21",
+          "path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/OH4230",
+          "registry_sha256": "9026157291F66F99FB7951A0D53F5477F1BB4729B438D8019DE6B0A260338520",
+          "resource_entries": 1
+        }
+      ],
+      "manifest_path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete/manifest.json",
+      "manifest_sha256": "3F5264FF63C6546E8F6936E52C3FF2A4B868BAF0CFC6206F68743E82099BF91C",
+      "path": "animations/packs-par-zone/portails-cinq-selection-20261010-v1-complete",
+      "schema": "bg2-upscale-area-animation-pack-index-v1",
+      "status": "completed"
+    },
+    "tested_areas": [
+      "OH4220",
+      "OH4230"
+    ],
+    "updated_at_utc": "2026-10-10T15:06:44Z"
+  },
+  "source_run": "animations/ressources/OHRSGATE/runs/ohrsgate-seedvr7b-inner16-final-20261010-v1",
+  "padding_checks": [
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame000.rgba",
+      "source_sha256": "0ABB0E0FFCED4D770FE64ABD2113A559475A4DB36FECDC4370662F9439B6DD5F",
+      "padded_sha256": "56CF409941734151D5824E463CC5A5387C724A29FBA0A1BF4546CEC9FBED6D11",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame001.rgba",
+      "source_sha256": "D537C3EDC20C371787FBB3A887E17AAADC9B6A94B4F8E3B93752536D96BF8959",
+      "padded_sha256": "B23F079C694DEE7F12C9813B8762D64C12C1F291DA636CF8E107C69F1D3A6FC1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame002.rgba",
+      "source_sha256": "6E96E74D3DC4B9090C46F71BCC1C83716E8DFB1B1E6218115F6E06D05648C7FC",
+      "padded_sha256": "BF972D11249B207FBE61DB0F8DF28ECB2AD5C75D85F45A8D46505894CF7DEFB5",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame003.rgba",
+      "source_sha256": "691530730EC909AEEF37342282E61335E4B649C7873075A150DF6A78CE3EE72C",
+      "padded_sha256": "4DF25CE5129B00D6962A47C360A7747E549BA82865140A554AC2FD9A567103FA",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame004.rgba",
+      "source_sha256": "7BBAC6B95AABB97EBCEC3F96DA358A626663BE22CA29C3A1653CD62B6BEEAADF",
+      "padded_sha256": "17F805A6E3B8C23846BC1AF09C072D3A5188AEA54F99E47F7BB9AFBF4C04A1C5",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame005.rgba",
+      "source_sha256": "A10F5C2C358B0A5DCD6EC4CEBF8D2759E717B75926F6395589B1523D3713BE4F",
+      "padded_sha256": "6C1A099F00FFC00687EB261CB4A881AEA898B31B89F9FA6C17D3ADB6A8C87C1A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame006.rgba",
+      "source_sha256": "55319B84455DC2237854B2EE1472508977171CF631C38D95C14267C49C2249CC",
+      "padded_sha256": "6C6417BA6E340A34E4992CCC6EFFBE608F194EFAF1221D87E3F7AAE9F8AFE256",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame007.rgba",
+      "source_sha256": "E09C4257912AD4C29EFF95C9C19C74AACEAEE6A9FBED231F8A2DE3D8924B6351",
+      "padded_sha256": "DE6A06F5D9282C5894B16986FF7A2BA5EBA9EA4DA6BF9FA16E29F2E5B8D49CB6",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame008.rgba",
+      "source_sha256": "AD323FC24C84B04056313C947762F5C3DAFF0AE2B7254B1E54F3C0B738AFB1BB",
+      "padded_sha256": "A84820612EE65D444CCCC55C887E7890FA4DC9B8478664048534B383B4086DDC",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame009.rgba",
+      "source_sha256": "73BA385DCF3A61D6D8C6CE1DC44C32FAD21B8D79D4B9C56648540AFC54DBC4E1",
+      "padded_sha256": "9C8A437EA6D101575F1A2E4962303F7F26B8952D62C4E2A17883210AB5CD0E0E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame010.rgba",
+      "source_sha256": "D1811913704BAD96C678D074379482BFA61144622A06CDCCDEFBD4F7FC2F19D7",
+      "padded_sha256": "B13CE560E49A24E3FF87716E423F44A4424D10A853E2CFE40C43EE44A5A9DDB6",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame011.rgba",
+      "source_sha256": "D0E8700A43ADE801A02440B9C6402CB7F1F6C18B9EE3E45D9AB0E94C2EBDE669",
+      "padded_sha256": "884BA96561CF01F4B1AE432786479949DD9BBCC50D96AD2998DA0DBCC92A58EE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame012.rgba",
+      "source_sha256": "FC71F61241A6FD9FC5D0A46FA8180871E523563F2D278F0936E194076F9332A7",
+      "padded_sha256": "C5D9189858ECE83B221D999433EDFB2962CC559BB6EA16FD28E886091CD156CC",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame013.rgba",
+      "source_sha256": "CD897B723C7542F92F7A64A9BFF6B2D91B5ED523DF34408867E4EBA189C0A285",
+      "padded_sha256": "6368FBA90C99E57F69F8957FEE18846E7BEF75DC5490E0F4561CC95E51F9FA10",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame014.rgba",
+      "source_sha256": "99137171F346C7AF3B2ECB739A02DDD5B47CA345EC8DE94B616E6E083A5264C7",
+      "padded_sha256": "5498DE02A09E4428E9BA7626989A2C00A1CF947B0CDFD59149BD8AC0ACFA1B5D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame015.rgba",
+      "source_sha256": "38FDD687762AFFBA454399B034507532BF305DFAE77C3A2098C711D99F189C9F",
+      "padded_sha256": "13C4D9CF0FF8581A2BB086C3DC380CE019A8A1602DCD7DD1DF23F7987EEAD208",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame016.rgba",
+      "source_sha256": "93599514D44C26A1BD1972E200E74FE38EB68E5B33698FD0FCC8B3002FAFD929",
+      "padded_sha256": "D87CEFC20046E8A0D21132F6FFB9209D84F9CB15D49037E5EF246961911DB18E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame017.rgba",
+      "source_sha256": "65241A8A768687AC4F6FE585F033F4B7AC1CD2857521C9E6123DC710EACDCFB5",
+      "padded_sha256": "E66F848947E6409FC7B2BC46E859E2E34EF411DF6DB015363AFA90BF316C6B52",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame018.rgba",
+      "source_sha256": "7C6D05FA97EB8B7F0CD9C6A63C532D2A3F9F3ACAF47AF4F088038E62A2B9EA79",
+      "padded_sha256": "7CB10ADA15F73C5A915DB2204B655CA0CD2EC94555900E96B938A10C0E04732D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame019.rgba",
+      "source_sha256": "781277685A9EE4D7E3C97A353B6224D54B88F9EE3ADA784E0E3DF380EC6FF88D",
+      "padded_sha256": "170DF694A35037D8517DD988DC954AADD1C0139DCEC54AA871BF9C2096DE46A2",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame020.rgba",
+      "source_sha256": "CD03F5D3495E3196CBDA0F9F15358B6838FDFF5CF3DE6E7B50F15655D9413CDA",
+      "padded_sha256": "BF87190BA98A0F27CE0788DA040A5CB8A707D1AC0062B554E7A65BF60A8DFCBD",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame021.rgba",
+      "source_sha256": "4EF9A05795737DE9524BFD3FC7CB7000DFBCFC615BCED9523B0B2316FAFFB3EB",
+      "padded_sha256": "116ACE341AE3A69BE0DFD6A74D5113085AF286CB0FA33696BCD3F61493BCEC97",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame022.rgba",
+      "source_sha256": "140A31FE4E0D9BE5174D0EAD560BD7DE48528B8159A920FC69C776CEFECF7338",
+      "padded_sha256": "B328B2E2A6D91059AF0602AF5C7A163CBDA6737F9698C3B9A03C6B69CD0BAD6C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame023.rgba",
+      "source_sha256": "9E36AE06AB9333B461237BD06D597725F11D634CD1DCCA38FC1395328D287490",
+      "padded_sha256": "80C6B67EDC374454ADDEE3FD8D10F25A8E2C95C1C01F1D09FB741AAB558CFC7E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame024.rgba",
+      "source_sha256": "E177211FF1D81CE63625F22F2DE70080C38CF1767BA4AA384087D25728BAB280",
+      "padded_sha256": "8DABAE4C7750C826901386D7A3E4F1CD6BB4B298EC2BD56063039405A7EE4E7C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame025.rgba",
+      "source_sha256": "54122E7B1B953AC0E529B864BE36CE14734CBE3C5D0218DB12681DA6A832772E",
+      "padded_sha256": "DE43E4A9DA76E084774DF055F606AF6814F06B4BDF90EC9CA3A32FB70B4FCE14",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame026.rgba",
+      "source_sha256": "05637EB5ADD7D8C5C863C31796148A7B2774F39B430D9FFF2E7CF39405A56250",
+      "padded_sha256": "287F6B7F8A5314BBC003A8DAE37E3F60F3D8A44A9CD7330374E4CC4D9D6CB7DB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame027.rgba",
+      "source_sha256": "44F595C022D5BD6C1778F5C70C514F5DAC21F50CF9BBA0B7B6895EC2C3B1BFE2",
+      "padded_sha256": "41139BFDF678083687FB6DFC31CD0FD8F819CD334E39FD5ABD66FDFC8AF4204B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame028.rgba",
+      "source_sha256": "94E7372405A04675B5480B5EC22B4690D490F44547F0D7E2D3D3A9D679DC6A4B",
+      "padded_sha256": "A53D7E88FA5FFDABDC70847BE331315D01ECA4813BCF3BB8FFCA4C74AFB30A0C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame029.rgba",
+      "source_sha256": "F22B3E437407AF29C43540125BBAF7257D2755F9E7456B5EE0F305AE3A801211",
+      "padded_sha256": "C81142B891686630F041679548ACF5136E1D5D3C6EAE5B695DC6ABCC8BAD18E0",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame030.rgba",
+      "source_sha256": "05BF9967BC7F9A5A6F2DDF7DFFFD4083BFA0B53EA153DDB32CA600CE09B4E63C",
+      "padded_sha256": "01F4DA86677AB8DC341F707021AF45DD7A8D8F513CE0D74AFA5C82ED1500F5FD",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame031.rgba",
+      "source_sha256": "03DC1EFCA65CB4FAE4D7D86BB22CAD9563E4761F4BA0F46064BA76CAE993622A",
+      "padded_sha256": "9609C877DE239B84B6DE165B7AD630C736DEA420ABB5E2D60FA4B9278DF976E8",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame032.rgba",
+      "source_sha256": "067EB4FC67EB5EF9F847BF7C5752C2F6396649774C679983C4ED64899F99B9D7",
+      "padded_sha256": "C5E3B27BE89355B1C2122B3707C4D3717FFB9BE2E2BC336FC58484059F661756",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame033.rgba",
+      "source_sha256": "07AA47103A0C11CFF3ED0E3698E088136A6B2D873EAC50C2B48BC31241502F14",
+      "padded_sha256": "0D296E7BE2F11E9DE370B2FCB297B28FEA8E948C5F2F1A0909348982FABEB4A5",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame034.rgba",
+      "source_sha256": "9617EAB1DE36654D0CBBB1E742489ECA1F4DF15068F316D8F666BA9BA373694D",
+      "padded_sha256": "09CE4639267F369E823DF48A759B6DEB5F75F75CA235C18B2D1694DEFB6E827B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame035.rgba",
+      "source_sha256": "327058BE88992C8CDC5D23F47E5A347E7584D390CA4DA454BF1198209D0EBD2E",
+      "padded_sha256": "F194D04D9BB92FD055962B87B28412BFBBB603835A8622CC0755D6779591F0BD",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame036.rgba",
+      "source_sha256": "A9C963D7EE499B55FF06885D4A47D1D79F4FB4228EB33A33914DCF6395DB1AA8",
+      "padded_sha256": "6AD20A1A663B7073C1560BA41577B5CC7CFE96BC51F3C78EAA089767CF8B4C33",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame037.rgba",
+      "source_sha256": "A4C6B4972E3BDB5A06117D8010B84447BA8378DB25722834BABD4BAB08B82A3E",
+      "padded_sha256": "66A27B31360C0690EC3E56D60324877490AF9255084ECEFCA3DBAC9BF500AA9A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame038.rgba",
+      "source_sha256": "D593D2523D5D087FC3F3F6A07127C9AA3A9DFF956C504F5A96C1421455D89C72",
+      "padded_sha256": "A49FBD92F68F7A7B98398CA1B60F237385152F3C76C1E5C5F7DCB8432B05797C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame039.rgba",
+      "source_sha256": "869EF0063F0B6E4795335B7CC883037F496270AAE6FA7D5D15EB9C8978ED5EEF",
+      "padded_sha256": "490D5582A983AB52B83D814BD7C4A690109347EFECFAE689EF1BC0783CBCD95A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame040.rgba",
+      "source_sha256": "AE5B6D9014395937953A902E34AB3749D26948AB4A1149EC56F994D98BCB1DB9",
+      "padded_sha256": "134EAD330F46A8200FEE7FD009E663C8F1E422148C31E39D4B2565A7C3158EFE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame041.rgba",
+      "source_sha256": "CCB600CAB95A1FCABACD96272DAD20892F12BAD483C60FE4716027BD919A535F",
+      "padded_sha256": "4165A3F2CE6F4A6DA060BF40557C3E64E4C9DB9BC95D93EC59DAC6FC40BDB6F8",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame042.rgba",
+      "source_sha256": "7FC2FF1D70F1DB1CD3D7923966CBAA7837D7908C46EB4CBB625D45E5EB1550ED",
+      "padded_sha256": "FE5FADD1E13D902B1E8140198B32F5879E2830A4829049CA7A4266DDCA230A87",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame043.rgba",
+      "source_sha256": "64E5893ECFA715EB057726003DEF222A61A6611502E70129ED18D880EBE536E5",
+      "padded_sha256": "F9EE5ED3ECF329C25C0C1F15F6215D21281FEE52152D1CEA3828ECED927E3EDB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame044.rgba",
+      "source_sha256": "C3D744CC5C467200F1EDBEA325ED7F9DAF0056324D3BDF4E9245F686430A2031",
+      "padded_sha256": "FFC90E69F1D347567938A1DE5E4FFBD5507D291A9357C32751F0191F4E56CB63",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame045.rgba",
+      "source_sha256": "03CB4A29AF4F401A8EA16A0E05371027C351600938CC8295577D2551A4AAAE83",
+      "padded_sha256": "42461E6AA750B91BC32A3DBA3A6EC3167AF1D7DD4338EA8C71F418A88192F931",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame046.rgba",
+      "source_sha256": "E9BCB3068D4ADF2E90D3A872B101C06B35DFF1839CE66200E3B0CF4B898E51FA",
+      "padded_sha256": "5BB1175AD76BE7CC5CD6E639A5BE35C907D4742F2FEE862CDABDE254B9738251",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame047.rgba",
+      "source_sha256": "A6208CE66BD02296DF4DD714F123D20146078350B2A6931163DB7AD6A38A4CC3",
+      "padded_sha256": "CED9B8BDAA05EED3EA142FF5ACC12874ACDF37AF8394DDE506AD9CC94D0F4386",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame048.rgba",
+      "source_sha256": "725D8AC05D1BB81C995BEAB4422DB783FC0EA608BEDF5FB46456A0C65CF21287",
+      "padded_sha256": "FDBC49826A5E2585F4B4AA16FF226A7DB7F792AE190EB73A7EA1452264D521ED",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame049.rgba",
+      "source_sha256": "62671A80035E37E173A1555A9721763FE77B54038193A9D3639B8704541A703D",
+      "padded_sha256": "45DB1D1B14448E0F3BF8EC9600AAB2026BC69F5778CBAD01C2EAD6B7D0895EA8",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame050.rgba",
+      "source_sha256": "2976FEBA5C5CF314C03D61243AE869E47A33D942A772C1B2738147E24A38B647",
+      "padded_sha256": "ECF0F44B36486711C785E9C44888A5A808538240A6ED4FCFAEC9F77F1CADBEDF",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame051.rgba",
+      "source_sha256": "6AA49E8AE60D4EEDD70066352A515B30046CA01522CE6DEC19797A2F8DFD5EC5",
+      "padded_sha256": "0F97A668F9D34563936CED0CE9B6EF7ECF2DFA91B585F6BEF7458848696A1182",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame052.rgba",
+      "source_sha256": "8C50B99146B994AA8229A6B9AD22852A91575C885C6D039032F4EA70090AB95D",
+      "padded_sha256": "5A84EC8BE213CC5A19F677948A67AAB616F5B239A0BD45618A38F64CDE55EFC4",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame053.rgba",
+      "source_sha256": "BD1329F75C8EEB8B3A830CE44BA23CFE86E111A706F5E1B9BDEBABB52E61CDB3",
+      "padded_sha256": "C5A889029E285254A15261D3FB6C24B8260A9B0A8F682D2EC18F5F192EE490B0",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame054.rgba",
+      "source_sha256": "0F043181871C31F5279698077DFBBDF564CE8F4D4D165A9C8D3A6ABEC6E143F9",
+      "padded_sha256": "3F72331843B5C7EA7EA73C4E585B0E96993F984EF461E284234DE3853461458E",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame055.rgba",
+      "source_sha256": "953C639A251BF1E48B84A780140E939B4144F1B3129F0EDC49CDB8D53B280297",
+      "padded_sha256": "35B0FC881B460D394519F62ADB1FE0A800D1446EB68DCCAD2ACCDAA48C5CB019",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame056.rgba",
+      "source_sha256": "4F35CC248FE83B267747D84713E80FE71D2F585C3511DF60370258F67269CB01",
+      "padded_sha256": "DC2EF3CAB4808C29F451F5DD75793BC2339D227963040CAD44BD0D5864F30843",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame057.rgba",
+      "source_sha256": "4EDEC05AB53E583A11C0E5A62C8D3D441EE0DA526D85A450A2D5BC4BBB1F175D",
+      "padded_sha256": "88F28124789165C7CCD4BBFED3FFD0A2EAA7C27E04DD3CA4F6D9241419325A45",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame058.rgba",
+      "source_sha256": "2FA24C34DF6B64BEEE73D32B359454A616E59EC236C07166E4B44B023EACD9E3",
+      "padded_sha256": "BAF2D31927CFECC507A8B8098897DCAB98B3D95CAEE3F18869A96202BEB4C3CB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/batches/ohrsgate-seedvr-comparison-20261010-v1/artifacts/OHRSGATE-final-split/OH4220/AAX4-OHRSGATE-frame059.rgba",
+      "source_sha256": "A99AAA895894D65F7510FBD30B8BA6D6866C8CC72867243BE384CC6DE8B3BAC3",
+      "padded_sha256": "B682538A65014A2F3AC464B393983F980BD9A8761CD9ABB1F037ACB9E2BB8AD9",
+      "pixels_alpha_world_positions_exact": true
+    }
+  ],
+  "neural_inference": 0,
+  "new_interpolation": 0,
+  "area_specific_placement_not_applied": true
+}

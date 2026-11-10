@@ -1,0 +1,56 @@
+{
+  "executable": {
+    "path": "config://bg2ee_game_root/BaldurReal.exe",
+    "sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "iesdp": {
+    "154": "https://gibberlings3.github.io/iesdp/opcodes/bgee.htm#op154",
+    "215": "https://gibberlings3.github.io/iesdp/opcodes/bgee.htm#op215"
+  },
+  "opcode215": {
+    "bam": "SPSCHGI",
+    "bif": "data/Rasaad.bif",
+    "effect_offset": "0xfa",
+    "opcode": 215,
+    "parameter1": 0,
+    "parameter2": 0,
+    "resource": "OHRSHAD.SPL",
+    "sha256": "52D5293FE26C5AEF287AC1D11AB86BC7ACD9688844D5FC0BEE9CEAF658B28C81"
+  },
+  "pixels": [
+    {
+      "covered_exact_black": 103,
+      "covered_native_pixels": 23027,
+      "covered_nearblack_le8": 564,
+      "ordinal": 22,
+      "resref": "SPSCHGI",
+      "source_bam": {
+        "bytes": 19642,
+        "path": "effects/ressources/SPSCHGI/source.bam",
+        "sha256": "A67A948C03E96BC7428AC8A4A76072ED6F4E98D8797F64FD3767DA5FAA57668A"
+      }
+    },
+    {
+      "covered_exact_black": 0,
+      "covered_native_pixels": 82514,
+      "covered_nearblack_le8": 6814,
+      "ordinal": 27,
+      "resref": "SPENTACI",
+      "source_bam": {
+        "bytes": 33544,
+        "path": "effects/ressources/SPENTACI/source.bam",
+        "sha256": "B9D5F48BA291B7FF2A29E4E68DCFF41D866A79295385771BE96BB2D33F214437"
+      }
+    }
+  ],
+  "spentaci_literal_offset": "0x5abc50",
+  "spentaci_literal_rva": "0x5ad250",
+  "spentaci_xrefs": [
+    {
+      "function_end": "0x3437c5",
+      "function_start": "0x341860",
+      "xref_rva": "0x34292f"
+    }
+  ],
+  "static_reference_is_not_runtime_blend_measurement": true
+}

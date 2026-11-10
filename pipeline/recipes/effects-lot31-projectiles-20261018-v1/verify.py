@@ -1,0 +1,162 @@
+"""Independent decode of each output, source carrier, timing and native contract."""
+import argparse
+import collections
+from fractions import Fraction
+import subprocess
+import time
+
+from temporal import ROOT,BATCH,load,save,digest,rel,native_rate,phase_count,native_slot,frame_durations,jobkey
+from bam_export import decode_bam,native_palette_alpha
+from scipy.ndimage import distance_transform_edt
+from derive_animation_visual_treatment import smoothstep
+from export_bam_frames import read_bam,cycle_metadata
+from compose_effect_runtime_packs import validate_pack
+import numpy as np
+from PIL import Image
+
+
+def verify(a):
+    name=a['resref'];report=load(BATCH/'checks'/(jobkey(a)+'.json'))
+    run=ROOT/'effects/ressources'/name/'runs'/a['interpolation_run'];stage=run/'02-interpolation'
+    m=load(stage/'manifest.json');sp=ROOT/m['parent']['spatial_manifest'];s=load(sp)
+    assert s['parameters']['model']=='seedvr2_7b_int8_convrot.safetensors'
+    assert s['parameters']['scale']==s['scale']==m['scale']==4
+    assert s['parameters']['color_correction_method']=='lab'
+    original=read_bam(ROOT/a['source']);old,pal,tr=decode_bam(original)
+    carrier=read_bam(ROOT/m['runtime_carrier']['path']);new,npal,ntr=decode_bam(carrier)
+    assert len(old)==len(new) and np.array_equal(pal,npal) and tr==ntr
+    cycles=cycle_metadata(original,len(old));assert cycles==cycle_metadata(carrier,len(new))==a['native_cycles']
+    cw,ch=s['aligned_canvas_size_x1']
+    anchor=[s['frames'][0]['canvas_offset_x1'][0]+old[0][1],s['frames'][0]['canvas_offset_x1'][1]+old[0][2]]
+    pose_palette=np.array(load(ROOT/a['palette_file'])['palette_rgb'],np.uint8)
+    frame_export=load(sp.parent.parent/'00-frames-x1/manifest.json')
+    assert frame_export['palette_context']['sha256']==load(run/'recipe.json')['palette_context']['sha256']
+    native_pose_hashes=[]
+    for (oi,cx,cy,_),(ni,nx,ny,_) in zip(old,new):
+        before=np.full((ch,cw),tr,np.uint8);after=np.full_like(before,tr)
+        x,y=anchor[0]-cx,anchor[1]-cy;xx,yy=anchor[0]-nx,anchor[1]-ny
+        assert xx<=x and yy<=y and xx+ni.shape[1]>=x+oi.shape[1] and yy+ni.shape[0]>=y+oi.shape[0]
+        before[y:y+oi.shape[0],x:x+oi.shape[1]]=oi;after[yy:yy+ni.shape[0],xx:xx+ni.shape[1]]=ni
+        assert np.array_equal(before,after),(name,'native carrier changed pixels')
+        native_rgba=np.dstack((pose_palette[before],(before!=tr).astype(np.uint8)*255))
+        native_rgba[native_rgba[:,:,3]==0]=0
+        native_pose_hashes.append(digest(native_rgba.tobytes()))
+    # Independently check exact native indexed colors at every model input.
+    for k,(indices,cx,cy,_) in enumerate(old):
+        with Image.open(sp.parent.parent/'00-frames-x1/rgba'/f'frame_{k:03d}.png') as im: exported=np.array(im)
+        x,y=anchor[0]-cx,anchor[1]-cy
+        assert np.array_equal(exported[y:y+indices.shape[0],x:x+indices.shape[1],:3],pose_palette[indices])
+        assert np.array_equal(exported[y:y+indices.shape[0],x:x+indices.shape[1],3],(indices!=tr).astype(np.uint8)*255)
+    pm=validate_pack(ROOT/a['pack']);assert pm.manifest_sha256==report['pack_manifest_sha256']
+    assert pm.manifest['cycles']==cycles
+    by_hash={(f['sha256'],tuple(f['physical_size_x4'])):i for i,f in enumerate(pm.frames)}
+    alpha={};normal_masks={};palette_alpha=native_palette_alpha(original,tr);rows=[];contracts=[];frame_backings={}
+    for v in m['timing']['cycles']:
+        slots=cycles[v['cycle']]['frame_indices'];phases=v['timeline_frame_indices']
+        assert len({native_pose_hashes[k] for k in v['keyframes']})==len(v['keyframes']),(name,v['id'],'repeated native input key')
+        fps=native_rate(a)
+        assert len(phases)==phase_count(len(slots),fps)==v['phase_count']
+        durations=[Fraction(*d) for d in v['phase_durations_rational']]
+        assert durations==frame_durations(len(slots),fps)
+        assert sum(durations)==Fraction(len(slots),fps)
+        rgba_hash=[];rgb_hash=[];empty=[]
+        for phase,idx in enumerate(phases):
+            f=m['frames'][idx];g=slots[native_slot(phase,fps,len(slots))];ni,cx,cy,_=new[g]
+            assert f['geometry_source_frame']==g and f['centre_x1']==[cx,cy]
+            assert f['logical_size_x1']==[ni.shape[1],ni.shape[0]]
+            assert f['physical_size_x4']==[ni.shape[1]*4,ni.shape[0]*4]
+            raw=(stage/f['raw_rgba_x4']).read_bytes();assert digest(raw)==f['raw_rgba_x4_sha256']
+            h,w=ni.shape;crop=np.frombuffer(raw,np.uint8).reshape(h*4,w*4,4)
+            assert np.all(crop[:,:,:3]<=crop[:,:,3:4])
+            straight_raw=(stage/f['straight_raw_rgba_x4']).read_bytes()
+            assert digest(straight_raw)==f['straight_raw_rgba_x4_sha256']
+            straight=np.frombuffer(straight_raw,np.uint8).reshape(h*4,w*4,4)
+            assert np.all(straight[:,:,3]<=crop[:,:,3])
+            reconstructed=np.rint(straight[:,:,:3].astype(np.float32)*straight[:,:,3:4]/255).astype(np.uint8)
+            if np.all(palette_alpha[np.arange(256)!=tr]==255):
+                assert np.max(np.abs(reconstructed.astype(np.int16)-crop[:,:,:3].astype(np.int16)))<=1
+            canvas=np.zeros((ch*4,cw*4,4),np.uint8);x,y=(anchor[0]-cx)*4,(anchor[1]-cy)*4
+            canvas[y:y+h*4,x:x+w*4]=crop
+            left,right=f['temporal_source_frames'];t=f['temporal_fraction']
+            for k in (left,right):
+                if k not in alpha:
+                    with Image.open(sp.parent/s['frames'][k]['aligned_rgba_xn']) as im:alpha[k]=np.asarray(im.getchannel('A')).astype(np.float32)
+            limit=np.rint(alpha[left]*(1-t)+alpha[right]*t)
+            assert np.all(canvas[:,:,3]<=limit)
+            for k in (left,right):
+                if k not in normal_masks:
+                    indices,cxx,cyy,_=old[k]; xx,yy=anchor[0]-cxx,anchor[1]-cyy
+                    mask=np.zeros((ch,cw),np.uint8);mask[yy:yy+indices.shape[0],xx:xx+indices.shape[1]]=palette_alpha[indices]
+                    normal_masks[k]=np.repeat(np.repeat(mask,4,axis=0),4,axis=1).astype(np.float32)
+            distance=distance_transform_edt(np.pad(limit>0,1))[1:-1,1:-1]
+            radius=a.get('inner_feather_x4',12)
+            factor=smoothstep((distance-1)/radius) if radius else np.ones(limit.shape)
+            expected=np.rint(np.rint(normal_masks[left]*(1-t)+normal_masks[right]*t)*factor).astype(np.uint8)
+            assert np.array_equal(straight[:,:,3],expected[y:y+h*4,x:x+w*4]),(name,v['id'],phase,'normal palette alpha changed')
+            rh=digest(canvas.tobytes());bh=digest(canvas[:,:,:3].tobytes())
+            assert rh==f['anchored_rgba_sha256'] and bh==f['anchored_rgb_sha256']
+            rgba_hash.append(rh);rgb_hash.append(bh)
+            if not canvas[:,:,:3].any():empty.append(phase)
+            frame_backings[idx]=by_hash[(f['raw_rgba_x4_sha256'],tuple(f['physical_size_x4']))]
+        duplicates=[p for p in range(1,len(rgb_hash)) if rgb_hash[p]==rgb_hash[p-1]]
+        seam=bool(v['loop_closed'] and rgb_hash[-1]==rgb_hash[0])
+        if not v['constant_native_cycle']:
+            assert not duplicates and not seam,(name,v['id'],duplicates,seam)
+            assert len(empty)<=1
+            assert len(set(rgb_hash))==len(rgb_hash),(name,v['id'],'nonconsecutive RGB duplicate')
+            assert len(set(rgba_hash))==len(rgba_hash),(name,v['id'],'nonconsecutive RGBA duplicate')
+        rows.append({'profile':v['id'],'cycle':v['cycle'],'closed':v['loop_closed'],'source_slots':len(slots),
+                     'output_phases':len(phases),'duration':[len(slots),fps],'unique_rgb':len(set(rgb_hash)),
+                     'nonconsecutive_pose_revisits':len(rgb_hash)-len(set(rgb_hash))-len(duplicates),
+                     'visible_adjacent_duplicates':0 if v['constant_native_cycle'] else len(duplicates),
+                     'constant_native_cycle':v['constant_native_cycle'],'transparent_native_cycle':v['transparent_native_cycle'],
+                     'empty_phases':empty,'loop_seam_duplicate':seam and not v['constant_native_cycle']})
+    tl=pm.manifest['timeline']
+    for sequence,profile in enumerate(tl['cycle_profiles']):
+        v=next(v for v in m['timing']['cycles'] if v['id']==profile)
+        native=tl['native_frame_indices_by_cycle'][sequence];timeline=tl['timeline_frame_indices_by_cycle'][sequence]
+        assert len(native)==len(v['native_slots']) and len(timeline)==phase_count(len(native),native_rate(a))
+        assert timeline==[frame_backings[i] for i in v['timeline_frame_indices']]
+        for phase,idx in enumerate(v['timeline_frame_indices']):
+            f=m['frames'][idx];w,h=f['logical_size_x1']
+            for ref in (name,name.lower()):
+                slot=native_slot(phase,native_rate(a),len(native))
+                contracts.append(f'{ref}\t{slot}\t{w}\t{h}\t{phase}\t{sequence}\t{native[slot]}\t{timeline[phase]}')
+    result={'resref':name,'job_id':jobkey(a),'palette_context_exact_at_input':True,'palette_file':a['palette_file'],'passed':True,'native_cycles':len(cycles),'cycle_mode_variants':len(rows),
+            'phases':len(m['frames']),'cycles':rows,'native_pixels_palette_world_geometry_preserved':True,
+            'source_model':'seedvr2_7b_int8_convrot.safetensors','scale':4,'target_fps':[30,1],
+            'filter':'NEAREST','pack_manifest_sha256':pm.manifest_sha256,'runtime_contract_rows':len(contracts),
+            'native_input_keys_unique_before_apollo':True,
+            'native_fps':[native_rate(a),1],
+            'native_rate_basis':'VVC field' if a['native_fps'] else '15 FPS compatibility default; runtime measurement pending',
+            'straight_alpha_companions_verified':True, 'native_palette_normal_alpha_exact':True,
+            'raw_bytes':sum(f['bytes'] for f in pm.frames),'visual_qa':'pending-user-review','installed':False}
+    output=BATCH/'verification'/f'{jobkey(a)}.json';save(output,result)
+    contract_path=BATCH/'contracts'/f'{jobkey(a)}.tsv';contract_path.parent.mkdir(exist_ok=True)
+    contract_path.write_text('\n'.join(contracts)+'\n',encoding='ascii')
+    print(name,'independent verification PASS',len(rows),'profiles',len(m['frames']),'phases',flush=True)
+    return result
+
+
+def main():
+    p=argparse.ArgumentParser();p.add_argument('--resref',action='append');p.add_argument('--wait',action='store_true');args=p.parse_args()
+    assets=[a for a in load(BATCH/'batch.json')['jobs'] if not args.resref or a['resref'] in args.resref]
+    failures=[];results=[]
+    for a in assets:
+        proof=BATCH/'verification'/f'{jobkey(a)}.json'
+        if proof.exists():results.append(load(proof));continue
+        if args.wait:
+            while not (BATCH/'checks'/f'{jobkey(a)}.json').exists():
+                progress=load(BATCH/'temporal-progress.json') if (BATCH/'temporal-progress.json').exists() else {}
+                if progress.get(jobkey(a),{}).get('state')=='failed':break
+                time.sleep(3)
+        try:results.append(verify(a))
+        except Exception as exc:
+            failures.append({'resref':a['resref'],'error':repr(exc)});print('VERIFY FAILED',a['resref'],repr(exc),flush=True)
+    save(BATCH/'verification.json',{'schema':'bg2-effects-multicycle-verification-v1','passed':len(results),'failures':failures,
+         'phases':sum(r['phases'] for r in results),'cycle_mode_variants':sum(r['cycle_mode_variants'] for r in results),
+         'assets':results,'visual_qa':'pending-user-review','installed':False})
+    return int(bool(failures))
+
+
+if __name__=='__main__':raise SystemExit(main())

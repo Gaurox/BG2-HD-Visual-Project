@@ -1,0 +1,38 @@
+{
+  "command": [
+    "C:\\Program Files\\Topaz Labs LLC\\Topaz Video AI\\ffmpeg.exe",
+    "-hide_banner",
+    "-loglevel",
+    "error",
+    "-y",
+    "-framerate",
+    "15",
+    "-i",
+    "G:\\AI\\BG2_Upscale\\effects\\batches\\lot31-corrections-preview-20261018-v1\\apollo\\SANCTRY-p01\\cycle000-once\\input\\in_%03d.png",
+    "-vf",
+    "tvai_fi=model=apo-8:fps=30:rdt=-0.01:device=-2",
+    "-pix_fmt",
+    "rgb24",
+    "G:\\AI\\BG2_Upscale\\effects\\batches\\lot31-corrections-preview-20261018-v1\\apollo\\SANCTRY-p01\\cycle000-once\\output\\out_%04d.png"
+  ],
+  "keys": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17
+  ],
+  "native_fps": 15,
+  "source_size": [
+    320,
+    444
+  ],
+  "target_fps": 30
+}

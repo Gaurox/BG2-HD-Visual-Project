@@ -1,0 +1,141 @@
+{
+  "resref": "SPENTACI",
+  "job_id": "SPENTACI-p01",
+  "palette_context_exact_at_input": true,
+  "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/SPENTACI-p01.json",
+  "passed": true,
+  "native_cycles": 3,
+  "cycle_mode_variants": 6,
+  "phases": 192,
+  "cycles": [
+    {
+      "profile": "cycle000-once",
+      "cycle": 0,
+      "closed": false,
+      "source_slots": 16,
+      "output_phases": 32,
+      "duration": [
+        16,
+        15
+      ],
+      "unique_rgb": 32,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle000-loop",
+      "cycle": 0,
+      "closed": true,
+      "source_slots": 16,
+      "output_phases": 32,
+      "duration": [
+        16,
+        15
+      ],
+      "unique_rgb": 32,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle001-once",
+      "cycle": 1,
+      "closed": false,
+      "source_slots": 16,
+      "output_phases": 32,
+      "duration": [
+        16,
+        15
+      ],
+      "unique_rgb": 32,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle001-loop",
+      "cycle": 1,
+      "closed": true,
+      "source_slots": 16,
+      "output_phases": 32,
+      "duration": [
+        16,
+        15
+      ],
+      "unique_rgb": 32,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle002-once",
+      "cycle": 2,
+      "closed": false,
+      "source_slots": 16,
+      "output_phases": 32,
+      "duration": [
+        16,
+        15
+      ],
+      "unique_rgb": 32,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    },
+    {
+      "profile": "cycle002-loop",
+      "cycle": 2,
+      "closed": true,
+      "source_slots": 16,
+      "output_phases": 32,
+      "duration": [
+        16,
+        15
+      ],
+      "unique_rgb": 32,
+      "nonconsecutive_pose_revisits": 0,
+      "visible_adjacent_duplicates": 0,
+      "constant_native_cycle": false,
+      "transparent_native_cycle": false,
+      "empty_phases": [],
+      "loop_seam_duplicate": false
+    }
+  ],
+  "native_pixels_palette_world_geometry_preserved": true,
+  "source_model": "seedvr2_7b_int8_convrot.safetensors",
+  "scale": 4,
+  "target_fps": [
+    30,
+    1
+  ],
+  "filter": "NEAREST",
+  "pack_manifest_sha256": "33F0E69E643312E11476C7BD2668C5A41E2F7544FA347BFD244B8E1EBCC7BA53",
+  "runtime_contract_rows": 192,
+  "native_input_keys_unique_before_apollo": true,
+  "native_fps": [
+    15,
+    1
+  ],
+  "native_rate_basis": "15 FPS compatibility default; runtime measurement pending",
+  "straight_alpha_companions_verified": true,
+  "native_palette_normal_alpha_exact": true,
+  "raw_bytes": 37936448,
+  "visual_qa": "pending-user-review",
+  "installed": false
+}

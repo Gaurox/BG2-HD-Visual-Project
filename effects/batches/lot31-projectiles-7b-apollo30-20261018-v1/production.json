@@ -1,0 +1,2963 @@
+{
+  "schema": "bg2-effects-palette-batch-production-result-v1",
+  "status": "completed",
+  "completed_utc": "2026-10-18T19:45:45Z",
+  "assets_count": 31,
+  "palette_contexts": 99,
+  "source_frames": 792,
+  "native_cycles": 97,
+  "spatial_model": "seedvr2_7b_int8_convrot.safetensors",
+  "scale": 4,
+  "interpolation_model": "apo-8",
+  "target_fps": [
+    30,
+    1
+  ],
+  "filter": "NEAREST",
+  "native_duplicate_audit": {
+    "distinct_productions": 31,
+    "covered_resrefs": 31,
+    "source_frames": 792,
+    "native_cycles": 97,
+    "native_slots_alternative_cycles_not_global_duration": 974,
+    "repeated_native_slots": 176,
+    "assets_with_repeats": 7,
+    "constant_native_cycles": 2,
+    "raw_x4_bytes_at_native_records": 183922496,
+    "groups": {
+      "projectiles-physiques": 7,
+      "projectiles-magiques": 9,
+      "impacts-manifestations": 6,
+      "marques-sol-controle": 7,
+      "protections-cylindriques": 2
+    },
+    "palette_tagged_assets": 15,
+    "usage_evidence": {
+      "controller-consumer": 13,
+      "native-executable-literal": 12,
+      "stock-visual-action-or-opcode215": 6
+    }
+  },
+  "output_phases_all_independent_profiles": 9968,
+  "output_profiles": 658,
+  "runtime_pack_raw_bytes": 4248524864,
+  "native_duration_rationals_preserved": true,
+  "unexpected_visible_duplicates": 0,
+  "alpha_policy": "Native index/graded palette alpha, per-phase reconstruction, no erosion/feather; premultiplied and straight encodings retained.",
+  "palette_policy": "All99 distinct full RGB palettes of known PRO/VVC consumers realized before SeedVR; native mixing verified; source indexed BAMs/carrier palettes unchanged.",
+  "integration_limits": [
+    "Palette variants are separate packs; native owner/palette dispatch remains to integrate before ingame tests.",
+    "VVC source FPS where present, otherwise15FPS compatibility default; no actual runtime rate measurement.",
+    "No fixed-color universal replacement for palette-dependent BAMs; runtime tint/blend remains consumer-specific."
+  ],
+  "palette_bindings": "palette-bindings.json",
+  "review": "review/index.html",
+  "qa": "pending-user-review",
+  "installed": false,
+  "release_changed": false,
+  "jobs": [
+    {
+      "resref": "SPRDRABU",
+      "job_id": "SPRDRABU-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/SPRDRABU-p01.json",
+      "passed": true,
+      "spatial_run": "sprdrabu-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "sprdrabu-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/SPRDRABU/packs/sprdrabu-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "0E83020ACDEA0412E6F5F559B91ECAC5CBC44692797B44DCA11FDB178029416D",
+      "native_cycles": 9,
+      "cycle_mode_variants": 18,
+      "phases": 720,
+      "backings": 702,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once",
+        "cycle005-once",
+        "cycle006-once",
+        "cycle007-once",
+        "cycle008-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPRDRABU/runs/sprdrabu-p01-apollo30-retimed-20261018-v1/runtime-carrier/SPRDRABU.bam",
+        "sha256": "28DF7871C556C104F2B19F9520177B3C03D079D21FA3E4718898065E258DAAD1",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1730847680
+    },
+    {
+      "resref": "BDETHREA",
+      "job_id": "BDETHREA-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/BDETHREA-p01.json",
+      "passed": true,
+      "spatial_run": "bdethrea-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "bdethrea-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/BDETHREA/packs/bdethrea-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "9115A3C39D2294932FF5BB559617F83600F0AF9C990A0B84BCCFF8C2953E4E60",
+      "native_cycles": 4,
+      "cycle_mode_variants": 8,
+      "phases": 404,
+      "backings": 396,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/BDETHREA/runs/bdethrea-p01-apollo30-retimed-20261018-v1/runtime-carrier/BDETHREA.bam",
+        "sha256": "F7A76B092E34C28623C585603BFBB5184CFF58372F634D496BE75C030D7489DC",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 114791488
+    },
+    {
+      "resref": "SPGREAAI",
+      "job_id": "SPGREAAI-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/SPGREAAI-p01.json",
+      "passed": true,
+      "spatial_run": "spgreaai-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "spgreaai-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/SPGREAAI/packs/spgreaai-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "CABF62F688F90E0B0FA74C570D8D4788AD5D833E605F7CD12E2FC7BEEC8B864F",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 64,
+      "backings": 62,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPGREAAI/runs/spgreaai-p01-apollo30-retimed-20261018-v1/runtime-carrier/SPGREAAI.bam",
+        "sha256": "3862E40AEB32B66BC6166861DE18F0AAF01F16A1B079C229271A79D95DFCD5AD",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 8458048
+    },
+    {
+      "resref": "SPGREAXI",
+      "job_id": "SPGREAXI-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/SPGREAXI-p01.json",
+      "passed": true,
+      "spatial_run": "spgreaxi-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "spgreaxi-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/SPGREAXI/packs/spgreaxi-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "8C49DAA5CB73EC0425C7661C7495CE56C182363220C400C9CB49B1BFD655CCA6",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 80,
+      "backings": 78,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPGREAXI/runs/spgreaxi-p01-apollo30-retimed-20261018-v1/runtime-carrier/SPGREAXI.bam",
+        "sha256": "0A99CD2802DE69A8E7C2295A9142C7B90AF38D8161D4523BD0F3D10EE7882E99",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 30005760
+    },
+    {
+      "resref": "SPIMPPT",
+      "job_id": "SPIMPPT-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/SPIMPPT-p01.json",
+      "passed": true,
+      "spatial_run": "spimppt-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "spimppt-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/SPIMPPT/packs/spimppt-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "8F479BD5DA5188417B013896DFD8DA5024EC4884F1C4D6B59E7785915694DBBE",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 120,
+      "backings": 119,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPIMPPT/runs/spimppt-p01-apollo30-retimed-20261018-v1/runtime-carrier/SPIMPPT.bam",
+        "sha256": "DFAA81104E7111E34686F5B863EF19DA7C6CA58FC1E50AA13280DCD7AFDC955B",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 124780544
+    },
+    {
+      "resref": "SPNPOISI",
+      "job_id": "SPNPOISI-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/SPNPOISI-p01.json",
+      "passed": true,
+      "spatial_run": "spnpoisi-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "spnpoisi-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/SPNPOISI/packs/spnpoisi-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "29F702ED96CEF08B26AF35E5D83310B708769B050E53E4858B2901319E5CDEA7",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 160,
+      "backings": 158,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPNPOISI/runs/spnpoisi-p01-apollo30-retimed-20261018-v1/runtime-carrier/SPNPOISI.bam",
+        "sha256": "9366EC4A1851C288AE0777776C1418B585C366E9D4B9D1936E4DF82768CDBA13",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 89930368
+    },
+    {
+      "resref": "SPRMPARI",
+      "job_id": "SPRMPARI-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/SPRMPARI-p01.json",
+      "passed": true,
+      "spatial_run": "sprmpari-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "sprmpari-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/SPRMPARI/packs/sprmpari-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "9015F0583EBD20A12EF34325FBA3FD5E09CDA6C4D2DF1DC5F049DCAA5C7E1CD0",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 136,
+      "backings": 134,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPRMPARI/runs/sprmpari-p01-apollo30-retimed-20261018-v1/runtime-carrier/SPRMPARI.bam",
+        "sha256": "AECB37B476ABB2641EF2CC5B0D1FCCFC8385DAF74AC0776409B205E212E53A08",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 72298752
+    },
+    {
+      "resref": "SPSCHGI",
+      "job_id": "SPSCHGI-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/SPSCHGI-p01.json",
+      "passed": true,
+      "spatial_run": "spschgi-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "spschgi-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/SPSCHGI/packs/spschgi-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "2ADE46B3F320B500FA515C150E10DA91589A4E8F3DEDB5FA1DCE267CCA76B715",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 72,
+      "backings": 70,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPSCHGI/runs/spschgi-p01-apollo30-retimed-20261018-v1/runtime-carrier/SPSCHGI.bam",
+        "sha256": "9262C82B4B6C4A8B50AB4BF57F3614B9BE9A2C3B8CA73388708225270BFCA923",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 20780416
+    },
+    {
+      "resref": "GLPHWRDH",
+      "job_id": "GLPHWRDH-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/GLPHWRDH-p01.json",
+      "passed": true,
+      "spatial_run": "glphwrdh-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "glphwrdh-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/GLPHWRDH/packs/glphwrdh-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "0F9C692904B6AD87C78029E00707C80482E9E71ACAF62AAF3E07D6048667DF0A",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/GLPHWRDH/runs/glphwrdh-p01-apollo30-retimed-20261018-v1/runtime-carrier/GLPHWRDH.bam",
+        "sha256": "D7857D7E4D198FCB641CFBEB17ED03F04BB0C5182BBFDCC2425D5EB5B3BC560F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 4055040
+    },
+    {
+      "resref": "GREASED",
+      "job_id": "GREASED-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/GREASED-p01.json",
+      "passed": true,
+      "spatial_run": "greased-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "greased-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/GREASED/packs/greased-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "5A6C8EF0462B73A2C18B6AFD6305E0C1F40D142FD495546FAF9C5FCAB55413E5",
+      "native_cycles": 3,
+      "cycle_mode_variants": 6,
+      "phases": 144,
+      "backings": 92,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/GREASED/runs/greased-p01-apollo30-retimed-20261018-v1/runtime-carrier/GREASED.bam",
+        "sha256": "60033ED6E16506B3B0BE5F9A6FDCB11247FCE2CCCDCEF45564D593512C4D3C69",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 13929792
+    },
+    {
+      "resref": "GREASEH",
+      "job_id": "GREASEH-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/GREASEH-p01.json",
+      "passed": true,
+      "spatial_run": "greaseh-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "greaseh-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/GREASEH/packs/greaseh-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "E1740D15D55792F6B2EF2E8DBAE91F0267299AA9DD21C4CB318BA7B35E10F7C9",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/GREASEH/runs/greaseh-p01-apollo30-retimed-20261018-v1/runtime-carrier/GREASEH.bam",
+        "sha256": "FB881654BD64A2B1BE3A22CE44B56DA9138F71E30BFD7005857FFF95C117311E",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 3773184
+    },
+    {
+      "resref": "SKLH",
+      "job_id": "SKLH-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/SKLH-p01.json",
+      "passed": true,
+      "spatial_run": "sklh-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "sklh-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/SKLH/packs/sklh-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "2A8DE73D24BC8C6B1CE444BB9802D8851296C8B44690A321D3FDE00298E1EF66",
+      "native_cycles": 6,
+      "cycle_mode_variants": 12,
+      "phases": 144,
+      "backings": 132,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once",
+        "cycle005-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SKLH/runs/sklh-p01-apollo30-retimed-20261018-v1/runtime-carrier/SKLH.bam",
+        "sha256": "B76F74ECD6C6FA63432B3CD7E8C036D4DB5E111D1DABCA318B19DBE1B475F252",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 2162688
+    },
+    {
+      "resref": "SPENTACI",
+      "job_id": "SPENTACI-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/SPENTACI-p01.json",
+      "passed": true,
+      "spatial_run": "spentaci-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "spentaci-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/SPENTACI/packs/spentaci-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "33F0E69E643312E11476C7BD2668C5A41E2F7544FA347BFD244B8E1EBCC7BA53",
+      "native_cycles": 3,
+      "cycle_mode_variants": 6,
+      "phases": 192,
+      "backings": 170,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPENTACI/runs/spentaci-p01-apollo30-retimed-20261018-v1/runtime-carrier/SPENTACI.bam",
+        "sha256": "210FEC285A667C2BDF69756D944A6BFBA26ADF37A03203C349B0173BDCD576F5",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 37936448
+    },
+    {
+      "resref": "WEBENTD",
+      "job_id": "WEBENTD-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/WEBENTD-p01.json",
+      "passed": true,
+      "spatial_run": "webentd-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "webentd-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/WEBENTD/packs/webentd-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "0097095C6CF92205FF80B99A573CDE714EF27B99381ECD6D70DBD4B3A9775634",
+      "native_cycles": 3,
+      "cycle_mode_variants": 6,
+      "phases": 32,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/WEBENTD/runs/webentd-p01-apollo30-retimed-20261018-v1/runtime-carrier/WEBENTD.bam",
+        "sha256": "1B131BE972BEAA5FB90C6C7702C13103373918F44B2FF4BB40C6D73ACD90BB60",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1777280
+    },
+    {
+      "resref": "WEBENTH",
+      "job_id": "WEBENTH-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/WEBENTH-p01.json",
+      "passed": true,
+      "spatial_run": "webenth-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "webenth-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/WEBENTH/packs/webenth-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "69AD06BA767C128104F0346D897B4A7A8F5A30BE5A141FB58712C6F24E873439",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/WEBENTH/runs/webenth-p01-apollo30-retimed-20261018-v1/runtime-carrier/WEBENTH.bam",
+        "sha256": "1405BE9C39A403CED709961C073BEDB46A5C409FE237DEA84A886765E7674A7F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1582464
+    },
+    {
+      "resref": "SANCTRY",
+      "job_id": "SANCTRY-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/SANCTRY-p01.json",
+      "passed": true,
+      "spatial_run": "sanctry-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "sanctry-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/SANCTRY/packs/sanctry-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "A8FE12D3ECFDCAD07D35219640F782FB626B6D09A76121AAD5A32409814E3560",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 48,
+      "backings": 46,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SANCTRY/runs/sanctry-p01-apollo30-retimed-20261018-v1/runtime-carrier/SANCTRY.bam",
+        "sha256": "45C6BFD54636F2DD45FB82DB4E14D0CC6BCE98BA40643F274042DCC4591E0C0E",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 24947648
+    },
+    {
+      "resref": "SPSHIELD",
+      "job_id": "SPSHIELD-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/SPSHIELD-p01.json",
+      "passed": true,
+      "spatial_run": "spshield-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "spshield-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/SPSHIELD/packs/spshield-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "06D0A0310B74AE2DCBB75BD1CF33CFE633C7C993808A0A13951BEDFA0101C953",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 48,
+      "backings": 46,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPSHIELD/runs/spshield-p01-apollo30-retimed-20261018-v1/runtime-carrier/SPSHIELD.bam",
+        "sha256": "F813D67307FABF98FA2014D2EA1CD800E29D232B4BBA14AE692E4034058120F5",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 17511168
+    },
+    {
+      "resref": "ARARROW",
+      "job_id": "ARARROW-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/ARARROW-p01.json",
+      "passed": true,
+      "spatial_run": "ararrow-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "ararrow-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/ARARROW/packs/ararrow-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "9AFFF6264E0E2DE5DDFFFEAAC5D95D8D79ED642E719350C87163A1FCBB59D47D",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 108,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/ARARROW/runs/ararrow-p01-apollo30-retimed-20261018-v1/runtime-carrier/ARARROW.bam",
+        "sha256": "6730EAEC6399E52C9230F2970352B61E391284C4E115CDF87AB09247C1DE8624",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1149696
+    },
+    {
+      "resref": "AXE",
+      "job_id": "AXE-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/AXE-p01.json",
+      "passed": true,
+      "spatial_run": "axe-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "axe-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/AXE/packs/axe-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "FE5EB19E9B0C55C366E58F099FD9272975BA94F767262D3931AEAFF04B51994A",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/AXE/runs/axe-p01-apollo30-retimed-20261018-v1/runtime-carrier/AXE.bam",
+        "sha256": "7BA629FB98694A8B43612F780CE54908F4EC1DD8C01608AA0015A9D2B6206F4A",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 9123840
+    },
+    {
+      "resref": "BOLT",
+      "job_id": "BOLT-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/BOLT-p01.json",
+      "passed": true,
+      "spatial_run": "bolt-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "bolt-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/BOLT/packs/bolt-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "8A18A292034BA90FD37CFEBEBDD01C063CF3B0A0CAAC16D60DA5CE55E11AA87D",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/BOLT/runs/bolt-p01-apollo30-retimed-20261018-v1/runtime-carrier/BOLT.bam",
+        "sha256": "55E353F0290F0BB893F925A94F41FE89D7A0584F94872BC54DF71D34C154BF9F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 2816000
+    },
+    {
+      "resref": "DAGGER",
+      "job_id": "DAGGER-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/DAGGER-p01.json",
+      "passed": true,
+      "spatial_run": "dagger-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "dagger-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/DAGGER/packs/dagger-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "E5F35F67CB818E68BEA66F51BE07A14FBC6004F69DE1FBA806F98B21506CBDE1",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/DAGGER/runs/dagger-p01-apollo30-retimed-20261018-v1/runtime-carrier/DAGGER.bam",
+        "sha256": "F982870324ABB2F23AFA43EAB2696124C25E71B62ED4809DB1D8B334953E2636",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1542592
+    },
+    {
+      "resref": "DART",
+      "job_id": "DART-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/DART-p01.json",
+      "passed": true,
+      "spatial_run": "dart-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "dart-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/DART/packs/dart-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "EFAD62C91646AB08EB96296B84DBCBE966683DB2870313790AE7B907CE4E71C4",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/DART/runs/dart-p01-apollo30-retimed-20261018-v1/runtime-carrier/DART.bam",
+        "sha256": "45BF1D5CD19929056ECB17282DFE445DE4B7A72B65AC8854BC66EF5303B34666",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 2816000
+    },
+    {
+      "resref": "SPEAR",
+      "job_id": "SPEAR-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/SPEAR-p01.json",
+      "passed": true,
+      "spatial_run": "spear-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "spear-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/SPEAR/packs/spear-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "DF0FE7C1AB79752BAD90EDE2D223F53015BF5BD9EFD609C4BC0D208E5D3761A0",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPEAR/runs/spear-p01-apollo30-retimed-20261018-v1/runtime-carrier/SPEAR.bam",
+        "sha256": "5CE744C591C244F8038A742518110ED1A9D590CBA0D5EAAE611793EBD18159C2",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 5867328
+    },
+    {
+      "resref": "TRDARTST",
+      "job_id": "TRDARTST-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/TRDARTST-p01.json",
+      "passed": true,
+      "spatial_run": "trdartst-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "trdartst-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/TRDARTST/packs/trdartst-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "67910E8D9377AF555158F4C1000C13B8995668C71381EDFA488BEE3B43E88A14",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 180,
+      "backings": 170,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/TRDARTST/runs/trdartst-p01-apollo30-retimed-20261018-v1/runtime-carrier/TRDARTST.bam",
+        "sha256": "044C13D218A1F2A35A8B3110FEA6BC19188C7760905E9F3CFD259AF01C92941A",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 8078400
+    },
+    {
+      "resref": "ACIDBLOB",
+      "job_id": "ACIDBLOB-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/ACIDBLOB-p01.json",
+      "passed": true,
+      "spatial_run": "acidblob-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "acidblob-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/ACIDBLOB/packs/acidblob-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "298530A46C7F7F4A6646397DE3D840EF2DE34574CB5EF7BC1D1BB6827AEAC841",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/ACIDBLOB/runs/acidblob-p01-apollo30-retimed-20261018-v1/runtime-carrier/ACIDBLOB.bam",
+        "sha256": "FD51560A03100156EF968A555A3A1921A06F8BFEDD3F64A8CFFFBBE320A54698",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 5262848
+    },
+    {
+      "resref": "MAGICSTN",
+      "job_id": "MAGICSTN-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/MAGICSTN-p01.json",
+      "passed": true,
+      "spatial_run": "magicstn-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "magicstn-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/MAGICSTN/packs/magicstn-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "1A150080B60E6A35C00BC88A26EAFBD06FDB5CB1E934398BABB88B2D67AE6BF9",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/MAGICSTN/runs/magicstn-p01-apollo30-retimed-20261018-v1/runtime-carrier/MAGICSTN.bam",
+        "sha256": "23708DA52DC0D6C53901D192B6D405749FFBE0B7D09B547D95C2772EA519C338",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 42240
+    },
+    {
+      "resref": "SPFIREBL",
+      "job_id": "SPFIREBL-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/SPFIREBL-p01.json",
+      "passed": true,
+      "spatial_run": "spfirebl-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "spfirebl-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/SPFIREBL/packs/spfirebl-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "877060E56D3ECD3BA3F03BAE47A9D2D6D98E86E3FF6D9599877834AD4977FFE8",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPFIREBL/runs/spfirebl-p01-apollo30-retimed-20261018-v1/runtime-carrier/SPFIREBL.bam",
+        "sha256": "1CDB3B97D077111F19D567D8CC35C3A901BC64A5A885320D547A6BEFADB9836A",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 7828608
+    },
+    {
+      "resref": "SPFLMARR",
+      "job_id": "SPFLMARR-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/SPFLMARR-p01.json",
+      "passed": true,
+      "spatial_run": "spflmarr-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "spflmarr-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/SPFLMARR/packs/spflmarr-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "95E2073C2CB95C17031FA2A6CC9A3928805834FAAF815AD16182B428BF83970B",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPFLMARR/runs/spflmarr-p01-apollo30-retimed-20261018-v1/runtime-carrier/SPFLMARR.bam",
+        "sha256": "6825B7F4BE95CCB2C30AA73AD8271D1D97D32B04D61BA8BCFDDED6BDAB20C25D",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 4206976
+    },
+    {
+      "resref": "STNKCLDT",
+      "job_id": "STNKCLDT-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/STNKCLDT-p01.json",
+      "passed": true,
+      "spatial_run": "stnkcldt-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "stnkcldt-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/STNKCLDT/packs/stnkcldt-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "C37F257828C943BBBA03A06A15765E98877A023DD5C7D72BD4EA0CFF02441D03",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/STNKCLDT/runs/stnkcldt-p01-apollo30-retimed-20261018-v1/runtime-carrier/STNKCLDT.bam",
+        "sha256": "BA46BA96490232BF34C0165BD94AC8603D897BD3E0D657970C8721045BB2F32F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 575744
+    },
+    {
+      "resref": "TRAVEL",
+      "job_id": "TRAVEL-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/TRAVEL-p01.json",
+      "passed": true,
+      "spatial_run": "travel-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "travel-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/TRAVEL/packs/travel-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "AD163E5AE290F036C14F0D8D958D9B97A6D46FF915BC5F6B0A191FBE3F82060B",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/TRAVEL/runs/travel-p01-apollo30-retimed-20261018-v1/runtime-carrier/TRAVEL.bam",
+        "sha256": "98E5A51D337D28B6FE71E37DD999CF875684874D77782E16F73DC8454891589D",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1824768
+    },
+    {
+      "resref": "WEBENTT",
+      "job_id": "WEBENTT-p01",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/WEBENTT-p01.json",
+      "passed": true,
+      "spatial_run": "webentt-p01-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "webentt-p01-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/WEBENTT/packs/webentt-p01-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "C7FD2684B2EF0735811DDAA3939A5DDB44DD13BCD410C0C45450C847D0F8B669",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 32,
+      "backings": 30,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/WEBENTT/runs/webentt-p01-apollo30-retimed-20261018-v1/runtime-carrier/WEBENTT.bam",
+        "sha256": "732DC0E1565C983D68826B2B4605E49B07A52D8A940D7D144D18C4BB869BADEC",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 946176
+    },
+    {
+      "resref": "TRAVEL",
+      "job_id": "TRAVEL-p02",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/TRAVEL-p02.json",
+      "passed": true,
+      "spatial_run": "travel-p02-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "travel-p02-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/TRAVEL/packs/travel-p02-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "FF4060CDB3B55ED2708930F16E64D211115FE1B6E7CC2E8E3A8A5D1D049D8144",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/TRAVEL/runs/travel-p02-apollo30-retimed-20261018-v1/runtime-carrier/TRAVEL.bam",
+        "sha256": "98E5A51D337D28B6FE71E37DD999CF875684874D77782E16F73DC8454891589D",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1824768
+    },
+    {
+      "resref": "ARARROW",
+      "job_id": "ARARROW-p02",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/ARARROW-p02.json",
+      "passed": true,
+      "spatial_run": "ararrow-p02-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "ararrow-p02-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/ARARROW/packs/ararrow-p02-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "0FD7B6DE38CDB8A79479E67825F5B38612FB25E2FD7FE43C955DDC522FF42FFB",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 108,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/ARARROW/runs/ararrow-p02-apollo30-retimed-20261018-v1/runtime-carrier/ARARROW.bam",
+        "sha256": "6730EAEC6399E52C9230F2970352B61E391284C4E115CDF87AB09247C1DE8624",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1149696
+    },
+    {
+      "resref": "ARARROW",
+      "job_id": "ARARROW-p03",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/ARARROW-p03.json",
+      "passed": true,
+      "spatial_run": "ararrow-p03-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "ararrow-p03-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/ARARROW/packs/ararrow-p03-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "4D565BF051D119C29D94EAA0EEC46843F72BD08E8CF8D679363CBB4167DA8772",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 108,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/ARARROW/runs/ararrow-p03-apollo30-retimed-20261018-v1/runtime-carrier/ARARROW.bam",
+        "sha256": "6730EAEC6399E52C9230F2970352B61E391284C4E115CDF87AB09247C1DE8624",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1149696
+    },
+    {
+      "resref": "ARARROW",
+      "job_id": "ARARROW-p04",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/ARARROW-p04.json",
+      "passed": true,
+      "spatial_run": "ararrow-p04-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "ararrow-p04-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/ARARROW/packs/ararrow-p04-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "083CB2F806953E6F31276DF7EB4C289E68A246A2F44313FD772ED9632F75905F",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 108,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/ARARROW/runs/ararrow-p04-apollo30-retimed-20261018-v1/runtime-carrier/ARARROW.bam",
+        "sha256": "6730EAEC6399E52C9230F2970352B61E391284C4E115CDF87AB09247C1DE8624",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1149696
+    },
+    {
+      "resref": "ARARROW",
+      "job_id": "ARARROW-p05",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/ARARROW-p05.json",
+      "passed": true,
+      "spatial_run": "ararrow-p05-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "ararrow-p05-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/ARARROW/packs/ararrow-p05-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "36B6CBA8DE33663845034DD13988F32B960F1533B1EDE0C94590059E52F41E00",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 108,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/ARARROW/runs/ararrow-p05-apollo30-retimed-20261018-v1/runtime-carrier/ARARROW.bam",
+        "sha256": "6730EAEC6399E52C9230F2970352B61E391284C4E115CDF87AB09247C1DE8624",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1149696
+    },
+    {
+      "resref": "ARARROW",
+      "job_id": "ARARROW-p06",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/ARARROW-p06.json",
+      "passed": true,
+      "spatial_run": "ararrow-p06-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "ararrow-p06-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/ARARROW/packs/ararrow-p06-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "FABAEE65BA444C54E901BC23B5EDBD034277B1C23B334733CF5A4AE9EB6A64CF",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 108,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/ARARROW/runs/ararrow-p06-apollo30-retimed-20261018-v1/runtime-carrier/ARARROW.bam",
+        "sha256": "6730EAEC6399E52C9230F2970352B61E391284C4E115CDF87AB09247C1DE8624",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1149696
+    },
+    {
+      "resref": "ARARROW",
+      "job_id": "ARARROW-p07",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/ARARROW-p07.json",
+      "passed": true,
+      "spatial_run": "ararrow-p07-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "ararrow-p07-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/ARARROW/packs/ararrow-p07-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "BB6031509F0744C646A73AA9468DD59A094FF86D19E7368243BD88DE10F636FE",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 108,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/ARARROW/runs/ararrow-p07-apollo30-retimed-20261018-v1/runtime-carrier/ARARROW.bam",
+        "sha256": "6730EAEC6399E52C9230F2970352B61E391284C4E115CDF87AB09247C1DE8624",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1149696
+    },
+    {
+      "resref": "ARARROW",
+      "job_id": "ARARROW-p08",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/ARARROW-p08.json",
+      "passed": true,
+      "spatial_run": "ararrow-p08-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "ararrow-p08-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/ARARROW/packs/ararrow-p08-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "8938836358828B5663D9FE57C88621B31A469193ABEABAA22FAAF5D416B783EC",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 108,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/ARARROW/runs/ararrow-p08-apollo30-retimed-20261018-v1/runtime-carrier/ARARROW.bam",
+        "sha256": "6730EAEC6399E52C9230F2970352B61E391284C4E115CDF87AB09247C1DE8624",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1149696
+    },
+    {
+      "resref": "ARARROW",
+      "job_id": "ARARROW-p09",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/ARARROW-p09.json",
+      "passed": true,
+      "spatial_run": "ararrow-p09-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "ararrow-p09-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/ARARROW/packs/ararrow-p09-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "3C8B901BF0F178FE4591B171FA81916FA663B8D2C9F943F41D868D4CA98AB818",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 108,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/ARARROW/runs/ararrow-p09-apollo30-retimed-20261018-v1/runtime-carrier/ARARROW.bam",
+        "sha256": "6730EAEC6399E52C9230F2970352B61E391284C4E115CDF87AB09247C1DE8624",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1149696
+    },
+    {
+      "resref": "ARARROW",
+      "job_id": "ARARROW-p10",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/ARARROW-p10.json",
+      "passed": true,
+      "spatial_run": "ararrow-p10-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "ararrow-p10-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/ARARROW/packs/ararrow-p10-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "253092A2EF1F3FEE0ABF91FF482D0217F2A275F4B09B4FDDA9B5B08BCE25CA40",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 108,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/ARARROW/runs/ararrow-p10-apollo30-retimed-20261018-v1/runtime-carrier/ARARROW.bam",
+        "sha256": "6730EAEC6399E52C9230F2970352B61E391284C4E115CDF87AB09247C1DE8624",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1149696
+    },
+    {
+      "resref": "ARARROW",
+      "job_id": "ARARROW-p11",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/ARARROW-p11.json",
+      "passed": true,
+      "spatial_run": "ararrow-p11-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "ararrow-p11-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/ARARROW/packs/ararrow-p11-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "8B77671BBD17D8278B155D26BC6BE92A24B7BD16AEA7C26408BAA279D2211F04",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 108,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/ARARROW/runs/ararrow-p11-apollo30-retimed-20261018-v1/runtime-carrier/ARARROW.bam",
+        "sha256": "6730EAEC6399E52C9230F2970352B61E391284C4E115CDF87AB09247C1DE8624",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1149696
+    },
+    {
+      "resref": "AXE",
+      "job_id": "AXE-p02",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/AXE-p02.json",
+      "passed": true,
+      "spatial_run": "axe-p02-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "axe-p02-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/AXE/packs/axe-p02-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "A787578525BB3B296EE21EA3A8A296829EB5ABCE678F2FE048AF8F63331D088C",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/AXE/runs/axe-p02-apollo30-retimed-20261018-v1/runtime-carrier/AXE.bam",
+        "sha256": "7BA629FB98694A8B43612F780CE54908F4EC1DD8C01608AA0015A9D2B6206F4A",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 9123840
+    },
+    {
+      "resref": "AXE",
+      "job_id": "AXE-p03",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/AXE-p03.json",
+      "passed": true,
+      "spatial_run": "axe-p03-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "axe-p03-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/AXE/packs/axe-p03-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "B975CB6A912E89425ED15F068A06E6649575DC9B83C19A63DFCC9A79669B5E01",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/AXE/runs/axe-p03-apollo30-retimed-20261018-v1/runtime-carrier/AXE.bam",
+        "sha256": "7BA629FB98694A8B43612F780CE54908F4EC1DD8C01608AA0015A9D2B6206F4A",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 9123840
+    },
+    {
+      "resref": "AXE",
+      "job_id": "AXE-p04",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/AXE-p04.json",
+      "passed": true,
+      "spatial_run": "axe-p04-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "axe-p04-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/AXE/packs/axe-p04-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "11FCA5D3E66A4D27CFA2312E87584E6254F276A2A2B2D130F6C235E0D7BF9EE9",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/AXE/runs/axe-p04-apollo30-retimed-20261018-v1/runtime-carrier/AXE.bam",
+        "sha256": "7BA629FB98694A8B43612F780CE54908F4EC1DD8C01608AA0015A9D2B6206F4A",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 9123840
+    },
+    {
+      "resref": "AXE",
+      "job_id": "AXE-p05",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/AXE-p05.json",
+      "passed": true,
+      "spatial_run": "axe-p05-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "axe-p05-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/AXE/packs/axe-p05-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "00E8BED0C7FE6173E740EFE16AB94D4D340C8BFCDE65528A8F32A5600ADD7769",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/AXE/runs/axe-p05-apollo30-retimed-20261018-v1/runtime-carrier/AXE.bam",
+        "sha256": "7BA629FB98694A8B43612F780CE54908F4EC1DD8C01608AA0015A9D2B6206F4A",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 9123840
+    },
+    {
+      "resref": "AXE",
+      "job_id": "AXE-p06",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/AXE-p06.json",
+      "passed": true,
+      "spatial_run": "axe-p06-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "axe-p06-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/AXE/packs/axe-p06-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "8219536FDA905370B40D14CDE870039F6C03892787342A2AAA0686220D3D621A",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/AXE/runs/axe-p06-apollo30-retimed-20261018-v1/runtime-carrier/AXE.bam",
+        "sha256": "7BA629FB98694A8B43612F780CE54908F4EC1DD8C01608AA0015A9D2B6206F4A",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 9123840
+    },
+    {
+      "resref": "BOLT",
+      "job_id": "BOLT-p02",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/BOLT-p02.json",
+      "passed": true,
+      "spatial_run": "bolt-p02-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "bolt-p02-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/BOLT/packs/bolt-p02-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "D17557FD88DCC10C7923FCE6D6AABF62245A0B536767BF279AF013063DDA0894",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/BOLT/runs/bolt-p02-apollo30-retimed-20261018-v1/runtime-carrier/BOLT.bam",
+        "sha256": "55E353F0290F0BB893F925A94F41FE89D7A0584F94872BC54DF71D34C154BF9F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 2816000
+    },
+    {
+      "resref": "BOLT",
+      "job_id": "BOLT-p03",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/BOLT-p03.json",
+      "passed": true,
+      "spatial_run": "bolt-p03-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "bolt-p03-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/BOLT/packs/bolt-p03-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "A5A746B24C2C44A11039137D9B31C7374FC3114DFA2558D9B1FE0A4381B796BE",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/BOLT/runs/bolt-p03-apollo30-retimed-20261018-v1/runtime-carrier/BOLT.bam",
+        "sha256": "55E353F0290F0BB893F925A94F41FE89D7A0584F94872BC54DF71D34C154BF9F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 2816000
+    },
+    {
+      "resref": "BOLT",
+      "job_id": "BOLT-p04",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/BOLT-p04.json",
+      "passed": true,
+      "spatial_run": "bolt-p04-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "bolt-p04-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/BOLT/packs/bolt-p04-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "E72E7214C12F535A011E82050FCB467ABC41940AA906B01B72B4B86BD963A88F",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/BOLT/runs/bolt-p04-apollo30-retimed-20261018-v1/runtime-carrier/BOLT.bam",
+        "sha256": "55E353F0290F0BB893F925A94F41FE89D7A0584F94872BC54DF71D34C154BF9F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 2816000
+    },
+    {
+      "resref": "BOLT",
+      "job_id": "BOLT-p05",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/BOLT-p05.json",
+      "passed": true,
+      "spatial_run": "bolt-p05-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "bolt-p05-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/BOLT/packs/bolt-p05-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "197D7A63D2FEAF44D90DC7C60B91364F025D2B0AEFE76EDDDA1A2B751D836E2C",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/BOLT/runs/bolt-p05-apollo30-retimed-20261018-v1/runtime-carrier/BOLT.bam",
+        "sha256": "55E353F0290F0BB893F925A94F41FE89D7A0584F94872BC54DF71D34C154BF9F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 2816000
+    },
+    {
+      "resref": "BOLT",
+      "job_id": "BOLT-p06",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/BOLT-p06.json",
+      "passed": true,
+      "spatial_run": "bolt-p06-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "bolt-p06-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/BOLT/packs/bolt-p06-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "0230D9C911BF254842D9F70BA1CE2FBC97A76966B71D34C9EA3A05871133EE9B",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/BOLT/runs/bolt-p06-apollo30-retimed-20261018-v1/runtime-carrier/BOLT.bam",
+        "sha256": "55E353F0290F0BB893F925A94F41FE89D7A0584F94872BC54DF71D34C154BF9F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 2816000
+    },
+    {
+      "resref": "BOLT",
+      "job_id": "BOLT-p07",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/BOLT-p07.json",
+      "passed": true,
+      "spatial_run": "bolt-p07-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "bolt-p07-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/BOLT/packs/bolt-p07-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "88620C569F3AFC94B247B1D3256A8F840ED7FEDE8D60FAEBC3D11734AAF68750",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/BOLT/runs/bolt-p07-apollo30-retimed-20261018-v1/runtime-carrier/BOLT.bam",
+        "sha256": "55E353F0290F0BB893F925A94F41FE89D7A0584F94872BC54DF71D34C154BF9F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 2816000
+    },
+    {
+      "resref": "BOLT",
+      "job_id": "BOLT-p08",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/BOLT-p08.json",
+      "passed": true,
+      "spatial_run": "bolt-p08-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "bolt-p08-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/BOLT/packs/bolt-p08-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "D40DED2F9FDEFA5159EBA132AE35B8A8A22C49B7C6F9B014CAC7B7F987AB2914",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/BOLT/runs/bolt-p08-apollo30-retimed-20261018-v1/runtime-carrier/BOLT.bam",
+        "sha256": "55E353F0290F0BB893F925A94F41FE89D7A0584F94872BC54DF71D34C154BF9F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 2816000
+    },
+    {
+      "resref": "BOLT",
+      "job_id": "BOLT-p09",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/BOLT-p09.json",
+      "passed": true,
+      "spatial_run": "bolt-p09-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "bolt-p09-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/BOLT/packs/bolt-p09-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "C2811612EB214D8A61A5D332B0C0F8DD5138B6EA3FF162E6C1F3961F16A0CE11",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/BOLT/runs/bolt-p09-apollo30-retimed-20261018-v1/runtime-carrier/BOLT.bam",
+        "sha256": "55E353F0290F0BB893F925A94F41FE89D7A0584F94872BC54DF71D34C154BF9F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 2816000
+    },
+    {
+      "resref": "BOLT",
+      "job_id": "BOLT-p10",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/BOLT-p10.json",
+      "passed": true,
+      "spatial_run": "bolt-p10-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "bolt-p10-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/BOLT/packs/bolt-p10-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "F1BD000F892CFB086E0B6918D84A6E844A4066A9ECB53F5B5BF3207186E4C20B",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/BOLT/runs/bolt-p10-apollo30-retimed-20261018-v1/runtime-carrier/BOLT.bam",
+        "sha256": "55E353F0290F0BB893F925A94F41FE89D7A0584F94872BC54DF71D34C154BF9F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 2816000
+    },
+    {
+      "resref": "BOLT",
+      "job_id": "BOLT-p11",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/BOLT-p11.json",
+      "passed": true,
+      "spatial_run": "bolt-p11-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "bolt-p11-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/BOLT/packs/bolt-p11-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "833C297159570847383087F95EB03C3C3A2D44CA2CB8D8349C5D803A8BBD9536",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/BOLT/runs/bolt-p11-apollo30-retimed-20261018-v1/runtime-carrier/BOLT.bam",
+        "sha256": "55E353F0290F0BB893F925A94F41FE89D7A0584F94872BC54DF71D34C154BF9F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 2816000
+    },
+    {
+      "resref": "BOLT",
+      "job_id": "BOLT-p12",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/BOLT-p12.json",
+      "passed": true,
+      "spatial_run": "bolt-p12-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "bolt-p12-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/BOLT/packs/bolt-p12-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "DE3A49DD7E8E6D75A37067B3CB740B7B9BEF66B889259DD0D3DBFAC87278F94F",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/BOLT/runs/bolt-p12-apollo30-retimed-20261018-v1/runtime-carrier/BOLT.bam",
+        "sha256": "55E353F0290F0BB893F925A94F41FE89D7A0584F94872BC54DF71D34C154BF9F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 2816000
+    },
+    {
+      "resref": "BOLT",
+      "job_id": "BOLT-p13",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/BOLT-p13.json",
+      "passed": true,
+      "spatial_run": "bolt-p13-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "bolt-p13-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/BOLT/packs/bolt-p13-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "073B6F8FEBDA26BE065A2426A32228B3BCF28FD412BCC8E138D3B1B70BA48B47",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/BOLT/runs/bolt-p13-apollo30-retimed-20261018-v1/runtime-carrier/BOLT.bam",
+        "sha256": "55E353F0290F0BB893F925A94F41FE89D7A0584F94872BC54DF71D34C154BF9F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 2816000
+    },
+    {
+      "resref": "DAGGER",
+      "job_id": "DAGGER-p02",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/DAGGER-p02.json",
+      "passed": true,
+      "spatial_run": "dagger-p02-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "dagger-p02-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/DAGGER/packs/dagger-p02-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "B1557F9437DCDA0F1F7C75AD94D0D71A51B038230F8133F2521639830B62AEDC",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/DAGGER/runs/dagger-p02-apollo30-retimed-20261018-v1/runtime-carrier/DAGGER.bam",
+        "sha256": "F982870324ABB2F23AFA43EAB2696124C25E71B62ED4809DB1D8B334953E2636",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1542592
+    },
+    {
+      "resref": "DART",
+      "job_id": "DART-p02",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/DART-p02.json",
+      "passed": true,
+      "spatial_run": "dart-p02-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "dart-p02-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/DART/packs/dart-p02-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "3BAE8AA028F24A7DCA8332B67181E51DA1BFC5B8C0185EF8A62279F42431CD1C",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/DART/runs/dart-p02-apollo30-retimed-20261018-v1/runtime-carrier/DART.bam",
+        "sha256": "45BF1D5CD19929056ECB17282DFE445DE4B7A72B65AC8854BC66EF5303B34666",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 2816000
+    },
+    {
+      "resref": "DART",
+      "job_id": "DART-p03",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/DART-p03.json",
+      "passed": true,
+      "spatial_run": "dart-p03-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "dart-p03-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/DART/packs/dart-p03-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "C92F94F9957BC9EF5452D4258D9A924531577C2A690BD675F2F3A69ABC9A9F66",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/DART/runs/dart-p03-apollo30-retimed-20261018-v1/runtime-carrier/DART.bam",
+        "sha256": "45BF1D5CD19929056ECB17282DFE445DE4B7A72B65AC8854BC66EF5303B34666",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 2816000
+    },
+    {
+      "resref": "DART",
+      "job_id": "DART-p04",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/DART-p04.json",
+      "passed": true,
+      "spatial_run": "dart-p04-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "dart-p04-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/DART/packs/dart-p04-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "9AB124E23ED2278F464BDE50609457EBB66F08338E5B8FD71EA9EEFC065A571E",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/DART/runs/dart-p04-apollo30-retimed-20261018-v1/runtime-carrier/DART.bam",
+        "sha256": "45BF1D5CD19929056ECB17282DFE445DE4B7A72B65AC8854BC66EF5303B34666",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 2816000
+    },
+    {
+      "resref": "ACIDBLOB",
+      "job_id": "ACIDBLOB-p02",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/ACIDBLOB-p02.json",
+      "passed": true,
+      "spatial_run": "acidblob-p02-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "acidblob-p02-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/ACIDBLOB/packs/acidblob-p02-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "BFDDE76D807ED38328E6F0FB55DCEF75BCA735B05214051283A4CFED2AC3B20C",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/ACIDBLOB/runs/acidblob-p02-apollo30-retimed-20261018-v1/runtime-carrier/ACIDBLOB.bam",
+        "sha256": "FD51560A03100156EF968A555A3A1921A06F8BFEDD3F64A8CFFFBBE320A54698",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 5262848
+    },
+    {
+      "resref": "ACIDBLOB",
+      "job_id": "ACIDBLOB-p03",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/ACIDBLOB-p03.json",
+      "passed": true,
+      "spatial_run": "acidblob-p03-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "acidblob-p03-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/ACIDBLOB/packs/acidblob-p03-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "02CE95C7E64FD453A89A309F5A55EB4A98F45A4B0438EF57D54BC1C3B66F53EE",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/ACIDBLOB/runs/acidblob-p03-apollo30-retimed-20261018-v1/runtime-carrier/ACIDBLOB.bam",
+        "sha256": "FD51560A03100156EF968A555A3A1921A06F8BFEDD3F64A8CFFFBBE320A54698",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 5262848
+    },
+    {
+      "resref": "ACIDBLOB",
+      "job_id": "ACIDBLOB-p04",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/ACIDBLOB-p04.json",
+      "passed": true,
+      "spatial_run": "acidblob-p04-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "acidblob-p04-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/ACIDBLOB/packs/acidblob-p04-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "31CDF416864204831DEA721B5E0A0B73B0AF6CA7AF0CDC4C127098477F3AA6EA",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/ACIDBLOB/runs/acidblob-p04-apollo30-retimed-20261018-v1/runtime-carrier/ACIDBLOB.bam",
+        "sha256": "FD51560A03100156EF968A555A3A1921A06F8BFEDD3F64A8CFFFBBE320A54698",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 5262848
+    },
+    {
+      "resref": "ACIDBLOB",
+      "job_id": "ACIDBLOB-p05",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/ACIDBLOB-p05.json",
+      "passed": true,
+      "spatial_run": "acidblob-p05-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "acidblob-p05-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/ACIDBLOB/packs/acidblob-p05-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "8B63C7995D44538F5D2D9B230D59E7E443B1C65C561637AC9056ABDB5A27301F",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/ACIDBLOB/runs/acidblob-p05-apollo30-retimed-20261018-v1/runtime-carrier/ACIDBLOB.bam",
+        "sha256": "FD51560A03100156EF968A555A3A1921A06F8BFEDD3F64A8CFFFBBE320A54698",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 5262848
+    },
+    {
+      "resref": "MAGICSTN",
+      "job_id": "MAGICSTN-p02",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/MAGICSTN-p02.json",
+      "passed": true,
+      "spatial_run": "magicstn-p02-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "magicstn-p02-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/MAGICSTN/packs/magicstn-p02-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "8BD3171CDF9D961CE390E52D8D2F93BC49CF85CEBA989FBB48416D731FE6814C",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/MAGICSTN/runs/magicstn-p02-apollo30-retimed-20261018-v1/runtime-carrier/MAGICSTN.bam",
+        "sha256": "23708DA52DC0D6C53901D192B6D405749FFBE0B7D09B547D95C2772EA519C338",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 42240
+    },
+    {
+      "resref": "MAGICSTN",
+      "job_id": "MAGICSTN-p03",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/MAGICSTN-p03.json",
+      "passed": true,
+      "spatial_run": "magicstn-p03-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "magicstn-p03-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/MAGICSTN/packs/magicstn-p03-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "08AB905C4E22FE781CDDF85A0B81944885D30433A9797081927F560348CC7B13",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/MAGICSTN/runs/magicstn-p03-apollo30-retimed-20261018-v1/runtime-carrier/MAGICSTN.bam",
+        "sha256": "23708DA52DC0D6C53901D192B6D405749FFBE0B7D09B547D95C2772EA519C338",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 42240
+    },
+    {
+      "resref": "MAGICSTN",
+      "job_id": "MAGICSTN-p04",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/MAGICSTN-p04.json",
+      "passed": true,
+      "spatial_run": "magicstn-p04-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "magicstn-p04-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/MAGICSTN/packs/magicstn-p04-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "0F51D2CD9214C432325ECE500D9CFFF2DEB4ED3EF7549DAB2BB94B218AD95DC4",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/MAGICSTN/runs/magicstn-p04-apollo30-retimed-20261018-v1/runtime-carrier/MAGICSTN.bam",
+        "sha256": "23708DA52DC0D6C53901D192B6D405749FFBE0B7D09B547D95C2772EA519C338",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 42240
+    },
+    {
+      "resref": "MAGICSTN",
+      "job_id": "MAGICSTN-p05",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/MAGICSTN-p05.json",
+      "passed": true,
+      "spatial_run": "magicstn-p05-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "magicstn-p05-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/MAGICSTN/packs/magicstn-p05-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "5B7D49FA2441BD7CB34E3F218BB56F71918A0C1A1A89805BC029AF5672EEE766",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/MAGICSTN/runs/magicstn-p05-apollo30-retimed-20261018-v1/runtime-carrier/MAGICSTN.bam",
+        "sha256": "23708DA52DC0D6C53901D192B6D405749FFBE0B7D09B547D95C2772EA519C338",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 42240
+    },
+    {
+      "resref": "MAGICSTN",
+      "job_id": "MAGICSTN-p06",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/MAGICSTN-p06.json",
+      "passed": true,
+      "spatial_run": "magicstn-p06-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "magicstn-p06-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/MAGICSTN/packs/magicstn-p06-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "FA01E348BD6C5FA13B129CBE0110C523FA9EB78A22BE3931BDFD6DD47819AC36",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/MAGICSTN/runs/magicstn-p06-apollo30-retimed-20261018-v1/runtime-carrier/MAGICSTN.bam",
+        "sha256": "23708DA52DC0D6C53901D192B6D405749FFBE0B7D09B547D95C2772EA519C338",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 42240
+    },
+    {
+      "resref": "MAGICSTN",
+      "job_id": "MAGICSTN-p07",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/MAGICSTN-p07.json",
+      "passed": true,
+      "spatial_run": "magicstn-p07-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "magicstn-p07-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/MAGICSTN/packs/magicstn-p07-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "9DDE8D0A6FFC97998CF2AFBB78AFED6C53E60DAC53E7F7E03522577117BA168B",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/MAGICSTN/runs/magicstn-p07-apollo30-retimed-20261018-v1/runtime-carrier/MAGICSTN.bam",
+        "sha256": "23708DA52DC0D6C53901D192B6D405749FFBE0B7D09B547D95C2772EA519C338",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 42240
+    },
+    {
+      "resref": "MAGICSTN",
+      "job_id": "MAGICSTN-p08",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/MAGICSTN-p08.json",
+      "passed": true,
+      "spatial_run": "magicstn-p08-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "magicstn-p08-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/MAGICSTN/packs/magicstn-p08-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "1278E68521BB8ADF805F37BA07AF6DE5C0CC6A0D38138538A93F3D0D60DBACB7",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/MAGICSTN/runs/magicstn-p08-apollo30-retimed-20261018-v1/runtime-carrier/MAGICSTN.bam",
+        "sha256": "23708DA52DC0D6C53901D192B6D405749FFBE0B7D09B547D95C2772EA519C338",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 42240
+    },
+    {
+      "resref": "SPFIREBL",
+      "job_id": "SPFIREBL-p02",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/SPFIREBL-p02.json",
+      "passed": true,
+      "spatial_run": "spfirebl-p02-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "spfirebl-p02-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/SPFIREBL/packs/spfirebl-p02-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "83BD8F4AEA3EADB5A7DE14BDE81B1921BBDA5BE800958F0627804793D536DD66",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPFIREBL/runs/spfirebl-p02-apollo30-retimed-20261018-v1/runtime-carrier/SPFIREBL.bam",
+        "sha256": "1CDB3B97D077111F19D567D8CC35C3A901BC64A5A885320D547A6BEFADB9836A",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 7828608
+    },
+    {
+      "resref": "SPFLMARR",
+      "job_id": "SPFLMARR-p02",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/SPFLMARR-p02.json",
+      "passed": true,
+      "spatial_run": "spflmarr-p02-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "spflmarr-p02-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/SPFLMARR/packs/spflmarr-p02-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "A9038851B0DE84D99B9EF27BC3080859AF13D1D76CD2F7F15B34EF8F49B87C41",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPFLMARR/runs/spflmarr-p02-apollo30-retimed-20261018-v1/runtime-carrier/SPFLMARR.bam",
+        "sha256": "6825B7F4BE95CCB2C30AA73AD8271D1D97D32B04D61BA8BCFDDED6BDAB20C25D",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 4206976
+    },
+    {
+      "resref": "SPFLMARR",
+      "job_id": "SPFLMARR-p03",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/SPFLMARR-p03.json",
+      "passed": true,
+      "spatial_run": "spflmarr-p03-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "spflmarr-p03-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/SPFLMARR/packs/spflmarr-p03-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "E8894C0631737B7B44C3F6E36173D2A81627BF291C0EB3B0B66FB058B5ADDF2F",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPFLMARR/runs/spflmarr-p03-apollo30-retimed-20261018-v1/runtime-carrier/SPFLMARR.bam",
+        "sha256": "6825B7F4BE95CCB2C30AA73AD8271D1D97D32B04D61BA8BCFDDED6BDAB20C25D",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 4206976
+    },
+    {
+      "resref": "SPFLMARR",
+      "job_id": "SPFLMARR-p04",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/SPFLMARR-p04.json",
+      "passed": true,
+      "spatial_run": "spflmarr-p04-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "spflmarr-p04-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/SPFLMARR/packs/spflmarr-p04-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "8532C413A32AF4BA12F3F1E4EAB8A6C3627AF6193ADFF9BE19C9DB8874BAA49B",
+      "native_cycles": 5,
+      "cycle_mode_variants": 10,
+      "phases": 120,
+      "backings": 110,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPFLMARR/runs/spflmarr-p04-apollo30-retimed-20261018-v1/runtime-carrier/SPFLMARR.bam",
+        "sha256": "6825B7F4BE95CCB2C30AA73AD8271D1D97D32B04D61BA8BCFDDED6BDAB20C25D",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 4206976
+    },
+    {
+      "resref": "SPRDRABU",
+      "job_id": "SPRDRABU-p02",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/SPRDRABU-p02.json",
+      "passed": true,
+      "spatial_run": "sprdrabu-p02-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "sprdrabu-p02-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/SPRDRABU/packs/sprdrabu-p02-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "2E4786329C6D4C174E8B4E022AAC71F440F0C6CD1DC913E50243E1658F4F1FF1",
+      "native_cycles": 9,
+      "cycle_mode_variants": 18,
+      "phases": 720,
+      "backings": 702,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once",
+        "cycle001-once",
+        "cycle002-once",
+        "cycle003-once",
+        "cycle004-once",
+        "cycle005-once",
+        "cycle006-once",
+        "cycle007-once",
+        "cycle008-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/SPRDRABU/runs/sprdrabu-p02-apollo30-retimed-20261018-v1/runtime-carrier/SPRDRABU.bam",
+        "sha256": "28DF7871C556C104F2B19F9520177B3C03D079D21FA3E4718898065E258DAAD1",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1730847680
+    },
+    {
+      "resref": "STNKCLDT",
+      "job_id": "STNKCLDT-p02",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/STNKCLDT-p02.json",
+      "passed": true,
+      "spatial_run": "stnkcldt-p02-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "stnkcldt-p02-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/STNKCLDT/packs/stnkcldt-p02-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "37F34591C345A6E40E1B2C4B93A6D4DCCB4D1094386071A3BAC5DC91D0F3C545",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/STNKCLDT/runs/stnkcldt-p02-apollo30-retimed-20261018-v1/runtime-carrier/STNKCLDT.bam",
+        "sha256": "BA46BA96490232BF34C0165BD94AC8603D897BD3E0D657970C8721045BB2F32F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 575744
+    },
+    {
+      "resref": "STNKCLDT",
+      "job_id": "STNKCLDT-p03",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/STNKCLDT-p03.json",
+      "passed": true,
+      "spatial_run": "stnkcldt-p03-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "stnkcldt-p03-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/STNKCLDT/packs/stnkcldt-p03-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "631A4F3B37C4D3FFAA7A80397C1C246E655F78E55C979A5B7AAE604F11AD150E",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/STNKCLDT/runs/stnkcldt-p03-apollo30-retimed-20261018-v1/runtime-carrier/STNKCLDT.bam",
+        "sha256": "BA46BA96490232BF34C0165BD94AC8603D897BD3E0D657970C8721045BB2F32F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 575744
+    },
+    {
+      "resref": "STNKCLDT",
+      "job_id": "STNKCLDT-p04",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/STNKCLDT-p04.json",
+      "passed": true,
+      "spatial_run": "stnkcldt-p04-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "stnkcldt-p04-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/STNKCLDT/packs/stnkcldt-p04-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "3DF5A504A083E9050386EABC1764CEB0A6D9FA12412C115F1A34A0967C2BB434",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/STNKCLDT/runs/stnkcldt-p04-apollo30-retimed-20261018-v1/runtime-carrier/STNKCLDT.bam",
+        "sha256": "BA46BA96490232BF34C0165BD94AC8603D897BD3E0D657970C8721045BB2F32F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 575744
+    },
+    {
+      "resref": "STNKCLDT",
+      "job_id": "STNKCLDT-p05",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/STNKCLDT-p05.json",
+      "passed": true,
+      "spatial_run": "stnkcldt-p05-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "stnkcldt-p05-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/STNKCLDT/packs/stnkcldt-p05-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "0BE35C91B5BAD9610371A6B05C6FE7FBB6676AE7F3864E78A375C2293A6A3A7F",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/STNKCLDT/runs/stnkcldt-p05-apollo30-retimed-20261018-v1/runtime-carrier/STNKCLDT.bam",
+        "sha256": "BA46BA96490232BF34C0165BD94AC8603D897BD3E0D657970C8721045BB2F32F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 575744
+    },
+    {
+      "resref": "STNKCLDT",
+      "job_id": "STNKCLDT-p06",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/STNKCLDT-p06.json",
+      "passed": true,
+      "spatial_run": "stnkcldt-p06-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "stnkcldt-p06-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/STNKCLDT/packs/stnkcldt-p06-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "5C8EC3688648DB4F6DEE78070A622A83BA5C682DAE777E59495C8952661DF6B6",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/STNKCLDT/runs/stnkcldt-p06-apollo30-retimed-20261018-v1/runtime-carrier/STNKCLDT.bam",
+        "sha256": "BA46BA96490232BF34C0165BD94AC8603D897BD3E0D657970C8721045BB2F32F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 575744
+    },
+    {
+      "resref": "STNKCLDT",
+      "job_id": "STNKCLDT-p07",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/STNKCLDT-p07.json",
+      "passed": true,
+      "spatial_run": "stnkcldt-p07-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "stnkcldt-p07-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/STNKCLDT/packs/stnkcldt-p07-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "362A114592CE11EA2564B7F84B5E4470D2339F99F1B051A5E722E0EA0C678177",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/STNKCLDT/runs/stnkcldt-p07-apollo30-retimed-20261018-v1/runtime-carrier/STNKCLDT.bam",
+        "sha256": "BA46BA96490232BF34C0165BD94AC8603D897BD3E0D657970C8721045BB2F32F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 575744
+    },
+    {
+      "resref": "STNKCLDT",
+      "job_id": "STNKCLDT-p08",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/STNKCLDT-p08.json",
+      "passed": true,
+      "spatial_run": "stnkcldt-p08-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "stnkcldt-p08-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/STNKCLDT/packs/stnkcldt-p08-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "FF56B375E0F3DF236FCFA8921046133F8C5C29AE9A20FA323CFAD27D71BF0CDF",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/STNKCLDT/runs/stnkcldt-p08-apollo30-retimed-20261018-v1/runtime-carrier/STNKCLDT.bam",
+        "sha256": "BA46BA96490232BF34C0165BD94AC8603D897BD3E0D657970C8721045BB2F32F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 575744
+    },
+    {
+      "resref": "STNKCLDT",
+      "job_id": "STNKCLDT-p09",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/STNKCLDT-p09.json",
+      "passed": true,
+      "spatial_run": "stnkcldt-p09-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "stnkcldt-p09-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/STNKCLDT/packs/stnkcldt-p09-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "C32D893985101383242786CDCFCF1703B924DF590ED5142FA1A50A90BC612070",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/STNKCLDT/runs/stnkcldt-p09-apollo30-retimed-20261018-v1/runtime-carrier/STNKCLDT.bam",
+        "sha256": "BA46BA96490232BF34C0165BD94AC8603D897BD3E0D657970C8721045BB2F32F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 575744
+    },
+    {
+      "resref": "STNKCLDT",
+      "job_id": "STNKCLDT-p10",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/STNKCLDT-p10.json",
+      "passed": true,
+      "spatial_run": "stnkcldt-p10-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "stnkcldt-p10-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/STNKCLDT/packs/stnkcldt-p10-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "5F495C70C731DFA67C866A5A4259264B0E887F17FAC6B7E2A1FD29CE6452CF89",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/STNKCLDT/runs/stnkcldt-p10-apollo30-retimed-20261018-v1/runtime-carrier/STNKCLDT.bam",
+        "sha256": "BA46BA96490232BF34C0165BD94AC8603D897BD3E0D657970C8721045BB2F32F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 575744
+    },
+    {
+      "resref": "STNKCLDT",
+      "job_id": "STNKCLDT-p11",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/STNKCLDT-p11.json",
+      "passed": true,
+      "spatial_run": "stnkcldt-p11-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "stnkcldt-p11-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/STNKCLDT/packs/stnkcldt-p11-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "8DB7B0EDA7BA9663C9BA7254D773A517E2A4B1801A9C761BA135AD66E084B4D7",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/STNKCLDT/runs/stnkcldt-p11-apollo30-retimed-20261018-v1/runtime-carrier/STNKCLDT.bam",
+        "sha256": "BA46BA96490232BF34C0165BD94AC8603D897BD3E0D657970C8721045BB2F32F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 575744
+    },
+    {
+      "resref": "STNKCLDT",
+      "job_id": "STNKCLDT-p12",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/STNKCLDT-p12.json",
+      "passed": true,
+      "spatial_run": "stnkcldt-p12-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "stnkcldt-p12-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/STNKCLDT/packs/stnkcldt-p12-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "FCB3BE7DA4329FA3CF52C042E8BF4A6C74F3FAEE6F4A9C0AB195E637BC000A84",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/STNKCLDT/runs/stnkcldt-p12-apollo30-retimed-20261018-v1/runtime-carrier/STNKCLDT.bam",
+        "sha256": "BA46BA96490232BF34C0165BD94AC8603D897BD3E0D657970C8721045BB2F32F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 575744
+    },
+    {
+      "resref": "STNKCLDT",
+      "job_id": "STNKCLDT-p13",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/STNKCLDT-p13.json",
+      "passed": true,
+      "spatial_run": "stnkcldt-p13-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "stnkcldt-p13-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/STNKCLDT/packs/stnkcldt-p13-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "F0EB90161A0DDA38589D6580A8CBEEEB90E309168269B8D7DB45E2F8487FB26A",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/STNKCLDT/runs/stnkcldt-p13-apollo30-retimed-20261018-v1/runtime-carrier/STNKCLDT.bam",
+        "sha256": "BA46BA96490232BF34C0165BD94AC8603D897BD3E0D657970C8721045BB2F32F",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 575744
+    },
+    {
+      "resref": "TRAVEL",
+      "job_id": "TRAVEL-p03",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/TRAVEL-p03.json",
+      "passed": true,
+      "spatial_run": "travel-p03-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "travel-p03-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/TRAVEL/packs/travel-p03-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "47214DAA853B687C7C71D8CB78FADC8A460A13F69D584F9390DC31C645362A9B",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/TRAVEL/runs/travel-p03-apollo30-retimed-20261018-v1/runtime-carrier/TRAVEL.bam",
+        "sha256": "98E5A51D337D28B6FE71E37DD999CF875684874D77782E16F73DC8454891589D",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1824768
+    },
+    {
+      "resref": "TRAVEL",
+      "job_id": "TRAVEL-p04",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/TRAVEL-p04.json",
+      "passed": true,
+      "spatial_run": "travel-p04-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "travel-p04-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/TRAVEL/packs/travel-p04-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "393AEA330811817C797E746CC9012AFB06D8AE3FB85D309CC8B671858D85907F",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/TRAVEL/runs/travel-p04-apollo30-retimed-20261018-v1/runtime-carrier/TRAVEL.bam",
+        "sha256": "98E5A51D337D28B6FE71E37DD999CF875684874D77782E16F73DC8454891589D",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1824768
+    },
+    {
+      "resref": "TRAVEL",
+      "job_id": "TRAVEL-p05",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/TRAVEL-p05.json",
+      "passed": true,
+      "spatial_run": "travel-p05-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "travel-p05-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/TRAVEL/packs/travel-p05-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "2EFF321BA68317CA5E6B37760948DA2C4226804F11020028C527D5FB90BDCF1E",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/TRAVEL/runs/travel-p05-apollo30-retimed-20261018-v1/runtime-carrier/TRAVEL.bam",
+        "sha256": "98E5A51D337D28B6FE71E37DD999CF875684874D77782E16F73DC8454891589D",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1824768
+    },
+    {
+      "resref": "TRAVEL",
+      "job_id": "TRAVEL-p06",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/TRAVEL-p06.json",
+      "passed": true,
+      "spatial_run": "travel-p06-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "travel-p06-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/TRAVEL/packs/travel-p06-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "D92DA0502BCDC31D51E158470FBD477012ED64946F12A86E301D60C3E46941BD",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/TRAVEL/runs/travel-p06-apollo30-retimed-20261018-v1/runtime-carrier/TRAVEL.bam",
+        "sha256": "98E5A51D337D28B6FE71E37DD999CF875684874D77782E16F73DC8454891589D",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1824768
+    },
+    {
+      "resref": "TRAVEL",
+      "job_id": "TRAVEL-p07",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/TRAVEL-p07.json",
+      "passed": true,
+      "spatial_run": "travel-p07-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "travel-p07-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/TRAVEL/packs/travel-p07-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "9FD742CEDEFF575E38015781117873BCA3908767BC1AB45FB755AFD8BD42C0DB",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/TRAVEL/runs/travel-p07-apollo30-retimed-20261018-v1/runtime-carrier/TRAVEL.bam",
+        "sha256": "98E5A51D337D28B6FE71E37DD999CF875684874D77782E16F73DC8454891589D",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1824768
+    },
+    {
+      "resref": "TRAVEL",
+      "job_id": "TRAVEL-p08",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/TRAVEL-p08.json",
+      "passed": true,
+      "spatial_run": "travel-p08-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "travel-p08-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/TRAVEL/packs/travel-p08-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "7DA2AA293FD420FA390AB2BC860097B6B812BB081B68CBE35C0B69CADDEF635C",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/TRAVEL/runs/travel-p08-apollo30-retimed-20261018-v1/runtime-carrier/TRAVEL.bam",
+        "sha256": "98E5A51D337D28B6FE71E37DD999CF875684874D77782E16F73DC8454891589D",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1824768
+    },
+    {
+      "resref": "TRAVEL",
+      "job_id": "TRAVEL-p09",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/TRAVEL-p09.json",
+      "passed": true,
+      "spatial_run": "travel-p09-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "travel-p09-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/TRAVEL/packs/travel-p09-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "275AD9D000411024570A197A6D2796F7D45D18B6250DAF794AFB12F3C53A9B31",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/TRAVEL/runs/travel-p09-apollo30-retimed-20261018-v1/runtime-carrier/TRAVEL.bam",
+        "sha256": "98E5A51D337D28B6FE71E37DD999CF875684874D77782E16F73DC8454891589D",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1824768
+    },
+    {
+      "resref": "TRAVEL",
+      "job_id": "TRAVEL-p10",
+      "palette_file": "effects/batches/lot31-projectiles-7b-apollo30-20261018-v1/palettes/TRAVEL-p10.json",
+      "passed": true,
+      "spatial_run": "travel-p10-seedvr7b-x4-20261018-v1",
+      "interpolation_run": "travel-p10-apollo30-retimed-20261018-v1",
+      "pack": "effects/ressources/TRAVEL/packs/travel-p10-7b-x4-apollo30-20261018-v1",
+      "pack_manifest_sha256": "395D3ADC6FA00942754C5D77497483492133DC130E2D57B5FA46E02D91BA4B51",
+      "native_cycles": 1,
+      "cycle_mode_variants": 2,
+      "phases": 24,
+      "backings": 22,
+      "native_durations_preserved": true,
+      "native_world_geometry_preserved": true,
+      "visible_adjacent_duplicates": 0,
+      "alternate_playback_profiles": [
+        "cycle000-once"
+      ],
+      "transparent_control_cycles": [],
+      "runtime_carrier": {
+        "path": "effects/ressources/TRAVEL/runs/travel-p10-apollo30-retimed-20261018-v1/runtime-carrier/TRAVEL.bam",
+        "sha256": "98E5A51D337D28B6FE71E37DD999CF875684874D77782E16F73DC8454891589D",
+        "native_world_pixels_preserved": true
+      },
+      "raw_bytes": 1824768
+    }
+  ]
+}

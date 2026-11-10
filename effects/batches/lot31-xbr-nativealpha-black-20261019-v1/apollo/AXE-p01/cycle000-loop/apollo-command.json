@@ -1,0 +1,37 @@
+{
+  "command": [
+    "C:\\Program Files\\Topaz Labs LLC\\Topaz Video AI\\ffmpeg.exe",
+    "-hide_banner",
+    "-loglevel",
+    "error",
+    "-y",
+    "-framerate",
+    "15",
+    "-i",
+    "G:\\AI\\BG2_Upscale\\effects\\batches\\lot31-xbr-nativealpha-black-20261019-v1\\apollo\\AXE-p01\\cycle000-loop\\input-rgb-padded\\in_%03d.png",
+    "-vf",
+    "tvai_fi=model=apo-8:fps=30:rdt=-0.01:device=-2",
+    "-pix_fmt",
+    "rgb24",
+    "G:\\AI\\BG2_Upscale\\effects\\batches\\lot31-xbr-nativealpha-black-20261019-v1\\apollo\\AXE-p01\\cycle000-loop\\apollo-padded\\out_%04d.png"
+  ],
+  "input_fps": [
+    15,
+    1
+  ],
+  "padding_only": true,
+  "original_rgb_size_x4": [
+    144,
+    144
+  ],
+  "padded_rgb_size_x4": [
+    160,
+    160
+  ],
+  "crop_x4": [
+    0,
+    0,
+    144,
+    144
+  ]
+}

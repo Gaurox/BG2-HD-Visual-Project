@@ -1,0 +1,292 @@
+{
+  "source_selection": {
+    "$schema": "../../schemas/animation-selection.schema.json",
+    "asset_id": "animations:bam:OHHNECR",
+    "correction_id": "innerfeather16-premultiply",
+    "lineage": {
+      "source_packs": [
+        {
+          "manifest_path": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-20261010-v1/manifest.json",
+          "manifest_sha256": "D8E88F9CD515B28C95ADAF7797411384DB5B9302716BDA28EF5AB687AB7EA164",
+          "path": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-20261010-v1",
+          "schema": "bg2-upscale-area-animation-pack-index-v1",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/manifest.json",
+          "manifest_sha256": "9556C6FD78C13CE41AB7C369778BCF4E041395317ABA239668456DD15A372A7D",
+          "path": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300",
+          "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/ressources/OHHNECR/runs/ohhnecr-reboutcx-apo8-x4-30fps-20261010-v1/03_runtime_pack/manifest.json",
+          "manifest_sha256": "7B8D1897EF135F475D908651CB7ACDCEC983F38903A6482F2123877403BB8866",
+          "path": "animations/ressources/OHHNECR/runs/ohhnecr-reboutcx-apo8-x4-30fps-20261010-v1/03_runtime_pack",
+          "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/ressources/OHHNECR/runs/ohhnecr-reboutcx-x4-20261010-v1/03_runtime_pack/manifest.json",
+          "manifest_sha256": "2B0C85421D6B4AA3045E620CF536FCC29152FEE544B23B1C646FAE7F57B17103",
+          "path": "animations/ressources/OHHNECR/runs/ohhnecr-reboutcx-x4-20261010-v1/03_runtime_pack",
+          "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+          "status": "completed"
+        }
+      ],
+      "source_runs": [
+        {
+          "manifest_path": "animations/ressources/OHHNECR/runs/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/manifest.json",
+          "manifest_sha256": "E329DA846E422AE15A73CF56B9BE795D09D23394F189A3486E3E2EAF028186F9",
+          "path": "animations/ressources/OHHNECR/runs/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1",
+          "schema": "bg2-upscale-blended-rgb-neutral-run-v1",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/ressources/OHHNECR/runs/ohhnecr-reboutcx-apo8-x4-30fps-20261010-v1/manifest.json",
+          "manifest_sha256": "83D79EC37034B40A701726C88D8F70E62A1A870E4E3392FCFB4820A948CC4B85",
+          "path": "animations/ressources/OHHNECR/runs/ohhnecr-reboutcx-apo8-x4-30fps-20261010-v1",
+          "schema": "bg2-upscale-area-animation-30fps-run-v2",
+          "status": "completed"
+        },
+        {
+          "manifest_path": "animations/ressources/OHHNECR/runs/ohhnecr-reboutcx-x4-20261010-v1/manifest.json",
+          "manifest_sha256": "B8D3DC72134C51D9D45103580F79052488C518C98D187081DB546D5D2E634B8C",
+          "path": "animations/ressources/OHHNECR/runs/ohhnecr-reboutcx-x4-20261010-v1",
+          "schema": "bg2-upscale-area-animation-run-v1",
+          "status": "completed"
+        }
+      ]
+    },
+    "qa_decision": {
+      "decision_date": "2026-10-10",
+      "path": "animations/index/qa-decisions/OHHNECR/2026-10-10-accepted-ohhnecr-pieges-reboutcx-apo8-inner16-v1.json",
+      "sha256": "3FBD7F838233B548F55A3AD2E0C56C4E207DCE90045597DF90181C5863CAC391",
+      "status": "accepted"
+    },
+    "recipe_id": "effet-blended-reboutcx-apo8-premul",
+    "resref": "OHHNECR",
+    "result_kind": "x4",
+    "schema_version": 1,
+    "selected_run": {
+      "manifest_path": "animations/ressources/OHHNECR/runs/ohhnecr-pieges-selection-accepted-20261010/manifest.json",
+      "manifest_sha256": "B0425BD4E1361FF492352AFCB94FDEC461BD347B4AC6C2E6B63AC72E4C1B207D",
+      "path": "animations/ressources/OHHNECR/runs/ohhnecr-pieges-selection-accepted-20261010",
+      "schema": "bg2-upscale-animation-final-selection-v1",
+      "status": "completed"
+    },
+    "source_pack": {
+      "areas": [
+        {
+          "area": "OH7300",
+          "manifest_path": "animations/packs-par-zone/oh7300-bulles-pieges-complete-20261010-v1/OH7300/manifest.json",
+          "manifest_sha256": "098C98BAF6D1F7FF5745F6C42CFCF82037E0D9C4026EF2A8EC5DF09C295DD72F",
+          "path": "animations/packs-par-zone/oh7300-bulles-pieges-complete-20261010-v1/OH7300",
+          "registry_sha256": "2E8AB0958AB8F5EF312AEBAE8A77F29119F05719CB64D55D034C390A9A8ED613",
+          "resource_entries": 1
+        }
+      ],
+      "manifest_path": "animations/packs-par-zone/oh7300-bulles-pieges-complete-20261010-v1/manifest.json",
+      "manifest_sha256": "0E490DFED1BD77210F1AF1328DBDCB8DD9BF881ED9E471CAF8A3A7CE9EB3F990",
+      "path": "animations/packs-par-zone/oh7300-bulles-pieges-complete-20261010-v1",
+      "schema": "bg2-upscale-area-animation-pack-index-v1",
+      "status": "completed"
+    },
+    "tested_areas": [
+      "OH7300"
+    ],
+    "updated_at_utc": "2026-10-09T23:17:50Z"
+  },
+  "source_run": "animations/ressources/OHHNECR/runs/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1",
+  "padding_checks": [
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame000.rgba",
+      "source_sha256": "86EC75E1F0331F0B4F4768FF276AB738EA8C748682B2DA62C0AB87ADBC09C818",
+      "padded_sha256": "555C1C97DE68984DA5BE772E784204500ABFA96D51C68EBF7778298CB21FABC0",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame001.rgba",
+      "source_sha256": "1ED2F31E47C3755D34CA699A0E117407F40F6C7331ACF1A2294F256371BA1BE3",
+      "padded_sha256": "AE1E7D704659B3DAEFEBA9B2B85A10AEDFD74EBAE52B1590A508FAE801711CBE",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame002.rgba",
+      "source_sha256": "618E17E3B034BA094B7E44ED3A0732FB8682A51982F85772A63FBA30039C9E59",
+      "padded_sha256": "E445CD3903DC1B93507B9E86886C09264E545EB21556B68118EFAA6DD2BD48BB",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame003.rgba",
+      "source_sha256": "F9EAC074307B80335EEEA72B9639F78FE1C256ECC55077C3BB6F7644F37F36FE",
+      "padded_sha256": "BCDEB38B5D404C46A2E329FDF838A410744AB637B0EC7FFD2B94B0031698AD6F",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame004.rgba",
+      "source_sha256": "FFD8C49ACF39A2A3488E35B23005B9812C53C4AE65B1D6DEB5CBE4D192728581",
+      "padded_sha256": "096DF3F41EA9EBD6540DAB074E4182F59547007CAA361D9F23EC66DB43DE4F3A",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame005.rgba",
+      "source_sha256": "FDA6CA4541AC392A9A6850196B626E93678AD7E680FCAFAE9B676B9AD923BC6B",
+      "padded_sha256": "E915C9A805E0E1D52C128B605EC9D5B65AAFDF4C9D895C9A49D899F4A60D476B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame006.rgba",
+      "source_sha256": "65F73320A24B9469918A3B0BB2DA59D85F27D6C36E291A026F4724D02DF765D5",
+      "padded_sha256": "AB9C5B342E5EEAD9512ECB6FB02F4D93171E00BEFE477AE1EFBF0C1AE69FE8FC",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame007.rgba",
+      "source_sha256": "2F4F77FE4B5855350A2F8DA8D6F1E681EBDC14E6B5121A800E7CB07B1B396371",
+      "padded_sha256": "DEF303C1F2B0BCC213617102BBAB6C12167E8999E9A9C8E665DE346ADFC1D720",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame008.rgba",
+      "source_sha256": "E7F0FDD2EDAF548D749F2DD69BB87E56B70DF25102F152C5EF6CF0BFAD9C3E2D",
+      "padded_sha256": "27C334B65C8F49F78F73D3FB32E93F3A3CC58564276558F3A726B6C23D636F42",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame009.rgba",
+      "source_sha256": "EA63E76ACB49425101B0AA1B77AEAD133F1F641C233D582241E12CFB0E3CFFAC",
+      "padded_sha256": "8858CC5A17278EB7720B059BBE1C3B3F5DE437432B98069DF488126BD6646714",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame010.rgba",
+      "source_sha256": "989EB4D6B366783CC21F7CD12F9042C3907FFC0562BF68437015CFD75FCDB64B",
+      "padded_sha256": "8CE35069A660CDB660855DE2152EBF55CF480BFE6B274797028A541A79B7ECB7",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame011.rgba",
+      "source_sha256": "AF9D05C9611460653AE5B00EFD815E33A93C30680AEB462EA8B9E1E575B7C0D6",
+      "padded_sha256": "7B180D9E02DE49E80A3767508007DE3A9C9C6937CA5FB932D721A545BD1CC01D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame012.rgba",
+      "source_sha256": "B754F1372B094D2970F0CCEB4C779524B1CBC172A07967308CFFF1F86C54FBAD",
+      "padded_sha256": "649A7BAB5DB0FA8A733BB687D578C820A4CB49094307456E6C16259CC3E9B0BD",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame013.rgba",
+      "source_sha256": "15E9A84B5C03C79A917F695EAA550D5BF081A1118735EE4AC9CD40E51440DB05",
+      "padded_sha256": "8CABBBEA0568EAC401CE1AF638CD17845F863D6D7C0707F2FD03A7F82C64ADE9",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame014.rgba",
+      "source_sha256": "8BC8691F383EDDFD7231C1768C5DE4CF59049083DBAC272EC1C3AB54754BF0AE",
+      "padded_sha256": "7DAA30CB9306AD32C76B3D34D8B8A6F4400D21873016A6A3C67AAD998E0C073C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame015.rgba",
+      "source_sha256": "D8B4DCC39BE6039E1A04985A7CA8F7290DB3C77B297F87B0784B56A0B0CC6A70",
+      "padded_sha256": "FA1F80C6925BFEE53080F0B7AE4B2A1FD5CC51E25DAD243A18D763B7EE71ED0D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame016.rgba",
+      "source_sha256": "CB739C0AC432128094C1E197ED72A9CEAB2FBAD173C42554EDA89FAFF160EC77",
+      "padded_sha256": "3194B666EF3EB8EDA5564BF6E0C4590E0633C97128AD6DACC0F69521B8EEAC02",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame017.rgba",
+      "source_sha256": "D3D4627BF9F5FB5E9D49D352D7538891AC0F6CEABFF00531C686EA2B8474270D",
+      "padded_sha256": "F13D1B8A6287E1B988235BC8E3F73DEB4A6E138D2E593EE3B8681244ED837D82",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame018.rgba",
+      "source_sha256": "66B5DE2F9C0B43E875B6D5D486E984242B9F1F43B9D5A8529AE3742BF9373A66",
+      "padded_sha256": "DC9EA924257769DD0962706BC1DEC0FF1D4C86321F3FFB94D091B1110D34E1CA",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame019.rgba",
+      "source_sha256": "49BAE8ED61FF18AF59F86AB7CB43F03E453AFA572855186D126A1935B54C6168",
+      "padded_sha256": "565688D50ED076469A2329C8D793F3F038BE3E63EA50FCF62B44116B7939569B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame020.rgba",
+      "source_sha256": "04FD031E28A784C74DB5BBDD5D50FF8AB2E0B9F35FE82142A15B470AC2CEF4C2",
+      "padded_sha256": "6EBF9FAC5DF7995C6F067EB856802A4AD6AB740C62ECC8B57961261A714F4F25",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame021.rgba",
+      "source_sha256": "4AA8C5473EF5E2299FA62DCE19BC8F502C9F78614217BED6A3557904AA4ABB83",
+      "padded_sha256": "FE20ECF3B5DB32651BE48E2FD7B2209CAE33E51A435FE5E4A58CAABC295479B1",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame022.rgba",
+      "source_sha256": "6B7F291790D7D15D90AB8630EF20078552502FE20AB5E3000BF65ECD7E6D961E",
+      "padded_sha256": "36B7FB5C826B65BBB33FA8D8192E7DAA299EA568D9FA524A24350A4BE1CDB53C",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame023.rgba",
+      "source_sha256": "0A4341406C4C3980A6AC7E86501C9B09585C436F2C263C9BAD8414EF0E5342AE",
+      "padded_sha256": "DDDD18A17206AB3835C8BB3673184857C47CE6B5144C314AD05128F8FF54156D",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame024.rgba",
+      "source_sha256": "1DBC270D4349E4148C0C2F9263456575EE08D8741EA89E56302A8AA25D0AE80D",
+      "padded_sha256": "0FC2C04128047B286F8A3B6D1E40DF743C6D6A73D0404A8F4B79BB248C4152C5",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame025.rgba",
+      "source_sha256": "C876636A147696F168BD4B34C274B550C6E8C9EF934C8BA0106F6B44A9897C50",
+      "padded_sha256": "A94CAE2BFE20A0426AD8DE2FD5A5E506DA3F034D20E655AAB54F83773CFBE969",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame026.rgba",
+      "source_sha256": "3C98C8BEA5D72AB96626BCCEE486C4A253CFD2621E46A9DC376694E15499BEFB",
+      "padded_sha256": "DFF4A61843F7E0A819E5A8FB0BD0F0672565CF28E20A330EAC11A9482AFFEA99",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame027.rgba",
+      "source_sha256": "92FF3A55DA29FEAF8DF08CDB3C9FB0C5556FF82E7BFFCB4310177557B4B1EC46",
+      "padded_sha256": "2B9C48D4D97CAED7C90CF8C81BCF2EE51F39F407B3D453B087257CD8E6A550ED",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame028.rgba",
+      "source_sha256": "0194BAAC5F0A82FF3C558FBB60DAE5AAE3DF865ABEB0527B6E0F0BE0A6D24385",
+      "padded_sha256": "B7094D45BE21A188E07D2D78CACDEC75EF0D603BA3E654414A93B68D7E028A7B",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame029.rgba",
+      "source_sha256": "A41E170B29A1499BEE1BC807D71F554FA3692A44A29E9EF87D61B88131041EBC",
+      "padded_sha256": "D922F9C51B946EC2D4357C7594894043DB606DCEA4C087F768FD65DDD8746B91",
+      "pixels_alpha_world_positions_exact": true
+    },
+    {
+      "source": "animations/packs-par-zone/ohhnecr-reboutcx-apo8-inner16-premul-20261010-v1/OH7300/AAX4-OHHNECR-frame030.rgba",
+      "source_sha256": "480149076B726D27F302BF28B43E91ADF0D89DA857FF3D88842474B35E8B0148",
+      "padded_sha256": "FB5AE45277C8CAAC7F31D956F92DF8AFA9679115175CE8831158F74A2397609A",
+      "pixels_alpha_world_positions_exact": true
+    }
+  ],
+  "neural_inference": 0,
+  "new_interpolation": 0,
+  "area_specific_placement_not_applied": true
+}
