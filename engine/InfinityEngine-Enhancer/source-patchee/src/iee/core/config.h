@@ -171,6 +171,8 @@ struct EngineConfig {
   // Reversible visual test: replace the static main-menu PVRZ pages (background,
   // title and button chrome) with 4x DXT5 atlases.  UI coordinates remain native.
   bool enableMainMenuX4Test = false;
+  // Only the seven START3EE selector pages; leaves the other menus/HUD disabled.
+  bool enableSelectorX4 = false;
   // Reversible comparison mode: replace the complete menu with x2 atlases.
   // This includes BIGLOGO and takes precedence over the x4 switches.
   bool enableMenuX2Test = false;

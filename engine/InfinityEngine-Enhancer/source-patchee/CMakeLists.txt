@@ -382,6 +382,10 @@ if(BUILD_TESTING)
             src/iee/item_icon_x2.cpp
         )
         target_link_libraries(iee_tests PRIVATE opengl32 Cabinet)
+        add_executable(iee_menu_upscale_tests tests/menu_upscale_tests.cpp
+            src/iee/biglogo_ui_upscale.cpp)
+        target_link_libraries(iee_menu_upscale_tests PRIVATE iee_common)
+        iee_configure_target(iee_menu_upscale_tests)
     endif()
 
     target_link_libraries(iee_tests PRIVATE iee_common)

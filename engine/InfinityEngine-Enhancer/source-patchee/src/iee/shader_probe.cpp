@@ -217,6 +217,7 @@ core::Hook<Fn_glDeleteTextures> g_glDeleteTexturesHook;
 core::Hook<Fn_glTexImage2D> g_glTexImage2DHook;
 core::Hook<Fn_glTexSubImage2D> g_glTexSubImage2DHook;
 core::Hook<Fn_glCompressedTexImage2D> g_glCompressedTexImage2DHook;
+bool g_menuUploadHookReady = false;  // protected by g_probeMutex
 
 void finish_queued_probe_hooks() noexcept {
   g_glShaderSourceHook.finish_queued_enable();
@@ -240,6 +241,7 @@ void finish_queued_probe_hooks() noexcept {
 }
 
 bool remove_probe_hooks() noexcept {
+  g_menuUploadHookReady = false;
   bool removed = true;
   removed = g_glDrawArraysHook.remove() && removed;
   removed = g_glCompressedTexImage2DHook.remove() && removed;
@@ -2259,7 +2261,8 @@ static void APIENTRY detour_glCompressedTexImage2D(unsigned target, int level,
     const auto caller = reinterpret_cast<std::uintptr_t>(_ReturnAddress());
     biglogo::ReplacementUpload replacement{};
     const bool logoReplacementEnabled = g_cfg.enableBigLogoX4Test ||
-                                        g_cfg.enableMainMenuX4Test || g_cfg.enableMenuX2Test;
+                                        g_cfg.enableMainMenuX4Test || g_cfg.enableMenuX2Test ||
+                                        g_cfg.enableSelectorX4;
     const bool useReplacement =
         logoReplacementEnabled && biglogo::try_replacement(
                                       target, level, internalFormat, width, height, imageSize,
@@ -2389,6 +2392,34 @@ void APIENTRY detour_glBindFramebuffer(unsigned target, unsigned framebuffer) no
 }
 }  // namespace
 
+bool install_menu_upload_hook(const core::EngineConfig& cfg) noexcept {
+  try {
+    if (!cfg.enableSelectorX4 || !game::gl::current_context()) return false;
+    std::lock_guard lock(g_probeMutex);
+    if (g_menuUploadHookReady ||
+        (g_shaderProbesInstalled && g_glCompressedTexImage2DHook.original())) return true;
+    const auto& gl = game::gl::get_gl_functions();
+    if (!gl.glCompressedTexImage2D) return false;
+    // The generic shader setup reuses this same Hook object (create/enable are
+    // idempotent), so the first UI upload does not depend on a frame callback.
+    const bool firstInstall = !g_glCompressedTexImage2DHook.original();
+    g_cfg = cfg;
+    g_glCompressedTexImage2DHook.create(
+        reinterpret_cast<void*>(gl.glCompressedTexImage2D),
+        reinterpret_cast<void*>(&detour_glCompressedTexImage2D));
+    g_glCompressedTexImage2DHook.enable();
+    g_menuUploadHookReady = true;
+    if (firstInstall)
+      LOG_INFO("Selector x4 compressed upload hook ready before native PVR Demand");
+    return true;
+  } catch (const std::exception& error) {
+    LOG_WARN("Selector x4 upload hook unavailable before PVR Demand: {}", error.what());
+    return false;
+  } catch (...) {
+    return false;
+  }
+}
+
 bool install_shader_probes(const core::EngineConfig& cfg) noexcept {
   try {
     std::lock_guard lock(g_probeMutex);
@@ -2500,6 +2531,7 @@ bool install_shader_probes(const core::EngineConfig& cfg) noexcept {
       }
       if ((cfg.enablePerformanceLogging || cfg.enableBamUiTextureProbe ||
            cfg.enableBigLogoX4Test || cfg.enableMainMenuX4Test || cfg.enableMenuX2Test ||
+           cfg.enableSelectorX4 ||
            cfg.creature_sprite_upscale_enabled()) &&
           gl.glCompressedTexImage2D) {
         g_glCompressedTexImage2DHook.create(reinterpret_cast<void*>(gl.glCompressedTexImage2D),

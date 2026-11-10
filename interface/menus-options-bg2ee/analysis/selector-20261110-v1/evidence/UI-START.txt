@@ -1,0 +1,162 @@
+7146: menu
+7147: {
+7148: 	name 'START'
+7149: 	align center center
+7150: 	ignoreesc
+7151: 	onOpen "
+7152: 		e:CheckGUISong()
+7153: 		local state = startEngine:GetEngineState()
+7154: 		if lastStartMenu and lastStartMenu ~= 'START' then
+7155: 			Infinity_PushMenu(lastStartMenu)
+7156: 			lastStartMenu = nil
+7157: 		elseif state == 1 then
+7158: 			Infinity_PushMenu('START_SP')
+7159: 		elseif state == 2 then
+7160: 			Infinity_PushMenu('START_MP')
+7161: 		elseif state == 0 then
+7162: 			Infinity_PushMenu('START_MAIN')
+7163: 		end
+7164: 		Infinity_SetBackground('BACKGROUND')
+7165: 	"
+7166: 	onClose "
+7167: 		local state = startEngine:GetEngineState()
+7168: 		if state == 1 then
+7169: 			Infinity_PopMenu('START_SP')
+7170: 		elseif state == 2 then
+7171: 			Infinity_PopMenu('START_MP')
+7172: 		elseif state == 0 or state == 3 then
+7173: 			Infinity_PopMenu('START_MAIN')
+7174: 		end
+7175: 
+7176: 	"
+7177: 
+7178: 	label
+7179: 	{
+7180: 		area 6 0 1024 768
+7181: 		mosaic 'START3EE'
+7182: 	}
+7183: 
+7184: 	text --soa
+7185: 	{
+7186: 		bam 'LOGOSOA'
+7187: 		sequence 0
+7188: 		frame lua "startThreeBookHighlight(1)"
+7189: 		area 106 270 202 240
+7190: 		align center center
+7191: 		action 
+7192: 		"
+7193: 			logoFrame = 0
+7194: 			-- initCampaign = 1
+7195: 			startEngine:OnSoAButtonClick(true)
+7196: 			Infinity_PushMenu('START_MAIN')
+7197: 		"
+7198: 		actionEnter
+7199: 		"
+7200: 			highlightBG = true
+7201: 		"
+7202: 		actionExit
+7203: 		"
+7204: 			highlightBG = false
+7205: 		"
+7206: 	}
+7207: 	text --tob
+7208: 	{
+7209: 		bam 'LOGOTOB'
+7210: 		sequence 0
+7211: 		frame lua "startThreeBookHighlight(2)"
+7212: 		area 400 270 235 224
+7213: 		align center center
+7214: 		action 
+7215: 		"
+7216: 			logoFrame = 1
+7217: 			-- initCampaign = 1
+7218: 			startEngine:OnToBButtonClick(true)
+7219: 			Infinity_PushMenu('START_MAIN')
+7220: 		"
+7221: 		actionEnter
+7222: 		"
+7223: 			highlightSOD = true
+7224: 		"
+7225: 		actionExit
+7226: 		"
+7227: 			highlightSOD = false
+7228: 		"
+7229: 	}
+7230: 	text --black pits
+7231: 	{
+7232: 		bam 'LOGOTBP'
+7233: 		sequence 0
+7234: 		frame lua "startThreeBookHighlight(3)"
+7235: 		area 718 282 226 212
+7236: 		align center center
+7237: 		action 
+7238: 		"
+7239: 			logoFrame = 2
+7240: 			-- initCampaign = 1
+7241: 			startEngine:OnTBPButtonClick(true)
+7242: 			Infinity_PushMenu('START_MAIN')
+7243: 		"
+7244: 		actionEnter
+7245: 		"
+7246: 			highlightBP = true
+7247: 		"
+7248: 		actionExit
+7249: 		"
+7250: 			highlightBP = false
+7251: 		"
+7252: 	}
+7253: 
+7254: 	button --credits
+7255: 	{
+7256: 		bam 'GUIOSTUL'
+7257: 		sequence 0
+7258: 		area 178 714 234 46
+7259: 		pad 10 8 10 8
+7260: 		text style "button"
+7261: 		text "CREDITS_BUTTON"
+7262: 		action 
+7263: 		"
+7264: 			Infinity_PushMenu('CREDITS')
+7265: 		"
+7266: 	}
+7267: 	button --quit
+7268: 	{
+7269: 		bam 'GUIOSTUM'
+7270: 		sequence 0
+7271: 		area 416 714 206 44
+7272: 		pad 10 8 10 8
+7273: 		text style "button"
+7274: 		text "QUIT_GAME_BUTTON"
+7275: 		enabled "not e:IsTouchUI()"
+7276: 		action 
+7277: 		"
+7278: 			startEngine:OnQuitButtonClick()
+7279: 		"
+7280: 	}
+7281: 	button --options
+7282: 	{
+7283: 		bam 'GUIOSTUR'
+7284: 		sequence 0
+7285: 		area 628 714 234 42
+7286: 		pad 10 8 10 8
+7287: 		text style "button"
+7288: 		text "OPTIONS_BUTTON"
+7289: 		action 
+7290: 		"
+7291: 			Infinity_TransitionMenu('START_OPTIONS')
+7292: 			optionsScreen:SetEngineState(1)
+7293: 			startEngine:OnOptionsButtonClick()
+7294: 			lastStartMenu = 'START'
+7295: 		"
+7296: 	}
+7297: 	
+7298: 	label
+7299: 	{
+7300: 		area 448 606 134 44
+7301: 		text lua "versionString"
+7302: 		text style	"label"
+7303: 		text point	10
+7304: 		align center center
+7305: 	} 
+7306: }
+7307: 

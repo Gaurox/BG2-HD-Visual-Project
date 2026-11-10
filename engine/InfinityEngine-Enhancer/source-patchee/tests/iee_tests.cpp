@@ -5286,6 +5286,7 @@ void test_config_shader_override_roundtrip() {
     orig.creatureSpriteFilter = iee::core::CreatureSpriteFilterMode::CatmullRom;
     orig.enableBigLogoX4Test = true;
     orig.enableMainMenuX4Test = true;
+    orig.enableSelectorX4 = true;
     orig.enableMenuX2Test = true;
     orig.enablePerformanceLogging = true;
     orig.enableTilePageDiagnostics = true;
@@ -5390,6 +5391,7 @@ void test_config_shader_override_roundtrip() {
               "saved xN and legacy activation keys should keep the helper enabled");
   expect_true(loaded.enableBigLogoX4Test, "enableBigLogoX4Test should round-trip as true");
   expect_true(loaded.enableMainMenuX4Test, "enableMainMenuX4Test should round-trip as true");
+  expect_true(loaded.enableSelectorX4, "selector-only activation should round-trip independently");
   expect_true(loaded.enableMenuX2Test, "enableMenuX2Test should round-trip as true");
   expect_true(loaded.enablePerformanceLogging,
               "enablePerformanceLogging should round-trip as true");

@@ -5362,6 +5362,14 @@ static void* dispatch_pvr_demand(void* thisPtr,
   if (consumed) *consumed = false;
   const auto original = g_pvrDemandHook.original();
   auto* ctx = g_ctx;
+  // This boundary precedes native decompression/cache materialization/upload,
+  // including the first START3EE texture. Do not wait for SwapBuffers or a map
+  // draw, and do not throttle retries across the first group of UI pages.
+  if (ctx && ctx->cfg.enableSelectorX4) {
+    const DWORD lastError = GetLastError();
+    (void)probe::install_menu_upload_hook(ctx->cfg);
+    SetLastError(lastError);
+  }
   if (reserved && (!ctx || !thisPtr || !reserved->current() || !reserved->page()))
     return nullptr;
   if (!ctx || (!ctx->cfg.enablePerformanceLogging && !map_page_prepare::enabled()) || !thisPtr) {
@@ -5996,6 +6004,21 @@ bool install_all(AppContext& ctx) {
     g_nativeOcclusionBridgeEnabled = false;
     g_nativeOcclusionTextureApi = {};
     g_nativeFxSurfacePools = nullptr;
+    // The selector must also work with all map diagnostics/preparation disabled.
+    // Its guarded Demand interceptor is independent of those optional features.
+    if (ctx.cfg.enableSelectorX4 && !g_pvrDemandHook.original()) {
+      const auto module = core::get_module_span(nullptr);
+      const auto& runtime = ctx.manifest->pvrDemand;
+      if (!module || !runtime.enabled() ||
+          !matches_pattern_at_rva(*module, runtime.demand, runtime.signature))
+        throw std::runtime_error("Selector x4 requires the manifested PVR Demand boundary");
+      g_pvrDemandHook.create(
+          reinterpret_cast<void*>(reinterpret_cast<std::uintptr_t>(module->base) + runtime.demand),
+          reinterpret_cast<void*>(&detour_pvr_demand));
+      g_pvrDemandHook.enable();
+      LOG_INFO("Selector x4 native PVR Demand startup hook installed");
+    }
+
     g_effectAnimationHooksEnabled = false;
     g_effectAnimationTextureApi = {};
     g_itemIconHooksEnabled = false;

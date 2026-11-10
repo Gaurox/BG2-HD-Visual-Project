@@ -19,6 +19,9 @@ struct ShaderRuntimeCapabilities {
 [[nodiscard]] ShaderRuntimeCapabilities detect_shader_runtime_capabilities() noexcept;
 void log_shader_runtime_capabilities();
 bool install_shader_probes(const core::EngineConfig& cfg) noexcept;
+// Called before native CResPVR::Demand, on its context-owning upload thread.
+// Arms only the compressed-upload interceptor; shader/water setup keeps its timing.
+bool install_menu_upload_hook(const core::EngineConfig& cfg) noexcept;
 void uninstall_shader_probes() noexcept;
 // True only for a live, introspected engine program carrying the versioned
 // D7 sprite-scope contract at the requested DrawColorTone slot.
