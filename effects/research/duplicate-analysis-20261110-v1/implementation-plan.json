@@ -1,0 +1,34 @@
+{
+  "status": "analysis-only-not-installed",
+  "registry_sha256": "B8C8DE78BC056628A0FAB84C6065DB65DDF06CDE7CBADD27DF0E8BFC7AD608D5",
+  "pack_manifest_sha256": "49546C4D095E3F520E30A6CB9CDCE16B49891B06B600C0DC47D8104AEE064B47",
+  "logical_frames": 71971,
+  "physical_frames": 65849,
+  "removed_frame_files": 6122,
+  "mapping_index_bytes": 287884,
+  "mapping_index_sha256": "7FED68193BD1955BC2F608FE2306442C80E827096982A723D407DA70A64A171B",
+  "index_format": "Prototype array u32le; exact registry resource/frame traversal order; header/version/registry binding still required in implementation",
+  "image_saved_bytes_before_new_metadata": 2588515136,
+  "image_saved_bytes_after_prototype_index": 2588227252,
+  "native_BAM_extra_saved_bytes": 59921928,
+  "runtime_scope": [
+    "preload reader",
+    "streaming reader",
+    "optional compact sidecar validation",
+    "shared filenames resolve through existing source descriptors; preserve each logical cacheId"
+  ],
+  "release_scope": [
+    "new versioned pack; existing sources/QA remain immutable",
+    "candidate schema and compiler inventory permit physical indirection",
+    "stage one canonical source per blob",
+    "WeiDU native BAM copies keep every destination/ownership",
+    "verifier reconstructs/checks all71971 logical bytes; registry/native clocks unchanged"
+  ],
+  "qualification": [
+    "decoded SHA256 identical for all71971 logical images",
+    "reject wrong registry binding, out-of-range IDs, noncanonical chains and size mismatch",
+    "native-slot/phase loader contracts, palette/normal/additive cache isolation, masking and streaming regressions",
+    "bounded ingame smoke of changed storage contract; no exhaustive PRO revalidation implied"
+  ],
+  "no_automatic_native_source_harmonization": true
+}

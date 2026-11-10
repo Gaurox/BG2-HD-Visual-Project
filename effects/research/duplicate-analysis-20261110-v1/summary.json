@@ -1,0 +1,61 @@
+{
+  "status": "complete",
+  "scope": "alpha.8 effects: native inventory497 + all72756 final effect files; no cropping or source replacement",
+  "native_assets": 497,
+  "native_verified": 495,
+  "native_frames": 19508,
+  "native_duplicate_counts": {
+    "source_sha256": {
+      "groups": 13,
+      "assets": 26
+    },
+    "uncompressed_sha256": {
+      "groups": 13,
+      "assets": 27
+    },
+    "semantic_sha256": {
+      "groups": 14,
+      "assets": 29
+    },
+    "native_pixel_key": {
+      "groups": 1410,
+      "members": 3868,
+      "cross_resref_groups": 1090
+    },
+    "native_geometry_key": {
+      "groups": 1296,
+      "members": 3378,
+      "cross_resref_groups": 1079
+    }
+  },
+  "native_equal_whole_sources_with_divergent_selected_outputs": 0,
+  "final_files": 72756,
+  "final_bytes": 37581575122,
+  "unique_final_bytes": 34933138058,
+  "exact_redundant_files": 6440,
+  "exact_saved_bytes": 2648437064,
+  "categories": {
+    ".bam": {
+      "groups": 176,
+      "redundant_files": 318,
+      "saved_bytes": 59921928,
+      "deflate6_duplicate_payload_bytes": 12912499
+    },
+    "rgba": {
+      "groups": 5826,
+      "redundant_files": 6122,
+      "saved_bytes": 2588515136,
+      "deflate6_duplicate_payload_bytes": 553755685
+    }
+  },
+  "all_zero_duplicate_groups": 22,
+  "mixed_dimension_groups": 0,
+  "distinct_source_file_ids": 72756,
+  "implementation": "Keep registry v3 logical frames, cycles, centres and independent palette/GPU cache identities. Add compact optional storage indirection; adapt both preload and streaming readers. Preserve native BAM/VVC/PRO destinations via installer copies; do not collapse their engine identities.",
+  "net_index_cost_example_bytes": 287884,
+  "archive_gain": "Exact sum of redundant independently DEFLATE6-compressed file payloads measured; container/path/index overhead excluded.",
+  "native_opportunity_gain": "Not counted as an immediately realizable byte saving when selected outputs differ; requires selection and compatibility work.",
+  "assets_modified": false,
+  "release_modified": false,
+  "new_QA": false
+}
