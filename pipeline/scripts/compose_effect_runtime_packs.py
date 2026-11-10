@@ -14,6 +14,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from effect_storage import read_map, NAME as STORAGE_NAME
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -156,6 +157,10 @@ def validate_pack(root: Path) -> InputPack:
     ):
         raise PackError(f"inventaire de frames invalide : {root}")
     expected_names = {"manifest.json", REGISTRY_NAME, "README.md"}
+    storage_ids = read_map(root, manifest, registry)
+    if manifest.get('storage'): expected_names.add(STORAGE_NAME)
+    logical_names = set()
+    physical_hashes = {}
     normalized_frames: list[dict[str, Any]] = []
     asset_resrefs: set[str] = set()
     for index, frame in enumerate(frames):
@@ -163,15 +168,19 @@ def validate_pack(root: Path) -> InputPack:
             raise PackError(f"index de frame invalide : {root}")
         asset = frame.get("asset")
         match = FRAME_NAME.fullmatch(asset) if isinstance(asset, str) else None
-        if match is None or int(match.group(2)) >= 4096 or asset in expected_names or asset not in by_name:
+        if match is None or int(match.group(2)) >= 4096 or asset in logical_names:
             raise PackError(f"asset de frame invalide : {asset}")
-        asset_path = by_name[asset]
+        logical_names.add(asset)
+        physical_asset = frames[storage_ids[index]]['asset']
+        if physical_asset not in by_name: raise PackError(f'Physical frame absent: {physical_asset}')
+        asset_path = by_name[physical_asset]
+        if physical_asset not in physical_hashes: physical_hashes[physical_asset] = sha256_file(asset_path)
         if (
             frame.get("bytes") != asset_path.stat().st_size
-            or str(frame.get("sha256", "")).upper() != sha256_file(asset_path)
+            or str(frame.get("sha256", "")).upper() != physical_hashes[physical_asset]
         ):
             raise PackError(f"asset de frame incohérent : {asset}")
-        expected_names.add(asset)
+        expected_names.add(physical_asset)
         asset_resrefs.add(match.group(1))
         normalized = dict(frame)
         normalized["resref"] = match.group(1)
@@ -216,6 +225,7 @@ def compose(packs: list[InputPack]) -> tuple[bytes, dict[str, Any], list[tuple[P
     seen_assets: set[str] = set()
     sources: list[dict[str, Any]] = []
     for pack in packs:
+        storage_ids = read_map(pack.root, pack.manifest) if pack.manifest.get('storage') else range(len(pack.frames))
         source_path = relative_to_repo(pack.root)
         sources.append(
             {
@@ -240,7 +250,7 @@ def compose(packs: list[InputPack]) -> tuple[bytes, dict[str, Any], list[tuple[P
             record["frame"] = len(frames)
             record["source_pack"] = source_path
             frames.append(record)
-            copies.append((pack.root / asset, asset))
+            copies.append((pack.root / pack.frames[storage_ids[frame['frame']]]['asset'], asset))
     version = versions.pop()
     registry = REGISTRY_HEADER.pack(REGISTRY_MAGIC, version, 4, resource_count, 0) + b"".join(
         pack.registry_records for pack in packs

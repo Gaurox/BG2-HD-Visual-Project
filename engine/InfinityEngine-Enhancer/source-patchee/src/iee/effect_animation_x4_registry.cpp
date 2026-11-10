@@ -1,6 +1,7 @@
 #include "iee/effect_animation_x4_registry.h"
 #include "iee/core/effect_smoke_palette.h"
 #include "iee/core/effect_native_underlay.h"
+#include "iee/core/effect_storage_index.h"
 
 #include <algorithm>
 #include <atomic>
@@ -716,19 +717,32 @@ bool prepare(const std::filesystem::path& assetsDirectory, const Options& option
     }
     if (!reader.at_end()) throw std::runtime_error("trailing effect registry bytes");
 
+    auto storage = std::make_shared<std::vector<std::uint32_t>>();
+    const auto storagePath = assetsDirectory / "EffectStorage-X4.index";
+    if (std::filesystem::exists(storagePath)) {
+      const auto storageBytes = read_file(storagePath, 0, options.metadataBytes);
+      charge(storageBytes.size()); // include temporary binding bytes in the peak budget
+      charge(sizes.size() * sizeof(std::uint32_t));
+      *storage = core::effect_storage_index(storageBytes, payload, sizes);
+    }
+    const auto physicalSource = [sources, storage](std::size_t id) -> const Source& {
+      return (*sources)[storage->empty() ? id : (*storage)[id]];
+    };
+
     if (!options.streaming) for (Resource& resource : loaded) {
       for (std::size_t frameIndex = 0; frameIndex < resource.frames.size(); ++frameIndex) {
         Frame& frame = resource.frames[frameIndex];
         const auto expectedBytes = static_cast<std::uint64_t>(frame.logicalWidth) * kScale *
                                    static_cast<std::uint64_t>(frame.logicalHeight) * kScale * 4ull;
-        frame.replacement = read_file(assetsDirectory / frame_asset_name(resource.resref, frameIndex),
+        const auto& physical = physicalSource(frame.cacheId);
+        frame.replacement = read_file(assetsDirectory / frame_asset_name(physical.resref, physical.frame),
                                       expectedBytes);
       }
     }
 
     if (options.streaming) {
-      const auto loader = [sources, assetsDirectory](std::size_t id, std::span<std::byte> out) {
-        const auto& src = (*sources)[id];
+      const auto loader = [physicalSource, assetsDirectory](std::size_t id, std::span<std::byte> out) {
+        const auto& src = physicalSource(id);
         const auto beforeOpen = steady_ns();
         std::ifstream file(assetsDirectory / frame_asset_name(src.resref, src.frame),
                            std::ios::binary | std::ios::ate);

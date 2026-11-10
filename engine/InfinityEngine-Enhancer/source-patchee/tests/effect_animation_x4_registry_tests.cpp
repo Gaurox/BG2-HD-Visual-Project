@@ -12,6 +12,7 @@
 
 #include "iee/effect_animation_x4_registry.h"
 #include "iee/core/effect_playback_profile.h"
+#include "iee/core/effect_storage_index.h"
 
 namespace {
 constexpr std::array<char, 8> kMagic{{'I', 'E', 'E', 'E', 'F', 'X', '4', '\0'}};
@@ -132,6 +133,55 @@ bool streaming_contracts(const std::filesystem::path& root) {
   return scalable && !prepare(root); // eager capacity remains its historical contract
 }
 }  // namespace
+
+bool storage_contracts(const std::filesystem::path& root) {
+  using namespace iee::effect_animation_x4;
+  if (!write_fixture(root, true, true)) return false;
+  std::ifstream in(root/"EffectAnimations-X4.registry",std::ios::binary|std::ios::ate);
+  std::vector<std::byte> registry(static_cast<std::size_t>(in.tellg()));
+  in.seekg(0);in.read(reinterpret_cast<char*>(registry.data()),registry.size());in.close();
+  const std::array<char,8> magic{'I','E','E','F','X','S','1',0};
+  std::vector<std::byte> index(reinterpret_cast<const std::byte*>(magic.data()),reinterpret_cast<const std::byte*>(magic.data())+8);
+  for(auto n:{1u,12u,static_cast<unsigned>(registry.size()),0u}) append_u32(index,n);
+  index.insert(index.end(),registry.begin(),registry.end());
+  for(unsigned i=0;i<12;++i) append_u32(index,0);
+  const auto write=[&](const auto& bytes) {
+    std::ofstream out(root/"EffectStorage-X4.index",std::ios::binary);
+    out.write(reinterpret_cast<const char*>(bytes.data()),bytes.size());
+  };
+  write(index);
+  for(unsigned i=1;i<12;++i) {
+    char name[64]{};std::snprintf(name,sizeof(name),"EFX4-SPMAGMIS-frame%03u.rgba",i);
+    std::filesystem::remove(root/name);
+  }
+  FrameHandle a{},b{};
+  bool ok=prepare(root) && resolve_timeline_frame(kResref,0,0,64,64,a) &&
+      resolve_timeline_frame(kResref,0,0,64,64,b,true) && a.frameIndex!=b.frameIndex;
+  release();
+  Options options;options.streaming=true;
+  ok=ok && prepare(root,options) && cpu_cache_stats().readyBytes==4*64*64*64;
+  release();
+  const auto reject=[&](std::vector<std::byte> bad) {write(bad);const bool rejected=!prepare(root,options)&&!ready();release();return rejected;};
+  auto bad=index;bad[0]=std::byte{0};ok=ok&&reject(bad);
+  bad=index;bad[8]=std::byte{2};ok=ok&&reject(bad);
+  bad=index;bad[12]=std::byte{11};ok=ok&&reject(bad);
+  bad=index;bad[20]=std::byte{1};ok=ok&&reject(bad);
+  bad=index;bad[24]=std::byte{0};ok=ok&&reject(bad); // exact registry mismatch
+  bad=index;bad.pop_back();ok=ok&&reject(bad);
+  bad=index;bad.push_back(std::byte{0});ok=ok&&reject(bad);
+  const auto base=24+registry.size();
+  bad=index;bad[base+4]=std::byte{12};ok=ok&&reject(bad); // out of range
+  bad=index;bad[base]=std::byte{1};ok=ok&&reject(bad); // 0 -> 1 -> 0 cycle
+  std::vector<std::uint64_t> sizes(12,64*64*64);sizes[1]=1;
+  bool wrongSize=false;
+  try { (void)iee::core::effect_storage_index(index,registry,sizes); }
+  catch(const std::exception&) {wrongSize=true;}
+  ok=ok&&wrongSize;
+  write(index);std::filesystem::remove(root/"EFX4-SPMAGMIS-frame000.rgba");
+  ok=ok&&!prepare(root);release();
+  std::filesystem::remove(root/"EffectStorage-X4.index");
+  return ok;
+}
 
 int main(int argc, char** argv) {
   int option=1;
@@ -264,8 +314,10 @@ int main(int argc, char** argv) {
       effect_once_profile(9, 1, 2, 3);
   const bool streaming = streaming_contracts(root);
   iee::effect_animation_x4::release();
+  const bool storage = storage_contracts(root);
+  iee::effect_animation_x4::release();
   std::filesystem::remove_all(root, error);
-  if (!streaming || !resolved || !mixedResolved || !diagnosticGates || !rejectedDimensions || !rejectedFrame ||
+  if (!storage || !streaming || !resolved || !mixedResolved || !diagnosticGates || !rejectedDimensions || !rejectedFrame ||
       !timelineLoaded || !profileResolved || !ownerRouting || !malformedRejected) {
     std::cerr << "effect registry resolution contract failed\n";
     return 1;
