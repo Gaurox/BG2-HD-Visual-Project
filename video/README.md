@@ -16,6 +16,18 @@ RESTDUNG30 et RESTINN SeedVR15/Apollo30 acceptés en comparaison ; décisions im
 `index/qa-decisions/`. RESTINN n'est pas installé. Recette :
 [`RESTINN SeedVR + Apollo`](../pipeline/recipes/restinn-seedvr-apollo-20261109-v1/README.md).
 
+REST SeedVR15/Apollo30 accepté en comparaison ; décision sous `index/qa-decisions/REST/` ;
+aucune installation. Recette : `../pipeline/recipes/rest-seedvr-apollo-20261109-v1/`.
+
+DAYNITE : H3 01604 remonte10s/fondus corrigés → nearest1920×1080 → Apollo8/30fps, son natif.
+Sélection pour test local2026-11-10 : `index/qa-decisions/DAYNITE/` ; installé uniquement dans
+`movies/daynite.wbm`, QA ingame en attente. Reçu/sauvegarde :
+`installations/daynite-h3-nearest-20261110-v1/installation.json` ; recette/restauration :
+`../pipeline/recipes/daynite-h3-nearest-ingame-20261110-v1/`. Aucune intégration release.
+Essais SeedVR direct/inverse, keyframes imagegen T1–T4, montage H3 et nearest : métadonnées dans
+`daynite/runs/*202611*-v1/` ; recettes `../pipeline/recipes/daynite-*/` ; comparateur
+`tools/comparator.html`. Le post-upscale SeedVR sur H3 a été jugé dégradant par l'utilisateur.
+
 ## Organisation
 
 ```text

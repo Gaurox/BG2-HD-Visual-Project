@@ -1,0 +1,40 @@
+{
+  "tool": "built-in image_gen",
+  "inputs": {
+    "geometry_night": {
+      "path": "C:\\Users\\Adrien\\Desktop\\DAYNITE-keyframes-20261110-v1\\T2\\T2-DAYNITE-NUIT-SeedVR-reconstruction-1920x1080-v1.png",
+      "sha256": "d2a984297f1158afb5bc9dc0386102bdf911bebd304fecc58fb2d8fbf1fcc355"
+    },
+    "lighting_day": {
+      "path": "C:\\Users\\Adrien\\Desktop\\DAYNITE-keyframes-20261110-v1\\T2\\T2-DAYNITE-JOUR-SeedVR-reconstruction-1920x1080-v1.png",
+      "sha256": "2e8beb82681ae3cc829cc8bccada3cbfb878f01e29358e6760b57f500dfe9fd5"
+    }
+  },
+  "prompt": "prompt.txt",
+  "intent": "Night T2 byte-identical; relight night T2 to day using day T2 only for colors and illumination. User selects night T2 as more faithful geometry.",
+  "generated_size": [
+    1672,
+    941
+  ],
+  "export": "ffmpeg scale=1920:1080:flags=lanczos,setsar=1; no crop; final exact 16:9",
+  "desktop": "C:/Users/Adrien/Desktop/DAYNITE-keyframes-20261110-v1/T4",
+  "inspection": "Day result follows night T2 gate construction, rope curves, facade patterns and tent shape. Some generated fine textures vary; no pixel-exact claim.",
+  "files": [
+    {
+      "file": "T4-DAYNITE-NUIT-copie-identique-T2-1920x1080.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "d2a984297f1158afb5bc9dc0386102bdf911bebd304fecc58fb2d8fbf1fcc355"
+    },
+    {
+      "file": "T4-DAYNITE-JOUR-geometrie-NUIT-T2-1920x1080-v1.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "sha256": "65907693b26855263d6f44feec9c2bac7cfb73ffddff2f50a1a84a1c74221e6d"
+    }
+  ]
+}

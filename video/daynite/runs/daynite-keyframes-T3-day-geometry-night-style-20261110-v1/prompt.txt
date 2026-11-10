@@ -1,0 +1,18 @@
+Use case: lighting-weather. Create ONE nighttime relighting edit of Image 1 for a perfectly registered day/night image-to-video keyframe pair.
+
+INPUT ROLES AND PRIORITY:
+Image 1 is the DAY T2 image and the sole authority for ALL geometry, object identity, materials, textures, silhouettes, composition and pixel-relative placement.
+Image 2 is the NIGHT T2 image and is ONLY a reference for nighttime exposure, dark blue-black sky, cool night palette, contrast, lighting mood and stars. Do not copy its different architecture, fence design, gate shape, texture patterns or object positions.
+
+PRIMARY REQUEST:
+Make the exact scene in Image 1 look like night, using the illumination and colors of Image 2. Preserve the pre-rendered game cinematic aesthetic. This is a careful lighting change of the DAY image, not a new reconstruction of the town.
+
+ABSOLUTE GEOMETRY LOCK:
+Keep the framing and camera perfectly unchanged. Every existing edge and object must remain at the exact same normalized coordinates as Image 1. Preserve the number, spacing, lengths and angles of all palisade planks, pointed fence uprights, horizontal rails and braces. Keep the right-hand gate's exact closed shape and diagonal wooden supports from Image 1. Keep the tent/dome silhouette, seams, rope, fabric wear and folds from Image 1. Preserve all carts, spokes, wheels, axles, boxes, roof ridges, windows, poles, finials, buildings, grass patches and every tree branch and leaf in their Image 1 positions. Preserve Image 1's solid wooden surfaces and existing material patterns under darker lighting. Do not replace wood with stone or invent new ornaments.
+
+ALLOWED CHANGES ONLY:
+Relight existing surfaces for nighttime, darken the sky to the night-reference palette, and place small stars in the sky in the style of Image 2. Match its dark nighttime exposure while leaving the scene readable. No new lamps, glowing windows, moon, people or objects. No new shadows that alter the perceived structure.
+
+OUTPUT:
+One single 1920x1080 PNG, exact 16:9, preserving the whole Image 1 canvas and its existing black letterbox bars: 132 pixels top and 132 pixels bottom at 1080p. No crop, zoom, camera change, perspective shift, stretching, outpainting, split screen, collage, captions, logos or watermark.
+Priority order: unchanged geometry and placement first; nighttime lighting/color matching second; detail enhancement last. When uncertain, retain Image 1's existing geometry and texture exactly.

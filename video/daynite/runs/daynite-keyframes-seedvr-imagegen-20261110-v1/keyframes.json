@@ -1,0 +1,63 @@
+{
+  "source": "video/daynite/runs/daynite-seedvr-apollo-20261109-v1/DAYNITE-SeedVR2-3B-FP16-LAB-1080p15.mp4",
+  "timestamps_seconds": [
+    2,
+    7.6
+  ],
+  "frames_zero_based": [
+    30,
+    114
+  ],
+  "extraction": "ffmpeg select eq(n,30)+eq(n,114), PNG, no interpolation or extra sharpening",
+  "tool": "built-in image_gen",
+  "prompts": "prompts.json",
+  "generated_size": [
+    1672,
+    941
+  ],
+  "final_size": [
+    1920,
+    1080
+  ],
+  "export": "Same as native-frame test: ffmpeg scale=1920:1080:flags=lanczos,setsar=1; no crop; 0.0532 percent aspect correction",
+  "desktop": "C:/Users/Adrien/Desktop/DAYNITE-keyframes-20261110-v1/T2",
+  "comparison": "Same prompts as native v2 apart from dimensional wording; independent stochastic generations. Wood readability improved versus SeedVR input, fine details reinterpreted; no claim of pixel-exact fidelity or established superiority over native-input reconstruction.",
+  "files": [
+    {
+      "file": "DAYNITE-JOUR-SeedVR-02.000s-1920x1080.png",
+      "sha256": "4A44A2C26402BA129098D056B5F7433D94F4E46E5C5230BA1EC8A867D40E5CE6",
+      "desktop_copy_verified": true,
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "DAYNITE-NUIT-SeedVR-07.600s-1920x1080.png",
+      "sha256": "CD7F02133CAF1370852FD5B12A82415CA42275B45CB1ACD3260D01AF1E6D26AD",
+      "desktop_copy_verified": true,
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "T2-DAYNITE-JOUR-SeedVR-reconstruction-1920x1080-v1.png",
+      "sha256": "2E8BEB82681AE3CC829CC8BCCADA3CBFB878F01E29358E6760B57F500DFE9FD5",
+      "desktop_copy_verified": true,
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "T2-DAYNITE-NUIT-SeedVR-reconstruction-1920x1080-v1.png",
+      "sha256": "D2A984297F1158AFB5BC9DC0386102BDF911BEBD304FECC58FB2D8FBF1FCC355",
+      "desktop_copy_verified": true,
+      "size": [
+        1920,
+        1080
+      ]
+    }
+  ]
+}

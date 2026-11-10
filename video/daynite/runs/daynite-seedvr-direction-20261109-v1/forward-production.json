@@ -1,0 +1,165 @@
+{
+  "direction": "forward",
+  "playback": "forward-normal",
+  "state": "verified-comparison-ready",
+  "qa": "pending-user",
+  "installed": false,
+  "workflow": "forward-workflow.api.json",
+  "comfy_output": "video/daynite/runs/daynite-seedvr-direction-20261109-v1/forward-output/7218388b_001.mov",
+  "raw_sha256": "d9fecb0c920dedf3613d5a4098c5dc51440327f429b9c87e0f3197d6ded6c77f",
+  "commands": [
+    [
+      "C:\\ffmpeg\\bin\\ffmpeg.EXE",
+      "-hide_banner",
+      "-nostdin",
+      "-n",
+      "-threads",
+      "8",
+      "-i",
+      "G:\\AI\\BG2_Upscale\\video\\daynite\\runs\\daynite-seedvr-direction-20261109-v1\\forward-output\\7218388b_001.mov",
+      "-i",
+      "G:\\AI\\BG2_Upscale\\video\\daynite\\daynite.wbm",
+      "-map",
+      "0:v:0",
+      "-map",
+      "1:a:0",
+      "-vf",
+      "setpts=N/(15*TB),scale=out_color_matrix=bt709:out_range=tv,format=yuv420p",
+      "-c:v",
+      "libx264",
+      "-crf",
+      "16",
+      "-preset",
+      "slow",
+      "-fps_mode",
+      "passthrough",
+      "-c:a",
+      "aac",
+      "-b:a",
+      "192k",
+      "-color_range",
+      "tv",
+      "-colorspace",
+      "bt709",
+      "-color_primaries",
+      "bt709",
+      "-color_trc",
+      "iec61966-2-1",
+      "-movflags",
+      "+faststart",
+      "G:\\AI\\BG2_Upscale\\video\\daynite\\runs\\daynite-seedvr-direction-20261109-v1\\DAYNITE-SeedVR2-DIRECT-temoin-1080p15.mp4"
+    ],
+    [
+      "C:\\Program Files\\Topaz Labs LLC\\Topaz Video AI\\ffmpeg.exe",
+      "-hide_banner",
+      "-nostdin",
+      "-n",
+      "-threads",
+      "8",
+      "-i",
+      "G:\\AI\\BG2_Upscale\\video\\daynite\\runs\\daynite-seedvr-direction-20261109-v1\\DAYNITE-SeedVR2-DIRECT-temoin-1080p15.mp4",
+      "-map",
+      "0:v:0",
+      "-an",
+      "-vf",
+      "format=rgb24,tvai_fi=model=apo-8:fps=30:slowmo=1:rdt=-0.01:device=0:vram=0.8:instances=0:download=0,setpts=N/(30*TB),format=gbrp16le",
+      "-c:v",
+      "ffv1",
+      "-level",
+      "3",
+      "-fps_mode",
+      "passthrough",
+      "-color_range",
+      "pc",
+      "-colorspace",
+      "rgb",
+      "G:\\AI\\BG2_Upscale\\video\\daynite\\runs\\daynite-seedvr-direction-20261109-v1\\forward-apollo-working.mkv"
+    ],
+    [
+      "C:\\ffmpeg\\bin\\ffmpeg.EXE",
+      "-hide_banner",
+      "-nostdin",
+      "-n",
+      "-threads",
+      "8",
+      "-i",
+      "G:\\AI\\BG2_Upscale\\video\\daynite\\runs\\daynite-seedvr-direction-20261109-v1\\forward-apollo-working.mkv",
+      "-i",
+      "G:\\AI\\BG2_Upscale\\video\\daynite\\runs\\daynite-seedvr-direction-20261109-v1\\DAYNITE-SeedVR2-DIRECT-temoin-1080p15.mp4",
+      "-map",
+      "0:v:0",
+      "-map",
+      "1:a:0",
+      "-vf",
+      "scale=in_range=pc:out_range=tv:out_color_matrix=bt709,format=yuv420p",
+      "-c:v",
+      "libx264",
+      "-crf",
+      "16",
+      "-preset",
+      "slow",
+      "-fps_mode",
+      "passthrough",
+      "-c:a",
+      "copy",
+      "-color_range",
+      "tv",
+      "-colorspace",
+      "bt709",
+      "-color_primaries",
+      "bt709",
+      "-color_trc",
+      "iec61966-2-1",
+      "-movflags",
+      "+faststart",
+      "G:\\AI\\BG2_Upscale\\video\\daynite\\runs\\daynite-seedvr-direction-20261109-v1\\DAYNITE-SeedVR2-DIRECT-temoin-Apollo8-1080p30.mp4"
+    ]
+  ],
+  "brightness_direction_warning": false,
+  "outputs": {
+    "seed15": "video/daynite/runs/daynite-seedvr-direction-20261109-v1/DAYNITE-SeedVR2-DIRECT-temoin-1080p15.mp4",
+    "apollo30": "video/daynite/runs/daynite-seedvr-direction-20261109-v1/DAYNITE-SeedVR2-DIRECT-temoin-Apollo8-1080p30.mp4"
+  },
+  "sha256": {
+    "seed15": "bc8470a2dc75e78714303aacee70ac3d16f561f0239e5738a59784c8a0747fcc",
+    "apollo30": "807fc5a57b5d993aa6ee2643f7dfb5232577fe3c80a5d30cbbe6b0098b284393"
+  },
+  "probe15": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "width": 1920,
+        "height": 1080,
+        "color_space": "bt709",
+        "r_frame_rate": "15/1",
+        "nb_read_frames": "150"
+      }
+    ],
+    "format": {
+      "duration": "10.292018"
+    }
+  },
+  "probe30": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "width": 1920,
+        "height": 1080,
+        "color_space": "bt709",
+        "r_frame_rate": "30/1",
+        "nb_read_frames": "299"
+      }
+    ],
+    "format": {
+      "duration": "10.292018"
+    }
+  },
+  "checks": {
+    "forward_playback_brightness_correlation": 0.99997015064445,
+    "novel_central_frames": 30,
+    "audio15_30_payload_identical": true,
+    "audio_hash": "SHA256=7489ecefdd6f35863b66ecb1a9c6675cb356d71fc5969ff950206d970264af60"
+  }
+}

@@ -1,0 +1,212 @@
+{
+  "state": "verified-comparison-ready",
+  "installed": false,
+  "user_validation": "pending",
+  "source": "video\\daynite\\runs\\daynite-h3-01604-seedvr-apollo30-20261110-v1\\DAYNITE-H3-01604-corrected-16x9-input-v1.mkv",
+  "source_sha256": "b0f20786c383317876aa9bcb5a806046d2d8c977fb0a6dd85b66ce1fda794bfb",
+  "source_contract": "Lossless crop of accepted corrected H3, before any SeedVR postprocessing; no post-H3 SeedVR render used.",
+  "upscale": "scale=1920:1080:flags=neighbor; pure nearest-neighbor, no sharpening or restoration",
+  "seedvr_used": false,
+  "audio_source": "video/daynite/daynite.wbm; AAC packet copy from previous verified 16:9 baseline, no trim/tempo change",
+  "commands": [
+    {
+      "label": "nearest24",
+      "argv": [
+        "C:\\ffmpeg\\bin\\ffmpeg.EXE",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\daynite\\runs\\daynite-h3-01604-seedvr-apollo30-20261110-v1\\DAYNITE-H3-01604-corrected-16x9-input-v1.mkv",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\daynite\\runs\\daynite-h3-01604-seedvr-apollo30-20261110-v1\\DAYNITE-H3-01604-fondus-corriges-16x9-son-original-24fps-v2.mp4",
+        "-map",
+        "0:v:0",
+        "-map",
+        "1:a:0",
+        "-map_metadata",
+        "-1",
+        "-vf",
+        "scale=1920:1080:flags=neighbor,format=yuv420p",
+        "-c:v",
+        "libx264",
+        "-crf",
+        "14",
+        "-preset",
+        "slow",
+        "-fps_mode",
+        "passthrough",
+        "-force_key_frames",
+        "0,9.958333333",
+        "-c:a",
+        "copy",
+        "-color_range",
+        "tv",
+        "-colorspace",
+        "bt709",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "-movflags",
+        "+faststart",
+        "G:\\AI\\BG2_Upscale\\video\\daynite\\runs\\daynite-h3-01604-nearest-apollo30-20261110-v1\\DAYNITE-H3-01604-NEAREST-1080p24-son-original-v1.mp4"
+      ]
+    },
+    {
+      "label": "apollo30",
+      "argv": [
+        "C:\\Program Files\\Topaz Labs LLC\\Topaz Video AI\\ffmpeg.exe",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-threads",
+        "8",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\daynite\\runs\\daynite-h3-01604-nearest-apollo30-20261110-v1\\DAYNITE-H3-01604-NEAREST-1080p24-son-original-v1.mp4",
+        "-map",
+        "0:v:0",
+        "-an",
+        "-vf",
+        "format=rgb24,tvai_fi=model=apo-8:fps=30:slowmo=1:rdt=-0.01:device=0:vram=0.8:instances=0:download=0,setpts=N/(30*TB),format=gbrp16le",
+        "-c:v",
+        "ffv1",
+        "-level",
+        "3",
+        "-fps_mode",
+        "passthrough",
+        "-color_range",
+        "pc",
+        "-colorspace",
+        "rgb",
+        "G:\\AI\\BG2_Upscale\\video\\daynite\\runs\\daynite-h3-01604-nearest-apollo30-20261110-v1\\apollo-working.mkv"
+      ]
+    },
+    {
+      "label": "final30",
+      "argv": [
+        "C:\\ffmpeg\\bin\\ffmpeg.EXE",
+        "-hide_banner",
+        "-nostdin",
+        "-n",
+        "-threads",
+        "8",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\daynite\\runs\\daynite-h3-01604-nearest-apollo30-20261110-v1\\apollo-working.mkv",
+        "-i",
+        "G:\\AI\\BG2_Upscale\\video\\daynite\\runs\\daynite-h3-01604-nearest-apollo30-20261110-v1\\DAYNITE-H3-01604-NEAREST-1080p24-son-original-v1.mp4",
+        "-map",
+        "0:v:0",
+        "-map",
+        "1:a:0",
+        "-vf",
+        "tpad=stop_mode=clone:stop_duration=0.1,trim=end_frame=300,setpts=N/(30*TB),scale=in_range=pc:out_range=tv:out_color_matrix=bt709,format=yuv420p,drawbox=x=0:y=0:w=iw:h=ih:color=black:t=fill:enable='eq(n,0)+eq(n,299)'",
+        "-c:v",
+        "libx264",
+        "-crf",
+        "14",
+        "-preset",
+        "slow",
+        "-fps_mode",
+        "passthrough",
+        "-force_key_frames",
+        "0,9.966666667",
+        "-c:a",
+        "copy",
+        "-color_range",
+        "tv",
+        "-colorspace",
+        "bt709",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "iec61966-2-1",
+        "-movflags",
+        "+faststart",
+        "G:\\AI\\BG2_Upscale\\video\\daynite\\runs\\daynite-h3-01604-nearest-apollo30-20261110-v1\\DAYNITE-H3-01604-NEAREST-Apollo8-1080p30-son-original-v1.mp4"
+      ]
+    }
+  ],
+  "apollo_raw_probe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "ffv1",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "30/1",
+        "nb_read_frames": "299"
+      }
+    ],
+    "format": {
+      "duration": "9.966000"
+    }
+  },
+  "end_black_frames_added": 1,
+  "probe24": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "24/1",
+        "duration": "10.000000",
+        "nb_read_frames": "240"
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "sample_rate": "22050",
+        "r_frame_rate": "0/0",
+        "duration": "10.292018",
+        "nb_read_frames": "223"
+      }
+    ],
+    "format": {
+      "duration": "10.292018"
+    }
+  },
+  "probe30": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "30/1",
+        "duration": "10.000000",
+        "nb_read_frames": "300"
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "sample_rate": "22050",
+        "r_frame_rate": "0/0",
+        "duration": "10.292018",
+        "nb_read_frames": "223"
+      }
+    ],
+    "format": {
+      "duration": "10.292018"
+    }
+  },
+  "outputs": {
+    "nearest24": "video\\daynite\\runs\\daynite-h3-01604-nearest-apollo30-20261110-v1\\DAYNITE-H3-01604-NEAREST-1080p24-son-original-v1.mp4",
+    "nearest_apollo30": "video\\daynite\\runs\\daynite-h3-01604-nearest-apollo30-20261110-v1\\DAYNITE-H3-01604-NEAREST-Apollo8-1080p30-son-original-v1.mp4"
+  },
+  "sha256": {
+    "DAYNITE-H3-01604-NEAREST-1080p24-son-original-v1.mp4": "f89b053348e0f531aa65c0c411faed637413ac32314689cf1032c0d2199583b9",
+    "DAYNITE-H3-01604-NEAREST-Apollo8-1080p30-son-original-v1.mp4": "2f7929e7e5d60bf40474d563fb89fedb2f064db25e124aa917d91cf49670cb4c"
+  },
+  "audio_packet_hash": "SHA256=7489ecefdd6f35863b66ecb1a9c6675cb356d71fc5969ff950206d970264af60",
+  "original_game_audio_identical_to_verified_baseline": true,
+  "verification": "verification.json",
+  "comparator_added": true
+}

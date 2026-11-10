@@ -1,0 +1,15 @@
+DAYNITE original: container-reported duration 10.269 s. Visual sequence: 150 frames / 15 fps = 10.000 s nominal. WBM timestamps use 1 ms precision; last visual PTS 9.933 s, packet duration 0.066 s. Audio/container duration differs from the nominal visual timeline.
+
+Original visual edit phases (observed boundaries at 15 fps):
+00:00.000-00:01.000 black to day fade
+00:01.000-00:03.000 static day
+00:03.000-00:07.000 continuous day to night transition
+00:07.000-00:09.000 static night
+00:09.000-00:10.000 night to black fade
+Codec residuals persist around transition endpoints; source last frame is almost black, RGB max 5/255, not mathematically zero.
+
+Recommended first/last workflow: generate 8 s, day first frame and night last frame. Local 0-2 day hold, 2-6 transition, 6-8 night hold. Assemble master: 1 s black-to-day fade using day still, generated 8 s, 1 s night-to-black fade using night still. Retain original audio separately if desired; adjust final black tail to match the desired mux/container duration. Model timing remains a requested target, not a frame-accurate guarantee.
+
+Official sources checked 2026-11-10:
+https://platform.minimax.io/docs/api-reference/video-generation-v2-create
+https://huggingface.co/MiniMaxAI/MiniMax-H3/raw/main/docs/VIDEO_PROMPT_WRITING_GUIDE_base_en.md

@@ -1,0 +1,77 @@
+{
+  "state": "runtime-encoded",
+  "source": "video\\daynite\\runs\\daynite-h3-01604-nearest-apollo30-20261110-v1\\DAYNITE-H3-01604-NEAREST-Apollo8-1080p30-son-original-v1.mp4",
+  "source_sha256": "2f7929e7e5d60bf40474d563fb89fedb2f064db25e124aa917d91cf49670cb4c",
+  "output": "video\\daynite\\runs\\daynite-h3-nearest-ingame-20261110-v1\\daynite.wbm",
+  "output_sha256": "f71b042e9e4cd1f3af6f78d42c1485511d49a5ae17a8aa90c0055c73029617c9",
+  "probe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "vp8",
+        "codec_type": "video",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "30/1",
+        "nb_read_frames": "300"
+      },
+      {
+        "codec_name": "vorbis",
+        "codec_type": "audio",
+        "r_frame_rate": "0/0",
+        "nb_read_frames": "465"
+      }
+    ],
+    "format": {
+      "format_name": "matroska,webm",
+      "duration": "10.292000",
+      "size": "25117307"
+    }
+  },
+  "audio_source": "video\\daynite\\daynite.wbm",
+  "audio_mode": "native Vorbis packet copy",
+  "command": [
+    "ffmpeg",
+    "-hide_banner",
+    "-nostdin",
+    "-n",
+    "-threads",
+    "8",
+    "-i",
+    "G:\\AI\\BG2_Upscale\\video\\daynite\\runs\\daynite-h3-01604-nearest-apollo30-20261110-v1\\DAYNITE-H3-01604-NEAREST-Apollo8-1080p30-son-original-v1.mp4",
+    "-i",
+    "G:\\AI\\BG2_Upscale\\video\\daynite\\daynite.wbm",
+    "-map",
+    "0:v:0",
+    "-map",
+    "1:a:0",
+    "-map_metadata",
+    "-1",
+    "-c:v",
+    "libvpx",
+    "-crf",
+    "4",
+    "-b:v",
+    "30M",
+    "-qmin",
+    "0",
+    "-qmax",
+    "12",
+    "-deadline",
+    "good",
+    "-cpu-used",
+    "0",
+    "-pix_fmt",
+    "yuv420p",
+    "-fps_mode",
+    "passthrough",
+    "-c:a",
+    "copy",
+    "-f",
+    "webm",
+    "G:\\AI\\BG2_Upscale\\video\\daynite\\runs\\daynite-h3-nearest-ingame-20261110-v1\\daynite.wbm"
+  ],
+  "qa_ingame": "pending-user",
+  "release_integration": false
+}

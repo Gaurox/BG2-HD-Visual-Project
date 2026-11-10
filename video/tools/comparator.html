@@ -55,6 +55,52 @@ sourceItems.unshift({name:'RESTINN — source originale · 720p15',url:'../resti
 resultItems.unshift(
  {name:'RESTINN — SeedVR2 + Apollo 8 · Full HD 30 fps',url:'../restinn/runs/restinn-seedvr-apollo-20261109-v1/RESTINN-SeedVR2-3B-FP16-LAB-Apollo8-1080p30.mp4',fps:30},
  {name:'RESTINN — SeedVR2 3B FP16 LAB · Full HD 15 fps',url:'../restinn/runs/restinn-seedvr-apollo-20261109-v1/RESTINN-SeedVR2-3B-FP16-LAB-1080p15.mp4',fps:15});
+// REST current comparison; previously accepted movies remain selectable.
+sourceItems.unshift({name:'REST — source originale · 720p15',url:'../rest/source-preview-720p15.mp4',fps:15});
+resultItems.unshift(
+ {name:'REST — SeedVR2 + Apollo 8 · Full HD 30 fps',url:'../rest/runs/rest-seedvr-apollo-20261109-v1/REST-SeedVR2-3B-FP16-LAB-Apollo8-1080p30.mp4',fps:30},
+ {name:'REST — SeedVR2 3B FP16 LAB · Full HD 15 fps',url:'../rest/runs/rest-seedvr-apollo-20261109-v1/REST-SeedVR2-3B-FP16-LAB-1080p15.mp4',fps:15});
+// DAYNITE current comparison; previously accepted movies remain selectable.
+sourceItems.unshift({name:'DAYNITE — source originale · 720p15',url:'../daynite/source-preview-720p15.mp4',fps:15});
+resultItems.unshift(
+ {name:'DAYNITE — SeedVR2 + Apollo 8 · Full HD 30 fps',url:'../daynite/runs/daynite-seedvr-apollo-20261109-v1/DAYNITE-SeedVR2-3B-FP16-LAB-Apollo8-1080p30.mp4',fps:30},
+ {name:'DAYNITE — SeedVR2 3B FP16 LAB · Full HD 15 fps',url:'../daynite/runs/daynite-seedvr-apollo-20261109-v1/DAYNITE-SeedVR2-3B-FP16-LAB-1080p15.mp4',fps:15});
+// DAYNITE DIRECTION TRIAL
+resultItems.unshift(...[
+ {
+  "name": "DAYNITE — INVERSE → remis à l’endroit · 30 fps",
+  "url": "../daynite/runs/daynite-seedvr-direction-20261109-v1/DAYNITE-SeedVR2-INVERSE-remis-endroit-Apollo8-1080p30.mp4",
+  "fps": 30
+ },
+ {
+  "name": "DAYNITE — DIRECT témoin même version · 30 fps",
+  "url": "../daynite/runs/daynite-seedvr-direction-20261109-v1/DAYNITE-SeedVR2-DIRECT-temoin-Apollo8-1080p30.mp4",
+  "fps": 30
+ },
+ {
+  "name": "DAYNITE — INVERSE → remis à l’endroit · 15 fps",
+  "url": "../daynite/runs/daynite-seedvr-direction-20261109-v1/DAYNITE-SeedVR2-INVERSE-remis-endroit-1080p15.mp4",
+  "fps": 15
+ },
+ {
+  "name": "DAYNITE — DIRECT témoin même version · 15 fps",
+  "url": "../daynite/runs/daynite-seedvr-direction-20261109-v1/DAYNITE-SeedVR2-DIRECT-temoin-1080p15.mp4",
+  "fps": 15
+ }
+]);
+resultItems.unshift(
+ {name:'DAYNITE — H3 01604 · fondus corrigés · 24 fps · 10 s',url:'../daynite/runs/daynite-minimax-h3-01604-fades-20261110-v1/DAYNITE-H3-01604-fondus-corriges-24fps-10s-v1.mp4',fps:24},
+ {name:'DAYNITE — H3 01604 brut · 24 fps',url:'../daynite/runs/daynite-minimax-h3-01604-fades-20261110-v1/MiniMax_H3_01604_-original.mp4',fps:24}
+);
+resultItems.unshift(
+ {name:'DAYNITE — H3 01604 + SeedVR + Apollo8 · 1080p30 · son original',url:'../daynite/runs/daynite-h3-01604-seedvr-apollo30-20261110-v1/DAYNITE-H3-01604-SeedVR2-Apollo8-1080p30-son-original-v1.mp4',fps:30},
+ {name:'DAYNITE — H3 01604 + SeedVR · 1080p24 · son original',url:'../daynite/runs/daynite-h3-01604-seedvr-apollo30-20261110-v1/DAYNITE-H3-01604-SeedVR2-1080p24-son-original-v1.mp4',fps:24},
+ {name:'DAYNITE — H3 01604 · fondus corrigés 16:9 · son original · 24 fps',url:'../daynite/runs/daynite-h3-01604-seedvr-apollo30-20261110-v1/DAYNITE-H3-01604-fondus-corriges-16x9-son-original-24fps-v2.mp4',fps:24}
+);
+resultItems.unshift(
+ {name:'DAYNITE — H3 01604 · NEAREST + Apollo8 · 1080p30 · son original',url:'../daynite/runs/daynite-h3-01604-nearest-apollo30-20261110-v1/DAYNITE-H3-01604-NEAREST-Apollo8-1080p30-son-original-v1.mp4',fps:30},
+ {name:'DAYNITE — H3 01604 · NEAREST seul · 1080p24 · son original',url:'../daynite/runs/daynite-h3-01604-nearest-apollo30-20261110-v1/DAYNITE-H3-01604-NEAREST-1080p24-son-original-v1.mp4',fps:24}
+);
 sourceItems.push(...resultItems.map(item=>({...item})));
 let loopStart=0,loopEnd=null;
 let playing=false,ready=false,loading=false,version=0,split=50,zoom=1,panX=0,panY=0,seeking=false,drag=null,frameRate=15;

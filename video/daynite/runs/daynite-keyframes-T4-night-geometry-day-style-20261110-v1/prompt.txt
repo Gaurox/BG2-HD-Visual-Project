@@ -1,0 +1,20 @@
+Use case: lighting-weather. Create ONE daytime relighting edit of Image 1. This is the day endpoint of an accurately registered day/night video keyframe pair.
+
+REFERENCE ROLES:
+Image 1 is NIGHT T2: the only authoritative source for scene content, architecture, geometry, materials, texture layout, silhouettes and position of every element.
+Image 2 is DAY T2: use ONLY its clear blue daytime sky, daylight brightness, natural daytime colors, light direction and exposure. Do not import any of its different fence, gate, tent, wagon or building designs.
+
+PRIMARY TASK:
+Reveal the EXACT scene of Image 1 under daylight. Change illumination and sky only, preserving the original pre-rendered fantasy game cinematic aesthetic. Priority is fidelity to Image 1 and exact spatial registration, not additional detail or redesign.
+
+GEOMETRY AND MATERIAL LOCK:
+Preserve Image 1's complete composition, camera, perspective, horizon and relative pixel coordinates. Keep exactly the same palisade uprights, rail spacing, decorative pointed tops, horizontal crossbars, braces and visible ropes. Preserve the precise gate and doorway construction from the NIGHT image, including the shapes of all supports and openings; do not replace them with the gate from Image 2.
+Keep the tent/dome's exact silhouette, seams, rope and folds from Image 1. Keep every building, roof apex, roof ridge, window, finial, pole, cart, wheel, spoke, axle, box, patch of ground, tree branch and leaf exactly in place. Preserve existing wood, stone and fabric patterns and material boundaries from Image 1 as they become visible in daylight. Never replace existing stone surfaces with solid wooden walls or invent new ornaments. Where dark detail is uncertain, use a restrained faithful reconstruction without embellishment.
+No camera movement, crop, zoom, perspective change, object movement or changed proportions.
+
+DAYLIGHT:
+Replace the dark starry sky with a clear blue daytime sky matching Image 2. Remove the stars. Use the daytime colors and natural illumination of Image 2 on the existing surfaces of Image 1, with coherent daytime shadows. Keep all objects and structures unchanged. No new people, animals, buildings, lights, clouds, moon or props.
+
+OUTPUT:
+One single 1920x1080 PNG, exact 16:9. Preserve the entire Image 1 canvas, with its existing horizontal black letterbox bars: 132 pixels above and 132 pixels below at 1080p. No collage, comparison panel, captions, text, logo or watermark.
+Priority order: NIGHT T2 geometry and positioning first; DAY T2 lighting and colors second; fine detail last.
