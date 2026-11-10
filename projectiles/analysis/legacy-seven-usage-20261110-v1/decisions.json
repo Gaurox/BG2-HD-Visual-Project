@@ -1,0 +1,293 @@
+{
+  "schema": "bg2-projectile-legacy-seven-usage-decisions-v1",
+  "date": "2026-11-10",
+  "user_request": "fais le 1 (7 cas)",
+  "state": "reviewed-native-legacy-preserved",
+  "scope": "Stock KEY plus current relevant override; bounded native executable references; excludes player saves and arbitrary runtime/mod inputs.",
+  "evidence": [
+    {
+      "path": "projectiles/analysis/legacy-seven-usage-20261110-v1/summary.json",
+      "sha256": "981C6D4FA1E69B3FABC790D861EF13EBD663DE4312A79BF79532C9E90053228B"
+    },
+    {
+      "path": "projectiles/analysis/legacy-seven-usage-20261110-v1/active/summary.json",
+      "sha256": "037E2D9E419D7E9DF09B3A1C5B9750585A676B09EF8C96D1A4BC94AD29844023"
+    },
+    {
+      "path": "projectiles/analysis/legacy-seven-usage-20261110-v1/inputs.json",
+      "sha256": "524F75FE8F2DC7835DBC4B7766BADBB2608B9F325D4D30651E6A733A88F18A22"
+    },
+    {
+      "path": "projectiles/analysis/legacy-seven-usage-20261110-v1/active/inputs.json",
+      "sha256": "5FD098531C8D0259AE2696746819875EEBE88DCF0801607F8800C84C1FBA38B2"
+    },
+    {
+      "path": "projectiles/analysis/legacy-seven-usage-20261110-v1/native-review.json",
+      "sha256": "B928ED8CDDC10874378E55F1803C99E418E73A899AE1AE1062F45C77ACBD83BC"
+    },
+    {
+      "path": "projectiles/analysis/legacy-seven-usage-20261110-v1/active/asset-name-references.json",
+      "sha256": "C303F9984E948EA12F53F428B21DFECC6E391E7FAB18113890160BE64B702561"
+    },
+    {
+      "path": "projectiles/analysis/legacy-seven-usage-20261110-v1/active/script-actions.json",
+      "sha256": "EAFF4ADDF341EC49E30B4B983BB4460B4C761D71529D8EDDEB92265C75C4DEF7"
+    }
+  ],
+  "images": {
+    "SPBRNHND": {
+      "canonical_BAM_sha256": "933811A2E0C72756A3CE06368B1B141D125F1BD072EDE2DF44ECD4C09B3B0BE2",
+      "native_frames": 30,
+      "native_cycles": 5,
+      "existing_authorities": {
+        "selection_sha256": "080C92B4E3A5A1D225AA5E8A857939568E2E3B031EDB01A4CE2488422BED4F89",
+        "QA": {
+          "bytes": 960,
+          "path": "effects/index/qa-decisions/SPBRNHND/2026-10-18-accepted-384829ed6358.json",
+          "sha256": "384829ED6358317AA3BA14732CE7EEBD758701DDD12D998902465E3A7D592E9B"
+        },
+        "pack": {
+          "bytes": 72139,
+          "path": "effects/ressources/SPBRNHND/packs/spbrnhnd-7b-x4-apollo30-native-20261017-v1/manifest.json",
+          "sha256": "2553E02E7DD5EA47EBE4D5E08CDB8D83DC01FBE04D59D9C89800101C3BF53518"
+        },
+        "catalogued": true
+      },
+      "exact_native_alias": "BURNHAND"
+    },
+    "SPSMKJET": {
+      "canonical_BAM_sha256": "E4A0B4CE202D618E33D79C10BE15EADEF1A22F9FA637211669A61B039C9BCBC5",
+      "native_frames": 6,
+      "native_cycles": 1,
+      "existing_authorities": {
+        "selection_sha256": "5839D7D8CA98D065FC25BB12CB124A27197C634D855544712F8F3DF4B81FAC58",
+        "QA": {
+          "bytes": 960,
+          "path": "effects/index/qa-decisions/SPSMKJET/2026-10-18-accepted-acadbfc5e622.json",
+          "sha256": "ACADBFC5E62201C4F3439410B427BA087D7B95FD3B7057492B412A6624C5D7D9"
+        },
+        "pack": {
+          "bytes": 15880,
+          "path": "effects/ressources/SPSMKJET/packs/spsmkjet-7b-x4-apollo30-native-20261017-v1/manifest.json",
+          "sha256": "731AED9753D605593C30508B572C84CF4F11483F9C95635A98ED38348DF5A9EB"
+        },
+        "catalogued": true
+      }
+    },
+    "SPHOLYMT": {
+      "canonical_BAM_sha256": "8E1F1924B7D280AE80542BCF8AF8F740EE1E64320C29B3BFB8F0857F941D9B52",
+      "native_frames": 10,
+      "native_cycles": 1,
+      "existing_authorities": {
+        "selection_sha256": "05625DCF41AEA1E24072B07696DF629EC49583CB4262926E3D604BDA892D69BC",
+        "QA": {
+          "bytes": 1549,
+          "path": "effects/index/qa-decisions/SPHOLYMT/2026-10-15-accepted-0f971b9676f3.json",
+          "sha256": "0F971B9676F34C234B8B738F430354CC529949A0100B59EF86FCB249EAFD418B"
+        },
+        "pack": {
+          "bytes": 14954,
+          "path": "effects/ressources/SPHOLYMT/packs/spholymt-7b-x4-apollo30-retimed-20261014-v2/manifest.json",
+          "sha256": "4481F6FA741BA2F848B3E84040C1842EE0F5FA45045ACF66386A9A41EF61102B"
+        },
+        "catalogued": true
+      }
+    },
+    "COLRSPRY": {
+      "canonical_BAM_sha256": "91B768FFA747F06803D34D8152FF84ECCFC64F8CEC80B11CB159A841E315FCC2",
+      "native_frames": 30,
+      "native_cycles": 5
+    }
+  },
+  "named_visual_routes": {
+    "SPSMKJET": [
+      {
+        "owner": "HEXXA25.bcs",
+        "offset": 8165,
+        "action": 273,
+        "signature": [
+          "CreateVisualEffectObject(S:Effect*,O:Target*)"
+        ],
+        "tail": "0 0 0 0 0\"SPSMKJET\" \"\"",
+        "strings": [
+          "SPSMKJET",
+          ""
+        ]
+      },
+      {
+        "owner": "HEXXA25.bcs",
+        "offset": 11641,
+        "action": 273,
+        "signature": [
+          "CreateVisualEffectObject(S:Effect*,O:Target*)"
+        ],
+        "tail": "0 0 0 0 0\"SPSMKJET\" \"\"",
+        "strings": [
+          "SPSMKJET",
+          ""
+        ]
+      },
+      {
+        "owner": "HEXXA25.bcs",
+        "offset": 12919,
+        "action": 273,
+        "signature": [
+          "CreateVisualEffectObject(S:Effect*,O:Target*)"
+        ],
+        "tail": "0 0 0 0 0\"SPSMKJET\" \"\"",
+        "strings": [
+          "SPSMKJET",
+          ""
+        ]
+      },
+      {
+        "owner": "HEXXAT.bcs",
+        "offset": 9608,
+        "action": 273,
+        "signature": [
+          "CreateVisualEffectObject(S:Effect*,O:Target*)"
+        ],
+        "tail": "0 0 0 0 0\"SPSMKJET\" \"\"",
+        "strings": [
+          "SPSMKJET",
+          ""
+        ]
+      },
+      {
+        "owner": "HEXXAT.bcs",
+        "offset": 13618,
+        "action": 273,
+        "signature": [
+          "CreateVisualEffectObject(S:Effect*,O:Target*)"
+        ],
+        "tail": "0 0 0 0 0\"SPSMKJET\" \"\"",
+        "strings": [
+          "SPSMKJET",
+          ""
+        ]
+      },
+      {
+        "owner": "HEXXAT.bcs",
+        "offset": 14896,
+        "action": 273,
+        "signature": [
+          "CreateVisualEffectObject(S:Effect*,O:Target*)"
+        ],
+        "tail": "0 0 0 0 0\"SPSMKJET\" \"\"",
+        "strings": [
+          "SPSMKJET",
+          ""
+        ]
+      }
+    ],
+    "SPHOLYMT": {
+      "owner": "SPIN629.spl",
+      "effect_offset": "0xfa",
+      "opcode": 215,
+      "resource_offset": "0x10e"
+    },
+    "existing_VVC_renderer": {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp",
+      "sha256": "77991203168589C8F86A158CD5B7365EFE1E1D822764C57BE169F77431AD051C"
+    },
+    "live_draw_claimed": false
+  },
+  "cases": [
+    {
+      "owner": "LIGHTSTO",
+      "PROJECTL": 92,
+      "ability_missile": 93,
+      "image": "MAGMIS",
+      "decision": "reviewed-native-legacy-preserved",
+      "reason": "MAGMIS absent KEY+override; no established incoming driver. Preserve PRO, never invent MAGMIS or substitute SPMAGMIS. Appel de la foudre uses80..83 then22/SKYBOLT.",
+      "established_driver_hits": 0,
+      "native_behavior_preserved": true,
+      "HD_route_qualified": false,
+      "new_manual_test": false
+    },
+    {
+      "owner": "engine-id:21",
+      "PROJECTL": 21,
+      "ability_missile": 22,
+      "image": "SPBRNHND",
+      "decision": "reviewed-native-legacy-preserved",
+      "reason": "Legacy SPBRNHND constructor; no established driver. Existing accepted/installed image also exact native alias BURNHAND. Modern SPWI103 uses340/BURNHAND.",
+      "established_driver_hits": 0,
+      "native_behavior_preserved": true,
+      "HD_route_qualified": false,
+      "new_manual_test": false
+    },
+    {
+      "owner": "engine-id:24",
+      "PROJECTL": 24,
+      "ability_missile": 25,
+      "image": "SPBRNHND",
+      "decision": "reviewed-native-legacy-preserved",
+      "reason": "Legacy cone constructor0x227800; no established driver. SPBRNHND already produced; modern Cone of Cold uses249/CONECOLD.",
+      "established_driver_hits": 0,
+      "native_behavior_preserved": true,
+      "HD_route_qualified": false,
+      "new_manual_test": false
+    },
+    {
+      "owner": "engine-id:25",
+      "PROJECTL": 25,
+      "ability_missile": 26,
+      "image": "SPBRNHND",
+      "decision": "reviewed-native-legacy-preserved",
+      "reason": "Legacy recoloured cone constructor0x227800; no established driver. No new palette pack or secondary scope justified without actual consumer.",
+      "established_driver_hits": 0,
+      "native_behavior_preserved": true,
+      "HD_route_qualified": false,
+      "new_manual_test": false
+    },
+    {
+      "owner": "engine-id:44",
+      "PROJECTL": 44,
+      "ability_missile": 45,
+      "image": "SPSMKJET",
+      "decision": "reviewed-native-legacy-preserved",
+      "reason": "No established PROJECTL44 driver. SPSMKJET has six action273 calls in Hexxat scripts, using named visual effects, not this projectile. Existing accepted/catalogued image, existing VVC scope.",
+      "established_driver_hits": 0,
+      "native_behavior_preserved": true,
+      "HD_route_qualified": false,
+      "new_manual_test": false
+    },
+    {
+      "owner": "engine-id:96",
+      "PROJECTL": 96,
+      "ability_missile": 97,
+      "image": "COLRSPRY",
+      "decision": "reviewed-native-legacy-preserved",
+      "reason": "COLRSPRY stock BAM exists, not catalogued. No established consumer. Modern Color Spray SPWI105 uses248/CSPRAY. Preserve stock; no speculative generation.",
+      "established_driver_hits": 0,
+      "native_behavior_preserved": true,
+      "HD_route_qualified": false,
+      "new_manual_test": false
+    },
+    {
+      "owner": "engine-id:241",
+      "PROJECTL": 241,
+      "ability_missile": 242,
+      "image": "SPHOLYMT",
+      "decision": "reviewed-native-legacy-preserved",
+      "reason": "No established PROJECTL241 driver. SPIN629 opcode215 and native0x3c0aa1→0x3c0dbb opcode215 dispatcher use SPHOLYMT as named visual effect. Existing accepted/catalogued image, existing VVC scope.",
+      "established_driver_hits": 0,
+      "native_behavior_preserved": true,
+      "HD_route_qualified": false,
+      "new_manual_test": false
+    }
+  ],
+  "reopen_when": "An actual driver/runtime observation is identified for the preserved ID, or source bytes/mod configuration change.",
+  "limits": [
+    "Local register windows are observations,not a whole-program proof of every computed runtime ID.",
+    "Native optional runtime parameters,console,savegames,future mods or another multiplayer client may introduce an ID;preserve native behavior.",
+    "Asset usage through215 orCreateVisualEffectObject is distinct from using a legacy PROJECTL ID."
+  ],
+  "new_inference_jobs": 0,
+  "new_runtime_links": 0,
+  "new_manual_tests": 0,
+  "visual_QA_changed": false,
+  "installation_changed": false,
+  "release_changed": false
+}

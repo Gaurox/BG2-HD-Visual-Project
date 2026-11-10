@@ -3,7 +3,7 @@
   "as_of_local_date": "2026-11-10",
   "latest_user_confirmation": "ok les 2 tests sont bons, valide-les, maj le suivi et committe",
   "authorities": {
-    "work_tracking_sha256": "CF4CF2747434A7E23EAA9314E9D7DEE7FA569FFAAB96CBFDBABCFD37C70D46E3",
+    "work_tracking_sha256": "6574BE0946A540BB833452372EAF5A446C8E8A148662211FD703A46C82A0ED76",
     "analysis_snapshot": "projectiles/analysis/20261109-bilan-validations-v13",
     "analysis_sha256": "153DECFFE9065026E4932025698B620D77E2ACB46638BCBA0633844B50834E23"
   },
@@ -68,9 +68,8 @@
     "meaning": "Historical conservative projection. Current per-owner technical disposition: owner-reconciliation-current.json; generic source tasks are not actionable exceptions or manual tests."
   },
   "remaining_work": [
-    "No active residual route/palette correction or manual test remains in this batch.",
-    "Seven no-driver native gaps preserved;no speculative production or systematic alias retests.",
-    "Position interpolation PROJ-MOTION-001 remains deferred;release separate."
+    "Images/routes batch closed by user2026-11-10:0 active work identified in scope.",
+    "Position interpolation PROJ-MOTION-001 remains deferred by user;release separate."
   ],
   "whole_chain_acceptance_percentage": null,
   "evidence": [
@@ -90,22 +89,22 @@
   "automatic_owner_reconciliation": {
     "schema": "bg2-projectile-owner-reconciliation-current-v1",
     "date": "2026-11-10",
-    "report": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/README.md",
+    "report": "projectiles/analysis/legacy-seven-usage-20261110-v1/README.md",
     "summary": {
-      "path": "projectiles/analysis/owner-contracts-residual-four-accepted-20261110-v3/summary.json",
-      "sha256": "CC7FC45386F3A8AB5FEA0EB069AC1F8D68ACFE460D02CE6DE3968F92DC3B1F38"
+      "path": "projectiles/analysis/legacy-seven-usage-20261110-v1/owner-summary.json",
+      "sha256": "53B8BF5BDEEE82A47633850973FD54B2975B6A604FFC0AA2DBF07DC70DB5FC43"
     },
     "owners": {
-      "path": "projectiles/analysis/owner-contracts-residual-four-accepted-20261110-v3/owners.json",
-      "sha256": "502EA9D9E54D6C282023EE52B11C5B6B17DE72E84287BE5382777CCB37FCDB63"
+      "path": "projectiles/analysis/legacy-seven-usage-20261110-v1/owners.json",
+      "sha256": "E6F2A8999620268BCF525A851D83F48ADEE43487891EC6BD26AFF70D9C70209C"
     },
     "exceptions": {
-      "path": "projectiles/analysis/owner-contracts-residual-four-accepted-20261110-v3/exceptions.json",
-      "sha256": "A5338D955B09046EC0B16F3A9625B7955C763AAE07DC722E474E6078745F932F"
+      "path": "projectiles/analysis/legacy-seven-usage-20261110-v1/exceptions.json",
+      "sha256": "37517E5F3DC66819F61F5A7BB8ACE1921282415F10551D2DEFA5C3EB0985B570"
     },
     "states": {
       "reconciled-compatible-contracts": 313,
-      "documented-native-gap-no-static-driver": 7
+      "reviewed-native-legacy-preserved": 7
     },
     "technical_qualified_owners": 313,
     "technical_percentage": 97.8125,
@@ -113,6 +112,24 @@
     "actionable_engine_IDs": 0,
     "deferred_native_gaps": 7,
     "new_manual_tests": 0,
-    "meaning": "Four residual families technically qualified/installed,two representative colours visually accepted;no remaining manual tests,no global whole-chain visual claim."
+    "meaning": "320 owner dispositions reviewed:313 compatible technical contracts plus7 justified native legacy preservations. Seven HD gaps remain, not pending usage analysis or visual QA; no global whole-chain acceptance claim.",
+    "reviewed_owners": 320,
+    "reviewed_percentage": 100,
+    "reviewed_native_preservations": 7,
+    "native_gap_usage_reviews_pending": 0
+  },
+  "legacy_native_usage_review": {
+    "path": "projectiles/analysis/legacy-seven-usage-20261110-v1/decisions.json",
+    "sha256": "6D1DE8916BD9213DD76FB240E5ABA6E0F73C68624AACD695FA7CE3F9DDF31479"
+  },
+  "images_routes_batch": {
+    "state": "closed",
+    "closed_on": "2026-11-10",
+    "evidence": {
+      "path": "projectiles/analysis/images-routes-closed-20261110-v1/closure.json",
+      "sha256": "EE6354C3A92A0330E4A54C855498553C41CF954D3F64268E22B536DA12B634AB"
+    },
+    "report": "projectiles/analysis/images-routes-closed-20261110-v1/README.md",
+    "motion": "deferred-by-user:PROJ-MOTION-001"
   }
 }

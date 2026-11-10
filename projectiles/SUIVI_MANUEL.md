@@ -1,5 +1,9 @@
 # Validations manuelles des projectiles — 2026-10-28
 
+**Lot images/raccords clôturé2026-11-10 : [clôture utilisateur](analysis/images-routes-closed-20261110-v1/README.md).** 0 essai manuel restant ;accords et limites de QA antérieurs conservés. Déplacement reporté,release séparée.
+
+**Revue des7 cas natifs2026-11-10 : [décisions](analysis/legacy-seven-usage-20261110-v1/README.md).** Conservation native après recherche de pilotes stock/override et revue ciblée moteur ;0 test manuel supplémentaire,0 nouvel accord visuel déduit. Qualification technique313/320 conservée ;320/320 dispositions examinées. Réouvrir seulement sur identification d'un usage réel ou changement des sources ;les anciens essais ci-dessous ne sont pas à rejouer.
+
 **État final2026-11-10 : [R4-01/R4-02 acceptés](analysis/residual-four-colours-accepted-20261110-v1/README.md).** SHWATER6 rouge/138 etSPBOOM67 doré/142 validés visuellement avecpreuves palette+HD+masque+phasesimpaires.0test manuel restant,trace désactivée ;anciensaccords conservés.39PRO +12IDs avecQA descomposants observés ;les instructions d'essais ci-dessous sont historiques,aucun retest demandé.
 
 **Courant2026-11-10 : [2 essais de couleur uniquement](analysis/residual-four-20261110-v1/CLUA.md).**4familles résiduelles corrigées/installées ;SHWATER6 rouge etSPBOOM67 doré demandent uneobservation représentative. FLMSTRK etSPDIMDR1/2 qualifiés statiquement sansnouvel essai visuel. Anciens accords acquis,trace temporaire active ;ne pas rejouer leslots historiques ci-dessous.
