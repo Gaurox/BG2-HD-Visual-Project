@@ -1,5 +1,17 @@
 # Known issues — alpha locale BG2 HD
 
+- Alpha.9 : stockage partagé exact des RGBA, renderer alpha.11. Régression technique
+  et identité des pixels vérifiées ; test ingame représentatif du nouveau lecteur
+  et qualification combinée sur jeu propre encore en attente. Le jeu installé
+  conserve son moteur précédent jusqu'à une installation explicitement demandée.
+
+- Alpha.8 : 424 effets acceptés et raccords projectiles clos intégrés ; QA limitée
+  aux images/composants/usages observés. 313/320 contrats propriétaires qualifiés,
+  sept conservations natives documentées ; déplacement interpolé reporté.
+  Renderer alpha.10 : qualification combinée sur jeu propre encore requise.
+- Icônes : QA en attente ; vidéos : livraison/QA jeu non finalisées. Aucun de ces
+  deux domaines n'est inclus dans cette release.
+
 - Sprites alpha.7 : 331 IDs Q3m x2 / Nearest acquis. Les paperdolls P7 couvrent
   le corps 0x6110 et 77 équipements partagés ; les autres corps restent natifs.
   E060, E0D0, E261 et E262 sont hors portée source Icewind retenue. Le test

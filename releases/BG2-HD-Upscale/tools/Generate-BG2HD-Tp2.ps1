@@ -139,6 +139,10 @@ foreach ($component in $components) {
             $lines.Add("  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~$dependency~ $message")
         }
         $entries = @($content | Where-Object { [int]$_.component_id -eq $id } | Sort-Object install_order, destination, source)
+        if (@($entries | Where-Object { $_.destination -eq 'iee-assets/effects/EffectStorage-X4.index' }).Count -gt 0) {
+            $lines.Add('  AT_NOW effect_storage_result ~powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File bg2hd/tools/bg2hd-effect-storage.ps1~')
+            $lines.Add('  ACTION_IF effect_storage_result != 0 THEN BEGIN FAIL ~Update the BG2 HD Core component before installing effects.~ END')
+        }
         $directories = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
         foreach ($entry in $entries) {
             $segments = @(([string]$entry.destination).Split('/'))

@@ -66,9 +66,9 @@ tier does not build the full staging or archive.
 ## Renderer prerequisite
 
 An asset candidate relying on a renderer fix must not be integrated against a rejected or
-different bundled DLL. Current candidate: exact fifteen-file `iee-0.1.0-alpha.9`, accepted installed
+different bundled DLL. Current candidate: exact fifteen-file `iee-0.1.0-alpha.10`, accepted installed
 DLL with retained source snapshot and SHA inventory in
-`pipeline/recipes/animations-release-finalization-20261011-v1/renderer-source-inventory.json`. Validate it before
+`pipeline/recipes/effects-release-finalization-20261110-v1/renderer-source-inventory.json`. Validate it before
 promotion. The promotion must atomically replace `bg2hd/renderer` and both copies of
 `renderer-bundle.json`; `runtime-compatibility.json` must pin the same DLL hash/bytes. Keep the
 release blocked until the clean-game and lifecycle gates are recorded.

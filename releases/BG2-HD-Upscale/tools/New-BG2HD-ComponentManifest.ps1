@@ -195,7 +195,7 @@ $effectComponents = foreach ($group in $effects) {
     $labels = @($entries | ForEach-Object { [string]$_.component_label } | Sort-Object -Unique)
     $groups = @($entries | ForEach-Object { [string]$_.payload_group } | Sort-Object -Unique)
     $areas = @($entries | ForEach-Object { [string]$_.area } | Sort-Object -Unique)
-    $roots = @($entries | ForEach-Object { ([string]$_.destination -split '/', 3)[0..1] -join '/' } | Sort-Object -Unique)
+    $roots = @($entries | Where-Object { $_.destination -notmatch '^override/[A-Za-z0-9_]{1,8}[.](bam|vvc|pro)$' } | ForEach-Object { ([string]$_.destination -split '/', 3)[0..1] -join '/' } | Sort-Object -Unique)
     if ($labels.Count -ne 1 -or $groups.Count -ne 1 -or $areas.Count -ne 1 -or $areas[0] -ne 'EFFECTS' -or $roots.Count -ne 1 -or $roots[0] -ne 'iee-assets/effects') {
         throw "Composant effet incoherent : $($group.Name)"
     }

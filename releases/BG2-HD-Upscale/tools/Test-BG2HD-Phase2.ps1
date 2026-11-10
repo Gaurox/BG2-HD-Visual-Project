@@ -15,15 +15,22 @@ function Require([bool]$Condition, [string]$Message) {
     if (-not $Condition) { throw $Message }
 }
 
+$qaEvidenceResults = @{}
 function Test-QAEvidenceHash([string]$Workspace, [string]$RelativePath, [string]$ExpectedHash) {
     $current = Join-Path $Workspace ($RelativePath.Replace('/', '\'))
+    $info = [IO.FileInfo]::new($current)
+    $stamp = if ($info.Exists) { "$($info.Length)|$($info.LastWriteTimeUtc.Ticks)" } else { 'missing' }
+    $key = "$current|$ExpectedHash|$stamp"
+    if ($qaEvidenceResults.ContainsKey($key)) { return $qaEvidenceResults[$key] }
     if ((Test-Path -LiteralPath $current -PathType Leaf) -and
         (Get-FileHash -LiteralPath $current -Algorithm SHA256).Hash -eq $ExpectedHash) {
+        $qaEvidenceResults[$key] = $true
         return $true
     }
     $adapter = Join-Path $Workspace 'pipeline\scripts\verify_historical_git_evidence.py'
     & python $adapter --path $RelativePath --sha256 $ExpectedHash --quiet
-    return $LASTEXITCODE -eq 0
+    $qaEvidenceResults[$key] = $LASTEXITCODE -eq 0
+    return $qaEvidenceResults[$key]
 }
 
 function Get-AnimationManifestResrefs([object]$Manifest) {
@@ -64,6 +71,7 @@ $schemas = @(
     @('map-release-assemblies.json', 'map-release-assemblies.schema.json'),
     @('animation-release-candidates.json', 'animation-release-candidates.schema.json'),
     @('sprite-release-candidates.json', 'sprite-release-candidates.schema.json'),
+    @('effect-release-candidates.json', 'effect-release-candidates.schema.json'),
     @('overlay-sources.json', 'overlay-sources.schema.json'),
     @('licenses-and-exclusions.json', 'licenses-and-exclusions.schema.json'),
     @('renderer-bundle.json', 'renderer-bundle.schema.json'),
@@ -77,6 +85,8 @@ foreach ($pair in $schemas) {
 
 & python (Join-Path $workspace 'pipeline/scripts/verify_map_release_candidates.py') --workspace-root $workspace --content (Join-Path $ReleaseRoot 'manifests/content.json') --metadata-only
 Require ($LASTEXITCODE -eq 0) 'Map projection / acquired QA / runtime contract verification failed.'
+& python (Join-Path $workspace 'pipeline/scripts/verify_effect_release_candidates.py') --workspace-root $workspace --content (Join-Path $ReleaseRoot 'manifests/content.json')
+Require ($LASTEXITCODE -eq 0) 'Effect selection / native routes / content projection verification failed.'
 
 $animationQaSchema = Join-Path $ReleaseRoot 'schemas\animation-qa-approval.schema.json'
 $animationDecisionSchema = Join-Path $workspace 'animations\schemas\animation-qa-decision.schema.json'

@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.1.0-alpha.9 — exact-byte shared effect storage
+
+- Keeps all 71,971 logical effect images, native clocks and independent palette/GPU
+  identities; stores 65,849 physical RGBA files through a versioned storage index.
+- Removes 6,122 duplicate RGBA files. Net image-storage saving including the
+  1,431,440-byte exact-registry-bound index: 2,587,083,696 bytes (about 2.41 GiB).
+- Renderer alpha.11 reads indirection in eager and streaming paths; old flat
+  packs remain supported. Invalid binding, range, chain or size fails closed.
+- Existing image QA, native BAM/VVC/PRO and game installation remain unchanged.
+  Storage-contract ingame smoke and combined clean-game lifecycle remain pending.
+
+## 0.1.0-alpha.8 — acquired effects and native projectile routes
+
+- Expands component 4100 from three historical effects to all 424 accepted x4
+  selections, retaining required normal/palette variants, native BAM carriers,
+  five stock VVC reference routes and the lot31 PRO reference-only changes.
+- Includes the accepted ACOWG1 sprite-to-projectile adapter. Six native masks
+  and 67 production exclusions remain native; projectile motion stays native.
+- Promotes accepted SeedVR SPCSPRAI to its canonical release identity; excludes
+  diagnostic/comparison resources and all isolated test controllers.
+- Pins renderer alpha.10: exact accepted November 10 DLL, projectile secondary
+  scopes/palette fixes, streaming cache and acquired sprite silhouette alpha AA.
+- Preserves existing maps, area-animation and Q3m asset inventories. Acquired
+  QA retains its original observed scope; no exhaustive gameplay QA is claimed.
+- Local release only. Clean-game combined lifecycle, save/uninstall and public
+  provenance/contact blockers remain open. Icons and videos remain outside.
+
 ## 0.1.0-alpha.7 — acquired Q3m sprites, local test package
 
 - Replaces the historical 173-ID xBR catalogue with the acquired 331-ID,

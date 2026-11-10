@@ -33,6 +33,23 @@ def digest(path: Path) -> str:
     with path.open('rb') as stream:
         return hashlib.file_digest(stream, 'sha256').hexdigest().upper()
 
+
+def verify_renderer_continuity(dll: Path, runtime: dict, registry_path: Path, compatibility: dict) -> None:
+    actual = digest(dll)
+    if actual == runtime['dll_sha256']:
+        return
+    successor = compatibility.get('renderer', {}).get('map_water_runtime', {})
+    require(successor.get('inherited_from_dll_sha256') == runtime['dll_sha256'] and
+            successor.get('dll_sha256') == actual and
+            successor.get('registry_sha256') == runtime['registry_sha256'],
+            'Accepted renderer DLL changed without an explicit compatible successor')
+    registry = read(registry_path)
+    normalized_sha = hashlib.sha256(registry_path.read_bytes().replace(b'\r\n', b'\n')).hexdigest().upper()
+    expected = f"IEE_WATER_ROUTE2_V1:{normalized_sha}:{registry['version']}:{runtime['entries']}"
+    contracts = set(re.findall(rb'IEE_WATER_ROUTE2_V1:[0-9A-F]{64}:[0-9]+:[0-9]+(?=\x00)', dll.read_bytes()))
+    require(contracts == {expected.encode('ascii')} and successor.get('build_contract') == expected,
+            'Successor renderer water registry fingerprint differs from acquired map contract')
+
 def verify(root: Path, candidates: Path, assemblies: Path, content: Path | None = None, metadata_only: bool = False) -> dict:
     manifest = read(assemblies)
     require(manifest.get('schema_version') == 1 and manifest.get('state') == 'approved-for-local-release', 'Unapproved map assembly manifest')
@@ -118,8 +135,13 @@ def verify(root: Path, candidates: Path, assemblies: Path, content: Path | None 
         for name,sha in required:
             require(name in fs and fs[name]['sha256']==sha.upper(), f'Runtime guard/overlay absent or differs: {e["wed"]["resref"]}/{name}')
     dll=root/'releases/BG2-HD-Upscale/bg2hd/renderer/InfinityEngine-Enhancer.dll'
-    require(digest(dll)==runtime['dll_sha256'], 'Accepted renderer DLL changed')
-    config=read(root/'releases/BG2-HD-Upscale/manifests/runtime-compatibility.json')['owned_ini_keys']['core-steam']['Shaders']
+    compatibility=read(root/'releases/BG2-HD-Upscale/manifests/runtime-compatibility.json')
+    verify_renderer_continuity(dll,runtime,registry_path,compatibility)
+    successor=compatibility.get('renderer',{}).get('map_water_runtime',{})
+    if digest(dll)!=runtime['dll_sha256']:
+        proof=successor.get('evidence',{})
+        checked(safe_path(root,proof['path']),proof['bytes'],proof['sha256'])
+    config=compatibility['owned_ini_keys']['core-steam']['Shaders']
     require(all(config.get(k)==v for k,v in runtime['owned_ini_keys'].items()), 'Installer water activation/strength differs from validated configuration')
     if content:
         actual={(e['area'],e['source']):e for e in read(content)['entries'] if e['kind']=='map'}

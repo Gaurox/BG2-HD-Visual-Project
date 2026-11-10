@@ -28,6 +28,29 @@ During finalization, every content entry must have a canonical source, normalize
 component ID, install order, byte count, SHA-256 and approved QA status. A destination collision is
 accepted only when explicitly ordered and validated.
 
+Alpha.9 retains the 424 acquired image decisions of component 4100. Its sealed
+`integration_evidence` binds retained v3 runtime variants, native carrier BAMs,
+five stock VVC reference routes, lot31 PRO reference-only routes and COW QA.
+`runtime_files` supplies explicit native destinations; isolated test controllers
+and rejected comparisons are excluded. `verify_effect_release_candidates.py`
+checks selections, source evidence and exact content projection. Retained
+runtime adapters do not broaden the original visual QA scope.
+
+Shared-storage packs retain registry v3 and every logical frame record. The optional
+`storage` manifest binds `EffectStorage-X4.index` (magic `IEEFXS1\0`, version1,
+logical count, registry byte count, reserved0, exact registry bytes, u32 physical
+source IDs). IDs must point directly to canonical IDs with identical byte sizes;
+offline verification additionally requires identical RGBA hashes/dimensions.
+Only canonical RGBA files and the index are projected into the payload. Both
+eager and streaming readers retain independent logical cache/GPU identities.
+Absent index uses legacy flat storage; invalid index rejects the pack.
+
+Acquired map assemblies retain their original renderer hash. An explicit
+`runtime-compatibility.json:renderer.map_water_runtime` successor must pin both
+DLL hashes, the unchanged acquired registry hash and its exact embedded
+`IEE_WATER_ROUTE2_V1` fingerprint; its separate evidence preserves the historical
+QA. Missing bindings, changed registries and unknown DLLs fail closed.
+
 Sprite component 4200 selects 331 acquired world IDs (V6/V7/V9, x2 Nearest).
 Component 4210 selects 81 V6 P7 paperdolls (0x6110 body plus 77 equipment packs).
 The verifier checks physical files against the sealed catalog and acquired QA.

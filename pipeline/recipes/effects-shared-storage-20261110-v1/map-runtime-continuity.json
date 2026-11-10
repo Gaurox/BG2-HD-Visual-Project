@@ -1,0 +1,71 @@
+{
+  "schema": "bg2-map-renderer-successor-contract-v1",
+  "inherited_from_dll_sha256": "5D4EE06D84E0D6C6F6FB81797EAB0E9756B3ECE335EBF537E57C5597E0B40BCF",
+  "dll_sha256": "F4DCF02BDA7887F2BAE5B74E31D2951CF29588073F4158F0C9F34132AF9F4D7A",
+  "registry": {
+    "path": "pipeline/water/requests/ar6300-water-30fps-20260929-v4/registry-v3.json",
+    "bytes": 381992,
+    "sha256": "BC1EB12DB3B8FD112A77182C0C7405B57B9E2949312C49FCD0C6F537BC8577F1"
+  },
+  "entries": 188,
+  "build_contract": "IEE_WATER_ROUTE2_V1:E582C7879B50C0765DAC7918EF80AD9CE3CC17E884FAE6E599E81796FF635471:3:188",
+  "identical_source_files": [
+    {
+      "path": "src/iee/core/water_overlay_policy.h",
+      "sha256": "42BD4576361A57D75DADFEC53863DAA6FCDD7EC372CE238F3017437FC5B1F0ED"
+    },
+    {
+      "path": "src/iee/water_route2_registry.h",
+      "sha256": "0E6CE35B91A981C19B1386ABEF180778EE0D12BC9495537F1280284DC9BF9AED"
+    },
+    {
+      "path": "src/iee/water_textures.cpp",
+      "sha256": "383165AC7BE094AD1DDF89A339A87DF2933799960E779380D8CF71903A28FE96"
+    },
+    {
+      "path": "src/iee/water_textures.h",
+      "sha256": "F5D80C83FAFC4A0EFE85558B1A58F105D459F8CCBBAD072843B63EB60AF1B69C"
+    },
+    {
+      "path": "src/iee/game/tile_liquid.h",
+      "sha256": "AEC50BEF72218DA1FEC431439B7EE7283A64DA7F3878808A3466DC7D0409A693"
+    },
+    {
+      "path": "src/iee/game/area_texture.h",
+      "sha256": "ABB39EDC87B6A7618F7676EBB2F03146FA9F88D35C94BFFB640531B6ABCB5A71"
+    },
+    {
+      "path": "src/iee/area_animation_x4_registry.cpp",
+      "sha256": "35B8431BAF980DF8E9AD448309C8F95EE6C61847BF5ACD7BB8D84F7D69978E66"
+    },
+    {
+      "path": "src/iee/area_animation_x4_registry.h",
+      "sha256": "F66318AC65921E7D85E97C79A1732534B176674B0A339850A268EDF99D463707"
+    },
+    {
+      "path": "src/iee/area_state.h",
+      "sha256": "83704B5B5E132E4131E1F9D0FEFAABB11547C77343A9181E85B190FD8B77EB27"
+    }
+  ],
+  "water_implementation": "Byte-identical source after removing only exported registry fingerprint function.",
+  "shared_area_resolver": "Existing safe loaded-area resolution extracted into game/active_area_runtime.h; exercised by iee_tests.",
+  "engine_tests": {
+    "path": "pipeline/recipes/effects-release-finalization-20261110-v1/engine-tests.log",
+    "bytes": 774,
+    "sha256": "B26F3C161FB42D87B9719CC1FFB338FA119CA2B7666B32C4D3B8287EA64B4FF3"
+  },
+  "fingerprint_tests": {
+    "path": "pipeline/recipes/effects-release-finalization-20261110-v1/water-contract-tests.log",
+    "bytes": 111,
+    "sha256": "117C8ABAFF09E272413E999FDBFE3CB0823562F9F0B14229D165BBD88B10A621"
+  },
+  "assets_and_QA_unchanged": true,
+  "new_ingame_QA": false,
+  "clean_game_combined_lifecycle": "pending",
+  "storage_only_successor_of": "ED9A5E4EE34D695DB84448EE7E9A8E221D39E6DEBD340479F114AD4E9132A844",
+  "parent_evidence": {
+    "path": "pipeline/recipes/effects-release-finalization-20261110-v1/map-runtime-continuity.json",
+    "bytes": 2762,
+    "sha256": "13C04A06A56E159D9CE04264F3464BF8B320C7D5EBC358B816C0CFEB37640675"
+  }
+}

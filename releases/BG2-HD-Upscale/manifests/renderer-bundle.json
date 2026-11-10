@@ -1,27 +1,17 @@
 {
   "$schema": "../schemas/renderer-bundle.schema.json",
   "schema_version": 1,
-  "bundle_id": "iee-0.1.0-alpha.9",
+  "bundle_id": "iee-0.1.0-alpha.11",
   "status": "integrated-awaiting-clean-lifecycle-test",
-  "source_tree": "releases/BG2-HD-Upscale/release-inputs/renderer/iee-0.1.0-alpha.9-source",
+  "source_tree": "releases/BG2-HD-Upscale/release-inputs/renderer/iee-0.1.0-alpha.11-source",
   "build_environment": {
     "cmake": "4.0.2",
     "generator": "Visual Studio 16 2019, x64",
-    "compiler": "MSVC 19.29.30133 (v142, x64)",
+    "compiler": "MSVC 19.29.30158.0 (v142, toolset 14.29.30133, x64)",
     "build_type": "Release",
-    "command": "Pinned accepted installed DLL, retained exact source snapshot; source inventory: pipeline/recipes/animations-release-finalization-20261011-v1/renderer-source-inventory.json"
+    "command": "cmake --build build/iee-projectile-secondary-links-20261028-v1 --config Release --target InfinityEngine-Enhancer iee_effect_animation_x4_registry_tests iee_effect_texture_cache_tests"
   },
   "files": [
-    {
-      "path": "InfinityEngine-Enhancer.dll",
-      "bytes": 2244608,
-      "sha256": "5D4EE06D84E0D6C6F6FB81797EAB0E9756B3ECE335EBF537E57C5597E0B40BCF"
-    },
-    {
-      "path": "InfinityEngine-Enhancer.sample.ini",
-      "bytes": 5691,
-      "sha256": "4ACD42B6F2E571FA6C2EA78B0B01C2E58F4AA4C1DD555106A6106BAFAC8DD553"
-    },
     {
       "path": "iee-textures/iee_water_dudv.rgba",
       "bytes": 1048588,
@@ -43,9 +33,19 @@
       "sha256": "4855884146FE6DB8ED47B8CD23C4418BCB45C10BD4C266E38A9D52B97A8D6B4E"
     },
     {
+      "path": "InfinityEngine-Enhancer.dll",
+      "bytes": 3484160,
+      "sha256": "F4DCF02BDA7887F2BAE5B74E31D2951CF29588073F4158F0C9F34132AF9F4D7A"
+    },
+    {
+      "path": "InfinityEngine-Enhancer.sample.ini",
+      "bytes": 6333,
+      "sha256": "876DC220BE75B17EFDC2CFD1E27B2B4D3FAB63FA2EB300AB9D4D94B4315813F1"
+    },
+    {
       "path": "override/fpDraw.glsl",
-      "bytes": 21082,
-      "sha256": "C6F1F23D99D16BFD34FC3EAC1577F24C096C4C00F0427CEA69E8BDE779311827"
+      "bytes": 23863,
+      "sha256": "C50A43EBD580EE840EDABAF6B96B9DF80589A7D793F27A85D1766BC17977BA20"
     },
     {
       "path": "override/fpFONT.glsl",
@@ -59,13 +59,13 @@
     },
     {
       "path": "override/fpSELECT.glsl",
-      "bytes": 22346,
-      "sha256": "E4E70C98DE1E6826C47F934AC3E600AF06F105F69CC80F84E2289D28E5952815"
+      "bytes": 25127,
+      "sha256": "F733B8970A3B1C3FB85F335C5BC3F2DC91A113DE22C6CF0B2CFBD2ACE79B84A5"
     },
     {
       "path": "override/fpSprite.glsl",
-      "bytes": 22085,
-      "sha256": "065E28C595AF84A7ADDCBD97793BC8EEDCB5052BB26BAB1D92710CB0E2FD0816"
+      "bytes": 24906,
+      "sha256": "CF5C2795E37EE31D908801312971B8FA1ED5BE3A87902A7A44F186A013610A73"
     },
     {
       "path": "override/fpTone.glsl",
@@ -97,6 +97,9 @@
     "approved SPMAGMIS/SPMINDAT/SPFEAREF effect registry gate",
     "AR0516 SPHINCT/SPHINCT2 native WED occlusion gate with bridge enabled",
     "AR0413 WTOIL overlay classified as Oil with liquidOverlayMask 0x02",
-    "In-place Steam shim lifecycle and verified full vanilla restoration after Phase 3"
+    "In-place Steam shim lifecycle and verified full vanilla restoration after Phase 3",
+    "Combined accepted effect v3 catalogue, retained native routes and COW bridge on clean game",
+    "Future native saves/full uninstall with renderer alpha.10",
+    "Exact-byte shared storage: representative ingame streaming/masking smoke pending; no new image QA inferred"
   ]
 }

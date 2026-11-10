@@ -1,0 +1,102 @@
+{
+  "$schema": "../schemas/renderer-bundle.schema.json",
+  "schema_version": 1,
+  "bundle_id": "iee-0.1.0-alpha.9",
+  "status": "integrated-awaiting-clean-lifecycle-test",
+  "source_tree": "releases/BG2-HD-Upscale/release-inputs/renderer/iee-0.1.0-alpha.9-source",
+  "build_environment": {
+    "cmake": "4.0.2",
+    "generator": "Visual Studio 16 2019, x64",
+    "compiler": "MSVC 19.29.30133 (v142, x64)",
+    "build_type": "Release",
+    "command": "Pinned accepted installed DLL, retained exact source snapshot; source inventory: pipeline/recipes/animations-release-finalization-20261011-v1/renderer-source-inventory.json"
+  },
+  "files": [
+    {
+      "path": "InfinityEngine-Enhancer.dll",
+      "bytes": 2244608,
+      "sha256": "5D4EE06D84E0D6C6F6FB81797EAB0E9756B3ECE335EBF537E57C5597E0B40BCF"
+    },
+    {
+      "path": "InfinityEngine-Enhancer.sample.ini",
+      "bytes": 5691,
+      "sha256": "4ACD42B6F2E571FA6C2EA78B0B01C2E58F4AA4C1DD555106A6106BAFAC8DD553"
+    },
+    {
+      "path": "iee-textures/iee_water_dudv.rgba",
+      "bytes": 1048588,
+      "sha256": "3F9FBF6E982CBECEBE70386F2DF8152A85D61651FD2965D9C17CC70807BBD83E"
+    },
+    {
+      "path": "iee-textures/iee_water_foam.rgba",
+      "bytes": 4194316,
+      "sha256": "F9FB4383F83BEDD94A187EC2118FFE91879AEE911C0E96E05CC3C882B309DFF6"
+    },
+    {
+      "path": "iee-textures/iee_water_normal.rgba",
+      "bytes": 1048588,
+      "sha256": "BBEBC635D68084D757176F5522161310AE7C1DDCA330438EB1743D96D8EFE551"
+    },
+    {
+      "path": "iee-textures/README.md",
+      "bytes": 3002,
+      "sha256": "4855884146FE6DB8ED47B8CD23C4418BCB45C10BD4C266E38A9D52B97A8D6B4E"
+    },
+    {
+      "path": "override/fpDraw.glsl",
+      "bytes": 21082,
+      "sha256": "C6F1F23D99D16BFD34FC3EAC1577F24C096C4C00F0427CEA69E8BDE779311827"
+    },
+    {
+      "path": "override/fpFONT.glsl",
+      "bytes": 396,
+      "sha256": "A340AC1BC9C6D06D37F7C184322E358ACA8382BE18FE4B9324CAEE78D0535945"
+    },
+    {
+      "path": "override/fpSEAM.glsl",
+      "bytes": 19546,
+      "sha256": "763CCBD16733CFC17AEEBA72A8F31D3204E96C918753CA6FB5A49519410E4D6C"
+    },
+    {
+      "path": "override/fpSELECT.glsl",
+      "bytes": 22346,
+      "sha256": "E4E70C98DE1E6826C47F934AC3E600AF06F105F69CC80F84E2289D28E5952815"
+    },
+    {
+      "path": "override/fpSprite.glsl",
+      "bytes": 22085,
+      "sha256": "065E28C595AF84A7ADDCBD97793BC8EEDCB5052BB26BAB1D92710CB0E2FD0816"
+    },
+    {
+      "path": "override/fpTone.glsl",
+      "bytes": 18201,
+      "sha256": "01900D8514E95D0107562204DDB896E2F8F65F1051229B13C6AFBF52E678162F"
+    },
+    {
+      "path": "override/fpYUV.glsl",
+      "bytes": 759,
+      "sha256": "90A3E35CF774EFD8C35F193265825301DDCF5E098AFA399FD79A56D6979050B4"
+    },
+    {
+      "path": "override/fpYUVGRY.glsl",
+      "bytes": 1618,
+      "sha256": "4D615E07B7F95C26D14233ECB58EE13C19D4FC1674566FAC88967CA06709085F"
+    },
+    {
+      "path": "override/M_IEEE.lua",
+      "bytes": 380,
+      "sha256": "6FED5BAE7C6293B92AAC628325565578E4AB91210D59E19358C7F08DD72454E0"
+    }
+  ],
+  "validation_required": [
+    "host tests from the same source tree",
+    "clean BG2EE Steam 2.7.3.0 game-hash gate",
+    "EEex/InfinityLoader launch gate",
+    "x4 map, animation and UI smoke gates",
+    "playable-only creature catalog and CatmullRom runtime gate",
+    "approved SPMAGMIS/SPMINDAT/SPFEAREF effect registry gate",
+    "AR0516 SPHINCT/SPHINCT2 native WED occlusion gate with bridge enabled",
+    "AR0413 WTOIL overlay classified as Oil with liquidOverlayMask 0x02",
+    "In-place Steam shim lifecycle and verified full vanilla restoration after Phase 3"
+  ]
+}

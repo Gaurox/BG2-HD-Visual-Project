@@ -31,6 +31,10 @@ The exact scope comes from `manifests/content.json` and `components.json`: valid
 approved UI, selected overlays, and approved area-animation packs. Pending-QA maps, development
 builds, backups, and captures are excluded.
 
+The effect component includes 424 accepted x4 effects, their required rendering
+variants and completed native projectile routes. Projectile movement remains
+native. Icons and movies are not included.
+
 Core installs the verified `Baldur.exe → InfinityLoader → BaldurReal.exe` path, renderer, and
 save-neutral `M_IEEE.lua` guard. The guard prevents new vanilla-compatible save chains from
 receiving EEex `X-BIV1.0` records; it does not repair old saves that already contain them.

@@ -11,7 +11,8 @@ param(
     [string]$OverlayPolicyPath = (Join-Path $PSScriptRoot '..\manifests\overlay-sources.json'),
     [switch]$IncludePendingAnimationCandidates,
     [string]$AnimationQaApprovalOverridePath,
-    [string[]]$OnlyAnimationArea
+    [string[]]$OnlyAnimationArea,
+    [string]$PhysicalHashIndexPath
 )
 
 $ErrorActionPreference = 'Stop'
@@ -19,6 +20,31 @@ $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'Assert-BG2HD-NoActiveAnimationTransaction.ps1')
 $animationAuthorityLease = Enter-BG2HDAnimationAuthorityLock -WorkspaceRoot $WorkspaceRoot
 try {
+
+# Optional, task-local physical hashes. A changed size or timestamp falls back
+# to a fresh hash; no candidate digest is treated as a physical verification.
+$physicalHashes = @{}
+if ($PhysicalHashIndexPath) {
+    $hashIndex = Get-Content -LiteralPath $PhysicalHashIndexPath -Raw | ConvertFrom-Json -AsHashtable
+    if ($hashIndex.schema -ne 'bg2-release-task-physical-hash-index-v1') { throw 'Index SHA physique invalide.' }
+    $physicalHashes = $hashIndex.files
+}
+function Get-FileHash {
+    param([string]$LiteralPath, [string]$Path, [string]$Algorithm = 'SHA256')
+    $full = [IO.Path]::GetFullPath($(if ($LiteralPath) { $LiteralPath } else { $Path }))
+    $file = [IO.FileInfo]::new($full)
+    if ($Algorithm -eq 'SHA256' -and $physicalHashes.ContainsKey($full)) {
+        $cached = $physicalHashes[$full]
+        if ($file.Length -eq [int64]$cached.bytes -and $file.LastWriteTimeUtc.Ticks -eq [int64]$cached.mtime_ticks) {
+            return [pscustomobject]@{ Hash = [string]$cached.sha256; Algorithm = 'SHA256'; Path = $full }
+        }
+    }
+    $result = Microsoft.PowerShell.Utility\Get-FileHash -LiteralPath $full -Algorithm $Algorithm
+    $after = [IO.FileInfo]::new($full)
+    if ($file.Length -ne $after.Length -or $file.LastWriteTimeUtc.Ticks -ne $after.LastWriteTimeUtc.Ticks) { throw "Source modifiee pendant SHA : $full" }
+    if ($Algorithm -eq 'SHA256') { $physicalHashes[$full] = @{ bytes = $file.Length; mtime_ticks = $file.LastWriteTimeUtc.Ticks; sha256 = $result.Hash } }
+    return $result
+}
 
 $selectedAnimationAreas = [System.Collections.Generic.List[string]]::new()
 foreach ($area in @($OnlyAnimationArea | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) })) {
@@ -39,15 +65,22 @@ function Require([bool]$Condition, [string]$Message) {
     if (-not $Condition) { throw $Message }
 }
 
+$qaEvidenceResults = @{}
 function Test-QAEvidenceHash([string]$Workspace, [string]$RelativePath, [string]$ExpectedHash) {
     $current = Join-Path $Workspace ($RelativePath.Replace('/', '\'))
+    $info = [IO.FileInfo]::new($current)
+    $stamp = if ($info.Exists) { "$($info.Length)|$($info.LastWriteTimeUtc.Ticks)" } else { 'missing' }
+    $key = "$current|$ExpectedHash|$stamp"
+    if ($qaEvidenceResults.ContainsKey($key)) { return $qaEvidenceResults[$key] }
     if ((Test-Path -LiteralPath $current -PathType Leaf) -and
         (Get-FileHash -LiteralPath $current -Algorithm SHA256).Hash -eq $ExpectedHash) {
+        $qaEvidenceResults[$key] = $true
         return $true
     }
     $adapter = Join-Path $Workspace 'pipeline\scripts\verify_historical_git_evidence.py'
     & python $adapter --path $RelativePath --sha256 $ExpectedHash --quiet
-    return $LASTEXITCODE -eq 0
+    $qaEvidenceResults[$key] = $LASTEXITCODE -eq 0
+    return $qaEvidenceResults[$key]
 }
 
 function Read-Json([string]$Path) {
@@ -516,7 +549,8 @@ function Get-SpriteCandidateEntries {
     $result = [System.Collections.Generic.List[object]]::new()
     $register = Read-Json $CandidatesPath
     if ([int]$register.schema_version -eq 2) {
-        $verification = @(& python -B (Join-Path $Workspace 'pipeline/scripts/verify_sprite_release_candidate.py') --workspace-root $Workspace --candidates $CandidatesPath 2>&1)
+        $hashArgs = if ($PhysicalHashIndexPath) { @('--hash-index', $PhysicalHashIndexPath) } else { @() }
+        $verification = @(& python -B (Join-Path $Workspace 'pipeline/scripts/verify_sprite_release_candidate.py') --workspace-root $Workspace --candidates $CandidatesPath @hashArgs 2>&1)
         Require ($LASTEXITCODE -eq 0) ('Selection Q3m invalide : ' + ($verification -join [Environment]::NewLine))
         foreach ($candidate in @($register.candidates)) {
             $inventory = Read-Json (Join-Path $Workspace ([string]$candidate.source_pack.path))
@@ -633,7 +667,24 @@ function Get-EffectCandidateEntries {
         $pack = Read-Json $manifestPath
         $expectedResrefs = @($candidate.resources | ForEach-Object { ([string]$_.resref).ToUpperInvariant() } | Sort-Object)
         $packResrefs = @($pack.resources | ForEach-Object { ([string]$_.resref).ToUpperInvariant() } | Sort-Object)
-        Require (-not (Compare-Object $expectedResrefs $packResrefs)) "Ressources du pack effet incoherentes : $($candidate.candidate_id)"
+        if ($null -ne $candidate.integration_evidence) {
+            $bindingPath = Join-Path $Workspace ([string]$candidate.integration_evidence.path)
+            Require ((Get-Item -LiteralPath $bindingPath).Length -eq [int64]$candidate.integration_evidence.bytes -and (Get-FileHash -LiteralPath $bindingPath -Algorithm SHA256).Hash -eq [string]$candidate.integration_evidence.sha256) 'Preuve integration effets modifiee.'
+            $binding = Read-Json $bindingPath
+            Require (-not (Compare-Object $expectedResrefs @($binding.selected_assets.resref | Sort-Object))) 'Selections effets incompletes.'
+            Require (@($binding.runtime_resources).Count -eq 1 -and [int]$binding.runtime_resources -eq $packResrefs.Count) 'Inventaire runtime effets incoherent.'
+            foreach ($selected in @($binding.selected_assets)) {
+                Require ($packResrefs -contains [string]$selected.release_runtime_ref) "Liaison runtime absente : $($selected.resref)"
+                $selectionPath = Join-Path $Workspace ([string]$selected.selection.path)
+                Require ((Get-FileHash -LiteralPath $selectionPath -Algorithm SHA256).Hash -eq [string]$selected.selection.sha256) "Selection effet modifiee : $($selected.resref)"
+                $resource = @($candidate.resources | Where-Object resref -eq $selected.resref)
+                Require ($resource.Count -eq 1 -and $resource[0].selected_run -eq $selected.selected_run -and $resource[0].qa_evidence_sha256 -eq $selected.qa_evidence.sha256) "QA/selection runtime divergente : $($selected.resref)"
+            }
+            Require ((ConvertTo-Json -InputObject @($binding.runtime_files) -Depth 8 -Compress) -ceq (ConvertTo-Json -InputObject @($candidate.runtime_files) -Depth 8 -Compress)) 'Fichiers natifs effets non couverts par integration.'
+        } else {
+            Require (-not (Compare-Object $expectedResrefs $packResrefs)) "Ressources du pack effet incoherentes : $($candidate.candidate_id)"
+            Require ($null -eq $candidate.runtime_files -or @($candidate.runtime_files).Count -eq 0) 'Fichiers natifs effets sans preuve integration.'
+        }
         Require ($pack.schema -eq 'bg2-upscale-effect-animation-runtime-pack-v1' -and $pack.status -eq 'completed' -and [int]$pack.scale -eq 4) "Pack effet non finalise : $($candidate.candidate_id)"
         Require ([string]$pack.registry -eq [string]$candidate.runtime_pack.registry -and [int]$pack.registry_version -eq [int]$candidate.runtime_pack.registry_version -and [int64]$pack.registry_bytes -eq [int64]$candidate.runtime_pack.registry_bytes -and [string]$pack.registry_sha256 -eq [string]$candidate.runtime_pack.registry_sha256) "Registre effet incoherent : $($candidate.candidate_id)"
 
@@ -656,9 +707,19 @@ function Get-EffectCandidateEntries {
         $registryFile = Get-Item -LiteralPath (Join-Path $packRoot ([string]$pack.registry)) -ErrorAction Stop
         Require ($registryFile.Length -eq [int64]$pack.registry_bytes -and (Get-FileHash -LiteralPath $registryFile.FullName -Algorithm SHA256).Hash -eq [string]$pack.registry_sha256) "Payload registre effet invalide : $($candidate.candidate_id)"
         $result.Add((New-ContentEntry $baseSpec $registryFile))
-        foreach ($frame in @($pack.frames)) {
+        $payloadFrames = @($pack.frames)
+        if ($null -ne $pack.storage) {
+            $projectionRaw = & python -B (Join-Path $Workspace 'pipeline/scripts/effect_storage.py') --pack $packRoot
+            Require ($LASTEXITCODE -eq 0) 'Index de stockage effets invalide.'
+            $projection = $projectionRaw | ConvertFrom-Json
+            $payloadFrames = @($projection.physical_ids | ForEach-Object { $pack.frames[[int]$_] })
+            $storageFile = Get-Item -LiteralPath (Join-Path $packRoot 'EffectStorage-X4.index')
+            [void]$expectedNames.Add($storageFile.Name)
+            $result.Add((New-ContentEntry $baseSpec $storageFile))
+        }
+        foreach ($frame in $payloadFrames) {
             $name = [string]$frame.asset
-            Require ($name -match '^EFX4-[A-Z0-9_]{1,8}-frame[0-9]{3}[.]rgba$') "Nom de frame effet invalide : $name"
+            Require ($name -match '^EFX4-[A-Z0-9_]{1,8}-frame[0-9]{3,4}[.]rgba$') "Nom de frame effet invalide : $name"
             [void]$expectedNames.Add($name)
             $file = Get-Item -LiteralPath (Join-Path $packRoot $name) -ErrorAction Stop
             Require ($file.Length -eq [int64]$frame.bytes -and (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash -eq [string]$frame.sha256) "Payload frame effet invalide : $name"
@@ -666,6 +727,15 @@ function Get-EffectCandidateEntries {
         }
         $actualNames = @(Get-ChildItem -LiteralPath $packRoot -File | ForEach-Object Name | Sort-Object)
         Require (-not (Compare-Object (@($expectedNames | Sort-Object)) $actualNames)) "Inventaire du pack effet inattendu : $($candidate.candidate_id)"
+        foreach ($native in @($candidate.runtime_files | Where-Object { $null -ne $_ })) {
+            Require ([string]$native.destination -cmatch '^override/[A-Za-z0-9_]{1,8}[.](bam|vvc|pro)$') 'Destination native effet interdite.'
+            Require ([string]$native.source -cmatch '^releases/BG2-HD-Upscale/release-inputs/effects/[A-Za-z0-9._/-]+$' -and [string]$native.source -notmatch '(^|/)\.\.(/|$)') 'Source native effet interdite.'
+            $file = Get-Item -LiteralPath (Join-Path $Workspace ([string]$native.source))
+            Require ($file.Length -eq [int64]$native.bytes -and (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash -eq [string]$native.sha256) "Payload natif effet modifie : $($native.destination)"
+            $entry = New-ContentEntry $baseSpec $file
+            $entry.destination = [string]$native.destination
+            $result.Add($entry)
+        }
     }
     return @($result)
 }

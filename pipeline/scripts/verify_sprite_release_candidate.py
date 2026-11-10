@@ -10,10 +10,21 @@ from pathlib import Path
 
 from run_creature_sprite_x2 import read_sealed_catalog_index
 
+PHYSICAL_HASHES = {}
+
 
 def sha256(path: Path) -> str:
+    before = path.stat()
+    cached = PHYSICAL_HASHES.get(str(path.resolve()))
+    if cached and cached['bytes'] == before.st_size and cached['mtime_ticks'] == 621355968000000000 + before.st_mtime_ns//100:
+        return cached['sha256']
     with path.open('rb') as stream:
-        return hashlib.file_digest(stream, 'sha256').hexdigest().upper()
+        digest = hashlib.file_digest(stream, 'sha256').hexdigest().upper()
+    after = path.stat()
+    if before.st_size != after.st_size or before.st_mtime_ns != after.st_mtime_ns:
+        raise ValueError(f'Source changed during SHA256: {path}')
+    PHYSICAL_HASHES[str(path.resolve())] = dict(bytes=after.st_size,mtime_ticks=621355968000000000+after.st_mtime_ns//100,sha256=digest)
+    return digest
 
 
 def contained(root: Path, relative: str) -> Path:
@@ -118,8 +129,13 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--workspace-root', type=Path, default=Path(__file__).resolve().parents[2])
     parser.add_argument('--candidates', type=Path)
+    parser.add_argument('--hash-index', type=Path)
     args = parser.parse_args()
     root = args.workspace_root.resolve()
+    if args.hash_index:
+        index = json.loads(args.hash_index.read_text(encoding='utf-8'))
+        if index['schema'] != 'bg2-release-task-physical-hash-index-v1': raise ValueError('Invalid physical hash index')
+        PHYSICAL_HASHES.update(index['files'])
     candidates = args.candidates or root / 'releases/BG2-HD-Upscale/manifests/sprite-release-candidates.json'
     summary = verify(root, json.loads(candidates.read_text(encoding='utf-8-sig')))
     print(json.dumps({'passed': True, 'physical': summary, 'new_ingame_qa': False, 'GPU_production': False}))

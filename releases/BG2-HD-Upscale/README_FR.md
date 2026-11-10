@@ -25,6 +25,10 @@ Le contenu exact vient de `manifests/content.json` et `components.json` : cartes
 composants UI approuvés, overlays explicitement sélectionnés et packs animation approuvés. Les
 cartes `installed-pending-qa`, builds de développement, backups et captures sont exclus.
 
+Le composant effets comprend 424 effets x4 acceptés et leurs variantes de rendu
+nécessaires, ainsi que les raccords projectiles terminés. Le déplacement des
+projectiles conserve son comportement natif. Icônes et vidéos ne sont pas incluses.
+
 Le composant sprites propose 331 animations de créatures en Q3m x2 / Nearest.
 Le composant paperdolls améliore l'apparence en inventaire de l'humaine guerrière
 (corps 0x6110, quatre variantes d'armure) et 77 ressources d'équipement partagées.

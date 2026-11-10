@@ -2,6 +2,7 @@
 import copy
 import hashlib
 import json
+import os
 import struct
 import sys
 import tempfile
@@ -14,6 +15,19 @@ import verify_sprite_release_candidate as verifier
 
 
 class SpriteReleaseTests(unittest.TestCase):
+    def test_physical_hash_cache_does_not_hide_size_or_timestamp_changes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory).resolve() / 'payload.bin'
+            path.write_bytes(b'old')
+            old = verifier.sha256(path)
+            path.write_bytes(b'longer')
+            changed = verifier.sha256(path)
+            self.assertNotEqual(old, changed)
+            previous = path.stat()
+            path.write_bytes(b'same-n')
+            os.utime(path, ns=(previous.st_atime_ns, previous.st_mtime_ns + 1_000_000_000))
+            self.assertEqual(verifier.sha256(path), hashlib.sha256(b'same-n').hexdigest().upper())
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)

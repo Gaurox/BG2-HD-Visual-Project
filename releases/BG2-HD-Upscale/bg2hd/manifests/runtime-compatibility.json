@@ -61,18 +61,18 @@
     "status": "integrated-awaiting-clean-lifecycle-test",
     "active_development_install": {
       "path": "InfinityEngine-Enhancer.dll",
-      "sha256": "5D4EE06D84E0D6C6F6FB81797EAB0E9756B3ECE335EBF537E57C5597E0B40BCF",
-      "bytes": 2244608,
-      "qa_evidence": "pipeline/recipes/trees-night-color-20261011-v2/acceptance.json"
+      "sha256": "ED9A5E4EE34D695DB84448EE7E9A8E221D39E6DEBD340479F114AD4E9132A844",
+      "bytes": 3481088,
+      "qa_evidence": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
     },
     "reproducible_source_build": {
-      "source": "releases/BG2-HD-Upscale/release-inputs/renderer/iee-0.1.0-alpha.9-source",
-      "output_sha256": "5D4EE06D84E0D6C6F6FB81797EAB0E9756B3ECE335EBF537E57C5597E0B40BCF",
-      "output_bytes": 2244608,
-      "build_status": "alpha.9 exact accepted installed DLL and retained source snapshot; clean-game lifecycle remains pending",
+      "source": "releases/BG2-HD-Upscale/release-inputs/renderer/iee-0.1.0-alpha.11-source",
+      "output_sha256": "F4DCF02BDA7887F2BAE5B74E31D2951CF29588073F4158F0C9F34132AF9F4D7A",
+      "output_bytes": 3484160,
+      "build_status": "Built and CPU/GPU regression tested; shared storage smoke and clean-game lifecycle pending.",
       "bundle_manifest": "manifests/renderer-bundle.json"
     },
-    "publication_rule": "Alpha.9 preserves acquired animation contracts; publication requires clean-game, future-save and full-uninstall lifecycle gates.",
+    "publication_rule": "Alpha.11 adds exact-byte shared effect storage; representative storage smoke, combined clean-game, future-save and full-uninstall lifecycle tests remain pending.",
     "area_animation_runtime": {
       "status": "integrated",
       "payload_layout": "iee-assets/areas/<AREA>",
@@ -92,6 +92,29 @@
         "qa_evidence": "engine/InfinityEngine-Enhancer/source-patchee/docs/validation/ar0516-acquired-release-binding-20261011-v1.md",
         "wed_correction": "maps/wed-corrections/AR0516/lower-sphinct-cover-acquired-20261011-v2.json"
       }
+    },
+    "effect_animation_runtime": {
+      "status": "integrated",
+      "registry_version": 3,
+      "supported_registry_versions": [
+        1,
+        2,
+        3
+      ],
+      "qa_scope": "Accepted images and scoped native owner qualifications; no exhaustive gameplay QA or interpolated projectile motion claimed.",
+      "integration_evidence": "pipeline/recipes/effects-release-finalization-20261110-v1/integration.json",
+      "storage_index": "EffectStorage-X4.index: exact registry binding, independent logical cache identities"
+    },
+    "map_water_runtime": {
+      "inherited_from_dll_sha256": "5D4EE06D84E0D6C6F6FB81797EAB0E9756B3ECE335EBF537E57C5597E0B40BCF",
+      "dll_sha256": "F4DCF02BDA7887F2BAE5B74E31D2951CF29588073F4158F0C9F34132AF9F4D7A",
+      "registry_sha256": "BC1EB12DB3B8FD112A77182C0C7405B57B9E2949312C49FCD0C6F537BC8577F1",
+      "build_contract": "IEE_WATER_ROUTE2_V1:E582C7879B50C0765DAC7918EF80AD9CE3CC17E884FAE6E599E81796FF635471:3:188",
+      "evidence": {
+        "path": "pipeline/recipes/effects-shared-storage-20261110-v1/map-runtime-continuity.json",
+        "bytes": 3096,
+        "sha256": "CBBD0E88D133556F2539C8FBC3FBC5660A8C03E45208C98FAAB56D193D292B5C"
+      }
     }
   },
   "owned_ini_keys": {
@@ -106,7 +129,15 @@
         "EnableNativeOcclusionBridge": "true",
         "EnableAreaAnimationX4": "true",
         "EnableWaterOverlayRoute2": "true",
-        "WaterOverlayStrength": "1.00"
+        "WaterOverlayStrength": "1.00",
+        "EnableEffectAnimationStreaming": "true",
+        "EnableEffectStreamingTrace": "false",
+        "EffectCpuCacheMiB": "768",
+        "EffectInFlightMiB": "32",
+        "EffectHeadCacheMiB": "256",
+        "EffectGpuCacheMiB": "288",
+        "EffectMetadataMiB": "32",
+        "EffectMaxResources": "8192"
       }
     },
     "ui-mainmenu-x4": {
@@ -119,7 +150,35 @@
     "sprites-approved-creatures-x2": {
       "Shaders": {
         "EnableCreatureSpriteUpscaleTest": "true",
-        "CreatureSpriteFilter": "Nearest"
+        "CreatureSpriteFilter": "Nearest",
+        "EnableCreatureSpriteLinearFiltering": "false",
+        "CreatureSpriteFilterAnimation": "0x0"
+      },
+      "ShaderSuite": {
+        "Enabled": "true"
+      },
+      "ShaderSuite.CreatureHD": {
+        "Enabled": "true",
+        "ColorSpace": "Stored",
+        "Sharpen": "0",
+        "Gamma": "1",
+        "Contrast": "1",
+        "Brightness": "0",
+        "Saturation": "1",
+        "HueDegrees": "0",
+        "OutlineMode": "Native",
+        "OutlineSize": "2",
+        "SelectedOutlineSize": "3.5"
+      },
+      "ShaderSuite.fpSprite": {
+        "Enabled": "false"
+      },
+      "ShaderSuite.fpSELECT": {
+        "Enabled": "false"
+      },
+      "Rendering": {
+        "EnableFullFrameFXAA": "false",
+        "EnableFullFrameSSAA2x": "false"
       }
     },
     "paperdolls-q3m-6110-x2": {

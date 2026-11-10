@@ -1,5 +1,7 @@
 # Avancement des validations projectiles —2026-11-10
 
+- **Release locale alpha.8 intégrée** : renderer alpha.10, raccords/palettes et pont COW retenus ; [candidat effets/runtime](../releases/BG2-HD-Upscale/manifests/effect-release-candidates.json), [rattachements](../pipeline/recipes/effects-release-finalization-20261110-v1/integration.json). Installation et QA conservées ; déplacement reporté, qualification combinée sur jeu propre et publication toujours distinctes.
+
 - **Lot images/raccords clôturé par l'utilisateur le2026-11-10 : [clôture](analysis/images-routes-closed-20261110-v1/README.md).** 0 travail actif identifié dans ce périmètre ; déplacement `PROJ-MOTION-001` maintenu pour plus tard. Qualification technique et portées QA conservées ; release séparée.
 - **Courant : [sept cas natifs examinés](analysis/legacy-seven-usage-20261110-v1/README.md).** Conservation native justifiée, aucun pilote établi vers ces IDs dans les sources stock/installées scannées ; 0 nouveau raccord/asset/test demandé. [Deux couleurs acceptées](analysis/residual-four-colours-accepted-20261110-v1/README.md) conservées.
 - Autorité technique : `index/owner-reconciliation-current.json` → `analysis/legacy-seven-usage-20261110-v1/owner-summary.json` ; décisions QA/install/release indépendantes : `index/work-tracking.json`.

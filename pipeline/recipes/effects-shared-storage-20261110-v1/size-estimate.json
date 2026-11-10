@@ -1,0 +1,90 @@
+{
+  "version": "0.1.0-alpha.9",
+  "method": "ZIP DEFLATE level6; deterministic probability-proportional-to-bytes midpoint samples, 192 draws per content kind",
+  "payload_files": 109512,
+  "payload_bytes": 60238832018,
+  "packaging_uncompressed_budget_bytes": 176317803,
+  "uncompressed_package_estimate_bytes": 60415149821,
+  "compressed_package_estimate_bytes": 24837591834,
+  "compressed_low_bytes": 23275238518,
+  "compressed_high_bytes": 26121032119,
+  "compression_samples": 846,
+  "breakdown": [
+    {
+      "kind": "overlay",
+      "files": 26,
+      "bytes": 4185910,
+      "sampled_files": 10,
+      "compressed_estimate_bytes": 4068942,
+      "compression_ratio": 0.9720566397720289,
+      "compressed_low_bytes": 3865495,
+      "compressed_high_bytes": 4227769
+    },
+    {
+      "kind": "ui",
+      "files": 15,
+      "bytes": 150994944,
+      "sampled_files": 11,
+      "compressed_estimate_bytes": 38311854,
+      "compression_ratio": 0.2537293831507365,
+      "compressed_low_bytes": 35099455,
+      "compressed_high_bytes": 41524253
+    },
+    {
+      "kind": "map",
+      "files": 8566,
+      "bytes": 9317400526,
+      "sampled_files": 192,
+      "compressed_estimate_bytes": 9228040899,
+      "compression_ratio": 0.9904093821957339,
+      "compressed_low_bytes": 8766638854,
+      "compressed_high_bytes": 9410574531
+    },
+    {
+      "kind": "area-animation",
+      "files": 19858,
+      "bytes": 8665029635,
+      "sampled_files": 192,
+      "compressed_estimate_bytes": 3343166234,
+      "compression_ratio": 0.38582282750942687,
+      "compressed_low_bytes": 3122667476,
+      "compressed_high_bytes": 3563664993
+    },
+    {
+      "kind": "effect",
+      "files": 66635,
+      "bytes": 34994491860,
+      "sampled_files": 192,
+      "compressed_estimate_bytes": 6785025782,
+      "compression_ratio": 0.1938883927432433,
+      "compressed_low_bytes": 6171145237,
+      "compressed_high_bytes": 7398906326
+    },
+    {
+      "kind": "sprite",
+      "files": 14331,
+      "bytes": 7104609867,
+      "sampled_files": 192,
+      "compressed_estimate_bytes": 5262347907,
+      "compression_ratio": 0.7406948454229348,
+      "compressed_low_bytes": 4999230512,
+      "compressed_high_bytes": 5525465303
+    },
+    {
+      "kind": "paperdoll",
+      "files": 81,
+      "bytes": 2119276,
+      "sampled_files": 57,
+      "compressed_estimate_bytes": 312413,
+      "compression_ratio": 0.14741515672032593,
+      "compressed_low_bytes": 273686,
+      "compressed_high_bytes": 351141
+    }
+  ],
+  "limits": [
+    "Compressed archive not built; range describes sample variability, not a formal confidence interval.",
+    "NoCompression remains the local package default; Optimal compression is reserved for final distribution.",
+    "Installation requires extracted package plus installed content and WeiDU backups, beyond archive size.",
+    "Icons, movies, development caches and corresponding renderer source snapshots are excluded from installer payload."
+  ]
+}

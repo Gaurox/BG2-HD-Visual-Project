@@ -1,0 +1,175 @@
+{
+  "schema": "bg2-release-integration-status-v1",
+  "recorded_on": "2026-11-10",
+  "version": "0.1.0-alpha.8",
+  "renderer_bundle": "iee-0.1.0-alpha.10",
+  "status": "integrated-local-buildable-public-blocked",
+  "accepted_effects": 424,
+  "new_effects_since_alpha7": 421,
+  "runtime_effect_resources": 733,
+  "runtime_effect_backings": 71971,
+  "native_support_files": {
+    "bam": 665,
+    "vvc": 5,
+    "pro": 113
+  },
+  "native_masks_preserved": 6,
+  "not_required_effects": 67,
+  "components": 617,
+  "payload": {
+    "files": 115633,
+    "bytes": 62825915280,
+    "source_sha256_verified_files": 115633,
+    "staging_sha256_verified_files": 115633,
+    "unchanged_non_effect_files": 42877,
+    "staging": "releases/BG2-HD-Upscale/bg2hd/payload-allvalidated",
+    "previous_staging_preserved": "releases/BG2-HD-Upscale/archive/payload-alpha7-before-effects-20261110-v1"
+  },
+  "sizes": {
+    "version": "0.1.0-alpha.8",
+    "method": "ZIP DEFLATE level6; deterministic probability-proportional-to-bytes midpoint samples, 192 draws per content kind",
+    "payload_files": 115633,
+    "payload_bytes": 62825915280,
+    "packaging_uncompressed_budget_bytes": 183403904,
+    "uncompressed_package_estimate_bytes": 63009319184,
+    "compressed_package_estimate_bytes": 25722422614,
+    "compressed_low_bytes": 24157206894,
+    "compressed_high_bytes": 27008725303,
+    "compression_samples": 846,
+    "breakdown": [
+      {
+        "kind": "overlay",
+        "files": 26,
+        "bytes": 4185910,
+        "sampled_files": 10,
+        "compressed_estimate_bytes": 4068942,
+        "compression_ratio": 0.9720566397720289,
+        "compressed_low_bytes": 3865495,
+        "compressed_high_bytes": 4227769
+      },
+      {
+        "kind": "ui",
+        "files": 15,
+        "bytes": 150994944,
+        "sampled_files": 11,
+        "compressed_estimate_bytes": 38311854,
+        "compression_ratio": 0.2537293831507365,
+        "compressed_low_bytes": 35099455,
+        "compressed_high_bytes": 41524253
+      },
+      {
+        "kind": "map",
+        "files": 8566,
+        "bytes": 9317400526,
+        "sampled_files": 192,
+        "compressed_estimate_bytes": 9228040899,
+        "compression_ratio": 0.9904093821957339,
+        "compressed_low_bytes": 8766638854,
+        "compressed_high_bytes": 9410574531
+      },
+      {
+        "kind": "area-animation",
+        "files": 19858,
+        "bytes": 8665029635,
+        "sampled_files": 192,
+        "compressed_estimate_bytes": 3343166234,
+        "compression_ratio": 0.38582282750942687,
+        "compressed_low_bytes": 3122667476,
+        "compressed_high_bytes": 3563664993
+      },
+      {
+        "kind": "effect",
+        "files": 72756,
+        "bytes": 37581575122,
+        "sampled_files": 192,
+        "compressed_estimate_bytes": 7662770461,
+        "compression_ratio": 0.20389700100826855,
+        "compressed_low_bytes": 7046027512,
+        "compressed_high_bytes": 8279513409
+      },
+      {
+        "kind": "sprite",
+        "files": 14331,
+        "bytes": 7104609867,
+        "sampled_files": 192,
+        "compressed_estimate_bytes": 5262347907,
+        "compression_ratio": 0.7406948454229348,
+        "compressed_low_bytes": 4999230512,
+        "compressed_high_bytes": 5525465303
+      },
+      {
+        "kind": "paperdoll",
+        "files": 81,
+        "bytes": 2119276,
+        "sampled_files": 57,
+        "compressed_estimate_bytes": 312413,
+        "compression_ratio": 0.14741515672032593,
+        "compressed_low_bytes": 273686,
+        "compressed_high_bytes": 351141
+      }
+    ],
+    "limits": [
+      "Compressed archive not built; range describes sample variability, not a formal confidence interval.",
+      "NoCompression remains the local package default; Optimal compression is reserved for final distribution.",
+      "Installation requires extracted package plus installed content and WeiDU backups, beyond archive size.",
+      "Icons, movies, development caches and corresponding renderer source snapshots are excluded from installer payload."
+    ]
+  },
+  "validation": {
+    "static_phase2": "passed",
+    "manifest_regression_tests": 24,
+    "engine_suites": 5,
+    "native_phase_contracts": 31668,
+    "renderer_install_restore_fixture": "passed",
+    "ini_encodings": "passed UTF8/UTF8-BOM/UTF16LE/UTF16BE",
+    "future_save_guard_contract": "passed; no ingame lifecycle claimed",
+    "ar0413_final_oil_contract": "passed"
+  },
+  "excluded": [
+    "icons: QA pending",
+    "movies: delivery/ingame QA unfinished",
+    "HUD: partial production without final QA",
+    "portraits/cursors/fonts: native inventories, no new accepted production identified",
+    "projectile movement interpolation: explicitly deferred"
+  ],
+  "public_blockers": [
+    "in-place-steam-shim-clean-install-lifecycle-test-pending",
+    "future-hd-save-native-vanilla-lifecycle-test-pending",
+    "full-vanilla-uninstall-restoration-test-pending",
+    "bootstrap-clean-game-eeex-absent-lifecycle-test-pending",
+    "renderer-clean-game-lifecycle-test-pending",
+    "renderer-alpha.10-effects-projectiles-combined-clean-game-lifecycle-test-pending",
+    "public-contact-and-provenance-record-pending",
+    "q3m-world-and-paperdolls-clean-game-lifecycle-test-pending"
+  ],
+  "game_modified": false,
+  "new_visual_QA": false,
+  "archive_built": false,
+  "evidence": {
+    "content": {
+      "path": "releases/BG2-HD-Upscale/manifests/content.json",
+      "bytes": 94953736,
+      "sha256": "26A53D7DDEEE17671E5BD6812612CE3A4B7470C8610F8F7F552929CF3B530678"
+    },
+    "integration": {
+      "path": "pipeline/recipes/effects-release-finalization-20261110-v1/integration.json",
+      "bytes": 545269,
+      "sha256": "8A469A2D6D2D4159D3279FA0C61543D8702E5AA2797BA5DEF914392CB5E2C851"
+    },
+    "staging": {
+      "path": "pipeline/recipes/effects-release-finalization-20261110-v1/staging.json",
+      "bytes": 327,
+      "sha256": "3E65AB13B71A2F75F10265EE800C1C25DBC691535EEF13E10A3D3599EDE51AE2"
+    },
+    "phase2": {
+      "path": "pipeline/recipes/effects-release-finalization-20261110-v1/phase2.log",
+      "bytes": 9535,
+      "sha256": "5A4122B4566594312606E896F8479B04D06496058C01A946BC7082345BAE16ED"
+    },
+    "size_estimate": {
+      "path": "pipeline/recipes/effects-release-finalization-20261110-v1/size-estimate.json",
+      "bytes": 3073,
+      "sha256": "B4C8743B2B1F5ADF9B32A30B267706B23D0F3AF8A304A453D5AD7921EF8DB0D3"
+    }
+  }
+}

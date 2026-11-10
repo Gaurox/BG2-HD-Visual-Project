@@ -1,7 +1,7 @@
 {
   "$schema": "../schemas/sprite-release-candidates.schema.json",
   "schema_version": 2,
-  "generated_by": "2026-10-12 explicit user local Q3m release and retirement decision",
+  "generated_by": "2026-11-10 explicit accepted-content release integration; acquired inventories/QA unchanged",
   "candidates": [
     {
       "candidate_id": "approved-q3m-sprite-x2-nearest-20261012-v1",
@@ -823,15 +823,17 @@
         "new_ingame_qa": false
       },
       "runtime_contract": {
-        "bundle_id": "iee-0.1.0-alpha.9",
-        "dll_sha256": "5D4EE06D84E0D6C6F6FB81797EAB0E9756B3ECE335EBF537E57C5597E0B40BCF",
+        "bundle_id": "iee-0.1.0-alpha.11",
+        "dll_sha256": "F4DCF02BDA7887F2BAE5B74E31D2951CF29588073F4158F0C9F34132AF9F4D7A",
         "scale": 2,
         "filter": "Nearest",
         "registry_versions": [
           6,
           7,
           9
-        ]
+        ],
+        "inherited_from_dll_sha256": "5D4EE06D84E0D6C6F6FB81797EAB0E9756B3ECE335EBF537E57C5597E0B40BCF",
+        "display_evidence": "sprite/display-default.json"
       },
       "payload_projection": {
         "status": "integrated",
@@ -878,13 +880,15 @@
         "new_ingame_qa": false
       },
       "runtime_contract": {
-        "bundle_id": "iee-0.1.0-alpha.9",
-        "dll_sha256": "5D4EE06D84E0D6C6F6FB81797EAB0E9756B3ECE335EBF537E57C5597E0B40BCF",
+        "bundle_id": "iee-0.1.0-alpha.11",
+        "dll_sha256": "F4DCF02BDA7887F2BAE5B74E31D2951CF29588073F4158F0C9F34132AF9F4D7A",
         "scale": 2,
         "filter": "Nearest",
         "registry_versions": [
           6
-        ]
+        ],
+        "inherited_from_dll_sha256": "5D4EE06D84E0D6C6F6FB81797EAB0E9756B3ECE335EBF537E57C5597E0B40BCF",
+        "display_evidence": "sprite/display-default.json"
       },
       "payload_projection": {
         "status": "integrated",
