@@ -1,0 +1,45 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "schema_version": 1,
+  "run_id": "flythr03-interpolation-apollo8-30fps-v1",
+  "domain": "videos",
+  "asset_ids": [
+    "videos:movie-default-flythr03"
+  ],
+  "pipeline": {
+    "id": "topaz-video-apollo8-30fps-v1",
+    "recipe_path": "pipeline/topaz/recipes/Video-Interpolation-Apollo8-30fps-v1.json",
+    "recipe_sha256": "e707dd23cb5fe789b2d0ae14de53392ab107c51b54a986771015e106abb47d5e",
+    "version": "1"
+  },
+  "inputs": [
+    {
+      "role": "upscale-technical-video",
+      "path": "video/runs/flythr03-method-prototype-20260831/FLYTHR03-1080p-seedvr2-3b-int8-full-temporal.mp4",
+      "sha256": "fb9f3939ab50cd956371747122bdcc9cea8138978183042887e2392015f98abf",
+      "bytes": 24758631
+    }
+  ],
+  "outputs": [],
+  "provenance": {
+    "created_at_utc": "2026-08-31T15:49:10.588801Z",
+    "generator": "pipeline/scripts/run_video_interpolation.py",
+    "command": [
+      "python",
+      "pipeline/scripts/run_video_interpolation.py",
+      "--upscale-run",
+      "flythr03-method-prototype-20260831",
+      "--run",
+      "flythr03-interpolation-apollo8-30fps-v1"
+    ],
+    "parents": [
+      "videos:flythr03-method-prototype-20260831"
+    ]
+  },
+  "result": {
+    "status": "failed",
+    "sealed": true,
+    "completed_at_utc": "2026-08-31T15:50:07.159998Z",
+    "notes": "sortie interpolation invalide: topaz_exact_double_frame_count"
+  }
+}

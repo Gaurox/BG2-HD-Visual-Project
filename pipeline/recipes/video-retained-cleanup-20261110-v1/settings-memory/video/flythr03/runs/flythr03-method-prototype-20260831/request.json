@@ -1,0 +1,22 @@
+{
+  "schema": "bg2-video-upscale-request-v1",
+  "run_id": "flythr03-method-prototype-20260831",
+  "asset_key": "movie:default:FLYTHR03",
+  "asset_id": "videos:movie-default-flythr03",
+  "pipeline_id": "seedvr2-video-3b-int8-1080p-v1",
+  "target": {
+    "width": 1920,
+    "height": 1080,
+    "frame_rate": "source",
+    "frame_count": "source"
+  },
+  "scope": {
+    "spatial_upscale": true,
+    "frame_interpolation": false,
+    "final_encoding": false,
+    "audio_mastering": false,
+    "ingame_integration": false,
+    "qa_approval": false,
+    "release_selection": false
+  }
+}

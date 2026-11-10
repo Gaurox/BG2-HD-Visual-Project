@@ -1,0 +1,62 @@
+{
+  "schema": "bg2-video-interpolation-report-v1",
+  "run_id": "flythr03-interpolation-apollo8-30fps-v2",
+  "asset_id": "videos:movie-default-flythr03",
+  "parent_run": "flythr03-method-prototype-20260831",
+  "recipe_sha256": "e707dd23cb5fe789b2d0ae14de53392ab107c51b54a986771015e106abb47d5e",
+  "filter": "tvai_fi=model=apo-8:fps=30:slowmo=1:rdt=-0.01:device=0:instances=0:download=0:vram=0.9,setpts=N/(30*TB)",
+  "source_probe": {
+    "width": 1920,
+    "height": 1080,
+    "frame_rate": "15/1",
+    "frame_count": 261,
+    "field_order": "progressive",
+    "video_codec": "h264",
+    "pixel_format": "yuv420p",
+    "audio_codec": "aac",
+    "duration": 17.4
+  },
+  "topaz_probe_before_exact_deduplication": {
+    "width": 1920,
+    "height": 1080,
+    "frame_rate": "30/1",
+    "frame_count": 521,
+    "field_order": "progressive",
+    "video_codec": "prores",
+    "pixel_format": "yuv422p10le",
+    "audio_codec": "",
+    "duration": 17.366667
+  },
+  "exact_duplicate_indices_removed": [],
+  "output_probe": {
+    "width": 1920,
+    "height": 1080,
+    "frame_rate": "30/1",
+    "frame_count": 521,
+    "field_order": "progressive",
+    "video_codec": "prores",
+    "pixel_format": "yuv422p10le",
+    "audio_codec": "",
+    "duration": 17.366667
+  },
+  "checks": {
+    "topaz_resolution_1920x1080": true,
+    "topaz_frame_rate_30": true,
+    "topaz_interval_complete_frame_count": true,
+    "output_resolution_1920x1080": true,
+    "output_frame_rate_30": true,
+    "output_frame_count": true,
+    "output_progressive": true,
+    "output_audio_absent": true,
+    "output_prores": true
+  },
+  "scope": {
+    "interpolation": true,
+    "exact_duplicate_removal": true,
+    "final_encoding": false,
+    "audio_mastering": false,
+    "in_game_integration": false,
+    "qa": false,
+    "release": false
+  }
+}

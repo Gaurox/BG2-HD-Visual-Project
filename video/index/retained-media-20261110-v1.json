@@ -1,0 +1,559 @@
+{
+  "schema": "video-retained-media-v1",
+  "date": "2026-11-10",
+  "cleanup": "pipeline/recipes/video-retained-cleanup-20261110-v1/cleanup.json",
+  "source_count": 50,
+  "selected_outputs": {
+    "DEATHAND": "video/deathand/runs/deathand-interpolation-apollo8-30fps-v1/03_interpolation/video-1080p-30fps-apollo8.mov",
+    "FLYTHR03": "video/flythr03/runs/flythr03-lab-interpolation-apollo8-30fps-v1/03_interpolation/video-1080p-30fps-apollo8.mov",
+    "RESTDUNG": "video/restdung/runs/restdung-seedvr-apollo30-20261109-v1/SeedVR2-RESTDUNG-3B-FP16-LAB-Apollo8-1080p30.mp4",
+    "RESTINN": "video/restinn/runs/restinn-seedvr-apollo-20261109-v1/RESTINN-SeedVR2-3B-FP16-LAB-Apollo8-1080p30.mp4",
+    "REST": "video/rest/runs/rest-seedvr-apollo-20261109-v1/REST-SeedVR2-3B-FP16-LAB-Apollo8-1080p30.mp4",
+    "DAYNITE": "video/daynite/runs/daynite-h3-01604-nearest-apollo30-20261110-v1/DAYNITE-H3-01604-NEAREST-Apollo8-1080p30-son-original-v1.mp4",
+    "POCKETZZ": "video/pocketzz/runs/pocketzz-comfyui-experiments-20260814/ComfyUI_00002_.mp4"
+  },
+  "pocketzz_status": "candidate only; user keeps this file, not a QA acceptance",
+  "relocated_dependencies": [
+    {
+      "previous": "video/daynite/runs/daynite-h3-01604-seedvr-apollo30-20261110-v1/DAYNITE-H3-01604-corrected-16x9-input-v1.mkv",
+      "retained": "video/daynite/runs/daynite-h3-01604-nearest-apollo30-20261110-v1/DAYNITE-H3-01604-corrected-16x9-input-v1.mkv",
+      "sha256": "b0f20786c383317876aa9bcb5a806046d2d8c977fb0a6dd85b66ce1fda794bfb"
+    },
+    {
+      "previous": "video/daynite/runs/daynite-h3-01604-seedvr-apollo30-20261110-v1/DAYNITE-H3-01604-fondus-corriges-16x9-son-original-24fps-v2.mp4",
+      "retained": "video/daynite/runs/daynite-h3-01604-nearest-apollo30-20261110-v1/DAYNITE-original-audio-aac.m4a",
+      "audio_packet_hash": "SHA256=7489ecefdd6f35863b66ecb1a9c6675cb356d71fc5969ff950206d970264af60",
+      "operation": "AAC packet extraction, no reencoding"
+    }
+  ],
+  "files": [
+    {
+      "path": "video/blackpit/blackpit.wbm",
+      "bytes": 4954763,
+      "sha256": "e6fd470859b6c66e7f7a9c5e24e777d4d5795c343738072871baa5759772e4f6",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/daynite/daynite.wbm",
+      "bytes": 2586217,
+      "sha256": "687b2e7e72d995238f4f0963e6cc45d3baba66b0388a88d0fa2344877e62f208",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/daynite/runs/daynite-comfyui-experiment-20260814/ComfyUI_00003_.mp4",
+      "bytes": 4261730,
+      "sha256": "35c369c92131fc899ac057f4dbdf7da1c10dd9a73faa0a384a92e66da1f00c3d",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/daynite/runs/daynite-h3-01604-nearest-apollo30-20261110-v1/DAYNITE-H3-01604-corrected-16x9-input-v1.mkv",
+      "bytes": 95977980,
+      "sha256": "b0f20786c383317876aa9bcb5a806046d2d8c977fb0a6dd85b66ce1fda794bfb",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/daynite/runs/daynite-h3-01604-nearest-apollo30-20261110-v1/DAYNITE-H3-01604-NEAREST-1080p24-son-original-v1.mp4",
+      "bytes": 9382521,
+      "sha256": "f89b053348e0f531aa65c0c411faed637413ac32314689cf1032c0d2199583b9",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/daynite/runs/daynite-h3-01604-nearest-apollo30-20261110-v1/DAYNITE-H3-01604-NEAREST-Apollo8-1080p30-son-original-v1.mp4",
+      "bytes": 17413696,
+      "sha256": "2f7929e7e5d60bf40474d563fb89fedb2f064db25e124aa917d91cf49670cb4c",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/daynite/runs/daynite-h3-01604-nearest-apollo30-20261110-v1/DAYNITE-original-audio-aac.m4a",
+      "bytes": 229844,
+      "sha256": "6a93808f7488b9a2250bf4f12e862ba3fe96175ea3fb931e521e6f03f20f32b3",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/daynite/runs/daynite-h3-nearest-ingame-20261110-v1/daynite.wbm",
+      "bytes": 25117307,
+      "sha256": "f71b042e9e4cd1f3af6f78d42c1485511d49a5ae17a8aa90c0055c73029617c9",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/daynite/runs/daynite-keyframes-seedvr-imagegen-20261110-v1/DAYNITE-JOUR-SeedVR-02.000s-1920x1080.png",
+      "bytes": 2038492,
+      "sha256": "4a44a2c26402ba129098d056b5f7433d94f4e46e5c5230ba1ec8a867d40e5ce6",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/daynite/runs/daynite-keyframes-seedvr-imagegen-20261110-v1/DAYNITE-JOUR-SeedVR-reconstruction-brute-v1.png",
+      "bytes": 2266702,
+      "sha256": "f889fd780a5a8dfd092a7615b6605cd029dc9fdaa4c172b30e2fab17a9886645",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/daynite/runs/daynite-keyframes-seedvr-imagegen-20261110-v1/DAYNITE-NUIT-SeedVR-07.600s-1920x1080.png",
+      "bytes": 1332058,
+      "sha256": "cd7f02133caf1370852fd5b12a82415ca42275b45cb1acd3260d01af1e6d26ad",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/daynite/runs/daynite-keyframes-seedvr-imagegen-20261110-v1/DAYNITE-NUIT-SeedVR-reconstruction-brute-v1.png",
+      "bytes": 1607287,
+      "sha256": "91a11121fd849d0bcee2754b5feed0e63190c694e4b21cac0110de7e4eef3046",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/daynite/runs/daynite-keyframes-seedvr-imagegen-20261110-v1/T2-DAYNITE-JOUR-SeedVR-reconstruction-1920x1080-v1.png",
+      "bytes": 2575766,
+      "sha256": "2e8beb82681ae3cc829cc8bccada3cbfb878f01e29358e6760b57f500dfe9fd5",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/daynite/runs/daynite-keyframes-seedvr-imagegen-20261110-v1/T2-DAYNITE-NUIT-SeedVR-reconstruction-1920x1080-v1.png",
+      "bytes": 1871468,
+      "sha256": "d2a984297f1158afb5bc9dc0386102bdf911bebd304fecc58fb2d8fbf1fcc355",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/daynite/runs/daynite-keyframes-T4-night-geometry-day-style-20261110-v1/T4-DAYNITE-JOUR-generation-brute-v1.png",
+      "bytes": 2412694,
+      "sha256": "c6243973ca99d717a44f0e9a304eafa9dd16a871337af20bf5e3068bedb11b64",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/daynite/runs/daynite-keyframes-T4-night-geometry-day-style-20261110-v1/T4-DAYNITE-JOUR-geometrie-NUIT-T2-1920x1080-v1.png",
+      "bytes": 2734046,
+      "sha256": "65907693b26855263d6f44feec9c2bac7cfb73ffddff2f50a1a84a1c74221e6d",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/daynite/runs/daynite-keyframes-T4-night-geometry-day-style-20261110-v1/T4-DAYNITE-NUIT-copie-identique-T2-1920x1080.png",
+      "bytes": 1871468,
+      "sha256": "d2a984297f1158afb5bc9dc0386102bdf911bebd304fecc58fb2d8fbf1fcc355",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/daynite/runs/daynite-minimax-h3-01604-fades-20261110-v1/DAYNITE-H3-01604-fondus-corriges-24fps-10s-v1.mp4",
+      "bytes": 4539772,
+      "sha256": "51dc2b2f2fbbd87ad4a1270d9e98150ea89498cab6403dc09dbccf33a530475e",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/daynite/runs/daynite-minimax-h3-01604-fades-20261110-v1/MiniMax_H3_01604_-original.mp4",
+      "bytes": 5640209,
+      "sha256": "1e25eca272dcf8db9ed857e2737ab9acaf4c64d29c8ceb110b1e7b2b950e9803",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/daynite/runs/daynite-seedvr-apollo-20261109-v1/DAYNITE-SeedVR2-3B-FP16-LAB-1080p15.mp4",
+      "bytes": 4324441,
+      "sha256": "371c0f54c05691563903d8b71e33793afb1455db2e5967ff03079a6946851259",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/daynite/source-preview-720p15.mp4",
+      "bytes": 3061246,
+      "sha256": "a4fb4e5ea1fd628e62228e5f6c489db6281aae535907de5ec8cd386189cdb274",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/de_DE_end15fps/de_DE_end15fps.wbm",
+      "bytes": 32008848,
+      "sha256": "38a2f429e956e49482d31dfebf961f8bced92caada5522e17aac57182ff95e53",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/de_DE_intro/de_DE_intro.wbm",
+      "bytes": 29981679,
+      "sha256": "dd3dd9c342074251d3d689dc36d3962269c34a81c249416cce41351cc5fcd59a",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/de_DE_intro15f/de_DE_intro15f.wbm",
+      "bytes": 49540184,
+      "sha256": "aa4ea388c7e105678c79d93b7cb50aff0cb0662cbc3020e62a2b2fe411722731",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/de_DE_melissan/de_DE_melissan.wbm",
+      "bytes": 9204460,
+      "sha256": "bc117113cde816f64e1c2d80bf82a8e024c795bfbc5a2147e8919558713b7654",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/deathand/deathand.wbm",
+      "bytes": 5789053,
+      "sha256": "8088eaf1955ba23dc078da7bbb11f6b6dcacff76a06b58d2ed34cf9aab3321bc",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/deathand/runs/deathand-interpolation-apollo8-30fps-v1/03_interpolation/video-1080p-30fps-apollo8.mov",
+      "bytes": 471036425,
+      "sha256": "1f496dfd5f0ea0b170c01ba5297076976e616df7501b71bbb905a667462419f0",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/deathand/runs/deathand-upscale-seedvr2-lab-1080p-v1/02_upscale/DEATHAND-1080p-seedvr2-3b-int8-lab.mp4",
+      "bytes": 13021901,
+      "sha256": "0ed81593c9581e403896f874c2926d44cf429fb8d816fb71538d17be4527bdba",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/dorngorg/dorngorg.wbm",
+      "bytes": 2901363,
+      "sha256": "06795963b793ed6a8c39e3a389315d795854ddfd2113f71cf3e5a911e5f751fe",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/dorntree/dorntree.wbm",
+      "bytes": 3460136,
+      "sha256": "0c8210302b2c89d54d125c7381ec8c0405c04be4dc91a8dc8bad440f6753f604",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/end15fps/end15fps.wbm",
+      "bytes": 31297158,
+      "sha256": "ffca53b4bd6f92e40821e20f73631658141d08f8854cd4cde61a859408a22368",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/endcrdit/endcrdit.wbm",
+      "bytes": 34938132,
+      "sha256": "c33fb0c335d5e0d89a82417f055decbe0e349d66d98fb218b44ef952085761c5",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/flythr01/flythr01.wbm",
+      "bytes": 5303761,
+      "sha256": "7e2222e87d82522e1a91098e080238ed4d0d4380cba132dbd56fda2f2534c21c",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/flythr02/flythr02.wbm",
+      "bytes": 3282591,
+      "sha256": "7926a56959d7530cf6b44bdb436432213a81c623044532fb7814fd9b726380ef",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/flythr03/flythr03.wbm",
+      "bytes": 4588109,
+      "sha256": "bfd239a526f04cacc9ab3f90a3257d25bc87fbb0db4f804c1796ae4db729df80",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/flythr03/runs/flythr03-lab-interpolation-apollo8-30fps-v1/03_interpolation/video-1080p-30fps-apollo8.mov",
+      "bytes": 391311251,
+      "sha256": "48220ed2522cb1f5df7478c3fc6448408e00c2ba61b20775b6f9cd7ec753e5d5",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/flythr03/runs/flythr03-upscale-seedvr2-lab-prototype-v1/02_upscale/FLYTHR03-1080p-seedvr2-3b-int8-lab.mp4",
+      "bytes": 23744930,
+      "sha256": "8be673ade2be30f9f5facd4bc5ae4a77dc8b6dd0cd0005ef773c7d9ec9beb22b",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/flythr04/flythr04.wbm",
+      "bytes": 4190381,
+      "sha256": "62c10cbbf5cdced372ccd1d3a5e457cb1b2c260c3fbcfd7ea5c96e08143c6220",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/hexxatdr/hexxatdr.wbm",
+      "bytes": 2784557,
+      "sha256": "ff856ae00ff6fb90823e99f2ad45159decbeb20de289aa915f168979b9510faf",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/installations/daynite-h3-nearest-20261110-v1/before/daynite.wbm",
+      "bytes": 2586217,
+      "sha256": "687b2e7e72d995238f4f0963e6cc45d3baba66b0388a88d0fa2344877e62f208",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/installations/restdung-seedvr-20261109-v1/before/restdung.wbm",
+      "bytes": 1499772,
+      "sha256": "5ea4565b2a7959a89d3671987afa5ef9b639527c1578b0666d421eed29c133e3",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/intro/intro.wbm",
+      "bytes": 28676301,
+      "sha256": "12b5269d7eef235b7d964c6834aa73e9412891be17d68df4e05fc6b44704aba6",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/intro15f/intro15f.wbm",
+      "bytes": 44086660,
+      "sha256": "5446b0c17ae4d8fb78b36da80efec820f57d36d0ed2f94e22e16a7bba7b5f02b",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/it_IT_end15fps/it_IT_end15fps.wbm",
+      "bytes": 32015452,
+      "sha256": "e4aae02ad13096efef638df2fdbed89111eb7d1568b79d2eafaba9ada139fd57",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/it_IT_intro15f/it_IT_intro15f.wbm",
+      "bytes": 49757549,
+      "sha256": "e71b8633305a1f8da2a1ca2751446cc4769cb063717cb6672b4284fcfb34fbf5",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/logo/logo.wbm",
+      "bytes": 2687283,
+      "sha256": "5b0c8eee77daae848861b47c4360e777f01e95db2f971eb2eae80d0d597aa99b",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/manaforg/manaforg.wbm",
+      "bytes": 4357634,
+      "sha256": "4788be474a9b7988782456a79b8b6095e416ccbc4fe48786b54dd16d2ae9fe5d",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/melissan/melissan.wbm",
+      "bytes": 9243155,
+      "sha256": "049d4d5d017df9787f21ae2dba0807d170277f9729b3954b9eeb406e1ef08566",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/neeraes/neeraes.wbm",
+      "bytes": 2912406,
+      "sha256": "240960fde2dd0fabae332a7ba2fe3d7d3c081236211fd65f61366133d82714b3",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/niteday/niteday.wbm",
+      "bytes": 2668595,
+      "sha256": "7e45bd2942940f8b6ebcaddc06b1bc39f95187424c302d43f1c49e7b8fff57fe",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/outro/outro.wbm",
+      "bytes": 20390800,
+      "sha256": "af6ae520d04fcbc5e9f1333fbcdb8860bc672468418a77172c24f594df12dcbc",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/pl_PL_end15fps/pl_PL_end15fps.wbm",
+      "bytes": 28379198,
+      "sha256": "1c1d2181d4c57141ebb67d772477bc723ea56008b512055cae9765e13d4e831a",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/pl_PL_intro/pl_PL_intro.wbm",
+      "bytes": 30489394,
+      "sha256": "df4a980aa22733eb37c71ebf68804c18c003a2fd6a25eb347f67a7938ed32ded",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/pl_PL_intro15f/pl_PL_intro15f.wbm",
+      "bytes": 45993779,
+      "sha256": "81852332cd82e09fbb7fb3d887d3d7a35f82894da2537b758415c4627dc1be47",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/pl_PL_melissan/pl_PL_melissan.wbm",
+      "bytes": 9831180,
+      "sha256": "b2f3a1252a36458c68076fff2803e69f8d61d45e3ac381572c0ccb4d7b8258fd",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/pocketzz/pocketzz.wbm",
+      "bytes": 1459588,
+      "sha256": "3241409b883a01c7d603d92cfa57c15cfc8d438c4c9dd29967570e928738c7aa",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/pocketzz/runs/pocketzz-comfyui-experiments-20260814/ComfyUI_00002_.mp4",
+      "bytes": 1631641,
+      "sha256": "5744eb0cbc905acb82e8d32f864b2b0f09efff12bb38c2937424a6809aa4de26",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/rasaadmi/rasaadmi.wbm",
+      "bytes": 3036654,
+      "sha256": "35c5b94529ab59c95c074c80d579f6f7713cd0958303068b991bf003563ed088",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/rasaadte/rasaadte.wbm",
+      "bytes": 3720392,
+      "sha256": "0ea04dbedd453a33b2a275118d78462d254034d72b65f357813052c2c491e557",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/rest/rest.wbm",
+      "bytes": 3216075,
+      "sha256": "5b8b5a0b9128af2e11d38344c51e1f7da6db92862df6c3cd14b608117ec56d0d",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/rest/runs/rest-seedvr-apollo-20261109-v1/REST-SeedVR2-3B-FP16-LAB-1080p15.mp4",
+      "bytes": 4428780,
+      "sha256": "4a5e9bab4ef5b6f0d05fbdd18f3a45a2adb8f0b26c22eb0f3207cb1175b8b4e0",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/rest/runs/rest-seedvr-apollo-20261109-v1/REST-SeedVR2-3B-FP16-LAB-Apollo8-1080p30.mp4",
+      "bytes": 3335001,
+      "sha256": "82b921e893d8e8c74c3d1b1e9021703484ee85e3a08cf38e23dbb2b16515d37c",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/rest/source-preview-720p15.mp4",
+      "bytes": 2456213,
+      "sha256": "949f0b254776e0c32c48a97d9e513ac81dc91abaf502726d8803395adec7e632",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/restdung/restdung.wbm",
+      "bytes": 1499772,
+      "sha256": "5ea4565b2a7959a89d3671987afa5ef9b639527c1578b0666d421eed29c133e3",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/restdung/runs/restdung-seedvr-apollo30-20261109-v1/comparison-15-30.png",
+      "bytes": 221072,
+      "sha256": "ad53789f0a1aff81cf8f015cfcd080c23c7f3ec1aa557981f87f61584f3e58d6",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/restdung/runs/restdung-seedvr-apollo30-20261109-v1/SeedVR2-RESTDUNG-3B-FP16-LAB-Apollo8-1080p30.mp4",
+      "bytes": 3254927,
+      "sha256": "5363723dd9b29da946d8766af3aba23ce563b850cfd35301a071d296e53d47a8",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/restdung/runs/restdung-seedvr-ingame-20261109-v1/restdung.wbm",
+      "bytes": 5654570,
+      "sha256": "98e98838208b6fd44ded83e51917bf605ed255376409a620a088371266b20047",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/restdung/runs/restdung-seedvr-reference-20261109-v1/comparator-seedvr-preview.png",
+      "bytes": 99128,
+      "sha256": "74a58310f13b05c8d9800c63b99aba1ed96d72ff8b3608698121a91176c23d7a",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/restdung/runs/restdung-seedvr-reference-20261109-v1/SeedVR2-RESTDUNG-3B-FP16-LAB-1080p15.mp4",
+      "bytes": 1384270,
+      "sha256": "3a76e06a0d0d4ab2438c13736485e97b58c88f46926491bad85bc4d6eaf1fdde",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/restdung/source-preview-720p15.mp4",
+      "bytes": 1753751,
+      "sha256": "f1b1509cf2d27a5f13681131d4debe59f11b171c618876e819a3684216d3fb8d",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/restinn/restinn.wbm",
+      "bytes": 1567105,
+      "sha256": "2827b234474fd2b45c7838b888224988e78df6acf07c039ff6c75f98b8830cde",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/restinn/runs/restinn-seedvr-apollo-20261109-v1/RESTINN-SeedVR2-3B-FP16-LAB-1080p15.mp4",
+      "bytes": 7348064,
+      "sha256": "85c4db3e7f247c17cb964d673451be048c0f3757fdf88118a750abf0baac4cdf",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/restinn/runs/restinn-seedvr-apollo-20261109-v1/RESTINN-SeedVR2-3B-FP16-LAB-Apollo8-1080p30.mp4",
+      "bytes": 6778095,
+      "sha256": "4d8e99d03b86d03e303cbb91a7abd0b4637f28e31f94fd34760e83ffc66c2462",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/restinn/source-preview-720p15.mp4",
+      "bytes": 2204556,
+      "sha256": "19cb34e43a890c3d8d43a4579a014c4684900e0fbc81da4a85ed66d8b78f96b7",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/saradush/saradush.wbm",
+      "bytes": 5575999,
+      "sha256": "b5a84d2c08ca8bc88de4685a136bfaf60f53368d422e2b38df9d4208b8bd78fe",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/tutorials/tut01/tut01.wbm",
+      "bytes": 850034,
+      "sha256": "6d735e8f54456d2393938c5cc241d4707096ee22c6f7411cd434d8ccd6247e1b",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/tutorials/tut03/tut03.wbm",
+      "bytes": 639268,
+      "sha256": "43e2f453899d82d244949f977574b2277f5270838fba9a0177f3fd218073c1c5",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/tutorials/tut04/tut04.wbm",
+      "bytes": 512751,
+      "sha256": "29a76478a39d521e64b3d902327a995b6b6fd698b6a383efe9bd34e9d3e561f8",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/tutorials/tut05/tut05.wbm",
+      "bytes": 1051922,
+      "sha256": "219f4bf05e5f6cafa971c5f480c84b3c89fd00143cd063cabbdb949e30366a6d",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/tutorials/tut06/tut06.wbm",
+      "bytes": 1037701,
+      "sha256": "37b7a4ffbc2badaf81aba96998d2c06ef03baca7747aa7d4b8416505f73272da",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/tutorials/tut07/tut07.wbm",
+      "bytes": 808197,
+      "sha256": "96dbc53b224596b7600c309f17b614e471e2d91ea7b0e57ef13b50546e356d4f",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/tutorials/tut08/tut08.wbm",
+      "bytes": 660865,
+      "sha256": "22f4a2b7d04f6732575a98ff5f4b9ad1a7460afafa38a1217313501779fce8d0",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/tutorials/tut09/tut09.wbm",
+      "bytes": 490331,
+      "sha256": "f1718d894ff9ac275405ba5c48cedb07184c0bbcfc2f0db1abb1a74d3c2f08ce",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/tutorials/tut10/tut10.wbm",
+      "bytes": 827170,
+      "sha256": "3d4046ac748aa846af853bff0937532ca1dc2b3e6455182e6f3f5bab4c2c4a43",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/tutorials/tut11/tut11.wbm",
+      "bytes": 838344,
+      "sha256": "8556b9448a24b2a0c60aab46d0014f42884f198f3a5c181dffb76aba1b3cefa4",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/tutorials/tut12/tut12.wbm",
+      "bytes": 580128,
+      "sha256": "c25615498ab34b8ee3b5eaee60400186418266838aa999e2ee0a542b511c6210",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/tutorials/tut13/tut13.wbm",
+      "bytes": 761759,
+      "sha256": "e4d9ccdf0feb762d64c721b4ce2e3f5546a8a477a3661e19737c85031a91213c",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    },
+    {
+      "path": "video/tutorials/tut14/tut14.wbm",
+      "bytes": 984259,
+      "sha256": "134d88ee3a2f822d742f9c2c512402805414eee4f4b36b77d68ca0ce328d2d1d",
+      "reason": "canonical source, retained production chain, QA, installation backup or active tool"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'G:\AI\BG2_Upscale\video\daynite\runs\daynite-comfyui-experiment-20260814\ComfyUI_00003_.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    workflow        : {"id": "e2c8e6ec-9e8a-4a81-a240-7e7d2befc2bf", "revision": 0, "last_node_id": 24, "last_link_id": 25, "nodes": [{"id": 20, "type": "Note", "pos": [-358.9923959032341, 553.3187800066305], "size": [290.1922351462714, 97.95592567265356], "flags": {}, "order"
+    prompt          : {"10": {"inputs": {"seed": 42, "resolution": 1080, "max_resolution": 0, "batch_size": 33, "uniform_batch_size": true, "color_correction": "lab", "temporal_overlap": 3, "prepend_frames": 0, "input_noise_scale": 0.0, "latent_noise_scale": 0.0, "offload_devi
+    encoder         : Lavf62.3.100
+  Duration: 00:00:10.00, start: 0.000000, bitrate: 3409 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 1920x1080, 3271 kb/s, 15 fps, 15 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 22050 Hz, stereo, fltp, 125 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+Input #1, matroska,webm, from 'G:\AI\BG2_Upscale\video\daynite\daynite.wbm':
+  Metadata:
+    encoder         : Lavf53.24.2
+  Duration: 00:00:10.27, start: 0.000000, bitrate: 2014 kb/s
+  Stream #1:0(eng): Video: vp8, yuv420p(progressive), 1280x720, SAR 1:1 DAR 16:9, 15 fps, 15 tbr, 1k tbn (default)
+  Stream #1:1: Audio: vorbis, 22050 Hz, stereo, fltp (default)
+Stream mapping:
+  Stream #0:0 -> #0:0 (copy)
+  Stream #1:1 -> #0:1 (vorbis (native) -> aac (native))
+Output #0, mp4, to 'G:\AI\BG2_Upscale\video\daynite\runs\daynite-seedvr-apollo-20261109-v1\DAYNITE-SeedVR2-3B-FP16-LAB-1080p15.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    workflow        : {"id": "e2c8e6ec-9e8a-4a81-a240-7e7d2befc2bf", "revision": 0, "last_node_id": 24, "last_link_id": 25, "nodes": [{"id": 20, "type": "Note", "pos": [-358.9923959032341, 553.3187800066305], "size": [290.1922351462714, 97.95592567265356], "flags": {}, "order"
+    prompt          : {"10": {"inputs": {"seed": 42, "resolution": 1080, "max_resolution": 0, "batch_size": 33, "uniform_batch_size": true, "color_correction": "lab", "temporal_overlap": 3, "prepend_frames": 0, "input_noise_scale": 0.0, "latent_noise_scale": 0.0, "offload_devi
+    encoder         : Lavf62.0.100
+  Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 1920x1080, q=2-31, 3271 kb/s, 15 fps, 15 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+  Stream #0:1: Audio: aac (LC) (mp4a / 0x6134706D), 22050 Hz, stereo, fltp, 192 kb/s (default)
+    Metadata:
+      encoder         : Lavc62.0.101 aac
+[mp4 @ 000002163ff54b40] Starting second pass: moving the moov atom to the beginning of the file
+[out#0/mp4 @ 000002163fcbe980] video:3994KiB audio:222KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.171785%
+frame=  150 fps=0.0 q=-1.0 Lsize=    4223KiB time=00:00:09.86 bitrate=3506.3kbits/s speed=57.1x    
+[aac @ 000002163fa1e0c0] Qavg: 39251.434

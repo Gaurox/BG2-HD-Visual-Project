@@ -1,0 +1,64 @@
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'G:\AI\BG2_Upscale\video\daynite\runs\daynite-seedvr-direction-20261109-v1\forward-output\7218388b_001.mov':
+  Metadata:
+    major_brand     : qt  
+    minor_version   : 512
+    compatible_brands: qt  
+    prompt          : {"10": {"inputs": {"seed": 42, "resolution": 1080, "max_resolution": 0, "batch_size": 33, "uniform_batch_size": true, "color_correction": "lab", "temporal_overlap": 3, "prepend_frames": 0, "input_noise_scale": 0.0, "latent_noise_scale": 0.0, "offload_devi
+    encoder         : Lavf62.3.100
+  Duration: 00:00:10.00, start: 0.000000, bitrate: 137648 kb/s
+  Stream #0:0[0x1]: Video: prores (4444) (ap4h / 0x68347061), yuv444p12le(bt709/bt709/iec61966-2-1), 1920x1080, 137645 kb/s, 15 fps, 15 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : FFMP
+Input #1, matroska,webm, from 'G:\AI\BG2_Upscale\video\daynite\daynite.wbm':
+  Metadata:
+    encoder         : Lavf53.24.2
+  Duration: 00:00:10.27, start: 0.000000, bitrate: 2014 kb/s
+  Stream #1:0(eng): Video: vp8, yuv420p(progressive), 1280x720, SAR 1:1 DAR 16:9, 15 fps, 15 tbr, 1k tbn (default)
+  Stream #1:1: Audio: vorbis, 22050 Hz, stereo, fltp (default)
+Stream mapping:
+  Stream #0:0 -> #0:0 (prores (native) -> h264 (libx264))
+  Stream #1:1 -> #0:1 (vorbis (native) -> aac (native))
+[libx264 @ 00000203066f4ac0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2
+[libx264 @ 00000203066f4ac0] profile High, level 5.0, 4:2:0, 8-bit
+[libx264 @ 00000203066f4ac0] 264 - core 165 r3215 32c3b80 - H.264/MPEG-4 AVC codec - Copyleft 2003-2025 - http://www.videolan.org/x264.html - options: cabac=1 ref=5 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=8 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=2 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=34 lookahead_threads=5 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=3 b_pyramid=2 b_adapt=1 b_bias=0 direct=3 weightb=1 open_gop=0 weightp=2 keyint=250 keyint_min=15 scenecut=40 intra_refresh=0 rc_lookahead=50 rc=crf mbtree=1 crf=16.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00
+Output #0, mp4, to 'G:\AI\BG2_Upscale\video\daynite\runs\daynite-seedvr-direction-20261109-v1\DAYNITE-SeedVR2-DIRECT-temoin-1080p15.mp4':
+  Metadata:
+    major_brand     : qt  
+    minor_version   : 512
+    compatible_brands: qt  
+    prompt          : {"10": {"inputs": {"seed": 42, "resolution": 1080, "max_resolution": 0, "batch_size": 33, "uniform_batch_size": true, "color_correction": "lab", "temporal_overlap": 3, "prepend_frames": 0, "input_noise_scale": 0.0, "latent_noise_scale": 0.0, "offload_devi
+    encoder         : Lavf62.0.100
+  Stream #0:0: Video: h264 (avc1 / 0x31637661), yuv420p(tv, bt709/bt709/iec61966-2-1, progressive), 1920x1080, q=2-31, 15 fps, 15360 tbn (default)
+    Metadata:
+      encoder         : Lavc62.0.101 libx264
+      handler_name    : VideoHandler
+      vendor_id       : FFMP
+    Side data:
+      cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A
+  Stream #0:1: Audio: aac (LC) (mp4a / 0x6134706D), 22050 Hz, stereo, fltp, 192 kb/s (default)
+    Metadata:
+      encoder         : Lavc62.0.101 aac
+frame=    2 fps=0.0 q=20.0 size=       0KiB time=00:00:00.00 bitrate=N/A speed=   0x    frame=   21 fps= 20 q=20.0 size=    2304KiB time=00:00:01.26 bitrate=14901.1kbits/s speed=1.23x    frame=   60 fps= 39 q=20.0 size=    6144KiB time=00:00:09.68 bitrate=5198.2kbits/s speed=6.22x    frame=   98 fps= 47 q=20.0 size=    9216KiB time=N/A bitrate=N/A speed=N/A    [mp4 @ 00000203067a1680] Starting second pass: moving the moov atom to the beginning of the file
+[out#0/mp4 @ 00000203067b0e40] video:11308KiB audio:222KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.062878%
+frame=  150 fps= 60 q=-1.0 Lsize=   11538KiB time=00:00:09.86 bitrate=9579.3kbits/s speed=3.94x    
+[libx264 @ 00000203066f4ac0] frame I:1     Avg QP:10.74  size:  1651
+[libx264 @ 00000203066f4ac0] frame P:44    Avg QP:11.99  size:200967
+[libx264 @ 00000203066f4ac0] frame B:105   Avg QP:15.82  size: 26044
+[libx264 @ 00000203066f4ac0] consecutive B-frames:  5.3%  2.7%  4.0% 88.0%
+[libx264 @ 00000203066f4ac0] mb I  I16..4:  3.9% 95.4%  0.6%
+[libx264 @ 00000203066f4ac0] mb P  I16..4:  2.9% 10.5%  1.0%  P16..4: 38.7% 16.5% 12.7%  0.0%  0.0%    skip:17.6%
+[libx264 @ 00000203066f4ac0] mb B  I16..4:  0.2%  0.7%  0.0%  B16..8: 28.0%  4.3%  1.8%  direct:19.6%  skip:45.3%  L0:39.8% L1:40.8% BI:19.4%
+[libx264 @ 00000203066f4ac0] 8x8 transform intra:75.9% inter:49.0%
+[libx264 @ 00000203066f4ac0] direct mvs  spatial:83.8% temporal:16.2%
+[libx264 @ 00000203066f4ac0] coded y,uvDC,uvAC intra: 56.2% 62.5% 49.9% inter: 33.2% 33.6% 10.8%
+[libx264 @ 00000203066f4ac0] i16 v,h,dc,p: 20% 49%  7% 24%
+[libx264 @ 00000203066f4ac0] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 12% 20% 33%  5%  5%  4%  6%  4% 10%
+[libx264 @ 00000203066f4ac0] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 10% 12% 12% 11% 12%  8% 11%  9% 16%
+[libx264 @ 00000203066f4ac0] i8c dc,h,v,p: 43% 39% 12%  7%
+[libx264 @ 00000203066f4ac0] Weighted P-Frames: Y:65.9% UV:63.6%
+[libx264 @ 00000203066f4ac0] ref P L0: 62.4% 19.7% 11.9%  3.2%  1.9%  0.8%  0.1%
+[libx264 @ 00000203066f4ac0] ref B L0: 81.1% 15.0%  3.1%  0.8%
+[libx264 @ 00000203066f4ac0] ref B L1: 95.3%  4.7%
+[libx264 @ 00000203066f4ac0] kb/s:9263.05
+[aac @ 0000020306730380] Qavg: 39251.434

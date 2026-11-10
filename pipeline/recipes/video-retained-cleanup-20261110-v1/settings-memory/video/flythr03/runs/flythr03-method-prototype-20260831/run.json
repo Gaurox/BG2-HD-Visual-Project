@@ -1,0 +1,52 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "schema_version": 1,
+  "run_id": "flythr03-method-prototype-20260831",
+  "domain": "videos",
+  "asset_ids": [
+    "videos:movie-default-flythr03"
+  ],
+  "pipeline": {
+    "id": "seedvr2-video-3b-int8-1080p-v1",
+    "recipe_path": "pipeline/comfyui/workflows/SeedVR-Video-BG2-3B-INT8-1080p-v1.api.json",
+    "recipe_sha256": "6a6837a95253fd34af4d369953c0b8c06d06603f1e936e5bc150610b79c16687",
+    "version": "1"
+  },
+  "inputs": [
+    {
+      "role": "source-video",
+      "path": "video/runs/flythr03-method-prototype-20260831/FLYTHR03-original.wbm",
+      "sha256": "bfd239a526f04cacc9ab3f90a3257d25bc87fbb0db4f804c1796ae4db729df80",
+      "bytes": 4588109
+    }
+  ],
+  "outputs": [
+    {
+      "role": "upscale-technical-video",
+      "path": "video/runs/flythr03-method-prototype-20260831/FLYTHR03-1080p-seedvr2-3b-int8-full-temporal.mp4",
+      "sha256": "fb9f3939ab50cd956371747122bdcc9cea8138978183042887e2392015f98abf",
+      "bytes": 24758631
+    },
+    {
+      "role": "prototype-source-audio-remux-non-authoritative",
+      "path": "video/runs/flythr03-method-prototype-20260831/FLYTHR03-1080p-seedvr2-3b-int8-full-temporal-source-audio.mkv",
+      "sha256": "2431e27771d2a677ea1eaff09127fc24c806fc6dcc9bbc6674449848aeb6ba98",
+      "bytes": 24727230
+    }
+  ],
+  "provenance": {
+    "created_at_utc": "2026-08-31T14:56:46.7150492Z",
+    "generator": "validated ComfyUI API prototype",
+    "command": [
+      "POST",
+      "http://127.0.0.1:8188/prompt",
+      "cb7d610d-46ce-460d-ae1f-8cb831d96c8e"
+    ]
+  },
+  "result": {
+    "status": "completed",
+    "sealed": true,
+    "completed_at_utc": "2026-08-31T14:56:46.7150492Z",
+    "notes": "Method validation only. Asset QA, interpolation, final encoding, audio mastering, in-game integration and release selection are not assessed."
+  }
+}

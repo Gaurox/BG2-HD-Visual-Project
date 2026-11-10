@@ -1,0 +1,43 @@
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'G:\AI\BG2_Upscale\video\rest\runs\rest-seedvr-apollo-20261109-v1\comfy-output\9885b349_001.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    prompt          : {"10": {"inputs": {"seed": 42, "resolution": 1080, "max_resolution": 0, "batch_size": 33, "uniform_batch_size": true, "color_correction": "lab", "temporal_overlap": 3, "prepend_frames": 0, "input_noise_scale": 0.0, "latent_noise_scale": 0.0, "offload_devi
+    encoder         : Lavf62.3.100
+  Duration: 00:00:12.00, start: 0.000000, bitrate: 2900 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709/bt709/iec61966-2-1, progressive), 1920x1080, 2767 kb/s, 15 fps, 15 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 22050 Hz, stereo, fltp, 126 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+Input #1, matroska,webm, from 'G:\AI\BG2_Upscale\video\rest\rest.wbm':
+  Metadata:
+    encoder         : Lavf53.24.2
+  Duration: 00:00:12.00, start: 0.000000, bitrate: 2144 kb/s
+  Stream #1:0(eng): Video: vp8, yuv420p(progressive), 1280x720, SAR 1:1 DAR 16:9, 15 fps, 15 tbr, 1k tbn (default)
+  Stream #1:1: Audio: vorbis, 22050 Hz, stereo, fltp (default)
+Stream mapping:
+  Stream #0:0 -> #0:0 (copy)
+  Stream #1:1 -> #0:1 (vorbis (native) -> aac (native))
+Output #0, mp4, to 'G:\AI\BG2_Upscale\video\rest\runs\rest-seedvr-apollo-20261109-v1\REST-SeedVR2-3B-FP16-LAB-1080p15.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    prompt          : {"10": {"inputs": {"seed": 42, "resolution": 1080, "max_resolution": 0, "batch_size": 33, "uniform_batch_size": true, "color_correction": "lab", "temporal_overlap": 3, "prepend_frames": 0, "input_noise_scale": 0.0, "latent_noise_scale": 0.0, "offload_devi
+    encoder         : Lavf62.0.100
+  Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709/bt709/iec61966-2-1, progressive), 1920x1080, q=2-31, 2767 kb/s, 15 fps, 15 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+  Stream #0:1: Audio: aac (LC) (mp4a / 0x6134706D), 22050 Hz, stereo, fltp, 192 kb/s (default)
+    Metadata:
+      encoder         : Lavc62.0.101 aac
+[mp4 @ 000002c433b13080] Starting second pass: moving the moov atom to the beginning of the file
+[out#0/mp4 @ 000002c433dd0e80] video:4054KiB audio:262KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.209230%
+frame=  180 fps=0.0 q=-1.0 Lsize=    4325KiB time=00:00:11.86 bitrate=2985.7kbits/s speed=90.2x    
+[aac @ 000002c433b14b40] Qavg: 64503.746

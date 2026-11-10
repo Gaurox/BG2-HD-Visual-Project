@@ -1,0 +1,11 @@
+# Nettoyage des seules chaînes vidéo retenues — 2026-11-10
+
+- Demande utilisateur : mettre le suivi vidéo à jour, supprimer tous les essais non gardés de toutes les vidéos, conserver les fichiers ayant mené aux résultats finaux, commit. Réponse explicite POCKETZZ : garder uniquement le candidat SeedVR FullHD.
+- `cleanup.py plan` puis `cleanup.py apply` exécutés. `plan.json` immuable : SHA/tailles de148fichiers protégés et467suppressions ;65petits fichiers de réglages/logs copiés et vérifiés sous `settings-memory/` avant suppression des anciens emplacements.
+- `cleanup.json` : état complete,0échec,467fichiers/4 680 715 222octets supprimés ;50sources natives et2installations/sauvegardes hash-identiques. Aucune écriture Bureau/ComfyUI/jeu/release. Scripts de nettoyage ponctuels ; ne pas rejouer sur le même reçu.
+- Entrées nearest sorties du run post-SeedVR écarté : MKV95 977 980octets copié à SHA identique ; AAC natif extrait sans réencodage. Nouveaux chemins sous `video/daynite/runs/daynite-h3-01604-nearest-apollo30-20261110-v1/` ; ancienne production.json non réécrite, alias conservés dans le plan et l'index des médias retenus.
+- REST/RESTINN : sorties Comfy MP4 redondantes supprimées après égalité SHA256 des paquets vidéo avec les SeedVR15 retenus ; source WBM et résultats15/30 conservés.
+- DEATHAND et FLYTHR03 LAB : MP4 upscalé + MOV Apollo et rapports/logs scellés conservés. Les autres essais FLYTHR03 ne sont pas les parents des résultats LAB retenus.
+- DAYNITE : SeedVR historique/framesT2/imagesT4/sourceH3/montage/nearest24+30/runtime conservés. `retained-h3-01604-prompt.api.json` extrait du rendu source : entrées LoadImage137/139=T4jour/T4nuit,27nœuds actifs. Pas de T1/T3/sens inverse/post-upscale SeedVR dans la chaîne finale.
+- POCKETZZ : seul `ComfyUI_00002_.mp4` conservé,1920×1080/15fps/90frames ; prompt embarqué exporté vers `retained-pocketzz-seedvr-prompt.api.json`. Candidat non validé, aucune interpolation/installation déduite.
+- `update_tracking.py` : index/processing.csv7productions, index/status.csv50assets, SUIVI.md, index/retained-media-20261110-v1.json88médias ; comparateur4sources+9résultats/étapes présents. Réglages historiques archivés byte-identiques ; aucune réécriture de run.json scellé.

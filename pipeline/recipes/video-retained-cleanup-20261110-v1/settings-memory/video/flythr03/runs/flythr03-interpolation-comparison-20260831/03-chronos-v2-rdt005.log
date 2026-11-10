@@ -1,0 +1,76 @@
+$ "C:\Program Files\Topaz Labs LLC\Topaz Video AI\ffmpeg.exe" -hide_banner -nostdin -y -i G:\AI\BG2_Upscale\video\runs\flythr03-method-prototype-20260831\FLYTHR03-1080p-seedvr2-3b-int8-full-temporal.mp4 -map 0:v:0 -an -vf tvai_fi=model=chr-2:fps=30:rdt=0.05:device=0:instances=0:download=1:vram=0.9,setpts=N/(30*TB) -fps_mode passthrough -c:v prores_ks -profile:v 3 -vendor apl0 -pix_fmt yuv422p10le -color_primaries bt709 -color_trc iec61966-2-1 -colorspace bt709 -movflags +faststart G:\AI\BG2_Upscale\video\proto\flythr03-interpolation-30fps-topaz\FLYTHR03-30fps-03-chronos-v2-rdt005.partial.mov
+
+
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'G:\AI\BG2_Upscale\video\runs\flythr03-method-prototype-20260831\FLYTHR03-1080p-seedvr2-3b-int8-full-temporal.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    prompt          : {"73": {"inputs": {"file": "FLYTHR03-full-17s.webm"}, "class_type": "LoadVideo", "_meta": {"title": "Load Video"}, "is_changed": [1729252497.6484737]}, "76": {"inputs": {"filename_prefix": "BG2_proto/FLYTHR03-1080p-seedvr2-3b-int8-full-temporal", "format"
+    encoder         : Lavf62.3.100
+  Duration: 00:00:17.40, start: 0.000000, bitrate: 11383 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709/bt709/iec61966-2-1, progressive), 1920x1080, 11251 kb/s, 15 fps, 15 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 22050 Hz, stereo, fltp, 125 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+[tvai_fi @ 00000209752DB700] Unable to parse option value "0" as video rate
+Stream mapping:
+  Stream #0:0 -> #0:0 (h264 (native) -> prores (prores_ks))
+[tvai_fi @ 00000209752DBA80] Unable to parse option value "0" as video rate
+[swscaler @ 000002096151A740] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000002096151A740] [swscaler @ 0000020961529680] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000002096151A740] [swscaler @ 00000209615385C0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000002096151A740] [swscaler @ 0000020961547D40] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000002096151A740] [swscaler @ 00000209615574C0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000002096151A740] [swscaler @ 0000020961566C40] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000002096151A740] [swscaler @ 00000209615763C0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000002096151A740] [swscaler @ 0000020961585B40] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000002096151A740] [swscaler @ 00000209615952C0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000002096151A740] [swscaler @ 00000209615A4A40] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000002096151A740] [swscaler @ 00000209615B41C0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000002096151A740] [swscaler @ 00000209615C3940] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000002096151A740] [swscaler @ 00000209615D30C0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000002096151A740] [swscaler @ 00000209615E2840] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000002096151A740] [swscaler @ 00000209615F1FC0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000002096151A740] [swscaler @ 0000020961601740] No accelerated colorspace conversion found from yuv420p to rgb48le.
+[swscaler @ 000002096151A740] [swscaler @ 0000020961610EC0] No accelerated colorspace conversion found from yuv420p to rgb48le.
+Output #0, mov, to 'G:\AI\BG2_Upscale\video\proto\flythr03-interpolation-30fps-topaz\FLYTHR03-30fps-03-chronos-v2-rdt005.partial.mov':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    prompt          : {"73": {"inputs": {"file": "FLYTHR03-full-17s.webm"}, "class_type": "LoadVideo", "_meta": {"title": "Load Video"}, "is_changed": [1729252497.6484737]}, "76": {"inputs": {"filename_prefix": "BG2_proto/FLYTHR03-1080p-seedvr2-3b-int8-full-temporal", "format"
+    encoder         : Lavf62.0.102
+  Stream #0:0(und): Video: prores (HQ) (apch / 0x68637061), yuv422p10le(tv, bt709/bt709/iec61966-2-1, progressive), 1920x1080, q=2-31, 200 kb/s, 30 fps, 15360 tbn (default)
+    Metadata:
+      encoder         : Lavc62.3.101 prores_ks
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+frame=    0 fps=0.0 q=0.0 size=       0KiB time=N/A bitrate=N/A speed=N/A elapsed=0:00:02.55    
+frame=   17 fps=5.5 q=-0.0 size=   11520KiB time=00:00:00.56 bitrate=166539.0kbits/s speed=0.185x elapsed=0:00:03.06    
+frame=   46 fps= 13 q=-0.0 size=   32768KiB time=00:00:01.53 bitrate=175066.8kbits/s speed=0.428x elapsed=0:00:03.58    
+frame=   75 fps= 18 q=-0.0 size=   54016KiB time=00:00:02.50 bitrate=176999.7kbits/s speed=0.611x elapsed=0:00:04.09    
+frame=  102 fps= 22 q=-0.0 size=   73728KiB time=00:00:03.40 bitrate=177641.2kbits/s speed=0.738x elapsed=0:00:04.60    
+frame=  134 fps= 26 q=-0.0 size=   97280KiB time=00:00:04.46 bitrate=178414.5kbits/s speed=0.872x elapsed=0:00:05.11    
+frame=  164 fps= 29 q=-0.0 size=  119296KiB time=00:00:05.46 bitrate=178769.5kbits/s speed=0.971x elapsed=0:00:05.62    
+frame=  194 fps= 32 q=-0.0 size=  141056KiB time=00:00:06.46 bitrate=178690.4kbits/s speed=1.05x elapsed=0:00:06.13    
+frame=  221 fps= 33 q=-0.0 size=  160512KiB time=00:00:07.36 bitrate=178495.2kbits/s speed=1.11x elapsed=0:00:06.64    
+frame=  248 fps= 35 q=-0.0 size=  179968KiB time=00:00:08.26 bitrate=178342.5kbits/s speed=1.15x elapsed=0:00:07.15    
+frame=  278 fps= 36 q=-0.0 size=  201984KiB time=00:00:09.26 bitrate=178559.7kbits/s speed=1.21x elapsed=0:00:07.67    
+frame=  306 fps= 37 q=-0.0 size=  222464KiB time=00:00:10.20 bitrate=178669.2kbits/s speed=1.25x elapsed=0:00:08.18    
+frame=  334 fps= 38 q=-0.0 size=  242944KiB time=00:00:11.13 bitrate=178760.3kbits/s speed=1.28x elapsed=0:00:08.68    
+frame=  362 fps= 39 q=-0.0 size=  263680KiB time=00:00:12.06 bitrate=179011.1kbits/s speed=1.31x elapsed=0:00:09.20    
+frame=  390 fps= 40 q=-0.0 size=  284160KiB time=00:00:13.00 bitrate=179064.5kbits/s speed=1.34x elapsed=0:00:09.70    
+frame=  418 fps= 41 q=-0.0 size=  304640KiB time=00:00:13.93 bitrate=179110.9kbits/s speed=1.36x elapsed=0:00:10.21    
+frame=  446 fps= 42 q=-0.0 size=  324608KiB time=00:00:14.86 bitrate=178869.2kbits/s speed=1.39x elapsed=0:00:10.72    
+frame=  467 fps= 42 q=-0.0 size=  339200KiB time=00:00:15.56 bitrate=178504.9kbits/s speed=1.39x elapsed=0:00:11.23    
+frame=  484 fps= 41 q=-0.0 size=  350976KiB time=00:00:16.13 bitrate=178214.6kbits/s speed=1.37x elapsed=0:00:11.74    
+frame=  484 fps= 39 q=-0.0 size=  350976KiB time=00:00:16.13 bitrate=178214.6kbits/s speed=1.32x elapsed=0:00:12.25    
+frame=  484 fps= 38 q=-0.0 size=  350976KiB time=00:00:16.13 bitrate=178214.6kbits/s speed=1.26x elapsed=0:00:12.76    
+[mov @ 0000020977823C80] Starting second pass: moving the moov atom to the beginning of the file
+[out#0/mov @ 000002097771F240] video:374166KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.001287%
+frame=  523 fps= 40 q=-0.0 Lsize=  374171KiB time=00:00:17.43 bitrate=175824.5kbits/s speed=1.33x elapsed=0:00:13.06    

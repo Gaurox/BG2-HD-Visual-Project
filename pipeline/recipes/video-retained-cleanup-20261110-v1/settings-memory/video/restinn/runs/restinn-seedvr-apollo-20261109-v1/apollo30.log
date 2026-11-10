@@ -1,0 +1,33 @@
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'G:\AI\BG2_Upscale\video\restinn\runs\restinn-seedvr-apollo-20261109-v1\RESTINN-SeedVR2-3B-FP16-LAB-1080p15.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf62.0.100
+  Duration: 00:00:07.08, start: 0.000000, bitrate: 8307 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709/bt709/iec61966-2-1, progressive), 1920x1080, 9638 kb/s, 15 fps, 15 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 22050 Hz, stereo, fltp, 127 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+[tvai_fi @ 000001CA85E44440] Unable to parse option value "0" as video rate
+Stream mapping:
+  Stream #0:0 -> #0:0 (h264 (native) -> ffv1 (native))
+[tvai_fi @ 000001CA85E43EC0] Unable to parse option value "0" as video rate
+[ffv1 @ 000001CA8837DD80] high bits_per_raw_sample, forcing range coder
+Output #0, matroska, to 'G:\AI\BG2_Upscale\video\restinn\runs\restinn-seedvr-apollo-20261109-v1\apollo-working.mkv':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf62.0.102
+  Stream #0:0(und): Video: ffv1 (FFV1 / 0x31564646), gbrp16le(pc, gbr/bt709/iec61966-2-1, progressive), 1920x1080, q=2-31, 200 kb/s, 30 fps, 1k tbn (default)
+    Metadata:
+      encoder         : Lavc62.3.101 ffv1
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+frame=    3 fps=0.7 q=-0.0 size=       1KiB time=00:00:00.10 bitrate=  71.8kbits/s speed=0.0218x elapsed=0:00:04.58    frame=   13 fps=2.6 q=-0.0 size=   53504KiB time=00:00:00.43 bitrate=1011473.3kbits/s speed=0.085x elapsed=0:00:05.09    frame=   25 fps=4.5 q=-0.0 size=  130560KiB time=00:00:00.83 bitrate=1283457.5kbits/s speed=0.149x elapsed=0:00:05.60    frame=   36 fps=5.9 q=-0.0 size=  202752KiB time=00:00:01.20 bitrate=1384120.3kbits/s speed=0.196x elapsed=0:00:06.11    frame=   47 fps=7.1 q=-0.0 size=  276480KiB time=00:00:01.56 bitrate=1445696.0kbits/s speed=0.236x elapsed=0:00:06.62    frame=   58 fps=8.1 q=-0.0 size=  350464KiB time=00:00:01.93 bitrate=1485000.8kbits/s speed=0.271x elapsed=0:00:07.13    frame=   69 fps=9.0 q=-0.0 size=  423424KiB time=00:00:02.30 bitrate=1508125.8kbits/s speed=0.301x elapsed=0:00:07.65    frame=   79 fps=9.7 q=-0.0 size=  488960KiB time=00:00:02.63 bitrate=1521099.0kbits/s speed=0.323x elapsed=0:00:08.16    frame=   89 fps= 10 q=-0.0 size=  554752KiB time=00:00:02.96 bitrate=1531863.3kbits/s speed=0.342x elapsed=0:00:08.67    frame=  101 fps= 11 q=-0.0 size=  633856KiB time=00:00:03.36 bitrate=1542340.9kbits/s speed=0.367x elapsed=0:00:09.18    frame=  112 fps= 12 q=-0.0 size=  706304KiB time=00:00:03.73 bitrate=1549832.9kbits/s speed=0.385x elapsed=0:00:09.69    frame=  123 fps= 12 q=-0.0 size=  779264KiB time=00:00:04.10 bitrate=1557007.5kbits/s speed=0.402x elapsed=0:00:10.20    frame=  135 fps= 13 q=-0.0 size=  857856KiB time=00:00:04.50 bitrate=1561679.2kbits/s speed=0.42x elapsed=0:00:10.71    frame=  146 fps= 13 q=-0.0 size=  930560KiB time=00:00:04.86 bitrate=1566400.1kbits/s speed=0.433x elapsed=0:00:11.22    frame=  157 fps= 13 q=-0.0 size= 1002240KiB time=00:00:05.23 bitrate=1568856.8kbits/s speed=0.446x elapsed=0:00:11.73    frame=  169 fps= 14 q=-0.0 size= 1079040KiB time=00:00:05.63 bitrate=1569141.3kbits/s speed=0.46x elapsed=0:00:12.25    frame=  169 fps= 13 q=-0.0 size= 1079040KiB time=00:00:05.63 bitrate=1569141.3kbits/s speed=0.441x elapsed=0:00:12.76    frame=  169 fps= 13 q=-0.0 size= 1079040KiB time=00:00:05.63 bitrate=1569141.3kbits/s speed=0.424x elapsed=0:00:13.27    [out#0/matroska @ 000001CA88371C80] video:1143260KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.000509%
+frame=  179 fps= 13 q=-0.0 Lsize= 1143266KiB time=00:00:05.96 bitrate=1569659.3kbits/s speed=0.44x elapsed=0:00:13.55    

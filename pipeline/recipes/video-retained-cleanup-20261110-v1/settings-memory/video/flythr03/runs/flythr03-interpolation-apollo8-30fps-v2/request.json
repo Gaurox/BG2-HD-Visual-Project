@@ -1,0 +1,37 @@
+{
+  "schema": "bg2-video-interpolation-request-v1",
+  "run_id": "flythr03-interpolation-apollo8-30fps-v2",
+  "pipeline": "topaz-video-apollo8-30fps-v1",
+  "recipe": "pipeline/topaz/recipes/Video-Interpolation-Apollo8-30fps-v1.json",
+  "recipe_sha256": "e707dd23cb5fe789b2d0ae14de53392ab107c51b54a986771015e106abb47d5e",
+  "parent_run": "flythr03-method-prototype-20260831",
+  "parent_descriptor_sha256": "241e79088eccc2f7978a51bddbf503d03ebba72e59f1a2b381f4f29c795bf5a4",
+  "asset_id": "videos:movie-default-flythr03",
+  "source": {
+    "role": "upscale-technical-video",
+    "path": "video/runs/flythr03-method-prototype-20260831/FLYTHR03-1080p-seedvr2-3b-int8-full-temporal.mp4",
+    "sha256": "fb9f3939ab50cd956371747122bdcc9cea8138978183042887e2392015f98abf",
+    "bytes": 24758631
+  },
+  "source_probe": {
+    "width": 1920,
+    "height": 1080,
+    "frame_rate": "15/1",
+    "frame_count": 261,
+    "field_order": "progressive",
+    "video_codec": "h264",
+    "pixel_format": "yuv420p",
+    "audio_codec": "aac",
+    "duration": 17.4
+  },
+  "filter": "tvai_fi=model=apo-8:fps=30:slowmo=1:rdt=-0.01:device=0:instances=0:download=0:vram=0.9,setpts=N/(30*TB)",
+  "scope": {
+    "interpolation": true,
+    "exact_duplicate_removal": true,
+    "final_encoding": false,
+    "audio_mastering": false,
+    "in_game_integration": false,
+    "qa": false,
+    "release": false
+  }
+}

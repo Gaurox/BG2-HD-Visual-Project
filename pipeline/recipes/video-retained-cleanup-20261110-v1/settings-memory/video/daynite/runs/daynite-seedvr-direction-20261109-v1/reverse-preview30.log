@@ -1,0 +1,75 @@
+Input #0, matroska,webm, from 'G:\AI\BG2_Upscale\video\daynite\runs\daynite-seedvr-direction-20261109-v1\reverse-apollo-working.mkv':
+  Metadata:
+    COMPATIBLE_BRANDS: isomiso2avc1mp41
+    MAJOR_BRAND     : isom
+    MINOR_VERSION   : 512
+    ENCODER         : Lavf62.0.102
+  Duration: 00:00:09.97, start: 0.000000, bitrate: 1484891 kb/s
+  Stream #0:0: Video: ffv1, gbrp16le(pc, gbr/bt709/iec61966-2-1, progressive), 1920x1080, 30 fps, 30 tbr, 1k tbn (default)
+    Metadata:
+      ENCODER         : Lavc62.3.101 ffv1
+      HANDLER_NAME    : VideoHandler
+      VENDOR_ID       : [0][0][0][0]
+      DURATION        : 00:00:09.966000000
+Input #1, mov,mp4,m4a,3gp,3g2,mj2, from 'G:\AI\BG2_Upscale\video\daynite\runs\daynite-seedvr-direction-20261109-v1\DAYNITE-SeedVR2-INVERSE-remis-endroit-1080p15.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf62.0.100
+  Duration: 00:00:10.29, start: 0.000000, bitrate: 9922 kb/s
+  Stream #1:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709/bt709/iec61966-2-1, progressive), 1920x1080, 10024 kb/s, 15 fps, 15 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc62.0.101 libx264
+  Stream #1:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 22050 Hz, stereo, fltp, 176 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+Stream mapping:
+  Stream #0:0 -> #0:0 (ffv1 (native) -> h264 (libx264))
+  Stream #1:1 -> #0:1 (copy)
+[libx264 @ 000001cafbf2bbc0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2
+[libx264 @ 000001cafbf2bbc0] profile High, level 5.0, 4:2:0, 8-bit
+[libx264 @ 000001cafbf2bbc0] 264 - core 165 r3215 32c3b80 - H.264/MPEG-4 AVC codec - Copyleft 2003-2025 - http://www.videolan.org/x264.html - options: cabac=1 ref=5 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=8 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=2 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=34 lookahead_threads=5 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=3 b_pyramid=2 b_adapt=1 b_bias=0 direct=3 weightb=1 open_gop=0 weightp=2 keyint=250 keyint_min=25 scenecut=40 intra_refresh=0 rc_lookahead=50 rc=crf mbtree=1 crf=16.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00
+Output #0, mp4, to 'G:\AI\BG2_Upscale\video\daynite\runs\daynite-seedvr-direction-20261109-v1\DAYNITE-SeedVR2-INVERSE-remis-endroit-Apollo8-1080p30.mp4':
+  Metadata:
+    COMPATIBLE_BRANDS: isomiso2avc1mp41
+    MAJOR_BRAND     : isom
+    MINOR_VERSION   : 512
+    encoder         : Lavf62.0.100
+  Stream #0:0: Video: h264 (avc1 / 0x31637661), yuv420p(tv, bt709/bt709/iec61966-2-1, progressive), 1920x1080, q=2-31, 30 fps, 15360 tbn (default)
+    Metadata:
+      encoder         : Lavc62.0.101 libx264
+      HANDLER_NAME    : VideoHandler
+      VENDOR_ID       : [0][0][0][0]
+      DURATION        : 00:00:09.966000000
+    Side data:
+      cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A
+  Stream #0:1(und): Audio: aac (LC) (mp4a / 0x6134706D), 22050 Hz, stereo, fltp, 176 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+frame=    0 fps=0.0 q=0.0 size=       0KiB time=N/A bitrate=N/A speed=N/A    frame=    0 fps=0.0 q=0.0 size=       0KiB time=N/A bitrate=N/A speed=N/A    frame=    0 fps=0.0 q=0.0 size=       0KiB time=N/A bitrate=N/A speed=N/A    frame=    0 fps=0.0 q=0.0 size=       0KiB time=N/A bitrate=N/A speed=N/A    frame=    0 fps=0.0 q=0.0 size=       0KiB time=N/A bitrate=N/A speed=N/A    frame=    0 fps=0.0 q=0.0 size=       0KiB time=N/A bitrate=N/A speed=N/A    frame=    0 fps=0.0 q=0.0 size=       0KiB time=N/A bitrate=N/A speed=N/A    frame=    2 fps=0.5 q=22.0 size=       0KiB time=00:00:00.00 bitrate=N/A speed=   0x    frame=   13 fps=2.8 q=22.0 size=     768KiB time=00:00:00.36 bitrate=17159.5kbits/s speed=0.079x    frame=   24 fps=4.7 q=22.0 size=    1024KiB time=00:00:00.73 bitrate=11439.5kbits/s speed=0.142x    frame=   36 fps=6.4 q=22.0 size=    1792KiB time=00:00:01.13 bitrate=12953.3kbits/s speed= 0.2x    frame=   48 fps=7.8 q=22.0 size=    2304KiB time=00:00:01.53 bitrate=12309.6kbits/s speed=0.248x    frame=   61 fps=9.1 q=22.0 size=    3072KiB time=00:00:01.96 bitrate=12796.4kbits/s speed=0.293x    frame=   71 fps=9.8 q=22.0 size=    3840KiB time=00:00:02.30 bitrate=13677.2kbits/s speed=0.319x    frame=   84 fps= 11 q=22.0 size=    4608KiB time=00:00:02.73 bitrate=13810.7kbits/s speed=0.354x    frame=   95 fps= 12 q=22.0 size=    5376KiB time=00:00:03.10 bitrate=14206.6kbits/s speed=0.376x    frame=  107 fps= 12 q=22.0 size=    5888KiB time=00:00:03.50 bitrate=13781.4kbits/s speed=0.399x    frame=  119 fps= 13 q=22.0 size=    6656KiB time=00:00:03.90 bitrate=13981.1kbits/s speed=0.42x    frame=  131 fps= 13 q=22.0 size=    7168KiB time=00:00:04.30 bitrate=13656.0kbits/s speed=0.439x    frame=  143 fps= 14 q=22.0 size=    7680KiB time=00:00:04.70 bitrate=13386.2kbits/s speed=0.456x    frame=  156 fps= 14 q=22.0 size=    8192KiB time=00:00:05.13 bitrate=13073.2kbits/s speed=0.474x    frame=  167 fps= 15 q=22.0 size=    8448KiB time=00:00:05.50 bitrate=12583.0kbits/s speed=0.485x    frame=  180 fps= 15 q=22.0 size=    8960KiB time=00:00:05.93 bitrate=12370.9kbits/s speed= 0.5x    frame=  192 fps= 16 q=22.0 size=    9216KiB time=00:00:06.33 bitrate=11920.7kbits/s speed=0.512x    frame=  205 fps= 16 q=22.0 size=    9728KiB time=00:00:06.76 bitrate=11777.2kbits/s speed=0.525x    frame=  271 fps= 20 q=-1.0 size=   11008KiB time=00:00:08.96 bitrate=10057.0kbits/s speed=0.669x    [mp4 @ 000001cafc1c4a80] Starting second pass: moving the moov atom to the beginning of the file
+[out#0/mp4 @ 000001cafbede240] video:11376KiB audio:222KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.086248%
+frame=  299 fps= 22 q=-1.0 Lsize=   11608KiB time=00:00:09.90 bitrate=9605.3kbits/s speed=0.731x    
+[libx264 @ 000001cafbf2bbc0] frame I:3     Avg QP:11.80  size:125151
+[libx264 @ 000001cafbf2bbc0] frame P:111   Avg QP:14.02  size: 89859
+[libx264 @ 000001cafbf2bbc0] frame B:185   Avg QP:18.30  size:  7017
+[libx264 @ 000001cafbf2bbc0] consecutive B-frames:  2.3% 45.5%  0.0% 52.2%
+[libx264 @ 000001cafbf2bbc0] mb I  I16..4: 24.3% 69.2%  6.5%
+[libx264 @ 000001cafbf2bbc0] mb P  I16..4:  2.1%  1.4%  0.3%  P16..4: 45.8% 11.6% 11.7%  0.0%  0.0%    skip:27.2%
+[libx264 @ 000001cafbf2bbc0] mb B  I16..4:  0.2%  0.2%  0.0%  B16..8: 26.5%  1.1%  0.3%  direct: 6.5%  skip:65.2%  L0:39.6% L1:53.0% BI: 7.4%
+[libx264 @ 000001cafbf2bbc0] 8x8 transform intra:49.8% inter:40.2%
+[libx264 @ 000001cafbf2bbc0] direct mvs  spatial:90.8% temporal:9.2%
+[libx264 @ 000001cafbf2bbc0] coded y,uvDC,uvAC intra: 35.3% 31.1% 21.1% inter: 18.9% 21.2% 5.9%
+[libx264 @ 000001cafbf2bbc0] i16 v,h,dc,p: 38% 36%  5% 20%
+[libx264 @ 000001cafbf2bbc0] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 15%  9% 39%  6%  7%  4%  7%  4% 10%
+[libx264 @ 000001cafbf2bbc0] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 10%  9% 14% 12% 13%  7% 10%  9% 15%
+[libx264 @ 000001cafbf2bbc0] i8c dc,h,v,p: 43% 44%  9%  4%
+[libx264 @ 000001cafbf2bbc0] Weighted P-Frames: Y:57.7% UV:29.7%
+[libx264 @ 000001cafbf2bbc0] ref P L0: 67.8% 13.3% 13.9%  2.8%  1.7%  0.5%  0.0%
+[libx264 @ 000001cafbf2bbc0] ref B L0: 90.5%  6.4%  2.6%  0.5%
+[libx264 @ 000001cafbf2bbc0] ref B L1: 97.5%  2.5%
+[libx264 @ 000001cafbf2bbc0] kb/s:9349.62

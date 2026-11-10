@@ -1,0 +1,33 @@
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'G:\AI\BG2_Upscale\video\daynite\runs\daynite-seedvr-apollo-20261109-v1\DAYNITE-SeedVR2-3B-FP16-LAB-1080p15.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf62.0.100
+  Duration: 00:00:10.29, start: 0.000000, bitrate: 3361 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 1920x1080, 3271 kb/s, 15 fps, 15 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 22050 Hz, stereo, fltp, 176 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+[tvai_fi @ 0000020363A4DCC0] Unable to parse option value "0" as video rate
+Stream mapping:
+  Stream #0:0 -> #0:0 (h264 (native) -> ffv1 (native))
+[tvai_fi @ 0000020363A4DCC0] Unable to parse option value "0" as video rate
+[ffv1 @ 0000020365F49480] high bits_per_raw_sample, forcing range coder
+Output #0, matroska, to 'G:\AI\BG2_Upscale\video\daynite\runs\daynite-seedvr-apollo-20261109-v1\apollo-working.mkv':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf62.0.102
+  Stream #0:0(und): Video: ffv1 (FFV1 / 0x31564646), gbrp16le(pc, gbr/unknown/unknown, progressive), 1920x1080, q=2-31, 200 kb/s, 30 fps, 1k tbn (default)
+    Metadata:
+      encoder         : Lavc62.3.101 ffv1
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+frame=    2 fps=0.4 q=-0.0 size=       1KiB time=00:00:00.06 bitrate= 106.8kbits/s speed=0.0145x elapsed=0:00:04.58    frame=   13 fps=2.6 q=-0.0 size=   51712KiB time=00:00:00.43 bitrate=977596.2kbits/s speed=0.0851x elapsed=0:00:05.09    frame=   24 fps=4.3 q=-0.0 size=  115200KiB time=00:00:00.80 bitrate=1179648.0kbits/s speed=0.143x elapsed=0:00:05.60    frame=   35 fps=5.7 q=-0.0 size=  180480KiB time=00:00:01.16 bitrate=1267278.6kbits/s speed=0.191x elapsed=0:00:06.11    frame=   47 fps=7.1 q=-0.0 size=  252928KiB time=00:00:01.56 bitrate=1322544.1kbits/s speed=0.236x elapsed=0:00:06.62    frame=   58 fps=8.1 q=-0.0 size=  320000KiB time=00:00:01.93 bitrate=1355917.5kbits/s speed=0.271x elapsed=0:00:07.13    frame=   69 fps=9.0 q=-0.0 size=  387328KiB time=00:00:02.30 bitrate=1379561.3kbits/s speed=0.301x elapsed=0:00:07.65    frame=   80 fps=9.8 q=-0.0 size=  455680KiB time=00:00:02.66 bitrate=1399848.8kbits/s speed=0.327x elapsed=0:00:08.16    frame=   91 fps= 10 q=-0.0 size=  524032KiB time=00:00:03.03 bitrate=1415232.1kbits/s speed=0.35x elapsed=0:00:08.67    frame=  102 fps= 11 q=-0.0 size=  592128KiB time=00:00:03.40 bitrate=1426680.2kbits/s speed=0.37x elapsed=0:00:09.18    frame=  113 fps= 12 q=-0.0 size=  659968KiB time=00:00:03.76 bitrate=1435342.7kbits/s speed=0.388x elapsed=0:00:09.69    frame=  125 fps= 12 q=-0.0 size=  733440KiB time=00:00:04.16 bitrate=1442001.6kbits/s speed=0.408x elapsed=0:00:10.20    frame=  135 fps= 13 q=-0.0 size=  792576KiB time=00:00:04.50 bitrate=1442840.6kbits/s speed=0.42x elapsed=0:00:10.71    frame=  147 fps= 13 q=-0.0 size=  864256KiB time=00:00:04.90 bitrate=1444894.9kbits/s speed=0.436x elapsed=0:00:11.23    frame=  158 fps= 13 q=-0.0 size=  929024KiB time=00:00:05.26 bitrate=1445043.8kbits/s speed=0.449x elapsed=0:00:11.74    frame=  169 fps= 14 q=-0.0 size=  994816KiB time=00:00:05.63 bitrate=1446662.7kbits/s speed=0.46x elapsed=0:00:12.25    frame=  180 fps= 14 q=-0.0 size= 1061376KiB time=00:00:06.00 bitrate=1449132.0kbits/s speed=0.47x elapsed=0:00:12.76    frame=  191 fps= 14 q=-0.0 size= 1126400KiB time=00:00:06.36 bitrate=1449340.6kbits/s speed=0.48x elapsed=0:00:13.27    frame=  203 fps= 15 q=-0.0 size= 1197824KiB time=00:00:06.76 bitrate=1450134.0kbits/s speed=0.491x elapsed=0:00:13.78    frame=  214 fps= 15 q=-0.0 size= 1263360KiB time=00:00:07.13 bitrate=1450856.9kbits/s speed=0.499x elapsed=0:00:14.29    frame=  226 fps= 15 q=-0.0 size= 1333760KiB time=00:00:07.53 bitrate=1450375.5kbits/s speed=0.509x elapsed=0:00:14.80    frame=  237 fps= 15 q=-0.0 size= 1398528KiB time=00:00:07.90 bitrate=1450220.4kbits/s speed=0.516x elapsed=0:00:15.31    frame=  249 fps= 16 q=-0.0 size= 1468928KiB time=00:00:08.30 bitrate=1449814.2kbits/s speed=0.524x elapsed=0:00:15.82    frame=  261 fps= 16 q=-0.0 size= 1538816KiB time=00:00:08.70 bitrate=1448963.3kbits/s speed=0.532x elapsed=0:00:16.34    frame=  273 fps= 16 q=-0.0 size= 1608704KiB time=00:00:09.10 bitrate=1448187.2kbits/s speed=0.54x elapsed=0:00:16.85    frame=  284 fps= 16 q=-0.0 size= 1673216KiB time=00:00:09.46 bitrate=1447920.9kbits/s speed=0.545x elapsed=0:00:17.36    frame=  289 fps= 16 q=-0.0 size= 1701888KiB time=00:00:09.63 bitrate=1447252.6kbits/s speed=0.539x elapsed=0:00:17.87    frame=  289 fps= 16 q=-0.0 size= 1701888KiB time=00:00:09.63 bitrate=1447252.6kbits/s speed=0.524x elapsed=0:00:18.38    [out#0/matroska @ 0000020365F47480] video:1762306KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.000520%
+frame=  299 fps= 16 q=-0.0 Lsize= 1762315KiB time=00:00:09.96 bitrate=1448516.9kbits/s speed=0.528x elapsed=0:00:18.85    

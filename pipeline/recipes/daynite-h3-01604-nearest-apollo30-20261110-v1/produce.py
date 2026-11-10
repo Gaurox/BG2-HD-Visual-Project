@@ -12,10 +12,9 @@ sys.path.insert(0, str(ROOT / 'pipeline/scripts'))
 from workspace_paths import get_path
 
 RUN = ROOT / 'video/daynite/runs/daynite-h3-01604-nearest-apollo30-20261110-v1'
-PREVIOUS = ROOT / 'video/daynite/runs/daynite-h3-01604-seedvr-apollo30-20261110-v1'
 # This is only the lossless 6px black-bar crop of the corrected H3 input, before SeedVR.
-INPUT = PREVIOUS / 'DAYNITE-H3-01604-corrected-16x9-input-v1.mkv'
-AUDIO = PREVIOUS / 'DAYNITE-H3-01604-fondus-corriges-16x9-son-original-24fps-v2.mp4'
+INPUT = RUN / 'DAYNITE-H3-01604-corrected-16x9-input-v1.mkv'
+AUDIO = RUN / 'DAYNITE-original-audio-aac.m4a'
 NEAREST = RUN / 'DAYNITE-H3-01604-NEAREST-1080p24-son-original-v1.mp4'
 FINAL = RUN / 'DAYNITE-H3-01604-NEAREST-Apollo8-1080p30-son-original-v1.mp4'
 MASTER = RUN / 'apollo-working.mkv'
@@ -51,8 +50,8 @@ def main():
         source_contract='Lossless crop of accepted corrected H3, before any SeedVR '
                         'postprocessing; no post-H3 SeedVR render used.',
         upscale='scale=1920:1080:flags=neighbor; pure nearest-neighbor, no sharpening or restoration',
-        seedvr_used=False, audio_source='video/daynite/daynite.wbm; AAC packet copy from '
-        'previous verified 16:9 baseline, no trim/tempo change', commands=[])
+        seedvr_used=False, audio_source='video/daynite/daynite.wbm; AAC packets retained in '
+        'DAYNITE-original-audio-aac.m4a, no trim/tempo change', commands=[])
 
     def save():
         (RUN / 'production.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')

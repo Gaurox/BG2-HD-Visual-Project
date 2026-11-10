@@ -1,0 +1,64 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "schema_version": 1,
+  "run_id": "flythr03-interpolation-apollo8-30fps-v2",
+  "domain": "videos",
+  "asset_ids": [
+    "videos:movie-default-flythr03"
+  ],
+  "pipeline": {
+    "id": "topaz-video-apollo8-30fps-v1",
+    "recipe_path": "pipeline/topaz/recipes/Video-Interpolation-Apollo8-30fps-v1.json",
+    "recipe_sha256": "e707dd23cb5fe789b2d0ae14de53392ab107c51b54a986771015e106abb47d5e",
+    "version": "1"
+  },
+  "inputs": [
+    {
+      "role": "upscale-technical-video",
+      "path": "video/runs/flythr03-method-prototype-20260831/FLYTHR03-1080p-seedvr2-3b-int8-full-temporal.mp4",
+      "sha256": "fb9f3939ab50cd956371747122bdcc9cea8138978183042887e2392015f98abf",
+      "bytes": 24758631
+    }
+  ],
+  "outputs": [
+    {
+      "role": "interpolation-technical-video",
+      "path": "video/runs/flythr03-interpolation-apollo8-30fps-v2/03_interpolation/video-1080p-30fps-apollo8.mov",
+      "sha256": "550a01d4de5e5a65bfe2529986c3ade30c3e5ec5e24e9d473e756fb4fcb3e538",
+      "bytes": 391500868
+    },
+    {
+      "role": "interpolation-technical-report",
+      "path": "video/runs/flythr03-interpolation-apollo8-30fps-v2/interpolation-report.json",
+      "sha256": "e6d57a5fd17ca0961f591ced1fb8f6d280f633ec513383684d7e84a934329c60",
+      "bytes": 1870
+    },
+    {
+      "role": "topaz-log",
+      "path": "video/runs/flythr03-interpolation-apollo8-30fps-v2/topaz.log",
+      "sha256": "3b1183dd82d77089b8eb367c9edc7cdf8cced42ca6b742832816f26fbc14a79e",
+      "bytes": 11825
+    }
+  ],
+  "provenance": {
+    "created_at_utc": "2026-08-31T15:51:14.617588Z",
+    "generator": "pipeline/scripts/run_video_interpolation.py",
+    "command": [
+      "python",
+      "pipeline/scripts/run_video_interpolation.py",
+      "--upscale-run",
+      "flythr03-method-prototype-20260831",
+      "--run",
+      "flythr03-interpolation-apollo8-30fps-v2"
+    ],
+    "parents": [
+      "videos:flythr03-method-prototype-20260831"
+    ]
+  },
+  "result": {
+    "status": "completed",
+    "sealed": true,
+    "completed_at_utc": "2026-08-31T15:52:09.914391Z",
+    "notes": "interpolation Apollo 8 vérifiée; encodage final, audio, intégration, QA et release non évalués"
+  }
+}

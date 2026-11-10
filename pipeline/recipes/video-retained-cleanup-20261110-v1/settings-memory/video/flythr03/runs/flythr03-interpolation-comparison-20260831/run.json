@@ -1,0 +1,74 @@
+{
+  "$schema": "docs/workspace-run.schema.json",
+  "schema_version": 1,
+  "run_id": "flythr03-interpolation-comparison-20260831",
+  "domain": "videos",
+  "asset_ids": [
+    "videos:movie-default-flythr03"
+  ],
+  "pipeline": {
+    "id": "topaz-video-interpolation-comparison-prototype-v1",
+    "recipe_path": "video/runs/flythr03-interpolation-comparison-20260831/run_trials.py",
+    "recipe_sha256": "21e5bbffcf1a5d1e80b15c15ce77ed3073e160ed2036f11206e3af41c045e0c9",
+    "version": "1"
+  },
+  "inputs": [
+    {
+      "role": "upscale-technical-video",
+      "path": "video/runs/flythr03-interpolation-comparison-20260831/00-SOURCE-FLYTHR03-1080p-15fps.mp4",
+      "sha256": "fb9f3939ab50cd956371747122bdcc9cea8138978183042887e2392015f98abf",
+      "bytes": 24758631
+    }
+  ],
+  "outputs": [
+    {
+      "role": "comparison-apollo8-rdt001",
+      "path": "video/runs/flythr03-interpolation-comparison-20260831/FLYTHR03-30fps-01-apollo-v8-rdt001.mov",
+      "sha256": "b55f8dda0fe2cf894cc496da80e3bc597e318879251b998be639cda98a0934c8",
+      "bytes": 390466913
+    },
+    {
+      "role": "comparison-apollo8-rdt010",
+      "path": "video/runs/flythr03-interpolation-comparison-20260831/FLYTHR03-30fps-02-apollo-v8-rdt010.mov",
+      "sha256": "7903e5b7cf3f51c64c43dca2aaf799f5c5d41cb6c3a9309aa6c8b79a4adaf330",
+      "bytes": 384789298
+    },
+    {
+      "role": "comparison-chronos2-rdt005",
+      "path": "video/runs/flythr03-interpolation-comparison-20260831/FLYTHR03-30fps-03-chronos-v2-rdt005.mov",
+      "sha256": "469808631ef772c69214964555aa711f5dfcd6e2c58169681adefa81d8679e11",
+      "bytes": 378988721
+    },
+    {
+      "role": "comparison-chronos-fast3-rdt005",
+      "path": "video/runs/flythr03-interpolation-comparison-20260831/FLYTHR03-30fps-04-chronos-fast-v3-rdt005.mov",
+      "sha256": "f98de09bfca7dcca307432935dcf7980f3cc17e738af8c2cfeb49c68888237c3",
+      "bytes": 378672195
+    },
+    {
+      "role": "comparison-aion1-rdt005",
+      "path": "video/runs/flythr03-interpolation-comparison-20260831/FLYTHR03-30fps-05-aion-v1-rdt005.mov",
+      "sha256": "9a2bb893672ea1bb99119f891cd5189f72ef74e0756941c5738cac5fecacddb3",
+      "bytes": 388604489
+    },
+    {
+      "role": "comparison-report",
+      "path": "video/runs/flythr03-interpolation-comparison-20260831/trials.json",
+      "sha256": "65d54bec244e707461a96ca711b2d2a8614dff63528cbf1bc044fb567efb0c8f",
+      "bytes": 9085
+    }
+  ],
+  "provenance": {
+    "created_at_utc": "2026-08-31T15:59:47.7202540Z",
+    "generator": "video/runs/flythr03-interpolation-comparison-20260831/run_trials.py",
+    "parents": [
+      "videos:flythr03-method-prototype-20260831"
+    ]
+  },
+  "result": {
+    "status": "completed",
+    "sealed": true,
+    "completed_at_utc": "2026-08-31T15:59:47.7202540Z",
+    "notes": "Comparison completed; Apollo 8 selected. Canonical recipe disables approximate duplicate detection. Asset QA, final encoding, audio, integration and release remain not assessed."
+  }
+}

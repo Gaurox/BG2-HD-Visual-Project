@@ -7,6 +7,9 @@ zone restent sous l'autorité de `animations/index/occurrences.csv` et sont excl
 `index/processing.csv` sélectionne les runs validés par étape et le run utilisé par le patch.
 `patch_run` vide signifie qu'aucun artefact vidéo n'est intégré au patch.
 
+Suivi courant : [`SUIVI.md`](SUIVI.md) ; vue50assets : `index/status.csv` ; médias réellement
+conservés et alias des entrées déplacées : `index/retained-media-20261110-v1.json`.
+
 RESTDUNG : SeedVR2 3B FP16 LAB Full HD15 retenu le 2026-11-09 ; installé localement en WBM
 VP8/Vorbis, QA ingame en attente. Sélection : `index/qa-decisions/RESTDUNG/` ; reçu :
 `installations/restdung-seedvr-20261109-v1/installation.json`. Réglages des essais supprimés et
@@ -24,9 +27,14 @@ Sélection pour test local2026-11-10 : `index/qa-decisions/DAYNITE/` ; installé
 `movies/daynite.wbm`, QA ingame en attente. Reçu/sauvegarde :
 `installations/daynite-h3-nearest-20261110-v1/installation.json` ; recette/restauration :
 `../pipeline/recipes/daynite-h3-nearest-ingame-20261110-v1/`. Aucune intégration release.
-Essais SeedVR direct/inverse, keyframes imagegen T1–T4, montage H3 et nearest : métadonnées dans
-`daynite/runs/*202611*-v1/` ; recettes `../pipeline/recipes/daynite-*/` ; comparateur
-`tools/comparator.html`. Le post-upscale SeedVR sur H3 a été jugé dégradant par l'utilisateur.
+La chaîne DAYNITE conserve imagesT2/T4, sourceH3, montage, inputs crop/audio, nearest24/30 et WBM.
+Le post-upscale SeedVR sur H3 a été jugé dégradant par l'utilisateur ; ses médias, les essais
+direct/inverse et T1/T3 ont été supprimés. Réglages/logs historiques :
+`../pipeline/recipes/video-retained-cleanup-20261110-v1/settings-memory/`.
+
+Nettoyage2026-11-10 :467fichiers supprimés (gain net≈4,27Gio),50sources et sauvegardes conservées.
+POCKETZZ : seul candidat SeedVR FullHD15 gardé explicitement, aucune validation déduite.
+Comparateur `tools/comparator.html` : uniquement sources/résultats retenus/étapes encore utiles.
 
 ## Organisation
 

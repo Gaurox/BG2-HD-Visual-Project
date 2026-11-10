@@ -145,6 +145,8 @@ occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans
 | Sélection | `video/index/processing.csv` sépare runs validés par étape et run du patch | changement explicite de sélection ou d'intégration |
 | RESTDUNG (2026-11-09) | SeedVR2 3B FP16 LAB historique, Full HD15, retenu visuellement ; essais Topaz supprimés (8,89 Gio), réglages conservés dans `pipeline/recipes/restdung-seedvr-selected-20261109-v1/` ; WBM VP8/Vorbis installé localement, QA ingame en attente, aucune intégration release | demande de modification ou défaut constaté en jeu |
 | Repos SeedVR30 (2026-11-09) | RESTDUNG et RESTINN SeedVR2 3B FP16 LAB → Apollo8 FullHD30 acceptés en comparaison ; décisions sous `video/index/qa-decisions/` ; RESTDUNG installé reste15fps, RESTINN non installé | demande utilisateur ou défaut visuel |
+| DAYNITE (2026-11-10) | H3 01604 depuis imagesT4 → fondus corrigés10s → nearest1920×1080 → Apollo8/30fps + son natif ; installé localement en VP8/Vorbis pour test ; QA ingame en attente ; reçu `video/installations/daynite-h3-nearest-20261110-v1/installation.json` | décision utilisateur après test |
+| Ménage vidéo (2026-11-10) |467fichiers écartés supprimés ;50sources natives, résultats et parents utiles conservés ; POCKETZZ SeedVR FullHD seul gardé comme candidat non validé ; réglages archivés dans `pipeline/recipes/video-retained-cleanup-20261110-v1/` ; suivi `video/SUIVI.md` | nouvelle production/sélection explicite |
 
 ## Release et workspace
 

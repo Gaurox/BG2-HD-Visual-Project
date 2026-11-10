@@ -1,0 +1,43 @@
+{
+  "schema": "bg2-video-upscale-report-v1",
+  "run_id": "flythr03-method-prototype-20260831",
+  "asset_key": "movie:default:FLYTHR03",
+  "comfyui_prompt_id": "cb7d610d-46ce-460d-ae1f-8cb831d96c8e",
+  "source": {
+    "path": "video/runs/flythr03-method-prototype-20260831/FLYTHR03-original.wbm",
+    "width": 1280,
+    "height": 720,
+    "frame_rate": "15/1",
+    "decoded_frames": 261,
+    "progressive": true,
+    "video_codec": "vp8",
+    "audio_codec": "vorbis",
+    "duration_seconds": 17.595
+  },
+  "upscale_output": {
+    "path": "video/runs/flythr03-method-prototype-20260831/FLYTHR03-1080p-seedvr2-3b-int8-full-temporal.mp4",
+    "width": 1920,
+    "height": 1080,
+    "frame_rate": "15/1",
+    "decoded_frames": 261,
+    "progressive": true,
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "duration_seconds": 17.4
+  },
+  "checks": {
+    "resolution_1920x1080": true,
+    "source_frame_rate_preserved": true,
+    "source_decoded_frame_count_preserved": true,
+    "progressive": true,
+    "frame_interpolation_absent": true
+  },
+  "scope": {
+    "method_validated": true,
+    "asset_qa": "not-assessed",
+    "audio": "non-authoritative",
+    "final_encoding": "not-assessed",
+    "ingame_integration": "not-assessed",
+    "release": "not-assessed"
+  }
+}
