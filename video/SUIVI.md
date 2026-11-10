@@ -10,7 +10,7 @@
 | RESTDUNG | SeedVR FP16 LAB15 → Apollo8 FullHD30 | comparaison15/30 acceptée | WBM15 ; test ingame en attente |
 | RESTINN | SeedVR FP16 LAB15 → Apollo8 FullHD30 | comparaison acceptée | non |
 | REST | SeedVR FP16 LAB15 → Apollo8 FullHD30 | comparaison acceptée | non |
-| DAYNITE | H3 01604 → fondus10s → nearest FullHD24 → Apollo8 FullHD30 + son natif | sélection pour test local ; post-SeedVR rejeté | WBM30 ; test ingame en attente |
+| DAYNITE | H3 01604 → fondus10s → nearest FullHD24 → Apollo8 FullHD30 + son natif | sélection pour test local ; post-SeedVR rejeté ; ancienne vidéo signalée ingame | WBM30 présent et SHA conforme ; anomalie ingame non résolue |
 | POCKETZZ | `pocketzz/runs/pocketzz-comfyui-experiments-20260814/ComfyUI_00002_.mp4`,SeedVR FP16 LAB FullHD15 | candidat gardé explicitement ; pas de validation | non |
 
 ## DAYNITE — chaîne conservée
@@ -20,6 +20,12 @@
 - Le graphe embarqué du H3 confirme les deux imagesT4 en entrée ; prompt exact conservé sous `../pipeline/recipes/video-retained-cleanup-20261110-v1/retained-h3-01604-prompt.api.json`.
 - Entrées nearest relocalisées dans `daynite/runs/daynite-h3-01604-nearest-apollo30-20261110-v1/` : MKV crop sans perte + AAC original extrait sans réencodage.
 - ImagesT2/T4, sourceH3, montage, inputs nearest, nearest24, final30 et WBM installable conservés ; T1/T3, sens inverse, H3 antérieur et post-upscale SeedVR supprimés.
+
+## Diagnostic ingame DAYNITE
+
+- Retour utilisateur2026-11-10 : ancienne vidéo visible ; QA=`index/qa-decisions/daynite-ingame-old-video-reported-20261110-v1.json`.
+- WBM installé conforme au SHA du runtime retenu ; aucun doublon prioritaire trouvé ; logs sans identifiant de film.
+- Accès Computer Use/Baldur refusé : reproduction bloquée ; aucun nouveau remplacement spéculatif. Diagnostic/reprise=`../pipeline/recipes/daynite-runtime-diagnosis-20261110-v1/README.md`.
 
 ## Nettoyage global
 
