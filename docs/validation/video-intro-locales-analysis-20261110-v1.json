@@ -1,0 +1,317 @@
+{
+  "status": "analysis-complete",
+  "scope": "7 native INTRO/INTRO15F sources present in this installation",
+  "sources": [
+    {
+      "name": "INTRO-de_DE",
+      "source": "video/de_DE_intro/de_DE_intro.wbm",
+      "sha256": "DD3DD9C342074251D3D689DC36D3962269C34A81C249416CCE41351CC5FCD59A",
+      "frames": 3345,
+      "fps": "30000/1001",
+      "container_duration_s": 112.905,
+      "audio_codec": "vorbis",
+      "audio_sample_rate": "44100",
+      "audio_channels": 2
+    },
+    {
+      "name": "INTRO15F-de_DE",
+      "source": "video/de_DE_intro15f/de_DE_intro15f.wbm",
+      "sha256": "AA4EA388C7E105678C79D93B7CB50AFF0CB0662CBC3020E62A2B2FE411722731",
+      "frames": 2574,
+      "fps": "15/1",
+      "container_duration_s": 171.625,
+      "audio_codec": "vorbis",
+      "audio_sample_rate": "44100",
+      "audio_channels": 2
+    },
+    {
+      "name": "INTRO-default",
+      "source": "video/intro/intro.wbm",
+      "sha256": "12B5269D7EEF235B7D964C6834AA73E9412891BE17D68DF4E05FC6B44704ABA6",
+      "frames": 3347,
+      "fps": "30000/1001",
+      "container_duration_s": 113.787,
+      "audio_codec": "vorbis",
+      "audio_sample_rate": "22050",
+      "audio_channels": 2
+    },
+    {
+      "name": "INTRO15F-default",
+      "source": "video/intro15f/intro15f.wbm",
+      "sha256": "5446B0C17AE4D8FB78B36DA80EFEC820F57D36D0ED2F94E22E16A7BBA7B5F02B",
+      "frames": 2574,
+      "fps": "15/1",
+      "container_duration_s": 171.637,
+      "audio_codec": "vorbis",
+      "audio_sample_rate": "22050",
+      "audio_channels": 2
+    },
+    {
+      "name": "INTRO15F-it_IT",
+      "source": "video/it_IT_intro15f/it_IT_intro15f.wbm",
+      "sha256": "E71B8633305A1F8DA2A1CA2751446CC4769CB063717CB6672B4284FCFB34FBF5",
+      "frames": 2574,
+      "fps": "15/1",
+      "container_duration_s": 171.625,
+      "audio_codec": "vorbis",
+      "audio_sample_rate": "44100",
+      "audio_channels": 2
+    },
+    {
+      "name": "INTRO-pl_PL",
+      "source": "video/pl_PL_intro/pl_PL_INTRO.wbm",
+      "sha256": "DF4A980AA22733EB37C71EBF68804C18C003A2FD6A25EB347F67A7938ED32DED",
+      "frames": 1721,
+      "fps": "16305/1088",
+      "container_duration_s": 115.834,
+      "audio_codec": "vorbis",
+      "audio_sample_rate": "44100",
+      "audio_channels": 2
+    },
+    {
+      "name": "INTRO15F-pl_PL",
+      "source": "video/pl_PL_intro15f/pl_PL_INTRO15F.wbm",
+      "sha256": "81852332CD82E09FBB7FB3D887D3D7A35F82894DA2537B758415C4627DC1BE47",
+      "frames": 2572,
+      "fps": "16305/1088",
+      "container_duration_s": 172.615,
+      "audio_codec": "vorbis",
+      "audio_sample_rate": "44100",
+      "audio_channels": 2
+    }
+  ],
+  "native_hashes_verified": true,
+  "total_decoded_frames": 18707,
+  "audio_pcm_streams_all_distinct": true,
+  "identical_video_sequences": false,
+  "comparisons": [
+    {
+      "base": "INTRO-default",
+      "other": "INTRO-de_DE",
+      "base_frames": 3347,
+      "other_frames": 3345,
+      "exact_decoded_matches_anywhere": 3167,
+      "exact_encoded_packet_matches_anywhere": 3317,
+      "identical_decoded_sequence": false,
+      "identical_encoded_sequence": false,
+      "identical_audio_pcm": false,
+      "mae_percentiles": {
+        "p0": 0.0,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 1.48048611111107,
+        "p99": 8.816666666666666,
+        "p100": 8.824305555555556
+      },
+      "frames_mae_gt3": 155,
+      "frames_mae_gt6": 130
+    },
+    {
+      "base": "INTRO-default",
+      "other": "INTRO-pl_PL",
+      "base_frames": 3347,
+      "other_frames": 1721,
+      "exact_decoded_matches_anywhere": 53,
+      "exact_encoded_packet_matches_anywhere": 0,
+      "identical_decoded_sequence": false,
+      "identical_encoded_sequence": false,
+      "identical_audio_pcm": false,
+      "mae_percentiles": {
+        "p0": 0.0,
+        "p50": 1.4327083333333333,
+        "p90": 1.8815972222222221,
+        "p95": 2.455277777777778,
+        "p99": 9.85875,
+        "p100": 9.859027777777778
+      },
+      "frames_mae_gt3": 80,
+      "frames_mae_gt6": 69
+    },
+    {
+      "base": "INTRO15F-default",
+      "other": "INTRO15F-de_DE",
+      "base_frames": 2574,
+      "other_frames": 2574,
+      "exact_decoded_matches_anywhere": 2103,
+      "exact_encoded_packet_matches_anywhere": 2215,
+      "identical_decoded_sequence": false,
+      "identical_encoded_sequence": false,
+      "identical_audio_pcm": false,
+      "mae_percentiles": {
+        "p0": 0.0,
+        "p50": 0.0,
+        "p90": 1.4575972222222222,
+        "p95": 9.204513888888888,
+        "p99": 9.209166666666667,
+        "p100": 9.212777777777777
+      },
+      "frames_mae_gt3": 222,
+      "frames_mae_gt6": 204
+    },
+    {
+      "base": "INTRO15F-default",
+      "other": "INTRO15F-it_IT",
+      "base_frames": 2574,
+      "other_frames": 2574,
+      "exact_decoded_matches_anywhere": 2111,
+      "exact_encoded_packet_matches_anywhere": 2215,
+      "identical_decoded_sequence": false,
+      "identical_encoded_sequence": false,
+      "identical_audio_pcm": false,
+      "mae_percentiles": {
+        "p0": 0.0,
+        "p50": 0.0,
+        "p90": 1.4734930555555563,
+        "p95": 5.630972222222222,
+        "p99": 5.6340972222222225,
+        "p100": 5.635625
+      },
+      "frames_mae_gt3": 211,
+      "frames_mae_gt6": 0
+    },
+    {
+      "base": "INTRO15F-default",
+      "other": "INTRO15F-pl_PL",
+      "base_frames": 2574,
+      "other_frames": 2572,
+      "exact_decoded_matches_anywhere": 12,
+      "exact_encoded_packet_matches_anywhere": 0,
+      "identical_decoded_sequence": false,
+      "identical_encoded_sequence": false,
+      "identical_audio_pcm": false,
+      "mae_percentiles": {
+        "p0": 0.0,
+        "p50": 29.088368055555556,
+        "p90": 64.69035416666667,
+        "p95": 71.4479236111111,
+        "p99": 79.53062708333334,
+        "p100": 85.9425
+      },
+      "frames_mae_gt3": 2473,
+      "frames_mae_gt6": 2435
+    }
+  ],
+  "post_title_comparisons": [
+    {
+      "other": "INTRO-de_DE",
+      "post_title_from_s": 7,
+      "frames": 3135,
+      "exact_yuv_matches": 3135,
+      "luma_mae_160x90_percentiles": {
+        "p50": 0.0,
+        "p90": 0.0,
+        "p99": 0.0,
+        "max": 0.0
+      },
+      "last_nonexact_locale_pts_s": null
+    },
+    {
+      "other": "INTRO-pl_PL",
+      "post_title_from_s": 7,
+      "frames": 1615,
+      "exact_yuv_matches": 52,
+      "luma_mae_160x90_percentiles": {
+        "p50": 1.42035,
+        "p90": 1.778432,
+        "p99": 2.2663816,
+        "max": 3.08951
+      },
+      "last_nonexact_locale_pts_s": 111.236
+    },
+    {
+      "other": "INTRO15F-de_DE",
+      "post_title_from_s": 18,
+      "frames": 2304,
+      "exact_yuv_matches": 2082,
+      "luma_mae_160x90_percentiles": {
+        "p50": 0.0,
+        "p90": 0.0,
+        "p99": 1.4677447999999986,
+        "max": 1.63625
+      },
+      "last_nonexact_locale_pts_s": 32.736
+    },
+    {
+      "other": "INTRO15F-it_IT",
+      "post_title_from_s": 18,
+      "frames": 2304,
+      "exact_yuv_matches": 2082,
+      "luma_mae_160x90_percentiles": {
+        "p50": 0.0,
+        "p90": 0.0,
+        "p99": 1.4847770999999985,
+        "max": 1.62944
+      },
+      "last_nonexact_locale_pts_s": 32.736
+    },
+    {
+      "other": "INTRO15F-pl_PL-fitted",
+      "post_title_from_s": 18,
+      "frames": 2301,
+      "exact_yuv_matches": 1,
+      "luma_mae_160x90_percentiles": {
+        "p50": 2.95903,
+        "p90": 8.26313,
+        "p99": 13.52979,
+        "max": 13.98097
+      },
+      "last_nonexact_locale_pts_s": 171.491
+    }
+  ],
+  "findings": {
+    "localized_title_cards": true,
+    "INTRO_title_window_plan_s": [
+      0,
+      7
+    ],
+    "INTRO15F_title_window_plan_s": [
+      0,
+      18
+    ],
+    "INTRO_main": "German exact after 7s; Polish visually aligned, separately encoded at ~15fps instead of ~30fps.",
+    "INTRO15F_main": "Default/German/Italian common picture; exact hashes match after ~32.8s, earlier shared film differs slightly through encoding.",
+    "INTRO15F_polish": "Same scenes; central 960x720 picture enlarged ~4/3 and vertically center cropped to 1280x720; separately encoded.",
+    "geometry_precision": "Observed native RGB previews + full-film thumbnail registration; approximate geometry, not exact pixel equality.",
+    "additional_translated_video_text": "No additional localized title/card segment identified after opening; Polish equivalence remains visual, not byte-certified.",
+    "missing_locales": "No separate French INTRO/INTRO15F file in this installation; locale-movies.json records directory inventory."
+  },
+  "feasibility": {
+    "shared_masters": 2,
+    "distinct_films": [
+      "INTRO",
+      "INTRO15F"
+    ],
+    "plan": "Upscale/interpolate common picture once per film; process opening cards separately; derive locale framing/timeline; remux corresponding native audio.",
+    "required": "Preserve real native frame PTS and trailing holds/audio; do not substitute duration/rate metadata for decoded frame timing.",
+    "seedvr": "Shared inference with temporal context; handle title transitions with overlap/black-boundary joins; do not infer common content independently per locale.",
+    "audio": "Preserve native encoded Vorbis streams where runtime permits; retain start/hold/trim offsets; no audio stretching inferred.",
+    "polish_framing_choice": "Preserve native crop or choose common uncropped 4:3 framing explicitly before production."
+  },
+  "inference_work_estimate": {
+    "method": "Source-frame counts, not measured GPU time; conservative 7s/18s localized title windows.",
+    "independent_frames": 18707,
+    "two_master_frames": 5921,
+    "extra_localized_title_frames_budget": 1125,
+    "estimated_frames_with_separate_title_upscale": 7046,
+    "estimated_frame_reduction_percent": 62.33495482974287,
+    "master_only_reduction_percent": 68.34874645854492,
+    "limits": "Temporal overlaps, output cadence and framing requirements may add work. This saves inference work, not necessarily installed video size."
+  },
+  "source_files_modified": false,
+  "game_modified": false,
+  "upscale_started": false,
+  "QA_changed": false,
+  "release_modified": false,
+  "visual_review": [
+    "INTRO-title.jpg",
+    "INTRO15F-title.jpg",
+    "INTRO15F-composition.jpg",
+    "INTRO15F-polish-review-1.jpg",
+    "INTRO15F-polish-review-2.jpg"
+  ],
+  "evidence": {
+    "sources.json": "FA746F00B4665002D73FF0ABB3E1A22E03A02F211929B0772E8B9BD4D2C9BEAE",
+    "comparisons.json": "348404142133D1FBF8549D46D5AA85A301D419C1349EE04B4A6AA38FB8563EBE",
+    "INTRO15F-pl_PL-fitted-geometry-analysis.json": "58A740CDCDF35FAFE9DEBC51F74116175A13AA8357118FA8E816874627973ADB"
+  }
+}

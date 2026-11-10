@@ -29,6 +29,8 @@
 
 ## Nettoyage global
 
+Analyse intros multilingues2026-11-10 :7sources natives,2films distincts ; tronc visuel partageable, cartons traduits séparés, INTRO15F polonais zoomé/recadré.2masters + cartons ≈62% d'images à inférer en moins (estimation, pas benchmark). Aucun traitement/sélection/QA/release lancé. Bilan : `../docs/validation/video-intro-locales-analysis-20261110-v1.json` ; recette : `../pipeline/recipes/video-intro-locales-analysis-20261110-v1/README.md` ; preuves locales : `research/intro-locales-analysis-20261110-v1/`.
+
 -467fichiers supprimés,4 680 715 222octets ; gain net≈4,27Gio après relocalisation des entrées utiles et archivage des réglages.
 - Essais FLYTHR03 nonLAB/Chronos/Aion, branches DAYNITE écartées,270frames et4MP4 POCKETZZ,36conversions WebM historiques et captures temporaires supprimés.
 -50sources natives, résultats retenus, parents nécessaires et sauvegardes installées vérifiés par SHA256 ; aucun fichier du jeu ou de release modifié pendant ce nettoyage.
