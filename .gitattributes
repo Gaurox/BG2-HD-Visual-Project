@@ -332,3 +332,13 @@ pipeline/recipes/projectiles-secondary-links-20261028-v1/*.txt -text -whitespace
 engine/InfinityEngine-Enhancer/installations/projectiles-*/**/*.csv -text whitespace=cr-at-eol
 projectiles/index/*.json -text whitespace=cr-at-eol
 engine/InfinityEngine-Enhancer/installations/projectiles-*/** -text -whitespace
+
+# Newly archived receipts and frozen inputs retain the exact SHA-bound bytes.
+pipeline/recipes/effects-release-finalization-20261110-v1/** -text whitespace=cr-at-eol
+pipeline/recipes/effects-shared-storage-20261110-v1/** -text whitespace=cr-at-eol
+docs/validation/release-alpha8-status-20261110-v1.json -text whitespace=cr-at-eol
+docs/validation/effects-shared-storage-status-20261110-v1.json -text whitespace=cr-at-eol
+docs/validation/video-intro-locales-analysis-20261110-v1.json -text whitespace=cr-at-eol
+releases/BG2-HD-Upscale/release-inputs/effects/**/*.json -text whitespace=cr-at-eol
+releases/BG2-HD-Upscale/release-inputs/renderer/iee-0.1.0-alpha.10/** -text whitespace=cr-at-eol
+releases/BG2-HD-Upscale/release-inputs/renderer/iee-0.1.0-alpha.11/** -text whitespace=cr-at-eol
