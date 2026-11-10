@@ -76,18 +76,20 @@ historique : produire une nouvelle version lorsque son remplacement est nécessa
 - Les artefacts déjà désignés comme preuves finales ou historiques restent immuables ; créer une
   nouvelle version seulement si leur remplacement est réellement nécessaire.
 
-## Sauvegarde complète du projet
+## Git et sauvegarde du futur installateur
 
-- Demande utilisateur 2026-10-12 : H: doit sauvegarder **toutes les productions**, caches,
-  sources, sorties, archives et fichiers ignorés ; un push Git seul ne vaut pas sauvegarde.
-- Commande canonique : `python -B pipeline/scripts/sync_full_project_backup.py`.
-  Configuration : `config://full_project_backup_source`, `config://full_project_backup_root`.
-- Le hook `pipeline/git-hooks/pre-push` déclenche cette copie pour le remote `local`, même
-  sans nouveau commit. Conserver les hooks Git LFS. Échec de copie => push local refusé.
-- SHA-256 des nouvelles copies, liens physiques conservés, fichiers remplacés retenus sous
-  `historique/`, aucune purge automatique. État réussi : `<backup_root>/.backup-state/completed.json`.
-- Après synchronisation, vérifier ce reçu ; ne pas déduire la présence des assets depuis Git.
-- Détails et restauration : [`docs/SAUVEGARDE_COMPLETE_H.md`](docs/SAUVEGARDE_COMPLETE_H.md).
+- Demande utilisateur 2026-11-10, remplace la règle du 2026-10-12 : Git pour code, documentation,
+  index et manifestes ; H: uniquement pour les fichiers du futur installateur. Preuves historiques
+  déjà suivies conservées ; aucune réécriture de l'historique Git.
+- Commande : `python -B pipeline/scripts/backup_installer.py` ; destination :
+  `config://installer_backup_root` + `installateur/<version>/<run>/`.
+- Périmètre : payload sélectionné par `content.json`, renderer livré, métadonnées/outils de
+  packaging, WeiDU et licences. Exclure sources de production, caches, essais et anciennes archives.
+- Chaque copie crée un snapshot distinct ; aucune suppression ni substitution des données H:
+  existantes. Vérifier son `completed.json` ; Git seul ne sauvegarde pas les assets.
+- `pre-push` conserve Git LFS seulement. Aucun push ne lance une sauvegarde complète ou ciblée.
+- Ancienne sauvegarde complète : conservée sur H:, outil historique sur demande explicite seulement.
+- Détails : [`docs/SAUVEGARDE_INSTALLATEUR_H.md`](docs/SAUVEGARDE_INSTALLATEUR_H.md).
 
 ## Site public séparé
 

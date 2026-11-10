@@ -3,6 +3,11 @@
   "local_override": "config/workspace-paths.local.json",
   "authority_policy": "Machine-independent path keys only. Values belong in the ignored local override or matching environment variables.",
   "paths": {
+    "installer_backup_root": {
+      "environment": "BG2HD_INSTALLER_BACKUP_ROOT",
+      "kind": "directory",
+      "markers": []
+    },
     "full_project_backup_source": {
       "environment": "BG2HD_FULL_BACKUP_SOURCE",
       "kind": "directory",

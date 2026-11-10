@@ -1,5 +1,9 @@
 # Sauvegarde complète H: — 2026-10-12
 
+> Historique depuis le 2026-11-10 : remplacé par
+> [`SAUVEGARDE_INSTALLATEUR_H.md`](SAUVEGARDE_INSTALLATEUR_H.md).
+> Copies H: existantes conservées. Outil complet uniquement sur demande explicite ; aucun hook Git.
+
 Autorité : utilisateur, fichiers directement accessibles ; toutes productions, caches et archives.
 Git ne transporte pas les données ignorées. Ni le commit courant ni le remote `local` ne prouvent
 une sauvegarde des assets. Dépendances externes via jonctions : références enregistrées ; octets
@@ -22,7 +26,7 @@ python -B pipeline/scripts/sync_full_project_backup.py
 python -B pipeline/scripts/sync_full_project_backup.py --full-verify
 # Installation locale des hooks versionnés (Git LFS conservé) :
 git config core.hooksPath pipeline/git-hooks
-# Cette commande déclenche aussi la sauvegarde complète, même sans nouveau commit :
+# Push Git uniquement ; ne déclenche plus de sauvegarde depuis le 2026-11-10 :
 git push local main:main
 ```
 
@@ -39,8 +43,7 @@ git push local main:main
 - Arbre source réénuméré avant réussite ; ajout/retrait/modification pendant copie => reçu
   `incomplete`, pas de promotion initiale. Relancer après stabilisation ; aucun faux succès.
 - Verrou exclusif ; pas de sauvegardes simultanées. Les `.git/**/*.lock` transitoires sont exclus.
-- Hook `pre-push` sur la source canonique uniquement, remote `local` uniquement ; autres hooks LFS
-  conservés. Copie échouée => push refusé. Les autres machines doivent configurer les deux clés.
+- Ancien couplage `pre-push` retiré le 2026-11-10 ; hook Git LFS conservé.
 
 ## Vérifier / restaurer
 

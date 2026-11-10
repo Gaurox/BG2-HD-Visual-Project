@@ -101,7 +101,7 @@ class FullBackupTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'non-nested'):
             backup.sync(self.source, nested)
 
-    def test_git_hook_runs_again_when_only_ignored_production_changes(self):
+    def test_git_hook_never_copies_ignored_production(self):
         def git(*args):
             return subprocess.check_output(['git', '-C', str(self.source), *args],
                                            stderr=subprocess.STDOUT, text=True)
@@ -130,11 +130,13 @@ class FullBackupTests(unittest.TestCase):
         git('add', '.')
         git('-c', 'user.name=BackupTest', '-c', 'user.email=backup@localhost', 'commit', '-m', 'fixture')
         git('push', 'local', 'main:main')
-        self.assertEqual((self.destination / 'projet/work/production.bin').read_bytes(), b'first production')
+        self.assertFalse((self.destination / 'projet').exists())
+        self.assertFalse((self.destination / '.backup-state').exists())
         self.put('work/production.bin', b'second ignored production')
         output = git('push', 'local', 'main:main')
         self.assertIn('Everything up-to-date', output)
-        self.assertEqual((self.destination / 'projet/work/production.bin').read_bytes(), b'second ignored production')
+        self.assertFalse((self.destination / 'projet').exists())
+        self.assertFalse((self.destination / '.backup-state').exists())
 
 
 if __name__ == '__main__':
