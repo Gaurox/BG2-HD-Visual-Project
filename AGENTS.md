@@ -47,6 +47,7 @@
 | Effects : file/asset/acceptation | [`effects/README.md`](effects/README.md#quotidien--minimum-utile) ; `effect_tracking.py queue`, `effect_workflow.py status/accept` |
 | Projectiles : suivi / déplacement à reprendre | [`projectiles/README.md`](projectiles/README.md) ; étude reportée [`PROJ-MOTION-001`](pipeline/PROBLEMES_A_RESOUDRE.md#proj-motion-001) |
 | Sprites | [`sprite/index/`](sprite/index/) |
+| Interface / HUD : suivi réduit | [`interface/tracking/README.md`](interface/tracking/README.md) ; `interface/index/work-tracking.json` |
 | Release | [`releases/BG2-HD-Upscale/manifests/release.json`](releases/BG2-HD-Upscale/manifests/release.json) |
 
 ## Sources de vérité

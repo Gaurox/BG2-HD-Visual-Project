@@ -15,3 +15,9 @@ Ce dossier sépare la production courante, les sources et les comparaisons histo
   `archive/legacy/workspace-p2-20260831/ui/menus-options-bg2ee/exports/`, hors de cette branche
   active et sans valeur de statut.
 - `docs/MENU_UPSCALE.md` : carte des ressources du menu principal et procédure complète de maintenance.
+
+## Suivi actif
+
+Autorité des travaux retenus : [suivi UI/HUD](../tracking/README.md).
+Les inventaires source et anciens packs restent historiques ; leurs boutons/icônes ne sont plus
+des travaux actifs. États production, QA, installation et release séparés par ressource.

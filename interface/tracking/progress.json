@@ -1,0 +1,24 @@
+{
+  "schema": "bg2-ui-progress-v1",
+  "authority": "interface/index/work-tracking.json",
+  "updated_on": "2026-11-10",
+  "unit": "logical native resref; all frames for complete production",
+  "total": 204,
+  "produced": 6,
+  "partial_production": 1,
+  "qa_complete": 0,
+  "qa_observed_normal": 4,
+  "release_confirmed": 0,
+  "release_unreconciled": 204,
+  "next_actions": {
+    "qualify-usage-and-existing-production": 197,
+    "complete-missing-large-medallion-variants": 1,
+    "reuse-and-qualify-reduced-atlas": 6
+  },
+  "limits": [
+    "Visual scope acceptance is not upscale QA.",
+    "204 selected resrefs include historical variants; current runtime use remains to qualify.",
+    "Unknown production/QA/release is not a negative verdict on historical accepted assets.",
+    "No release payload or installed asset modified by tracking migration."
+  ]
+}

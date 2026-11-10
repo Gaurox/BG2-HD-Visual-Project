@@ -5,6 +5,20 @@
 L'interface remplace des textures DXT5 au chargement OpenGL ; les BAM/MOS natifs et leur géométrie
 restent inchangés. Ne pas appliquer le pipeline TIS/PVRZ des cartes.
 
+## Périmètre réduit — décision utilisateur 2026-11-10
+
+- Conserver : fonds/grands panneaux des menus, grands titres et médaillons, `DONATE` (fondu alpha
+  natif), `INNROOMS`, papier `QUESTBG`, colonnes décoratives gauche/droite.
+- Sortir de la production UI : boutons, petites icônes, contrôles/texte.
+- Cadres `GMPWMSG0`, `GUWBTP10`, `GUISTBBB`, `GUWPKPC0` : finalement conservés,
+  décision utilisateur révisée pendant la revue visuelle ; boutons superposés exclus.
+- Réutiliser les exports déjà validés ; ne pas les régénérer pour ce changement de périmètre.
+- Éléments conservés/exclus dans une même page : nouvelle recomposition ciblée avant installation.
+  Ne pas activer un ancien pack complet pour rétablir seulement un fond.
+- Analyse et décisions : [`analysis/large-surfaces-20261110-v1/README.md`](analysis/large-surfaces-20261110-v1/README.md).
+- Cette décision de périmètre ne supprime aucun historique et ne modifie pas à elle seule
+  installation, QA acquise ou release.
+
 ## Autorités et routage
 
 | Besoin | Référence |
@@ -55,3 +69,13 @@ est réservé aux corrections locales de cartes.
 | taille apparente modifiée | coordonnées BAM/MOS modifiées à tort |
 
 Une validation locale n'intègre pas automatiquement `content.json`.
+
+Révision du périmètre HUD : tous les candidats explicitement refusés lors de la revue sont finalement
+conservés (dont `GUIW12_1..8`, `GUIVERB`, `DLGDIVI`, `PAPERSEP`, `PCHAPTER`).
+Décisions finales : `analysis/large-surfaces-20261110-v1/decisions.json` ; boutons/icônes/contrôles hors périmètre.
+
+## Suivi actif
+
+Autorité des travaux retenus : [suivi UI/HUD](tracking/README.md).
+Les inventaires source et anciens packs restent historiques ; leurs boutons/icônes ne sont plus
+des travaux actifs. États production, QA, installation et release séparés par ressource.

@@ -1,0 +1,2746 @@
+{
+  "schema": "bg2-ui-large-surface-decisions-v1",
+  "date": "2026-11-10",
+  "state": "verification-pass-selection-recorded-runtime-routing-pending",
+  "scope": {
+    "keep": "All visually reviewed backgrounds/panels/illustrations/titles/decorations, including all formerly refused candidates; reuse existing accepted upscales.",
+    "exclude": "UI buttons, small UI icons and text controls; prior accepted artifacts remain immutable; runtime/release unchanged during this analysis"
+  },
+  "decisions": [
+    {
+      "resrefs": [
+        "TITLE"
+      ],
+      "frames": "all native variants",
+      "decision": "treat",
+      "user_answer": "Traite",
+      "source": "C — Les grands titres graphiques des campagnes"
+    },
+    {
+      "resrefs": [
+        "BIGLOGO"
+      ],
+      "frames": [
+        0,
+        1,
+        2
+      ],
+      "decision": "treat",
+      "user_answer": "oui ont traites ces medaillons et le 3eme de black pi aussi",
+      "meaning": "retain in reduced scope; does not request regenerating accepted existing files"
+    },
+    {
+      "resrefs": [
+        "LOGOSOA",
+        "LOGOTOB",
+        "LOGOTBP"
+      ],
+      "frames": "all existing states",
+      "decision": "keep-existing-upscale",
+      "user_answer": "pour moi ces 3 medaillons sont déja upscale ingame",
+      "production": "existing Topaz Recovery v2 Detail 50 x4; selector runtime accepted 2026-11-10; reuse exact existing exports"
+    },
+    {
+      "resrefs": [
+        "DONATE"
+      ],
+      "frames": "all native states",
+      "decision": "treat",
+      "user_answer": "oui on traite donate mais faudra bien gérer son contour en fade",
+      "constraints": [
+        "Preserve soft graded-alpha fade; no hard cutout or light/dark fringe.",
+        "Process artwork separately; derive alpha from native transparency, not inferred model background.",
+        "Check matte/premultiplication and atlas edges before acceptance."
+      ],
+      "native_alpha_inspected": {
+        "levels": 14,
+        "graded_pixels": 1973
+      }
+    },
+    {
+      "resrefs": [
+        "INNROOMS"
+      ],
+      "frames": "all 8 native frames, 4 categories with 2 states each",
+      "decision": "treat",
+      "user_answer": "on traite"
+    },
+    {
+      "resrefs": [
+        "QUESTBG"
+      ],
+      "frames": "all native paper variants",
+      "decision": "treat",
+      "user_answer": "oui on traite la feuille de papier"
+    },
+    {
+      "resrefs": [
+        "GUIWLSP",
+        "GUIWRSP",
+        "GUIWLS20",
+        "GUIWRS20"
+      ],
+      "frames": "left/right decorative side-panel variants; no controls or portraits",
+      "decision": "treat",
+      "user_answer": "oui",
+      "presentation": "choices-side-borders.png shows GUIWLSP/GUIWRSP; GUIWLS20/GUIWRS20 are corresponding decorative variants identified in HUD inventory"
+    },
+    {
+      "resrefs": [
+        "GMPWMSG0",
+        "GUWBTP10"
+      ],
+      "decision": "do-not-treat",
+      "user_answer": "aucun",
+      "presentation": "choices-bottom-frames.png; A container panel frame and B actionbar backing"
+    },
+    {
+      "resrefs": [
+        "GUISTBBB",
+        "GUWPKPC0"
+      ],
+      "decision": "do-not-treat",
+      "user_answer": "aucun",
+      "presentation": "choices-small-bands.png; C shop service selector backing and D party-selection frame"
+    },
+    {
+      "resrefs": [
+        "INVENTOR",
+        "INVSTATS"
+      ],
+      "decision": "treat",
+      "user_answer": "ouais allons-y",
+      "scope": "inventory main decorative background and complementary statistics panel; independent buttons/items/paperdoll/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUIREC2"
+      ],
+      "decision": "treat",
+      "user_answer": "oui",
+      "scope": "character record background and framing; independent portrait, text and buttons excluded"
+    },
+    {
+      "resrefs": [
+        "STONEOPT"
+      ],
+      "decision": "treat",
+      "user_answer": "oui",
+      "scope": "in-game options background/framing; six independent overlaid buttons excluded"
+    },
+    {
+      "resrefs": [
+        "GUITUTB"
+      ],
+      "decision": "treat",
+      "user_answer": "oui",
+      "scope": "shared gameplay/sound/feedback menu background and framing; independent buttons, sliders and text excluded"
+    },
+    {
+      "resrefs": [
+        "GUICHISD"
+      ],
+      "decision": "treat",
+      "user_answer": "oui",
+      "scope": "graphics/keybindings/autopause and shared character customization background; independent controls and text excluded"
+    },
+    {
+      "resrefs": [
+        "GUICUSTB"
+      ],
+      "decision": "treat",
+      "user_answer": "oui",
+      "scope": "character customization/biography background and framing; independent controls and text excluded"
+    },
+    {
+      "resrefs": [
+        "GUIINVHI"
+      ],
+      "decision": "treat",
+      "user_answer": "oui",
+      "scope": "item description parchment/background/framing; independent item illustration, controls and text excluded"
+    },
+    {
+      "resrefs": [
+        "GUIMGX"
+      ],
+      "decision": "treat",
+      "user_answer": "oui",
+      "scope": "item abilities panel background and framing; independent icons, controls and text excluded"
+    },
+    {
+      "resrefs": [
+        "GUIMGB"
+      ],
+      "decision": "treat",
+      "user_answer": "oui",
+      "scope": "mage spellbook, parchment and framing; independent spell icons, controls and text excluded"
+    },
+    {
+      "resrefs": [
+        "GUIPRB"
+      ],
+      "decision": "treat",
+      "user_answer": "oui",
+      "scope": "priest spellbook parchment and framing; independent spell icons, controls and text excluded"
+    },
+    {
+      "resrefs": [
+        "GUIMGCP"
+      ],
+      "decision": "treat",
+      "user_answer": "oui",
+      "scope": "mage contingency preparation background and framing; independent icons, controls and text excluded"
+    },
+    {
+      "resrefs": [
+        "GUISTBSC"
+      ],
+      "decision": "treat",
+      "user_answer": "oui",
+      "scope": "shop buy/sell background and framing; independent items, controls and text excluded"
+    },
+    {
+      "resrefs": [
+        "GUISTDOB"
+      ],
+      "decision": "treat",
+      "user_answer": "oui pour temple",
+      "scope": "temple donation background, parchment and framing; independent controls and text excluded; DONATE artwork retained separately with native soft alpha"
+    },
+    {
+      "resrefs": [
+        "GUISTIDB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-01",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUISTROB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-01",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "QUESTBAK"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-01",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "RECENTEV"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-01",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUILOAD"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-01",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUICREDT"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-02",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GMPCARBD"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-02",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GU3MPB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-02",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUIAPB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-02",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUICGB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-02",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUICONN1"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-02",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUICONNB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-03",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUIDCX"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-03",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUIDLC"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-03",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUIERR"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-03",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUIERR6"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-03",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUIERR7"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-03",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GMPWMSG0",
+        "GUWBTP10",
+        "GUISTBBB",
+        "GUWPKPC0"
+      ],
+      "decision": "treat",
+      "user_answer": "on avait refusé 4 cadres dans ce style qu'il faut finalement intégrer",
+      "supersedes": "earlier do-not-treat decisions for these same four backgrounds",
+      "scope": "decorative backings/frames retained; overlaid buttons/icons remain excluded"
+    },
+    {
+      "resrefs": [
+        "GUIGDB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-04",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUIHSB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-04",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUIHSBS"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-04",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUIINVHB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-04",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUILUPB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-04",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUIMAPWB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-04",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUIMOVB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-05",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUIMPB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-05",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUISAVEB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-05",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUISMBM"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-05",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUISMDA"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-05",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUISMDB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-05",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUISMF"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-06",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUISMS"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-06",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUISRRQB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-06",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "NPCCHAP"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-06",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "START"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-06",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "START3EE"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-06",
+      "scope": "background/decorative framing only; independent buttons/icons/text excluded"
+    },
+    {
+      "resrefs": [
+        "GUIW12_1"
+      ],
+      "decision": "do-not-treat",
+      "user_answer": "aucun",
+      "batch_id": "batch-07",
+      "scope": "this native composition excluded from upscale scope"
+    },
+    {
+      "resrefs": [
+        "GUIW12_2"
+      ],
+      "decision": "do-not-treat",
+      "user_answer": "aucun",
+      "batch_id": "batch-07",
+      "scope": "this native composition excluded from upscale scope"
+    },
+    {
+      "resrefs": [
+        "GUIW12_3"
+      ],
+      "decision": "do-not-treat",
+      "user_answer": "aucun",
+      "batch_id": "batch-07",
+      "scope": "this native composition excluded from upscale scope"
+    },
+    {
+      "resrefs": [
+        "GUIW12_4"
+      ],
+      "decision": "do-not-treat",
+      "user_answer": "aucun",
+      "batch_id": "batch-07",
+      "scope": "this native composition excluded from upscale scope"
+    },
+    {
+      "resrefs": [
+        "GUIW12_5"
+      ],
+      "decision": "do-not-treat",
+      "user_answer": "aucun",
+      "batch_id": "batch-07",
+      "scope": "this native composition excluded from upscale scope"
+    },
+    {
+      "resrefs": [
+        "GUIW12_6"
+      ],
+      "decision": "do-not-treat",
+      "user_answer": "aucun",
+      "batch_id": "batch-07",
+      "scope": "this native composition excluded from upscale scope"
+    },
+    {
+      "resrefs": [
+        "GUIW12_7"
+      ],
+      "decision": "do-not-treat",
+      "user_answer": "aucun",
+      "batch_id": "batch-07",
+      "scope": "this native composition excluded from upscale scope"
+    },
+    {
+      "resrefs": [
+        "GUIW12_8"
+      ],
+      "decision": "do-not-treat",
+      "user_answer": "aucun",
+      "batch_id": "batch-07",
+      "scope": "this native composition excluded from upscale scope"
+    },
+    {
+      "resrefs": [
+        "GUIVERB"
+      ],
+      "decision": "do-not-treat",
+      "user_answer": "aucun",
+      "batch_id": "batch-07",
+      "scope": "this native composition excluded from upscale scope"
+    },
+    {
+      "resrefs": [
+        "START2EE"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-08",
+      "scope": "native background/illustration retained visually; current runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "STARTBP2"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-08",
+      "scope": "native background/illustration retained visually; current runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "STARTM"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-08",
+      "scope": "native background/illustration retained visually; current runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIRECBG"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-08",
+      "scope": "native background/illustration retained visually; current runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUISTATS"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-08",
+      "scope": "native background/illustration retained visually; current runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIJRNL"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-08",
+      "scope": "native background/illustration retained visually; current runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIHELP"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-08",
+      "scope": "native background/illustration retained visually; current runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUISPLHB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-08",
+      "scope": "native background/illustration retained visually; current runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIPOPAI"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-08",
+      "scope": "native background/illustration retained visually; current runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIAPBR"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-09",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUICGPR"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-09",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUICHISE"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-09",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUICP"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-09",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUICPORB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-09",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUICUSTP"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-09",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUICUSTX"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-09",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIDCB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-09",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIDLCH"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-09",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIERR8"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-10",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIERR09"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-10",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIERR10"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-10",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIMAPAB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-10",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIOSTUM"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-10",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUISMF2"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-10",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUISPMB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-10",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUISRSVB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-10",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUITUT"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-10",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "BGPADB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-11",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "BGPADL"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-11",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "BGPADR"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-11",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GU10BKMD"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-11",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GU20BKLS"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-11",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GU20BKMD"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-11",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GU20BKRS"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-11",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GMWMSGA0"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-11",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GMWMSGA9"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-11",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "COLOR"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-12",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "COLORI"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-12",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "COLORR"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-12",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GMPCARBB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-12",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GMPPARBB"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-12",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GMPWBTP0"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-12",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GMPWPKP0"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-12",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GPROGBAR"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-12",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "STARTEE"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-12",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIWBTP3"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-13",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIWDSL9"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-13",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUWBTP39"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-13",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUWBTP3M"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-13",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUWBTP9M"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-13",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUWDSL9"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-13",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "STARTOLD"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-13",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUICHP0B"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-13",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUICHP1B"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-13",
+      "scope": "native background retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUICHP2B"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-14",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUICHP3B"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-14",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUICHP4B"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-14",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUICHP5B"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-14",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUICHP6B"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-14",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUICHP7B"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-14",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUICHP8B"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-14",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "ARRIVE"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-14",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "LEAVE"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-14",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "CH01AJON"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-15",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "CH02AGLN"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-15",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "CH03AMON"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-15",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "CH04ASHP"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-15",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "CH04BGTH"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-15",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "CH04CSAH"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-15",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "CH05AUND"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-15",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "CH06ADRW"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-15",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "CH07ASUL"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-15",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "BPEND"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-16",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "CHPTAMKE"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-16",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "CHPTMANA"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-16",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "CHPTODRE"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-16",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "CHPTSARA"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-16",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIDRM2"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-16",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIDRM3"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-16",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIDRM4"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-16",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIDRM5"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-16",
+      "scope": "native illustration retained visually; runtime usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIDRM6"
+      ],
+      "decision": "treat",
+      "user_answer": "1 a 6",
+      "batch_id": "batch-17",
+      "scope": "numbered visual choice; omitted numbers excluded; independent controls remain excluded"
+    },
+    {
+      "resrefs": [
+        "GUIDRM7"
+      ],
+      "decision": "treat",
+      "user_answer": "1 a 6",
+      "batch_id": "batch-17",
+      "scope": "numbered visual choice; omitted numbers excluded; independent controls remain excluded"
+    },
+    {
+      "resrefs": [
+        "TOBMAP72"
+      ],
+      "decision": "treat",
+      "user_answer": "1 a 6",
+      "batch_id": "batch-17",
+      "scope": "numbered visual choice; omitted numbers excluded; independent controls remain excluded"
+    },
+    {
+      "resrefs": [
+        "TOSCEND"
+      ],
+      "decision": "treat",
+      "user_answer": "1 a 6",
+      "batch_id": "batch-17",
+      "scope": "numbered visual choice; omitted numbers excluded; independent controls remain excluded"
+    },
+    {
+      "resrefs": [
+        "ULGOTHST"
+      ],
+      "decision": "treat",
+      "user_answer": "1 a 6",
+      "batch_id": "batch-17",
+      "scope": "numbered visual choice; omitted numbers excluded; independent controls remain excluded"
+    },
+    {
+      "resrefs": [
+        "WORLDMAP"
+      ],
+      "decision": "treat",
+      "user_answer": "1 a 6",
+      "batch_id": "batch-17",
+      "scope": "numbered visual choice; omitted numbers excluded; independent controls remain excluded"
+    },
+    {
+      "resrefs": [
+        "DLGDIVI"
+      ],
+      "decision": "do-not-treat",
+      "user_answer": "1 a 6",
+      "batch_id": "batch-17",
+      "scope": "numbered visual choice; omitted numbers excluded; independent controls remain excluded"
+    },
+    {
+      "resrefs": [
+        "PAPERSEP"
+      ],
+      "decision": "do-not-treat",
+      "user_answer": "1 a 6",
+      "batch_id": "batch-17",
+      "scope": "numbered visual choice; omitted numbers excluded; independent controls remain excluded"
+    },
+    {
+      "resrefs": [
+        "PCHAPTER"
+      ],
+      "decision": "do-not-treat",
+      "user_answer": "1 a 6",
+      "batch_id": "batch-17",
+      "scope": "numbered visual choice; omitted numbers excluded; independent controls remain excluded"
+    },
+    {
+      "resrefs": [
+        "GU10BKLS"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-18",
+      "scope": "native decorative background/panel retained visually; usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GU10BKRS"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-18",
+      "scope": "native decorative background/panel retained visually; usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "SIDEBLOK"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-18",
+      "scope": "native decorative background/panel retained visually; usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIOLSP0"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-18",
+      "scope": "native decorative background/panel retained visually; usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIWLSP0"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-18",
+      "scope": "native decorative background/panel retained visually; usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIERR2"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-18",
+      "scope": "native decorative background/panel retained visually; usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUIERR21"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-18",
+      "scope": "native decorative background/panel retained visually; usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUISAVEC"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-18",
+      "scope": "native decorative background/panel retained visually; usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GUISTBBM"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-18",
+      "scope": "native decorative background/panel retained visually; usage still to qualify; independent controls excluded"
+    },
+    {
+      "resrefs": [
+        "GMPNTCPB",
+        "GMWMSGB0",
+        "GUDEATH0",
+        "GUICONTB",
+        "GUIWDMB",
+        "GUIWDMB0",
+        "GUIWDMB9",
+        "GUIWDMBM",
+        "GUIWDSL0"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-19"
+    },
+    {
+      "resrefs": [
+        "GUIWDSL1",
+        "GUWDMBM9",
+        "GWCONTB0",
+        "GUIWBTP1",
+        "GUIWBTP2",
+        "GUWBTP29",
+        "BGDECBAR",
+        "GUIPBARB",
+        "GUIPNLC"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-20"
+    },
+    {
+      "resrefs": [
+        "GUIWLS20",
+        "GUIWRS20"
+      ],
+      "decision": "treat",
+      "user_answer": "oui",
+      "batch_id": "batch-21"
+    },
+    {
+      "resrefs": [
+        "GKEYMAP",
+        "GOPGAMB",
+        "GOPSNDSB",
+        "LOADCNTR",
+        "ROOMDELU",
+        "ROOMMERC",
+        "ROOMNOBE",
+        "ROOMPEAS",
+        "COADCNTR"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-22"
+    },
+    {
+      "resrefs": [
+        "GUIRSP20",
+        "GUIDIFF",
+        "BAR-FINL",
+        "BAR-STEP"
+      ],
+      "decision": "treat",
+      "user_answer": "tout",
+      "batch_id": "batch-23"
+    },
+    {
+      "resrefs": [
+        "DLGDIVI",
+        "PAPERSEP",
+        "PCHAPTER",
+        "GUIW12_1",
+        "GUIW12_2",
+        "GUIW12_3",
+        "GUIW12_4",
+        "GUIW12_5",
+        "GUIW12_6",
+        "GUIW12_7",
+        "GUIW12_8",
+        "GUIVERB"
+      ],
+      "decision": "treat",
+      "user_answer": "finalement accepte meme ceux qu'on a refusé",
+      "scope": "Reverses all explicit visual-review refusals; scope exclusions for buttons/icons/controls/debug unchanged."
+    }
+  ],
+  "pending": [],
+  "presentation": "Embed actual PNG paths in assistant messages; tool-only images were not visible to user.",
+  "pipeline": {
+    "model": "Topaz Gigapixel 8.4.1 Recovery v2",
+    "detail": 50,
+    "scale": 4,
+    "colors": "preserve",
+    "processing_unit": "one composed visual element, not a full atlas",
+    "packaging": "DXT5, native BAM/MOS geometry unchanged",
+    "authority": "interface/menus-options-bg2ee/docs/MENU_UPSCALE.md",
+    "reuse_existing": true
+  },
+  "known_production_gaps": [
+    "Only BIGLOGO frame 0 has an individual Topaz export in current production; frames 1 and 2 are retained in scope but no new production is requested by this analysis."
+  ],
+  "visual_review": {
+    "mode": "show every menu background/panel, not only ambiguous cases",
+    "confirmed_resrefs": [
+      "ARRIVE",
+      "BGPADB",
+      "BGPADL",
+      "BGPADR",
+      "BIGLOGO",
+      "BPEND",
+      "CH01AJON",
+      "CH02AGLN",
+      "CH03AMON",
+      "CH04ASHP",
+      "CH04BGTH",
+      "CH04CSAH",
+      "CH05AUND",
+      "CH06ADRW",
+      "CH07ASUL",
+      "CHPTAMKE",
+      "CHPTMANA",
+      "CHPTODRE",
+      "CHPTSARA",
+      "COLOR",
+      "COLORI",
+      "COLORR",
+      "DLGDIVI",
+      "DONATE",
+      "GMPCARBB",
+      "GMPCARBD",
+      "GMPPARBB",
+      "GMPWBTP0",
+      "GMPWMSG0",
+      "GMPWPKP0",
+      "GMWMSGA0",
+      "GMWMSGA9",
+      "GPROGBAR",
+      "GU10BKLS",
+      "GU10BKMD",
+      "GU10BKRS",
+      "GU20BKLS",
+      "GU20BKMD",
+      "GU20BKRS",
+      "GU3MPB",
+      "GUIAPB",
+      "GUIAPBR",
+      "GUICGB",
+      "GUICGPR",
+      "GUICHISD",
+      "GUICHISE",
+      "GUICHP0B",
+      "GUICHP1B",
+      "GUICHP2B",
+      "GUICHP3B",
+      "GUICHP4B",
+      "GUICHP5B",
+      "GUICHP6B",
+      "GUICHP7B",
+      "GUICHP8B",
+      "GUICONN1",
+      "GUICONNB",
+      "GUICP",
+      "GUICPORB",
+      "GUICREDT",
+      "GUICUSTB",
+      "GUICUSTP",
+      "GUICUSTX",
+      "GUIDCB",
+      "GUIDCX",
+      "GUIDLC",
+      "GUIDLCH",
+      "GUIDRM2",
+      "GUIDRM3",
+      "GUIDRM4",
+      "GUIDRM5",
+      "GUIDRM6",
+      "GUIDRM7",
+      "GUIERR",
+      "GUIERR09",
+      "GUIERR10",
+      "GUIERR2",
+      "GUIERR21",
+      "GUIERR6",
+      "GUIERR7",
+      "GUIERR8",
+      "GUIGDB",
+      "GUIHELP",
+      "GUIHSB",
+      "GUIHSBS",
+      "GUIINVHB",
+      "GUIINVHI",
+      "GUIJRNL",
+      "GUILOAD",
+      "GUILUPB",
+      "GUIMAPAB",
+      "GUIMAPWB",
+      "GUIMGB",
+      "GUIMGCP",
+      "GUIMGX",
+      "GUIMOVB",
+      "GUIMPB",
+      "GUIOLSP0",
+      "GUIOSTUM",
+      "GUIPOPAI",
+      "GUIPRB",
+      "GUIREC2",
+      "GUIRECBG",
+      "GUISAVEB",
+      "GUISAVEC",
+      "GUISMBM",
+      "GUISMDA",
+      "GUISMDB",
+      "GUISMF",
+      "GUISMF2",
+      "GUISMS",
+      "GUISPLHB",
+      "GUISPMB",
+      "GUISRRQB",
+      "GUISRSVB",
+      "GUISTATS",
+      "GUISTBBB",
+      "GUISTBBM",
+      "GUISTBSC",
+      "GUISTDOB",
+      "GUISTIDB",
+      "GUISTROB",
+      "GUITUT",
+      "GUITUTB",
+      "GUIVERB",
+      "GUIW12_1",
+      "GUIW12_2",
+      "GUIW12_3",
+      "GUIW12_4",
+      "GUIW12_5",
+      "GUIW12_6",
+      "GUIW12_7",
+      "GUIW12_8",
+      "GUIWBTP3",
+      "GUIWDSL9",
+      "GUIWLS20",
+      "GUIWLSP",
+      "GUIWLSP0",
+      "GUIWRS20",
+      "GUIWRSP",
+      "GUWBTP10",
+      "GUWBTP39",
+      "GUWBTP3M",
+      "GUWBTP9M",
+      "GUWDSL9",
+      "GUWPKPC0",
+      "INNROOMS",
+      "INVENTOR",
+      "INVSTATS",
+      "LEAVE",
+      "LOGOSOA",
+      "LOGOTBP",
+      "LOGOTOB",
+      "NPCCHAP",
+      "PAPERSEP",
+      "PCHAPTER",
+      "QUESTBAK",
+      "QUESTBG",
+      "RECENTEV",
+      "SIDEBLOK",
+      "START",
+      "START2EE",
+      "START3EE",
+      "STARTBP2",
+      "STARTEE",
+      "STARTM",
+      "STARTOLD",
+      "STONEOPT",
+      "TITLE",
+      "TOBMAP72",
+      "TOSCEND",
+      "ULGOTHST",
+      "WORLDMAP",
+      "GMPNTCPB",
+      "GMWMSGB0",
+      "GUDEATH0",
+      "GUICONTB",
+      "GUIWDMB",
+      "GUIWDMB0",
+      "GUIWDMB9",
+      "GUIWDMBM",
+      "GUIWDSL0",
+      "GUIWDSL1",
+      "GUWDMBM9",
+      "GWCONTB0",
+      "GUIWBTP1",
+      "GUIWBTP2",
+      "GUWBTP29",
+      "BGDECBAR",
+      "GUIPBARB",
+      "GUIPNLC",
+      "GKEYMAP",
+      "GOPGAMB",
+      "GOPSNDSB",
+      "LOADCNTR",
+      "ROOMDELU",
+      "ROOMMERC",
+      "ROOMNOBE",
+      "ROOMPEAS",
+      "COADCNTR",
+      "GUIRSP20",
+      "GUIDIFF",
+      "BAR-FINL",
+      "BAR-STEP"
+    ],
+    "pending_mos_count": 9,
+    "next_group": [],
+    "reason": "User requested full visual review; prior inventory did not constitute per-asset visual acceptance.",
+    "batch_protocol": {
+      "size": 9,
+      "numbering": "1 to 9 per displayed batch",
+      "selected_numbers": "keep",
+      "omitted_numbers": "exclude",
+      "user_instruction": "Groupes de 9; seuls les numéros cités sont conservés, les autres exclus; tout conserve le lot entier."
+    },
+    "active_batch": null,
+    "batch_history": [
+      {
+        "id": "batch-01",
+        "items": [
+          {
+            "number": 1,
+            "resref": "GUISTIDB"
+          },
+          {
+            "number": 2,
+            "resref": "GUISTROB"
+          },
+          {
+            "number": 3,
+            "resref": "QUESTBAK"
+          },
+          {
+            "number": 4,
+            "resref": "RECENTEV"
+          },
+          {
+            "number": 5,
+            "resref": "GUILOAD"
+          }
+        ],
+        "state": "accepted-all",
+        "user_answer": "tout"
+      },
+      {
+        "id": "batch-02",
+        "items": [
+          {
+            "number": 1,
+            "resref": "GUICREDT"
+          },
+          {
+            "number": 2,
+            "resref": "GMPCARBD"
+          },
+          {
+            "number": 3,
+            "resref": "GU3MPB"
+          },
+          {
+            "number": 4,
+            "resref": "GUIAPB"
+          },
+          {
+            "number": 5,
+            "resref": "GUICGB"
+          },
+          {
+            "number": 6,
+            "resref": "GUICONN1"
+          }
+        ],
+        "state": "accepted-all",
+        "user_answer": "tout"
+      },
+      {
+        "id": "batch-03",
+        "items": [
+          {
+            "number": 1,
+            "resref": "GUICONNB"
+          },
+          {
+            "number": 2,
+            "resref": "GUIDCX"
+          },
+          {
+            "number": 3,
+            "resref": "GUIDLC"
+          },
+          {
+            "number": 4,
+            "resref": "GUIERR"
+          },
+          {
+            "number": 5,
+            "resref": "GUIERR6"
+          },
+          {
+            "number": 6,
+            "resref": "GUIERR7"
+          }
+        ],
+        "state": "accepted-all",
+        "user_answer": "tout"
+      },
+      {
+        "id": "batch-04",
+        "items": [
+          {
+            "number": 1,
+            "resref": "GUIGDB"
+          },
+          {
+            "number": 2,
+            "resref": "GUIHSB"
+          },
+          {
+            "number": 3,
+            "resref": "GUIHSBS"
+          },
+          {
+            "number": 4,
+            "resref": "GUIINVHB"
+          },
+          {
+            "number": 5,
+            "resref": "GUILUPB"
+          },
+          {
+            "number": 6,
+            "resref": "GUIMAPWB"
+          }
+        ],
+        "state": "accepted-all",
+        "user_answer": "tout"
+      },
+      {
+        "id": "batch-05",
+        "items": [
+          {
+            "number": 1,
+            "resref": "GUIMOVB"
+          },
+          {
+            "number": 2,
+            "resref": "GUIMPB"
+          },
+          {
+            "number": 3,
+            "resref": "GUISAVEB"
+          },
+          {
+            "number": 4,
+            "resref": "GUISMBM"
+          },
+          {
+            "number": 5,
+            "resref": "GUISMDA"
+          },
+          {
+            "number": 6,
+            "resref": "GUISMDB"
+          }
+        ],
+        "state": "accepted-all",
+        "user_answer": "tout"
+      },
+      {
+        "id": "batch-06",
+        "items": [
+          {
+            "number": 1,
+            "resref": "GUISMF"
+          },
+          {
+            "number": 2,
+            "resref": "GUISMS"
+          },
+          {
+            "number": 3,
+            "resref": "GUISRRQB"
+          },
+          {
+            "number": 4,
+            "resref": "NPCCHAP"
+          },
+          {
+            "number": 5,
+            "resref": "START"
+          },
+          {
+            "number": 6,
+            "resref": "START3EE"
+          }
+        ],
+        "state": "accepted-all",
+        "user_answer": "tout"
+      },
+      {
+        "id": "batch-07",
+        "series": "supplementary-hud-compositions",
+        "items": [
+          {
+            "number": 1,
+            "resref": "GUIW12_1"
+          },
+          {
+            "number": 2,
+            "resref": "GUIW12_2"
+          },
+          {
+            "number": 3,
+            "resref": "GUIW12_3"
+          },
+          {
+            "number": 4,
+            "resref": "GUIW12_4"
+          },
+          {
+            "number": 5,
+            "resref": "GUIW12_5"
+          },
+          {
+            "number": 6,
+            "resref": "GUIW12_6"
+          },
+          {
+            "number": 7,
+            "resref": "GUIW12_7"
+          },
+          {
+            "number": 8,
+            "resref": "GUIW12_8"
+          },
+          {
+            "number": 9,
+            "resref": "GUIVERB"
+          }
+        ],
+        "state": "excluded-all",
+        "user_answer": "aucun"
+      },
+      {
+        "id": "batch-08",
+        "series": "supplementary-native-menu-variants",
+        "items": [
+          {
+            "number": 1,
+            "resref": "START2EE"
+          },
+          {
+            "number": 2,
+            "resref": "STARTBP2"
+          },
+          {
+            "number": 3,
+            "resref": "STARTM"
+          },
+          {
+            "number": 4,
+            "resref": "GUIRECBG"
+          },
+          {
+            "number": 5,
+            "resref": "GUISTATS"
+          },
+          {
+            "number": 6,
+            "resref": "GUIJRNL"
+          },
+          {
+            "number": 7,
+            "resref": "GUIHELP"
+          },
+          {
+            "number": 8,
+            "resref": "GUISPLHB"
+          },
+          {
+            "number": 9,
+            "resref": "GUIPOPAI"
+          }
+        ],
+        "state": "accepted-all",
+        "user_answer": "tout"
+      },
+      {
+        "id": "batch-09",
+        "series": "supplementary-native-menu-variants",
+        "items": [
+          {
+            "number": 1,
+            "resref": "GUIAPBR"
+          },
+          {
+            "number": 2,
+            "resref": "GUICGPR"
+          },
+          {
+            "number": 3,
+            "resref": "GUICHISE"
+          },
+          {
+            "number": 4,
+            "resref": "GUICP"
+          },
+          {
+            "number": 5,
+            "resref": "GUICPORB"
+          },
+          {
+            "number": 6,
+            "resref": "GUICUSTP"
+          },
+          {
+            "number": 7,
+            "resref": "GUICUSTX"
+          },
+          {
+            "number": 8,
+            "resref": "GUIDCB"
+          },
+          {
+            "number": 9,
+            "resref": "GUIDLCH"
+          }
+        ],
+        "state": "accepted-all",
+        "user_answer": "tout"
+      },
+      {
+        "id": "batch-10",
+        "series": "supplementary-native-menu-variants",
+        "items": [
+          {
+            "number": 1,
+            "resref": "GUIERR8"
+          },
+          {
+            "number": 2,
+            "resref": "GUIERR09"
+          },
+          {
+            "number": 3,
+            "resref": "GUIERR10"
+          },
+          {
+            "number": 4,
+            "resref": "GUIMAPAB"
+          },
+          {
+            "number": 5,
+            "resref": "GUIOSTUM"
+          },
+          {
+            "number": 6,
+            "resref": "GUISMF2"
+          },
+          {
+            "number": 7,
+            "resref": "GUISPMB"
+          },
+          {
+            "number": 8,
+            "resref": "GUISRSVB"
+          },
+          {
+            "number": 9,
+            "resref": "GUITUT"
+          }
+        ],
+        "state": "accepted-all",
+        "user_answer": "tout"
+      },
+      {
+        "id": "batch-11",
+        "series": "supplementary-native-panel-variants",
+        "items": [
+          {
+            "number": 1,
+            "resref": "BGPADB"
+          },
+          {
+            "number": 2,
+            "resref": "BGPADL"
+          },
+          {
+            "number": 3,
+            "resref": "BGPADR"
+          },
+          {
+            "number": 4,
+            "resref": "GU10BKMD"
+          },
+          {
+            "number": 5,
+            "resref": "GU20BKLS"
+          },
+          {
+            "number": 6,
+            "resref": "GU20BKMD"
+          },
+          {
+            "number": 7,
+            "resref": "GU20BKRS"
+          },
+          {
+            "number": 8,
+            "resref": "GMWMSGA0"
+          },
+          {
+            "number": 9,
+            "resref": "GMWMSGA9"
+          }
+        ],
+        "state": "accepted-all",
+        "user_answer": "tout"
+      },
+      {
+        "id": "batch-12",
+        "series": "supplementary-native-menu-variants",
+        "items": [
+          {
+            "number": 1,
+            "resref": "COLOR"
+          },
+          {
+            "number": 2,
+            "resref": "COLORI"
+          },
+          {
+            "number": 3,
+            "resref": "COLORR"
+          },
+          {
+            "number": 4,
+            "resref": "GMPCARBB"
+          },
+          {
+            "number": 5,
+            "resref": "GMPPARBB"
+          },
+          {
+            "number": 6,
+            "resref": "GMPWBTP0"
+          },
+          {
+            "number": 7,
+            "resref": "GMPWPKP0"
+          },
+          {
+            "number": 8,
+            "resref": "GPROGBAR"
+          },
+          {
+            "number": 9,
+            "resref": "STARTEE"
+          }
+        ],
+        "state": "accepted-all",
+        "user_answer": "tout"
+      },
+      {
+        "id": "batch-13",
+        "series": "supplementary-native-compositions",
+        "items": [
+          {
+            "number": 1,
+            "resref": "GUIWBTP3"
+          },
+          {
+            "number": 2,
+            "resref": "GUIWDSL9"
+          },
+          {
+            "number": 3,
+            "resref": "GUWBTP39"
+          },
+          {
+            "number": 4,
+            "resref": "GUWBTP3M"
+          },
+          {
+            "number": 5,
+            "resref": "GUWBTP9M"
+          },
+          {
+            "number": 6,
+            "resref": "GUWDSL9"
+          },
+          {
+            "number": 7,
+            "resref": "STARTOLD"
+          },
+          {
+            "number": 8,
+            "resref": "GUICHP0B"
+          },
+          {
+            "number": 9,
+            "resref": "GUICHP1B"
+          }
+        ],
+        "state": "accepted-all",
+        "user_answer": "tout"
+      },
+      {
+        "id": "batch-14",
+        "series": "supplementary-native-illustrations",
+        "items": [
+          {
+            "number": 1,
+            "resref": "GUICHP2B"
+          },
+          {
+            "number": 2,
+            "resref": "GUICHP3B"
+          },
+          {
+            "number": 3,
+            "resref": "GUICHP4B"
+          },
+          {
+            "number": 4,
+            "resref": "GUICHP5B"
+          },
+          {
+            "number": 5,
+            "resref": "GUICHP6B"
+          },
+          {
+            "number": 6,
+            "resref": "GUICHP7B"
+          },
+          {
+            "number": 7,
+            "resref": "GUICHP8B"
+          },
+          {
+            "number": 8,
+            "resref": "ARRIVE"
+          },
+          {
+            "number": 9,
+            "resref": "LEAVE"
+          }
+        ],
+        "state": "accepted-all",
+        "user_answer": "tout"
+      },
+      {
+        "id": "batch-15",
+        "series": "supplementary-native-chapter-illustrations",
+        "items": [
+          {
+            "number": 1,
+            "resref": "CH01AJON"
+          },
+          {
+            "number": 2,
+            "resref": "CH02AGLN"
+          },
+          {
+            "number": 3,
+            "resref": "CH03AMON"
+          },
+          {
+            "number": 4,
+            "resref": "CH04ASHP"
+          },
+          {
+            "number": 5,
+            "resref": "CH04BGTH"
+          },
+          {
+            "number": 6,
+            "resref": "CH04CSAH"
+          },
+          {
+            "number": 7,
+            "resref": "CH05AUND"
+          },
+          {
+            "number": 8,
+            "resref": "CH06ADRW"
+          },
+          {
+            "number": 9,
+            "resref": "CH07ASUL"
+          }
+        ],
+        "state": "accepted-all",
+        "user_answer": "tout"
+      },
+      {
+        "id": "batch-16",
+        "series": "supplementary-native-illustrations",
+        "items": [
+          {
+            "number": 1,
+            "resref": "BPEND"
+          },
+          {
+            "number": 2,
+            "resref": "CHPTAMKE"
+          },
+          {
+            "number": 3,
+            "resref": "CHPTMANA"
+          },
+          {
+            "number": 4,
+            "resref": "CHPTODRE"
+          },
+          {
+            "number": 5,
+            "resref": "CHPTSARA"
+          },
+          {
+            "number": 6,
+            "resref": "GUIDRM2"
+          },
+          {
+            "number": 7,
+            "resref": "GUIDRM3"
+          },
+          {
+            "number": 8,
+            "resref": "GUIDRM4"
+          },
+          {
+            "number": 9,
+            "resref": "GUIDRM5"
+          }
+        ],
+        "state": "accepted-all",
+        "user_answer": "tout"
+      },
+      {
+        "id": "batch-17",
+        "series": "supplementary-illustrations-and-small-decorations",
+        "items": [
+          {
+            "number": 1,
+            "resref": "GUIDRM6"
+          },
+          {
+            "number": 2,
+            "resref": "GUIDRM7"
+          },
+          {
+            "number": 3,
+            "resref": "TOBMAP72"
+          },
+          {
+            "number": 4,
+            "resref": "TOSCEND"
+          },
+          {
+            "number": 5,
+            "resref": "ULGOTHST"
+          },
+          {
+            "number": 6,
+            "resref": "WORLDMAP"
+          },
+          {
+            "number": 7,
+            "resref": "DLGDIVI"
+          },
+          {
+            "number": 8,
+            "resref": "PAPERSEP"
+          },
+          {
+            "number": 9,
+            "resref": "PCHAPTER"
+          }
+        ],
+        "state": "selection-recorded",
+        "selected_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "user_answer": "1 a 6"
+      },
+      {
+        "id": "batch-18",
+        "series": "supplementary-native-panels",
+        "items": [
+          {
+            "number": 1,
+            "resref": "GU10BKLS"
+          },
+          {
+            "number": 2,
+            "resref": "GU10BKRS"
+          },
+          {
+            "number": 3,
+            "resref": "SIDEBLOK"
+          },
+          {
+            "number": 4,
+            "resref": "GUIOLSP0"
+          },
+          {
+            "number": 5,
+            "resref": "GUIWLSP0"
+          },
+          {
+            "number": 6,
+            "resref": "GUIERR2"
+          },
+          {
+            "number": 7,
+            "resref": "GUIERR21"
+          },
+          {
+            "number": 8,
+            "resref": "GUISAVEC"
+          },
+          {
+            "number": 9,
+            "resref": "GUISTBBM"
+          }
+        ],
+        "state": "accepted-all",
+        "user_answer": "tout"
+      },
+      {
+        "id": "batch-19",
+        "series": "supplementary-native-panels",
+        "items": [
+          {
+            "number": 1,
+            "resref": "GMPNTCPB"
+          },
+          {
+            "number": 2,
+            "resref": "GMWMSGB0"
+          },
+          {
+            "number": 3,
+            "resref": "GUDEATH0"
+          },
+          {
+            "number": 4,
+            "resref": "GUICONTB"
+          },
+          {
+            "number": 5,
+            "resref": "GUIWDMB"
+          },
+          {
+            "number": 6,
+            "resref": "GUIWDMB0"
+          },
+          {
+            "number": 7,
+            "resref": "GUIWDMB9"
+          },
+          {
+            "number": 8,
+            "resref": "GUIWDMBM"
+          },
+          {
+            "number": 9,
+            "resref": "GUIWDSL0"
+          }
+        ],
+        "state": "accepted-all",
+        "user_answer": "tout"
+      },
+      {
+        "id": "batch-20",
+        "series": "supplementary-native-panels",
+        "items": [
+          {
+            "number": 1,
+            "resref": "GUIWDSL1"
+          },
+          {
+            "number": 2,
+            "resref": "GUWDMBM9"
+          },
+          {
+            "number": 3,
+            "resref": "GWCONTB0"
+          },
+          {
+            "number": 4,
+            "resref": "GUIWBTP1"
+          },
+          {
+            "number": 5,
+            "resref": "GUIWBTP2"
+          },
+          {
+            "number": 6,
+            "resref": "GUWBTP29"
+          },
+          {
+            "number": 7,
+            "resref": "BGDECBAR"
+          },
+          {
+            "number": 8,
+            "resref": "GUIPBARB"
+          },
+          {
+            "number": 9,
+            "resref": "GUIPNLC"
+          }
+        ],
+        "state": "accepted-all",
+        "user_answer": "tout"
+      },
+      {
+        "id": "batch-21",
+        "series": "indirect-side-variants",
+        "items": [
+          {
+            "number": 1,
+            "resref": "GUIWLS20"
+          },
+          {
+            "number": 2,
+            "resref": "GUIWRS20"
+          }
+        ],
+        "state": "accepted-all",
+        "user_answer": "oui"
+      },
+      {
+        "id": "batch-22",
+        "series": "verification-pass-discoveries",
+        "items": [
+          {
+            "number": 1,
+            "resref": "GKEYMAP"
+          },
+          {
+            "number": 2,
+            "resref": "GOPGAMB"
+          },
+          {
+            "number": 3,
+            "resref": "GOPSNDSB"
+          },
+          {
+            "number": 4,
+            "resref": "LOADCNTR"
+          },
+          {
+            "number": 5,
+            "resref": "ROOMDELU"
+          },
+          {
+            "number": 6,
+            "resref": "ROOMMERC"
+          },
+          {
+            "number": 7,
+            "resref": "ROOMNOBE"
+          },
+          {
+            "number": 8,
+            "resref": "ROOMPEAS"
+          },
+          {
+            "number": 9,
+            "resref": "COADCNTR"
+          }
+        ],
+        "state": "accepted-all",
+        "user_answer": "tout"
+      },
+      {
+        "id": "batch-23",
+        "series": "verification-ambiguous-decoration",
+        "items": [
+          {
+            "number": 1,
+            "resref": "GUIRSP20"
+          },
+          {
+            "number": 2,
+            "resref": "GUIDIFF"
+          },
+          {
+            "number": 3,
+            "resref": "BAR-FINL"
+          },
+          {
+            "number": 4,
+            "resref": "BAR-STEP"
+          }
+        ],
+        "state": "accepted-all",
+        "user_answer": "tout"
+      }
+    ],
+    "coverage": "Batches 01–23 resolved. Verification inspected 617 KEY MOS and interface-index BAM >=10000 px/frame, plus override UI additions. Static coverage only; computed Lua/motor routes and current runtime usage not proven.",
+    "direct_ui_menu_series_complete": true,
+    "final_revision": "All explicit refusals reversed by user; historical batch answers retained, latest decisions take precedence."
+  },
+  "supplementary_backlog": {
+    "status": "usage/variant routing to qualify before declaring complete",
+    "large_indexed_mos_not_in_direct_series": [],
+    "already_known_indirect_variants": [
+      "START2EE",
+      "GUIWLS20",
+      "GUIWRS20"
+    ],
+    "other_unpresented_static_decorations": [],
+    "unresolved_references": [
+      "GUIBG",
+      "GUINOTE"
+    ],
+    "below_large_surface_filter_review_in_progress": false,
+    "remaining_scope_exclusions": "Small input fields, progress controls, small icons excluded by requested scope; map miniatures belong to map domain.",
+    "verification_ambiguous_candidates": [],
+    "override_ui_result": "B3T timer bars 2-10 px wide; X-DELAY/KEYBND/X controls 64x64: outside requested surface scope."
+  }
+}
