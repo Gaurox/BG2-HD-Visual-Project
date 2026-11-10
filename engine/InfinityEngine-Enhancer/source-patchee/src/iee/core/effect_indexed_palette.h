@@ -2,6 +2,7 @@
 #include "iee/core/area_animation_lighting.h"
 #include "iee/core/effect_sharea_source_palette.h"
 #include "iee/core/effect_native_projectile_palettes.h"
+#include "iee/core/effect_residual_projectile_palettes.h"
 #include <limits>
 
 namespace iee::core::effect_indexed_palette {
@@ -9,13 +10,15 @@ namespace iee::core::effect_indexed_palette {
 // smoke ramp cannot represent them. Interpolate palette deltas in source RGB
 // space; exact native knots and identity palettes remain byte-exact. Only the
 // upload copy changes, never the production frame or its cached CPU bytes.
-enum class SourceKind { Sharea, Air, Earth, HolyMight };
+enum class SourceKind { Sharea, Air, Earth, HolyMight, Water, Boom };
 
 inline const std::array<std::uint32_t,256>& source_palette(SourceKind kind) noexcept {
   switch(kind) {
     case SourceKind::Air: return shairSource;
     case SourceKind::Earth: return shearthSource;
     case SourceKind::HolyMight: return hlymiteSource;
+    case SourceKind::Water: return shwaterSource;
+    case SourceKind::Boom: return spboomSource;
     default: return source;
   }
 }
@@ -24,6 +27,8 @@ inline SourceKind source_kind(const std::array<char,8>& ref) noexcept {
   if(ref==std::array<char,8>{'S','H','A','I','R'}) return SourceKind::Air;
   if(ref==std::array<char,8>{'S','H','E','A','R','T','H'}) return SourceKind::Earth;
   if(ref==std::array<char,8>{'H','L','Y','M','I','T','E'}) return SourceKind::HolyMight;
+  if(ref==std::array<char,8>{'S','H','W','A','T','E','R'}) return SourceKind::Water;
+  if(ref==std::array<char,8>{'S','P','B','O','O','M'}) return SourceKind::Boom;
   return SourceKind::Sharea;
 }
 
@@ -31,7 +36,7 @@ struct Transfer {
   std::array<std::array<int,3>,256> delta{};
   std::uint64_t fingerprint{};
   unsigned opacity{255};
-  bool valid{}, identity{true};
+  bool valid{}, identity{true}, straightOutput{};
   SourceKind sourceKind{SourceKind::Sharea};
 };
 
@@ -39,7 +44,18 @@ inline bool enabled(const std::array<char,8>& ref) noexcept {
   return ref==std::array<char,8>{'S','H','A','R','E','A','\0','\0'} ||
          ref==std::array<char,8>{'S','H','A','I','R'} ||
          ref==std::array<char,8>{'S','H','E','A','R','T','H'} ||
+         ref==std::array<char,8>{'S','H','W','A','T','E','R'} ||
+         ref==std::array<char,8>{'S','P','B','O','O','M'} ||
          ref==std::array<char,8>{'H','L','Y','M','I','T','E'};
+}
+
+// KEY/BIF native pixel-index inventory is pinned by the residual palette recipe.
+// Water BMPs contain217 entries; their unused tail is not a colour/alpha contract.
+// Boom's actual images use only range0 (4..15), never its duplicate unused RGBs.
+inline bool used_index(SourceKind kind,unsigned i) noexcept {
+  if(kind==SourceKind::Water) return i>=1 && i<=214;
+  if(kind==SourceKind::Boom) return i>=4 && i<=15;
+  return i>=1 && i<256;
 }
 
 inline Transfer derive(const area_lighting::Palette& realized, bool bgra,
@@ -47,11 +63,12 @@ inline Transfer derive(const area_lighting::Palette& realized, bool bgra,
   Transfer out{};
   out.sourceKind=kind;
   const auto& knots=source_palette(kind);
-  out.opacity=realized[2]>>24;
+  out.opacity=realized[kind==SourceKind::Boom?4:2]>>24;
   std::uint64_t hash=0x5348415245410008ull ^ static_cast<unsigned>(kind);
   // SHAREA's black index1 keeps the established neutral policy. The other
   // three BAMs have a colored index1 and must include it in the transfer.
   for(unsigned i=kind==SourceKind::Sharea?2u:1u;i<256;++i) {
+    if(!used_index(kind,i)) continue;
     if((realized[i]>>24)!=out.opacity) return {};
     for(unsigned c=0;c<3;++c) {
       const int value=(realized[i]>>((bgra?2-c:c)*8))&255;
@@ -72,6 +89,25 @@ inline Transfer derive(const area_lighting::Palette& realized, bool bgra,
   return out;
 }
 
+inline bool requires_transfer(const std::array<char,8>& ref,const Transfer& transfer) noexcept {
+  // Preserve accepted neutral Fireball SPBOOM on its original normal/composite
+  // path. Coloured/invalid Boom transfers must not silently draw neutral HD.
+  return enabled(ref) && !(source_kind(ref)==SourceKind::Boom &&
+      transfer.valid && transfer.identity && transfer.opacity==255);
+}
+
+inline bool supports_normal(SourceKind kind) noexcept {
+  return kind==SourceKind::Water || kind==SourceKind::Boom;
+}
+
+inline Transfer for_draw(Transfer transfer,bool normal) noexcept {
+  // Source backings stay premultiplied. Only the private GPU upload becomes
+  // straight for a native normal-blend draw; cache identities must stay distinct.
+  if(transfer.straightOutput!=normal) transfer.fingerprint^=0x4e4f524d414c0001ull;
+  transfer.straightOutput=normal;
+  return transfer;
+}
+
 inline unsigned distance(unsigned a,unsigned b) noexcept {
   const int r=int(a>>16)-int(b>>16);
   const int g=int((a>>8)&255)-int((b>>8)&255);
@@ -85,13 +121,17 @@ struct Search {
   std::array<std::array<unsigned char,8>,4096> grid{};
   explicit Search(SourceKind kind) noexcept {
     const auto& knots=source_palette(kind);
-    for(unsigned i=1;i<256;++i) exact[i-1]={knots[i],i};
+    exact.fill({std::numeric_limits<unsigned>::max(),0});
+    unsigned exactCount=0;
+    for(unsigned i=1;i<256;++i) if(used_index(kind,i)) exact[exactCount++]={knots[i],i};
     std::sort(exact.begin(),exact.end());
     for(unsigned bin=0;bin<4096;++bin) {
       const auto rgb=(((bin>>8)*16+8)<<16) |
           ((((bin>>4)&15)*16+8)<<8) | ((bin&15)*16+8);
       std::array<std::pair<unsigned,unsigned>,255> ranked{};
-      for(unsigned i=1;i<256;++i) ranked[i-1]={distance(rgb,knots[i]),i};
+      ranked.fill({std::numeric_limits<unsigned>::max(),0});
+      unsigned count=0;
+      for(unsigned i=1;i<256;++i) if(used_index(kind,i)) ranked[count++]={distance(rgb,knots[i]),i};
       std::partial_sort(ranked.begin(),ranked.begin()+8,ranked.end());
       for(unsigned i=0;i<8;++i) grid[bin][i]=static_cast<unsigned char>(ranked[i].second);
     }
@@ -102,6 +142,8 @@ inline const Search& search_for(SourceKind kind) noexcept {
   if(kind==SourceKind::Air) { static const Search table{SourceKind::Air}; return table; }
   if(kind==SourceKind::Earth) { static const Search table{SourceKind::Earth}; return table; }
   if(kind==SourceKind::HolyMight) { static const Search table{SourceKind::HolyMight}; return table; }
+  if(kind==SourceKind::Water) { static const Search table{SourceKind::Water}; return table; }
+  if(kind==SourceKind::Boom) { static const Search table{SourceKind::Boom}; return table; }
   static const Search table{SourceKind::Sharea}; return table;
 }
 
@@ -109,6 +151,7 @@ inline std::array<unsigned,3> recolor(std::array<unsigned,3> rgb,
                                     const Transfer& transfer) noexcept {
   if(transfer.identity || (rgb[0]|rgb[1]|rgb[2])==0) return rgb;
   const auto& search=search_for(transfer.sourceKind);
+  const auto& knots=source_palette(transfer.sourceKind);
   const unsigned packed=(rgb[0]<<16)|(rgb[1]<<8)|rgb[2];
   const auto found=std::lower_bound(search.exact.begin(),search.exact.end(),
                                   std::pair<unsigned,unsigned>{packed,0});
@@ -120,7 +163,7 @@ inline std::array<unsigned,3> recolor(std::array<unsigned,3> rgb,
   const auto bin=((rgb[0]>>4)<<8)|((rgb[1]>>4)<<4)|(rgb[2]>>4);
   std::array<std::pair<unsigned,unsigned>,8> ranked{};
   for(unsigned j=0;j<8;++j) {
-    const auto i=search.grid[bin][j];ranked[j]={distance(packed,source[i]),i};
+    const auto i=search.grid[bin][j];ranked[j]={distance(packed,knots[i]),i};
   }
   std::partial_sort(ranked.begin(),ranked.begin()+4,ranked.end());
   std::array<double,3> delta{};double weights=0;
@@ -135,7 +178,7 @@ inline std::array<unsigned,3> recolor(std::array<unsigned,3> rgb,
 }
 
 inline void apply(std::span<std::byte> pixels,const Transfer& transfer) noexcept {
-  if(!transfer.valid || pixels.size()%4 || (transfer.identity && transfer.opacity==255)) return;
+  if(!transfer.valid || pixels.size()%4 || (transfer.identity && transfer.opacity==255 && !transfer.straightOutput)) return;
   for(std::size_t i=0;i<pixels.size();i+=4) {
     const auto alpha=std::to_integer<unsigned>(pixels[i+3]);
     if(!alpha) continue;
@@ -144,7 +187,7 @@ inline void apply(std::span<std::byte> pixels,const Transfer& transfer) noexcept
       rgb[c]=std::min(255u,(std::to_integer<unsigned>(pixels[i+c])*255u+alpha/2)/alpha);
     rgb=recolor(rgb,transfer);
     const auto outputAlpha=(alpha*transfer.opacity+127)/255;
-    for(unsigned c=0;c<3;++c) pixels[i+c]=static_cast<std::byte>((rgb[c]*outputAlpha+127)/255);
+    for(unsigned c=0;c<3;++c) pixels[i+c]=static_cast<std::byte>(transfer.straightOutput?rgb[c]:(rgb[c]*outputAlpha+127)/255);
     pixels[i+3]=static_cast<std::byte>(outputAlpha);
   }
 }

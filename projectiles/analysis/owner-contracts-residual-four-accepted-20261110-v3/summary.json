@@ -1,0 +1,61 @@
+{
+  "schema": "bg2-projectile-owner-reconciliation-acceptance-v1",
+  "date": "2026-11-10",
+  "prior_authority": {
+    "schema": "bg2-projectile-owner-reconciliation-current-v1",
+    "date": "2026-11-10",
+    "report": "projectiles/analysis/residual-four-20261110-v1/README.md",
+    "summary": {
+      "path": "projectiles/analysis/owner-contracts-residual-four-20261110-v2/summary.json",
+      "sha256": "65E05722016CF7539AAE9FC1A0D855549C451DDEC277DF7E4BB03F8482DEA6E7"
+    },
+    "owners": {
+      "path": "projectiles/analysis/owner-contracts-residual-four-20261110-v2/owners.json",
+      "sha256": "B5324E80E5C21DB0E458DFB6556E64796515B0E45DD3C0C506F9CCBC02788131"
+    },
+    "exceptions": {
+      "path": "projectiles/analysis/owner-contracts-residual-four-20261110-v2/exceptions.json",
+      "sha256": "A5338D955B09046EC0B16F3A9625B7955C763AAE07DC722E474E6078745F932F"
+    },
+    "states": {
+      "reconciled-compatible-contracts": 302,
+      "documented-native-gap-no-static-driver": 7,
+      "qualified-installed-scoped-colour-QA-pending": 11
+    },
+    "technical_qualified_owners": 313,
+    "technical_percentage": 97.8125,
+    "actionable_families": 0,
+    "actionable_engine_IDs": 0,
+    "deferred_native_gaps": 7,
+    "new_manual_tests": 2,
+    "meaning": "All four active gaps technically corrected/installed;two representative colour reviews pending;no global visual QA or new live HD claim."
+  },
+  "acceptance": {
+    "path": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json",
+    "sha256": "4840D26CC6F2C90D619EBDD8C443B94CBD472479128B3B87048C9E05134B38D6"
+  },
+  "trace_cleanup": {
+    "path": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/trace-cleanup.json",
+    "sha256": "1F664EC0BDF474BDDD6AFC5C852C13B9782E524932CA585C58C3AB7A9FEAE57F"
+  },
+  "owner_states": {
+    "reconciled-compatible-contracts": 313,
+    "documented-native-gap-no-static-driver": 7
+  },
+  "technical_qualified_owners": 313,
+  "total_owners": 320,
+  "technical_percentage": 97.8125,
+  "active_exception_families": 0,
+  "pending_manual_checks": 0,
+  "actual_new_HD_colour_resources": [
+    "SHWATER",
+    "SPBOOM"
+  ],
+  "observed_native_IDs": [
+    138,
+    142
+  ],
+  "other_variants": "Technically qualified/shared compatible evidence;no invented individual visual acceptance",
+  "FLMSTRK_SPDIMDR_live_draw_claimed": false,
+  "release_changed": false
+}

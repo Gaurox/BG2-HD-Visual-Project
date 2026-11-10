@@ -1,5 +1,9 @@
 # Validations manuelles des projectiles — 2026-10-28
 
+**État final2026-11-10 : [R4-01/R4-02 acceptés](analysis/residual-four-colours-accepted-20261110-v1/README.md).** SHWATER6 rouge/138 etSPBOOM67 doré/142 validés visuellement avecpreuves palette+HD+masque+phasesimpaires.0test manuel restant,trace désactivée ;anciensaccords conservés.39PRO +12IDs avecQA descomposants observés ;les instructions d'essais ci-dessous sont historiques,aucun retest demandé.
+
+**Courant2026-11-10 : [2 essais de couleur uniquement](analysis/residual-four-20261110-v1/CLUA.md).**4familles résiduelles corrigées/installées ;SHWATER6 rouge etSPBOOM67 doré demandent uneobservation représentative. FLMSTRK etSPDIMDR1/2 qualifiés statiquement sansnouvel essai visuel. Anciens accords acquis,trace temporaire active ;ne pas rejouer leslots historiques ci-dessous.
+
 **Réconciliation technique2026-11-10 : [4 exceptions actives](analysis/owner-contracts-20261110-v1/README.md).** Preuves communes reliées aux320 propriétaires,299 contrats compatibles ;aucun accord visuel élargi ou révoqué. SHWATER,FLMSTRK,SPDIMDR1/2,SPBOOM recoloré demandent un travail technique avant toute nouvelle observation utile ;**0 nouveau test manuel préparé**,0 campagne PRO par PRO. Les8 écarts sans pilote scanné restent natifs.
 
 **État courant2026-11-09 : [bilan des validations](ETAT_VALIDATIONS.md).**39PRO et10IDs moteur avec accords visuels bornés aux composants observés. Les10raccords secondaires repérés sont installés :6routesHD acceptées+3couleurs acceptées ;SPSCORIC qualifié statiquement9cycles etaccord visuel antérieur conservé.0test de couleur en attente,trace désactivée. Les mentions «raccords ouverts» ci-dessous décrivent les étapes historiques.

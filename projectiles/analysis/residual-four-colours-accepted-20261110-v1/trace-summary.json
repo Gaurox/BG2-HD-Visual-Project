@@ -1,0 +1,102 @@
+{
+  "resources": {
+    "SHWATER": {
+      "HD_draws": 66,
+      "masked_HD_draws": 31,
+      "odd_HD_draws": 34,
+      "phases": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "outcomes": {
+        "1": 1,
+        "0": 66
+      },
+      "palette_bindings": [
+        "[2026-11-10 01:05:14.813] [info] EFX_PALETTE_BOUND resref=SHWATER fingerprint=87B4E8C8F33EC9B7 opacity=255 sequence=0 phase=2 backing=37 canvas=54x26; native palette at HD upload"
+      ],
+      "limits": "Observed representative colour and sampled phases/masks only; no all-owner/colour/full-motion claim."
+    },
+    "SPBOOM": {
+      "HD_draws": 41,
+      "masked_HD_draws": 41,
+      "odd_HD_draws": 19,
+      "phases": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "outcomes": {
+        "0": 41
+      },
+      "palette_bindings": [
+        "[2026-11-10 01:05:27.667] [info] EFX_PALETTE_BOUND resref=SPBOOM fingerprint=154DD193DB7851AB opacity=255 sequence=0 phase=0 backing=0 canvas=70x56; native palette at HD upload"
+      ],
+      "limits": "Observed representative colour and sampled phases/masks only; no all-owner/colour/full-motion claim."
+    }
+  },
+  "local_cutoff": "[2026-11-10 00:58:44",
+  "source_logs": [
+    {
+      "path": "config://bg2ee_game_root/InfinityEngine-Enhancer.log",
+      "sha256": "FC3F677D25C38DCD77F354785903DC8221598410EE842C7E85477784C80C6559",
+      "bytes": 14658104
+    }
+  ],
+  "maximum_traceDropped": 0,
+  "limits": [
+    "Sampled telemetry,not an exhaustive trace.",
+    "outcome0=HD;outcome1=CpuNotReady;cold-cache native fallback is retained.",
+    "draw row ok=false is not a rejection;that field describes swap events."
+  ]
+}

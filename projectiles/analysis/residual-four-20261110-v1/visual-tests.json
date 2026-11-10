@@ -1,0 +1,97 @@
+{
+  "manual_tests": [
+    {
+      "id": "R4-01",
+      "spell": "SPPR207",
+      "projectl_id": 138,
+      "opcode141_type": 26,
+      "source_sha256": "5780F44574461C30308812928C273271A5BC4E3CF3199ED6DC771B0FF997B764",
+      "effects": [
+        {
+          "offset": "0x9a",
+          "opcode": 122,
+          "target": 1,
+          "parameter1": 5,
+          "parameter2": 0,
+          "timing": 4,
+          "duration": 1,
+          "resource": "gberry"
+        },
+        {
+          "offset": "0xca",
+          "opcode": 174,
+          "target": 1,
+          "parameter1": 0,
+          "parameter2": 0,
+          "timing": 4,
+          "duration": 1,
+          "resource": "EFF_P82"
+        },
+        {
+          "offset": "0xfa",
+          "opcode": 141,
+          "target": 1,
+          "parameter1": 0,
+          "parameter2": 26,
+          "timing": 4,
+          "duration": 1,
+          "resource": ""
+        },
+        {
+          "offset": "0x12a",
+          "opcode": 61,
+          "target": 1,
+          "parameter1": 1996800,
+          "parameter2": 1638400,
+          "timing": 4,
+          "duration": 1,
+          "resource": ""
+        }
+      ],
+      "command": "C:Eval('ForceSpellRES(\"SPPR207\",Myself)',0)",
+      "inspect": "New native colour, obvious clipping/opaque rectangle only; no replay of old assets.",
+      "status": "prepared-not-observed"
+    },
+    {
+      "id": "R4-02",
+      "spell": "SPWM110",
+      "projectl_id": 142,
+      "opcode141_type": 32,
+      "source_sha256": "1BCD8E2B3B439E1A993597FC9595B1664756159B1E07AF2D02175AFFA63A610C",
+      "effects": [
+        {
+          "offset": "0x9a",
+          "opcode": 170,
+          "target": 2,
+          "parameter1": 0,
+          "parameter2": 6,
+          "timing": 0,
+          "duration": 60,
+          "resource": ""
+        },
+        {
+          "offset": "0xca",
+          "opcode": 141,
+          "target": 2,
+          "parameter1": 0,
+          "parameter2": 32,
+          "timing": 9,
+          "duration": 0,
+          "resource": ""
+        }
+      ],
+      "command": "C:Eval('ForceSpellRES(\"SPWM110\",NearestEnemyOf(Myself))',0)",
+      "inspect": "New native colour, obvious clipping/opaque rectangle only; no replay of old assets.",
+      "status": "prepared-not-observed"
+    }
+  ],
+  "manual_test_count": 2,
+  "policy": "One representative per new palette family, not each alias or every colour. All native knots/BMP variants/normal+additive cache paths tested automatically.",
+  "automated_instead_of_manual": [
+    "FLMSTRK unchanged image/native cycles/centres",
+    "SPDIMDR1/2 native update and2->1->2 identity switch; both packs qualified",
+    "All7 SHWATER palettes on214 used native indices",
+    "All3 SPBOOM range0 colours on12 used indices"
+  ],
+  "new_helpers_installed": false
+}

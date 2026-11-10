@@ -1,0 +1,75 @@
+{
+  "schema": "bg2-projectile-owner-reconciliation-amendment-v1",
+  "date": "2026-11-10",
+  "prior_authority": {
+    "schema": "bg2-projectile-owner-reconciliation-current-v1",
+    "date": "2026-11-10",
+    "report": "projectiles/analysis/owner-contracts-20261110-v1/README.md",
+    "summary": {
+      "path": "projectiles/analysis/owner-contracts-20261110-v1/summary.json",
+      "sha256": "BEE77686D3613335FC56CE9D7B2692EC8C1B2DDCB088CBF6E1FAB0951AAB859F"
+    },
+    "owners": {
+      "path": "projectiles/analysis/owner-contracts-20261110-v1/owners.json",
+      "sha256": "BFAA0EF6C9A2D860ED0AD5738ED806587C0EE3C8B3F17550EB8F15B7ABF602EC"
+    },
+    "exceptions": {
+      "path": "projectiles/analysis/owner-contracts-20261110-v1/exceptions.json",
+      "sha256": "E495899B642B8548A12187550935B29A39DB749FF161EFCB7A20CEC36A68CDA9"
+    },
+    "states": {
+      "reconciled-compatible-contracts": 299,
+      "documented-native-gap-no-static-driver": 8,
+      "exception-to-treat": 13
+    },
+    "actionable_families": 4,
+    "actionable_engine_IDs": 13,
+    "deferred_native_gaps": 8,
+    "new_manual_tests": 0,
+    "meaning": "Technical reconciliation only. Existing visual QA and installation/release decisions remain separate."
+  },
+  "current_installation": {
+    "path": "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/installation.json",
+    "sha256": "0208634C25452B6D14CED1862A13D3E5A670637C6146DDB8C0B8CB95B47D7695"
+  },
+  "source_evidence": [
+    {
+      "path": "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/installation.json",
+      "sha256": "0208634C25452B6D14CED1862A13D3E5A670637C6146DDB8C0B8CB95B47D7695"
+    },
+    {
+      "path": "projectiles/analysis/residual-four-20261110-v1/qualification.json",
+      "sha256": "6789FC44AFCD2E840E8744CEC0DA918F5873D2ED770CF0304239D0F0FDD5FD6E"
+    },
+    {
+      "path": "projectiles/analysis/residual-four-20261110-v1/source-palettes.json",
+      "sha256": "6D9338D8B11855978B01ABBD07F13B62AC6C3285DC7E17EC5596F06F444EB851"
+    },
+    {
+      "path": "projectiles/analysis/residual-four-20261110-v1/engine-tests.log",
+      "sha256": "6EA0B6DBDC16657B9CBBCF2600AC44941CF486734AB839615D82B69E73D3A6E1"
+    },
+    {
+      "path": "projectiles/analysis/residual-four-20261110-v1/regression-loader.log",
+      "sha256": "D392C7E27D21B8368A89D805634926CE0FE4187A2B783CA9DD254FE9F06D4792"
+    }
+  ],
+  "PROs": 243,
+  "engine_IDs": 77,
+  "technical_qualified_owners": 313,
+  "technical_percentage": 97.8125,
+  "owner_states": {
+    "reconciled-compatible-contracts": 302,
+    "documented-native-gap-no-static-driver": 7,
+    "qualified-installed-scoped-colour-QA-pending": 11
+  },
+  "active_exception_families": 0,
+  "pending_manual_colour_checks": 2,
+  "actual_new_live_HD_draws_claimed": 0,
+  "resolved_active_engine_IDs": 13,
+  "additional_shared_FLMSTRK_ID": 66,
+  "deferred_no_driver_owners": 7,
+  "QA_promoted": false,
+  "images_changed": false,
+  "release_changed": false
+}

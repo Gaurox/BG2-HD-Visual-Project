@@ -1,0 +1,724 @@
+{
+  "schema": "bg2-projectiles-residual-four-qualification-v1",
+  "resources": [
+    "SHWATER",
+    "FLMSTRK",
+    "SPDIMDR1",
+    "SPDIMDR2",
+    "SPBOOM"
+  ],
+  "installed_resources": 743,
+  "installed_backings": 72563,
+  "manifest_sha256": "4ED0F7CDD1374F74001B45FCCD6063F8275783BE7F1B11839B0BBFDAAF85B5B9",
+  "registry_sha256": "5994D9F9BD7FB08F63CDBA8BBBF6A78A44E0AB2E330F954A20E6B57725ABEC41",
+  "installed_dll_sha256": "5A1559B5C16A7BA4614D96DF2B5E9CF9F6A629273A008B26708351063106612B",
+  "contracts": 600,
+  "verified_backings": 208,
+  "proofs": [
+    {
+      "resref": "SHWATER",
+      "installed_BAM_sha256": "D4C3169876251BBB595689B7E733379F7E05BBC51341D1588B9439B71016DF65",
+      "native_override": true,
+      "native_frames": 18,
+      "native_cycles": 1,
+      "registry_frames": 70,
+      "installed_backing_hashes_verified": 70,
+      "backing_bytes": 8598976,
+      "resource_metadata": {
+        "cycles": [
+          {
+            "cycle": 0,
+            "frame_indices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17
+            ],
+            "lookup_start": 0
+          }
+        ],
+        "frame_count": 70,
+        "interpolation_run": "shwater-apollo30-native-retimed-20261017-v1",
+        "production_bam": "SHWATER",
+        "resref": "SHWATER",
+        "rgb_encoding": "premultiplied",
+        "timeline": {
+          "actual_phase_counts_by_cycle": [
+            36
+          ],
+          "cycle_profiles": [
+            "cycle000-loop"
+          ],
+          "native_fps": [
+            15,
+            1
+          ],
+          "native_frame_indices_by_cycle": [
+            [
+              0,
+              37,
+              39,
+              41,
+              43,
+              45,
+              47,
+              49,
+              51,
+              53,
+              55,
+              57,
+              59,
+              61,
+              63,
+              65,
+              67,
+              35
+            ]
+          ],
+          "once_profiles": [
+            "cycle000-once"
+          ],
+          "phase_count": 36,
+          "target_fps": [
+            30,
+            1
+          ],
+          "timeline_frame_indices_by_cycle": [
+            [
+              0,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              48,
+              49,
+              50,
+              51,
+              52,
+              53,
+              54,
+              55,
+              56,
+              57,
+              58,
+              59,
+              60,
+              61,
+              62,
+              63,
+              64,
+              65,
+              66,
+              67,
+              68,
+              35,
+              69
+            ]
+          ]
+        }
+      },
+      "profiles": [
+        {
+          "cycle": 0,
+          "once": 0,
+          "native_slots": 18,
+          "phases": 36,
+          "sizes_centres_exact": true
+        },
+        {
+          "cycle": 0,
+          "once": 1,
+          "native_slots": 18,
+          "phases": 36,
+          "sizes_centres_exact": true
+        }
+      ],
+      "selection": {
+        "path": "effects/index/selections/SHWATER.json",
+        "sha256": "E276389954F76D4BE5B149FC183335E580328F36260D1F5647FF3FB8043697FD"
+      }
+    },
+    {
+      "resref": "FLMSTRK",
+      "installed_BAM_sha256": "6F8C06436FD445556618DD6BFF9FC019CCF499A13C5DB97086246315BCE79A5F",
+      "native_override": true,
+      "native_frames": 34,
+      "native_cycles": 1,
+      "registry_frames": 66,
+      "installed_backing_hashes_verified": 66,
+      "backing_bytes": 212921984,
+      "resource_metadata": {
+        "cycles": [
+          {
+            "cycle": 0,
+            "frame_indices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30,
+              31,
+              32
+            ],
+            "lookup_start": 0
+          }
+        ],
+        "frame_count": 66,
+        "resref": "FLMSTRK",
+        "source": {
+          "interpolation_run": "flmstrk-interpolation-apollo30-retimed-lot64-20261015-v1",
+          "interpolation_run_descriptor_sha256": "F53BB7F5C0F0A7A9E8BB8E4900D0AD914CBCBB56BDDA5AD4A935AAA02FA6F75D",
+          "source_bam_sha256": "13ead5e2f0fc77e619451b5f656945bef215ea4b6bcf50a492a3795195f75428",
+          "spatial_manifest_sha256": "3E882F4F1707F3869F498D7397966CA17C71379B4C1A006707B8CC25FBFCB0A6",
+          "spatial_run": "flmstrk-spatial-seedvr7b-lab-lot64-20261015-v1",
+          "spatial_run_descriptor_sha256": "3C67712C9E29D3AB8D240650CEB1C49206F5921A3153EFEC60EA3BC23C97C178"
+        },
+        "timeline": {
+          "actual_phase_counts_by_cycle": [
+            66
+          ],
+          "alternate_profiles": [],
+          "cycle_profiles": [
+            "cycle000-once"
+          ],
+          "native_fps": [
+            15,
+            1
+          ],
+          "native_frame_indices_by_cycle": [
+            [
+              0,
+              2,
+              4,
+              6,
+              8,
+              10,
+              12,
+              14,
+              16,
+              18,
+              20,
+              22,
+              24,
+              26,
+              28,
+              30,
+              32,
+              34,
+              36,
+              38,
+              40,
+              42,
+              44,
+              46,
+              48,
+              50,
+              52,
+              54,
+              56,
+              58,
+              60,
+              62,
+              64
+            ]
+          ],
+          "phase_count": 66,
+          "target_fps": [
+            30,
+            1
+          ],
+          "timeline_frame_indices_by_cycle": [
+            [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              48,
+              49,
+              50,
+              51,
+              52,
+              53,
+              54,
+              55,
+              56,
+              57,
+              58,
+              59,
+              60,
+              61,
+              62,
+              63,
+              64,
+              65
+            ]
+          ],
+          "unreachable_tail_policy": "v2 equal-width tables padded only beyond native slot count; no extra presented phase or duration"
+        }
+      },
+      "profiles": [
+        {
+          "cycle": 0,
+          "once": 0,
+          "native_slots": 33,
+          "phases": 66,
+          "sizes_centres_exact": true
+        },
+        {
+          "cycle": 0,
+          "once": 1,
+          "native_slots": 33,
+          "phases": 66,
+          "sizes_centres_exact": true
+        }
+      ],
+      "selection": {
+        "path": "effects/index/selections/FLMSTRK.json",
+        "sha256": "8A601D0AD253B774714AC5FED5F873C9973E451BB1B1B1D636829D24BCA6774E"
+      }
+    },
+    {
+      "resref": "SPDIMDR1",
+      "installed_BAM_sha256": "CC13E47580A6F28A5BE1E1A9F8EF3A4E0658489006B42F039A30B68726906F7D",
+      "native_override": true,
+      "native_frames": 6,
+      "native_cycles": 1,
+      "registry_frames": 13,
+      "installed_backing_hashes_verified": 13,
+      "backing_bytes": 4685824,
+      "resource_metadata": {
+        "cycles": [
+          {
+            "cycle": 0,
+            "frame_indices": [
+              5,
+              4,
+              3,
+              2,
+              1,
+              0
+            ],
+            "lookup_start": 0
+          }
+        ],
+        "frame_count": 13,
+        "interpolation_run": "spdimdr1-magic-apollo30-20261108-v1",
+        "native_source_cycles": [
+          {
+            "cycle": 0,
+            "frame_indices": [
+              5,
+              4,
+              3,
+              2,
+              1,
+              0
+            ],
+            "lookup_start": 0
+          }
+        ],
+        "production_bam": "SPDIMDR1",
+        "production_pack": "effects/ressources/SPDIMDR1/packs/spdimdr1-magic-x4-apollo30-profiles-20261108-v1",
+        "production_pack_sha256": "5CE4412FD5CAE7E0E388D659689362FC7A369C33B64C1378D663B3566649BDE4",
+        "resref": "SPDIMDR1",
+        "rgb_encoding": "premultiplied",
+        "timeline": {
+          "actual_phase_counts_by_cycle": [
+            12
+          ],
+          "cycle_profiles": [
+            "cycle000-loop"
+          ],
+          "native_fps": [
+            15,
+            1
+          ],
+          "native_frame_indices_by_cycle": [
+            [
+              0,
+              2,
+              4,
+              6,
+              8,
+              10
+            ]
+          ],
+          "once_profiles": [
+            "cycle000-once"
+          ],
+          "phase_count": 12,
+          "target_fps": [
+            30,
+            1
+          ],
+          "timeline_frame_indices_by_cycle": [
+            [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              11,
+              10,
+              12
+            ]
+          ]
+        }
+      },
+      "profiles": [
+        {
+          "cycle": 0,
+          "once": 0,
+          "native_slots": 6,
+          "phases": 12,
+          "sizes_centres_exact": true
+        },
+        {
+          "cycle": 0,
+          "once": 1,
+          "native_slots": 6,
+          "phases": 12,
+          "sizes_centres_exact": true
+        }
+      ],
+      "selection": {
+        "path": "effects/index/selections/SPDIMDR1.json",
+        "sha256": "BCE339AC910CCFB4A9482A326583B41F97C7BD33066A5E1E8CE1F7377AA5237D"
+      }
+    },
+    {
+      "resref": "SPDIMDR2",
+      "installed_BAM_sha256": "1CD14316EB68DA5EF66F53B4ACB51E8B3C343E208C4686C9D27AD6DA3F777E29",
+      "native_override": true,
+      "native_frames": 6,
+      "native_cycles": 1,
+      "registry_frames": 13,
+      "installed_backing_hashes_verified": 13,
+      "backing_bytes": 2334592,
+      "resource_metadata": {
+        "cycles": [
+          {
+            "cycle": 0,
+            "frame_indices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "lookup_start": 0
+          }
+        ],
+        "frame_count": 13,
+        "interpolation_run": "spdimdr2-magic-apollo30-20261108-v1",
+        "native_source_cycles": [
+          {
+            "cycle": 0,
+            "frame_indices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "lookup_start": 0
+          }
+        ],
+        "production_bam": "SPDIMDR2",
+        "production_pack": "effects/ressources/SPDIMDR2/packs/spdimdr2-magic-x4-apollo30-profiles-20261108-v1",
+        "production_pack_sha256": "3CD5F7E670B049196DFB11E0B2EE5A5623A4D3E180664EA06270B9403DA16FF0",
+        "resref": "SPDIMDR2",
+        "rgb_encoding": "premultiplied",
+        "timeline": {
+          "actual_phase_counts_by_cycle": [
+            12
+          ],
+          "cycle_profiles": [
+            "cycle000-loop"
+          ],
+          "native_fps": [
+            15,
+            1
+          ],
+          "native_frame_indices_by_cycle": [
+            [
+              0,
+              2,
+              4,
+              6,
+              8,
+              10
+            ]
+          ],
+          "once_profiles": [
+            "cycle000-once"
+          ],
+          "phase_count": 12,
+          "target_fps": [
+            30,
+            1
+          ],
+          "timeline_frame_indices_by_cycle": [
+            [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              11,
+              10,
+              12
+            ]
+          ]
+        }
+      },
+      "profiles": [
+        {
+          "cycle": 0,
+          "once": 0,
+          "native_slots": 6,
+          "phases": 12,
+          "sizes_centres_exact": true
+        },
+        {
+          "cycle": 0,
+          "once": 1,
+          "native_slots": 6,
+          "phases": 12,
+          "sizes_centres_exact": true
+        }
+      ],
+      "selection": {
+        "path": "effects/index/selections/SPDIMDR2.json",
+        "sha256": "4235AC64C056FF8BE94464AF8E84C1B887ED46912C792F3F38654C53201C6FBD"
+      }
+    },
+    {
+      "resref": "SPBOOM",
+      "installed_BAM_sha256": "547ACCEA819F93B29ABFBA62630C2650176702BF7A1C193C1C0A8A7618AD0DE2",
+      "native_override": true,
+      "native_frames": 12,
+      "native_cycles": 1,
+      "registry_frames": 46,
+      "installed_backing_hashes_verified": 46,
+      "backing_bytes": 12250496,
+      "resource_metadata": {
+        "cycles": [
+          {
+            "cycle": 0,
+            "frame_indices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11
+            ],
+            "lookup_start": 0
+          }
+        ],
+        "frame_count": 46,
+        "interpolation_run": "spboom-apollo30-native-retimed-20261017-v1",
+        "production_bam": "SPBOOM",
+        "resref": "SPBOOM",
+        "rgb_encoding": "premultiplied",
+        "timeline": {
+          "actual_phase_counts_by_cycle": [
+            24
+          ],
+          "cycle_profiles": [
+            "cycle000-loop"
+          ],
+          "native_fps": [
+            15,
+            1
+          ],
+          "native_frame_indices_by_cycle": [
+            [
+              0,
+              25,
+              27,
+              29,
+              31,
+              33,
+              35,
+              37,
+              39,
+              41,
+              43,
+              23
+            ]
+          ],
+          "once_profiles": [
+            "cycle000-once"
+          ],
+          "phase_count": 24,
+          "target_fps": [
+            30,
+            1
+          ],
+          "timeline_frame_indices_by_cycle": [
+            [
+              0,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              23,
+              45
+            ]
+          ]
+        }
+      },
+      "profiles": [
+        {
+          "cycle": 0,
+          "once": 0,
+          "native_slots": 12,
+          "phases": 24,
+          "sizes_centres_exact": true
+        },
+        {
+          "cycle": 0,
+          "once": 1,
+          "native_slots": 12,
+          "phases": 24,
+          "sizes_centres_exact": true
+        }
+      ],
+      "selection": {
+        "path": "effects/index/selections/SPBOOM.json",
+        "sha256": "0E51B0484AF77EAA878D31872917FC964021F74EECFF881A7756BA21B1ED6D7E"
+      }
+    }
+  ],
+  "new_inference": 0,
+  "image_changes": 0,
+  "native_geometry_changes": 0,
+  "scope": "Actual native-cell lookup for all five: current cycles, source centres/sizes, base+once profiles. Blend/palette/occlusion keep existing safe native fallback; live HD draw requires test."
+}

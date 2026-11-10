@@ -635,16 +635,30 @@
           "projectiles/analysis/owner-contracts-20261110-v1/owners.json"
         ],
         "automatic_reconciliation": {
-          "state": "documented-native-gap-no-static-driver",
-          "evidence": "projectiles/analysis/owner-contracts-20261110-v1/owners.json",
+          "state": "reconciled-compatible-contracts",
+          "evidence": "projectiles/analysis/owner-contracts-residual-four-20261110-v2/owners.json",
           "owner": "engine-id:66",
           "reviewed_on": "2026-11-10",
-          "contract_PRO_sha256": null,
-          "errors": [
-            "missing-secondary-scope"
+          "scope": "Technical bridge/palette qualification only; colour QA pending, existing image QA retained."
+        },
+        "residual_four_runtime": {
+          "state": "qualified-static-installed-prior-image-QA-retained",
+          "evidence": [
+            "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/installation.json",
+            "projectiles/analysis/residual-four-20261110-v1/qualification.json",
+            "projectiles/analysis/residual-four-20261110-v1/source-palettes.json",
+            "projectiles/analysis/residual-four-20261110-v1/engine-tests.log",
+            "projectiles/analysis/residual-four-20261110-v1/regression-loader.log"
           ],
-          "scope": "Static native owner/child/geometry/cycles/palette/installed backing contract; no new visual approval, live draw or full spell-chain claim."
+          "scope": "Same FLMSTRK source/class/geometry as145;no scanned driver for66;no new live draw claim."
         }
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/backups/20261109T235843951788Z-484d9143/renderer-install-receipt.json"
+        ],
+        "scope": "Shared FLMSTRK registration;native asset unchanged."
       }
     },
     "67": {
@@ -1065,16 +1079,30 @@
           "projectiles/analysis/owner-contracts-20261110-v1/owners.json"
         ],
         "automatic_reconciliation": {
-          "state": "exception-to-treat",
-          "evidence": "projectiles/analysis/owner-contracts-20261110-v1/owners.json",
+          "state": "reconciled-compatible-contracts",
+          "evidence": "projectiles/analysis/owner-contracts-residual-four-20261110-v2/owners.json",
           "owner": "engine-id:109",
           "reviewed_on": "2026-11-10",
-          "contract_PRO_sha256": null,
-          "errors": [
-            "missing-secondary-scope"
+          "scope": "Technical bridge/palette qualification only; colour QA pending, existing image QA retained."
+        },
+        "residual_four_runtime": {
+          "state": "qualified-static-installed-prior-image-QA-retained",
+          "evidence": [
+            "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/installation.json",
+            "projectiles/analysis/residual-four-20261110-v1/qualification.json",
+            "projectiles/analysis/residual-four-20261110-v1/source-palettes.json"
           ],
-          "scope": "Static native owner/child/geometry/cycles/palette/installed backing contract; no new visual approval, live draw or full spell-chain claim."
+          "previous_visual_QA_retained": true,
+          "live_HD_draw_observed": false,
+          "scope": "Current DLL source/pack/palette/native geometry/cycles qualification, not live draw or global visual approval"
         }
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/backups/20261109T235843951788Z-484d9143/renderer-install-receipt.json"
+        ],
+        "scope": "DLL bridge/palette changes only; existing images and native PROs unchanged."
       }
     },
     "120": {
@@ -1084,16 +1112,32 @@
           "projectiles/analysis/owner-contracts-20261110-v1/owners.json"
         ],
         "automatic_reconciliation": {
-          "state": "exception-to-treat",
-          "evidence": "projectiles/analysis/owner-contracts-20261110-v1/owners.json",
+          "state": "reconciled-compatible-contracts",
+          "evidence": "projectiles/analysis/owner-contracts-residual-four-accepted-20261110-v3/owners.json",
           "owner": "engine-id:120",
           "reviewed_on": "2026-11-10",
-          "contract_PRO_sha256": null,
-          "errors": [
-            "missing-secondary-scope"
+          "scope": "Shared technically qualified native palette/render contract;direct colour approval only138 and142.",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
+        },
+        "residual_four_runtime": {
+          "state": "qualified-installed-shared-colour-evidence",
+          "evidence": [
+            "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/installation.json",
+            "projectiles/analysis/residual-four-20261110-v1/qualification.json",
+            "projectiles/analysis/residual-four-20261110-v1/source-palettes.json"
           ],
-          "scope": "Static native owner/child/geometry/cycles/palette/installed backing contract; no new visual approval, live draw or full spell-chain claim."
+          "previous_visual_QA_retained": true,
+          "live_HD_draw_observed": false,
+          "scope": "Current DLL source/pack/palette/native geometry/cycles qualification, not live draw or global visual approval",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
         }
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/backups/20261109T235843951788Z-484d9143/renderer-install-receipt.json"
+        ],
+        "scope": "DLL bridge/palette changes only; existing images and native PROs unchanged."
       }
     },
     "121": {
@@ -1137,17 +1181,32 @@
           "projectiles/analysis/owner-contracts-20261110-v1/owners.json"
         ],
         "automatic_reconciliation": {
-          "state": "exception-to-treat",
-          "evidence": "projectiles/analysis/owner-contracts-20261110-v1/owners.json",
+          "state": "reconciled-compatible-contracts",
+          "evidence": "projectiles/analysis/owner-contracts-residual-four-accepted-20261110-v3/owners.json",
           "owner": "engine-id:123",
           "reviewed_on": "2026-11-10",
-          "contract_PRO_sha256": null,
-          "errors": [
-            "missing-secondary-scope",
-            "native-BMP-palette-not-transferred"
+          "scope": "Shared technically qualified native palette/render contract;direct colour approval only138 and142.",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
+        },
+        "residual_four_runtime": {
+          "state": "qualified-installed-shared-colour-evidence",
+          "evidence": [
+            "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/installation.json",
+            "projectiles/analysis/residual-four-20261110-v1/qualification.json",
+            "projectiles/analysis/residual-four-20261110-v1/source-palettes.json"
           ],
-          "scope": "Static native owner/child/geometry/cycles/palette/installed backing contract; no new visual approval, live draw or full spell-chain claim."
+          "previous_visual_QA_retained": true,
+          "live_HD_draw_observed": false,
+          "scope": "Current DLL source/pack/palette/native geometry/cycles qualification, not live draw or global visual approval",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
         }
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/backups/20261109T235843951788Z-484d9143/renderer-install-receipt.json"
+        ],
+        "scope": "DLL bridge/palette changes only; existing images and native PROs unchanged."
       }
     },
     "124": {
@@ -1191,17 +1250,32 @@
           "projectiles/analysis/owner-contracts-20261110-v1/owners.json"
         ],
         "automatic_reconciliation": {
-          "state": "exception-to-treat",
-          "evidence": "projectiles/analysis/owner-contracts-20261110-v1/owners.json",
+          "state": "reconciled-compatible-contracts",
+          "evidence": "projectiles/analysis/owner-contracts-residual-four-accepted-20261110-v3/owners.json",
           "owner": "engine-id:126",
           "reviewed_on": "2026-11-10",
-          "contract_PRO_sha256": null,
-          "errors": [
-            "missing-secondary-scope",
-            "native-BMP-palette-not-transferred"
+          "scope": "Shared technically qualified native palette/render contract;direct colour approval only138 and142.",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
+        },
+        "residual_four_runtime": {
+          "state": "qualified-installed-shared-colour-evidence",
+          "evidence": [
+            "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/installation.json",
+            "projectiles/analysis/residual-four-20261110-v1/qualification.json",
+            "projectiles/analysis/residual-four-20261110-v1/source-palettes.json"
           ],
-          "scope": "Static native owner/child/geometry/cycles/palette/installed backing contract; no new visual approval, live draw or full spell-chain claim."
+          "previous_visual_QA_retained": true,
+          "live_HD_draw_observed": false,
+          "scope": "Current DLL source/pack/palette/native geometry/cycles qualification, not live draw or global visual approval",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
         }
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/backups/20261109T235843951788Z-484d9143/renderer-install-receipt.json"
+        ],
+        "scope": "DLL bridge/palette changes only; existing images and native PROs unchanged."
       }
     },
     "127": {
@@ -1245,17 +1319,32 @@
           "projectiles/analysis/owner-contracts-20261110-v1/owners.json"
         ],
         "automatic_reconciliation": {
-          "state": "exception-to-treat",
-          "evidence": "projectiles/analysis/owner-contracts-20261110-v1/owners.json",
+          "state": "reconciled-compatible-contracts",
+          "evidence": "projectiles/analysis/owner-contracts-residual-four-accepted-20261110-v3/owners.json",
           "owner": "engine-id:129",
           "reviewed_on": "2026-11-10",
-          "contract_PRO_sha256": null,
-          "errors": [
-            "missing-secondary-scope",
-            "native-BMP-palette-not-transferred"
+          "scope": "Shared technically qualified native palette/render contract;direct colour approval only138 and142.",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
+        },
+        "residual_four_runtime": {
+          "state": "qualified-installed-shared-colour-evidence",
+          "evidence": [
+            "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/installation.json",
+            "projectiles/analysis/residual-four-20261110-v1/qualification.json",
+            "projectiles/analysis/residual-four-20261110-v1/source-palettes.json"
           ],
-          "scope": "Static native owner/child/geometry/cycles/palette/installed backing contract; no new visual approval, live draw or full spell-chain claim."
+          "previous_visual_QA_retained": true,
+          "live_HD_draw_observed": false,
+          "scope": "Current DLL source/pack/palette/native geometry/cycles qualification, not live draw or global visual approval",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
         }
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/backups/20261109T235843951788Z-484d9143/renderer-install-receipt.json"
+        ],
+        "scope": "DLL bridge/palette changes only; existing images and native PROs unchanged."
       }
     },
     "131": {
@@ -1282,17 +1371,32 @@
           "projectiles/analysis/owner-contracts-20261110-v1/owners.json"
         ],
         "automatic_reconciliation": {
-          "state": "exception-to-treat",
-          "evidence": "projectiles/analysis/owner-contracts-20261110-v1/owners.json",
+          "state": "reconciled-compatible-contracts",
+          "evidence": "projectiles/analysis/owner-contracts-residual-four-accepted-20261110-v3/owners.json",
           "owner": "engine-id:132",
           "reviewed_on": "2026-11-10",
-          "contract_PRO_sha256": null,
-          "errors": [
-            "missing-secondary-scope",
-            "native-BMP-palette-not-transferred"
+          "scope": "Shared technically qualified native palette/render contract;direct colour approval only138 and142.",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
+        },
+        "residual_four_runtime": {
+          "state": "qualified-installed-shared-colour-evidence",
+          "evidence": [
+            "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/installation.json",
+            "projectiles/analysis/residual-four-20261110-v1/qualification.json",
+            "projectiles/analysis/residual-four-20261110-v1/source-palettes.json"
           ],
-          "scope": "Static native owner/child/geometry/cycles/palette/installed backing contract; no new visual approval, live draw or full spell-chain claim."
+          "previous_visual_QA_retained": true,
+          "live_HD_draw_observed": false,
+          "scope": "Current DLL source/pack/palette/native geometry/cycles qualification, not live draw or global visual approval",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
         }
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/backups/20261109T235843951788Z-484d9143/renderer-install-receipt.json"
+        ],
+        "scope": "DLL bridge/palette changes only; existing images and native PROs unchanged."
       }
     },
     "133": {
@@ -1336,17 +1440,32 @@
           "projectiles/analysis/owner-contracts-20261110-v1/owners.json"
         ],
         "automatic_reconciliation": {
-          "state": "exception-to-treat",
-          "evidence": "projectiles/analysis/owner-contracts-20261110-v1/owners.json",
+          "state": "reconciled-compatible-contracts",
+          "evidence": "projectiles/analysis/owner-contracts-residual-four-accepted-20261110-v3/owners.json",
           "owner": "engine-id:135",
           "reviewed_on": "2026-11-10",
-          "contract_PRO_sha256": null,
-          "errors": [
-            "missing-secondary-scope",
-            "native-BMP-palette-not-transferred"
+          "scope": "Shared technically qualified native palette/render contract;direct colour approval only138 and142.",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
+        },
+        "residual_four_runtime": {
+          "state": "qualified-installed-shared-colour-evidence",
+          "evidence": [
+            "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/installation.json",
+            "projectiles/analysis/residual-four-20261110-v1/qualification.json",
+            "projectiles/analysis/residual-four-20261110-v1/source-palettes.json"
           ],
-          "scope": "Static native owner/child/geometry/cycles/palette/installed backing contract; no new visual approval, live draw or full spell-chain claim."
+          "previous_visual_QA_retained": true,
+          "live_HD_draw_observed": false,
+          "scope": "Current DLL source/pack/palette/native geometry/cycles qualification, not live draw or global visual approval",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
         }
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/backups/20261109T235843951788Z-484d9143/renderer-install-receipt.json"
+        ],
+        "scope": "DLL bridge/palette changes only; existing images and native PROs unchanged."
       }
     },
     "136": {
@@ -1373,16 +1492,46 @@
           "projectiles/analysis/owner-contracts-20261110-v1/owners.json"
         ],
         "automatic_reconciliation": {
-          "state": "exception-to-treat",
-          "evidence": "projectiles/analysis/owner-contracts-20261110-v1/owners.json",
+          "state": "reconciled-compatible-contracts",
+          "evidence": "projectiles/analysis/owner-contracts-residual-four-accepted-20261110-v3/owners.json",
           "owner": "engine-id:138",
           "reviewed_on": "2026-11-10",
-          "contract_PRO_sha256": null,
-          "errors": [
-            "missing-secondary-scope",
-            "native-BMP-palette-not-transferred"
+          "scope": "Shared technically qualified native palette/render contract;direct colour approval only138 and142.",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
+        },
+        "residual_four_runtime": {
+          "state": "accepted-observed-colour-route",
+          "evidence": [
+            "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/installation.json",
+            "projectiles/analysis/residual-four-20261110-v1/qualification.json",
+            "projectiles/analysis/residual-four-20261110-v1/source-palettes.json"
           ],
-          "scope": "Static native owner/child/geometry/cycles/palette/installed backing contract; no new visual approval, live draw or full spell-chain claim."
+          "previous_visual_QA_retained": true,
+          "live_HD_draw_observed": true,
+          "scope": "Current DLL source/pack/palette/native geometry/cycles qualification, not live draw or global visual approval",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
+        }
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/backups/20261109T235843951788Z-484d9143/renderer-install-receipt.json"
+        ],
+        "scope": "DLL bridge/palette changes only; existing images and native PROs unchanged."
+      },
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
+        ],
+        "reviewed_on": "2026-11-10",
+        "scope": [
+          "SHWATER/SHWATER6,nativeID138: explicit visual approval plus palette/HD/mask/odd-phase telemetry."
+        ],
+        "limits": "Representative colour only;no all-variants/owners/cycles/native-motion/release approval.",
+        "latest_manual_feedback": {
+          "text": "ok les 2 tests sont bons, valide-les, maj le suivi et committe",
+          "evidence": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
         }
       }
     },
@@ -1427,17 +1576,32 @@
           "projectiles/analysis/owner-contracts-20261110-v1/owners.json"
         ],
         "automatic_reconciliation": {
-          "state": "exception-to-treat",
-          "evidence": "projectiles/analysis/owner-contracts-20261110-v1/owners.json",
+          "state": "reconciled-compatible-contracts",
+          "evidence": "projectiles/analysis/owner-contracts-residual-four-accepted-20261110-v3/owners.json",
           "owner": "engine-id:141",
           "reviewed_on": "2026-11-10",
-          "contract_PRO_sha256": null,
-          "errors": [
-            "missing-secondary-scope",
-            "native-BMP-palette-not-transferred"
+          "scope": "Shared technically qualified native palette/render contract;direct colour approval only138 and142.",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
+        },
+        "residual_four_runtime": {
+          "state": "qualified-installed-shared-colour-evidence",
+          "evidence": [
+            "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/installation.json",
+            "projectiles/analysis/residual-four-20261110-v1/qualification.json",
+            "projectiles/analysis/residual-four-20261110-v1/source-palettes.json"
           ],
-          "scope": "Static native owner/child/geometry/cycles/palette/installed backing contract; no new visual approval, live draw or full spell-chain claim."
+          "previous_visual_QA_retained": true,
+          "live_HD_draw_observed": false,
+          "scope": "Current DLL source/pack/palette/native geometry/cycles qualification, not live draw or global visual approval",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
         }
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/backups/20261109T235843951788Z-484d9143/renderer-install-receipt.json"
+        ],
+        "scope": "DLL bridge/palette changes only; existing images and native PROs unchanged."
       }
     },
     "142": {
@@ -1447,15 +1611,46 @@
           "projectiles/analysis/owner-contracts-20261110-v1/owners.json"
         ],
         "automatic_reconciliation": {
-          "state": "exception-to-treat",
-          "evidence": "projectiles/analysis/owner-contracts-20261110-v1/owners.json",
+          "state": "reconciled-compatible-contracts",
+          "evidence": "projectiles/analysis/owner-contracts-residual-four-accepted-20261110-v3/owners.json",
           "owner": "engine-id:142",
           "reviewed_on": "2026-11-10",
-          "contract_PRO_sha256": null,
-          "errors": [
-            "native-range-palette-not-transferred"
+          "scope": "Shared technically qualified native palette/render contract;direct colour approval only138 and142.",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
+        },
+        "residual_four_runtime": {
+          "state": "accepted-observed-colour-route",
+          "evidence": [
+            "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/installation.json",
+            "projectiles/analysis/residual-four-20261110-v1/qualification.json",
+            "projectiles/analysis/residual-four-20261110-v1/source-palettes.json"
           ],
-          "scope": "Static native owner/child/geometry/cycles/palette/installed backing contract; no new visual approval, live draw or full spell-chain claim."
+          "previous_visual_QA_retained": true,
+          "live_HD_draw_observed": true,
+          "scope": "Current DLL source/pack/palette/native geometry/cycles qualification, not live draw or global visual approval",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
+        }
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/backups/20261109T235843951788Z-484d9143/renderer-install-receipt.json"
+        ],
+        "scope": "DLL bridge/palette changes only; existing images and native PROs unchanged."
+      },
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
+        ],
+        "reviewed_on": "2026-11-10",
+        "scope": [
+          "SPBOOM/MPALETTE67,nativeID142: explicit visual approval plus palette/HD/mask/odd-phase telemetry."
+        ],
+        "limits": "Representative colour only;no all-variants/owners/cycles/native-motion/release approval.",
+        "latest_manual_feedback": {
+          "text": "ok les 2 tests sont bons, valide-les, maj le suivi et committe",
+          "evidence": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
         }
       }
     },
@@ -1466,16 +1661,32 @@
           "projectiles/analysis/owner-contracts-20261110-v1/owners.json"
         ],
         "automatic_reconciliation": {
-          "state": "exception-to-treat",
-          "evidence": "projectiles/analysis/owner-contracts-20261110-v1/owners.json",
+          "state": "reconciled-compatible-contracts",
+          "evidence": "projectiles/analysis/owner-contracts-residual-four-accepted-20261110-v3/owners.json",
           "owner": "engine-id:143",
           "reviewed_on": "2026-11-10",
-          "contract_PRO_sha256": null,
-          "errors": [
-            "native-range-palette-not-transferred"
+          "scope": "Shared technically qualified native palette/render contract;direct colour approval only138 and142.",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
+        },
+        "residual_four_runtime": {
+          "state": "qualified-installed-shared-colour-evidence",
+          "evidence": [
+            "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/installation.json",
+            "projectiles/analysis/residual-four-20261110-v1/qualification.json",
+            "projectiles/analysis/residual-four-20261110-v1/source-palettes.json"
           ],
-          "scope": "Static native owner/child/geometry/cycles/palette/installed backing contract; no new visual approval, live draw or full spell-chain claim."
+          "previous_visual_QA_retained": true,
+          "live_HD_draw_observed": false,
+          "scope": "Current DLL source/pack/palette/native geometry/cycles qualification, not live draw or global visual approval",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
         }
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/backups/20261109T235843951788Z-484d9143/renderer-install-receipt.json"
+        ],
+        "scope": "DLL bridge/palette changes only; existing images and native PROs unchanged."
       }
     },
     "144": {
@@ -1485,16 +1696,32 @@
           "projectiles/analysis/owner-contracts-20261110-v1/owners.json"
         ],
         "automatic_reconciliation": {
-          "state": "exception-to-treat",
-          "evidence": "projectiles/analysis/owner-contracts-20261110-v1/owners.json",
+          "state": "reconciled-compatible-contracts",
+          "evidence": "projectiles/analysis/owner-contracts-residual-four-accepted-20261110-v3/owners.json",
           "owner": "engine-id:144",
           "reviewed_on": "2026-11-10",
-          "contract_PRO_sha256": null,
-          "errors": [
-            "native-range-palette-not-transferred"
+          "scope": "Shared technically qualified native palette/render contract;direct colour approval only138 and142.",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
+        },
+        "residual_four_runtime": {
+          "state": "qualified-installed-shared-colour-evidence",
+          "evidence": [
+            "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/installation.json",
+            "projectiles/analysis/residual-four-20261110-v1/qualification.json",
+            "projectiles/analysis/residual-four-20261110-v1/source-palettes.json"
           ],
-          "scope": "Static native owner/child/geometry/cycles/palette/installed backing contract; no new visual approval, live draw or full spell-chain claim."
+          "previous_visual_QA_retained": true,
+          "live_HD_draw_observed": false,
+          "scope": "Current DLL source/pack/palette/native geometry/cycles qualification, not live draw or global visual approval",
+          "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
         }
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/backups/20261109T235843951788Z-484d9143/renderer-install-receipt.json"
+        ],
+        "scope": "DLL bridge/palette changes only; existing images and native PROs unchanged."
       }
     },
     "145": {
@@ -1504,16 +1731,30 @@
           "projectiles/analysis/owner-contracts-20261110-v1/owners.json"
         ],
         "automatic_reconciliation": {
-          "state": "exception-to-treat",
-          "evidence": "projectiles/analysis/owner-contracts-20261110-v1/owners.json",
+          "state": "reconciled-compatible-contracts",
+          "evidence": "projectiles/analysis/owner-contracts-residual-four-20261110-v2/owners.json",
           "owner": "engine-id:145",
           "reviewed_on": "2026-11-10",
-          "contract_PRO_sha256": null,
-          "errors": [
-            "missing-secondary-scope"
+          "scope": "Technical bridge/palette qualification only; colour QA pending, existing image QA retained."
+        },
+        "residual_four_runtime": {
+          "state": "qualified-static-installed-prior-image-QA-retained",
+          "evidence": [
+            "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/installation.json",
+            "projectiles/analysis/residual-four-20261110-v1/qualification.json",
+            "projectiles/analysis/residual-four-20261110-v1/source-palettes.json"
           ],
-          "scope": "Static native owner/child/geometry/cycles/palette/installed backing contract; no new visual approval, live draw or full spell-chain claim."
+          "previous_visual_QA_retained": true,
+          "live_HD_draw_observed": false,
+          "scope": "Current DLL source/pack/palette/native geometry/cycles qualification, not live draw or global visual approval"
         }
+      },
+      "installation": {
+        "state": "installed",
+        "evidence": [
+          "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/backups/20261109T235843951788Z-484d9143/renderer-install-receipt.json"
+        ],
+        "scope": "DLL bridge/palette changes only; existing images and native PROs unchanged."
       }
     },
     "146": {
@@ -8603,6 +8844,43 @@
       "remaining_manual_variants": [],
       "beam_visual_approval_reused": true,
       "trace_cleanup": "projectiles/analysis/final-four-colours-accepted-20261109-v1/trace-cleanup.json"
+    },
+    "residual-four-20261110-v1": {
+      "state": "four-families-qualified-two-colours-accepted",
+      "resources": [
+        "SHWATER",
+        "FLMSTRK",
+        "SPDIMDR1",
+        "SPDIMDR2",
+        "SPBOOM"
+      ],
+      "evidence": [
+        "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/installation.json",
+        "projectiles/analysis/residual-four-20261110-v1/qualification.json",
+        "projectiles/analysis/residual-four-20261110-v1/source-palettes.json"
+      ],
+      "receipt": "engine/InfinityEngine-Enhancer/installations/projectiles-residual-four-20261110-v1/backups/20261109T235843951788Z-484d9143/renderer-install-receipt.json",
+      "dll": {
+        "bytes": 3481088,
+        "sha256": "ED9A5E4EE34D695DB84448EE7E9A8E221D39E6DEBD340479F114AD4E9132A844"
+      },
+      "trace_enabled": false,
+      "manual_review_scope": [
+        "SHWATER6 red via SPPR207",
+        "SPBOOM67 gold via SPWM110"
+      ],
+      "automated_other_variants": [
+        "SHWATER1..7 native214 used knots each",
+        "SPBOOM67/65/69 twelve used knots each",
+        "normal/additive upload cache separation",
+        "FLMSTRK neutral and SPDIMDR1/2 2->1->2 native resource transitions"
+      ],
+      "new_images": 0,
+      "neutral_visual_retests_requested": false,
+      "acceptance": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json",
+      "remaining_manual_variants": [],
+      "repeat_visual_tests_requested": 0,
+      "trace_cleanup": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/trace-cleanup.json"
     }
   },
   "shared_component_route_QA": {
@@ -8620,7 +8898,17 @@
         "projectiles/analysis/native-six-links-accepted-20261109-v1/acceptance.json"
       ],
       "runtime_class": "Fireball",
-      "reuse_policy": "Reuse exact pack plus compatible palette/blend/geometry/cycles/timing; audit aliases automatically, manual review only for real differences."
+      "reuse_policy": "Reuse exact pack plus compatible palette/blend/geometry/cycles/timing; audit aliases automatically, manual review only for real differences.",
+      "palette_variant_QA": {
+        "142": {
+          "state": "accepted-observed-colour-route",
+          "palette": "MPALETTE67",
+          "evidence": [
+            "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
+          ],
+          "reuse_policy": "Exact source/pack/compatible blend,geometry,timing and source-specific palette contract;other colours stay technically qualified,not individually observed."
+        }
+      }
     },
     "SPFDEATH": {
       "state": "accepted-observed-HD-component-route",
@@ -8677,6 +8965,19 @@
       ],
       "native_id": "137",
       "limits": "Reuse only with matching palette/blend/geometry/cycles/timing; neutral variants qualified separately."
+    },
+    "SHWATER": {
+      "state": "accepted-observed-coloured-component-route",
+      "palette_variant_QA": {
+        "138": {
+          "state": "accepted-observed-colour-route",
+          "palette": "SHWATER6",
+          "evidence": [
+            "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
+          ],
+          "reuse_policy": "Exact source/pack/compatible blend,geometry,timing and source-specific palette contract;other colours stay technically qualified,not individually observed."
+        }
+      }
     }
   },
   "manual_QA_policy": {
@@ -8691,28 +8992,29 @@
   "owner_evidence_reconciliation": {
     "schema": "bg2-projectile-owner-reconciliation-current-v1",
     "date": "2026-11-10",
-    "report": "projectiles/analysis/owner-contracts-20261110-v1/README.md",
+    "report": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/README.md",
     "summary": {
-      "path": "projectiles/analysis/owner-contracts-20261110-v1/summary.json",
-      "sha256": "BEE77686D3613335FC56CE9D7B2692EC8C1B2DDCB088CBF6E1FAB0951AAB859F"
+      "path": "projectiles/analysis/owner-contracts-residual-four-accepted-20261110-v3/summary.json",
+      "sha256": "CC7FC45386F3A8AB5FEA0EB069AC1F8D68ACFE460D02CE6DE3968F92DC3B1F38"
     },
     "owners": {
-      "path": "projectiles/analysis/owner-contracts-20261110-v1/owners.json",
-      "sha256": "BFAA0EF6C9A2D860ED0AD5738ED806587C0EE3C8B3F17550EB8F15B7ABF602EC"
+      "path": "projectiles/analysis/owner-contracts-residual-four-accepted-20261110-v3/owners.json",
+      "sha256": "502EA9D9E54D6C282023EE52B11C5B6B17DE72E84287BE5382777CCB37FCDB63"
     },
     "exceptions": {
-      "path": "projectiles/analysis/owner-contracts-20261110-v1/exceptions.json",
-      "sha256": "E495899B642B8548A12187550935B29A39DB749FF161EFCB7A20CEC36A68CDA9"
+      "path": "projectiles/analysis/owner-contracts-residual-four-accepted-20261110-v3/exceptions.json",
+      "sha256": "A5338D955B09046EC0B16F3A9625B7955C763AAE07DC722E474E6078745F932F"
     },
     "states": {
-      "reconciled-compatible-contracts": 299,
-      "documented-native-gap-no-static-driver": 8,
-      "exception-to-treat": 13
+      "reconciled-compatible-contracts": 313,
+      "documented-native-gap-no-static-driver": 7
     },
-    "actionable_families": 4,
-    "actionable_engine_IDs": 13,
-    "deferred_native_gaps": 8,
+    "technical_qualified_owners": 313,
+    "technical_percentage": 97.8125,
+    "actionable_families": 0,
+    "actionable_engine_IDs": 0,
+    "deferred_native_gaps": 7,
     "new_manual_tests": 0,
-    "meaning": "Technical reconciliation only. Existing visual QA and installation/release decisions remain separate."
+    "meaning": "Four residual families technically qualified/installed,two representative colours visually accepted;no remaining manual tests,no global whole-chain visual claim."
   }
 }

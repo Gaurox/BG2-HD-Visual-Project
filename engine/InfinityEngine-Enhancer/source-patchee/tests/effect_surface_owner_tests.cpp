@@ -5,6 +5,7 @@
 #include "iee/core/effect_native_underlay.h"
 #include "effect_sharea_palette_fixtures.h"
 #include "effect_native_projectile_palette_fixtures.h"
+#include "effect_residual_projectile_palette_fixtures.h"
 #include "iee/core/effect_indexed_palette.h"
 #include <cstdlib>
 static void require(bool value) { if (!value) std::abort(); }
@@ -65,6 +66,81 @@ int main() {
     require(source_kind({'S','H','E','A','R','T','H'})==SourceKind::Earth);
     require(source_kind({'H','L','Y','M','I','T','E'})==SourceKind::HolyMight);
   }
+  {
+    using namespace iee::core::effect_indexed_palette;
+    const auto check=[](SourceKind kind,const auto& base,const auto& realized) {
+      const auto neutral=derive(base,true,kind), tint=derive(realized,true,kind);
+      require(neutral.valid && neutral.identity && tint.valid && !tint.identity);
+      const auto& knots=source_palette(kind);
+      unsigned exercised=0;
+      for(unsigned i=1;i<256;++i) if(used_index(kind,i)) {
+        require(recolor({(knots[i]>>16)&255,(knots[i]>>8)&255,knots[i]&255},tint)==
+            std::array<unsigned,3>{(realized[i]>>16)&255,(realized[i]>>8)&255,realized[i]&255});
+        ++exercised;
+      }
+      require(exercised==(kind==SourceKind::Water?214:12));
+      auto unused=realized;
+      for(unsigned i=0;i<256;++i) if(!used_index(kind,i)) unused[i]=0x01020304u;
+      require(derive(unused,true,kind).fingerprint==tint.fingerprint);
+      auto invalid=realized; invalid[kind==SourceKind::Water?100:10]&=0xffffffu;
+      require(!derive(invalid,true,kind).valid);
+      auto rgba=realized;
+      for(auto& value:rgba)value=(value&0xff00ff00u)|((value&255)<<16)|((value>>16)&255);
+      require(derive(rgba,false,kind).fingerprint==tint.fingerprint);
+    };
+    for(const auto& pal:{fixtureSHWATER1,fixtureSHWATER2,fixtureSHWATER3,fixtureSHWATER4,
+                         fixtureSHWATER5,fixtureSHWATER6,fixtureSHWATER7})
+      check(SourceKind::Water,fixtureSHWATERbase,pal);
+    for(const auto& pal:{fixtureSPBOOM67,fixtureSPBOOM65,fixtureSPBOOM69})
+      check(SourceKind::Boom,fixtureSPBOOMbase,pal);
+    const std::array<char,8> boom{'S','P','B','O','O','M'};
+    require(!requires_transfer(boom,derive(fixtureSPBOOMbase,true,SourceKind::Boom)));
+    require(requires_transfer(boom,derive(fixtureSPBOOM65,true,SourceKind::Boom)));
+    require(requires_transfer(boom,Transfer{}));
+    auto neutral=derive(fixtureSPBOOMbase,true,SourceKind::Boom);
+    const auto straight=for_draw(neutral,true);
+    require(straight.fingerprint!=neutral.fingerprint && for_draw(straight,false).fingerprint==neutral.fingerprint);
+    require(for_draw(straight,true).fingerprint==straight.fingerprint);
+    std::array<std::byte,4> semi{std::byte{60},std::byte{30},std::byte{10},std::byte{128}};
+    const auto immutable=semi;
+    iee::core::effect_indexed_palette::apply(semi,straight);
+    require(semi==std::array<std::byte,4>{std::byte{120},std::byte{60},std::byte{20},std::byte{128}});
+    auto premult=immutable;iee::core::effect_indexed_palette::apply(premult,neutral);require(premult==immutable);
+    require(supports_normal(SourceKind::Water) && supports_normal(SourceKind::Boom) && !supports_normal(SourceKind::Air));
+    // Independent exhaustive nearest-four oracle for intermediate RGBs. Check
+    // only points whose four exact neighbours are retained by the bounded grid.
+    // This catches ranking with SHAREA's knots for Air/Earth/Water/Boom.
+    for(const auto kind:{SourceKind::Air,SourceKind::Earth,SourceKind::HolyMight,SourceKind::Water,SourceKind::Boom}) {
+      auto pal=kind==SourceKind::Air?fixtureSHAIR4:kind==SourceKind::Earth?fixtureSHEARTH6:
+          kind==SourceKind::Water?fixtureSHWATER4:kind==SourceKind::Boom?fixtureSPBOOM69:fixtureHLYMITE;
+      if(kind==SourceKind::HolyMight) for(auto& v:pal)v&=0xffff0000u;
+      const auto tint=derive(pal,true,kind);
+      const auto& knots=source_palette(kind);
+      unsigned checked=0;
+      for(unsigned r=17;r<256;r+=37)for(unsigned g=23;g<256;g+=37)for(unsigned b=29;b<256;b+=37) {
+        const unsigned packed=(r<<16)|(g<<8)|b,bin=((r>>4)<<8)|((g>>4)<<4)|(b>>4);
+        std::array<std::pair<unsigned,unsigned>,255> all;
+        all.fill({std::numeric_limits<unsigned>::max(),0});unsigned count=0;
+        for(unsigned i=1;i<256;++i)if(used_index(kind,i))all[count++]={distance(packed,knots[i]),i};
+        std::partial_sort(all.begin(),all.begin()+4,all.end());
+        const auto& candidates=search_for(kind).grid[bin];
+        if(!all[0].first || std::any_of(all.begin(),all.begin()+4,[&](auto pair){
+            return std::find(candidates.begin(),candidates.end(),pair.second)==candidates.end();}))continue;
+        std::array<unsigned,3> expected{};double sum=0;std::array<double,3> delta{};
+        for(unsigned j=0;j<4;++j) {
+          const double w=1.0/all[j].first;sum+=w;
+          for(unsigned c=0;c<3;++c)delta[c]+=w*tint.delta[all[j].second][c];
+        }
+        const std::array<unsigned,3> rgb{r,g,b};
+        for(unsigned c=0;c<3;++c)expected[c]=static_cast<unsigned>(std::clamp(std::lround(rgb[c]+delta[c]/sum),0L,255L));
+        require(recolor(rgb,tint)==expected);++checked;
+      }
+      require(checked>100);
+    }
+  }
+  for(const std::array<char,8> ref:{std::array<char,8>{'S','H','W','A','T','E','R'},
+      std::array<char,8>{'F','L','M','S','T','R','K'},std::array<char,8>{'S','P','D','I','M','D','R','1'},
+      std::array<char,8>{'S','P','D','I','M','D','R','2'}})require(iee::core::effect_secondary_scope::enabled(ref));
   // Engine COW188 shares CProjectileBAM::Render, but its image is a sprite BAM.
   const std::array<char,8> cow{'A','C','O','W','G','1'};
   require(iee::core::effect_secondary_scope::enabled(cow));

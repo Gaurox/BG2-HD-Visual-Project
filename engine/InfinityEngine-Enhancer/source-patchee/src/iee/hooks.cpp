@@ -3095,8 +3095,11 @@ static int detour_projectile_fx_render(void* thisPtr, void* sourceRect, int x, i
   std::array<char,8> surfaceRef{};
   const bool smoke = surfaceCell && read_registered_effect_resref(surfaceCell, surfaceRef) &&
       surfaceRef == std::array<char,8>{'S','P','S','M','P','U','F','F'};
-  const bool indexed=surfaceCell && core::effect_indexed_palette::enabled(surfaceRef);
-  const bool indexedReady=!indexed || (!g_effectNormalTextureProfile && g_effectSurfaceIndexedPalette.valid);
+  const bool indexed=surfaceCell && core::effect_indexed_palette::requires_transfer(
+      surfaceRef,g_effectSurfaceIndexedPalette);
+  const bool indexedReady=!indexed || (g_effectSurfaceIndexedPalette.valid &&
+      (!g_effectNormalTextureProfile || core::effect_indexed_palette::supports_normal(
+          g_effectSurfaceIndexedPalette.sourceKind)));
   const bool composed=g_effectSurfaceOwner.submissions()>1;
   const auto surfaceLayout=core::effect_surface_layout(surfaceRef,
       g_effectSurfacePlacement.width,g_effectSurfacePlacement.height,composed);
@@ -3129,6 +3132,8 @@ static int detour_projectile_fx_render(void* thisPtr, void* sourceRect, int x, i
   g_effectDrawNativeOpacity=g_effectSurfaceNativeOpacity;
   g_effectDrawPlacement=surfaceOwned ? &g_effectSurfacePlacement : nullptr;
   g_effectDrawPalette = surfaceOwned && smoke ? &g_effectSurfacePalette : nullptr;
+  if(surfaceOwned && indexed) g_effectSurfaceIndexedPalette=core::effect_indexed_palette::for_draw(
+      g_effectSurfaceIndexedPalette,g_effectNormalTextureProfile);
   g_effectDrawIndexedPalette=surfaceOwned && indexed ? &g_effectSurfaceIndexedPalette : nullptr;
   g_effectDrawPaletteOpacity = g_effectSurfacePaletteOpacity;
   if (surfaceOwned) {

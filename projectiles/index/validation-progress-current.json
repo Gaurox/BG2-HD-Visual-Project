@@ -1,9 +1,9 @@
 {
   "schema": "bg2-projectile-validation-progress-v1",
   "as_of_local_date": "2026-11-10",
-  "latest_user_confirmation": "non mais je ml'en fou je voulais juste m'assurer que c'etait normal. valide donc lmes 3 et mj le suivi. puis fais moi un état d'avancement des validation projectiles. et committe",
+  "latest_user_confirmation": "ok les 2 tests sont bons, valide-les, maj le suivi et committe",
   "authorities": {
-    "work_tracking_sha256": "E0DD0A5C3F930F56181A76892C3247E5D35AFA9E2A2F53C5C03D40859F587AD4",
+    "work_tracking_sha256": "CF4CF2747434A7E23EAA9314E9D7DEE7FA569FFAAB96CBFDBABCFD37C70D46E3",
     "analysis_snapshot": "projectiles/analysis/20261109-bilan-validations-v13",
     "analysis_sha256": "153DECFFE9065026E4932025698B620D77E2ACB46638BCBA0633844B50834E23"
   },
@@ -25,11 +25,12 @@
   },
   "scoped_visual_QA": {
     "PRO_observed_components_accepted": 39,
-    "engine_IDs_observed_components_accepted": 10,
+    "engine_IDs_observed_components_accepted": 12,
     "historical_PRE_FIX_PRO_approvals_remaining": 0,
     "new_colour_variants_accepted": 3,
     "prepared_manual_tests_pending": 0,
-    "meaning": "Observed components and compatible shared evidence; not complete chains or an exhaustive one-by-one manual campaign."
+    "meaning": "Observed components and compatible shared evidence; not complete chains or an exhaustive one-by-one manual campaign.",
+    "residual_colour_variants_accepted": 2
   },
   "known_secondary_gate_backlog": {
     "identified": 10,
@@ -44,7 +45,7 @@
     "gate_omissions_remaining": 0
   },
   "runtime": {
-    "dll_sha256": "5A1559B5C16A7BA4614D96DF2B5E9CF9F6A629273A008B26708351063106612B",
+    "dll_sha256": "ED9A5E4EE34D695DB84448EE7E9A8E221D39E6DEBD340479F114AD4E9132A844",
     "trace_enabled": false,
     "catalogue_resources": 743,
     "backing_files": 72563,
@@ -67,12 +68,9 @@
     "meaning": "Historical conservative projection. Current per-owner technical disposition: owner-reconciliation-current.json; generic source tasks are not actionable exceptions or manual tests."
   },
   "remaining_work": [
-    "SHWATER: Register the native SpellHit FX cell; add source-specific realized-palette transfer for SHWATER1..7 before enabling coloured HD.",
-    "FLMSTRK: Register and qualify the existing FLMSTRK pack on the native SkyStrike route; ID66 shares this image but has no scanned driver.",
-    "SPDIMDR1-SPDIMDR2: Register both native DimensionDoor phases and qualify the 2->1->2 occurrence lifecycle; images already produced/accepted.",
-    "SPBOOM-palettes: Preserve the accepted neutral/fireball route. Qualify/apply native range0 colours67/65/69 to the private GPU upload for opcode141 variants32/33/34.",
-    "Eight native gaps without scanned drivers retained separately, including LIGHTSTO/MAGMIS. No speculative asset production or test request.",
-    "Manual QA only for genuine new visual differences after technical fixes. Position interpolation remains deferred; release separate."
+    "No active residual route/palette correction or manual test remains in this batch.",
+    "Seven no-driver native gaps preserved;no speculative production or systematic alias retests.",
+    "Position interpolation PROJ-MOTION-001 remains deferred;release separate."
   ],
   "whole_chain_acceptance_percentage": null,
   "evidence": [
@@ -92,28 +90,29 @@
   "automatic_owner_reconciliation": {
     "schema": "bg2-projectile-owner-reconciliation-current-v1",
     "date": "2026-11-10",
-    "report": "projectiles/analysis/owner-contracts-20261110-v1/README.md",
+    "report": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/README.md",
     "summary": {
-      "path": "projectiles/analysis/owner-contracts-20261110-v1/summary.json",
-      "sha256": "BEE77686D3613335FC56CE9D7B2692EC8C1B2DDCB088CBF6E1FAB0951AAB859F"
+      "path": "projectiles/analysis/owner-contracts-residual-four-accepted-20261110-v3/summary.json",
+      "sha256": "CC7FC45386F3A8AB5FEA0EB069AC1F8D68ACFE460D02CE6DE3968F92DC3B1F38"
     },
     "owners": {
-      "path": "projectiles/analysis/owner-contracts-20261110-v1/owners.json",
-      "sha256": "BFAA0EF6C9A2D860ED0AD5738ED806587C0EE3C8B3F17550EB8F15B7ABF602EC"
+      "path": "projectiles/analysis/owner-contracts-residual-four-accepted-20261110-v3/owners.json",
+      "sha256": "502EA9D9E54D6C282023EE52B11C5B6B17DE72E84287BE5382777CCB37FCDB63"
     },
     "exceptions": {
-      "path": "projectiles/analysis/owner-contracts-20261110-v1/exceptions.json",
-      "sha256": "E495899B642B8548A12187550935B29A39DB749FF161EFCB7A20CEC36A68CDA9"
+      "path": "projectiles/analysis/owner-contracts-residual-four-accepted-20261110-v3/exceptions.json",
+      "sha256": "A5338D955B09046EC0B16F3A9625B7955C763AAE07DC722E474E6078745F932F"
     },
     "states": {
-      "reconciled-compatible-contracts": 299,
-      "documented-native-gap-no-static-driver": 8,
-      "exception-to-treat": 13
+      "reconciled-compatible-contracts": 313,
+      "documented-native-gap-no-static-driver": 7
     },
-    "actionable_families": 4,
-    "actionable_engine_IDs": 13,
-    "deferred_native_gaps": 8,
+    "technical_qualified_owners": 313,
+    "technical_percentage": 97.8125,
+    "actionable_families": 0,
+    "actionable_engine_IDs": 0,
+    "deferred_native_gaps": 7,
     "new_manual_tests": 0,
-    "meaning": "Technical reconciliation only. Existing visual QA and installation/release decisions remain separate."
+    "meaning": "Four residual families technically qualified/installed,two representative colours visually accepted;no remaining manual tests,no global whole-chain visual claim."
   }
 }
