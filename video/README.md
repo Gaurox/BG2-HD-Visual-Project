@@ -12,6 +12,8 @@ avec audio natif ; comparaison commune acceptée, cadences natives conservées, 
 Corps commun INTRO15F non commencé. Suivi/empreintes : `index/intro-seedvr-20261111-v1.json` ;
 recette/reprise : [`intro-seedvr-20261111-v1`](../pipeline/recipes/intro-seedvr-20261111-v1/README.md).
 Aucune installation/release ; médias locaux ignorés par Git.
+Variante INTRO polonaise30 nominales (30000/1001), sans interpolation IA : comparaison acceptée,
+sélection `index/intro-polish-master30-20261111-v1.json` ; ancien assemblage~15fps conservé.
 
 Suivi courant : [`SUIVI.md`](SUIVI.md) ; vue50assets : `index/status.csv` ; médias réellement
 conservés et alias des entrées déplacées : `index/retained-media-20261110-v1.json`.

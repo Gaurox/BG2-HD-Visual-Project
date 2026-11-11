@@ -1,0 +1,55 @@
+{
+  "schema": "video-intro-polish-master30-v1",
+  "parent": "video/index/intro-seedvr-20261111-v1.json",
+  "status": "accepted-visual-comparison",
+  "files": {
+    "master": {
+      "path": "video/assembly/intro-polish-master30-20261111-v1/INTRO-pl_PL-SeedVR2-shared-master-1080p2997-native-audio.mkv",
+      "bytes": 319874360,
+      "sha256": "d95cf91b298744225863f48ccf867fec00811bdd9605c329efa5fc1d0f39b00a"
+    },
+    "preview": {
+      "path": "video/assembly/intro-polish-master30-20261111-v1/INTRO-pl_PL-SeedVR2-shared-master-1080p2997-audio.mp4",
+      "bytes": 320898290,
+      "sha256": "6183b53172226f6937769b34280b831e9977bf910b84e2e22bdfa859d50af822"
+    }
+  },
+  "verification": {
+    "status": "review-ready",
+    "locale": "pl_PL",
+    "film": "INTRO",
+    "nominal_fps": 30,
+    "exact_fps": "30000/1001",
+    "output_frames": 3440,
+    "video_duration_s": 114.781333,
+    "native_video_end_s": 114.772,
+    "master_frames_reused": 3137,
+    "master_frames_skipped": 0,
+    "master_holds": 96,
+    "cut_frame": 207,
+    "cut_pts_s": 6.9069,
+    "opening": "Existing Polish ~15fps frames held; no synthesized in-betweens",
+    "timeline": "Monotone alignment to native Polish timestamps; every common master frame retained in order",
+    "native_audio_pcm_identical": true,
+    "audio_packets_identical_count": 8874,
+    "max_audio_pts_deviation_s": 0.0,
+    "audio_stretched": false,
+    "interpolation_ai": false,
+    "pixel_blending": false,
+    "sync_diagnostic": {
+      "native_visible_anchor_luma_mae_p50": 1.4276388883590698,
+      "native_visible_anchor_luma_mae_p99": 1.965930461883545,
+      "native_visible_anchor_luma_mae_max": 2.3631250858306885,
+      "note": "160x90 vanilla picture correspondence; visual-sync diagnostic, not a speech/lip-sync certification"
+    },
+    "master": "INTRO-pl_PL-SeedVR2-shared-master-1080p2997-native-audio.mkv",
+    "preview": "INTRO-pl_PL-SeedVR2-shared-master-1080p2997-audio.mp4",
+    "previous_15fps_assembly_preserved": true,
+    "installed": false,
+    "user_validation": "pending"
+  },
+  "recipe": "pipeline/recipes/intro-polish-master30-20261111-v1/README.md",
+  "installed": false,
+  "release_integration": false,
+  "qa_decision": "video/index/qa-decisions/INTRO/20261111-polish-shared-master30-accepted-v1.json"
+}
