@@ -7,18 +7,23 @@ zone restent sous l'autorité de `animations/index/occurrences.csv` et sont excl
 `index/processing.csv` sélectionne les runs validés par étape et le run utilisé par le patch.
 `patch_run` vide signifie qu'aucun artefact vidéo n'est intégré au patch.
 
-Intros SeedVR2026-11-11 : 7ouvertures et2corps communs produits ;3assemblages INTRO défaut/DE/PL
-avec audio natif ; comparaison commune acceptée, cadences natives conservées, **aucune interpolation**.
-Corps commun INTRO15F terminé ; ses assemblages par langue restent à faire. Suivi INTRO : `index/intro-seedvr-20261111-v1.json` ;
-recette/reprise : [`intro-seedvr-20261111-v1`](../pipeline/recipes/intro-seedvr-20261111-v1/README.md).
-Aucune intégration release ; médias locaux ignorés par Git.
-Variante INTRO polonaise30 nominales (30000/1001), sans interpolation IA : comparaison acceptée,
-sélection `index/intro-polish-master30-20261111-v1.json` ; ancien assemblage~15fps conservé.
-Test local des3INTRO installé2026-11-11 : `index/intro-ingame-test-20261111-v1.json` ; sauvegardes
-dans `installations/intro-locales-seedvr-20261111-v1/before/`. Alias console `HDINEN`/`HDINDE`/`HDINPL`
-pour tester sans changer de langue ; [commandes et restauration](../pipeline/recipes/intro-ingame-test-20261111-v1/README.md).
-QA ingame en attente ; aucune release modifiée. Corps INTRO15F produit (153.6s/2304images) :
-`index/intro15f-common-seedvr-20261111-v1.json` ; première portion acceptée, sans validation globale déduite.
+Intros finales2026-11-11 : **7ensembles FullHD prêts techniquement pour installation future** :
+`index/intro-finals30-20261111-v1.json` ; chemins lecture/jeu : `index/intro-review-files-20261111-v1.json`.
+Local : `video/final/intro-30fps-20261111-v1/{INTRO,INTRO15F}/<locale>/` ; MP4 AAC de contrôle,
+MKV H264/Vorbis natif, WBM VP8/Vorbis natif destiné au jeu. Native PCM/PTS audio vérifiés,
+décodage complet/PTS vidéo/nombres d’images contrôlés ; SSIM échantillonné runtime >0.99.
+INTRO défaut/DE/PL :30000/1001 (~29.97fps), fichiers acceptés existants réutilisés ; PL = master30,
+carton natif tenu, aucune interpolation IA. INTRO15F défaut/DE/IT/PL :30/1 après Apollo8 ; défaut
+et3autres variantes acceptés en revue visuelle ; décision groupée `index/qa-decisions/INTRO15F/20261111-four-apollo30-assemblies-accepted-v1.json`. Master partagé INTRO15F accepté ; les PTS
+polonais irréguliers sont restaurés avant grille30fps, audio non étiré. Recettes :
+[`intros finales30`](../pipeline/recipes/intro-finals30-20261111-v1/README.md),
+[`assemblage INTRO15F`](../pipeline/recipes/intro15f-locales-assembly-20261111-v1/README.md).
+Test local des3INTRO déjà installé : `index/intro-ingame-test-20261111-v1.json` ; sauvegardes
+`installations/intro-locales-seedvr-20261111-v1/before/` ; alias `HDINEN`/`HDINDE`/`HDINPL`.
+4INTRO15F installées pour test local : `index/intro15f-ingame-test-20261111-v1.json` ; sauvegardes
+`installations/intro15f-apollo30-20261111-v1/before/` ; alias `HD15EN`/`HD15DE`/`HD15IT`/`HD15PL`.
+[Console/restauration](../pipeline/recipes/intro15f-ingame-test-20261111-v1/README.md). QA ingame reste en attente ; aucune intégration release.
+Sources/runs précédents conservés ; médias locaux ignorés par Git.
 
 Suivi courant : [`SUIVI.md`](SUIVI.md) ; vue50assets : `index/status.csv` ; médias réellement
 conservés et alias des entrées déplacées : `index/retained-media-20261110-v1.json`.

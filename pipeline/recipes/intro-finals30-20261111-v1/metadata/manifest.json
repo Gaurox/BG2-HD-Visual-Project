@@ -1,0 +1,1113 @@
+{
+  "schema": "intro-finals30-v1",
+  "state": "runtime-ready",
+  "created_utc": "2026-11-11T18:30:56.780886+00:00",
+  "scope": "7 final filesets, no game/release writes",
+  "variants": [
+    {
+      "film": "INTRO",
+      "locale": "default",
+      "fps": "30000/1001",
+      "frames": 3347,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "files": {
+        "preview": {
+          "path": "video/final/intro-30fps-20261111-v1/INTRO/default/INTRO-default-1080p30-audio.mp4",
+          "bytes": 319124966,
+          "sha256": "36d8b1721eca0c649693668a739425cf0afc089315f4ce4db0753be14d5f4863"
+        },
+        "native_audio_master": {
+          "path": "video/final/intro-30fps-20261111-v1/INTRO/default/INTRO-default-1080p30-native-audio.mkv",
+          "bytes": 317465667,
+          "sha256": "9cb4be1a2b0af9519ff29e5fdd352cc082796d07c30fb80f173c5445b16a8cda"
+        },
+        "game_ready": {
+          "path": "video/final/intro-30fps-20261111-v1/INTRO/default/intro.wbm",
+          "bytes": 381620459,
+          "sha256": "68805f74028da19b5430c761686c18d9ba228b8c5120a105d59b0991d8c9c92c"
+        }
+      },
+      "target": "config://bg2ee_game_root/movies/intro.wbm",
+      "encoding": "Existing verified VP8/Vorbis bytes reused unchanged",
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "vp8",
+            "codec_long_name": "On2 VP8",
+            "profile": "0",
+            "codec_type": "video",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "has_b_frames": 0,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuv420p",
+            "level": -99,
+            "color_range": "tv",
+            "chroma_location": "left",
+            "field_order": "progressive",
+            "refs": 1,
+            "r_frame_rate": "30000/1001",
+            "avg_frame_rate": "30000/1001",
+            "time_base": "1/1000",
+            "start_pts": 12,
+            "start_time": "0.012000",
+            "nb_read_frames": "3347",
+            "disposition": {
+              "default": 0,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "ENCODER": "Lavc62.0.101 libvpx",
+              "DURATION": "00:01:51.690000000"
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "vorbis",
+            "codec_long_name": "Vorbis",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "22050",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/1000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "nb_read_frames": "5294",
+            "extradata_size": 3614,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "DURATION": "00:01:53.807000000"
+            }
+          }
+        ],
+        "format": {
+          "filename": "G:\\AI\\BG2_Upscale\\video\\final\\intro-30fps-20261111-v1\\INTRO\\default\\intro.wbm",
+          "nb_streams": 2,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "matroska,webm",
+          "format_long_name": "Matroska / WebM",
+          "start_time": "0.000000",
+          "duration": "113.807000",
+          "size": "381620459",
+          "bit_rate": "26825798",
+          "probe_score": 100,
+          "tags": {
+            "ENCODER": "Lavf62.0.100"
+          }
+        }
+      },
+      "native_audio_pcm_identical": true,
+      "audio_packets": 5295,
+      "max_audio_pts_deviation_s": 0.0,
+      "max_video_pts_deviation_s": 0.0,
+      "ssim_sampled_all": 0.994793,
+      "full_frame_decode": true,
+      "user_visual_qa": "existing-INTRO-QA",
+      "runtime_ingame_qa": "pending",
+      "installed_by_this_run": false,
+      "release_integration": false
+    },
+    {
+      "film": "INTRO",
+      "locale": "de_DE",
+      "fps": "30000/1001",
+      "frames": 3345,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "files": {
+        "preview": {
+          "path": "video/final/intro-30fps-20261111-v1/INTRO/de_DE/INTRO-de_DE-1080p30-audio.mp4",
+          "bytes": 319734417,
+          "sha256": "160ee7317ab627f751ca6905a60871f8b13d1bdc6bc5e0c01206c11daee79a5d"
+        },
+        "native_audio_master": {
+          "path": "video/final/intro-30fps-20261111-v1/INTRO/de_DE/INTRO-de_DE-1080p30-native-audio.mkv",
+          "bytes": 318311003,
+          "sha256": "1873f279ff935b03be3e2c3601eaa3a9247d15b81723aafefc8c44a078d2edc4"
+        },
+        "game_ready": {
+          "path": "video/final/intro-30fps-20261111-v1/INTRO/de_DE/intro.wbm",
+          "bytes": 382556705,
+          "sha256": "2f711a3a56b141dd4984e2997915a0a330a049e0060a257d486ed56427a6939d"
+        }
+      },
+      "target": "config://bg2ee_game_root/lang/de_DE/movies/intro.wbm",
+      "encoding": "Existing verified VP8/Vorbis bytes reused unchanged",
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "vp8",
+            "codec_long_name": "On2 VP8",
+            "profile": "0",
+            "codec_type": "video",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "has_b_frames": 0,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuv420p",
+            "level": -99,
+            "color_range": "tv",
+            "chroma_location": "left",
+            "field_order": "progressive",
+            "refs": 1,
+            "r_frame_rate": "30000/1001",
+            "avg_frame_rate": "30000/1001",
+            "time_base": "1/1000",
+            "start_pts": 3,
+            "start_time": "0.003000",
+            "nb_read_frames": "3345",
+            "disposition": {
+              "default": 0,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "ENCODER": "Lavc62.0.101 libvpx",
+              "DURATION": "00:01:51.614000000"
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "vorbis",
+            "codec_long_name": "Vorbis",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "44100",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/1000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "nb_read_frames": "6829",
+            "extradata_size": 4258,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "DURATION": "00:01:52.908000000"
+            }
+          }
+        ],
+        "format": {
+          "filename": "G:\\AI\\BG2_Upscale\\video\\final\\intro-30fps-20261111-v1\\INTRO\\de_DE\\intro.wbm",
+          "nb_streams": 2,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "matroska,webm",
+          "format_long_name": "Matroska / WebM",
+          "start_time": "0.000000",
+          "duration": "112.908000",
+          "size": "382556705",
+          "bit_rate": "27105728",
+          "probe_score": 100,
+          "tags": {
+            "ENCODER": "Lavf62.0.100"
+          }
+        }
+      },
+      "native_audio_pcm_identical": true,
+      "audio_packets": 6830,
+      "max_audio_pts_deviation_s": 0.0,
+      "max_video_pts_deviation_s": 0.0,
+      "ssim_sampled_all": 0.994993,
+      "full_frame_decode": true,
+      "user_visual_qa": "existing-INTRO-QA",
+      "runtime_ingame_qa": "pending",
+      "installed_by_this_run": false,
+      "release_integration": false
+    },
+    {
+      "film": "INTRO",
+      "locale": "pl_PL",
+      "fps": "30000/1001",
+      "frames": 3440,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "files": {
+        "preview": {
+          "path": "video/final/intro-30fps-20261111-v1/INTRO/pl_PL/INTRO-pl_PL-1080p30-audio.mp4",
+          "bytes": 320898290,
+          "sha256": "6183b53172226f6937769b34280b831e9977bf910b84e2e22bdfa859d50af822"
+        },
+        "native_audio_master": {
+          "path": "video/final/intro-30fps-20261111-v1/INTRO/pl_PL/INTRO-pl_PL-1080p30-native-audio.mkv",
+          "bytes": 319874360,
+          "sha256": "d95cf91b298744225863f48ccf867fec00811bdd9605c329efa5fc1d0f39b00a"
+        },
+        "game_ready": {
+          "path": "video/final/intro-30fps-20261111-v1/INTRO/pl_PL/intro.wbm",
+          "bytes": 382332043,
+          "sha256": "577541eb2d0206cc438513035141fb65abba651bf7cbd4887ba290f525896ae6"
+        }
+      },
+      "target": "config://bg2ee_game_root/lang/pl_PL/movies/INTRO.wbm",
+      "encoding": "Existing verified VP8/Vorbis bytes reused unchanged",
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "vp8",
+            "codec_long_name": "On2 VP8",
+            "profile": "0",
+            "codec_type": "video",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "has_b_frames": 0,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuv420p",
+            "level": -99,
+            "color_range": "tv",
+            "chroma_location": "left",
+            "field_order": "progressive",
+            "refs": 1,
+            "r_frame_rate": "30000/1001",
+            "avg_frame_rate": "30000/1001",
+            "time_base": "1/1000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "nb_read_frames": "3440",
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "ENCODER": "Lavc62.0.101 libvpx",
+              "DURATION": "00:01:54.781000000"
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "vorbis",
+            "codec_long_name": "Vorbis",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "44100",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/1000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "nb_read_frames": "8873",
+            "extradata_size": 4342,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "DURATION": "00:01:54.856000000"
+            }
+          }
+        ],
+        "format": {
+          "filename": "G:\\AI\\BG2_Upscale\\video\\final\\intro-30fps-20261111-v1\\INTRO\\pl_PL\\intro.wbm",
+          "nb_streams": 2,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "matroska,webm",
+          "format_long_name": "Matroska / WebM",
+          "start_time": "0.000000",
+          "duration": "114.856000",
+          "size": "382332043",
+          "bit_rate": "26630357",
+          "probe_score": 100,
+          "tags": {
+            "ENCODER": "Lavf62.0.100"
+          }
+        }
+      },
+      "native_audio_pcm_identical": true,
+      "audio_packets": 8874,
+      "max_audio_pts_deviation_s": 0.0,
+      "max_video_pts_deviation_s": 0.0,
+      "ssim_sampled_all": 0.99504,
+      "full_frame_decode": true,
+      "user_visual_qa": "existing-INTRO-QA",
+      "runtime_ingame_qa": "pending",
+      "installed_by_this_run": false,
+      "release_integration": false
+    },
+    {
+      "film": "INTRO15F",
+      "locale": "default",
+      "fps": "30/1",
+      "frames": 5148,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "files": {
+        "preview": {
+          "path": "video/final/intro-30fps-20261111-v1/INTRO15F/default/INTRO15F-default-1080p30-audio.mp4",
+          "bytes": 298501301,
+          "sha256": "ede30df47bbc40408d57d2ecd050c92cca681a17dea35ff1acae55535415428f"
+        },
+        "native_audio_master": {
+          "path": "video/final/intro-30fps-20261111-v1/INTRO15F/default/INTRO15F-default-1080p30-native-audio.mkv",
+          "bytes": 296114118,
+          "sha256": "6994516d3c0eef8347cdb90c0c31a21225bb7b217bd5bfc989cbb4361c5c55ce"
+        },
+        "game_ready": {
+          "path": "video/final/intro-30fps-20261111-v1/INTRO15F/default/intro15f.wbm",
+          "bytes": 480363676,
+          "sha256": "fbfc82142de93f2bbcc99daf046769d914d52a1b990aa6b7e35420f46d2cda7d"
+        }
+      },
+      "target": "config://bg2ee_game_root/movies/intro15f.wbm",
+      "encoding": "VP8 CRF4/30M/qmax12/cpu-used2; Vorbis stream copy",
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "vp8",
+            "codec_long_name": "On2 VP8",
+            "profile": "0",
+            "codec_type": "video",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "has_b_frames": 0,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuv420p",
+            "level": -99,
+            "color_range": "tv",
+            "color_space": "bt470bg",
+            "chroma_location": "left",
+            "field_order": "progressive",
+            "refs": 1,
+            "r_frame_rate": "30/1",
+            "avg_frame_rate": "30/1",
+            "time_base": "1/1000",
+            "start_pts": 12,
+            "start_time": "0.012000",
+            "nb_read_frames": "5148",
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "ENCODER": "Lavc62.0.101 libvpx",
+              "DURATION": "00:02:51.612000000"
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "vorbis",
+            "codec_long_name": "Vorbis",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "22050",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/1000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "nb_read_frames": "7938",
+            "extradata_size": 3614,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "DURATION": "00:02:51.648000000"
+            }
+          }
+        ],
+        "format": {
+          "filename": "G:\\AI\\BG2_Upscale\\video\\final\\intro-30fps-20261111-v1\\INTRO15F\\default\\intro15f.wbm",
+          "nb_streams": 2,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "matroska,webm",
+          "format_long_name": "Matroska / WebM",
+          "start_time": "0.000000",
+          "duration": "171.648000",
+          "size": "480363676",
+          "bit_rate": "22388314",
+          "probe_score": 100,
+          "tags": {
+            "ENCODER": "Lavf62.0.100"
+          }
+        }
+      },
+      "native_audio_pcm_identical": true,
+      "audio_packets": 7939,
+      "max_audio_pts_deviation_s": 0.0,
+      "max_video_pts_deviation_s": 0.0,
+      "ssim_sampled_all": 0.995073,
+      "full_frame_decode": true,
+      "user_visual_qa": "accepted",
+      "runtime_ingame_qa": "pending",
+      "installed_by_this_run": false,
+      "release_integration": false
+    },
+    {
+      "film": "INTRO15F",
+      "locale": "de_DE",
+      "fps": "30/1",
+      "frames": 5148,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "files": {
+        "preview": {
+          "path": "video/final/intro-30fps-20261111-v1/INTRO15F/de_DE/INTRO15F-de_DE-1080p30-audio.mp4",
+          "bytes": 299457697,
+          "sha256": "94862ef6405b331835abda307eae24fe7da1f4a1f189b75cf6bfeeb61e85b3fa"
+        },
+        "native_audio_master": {
+          "path": "video/final/intro-30fps-20261111-v1/INTRO15F/de_DE/INTRO15F-de_DE-1080p30-native-audio.mkv",
+          "bytes": 297341671,
+          "sha256": "6d44b402fce1ddbc98241b6ba57ee437f84ab1af34d283488c1e9ebe040e7d37"
+        },
+        "game_ready": {
+          "path": "video/final/intro-30fps-20261111-v1/INTRO15F/de_DE/intro15f.wbm",
+          "bytes": 482165767,
+          "sha256": "e9cd5f51e46d0bfff117a8d469922aaac9675ad399e7038f6b4fc3ad311a62b0"
+        }
+      },
+      "target": "config://bg2ee_game_root/lang/de_DE/movies/intro15f.wbm",
+      "encoding": "VP8 CRF4/30M/qmax12/cpu-used2; Vorbis stream copy",
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "vp8",
+            "codec_long_name": "On2 VP8",
+            "profile": "0",
+            "codec_type": "video",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "has_b_frames": 0,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuv420p",
+            "level": -99,
+            "color_range": "tv",
+            "color_space": "bt470bg",
+            "chroma_location": "left",
+            "field_order": "progressive",
+            "refs": 1,
+            "r_frame_rate": "30/1",
+            "avg_frame_rate": "30/1",
+            "time_base": "1/1000",
+            "start_pts": 3,
+            "start_time": "0.003000",
+            "nb_read_frames": "5148",
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "ENCODER": "Lavc62.0.101 libvpx",
+              "DURATION": "00:02:51.603000000"
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "vorbis",
+            "codec_long_name": "Vorbis",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "44100",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/1000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "nb_read_frames": "11729",
+            "extradata_size": 4258,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "DURATION": "00:02:51.626000000"
+            }
+          }
+        ],
+        "format": {
+          "filename": "G:\\AI\\BG2_Upscale\\video\\final\\intro-30fps-20261111-v1\\INTRO15F\\de_DE\\intro15f.wbm",
+          "nb_streams": 2,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "matroska,webm",
+          "format_long_name": "Matroska / WebM",
+          "start_time": "0.000000",
+          "duration": "171.626000",
+          "size": "482165767",
+          "bit_rate": "22475185",
+          "probe_score": 100,
+          "tags": {
+            "ENCODER": "Lavf62.0.100"
+          }
+        }
+      },
+      "native_audio_pcm_identical": true,
+      "audio_packets": 11730,
+      "max_audio_pts_deviation_s": 0.0,
+      "max_video_pts_deviation_s": 0.0,
+      "ssim_sampled_all": 0.995038,
+      "full_frame_decode": true,
+      "user_visual_qa": "pending",
+      "runtime_ingame_qa": "pending",
+      "installed_by_this_run": false,
+      "release_integration": false
+    },
+    {
+      "film": "INTRO15F",
+      "locale": "it_IT",
+      "fps": "30/1",
+      "frames": 5148,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "files": {
+        "preview": {
+          "path": "video/final/intro-30fps-20261111-v1/INTRO15F/it_IT/INTRO15F-it_IT-1080p30-audio.mp4",
+          "bytes": 298759228,
+          "sha256": "04757e83df714173e404e6240e04f85daa34f26fea496d814f3fd2047cbad786"
+        },
+        "native_audio_master": {
+          "path": "video/final/intro-30fps-20261111-v1/INTRO15F/it_IT/INTRO15F-it_IT-1080p30-native-audio.mkv",
+          "bytes": 296681283,
+          "sha256": "e9439f423fcfc05ef9d780d3e3c2bdf2b7d1b5b82532c86d8f48b1417ced4528"
+        },
+        "game_ready": {
+          "path": "video/final/intro-30fps-20261111-v1/INTRO15F/it_IT/intro15f.wbm",
+          "bytes": 480933633,
+          "sha256": "a2de4ab2ae6a70d7520846c8ff67d126d508e5dcf7de7151c80e6c7477461fbc"
+        }
+      },
+      "target": "config://bg2ee_game_root/lang/it_IT/movies/intro15f.wbm",
+      "encoding": "VP8 CRF4/30M/qmax12/cpu-used2; Vorbis stream copy",
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "vp8",
+            "codec_long_name": "On2 VP8",
+            "profile": "0",
+            "codec_type": "video",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "has_b_frames": 0,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuv420p",
+            "level": -99,
+            "color_range": "tv",
+            "color_space": "bt470bg",
+            "chroma_location": "left",
+            "field_order": "progressive",
+            "refs": 1,
+            "r_frame_rate": "30/1",
+            "avg_frame_rate": "30/1",
+            "time_base": "1/1000",
+            "start_pts": 3,
+            "start_time": "0.003000",
+            "nb_read_frames": "5148",
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "ENCODER": "Lavc62.0.101 libvpx",
+              "DURATION": "00:02:51.603000000"
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "vorbis",
+            "codec_long_name": "Vorbis",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "44100",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/1000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "nb_read_frames": "12597",
+            "extradata_size": 4267,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "DURATION": "00:02:51.626000000"
+            }
+          }
+        ],
+        "format": {
+          "filename": "G:\\AI\\BG2_Upscale\\video\\final\\intro-30fps-20261111-v1\\INTRO15F\\it_IT\\intro15f.wbm",
+          "nb_streams": 2,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "matroska,webm",
+          "format_long_name": "Matroska / WebM",
+          "start_time": "0.000000",
+          "duration": "171.626000",
+          "size": "480933633",
+          "bit_rate": "22417751",
+          "probe_score": 100,
+          "tags": {
+            "ENCODER": "Lavf62.0.100"
+          }
+        }
+      },
+      "native_audio_pcm_identical": true,
+      "audio_packets": 12598,
+      "max_audio_pts_deviation_s": 0.0,
+      "max_video_pts_deviation_s": 0.0,
+      "ssim_sampled_all": 0.995064,
+      "full_frame_decode": true,
+      "user_visual_qa": "pending",
+      "runtime_ingame_qa": "pending",
+      "installed_by_this_run": false,
+      "release_integration": false
+    },
+    {
+      "film": "INTRO15F",
+      "locale": "pl_PL",
+      "fps": "30/1",
+      "frames": 5147,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "files": {
+        "preview": {
+          "path": "video/final/intro-30fps-20261111-v1/INTRO15F/pl_PL/INTRO15F-pl_PL-1080p30-audio.mp4",
+          "bytes": 343845710,
+          "sha256": "53f7da5ddb9d3f8a3756352ef183b2c38a844e8773f5a2b925d980e6af10a776"
+        },
+        "native_audio_master": {
+          "path": "video/final/intro-30fps-20261111-v1/INTRO15F/pl_PL/INTRO15F-pl_PL-1080p30-native-audio.mkv",
+          "bytes": 342525722,
+          "sha256": "6d67ac50f078232985140005f6b0bfb4e193098560456d92679d86c848fdbdc6"
+        },
+        "game_ready": {
+          "path": "video/final/intro-30fps-20261111-v1/INTRO15F/pl_PL/intro15f.wbm",
+          "bytes": 506268086,
+          "sha256": "36f6c6327d47d3103c72f3d63eefa8bf751038f0e81b2b21a643443edc7c7d78"
+        }
+      },
+      "target": "config://bg2ee_game_root/lang/pl_PL/movies/INTRO15F.wbm",
+      "encoding": "VP8 CRF4/30M/qmax12/cpu-used2; Vorbis stream copy",
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "vp8",
+            "codec_long_name": "On2 VP8",
+            "profile": "0",
+            "codec_type": "video",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "has_b_frames": 0,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuv420p",
+            "level": -99,
+            "color_range": "tv",
+            "color_space": "bt470bg",
+            "chroma_location": "left",
+            "field_order": "progressive",
+            "refs": 1,
+            "r_frame_rate": "30/1",
+            "avg_frame_rate": "30/1",
+            "time_base": "1/1000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "nb_read_frames": "5147",
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "ENCODER": "Lavc62.0.101 libvpx",
+              "DURATION": "00:02:51.566000000"
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "vorbis",
+            "codec_long_name": "Vorbis",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "44100",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/1000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "nb_read_frames": "15311",
+            "extradata_size": 4342,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "DURATION": "00:02:51.637000000"
+            }
+          }
+        ],
+        "format": {
+          "filename": "G:\\AI\\BG2_Upscale\\video\\final\\intro-30fps-20261111-v1\\INTRO15F\\pl_PL\\intro15f.wbm",
+          "nb_streams": 2,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "matroska,webm",
+          "format_long_name": "Matroska / WebM",
+          "start_time": "0.000000",
+          "duration": "171.637000",
+          "size": "506268086",
+          "bit_rate": "23597153",
+          "probe_score": 100,
+          "tags": {
+            "ENCODER": "Lavf62.0.100"
+          }
+        }
+      },
+      "native_audio_pcm_identical": true,
+      "audio_packets": 15312,
+      "max_audio_pts_deviation_s": 0.0,
+      "max_video_pts_deviation_s": 0.0,
+      "ssim_sampled_all": 0.993915,
+      "full_frame_decode": true,
+      "user_visual_qa": "pending",
+      "runtime_ingame_qa": "pending",
+      "installed_by_this_run": false,
+      "release_integration": false
+    }
+  ],
+  "installed": false,
+  "release_integration": false
+}

@@ -1,0 +1,27 @@
+{
+  "state": "accepted-visual-review",
+  "source": "video/assembly/intro15f-locales-seedvr-1080-20261111-v1/default/INTRO15F-default-SeedVR2-1080-audio.mp4",
+  "source_sha256": "a0b00f483073ca603b3162c8b9e03617d0b2a737e78278e5e2bd663949441357",
+  "output": "video/intro15f/runs/intro15f-default-apollo30-20261111-v1/INTRO15F-default-SeedVR2-Apollo8-1080p30-audio.mp4",
+  "output_sha256": "ede30df47bbc40408d57d2ecd050c92cca681a17dea35ff1acae55535415428f",
+  "model": "apo-8",
+  "fps": 30,
+  "expected_frames": 5148,
+  "expected_duration_s": 171.6,
+  "user_validation": "accepted",
+  "installed": false,
+  "release_integration": false,
+  "audio_packets_identical": true,
+  "max_audio_pts_deviation_s": 0.0,
+  "interpolation_check": {
+    "sample": "40-42s",
+    "novel_odd_frames": 30,
+    "tested_odd_frames": 30,
+    "even_anchor_luma_mae": 0.7549316883087158
+  },
+  "schema": "intro15f-default-apollo30-v1",
+  "recipe": "pipeline/recipes/intro15f-default-apollo30-20261111-v1/README.md",
+  "other_locales": "Apollo30 completed; all 7 runtime sets ready",
+  "qa_decision": "video/index/qa-decisions/INTRO15F/20261111-default-apollo30-accepted-v1.json",
+  "final_files": "video/index/intro-finals30-20261111-v1.json"
+}

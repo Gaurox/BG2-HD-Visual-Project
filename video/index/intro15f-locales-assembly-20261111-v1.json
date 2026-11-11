@@ -1,0 +1,116 @@
+{
+  "status": "produced-review-pending",
+  "results": [
+    {
+      "locale": "default",
+      "frames": 2574,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "source": "video/intro15f/intro15f.wbm",
+      "master": "video/assembly/intro15f-locales-seedvr-1080-20261111-v1/default/INTRO15F-default-SeedVR2-1080-native-audio.mkv",
+      "preview": "video/assembly/intro15f-locales-seedvr-1080-20261111-v1/default/INTRO15F-default-SeedVR2-1080-audio.mp4",
+      "preview_sha256": "a0b00f483073ca603b3162c8b9e03617d0b2a737e78278e5e2bd663949441357",
+      "overlap_frames_inclusive": [
+        270,
+        284
+      ],
+      "max_native_pts_deviation_s": 0.0,
+      "native_audio_pcm_identical": true,
+      "audio_packet_count": 7939,
+      "max_audio_pts_deviation_s": 0.0,
+      "audio_master": "Vorbis stream copy",
+      "audio_preview": "AAC192k",
+      "interpolation": false,
+      "framing": "native pillarboxed 4:3",
+      "user_validation": "pending",
+      "installed": false,
+      "release_integration": false
+    },
+    {
+      "locale": "de_DE",
+      "frames": 2574,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "source": "video/de_DE_intro15f/de_DE_intro15f.wbm",
+      "master": "video/assembly/intro15f-locales-seedvr-1080-20261111-v1/de_DE/INTRO15F-de_DE-SeedVR2-1080-native-audio.mkv",
+      "preview": "video/assembly/intro15f-locales-seedvr-1080-20261111-v1/de_DE/INTRO15F-de_DE-SeedVR2-1080-audio.mp4",
+      "preview_sha256": "52e244983691db67681935fb5c728bbb4cbef3f85a9f582cfc70d7bb08244d96",
+      "overlap_frames_inclusive": [
+        269,
+        284
+      ],
+      "max_native_pts_deviation_s": 0.0,
+      "native_audio_pcm_identical": true,
+      "audio_packet_count": 11730,
+      "max_audio_pts_deviation_s": 0.0,
+      "audio_master": "Vorbis stream copy",
+      "audio_preview": "AAC192k",
+      "interpolation": false,
+      "framing": "native pillarboxed 4:3",
+      "user_validation": "pending",
+      "installed": false,
+      "release_integration": false
+    },
+    {
+      "locale": "it_IT",
+      "frames": 2574,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "source": "video/it_IT_intro15f/it_IT_intro15f.wbm",
+      "master": "video/assembly/intro15f-locales-seedvr-1080-20261111-v1/it_IT/INTRO15F-it_IT-SeedVR2-1080-native-audio.mkv",
+      "preview": "video/assembly/intro15f-locales-seedvr-1080-20261111-v1/it_IT/INTRO15F-it_IT-SeedVR2-1080-audio.mp4",
+      "preview_sha256": "9bf18422f798fc6f36b994d6032903de82fb3d35394329d05ed8b69c18ad47d1",
+      "overlap_frames_inclusive": [
+        269,
+        284
+      ],
+      "max_native_pts_deviation_s": 0.0,
+      "native_audio_pcm_identical": true,
+      "audio_packet_count": 12598,
+      "max_audio_pts_deviation_s": 0.0,
+      "audio_master": "Vorbis stream copy",
+      "audio_preview": "AAC192k",
+      "interpolation": false,
+      "framing": "native pillarboxed 4:3",
+      "user_validation": "pending",
+      "installed": false,
+      "release_integration": false
+    },
+    {
+      "locale": "pl_PL",
+      "frames": 2572,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "source": "video/pl_PL_intro15f/pl_PL_INTRO15F.wbm",
+      "master": "video/assembly/intro15f-locales-seedvr-1080-20261111-v1/pl_PL/INTRO15F-pl_PL-SeedVR2-1080-native-audio.mkv",
+      "preview": "video/assembly/intro15f-locales-seedvr-1080-20261111-v1/pl_PL/INTRO15F-pl_PL-SeedVR2-1080-audio.mp4",
+      "preview_sha256": "845ac2dd52bc79882522bf68b6461fb8dffec9ffee5d6d998ca8c4712a3fff26",
+      "overlap_frames_inclusive": [
+        270,
+        285
+      ],
+      "max_native_pts_deviation_s": 0.0,
+      "native_audio_pcm_identical": true,
+      "audio_packet_count": 15312,
+      "max_audio_pts_deviation_s": 0.0,
+      "audio_master": "Vorbis stream copy",
+      "audio_preview": "AAC192k",
+      "interpolation": false,
+      "framing": "native Polish center zoom 4/3",
+      "user_validation": "pending",
+      "installed": false,
+      "release_integration": false
+    }
+  ],
+  "schema": "intro15f-locales-assembly-v1",
+  "recipe": "pipeline/recipes/intro15f-locales-assembly-20261111-v1/README.md",
+  "shared_body_qa": "video/index/qa-decisions/INTRO15F/20261111-shared-body-full-accepted-v1.json"
+}
