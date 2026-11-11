@@ -53,7 +53,8 @@ class RendererCandidateTransactionTests(unittest.TestCase):
 
     def setUp(self) -> None:
         self.temporary = tempfile.TemporaryDirectory()
-        self.root = Path(self.temporary.name)
+        # Match the installer's resolved paths, including Windows 8.3 temp aliases.
+        self.root = Path(self.temporary.name).resolve()
         self.game = self.root / "game"
         self.candidate = self.root / "candidate"
         self.backups = self.root / "backups"
