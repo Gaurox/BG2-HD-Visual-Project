@@ -1,0 +1,38 @@
+{
+  "schema": "video-cleanup-analysis-summary-v1",
+  "date": "2026-11-11",
+  "scope": "BG2 video workspace plus specifically identified BG2 ComfyUI video input/output caches",
+  "analysis_only": true,
+  "deleted_files": 0,
+  "gpu_tasks_started": 0,
+  "media_decodes": 0,
+  "new_media_hashes": 0,
+  "current_project_video_bytes": 28656471756,
+  "current_project_video_files": 857,
+  "candidate_files": 141,
+  "candidate_bytes": 14631402684,
+  "candidate_gib": 13.627,
+  "breakdown_bytes": {
+    "intro_workfiles": 10634766627,
+    "endings_workfiles": 1529002480,
+    "analysis_caches_and_preview_copies": 455135386,
+    "external_comfy_video_outputs": 1690052883,
+    "external_comfy_video_inputs": 322445308
+  },
+  "protected_native_source_files": 50,
+  "protected_canonical_final_files": 42,
+  "protected_final_bytes": 10552677672,
+  "protected_historical_qa_copies_bytes": 1575864584,
+  "protected_other": [
+    "Actual installation backups and all receipts",
+    "All QA-linked evidence, including rejected ENDCRDIT portion",
+    "All ENDCRDIT pause/resume inputs and previews",
+    "DAYNITE unresolved diagnosis chain, POCKETZZ candidate, selected older productions",
+    "Reports, recipes, checks, PTS/hashes/maps and Git-tracked files"
+  ],
+  "method": "Filesystem sizes and existing inventories/manifests/QA/receipts only. No video decoding, inference, new hashes of large media, GPU call or task launch. Logical byte estimates; physical allocation not measured. Existing recorded copy identity to be checked before any future deletion.",
+  "deletion_prerequisites": "No deletion authorized by this analysis. If subsequently requested, recheck candidate path/size/mtime, verify duplicate bytes where required, and preserve immutable references/proofs.",
+  "plan": "video/research/cleanup-analysis-20261111-v1/plan.json",
+  "plan_sha256": "c05b3679c96082d4614d40347007d5c6591a72471cb4d993717f668d4565b5bd",
+  "candidate_csv": "video/research/cleanup-analysis-20261111-v1/candidates.csv"
+}

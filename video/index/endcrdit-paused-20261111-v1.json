@@ -1,0 +1,33 @@
+{
+  "state": "paused",
+  "requested_by_user": "une fois que tu m’as montré la premiere portion, peux tu mettre le travail en pause sans le perdre? j’ai besoin du GPU pour autre chose",
+  "requested_utc": "2026-11-11T20:27:31.747872+00:00",
+  "gpu_worker_pid": 54508,
+  "kept_video": "video/endcrdit/runs/endcrdit-seedvr-apollo30-20261111-v1/portions/ENDCRDIT-common-part-01.mp4",
+  "kept_sha256": "1964f21a069fdf9324ed8ea7869b375e31caa7dabf4e3c0509ab7d4c5761a810",
+  "kept_frames": 330,
+  "kept_source_frames_inclusive": [
+    0,
+    329
+  ],
+  "next_source_frame": 330,
+  "total_source_frames": 2001,
+  "remaining_source_frames": 1671,
+  "preserved_native_input": "video/endcrdit/runs/endcrdit-seedvr-apollo30-20261111-v1/ENDCRDIT-common-native-input.mkv",
+  "preserved_mapping": "video/endcrdit/runs/endcrdit-seedvr-apollo30-20261111-v1/frames.csv",
+  "resume_plan": {
+    "source_start_frame_with_context": 297,
+    "context_frames": 33,
+    "discard_resumed_context_frames": 33,
+    "append_from_source_frame": 330,
+    "retained_prefix_must_not_be_regenerated": true,
+    "join_text_review_required": true
+  },
+  "full_seedvr_completed": false,
+  "apollo_started": false,
+  "installed": false,
+  "release_integration": false,
+  "paused_utc": "2026-11-11T20:27:33.160923+00:00",
+  "launcher_exit_code": 15,
+  "worker_stop": "Intentional termination after a complete, verified MP4 portion; GPU process exited"
+}

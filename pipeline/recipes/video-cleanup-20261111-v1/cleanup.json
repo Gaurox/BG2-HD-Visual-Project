@@ -1,0 +1,725 @@
+{
+  "schema": "video-cleanup-receipt-v1",
+  "state": "complete",
+  "started_utc": "2026-11-11T20:51:12.004609+00:00",
+  "plan": "video/research/cleanup-analysis-20261111-v1/plan.json",
+  "plan_sha256": "c05b3679c96082d4614d40347007d5c6591a72471cb4d993717f668d4565b5bd",
+  "user_authorization": "ok go pour la passe de ménage sans utiliser le gpu",
+  "gpu_tasks_started": 0,
+  "media_decodes": 0,
+  "deleted": [
+    {
+      "path": "video/assembly/intro-locales-seedvr-1080-20261111-v1/default/INTRO-original-720-audio-v2.mp4",
+      "bytes": 55501131,
+      "category": "intro_assembly_copies_and_trials"
+    },
+    {
+      "path": "video/assembly/intro-locales-seedvr-1080-20261111-v1/default/INTRO-original-720-audio.mp4",
+      "bytes": 55469172,
+      "category": "intro_assembly_copies_and_trials"
+    },
+    {
+      "path": "video/assembly/intro-locales-seedvr-1080-20261111-v1/de_DE/INTRO-de_DE-SeedVR2-1080-audio.mp4",
+      "bytes": 319734417,
+      "category": "intro_assembly_copies_and_trials"
+    },
+    {
+      "path": "video/assembly/intro-locales-seedvr-1080-20261111-v1/de_DE/INTRO-de_DE-SeedVR2-1080-native-audio.mkv",
+      "bytes": 318311003,
+      "category": "intro_assembly_copies_and_trials"
+    },
+    {
+      "path": "video/assembly/intro-locales-seedvr-1080-20261111-v1/pl_PL/INTRO-pl_PL-SeedVR2-1080-native-audio-timing-attempt1.mkv",
+      "bytes": 262254372,
+      "category": "intro_assembly_copies_and_trials"
+    },
+    {
+      "path": "video/assembly/intro-polish-master30-20261111-v1/INTRO-pl_PL-SeedVR2-shared-master-1080p2997-video.mp4",
+      "bytes": 317996696,
+      "category": "intro_polish_mux_input"
+    },
+    {
+      "path": "video/assembly/intro15f-locales-seedvr-1080-20261111-v1/default/INTRO15F-default-SeedVR2-1080-audio.mp4",
+      "bytes": 386975090,
+      "category": "obsolete_intro15f_15fps_assemblies"
+    },
+    {
+      "path": "video/assembly/intro15f-locales-seedvr-1080-20261111-v1/default/INTRO15F-default-SeedVR2-1080-native-audio.mkv",
+      "bytes": 384630393,
+      "category": "obsolete_intro15f_15fps_assemblies"
+    },
+    {
+      "path": "video/assembly/intro15f-locales-seedvr-1080-20261111-v1/de_DE/INTRO15F-de_DE-SeedVR2-1080-audio.mp4",
+      "bytes": 388225025,
+      "category": "obsolete_intro15f_15fps_assemblies"
+    },
+    {
+      "path": "video/assembly/intro15f-locales-seedvr-1080-20261111-v1/de_DE/INTRO15F-de_DE-SeedVR2-1080-native-audio.mkv",
+      "bytes": 386200737,
+      "category": "obsolete_intro15f_15fps_assemblies"
+    },
+    {
+      "path": "video/assembly/intro15f-locales-seedvr-1080-20261111-v1/it_IT/INTRO15F-it_IT-SeedVR2-1080-audio.mp4",
+      "bytes": 387835909,
+      "category": "obsolete_intro15f_15fps_assemblies"
+    },
+    {
+      "path": "video/assembly/intro15f-locales-seedvr-1080-20261111-v1/it_IT/INTRO15F-it_IT-SeedVR2-1080-native-audio.mkv",
+      "bytes": 385849711,
+      "category": "obsolete_intro15f_15fps_assemblies"
+    },
+    {
+      "path": "video/assembly/intro15f-locales-seedvr-1080-20261111-v1/pl_PL/INTRO15F-pl_PL-SeedVR2-1080-audio.mp4",
+      "bytes": 448666523,
+      "category": "obsolete_intro15f_15fps_assemblies"
+    },
+    {
+      "path": "video/assembly/intro15f-locales-seedvr-1080-20261111-v1/pl_PL/INTRO15F-pl_PL-SeedVR2-1080-native-audio.mkv",
+      "bytes": 447441193,
+      "category": "obsolete_intro15f_15fps_assemblies"
+    },
+    {
+      "path": "video/end15fps/runs/end15fps-shared-seedvr-apollo30-20261111-v1/END15FPS-common-native-input.mkv",
+      "bytes": 316145115,
+      "category": "completed_endings_inference_workfiles"
+    },
+    {
+      "path": "video/end15fps/runs/end15fps-shared-seedvr-apollo30-20261111-v1/END15FPS-common-SeedVR2-3B-FP16-LAB-1080-stream-raw.mp4",
+      "bytes": 232996351,
+      "category": "completed_endings_inference_workfiles"
+    },
+    {
+      "path": "video/end15fps/runs/end15fps-shared-seedvr-apollo30-20261111-v1/END15FPS-shared-SeedVR2-Apollo8-1080p30.mp4",
+      "bytes": 145973909,
+      "category": "completed_endings_inference_workfiles"
+    },
+    {
+      "path": "video/end15fps/runs/end15fps-shared-seedvr-apollo30-20261111-v1/portions/END15FPS-common-part-01.mp4",
+      "bytes": 41454263,
+      "category": "completed_endings_inference_workfiles"
+    },
+    {
+      "path": "video/end15fps/runs/end15fps-shared-seedvr-apollo30-20261111-v1/portions/END15FPS-common-part-02.mp4",
+      "bytes": 54014964,
+      "category": "completed_endings_inference_workfiles"
+    },
+    {
+      "path": "video/end15fps/runs/end15fps-shared-seedvr-apollo30-20261111-v1/portions/END15FPS-common-part-03.mp4",
+      "bytes": 53556580,
+      "category": "completed_endings_inference_workfiles"
+    },
+    {
+      "path": "video/end15fps/runs/end15fps-shared-seedvr-apollo30-20261111-v1/portions/END15FPS-common-part-04.mp4",
+      "bytes": 30697177,
+      "category": "completed_endings_inference_workfiles"
+    },
+    {
+      "path": "video/end15fps/runs/end15fps-shared-seedvr-apollo30-20261111-v1/portions/END15FPS-common-part-05.mp4",
+      "bytes": 36136952,
+      "category": "completed_endings_inference_workfiles"
+    },
+    {
+      "path": "video/end15fps/runs/end15fps-shared-seedvr-apollo30-20261111-v1/portions/END15FPS-common-part-06.mp4",
+      "bytes": 17139742,
+      "category": "completed_endings_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-common-seedvr3b-stream-1080-20261111-v1/INTRO-common-native-input.mkv",
+      "bytes": 576327558,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-common-seedvr3b-stream-1080-20261111-v1/INTRO-common-SeedVR2-3B-FP16-LAB-1080-stream-raw.mp4",
+      "bytes": 318430326,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-common-seedvr3b-stream-1080-20261111-v1/INTRO-common-SeedVR2-3B-FP16-LAB-1080p.mp4",
+      "bytes": 318430326,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-common-seedvr3b-stream-1080-20261111-v1/portions/INTRO-common-part-01.mp4",
+      "bytes": 33610606,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-common-seedvr3b-stream-1080-20261111-v1/portions/INTRO-common-part-02.mp4",
+      "bytes": 38112987,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-common-seedvr3b-stream-1080-20261111-v1/portions/INTRO-common-part-03.mp4",
+      "bytes": 33593507,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-common-seedvr3b-stream-1080-20261111-v1/portions/INTRO-common-part-04.mp4",
+      "bytes": 37955734,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-common-seedvr3b-stream-1080-20261111-v1/portions/INTRO-common-part-05.mp4",
+      "bytes": 34704670,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-common-seedvr3b-stream-1080-20261111-v1/portions/INTRO-common-part-06.mp4",
+      "bytes": 33958760,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-common-seedvr3b-stream-1080-20261111-v1/portions/INTRO-common-part-07.mp4",
+      "bytes": 30296863,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-common-seedvr3b-stream-1080-20261111-v1/portions/INTRO-common-part-08.mp4",
+      "bytes": 20956383,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-common-seedvr3b-stream-1080-20261111-v1/portions/INTRO-common-part-09.mp4",
+      "bytes": 35750420,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-common-seedvr3b-stream-1080-20261111-v1/portions/INTRO-common-part-10.mp4",
+      "bytes": 19496877,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-openings-seedvr3b-1080-20261111-v1/comfy-output/default/4860be97_000.mkv",
+      "bytes": 12450185,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-openings-seedvr3b-1080-20261111-v1/comfy-output/default/4860be97_001.mov",
+      "bytes": 215235336,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-openings-seedvr3b-1080-20261111-v1/comfy-output/de_DE/5f4d9afa_000.mkv",
+      "bytes": 20262159,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-openings-seedvr3b-1080-20261111-v1/comfy-output/de_DE/5f4d9afa_001.mov",
+      "bytes": 216477881,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-openings-seedvr3b-1080-20261111-v1/comfy-output/pl_PL/ea0f1d0f_000.mkv",
+      "bytes": 7671573,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-openings-seedvr3b-1080-20261111-v1/comfy-output/pl_PL/ea0f1d0f_001.mov",
+      "bytes": 125356505,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-openings-seedvr3b-1080-20261111-v1/default/INTRO-default-SeedVR2-3B-FP16-LAB-1080p.mp4",
+      "bytes": 3287374,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-openings-seedvr3b-1080-20261111-v1/default/INTRO-default-source-720p.mp4",
+      "bytes": 930923,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-openings-seedvr3b-1080-20261111-v1/de_DE/INTRO-de_DE-SeedVR2-3B-FP16-LAB-1080p.mp4",
+      "bytes": 3487792,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-openings-seedvr3b-1080-20261111-v1/de_DE/INTRO-de_DE-source-720p.mp4",
+      "bytes": 1029135,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-openings-seedvr3b-1080-20261111-v1/pl_PL/INTRO-pl_PL-SeedVR2-3B-FP16-LAB-1080p.mp4",
+      "bytes": 3142460,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro-openings-seedvr3b-1080-20261111-v1/pl_PL/INTRO-pl_PL-source-720p.mp4",
+      "bytes": 787939,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-common-seedvr3b-stream-1080-20261111-v1/INTRO15F-common-native-input.mkv",
+      "bytes": 509165772,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-common-seedvr3b-stream-1080-20261111-v1/INTRO15F-common-SeedVR2-3B-FP16-LAB-1080-stream-raw.mp4",
+      "bytes": 390070199,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-common-seedvr3b-stream-1080-20261111-v1/portions/INTRO15F-common-part-02.mp4",
+      "bytes": 60787838,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-common-seedvr3b-stream-1080-20261111-v1/portions/INTRO15F-common-part-03.mp4",
+      "bytes": 64926164,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-common-seedvr3b-stream-1080-20261111-v1/portions/INTRO15F-common-part-04.mp4",
+      "bytes": 69964501,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-common-seedvr3b-stream-1080-20261111-v1/portions/INTRO15F-common-part-05.mp4",
+      "bytes": 48898406,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-common-seedvr3b-stream-1080-20261111-v1/portions/INTRO15F-common-part-06.mp4",
+      "bytes": 49031683,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-common-seedvr3b-stream-1080-20261111-v1/portions/INTRO15F-common-part-07.mp4",
+      "bytes": 34915093,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-default-seedvr3b-1080-20261111-v1/INTRO15F-default-SeedVR2-3B-FP16-LAB-1080p15.mp4",
+      "bytes": 2250035,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-default-seedvr3b-1080-20261111-v1/INTRO15F-default-source-720p15.mp4",
+      "bytes": 576868,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-default-seedvr3b-1080-20261111-v1/comfy-output/3999d6b1_000.mkv",
+      "bytes": 9712190,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-default-seedvr3b-1080-20261111-v1/comfy-output/3999d6b1_001.mov",
+      "bytes": 100246366,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-locales-seedvr3b-1080-20261111-v1/de_DE/INTRO15F-de_DE-SeedVR2-3B-FP16-LAB-1080p15.mp4",
+      "bytes": 2538506,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-locales-seedvr3b-1080-20261111-v1/de_DE/INTRO15F-de_DE-source-720p15.mp4",
+      "bytes": 993698,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-locales-seedvr3b-1080-20261111-v1/de_DE/comfy-output/9ab04edf_000.mkv",
+      "bytes": 20709005,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-locales-seedvr3b-1080-20261111-v1/de_DE/comfy-output/9ab04edf_001.mov",
+      "bytes": 118229966,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-locales-seedvr3b-1080-20261111-v1/it_IT/INTRO15F-it_IT-SeedVR2-3B-FP16-LAB-1080p15.mp4",
+      "bytes": 2309516,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-locales-seedvr3b-1080-20261111-v1/it_IT/INTRO15F-it_IT-source-720p15.mp4",
+      "bytes": 851630,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-locales-seedvr3b-1080-20261111-v1/it_IT/comfy-output/41b24a93_000.mkv",
+      "bytes": 16007703,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-locales-seedvr3b-1080-20261111-v1/it_IT/comfy-output/41b24a93_001.mov",
+      "bytes": 107425439,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-locales-seedvr3b-1080-20261111-v1/pl_PL/INTRO15F-pl_PL-SeedVR2-3B-FP16-LAB-1080p15.mp4",
+      "bytes": 3142613,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-locales-seedvr3b-1080-20261111-v1/pl_PL/INTRO15F-pl_PL-source-720p15.mp4",
+      "bytes": 809822,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-locales-seedvr3b-1080-20261111-v1/pl_PL/comfy-output/8f9e0fc5_000.mkv",
+      "bytes": 16522235,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/experiments/intro15f-locales-seedvr3b-1080-20261111-v1/pl_PL/comfy-output/8f9e0fc5_001.mov",
+      "bytes": 125938836,
+      "category": "completed_intro_inference_workfiles"
+    },
+    {
+      "path": "video/final/endings-shared-30fps-20261111-v1/END15FPS/pl_PL/END15FPS-pl_PL-1080p30-video.mp4",
+      "bytes": 196468586,
+      "category": "polish_silent_mux_inputs"
+    },
+    {
+      "path": "video/final/endings-shared-30fps-20261111-v1/MELISSAN/pl_PL/MELISSAN-pl_PL-1080p30-video.mp4",
+      "bytes": 79612255,
+      "category": "polish_silent_mux_inputs"
+    },
+    {
+      "path": "video/intro/runs/intro-locales-ingame-20261111-v1/default/intro.wbm",
+      "bytes": 381620459,
+      "category": "intro_runtime_copies"
+    },
+    {
+      "path": "video/intro/runs/intro-locales-ingame-20261111-v1/de_DE/intro.wbm",
+      "bytes": 382556705,
+      "category": "intro_runtime_copies"
+    },
+    {
+      "path": "video/intro/runs/intro-locales-ingame-20261111-v1/pl_PL/intro.wbm",
+      "bytes": 382332043,
+      "category": "intro_runtime_copies"
+    },
+    {
+      "path": "video/intro15f/runs/intro15f-de_DE-apollo30-20261111-v1/INTRO15F-de_DE-SeedVR2-Apollo8-1080p30-audio.mp4",
+      "bytes": 299457697,
+      "category": "intro15f_final_preview_copies"
+    },
+    {
+      "path": "video/intro15f/runs/intro15f-it_IT-apollo30-20261111-v1/INTRO15F-it_IT-SeedVR2-Apollo8-1080p30-audio.mp4",
+      "bytes": 298759228,
+      "category": "intro15f_final_preview_copies"
+    },
+    {
+      "path": "video/intro15f/runs/intro15f-pl_PL-apollo30-20261111-v1/INTRO15F-pl_PL-SeedVR2-Apollo8-1080p30-audio.mp4",
+      "bytes": 343845710,
+      "category": "intro15f_final_preview_copies"
+    },
+    {
+      "path": "video/melissan/runs/melissan-shared-seedvr-apollo30-20261111-v1/MELISSAN-common-native-input.mkv",
+      "bytes": 95818994,
+      "category": "completed_endings_inference_workfiles"
+    },
+    {
+      "path": "video/melissan/runs/melissan-shared-seedvr-apollo30-20261111-v1/MELISSAN-common-SeedVR2-3B-FP16-LAB-1080-stream-raw.mp4",
+      "bytes": 82939122,
+      "category": "completed_endings_inference_workfiles"
+    },
+    {
+      "path": "video/melissan/runs/melissan-shared-seedvr-apollo30-20261111-v1/MELISSAN-shared-SeedVR2-Apollo8-1080p30.mp4",
+      "bytes": 63108897,
+      "category": "completed_endings_inference_workfiles"
+    },
+    {
+      "path": "video/melissan/runs/melissan-shared-seedvr-apollo30-20261111-v1/portions/MELISSAN-common-part-01.mp4",
+      "bytes": 52701367,
+      "category": "completed_endings_inference_workfiles"
+    },
+    {
+      "path": "video/melissan/runs/melissan-shared-seedvr-apollo30-20261111-v1/portions/MELISSAN-common-part-02.mp4",
+      "bytes": 30238206,
+      "category": "completed_endings_inference_workfiles"
+    },
+    {
+      "path": "video/preparation/intro-localized-segments-20261111-v1/INTRO/default/INTRO-default__ouverture_contexte__n000000-000239.mkv",
+      "bytes": 12450185,
+      "category": "native_opening_preparations"
+    },
+    {
+      "path": "video/preparation/intro-localized-segments-20261111-v1/INTRO/de_DE/INTRO-de_DE__ouverture_contexte__n000000-000239.mkv",
+      "bytes": 20262159,
+      "category": "native_opening_preparations"
+    },
+    {
+      "path": "video/preparation/intro-localized-segments-20261111-v1/INTRO/pl_PL/INTRO-pl_PL__ouverture_contexte__n000000-000120.mkv",
+      "bytes": 7671573,
+      "category": "native_opening_preparations"
+    },
+    {
+      "path": "video/preparation/intro-localized-segments-20261111-v1/INTRO15F/default/INTRO15F-default__ouverture_contexte__n000000-000284.mkv",
+      "bytes": 9712190,
+      "category": "native_opening_preparations"
+    },
+    {
+      "path": "video/preparation/intro-localized-segments-20261111-v1/INTRO15F/de_DE/INTRO15F-de_DE__ouverture_contexte__n000000-000284.mkv",
+      "bytes": 20709005,
+      "category": "native_opening_preparations"
+    },
+    {
+      "path": "video/preparation/intro-localized-segments-20261111-v1/INTRO15F/it_IT/INTRO15F-it_IT__ouverture_contexte__n000000-000284.mkv",
+      "bytes": 16007703,
+      "category": "native_opening_preparations"
+    },
+    {
+      "path": "video/preparation/intro-localized-segments-20261111-v1/INTRO15F/pl_PL/INTRO15F-pl_PL__ouverture_contexte__n000000-000285.mkv",
+      "bytes": 16522235,
+      "category": "native_opening_preparations"
+    },
+    {
+      "path": "video/previews/native-endcrdit-outro-20261111-v1/endcrdit.webm",
+      "bytes": 34938132,
+      "category": "native_preview_copies"
+    },
+    {
+      "path": "video/previews/native-endcrdit-outro-20261111-v1/outro.webm",
+      "bytes": 20390800,
+      "category": "native_preview_copies"
+    },
+    {
+      "path": "video/research/endings-locales-analysis-20261111-v1/END15FPS-default.gray",
+      "bytes": 26337600,
+      "category": "analysis_caches"
+    },
+    {
+      "path": "video/research/endings-locales-analysis-20261111-v1/END15FPS-de_DE.gray",
+      "bytes": 26337600,
+      "category": "analysis_caches"
+    },
+    {
+      "path": "video/research/endings-locales-analysis-20261111-v1/END15FPS-it_IT.gray",
+      "bytes": 26337600,
+      "category": "analysis_caches"
+    },
+    {
+      "path": "video/research/endings-locales-analysis-20261111-v1/END15FPS-pl_PL.gray",
+      "bytes": 26308800,
+      "category": "analysis_caches"
+    },
+    {
+      "path": "video/research/endings-locales-analysis-20261111-v1/MELISSAN-default.gray",
+      "bytes": 7560000,
+      "category": "analysis_caches"
+    },
+    {
+      "path": "video/research/endings-locales-analysis-20261111-v1/MELISSAN-de_DE.gray",
+      "bytes": 7560000,
+      "category": "analysis_caches"
+    },
+    {
+      "path": "video/research/endings-locales-analysis-20261111-v1/MELISSAN-pl_PL.gray",
+      "bytes": 8006400,
+      "category": "analysis_caches"
+    },
+    {
+      "path": "video/research/intro-locales-analysis-20261110-v1/INTRO-default.gray",
+      "bytes": 48196800,
+      "category": "analysis_caches"
+    },
+    {
+      "path": "video/research/intro-locales-analysis-20261110-v1/INTRO-de_DE.gray",
+      "bytes": 48168000,
+      "category": "analysis_caches"
+    },
+    {
+      "path": "video/research/intro-locales-analysis-20261110-v1/INTRO-pl_PL.gray",
+      "bytes": 24782400,
+      "category": "analysis_caches"
+    },
+    {
+      "path": "video/research/intro-locales-analysis-20261110-v1/INTRO15F-default.gray",
+      "bytes": 37065600,
+      "category": "analysis_caches"
+    },
+    {
+      "path": "video/research/intro-locales-analysis-20261110-v1/INTRO15F-de_DE.gray",
+      "bytes": 37065600,
+      "category": "analysis_caches"
+    },
+    {
+      "path": "video/research/intro-locales-analysis-20261110-v1/INTRO15F-it_IT.gray",
+      "bytes": 37065600,
+      "category": "analysis_caches"
+    },
+    {
+      "path": "video/research/intro-locales-analysis-20261110-v1/INTRO15F-pl_PL.gray",
+      "bytes": 37036800,
+      "category": "analysis_caches"
+    },
+    {
+      "path": "video/tutorials/tut01/previews/TUT01-original-preview.mp4",
+      "bytes": 1977654,
+      "category": "excluded_tutorial_preview"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\output\\BG2_video_upscale\\daynite-direction-20261109-v1\\forward\\DAYNITE-forward-SeedVR2_00001_.mov",
+      "bytes": 172060824,
+      "category": "external_comfy_video_workfiles"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\output\\BG2_video_upscale\\daynite-direction-20261109-v1\\reverse\\DAYNITE-reverse-SeedVR2_00001_.mov",
+      "bytes": 172602560,
+      "category": "external_comfy_video_workfiles"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\output\\BG2_video_upscale\\daynite-h3-01604-seedvr-apollo30-20261110-v1\\DAYNITE-H3-01604-SeedVR2_00001_.mov",
+      "bytes": 288034901,
+      "category": "external_comfy_video_workfiles"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\output\\BG2_video_upscale\\deathand-upscale-seedvr2-lab-1080p-v1\\DEATHAND-1080p-seedvr2-3b-int8-lab_00001_.mp4",
+      "bytes": 13021901,
+      "category": "external_comfy_video_workfiles"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\output\\BG2_video_upscale\\flythr03-upscale-seedvr2-lab-prototype-v1\\FLYTHR03-1080p-seedvr2-3b-int8-lab_00001_.mp4",
+      "bytes": 23744930,
+      "category": "external_comfy_video_workfiles"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\output\\BG2_video_upscale\\intro-openings-seedvr3b-1080-20261111-v1\\INTRO-default-SeedVR2-3B-FP16-LAB-1080_00001_.mov",
+      "bytes": 215235336,
+      "category": "external_comfy_video_workfiles"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\output\\BG2_video_upscale\\intro-openings-seedvr3b-1080-20261111-v1\\INTRO-de_DE-SeedVR2-3B-FP16-LAB-1080_00001_.mov",
+      "bytes": 216477881,
+      "category": "external_comfy_video_workfiles"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\output\\BG2_video_upscale\\intro-openings-seedvr3b-1080-20261111-v1\\INTRO-pl_PL-SeedVR2-3B-FP16-LAB-1080_00001_.mov",
+      "bytes": 125356505,
+      "category": "external_comfy_video_workfiles"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\output\\BG2_video_upscale\\intro15f-default-seedvr3b-1080-20261111-v1\\INTRO15F-default-SeedVR2-3B-FP16-LAB-1080_00001_.mov",
+      "bytes": 100246366,
+      "category": "external_comfy_video_workfiles"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\output\\BG2_video_upscale\\intro15f-locales-seedvr3b-1080-20261111-v1\\INTRO15F-de_DE-SeedVR2-3B-FP16-LAB-1080_00001_.mov",
+      "bytes": 118229966,
+      "category": "external_comfy_video_workfiles"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\output\\BG2_video_upscale\\intro15f-locales-seedvr3b-1080-20261111-v1\\INTRO15F-it_IT-SeedVR2-3B-FP16-LAB-1080_00001_.mov",
+      "bytes": 107425439,
+      "category": "external_comfy_video_workfiles"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\output\\BG2_video_upscale\\intro15f-locales-seedvr3b-1080-20261111-v1\\INTRO15F-pl_PL-SeedVR2-3B-FP16-LAB-1080_00001_.mov",
+      "bytes": 125938836,
+      "category": "external_comfy_video_workfiles"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\output\\BG2_video_upscale\\rest-seedvr-fp16-lab-20261109-v1\\REST-1080p15-SeedVR2_00001_.mp4",
+      "bytes": 4350449,
+      "category": "external_comfy_video_workfiles"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\output\\BG2_video_upscale\\restinn-seedvr-fp16-lab-20261109-v1\\RESTINN-1080p15-SeedVR2_00001_.mp4",
+      "bytes": 7326989,
+      "category": "external_comfy_video_workfiles"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\input\\DAYNITE-forward-input-v1.mkv",
+      "bytes": 38502295,
+      "category": "external_comfy_video_inputs"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\input\\DAYNITE-reverse-input-v1.mkv",
+      "bytes": 38500844,
+      "category": "external_comfy_video_inputs"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\input\\DAYNITE-H3-01604-corrected-16x9-input-v1.mkv",
+      "bytes": 95977980,
+      "category": "external_comfy_video_inputs"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\input\\bg2_proto_flythr03_seedvr3b.webm",
+      "bytes": 4588109,
+      "category": "external_comfy_video_inputs"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\input\\FLYTHR03-full-17s.webm",
+      "bytes": 4588109,
+      "category": "external_comfy_video_inputs"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\input\\FLYTHR03-source-segment-01-000-074-5s.mkv",
+      "bytes": 20922614,
+      "category": "external_comfy_video_inputs"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\input\\daynite.webm",
+      "bytes": 2586230,
+      "category": "external_comfy_video_inputs"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\input\\restdung.webm",
+      "bytes": 1499791,
+      "category": "external_comfy_video_inputs"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\input\\restinn.webm",
+      "bytes": 1567124,
+      "category": "external_comfy_video_inputs"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\input\\INTRO-default__ouverture_contexte__n000000-000239.mkv",
+      "bytes": 12450185,
+      "category": "external_comfy_video_inputs"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\input\\INTRO-de_DE__ouverture_contexte__n000000-000239.mkv",
+      "bytes": 20262159,
+      "category": "external_comfy_video_inputs"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\input\\INTRO-pl_PL__ouverture_contexte__n000000-000120.mkv",
+      "bytes": 7671573,
+      "category": "external_comfy_video_inputs"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\input\\INTRO15F-default__ouverture_contexte__n000000-000284.mkv",
+      "bytes": 9712190,
+      "category": "external_comfy_video_inputs"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\input\\INTRO15F-de_DE__ouverture_contexte__n000000-000284.mkv",
+      "bytes": 20709005,
+      "category": "external_comfy_video_inputs"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\input\\INTRO15F-it_IT__ouverture_contexte__n000000-000284.mkv",
+      "bytes": 16007703,
+      "category": "external_comfy_video_inputs"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\input\\INTRO15F-pl_PL__ouverture_contexte__n000000-000285.mkv",
+      "bytes": 16522235,
+      "category": "external_comfy_video_inputs"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\input\\bg2-video-upscale\\deathand-upscale-seedvr2-lab-1080p-v1\\movie-default-DEATHAND.webm",
+      "bytes": 5789053,
+      "category": "external_comfy_video_inputs"
+    },
+    {
+      "path": "E:\\AI\\ComfyUI_windows_portable\\ComfyUI\\input\\bg2-video-upscale\\flythr03-upscale-seedvr2-lab-prototype-v1\\movie-default-FLYTHR03.webm",
+      "bytes": 4588109,
+      "category": "external_comfy_video_inputs"
+    }
+  ],
+  "errors": [],
+  "protected_files": 748,
+  "finished_utc": "2026-11-11T20:51:12.464796+00:00",
+  "deleted_files": 141,
+  "deleted_bytes": 14631402684,
+  "protected_files_unchanged": true,
+  "game_modified": false,
+  "release_modified": false
+}

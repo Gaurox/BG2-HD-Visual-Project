@@ -25,13 +25,13 @@ Test local des3INTRO déjà installé : `index/intro-ingame-test-20261111-v1.jso
 4INTRO15F installées pour test local : `index/intro15f-ingame-test-20261111-v1.json` ; sauvegardes
 `installations/intro15f-apollo30-20261111-v1/before/` ; alias `HD15EN`/`HD15DE`/`HD15IT`/`HD15PL`.
 [Console/restauration](../pipeline/recipes/intro15f-ingame-test-20261111-v1/README.md). QA ingame reste en attente ; aucune intégration release.
-Sources/runs précédents conservés ; médias locaux ignorés par Git.
+Sources/fichiers finaux/preuves QA conservés ; intermédiaires inutiles retirés2026-11-11 selon `index/cleanup-20261111-v1.json`. Médias locaux ignorés par Git.
 
 Périmètre production :37cinématiques ;13tutoriels exclus sur demande utilisateur2026-11-11,
 `index/production-scope.json`. Ne pas réintroduire les tutoriels dans le suivi ou une file de traitement.
 Inventaire source50assets et fichiers tutoriels conservés.
 Suivi courant : [`SUIVI.md`](SUIVI.md) ; vue37cinématiques : `index/status.csv` ; médias réellement
-conservés et alias des entrées déplacées : `index/retained-media-20261110-v1.json`.
+conservés et alias des anciennes copies : `index/retained-media-20261111-v1.json` (inventaire20261110 historique conservé).
 
 RESTDUNG : SeedVR2 3B FP16 LAB Full HD15 retenu le 2026-11-09 ; installé localement en WBM
 VP8/Vorbis, QA ingame en attente. Sélection : `index/qa-decisions/RESTDUNG/` ; reçu :
@@ -54,6 +54,8 @@ La chaîne DAYNITE conserve imagesT2/T4, sourceH3, montage, inputs crop/audio, n
 Le post-upscale SeedVR sur H3 a été jugé dégradant par l'utilisateur ; ses médias, les essais
 direct/inverse et T1/T3 ont été supprimés. Réglages/logs historiques :
 `../pipeline/recipes/video-retained-cleanup-20261110-v1/settings-memory/`.
+
+Nettoyage2026-11-11 :141fichiers de travail supprimés,14 631 402 684octets (~13,63Gio),dont109dans le projet et32caches vidéo BG2 ComfyUI.34contrôles de doublons ;748fichiers protégés inchangés.50sources,42fichiers finaux,preuves QA,sauvegardes et pause ENDCRDIT conservés ; aucune tâche GPU/décodage. Reçu : `index/cleanup-20261111-v1.json` ; recette : `../pipeline/recipes/video-cleanup-20261111-v1/README.md`.
 
 Nettoyage2026-11-10 :467fichiers supprimés (gain net≈4,27Gio),50sources et sauvegardes conservées.
 POCKETZZ : seul candidat SeedVR FullHD15 gardé explicitement, aucune validation déduite.

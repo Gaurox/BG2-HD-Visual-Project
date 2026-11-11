@@ -1,7 +1,7 @@
 # Suivi vidéo — 2026-11-11
 
 - Autorités : sources=`index/resources.csv` ; périmètre=`index/production-scope.json` ; production courante=`index/status.csv`, détails `index/processing.csv`, `index/intro-finals30-20261111-v1.json` et `index/endings-finals30-20261111-v1.json` ; QA=`index/qa-decisions/` ; installation=`installations/*/installation.json` ; release séparée.
-- Périmètre actif37cinématiques (variantes linguistiques comprises) :21avec résultat conservé,16sans production ; ≈7min39s de sources restantes.16installées localement ;7END15FPS/MELISSAN validées ingame ; autres QA ingame séparées. POCKETZZ reste candidat non validé ; anomalie DAYNITE ouverte. Aucun asset vidéo intégré à la release.
+- Périmètre actif37cinématiques (variantes linguistiques comprises) :21productions complètes,1partielle en pause (ENDCRDIT),15sans production ;16cinématiques à terminer (≈7min39s de sources entières).16installées localement ;7END15FPS/MELISSAN validées ingame ; autres QA ingame séparées. POCKETZZ reste candidat non validé ; anomalie DAYNITE ouverte. Aucun asset vidéo intégré à la release.
 -13tutoriels retirés du suivi et exclus des futurs traitements sur demande utilisateur2026-11-11 ; décision `index/production-scope.json`. Inventaire50sources et fichiers natifs conservés.
 
 | Vidéo | Production conservée | QA | Installation locale |
@@ -22,10 +22,15 @@
 - Installation : `index/endings-ingame-test-20261111-v1.json` ;7WBM canoniques +7alias (`HDENEN/DE/IT/PL`, `HDMLEN/DE/PL`),sauvegardes réelles conservées. 7WBM acceptés ingame par l’utilisateur2026-11-11 ; décision immuable `index/qa-decisions/endings-ingame-accepted-20261111-v1.json` liée aux SHA des fichiers testés. Aucune intégration release.
 - Console/restauration/réglages : `../pipeline/recipes/endings-shared-30fps-20261111-v1/README.md`.
 
-## À produire — 16cinématiques
+## ENDCRDIT — pause après première portion
+
+- Demande utilisateur2026-11-11 : montrer la première portion puis libérer le GPU.330images/0–22s SeedVR FullHD15 conservées ;1671images source restantes, Apollo non démarré. Source/FFV1/SHA/commandes gardés ; reprise à l’image330 avec contexte natif297–329.
+- Point de reprise : `index/endcrdit-paused-20261111-v1.json` ; aperçu et comparaison : `../pipeline/recipes/endcrdit-seedvr-apollo30-20261111-v1/README.md`. QA utilisateur2026-11-11 : rendu apprécié mais lettres trop déformées, portion SeedVR refusée ; décision `index/qa-decisions/ENDCRDIT/20261111-first-seedvr-portion-text-rejected-v1.json`. Essais Topaz reportés à une reprise demandée ; pause maintenue, médias conservés. Aucune installation/release.
+
+## À terminer — 16cinématiques
 
 - `BLACKPIT`, `DORNGORG`, `DORNTREE`, `ENDCRDIT`, `FLYTHR01`, `FLYTHR02`, `FLYTHR04`, `HEXXATDR`, `LOGO`, `MANAFORG`, `NEERAES`, `NITEDAY`, `OUTRO`, `RASAADMI`, `RASAADTE`, `SARADUSH`.
-- Sources cumulées458,727s (≈7min39s) ; état `not-started` de `index/status.csv`.13tutoriels exclus. POCKETZZ candidat et anomalie DAYNITE restent suivis séparément.
+- Sources entières cumulées458,727s (≈7min39s) ;15états `not-started` +ENDCRDIT `partial-paused` dans `index/status.csv`.13tutoriels exclus. POCKETZZ candidat et anomalie DAYNITE restent suivis séparément.
 
 ## DAYNITE — chaîne conservée
 
@@ -40,6 +45,12 @@
 - Retour utilisateur2026-11-10 : ancienne vidéo visible ; QA=`index/qa-decisions/daynite-ingame-old-video-reported-20261110-v1.json`.
 - WBM installé conforme au SHA du runtime retenu ; aucun doublon prioritaire trouvé ; logs sans identifiant de film.
 - Accès Computer Use/Baldur refusé : reproduction bloquée ; aucun nouveau remplacement spéculatif. Diagnostic/reprise=`../pipeline/recipes/daynite-runtime-diagnosis-20261110-v1/README.md`.
+
+## Nettoyage2026-11-11 — terminé sans GPU
+
+-141fichiers supprimés,14 631 402 684octets (~13,63Gio) :109fichiers projet (~11,75Gio),32entrées/sorties vidéo BG2 de ComfyUI (~1,87Gio).34contrôles de doublons CPU ; aucun décodage/inférence/GPU.
+-748fichiers protégés inchangés :50sources,42finaux canoniques,preuves QA,sauvegardes,chaîne DAYNITE ouverte,candidat POCKETZZ et pause ENDCRDIT.5copies QA historiques (~1,47Gio) conservées. Jeu/release/autres projets intacts.
+- Reçu : `index/cleanup-20261111-v1.json` ; inventaire courant/8alias de copies exactes supprimées : `index/retained-media-20261111-v1.json`. Manifestes/QA/reçus antérieurs inchangés ; comparateur courant sans référence aux suppressions.
 
 ## Nettoyage global
 

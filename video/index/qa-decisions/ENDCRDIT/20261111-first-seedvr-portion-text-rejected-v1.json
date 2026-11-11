@@ -1,0 +1,30 @@
+{
+  "decision": "rejected",
+  "decision_date": "2026-11-11",
+  "asset_key": "movie:default:ENDCRDIT",
+  "scope": "first-portion-SeedVR-FP16-LAB-1080p15-text-readability",
+  "user_decision": "oui le rendu est tres beau mais certaines lettres sont trop déformées pour qu'on puisse valider. on fera de nouveaux tests plus tard avec topaz",
+  "reason": "Visual rendering appreciated; glyph deformation prevents text fidelity acceptance",
+  "source_frames_inclusive": [
+    0,
+    329
+  ],
+  "seconds": [
+    0,
+    22
+  ],
+  "spatial_output": {
+    "path": "video/endcrdit/runs/endcrdit-seedvr-apollo30-20261111-v1/portions/ENDCRDIT-common-part-01.mp4",
+    "sha256": "1964f21a069fdf9324ed8ea7869b375e31caa7dabf4e3c0509ab7d4c5761a810"
+  },
+  "review_preview": {
+    "path": "video/previews/endcrdit-text-20261111-v1/ENDCRDIT-SeedVR2-0-22s-1080p15-audio.mp4",
+    "sha256": "ae3df832e24792c28ccad7d1a0c27457c26203c5834860ec48b5e01a087cb599"
+  },
+  "preserve_outputs": true,
+  "processing_state": "paused-user",
+  "next_direction": "Future Topaz tests at user request; no new processing started",
+  "pause_checkpoint": "video/index/endcrdit-paused-20261111-v1.json",
+  "installed": false,
+  "release_integration": false
+}

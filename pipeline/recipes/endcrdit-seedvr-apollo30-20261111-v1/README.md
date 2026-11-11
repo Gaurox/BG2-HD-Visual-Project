@@ -1,0 +1,19 @@
+# ENDCRDIT — SeedVR / Apollo30 avec revue anticipée du texte
+
+- Demande2026-11-11 : traiter ENDCRDIT comme les films précédents ; présenter impérativement la première portion pour validation de lisibilité pendant la poursuite du film complet.
+- Source : `video/endcrdit/endcrdit.wbm`, inventaire `video/index/resources.csv` ;2001images1280×720/15fps,~133,45s avec audio. SHA source et toutes les images FFV1 vérifiés ; métadonnées natives `video/research/endcrdit-native-20261111-v1/`.
+- `python -B pipeline/recipes/endcrdit-seedvr-apollo30-20261111-v1/seedvr.py --film ENDCRDIT` : SeedVR2 3B FP16/VAE FP16/LAB,1080,seed42,batch33 uniforme,overlap3,portions330,bruits0,SDPA,swap32,CPU offload,VAE encode1024/128/decode768/128 ; bootstrap borné des intros réutilisé.7portions, aucune pause liée à la revue.
+- `preview_first.py` attend `BG2_PORTION_SAVED 1` (MP4 finalisé), publie les330premières images/0–22s : SeedVR FullHD15 + AAC et référence source agrandie Lanczos FullHD15. Vidéo traitée copiée sans réencodage ; même AAC dans les2clips. Crop1:1 du texte12s ; aperçu uniquement, aucun audio de production coupé.
+- Aperçus : `video/previews/endcrdit-text-20261111-v1/ENDCRDIT-SeedVR2-0-22s-1080p15-audio.mp4` et `ENDCRDIT-source-0-22s-1080-lanczos-audio.mp4`. Première revue = sortie spatiale SeedVR15, pas validation globale du futur Apollo30.
+- `produce.py` attend le SeedVR complet puis réutilise les fonctions vérifiées de `../endings-shared-30fps-20261111-v1/produce.py` dans un module isolé, chemins ENDCRDIT uniquement : Apollo apo-8/30fps/rdt−0.01 puis4002images (4001IA+1maintien), MP4 AAC, MKV H264/Vorbis natif et WBM VP8/Vorbis natif. Aucune installation ou release.
+- Destination : `video/final/endcrdit-seedvr-apollo30-20261111-v1/ENDCRDIT/default/` ; index final `video/index/endcrdit-finals30-20261111-v1.json` seulement après vérifications nombre/dimensions/PTS images, PCM+flux+PTS audio natifs, SSIM livraison >0,99.
+- Run : `video/endcrdit/runs/endcrdit-seedvr-apollo30-20261111-v1/`. Scripts de lancement à utiliser dans cet ordre ; `produce.py` et `preview_first.py` peuvent attendre le SeedVR en cours. Sorties finales immuables ; nouvelle version si correction réellement nécessaire.
+- QA utilisateur2026-11-11 : première portion refusée pour déformation des lettres malgré un rendu visuel apprécié ; décision `video/index/qa-decisions/ENDCRDIT/20261111-first-seedvr-portion-text-rejected-v1.json`. Aucun essai Topaz lancé ; reprise ultérieure sur demande.
+
+## Pause utilisateur après première portion
+
+- État courant : **en pause, GPU libéré** ; `video/index/endcrdit-paused-20261111-v1.json`, copie locale `pause-checkpoint.json`. Arrêt volontaire du worker après MP4 de portion finalisé ; code15 du lanceur et assertion `failed` du finisseur correspondent à cette interruption demandée, pas à une corruption de la portion.
+- Conservé :330images/source0–329/22s, MP4 original de portion, aperçu avec son et référence, source FFV1 complète vérifiée, SHA et `frames.csv`, commandes et journaux.1671images source restent à traiter ; Apollo non démarré, aucune installation.
+- Reprise prévue : garder les330images existantes ; inférer une nouvelle queue depuis l’image native297 avec33images de contexte, retirer ces33images de la queue avant raccord à l’image330, vérifier texte/jointure. Nouvelle destination pour les sorties ; ne pas relancer le préfixe déjà conservé ni écraser ce run interrompu.
+- Contrôle agent : la capture1:1 à12s montre des glyphes/noms redessinés par SeedVR ; fidélité du texte non acquise. Retour utilisateur reçu : lettres trop déformées, refus de cette portion ; nouveaux essais Topaz plus tard. Pause et conservation des médias maintenues.
+- `pause_after_first.py` : attend la fermeture de la portion1, vérifie330images et SHA puis arrête exclusivement le PID du worker de ce run ; l’arrêt a nécessité l’exécution autorisée hors sandbox Windows.
