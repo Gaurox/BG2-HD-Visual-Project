@@ -7,17 +7,17 @@ zone restent sous l'autorité de `animations/index/occurrences.csv` et sont excl
 `index/processing.csv` sélectionne les runs validés par étape et le run utilisé par le patch.
 `patch_run` vide signifie qu'aucun artefact vidéo n'est intégré au patch.
 
-Intros SeedVR2026-11-11 : 7ouvertures produites ; corps commun INTRO et3assemblages défaut/DE/PL
+Intros SeedVR2026-11-11 : 7ouvertures et2corps communs produits ;3assemblages INTRO défaut/DE/PL
 avec audio natif ; comparaison commune acceptée, cadences natives conservées, **aucune interpolation**.
-Corps commun INTRO15F non commencé. Suivi/empreintes : `index/intro-seedvr-20261111-v1.json` ;
+Corps commun INTRO15F terminé ; ses assemblages par langue restent à faire. Suivi INTRO : `index/intro-seedvr-20261111-v1.json` ;
 recette/reprise : [`intro-seedvr-20261111-v1`](../pipeline/recipes/intro-seedvr-20261111-v1/README.md).
-Aucune installation/release ; médias locaux ignorés par Git.
+Aucune intégration release ; médias locaux ignorés par Git.
 Variante INTRO polonaise30 nominales (30000/1001), sans interpolation IA : comparaison acceptée,
 sélection `index/intro-polish-master30-20261111-v1.json` ; ancien assemblage~15fps conservé.
 Test local des3INTRO installé2026-11-11 : `index/intro-ingame-test-20261111-v1.json` ; sauvegardes
 dans `installations/intro-locales-seedvr-20261111-v1/before/`. Alias console `HDINEN`/`HDINDE`/`HDINPL`
 pour tester sans changer de langue ; [commandes et restauration](../pipeline/recipes/intro-ingame-test-20261111-v1/README.md).
-QA ingame en attente ; aucune release modifiée. Corps INTRO15F en production :
+QA ingame en attente ; aucune release modifiée. Corps INTRO15F produit (153.6s/2304images) :
 `index/intro15f-common-seedvr-20261111-v1.json` ; première portion acceptée, sans validation globale déduite.
 
 Suivi courant : [`SUIVI.md`](SUIVI.md) ; vue50assets : `index/status.csv` ; médias réellement

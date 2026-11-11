@@ -1,6 +1,7 @@
 # INTRO15F — corps commun SeedVR, 2026-11-11 v1
 
 - Demande : traiter tout le corps commun ; montrer la première portion puis continuer ; première portion acceptée (« validé. continue jusqu'aubout »).
+- Production terminée : `video/experiments/intro15f-common-seedvr3b-stream-1080-20261111-v1/INTRO15F-common-SeedVR2-3B-FP16-LAB-1080p.mp4`,1920×1080/15fps/2304images/153.6s,muet,sans interpolation ; écart maximal PTS natifs0.667ms. Revue du master complet encore en attente.
 - Suivi : `video/index/intro15f-common-seedvr-20261111-v1.json` ; QA limitée aux22premières secondes : `video/index/qa-decisions/INTRO15F/20261111-shared-body-first-portion-accepted-v1.json`.
 - Source `video/intro15f/intro15f.wbm`, images270..2573, PTS18.012..171.545s ;2304images,153.6s à15fps. Entrée FFV1 vérifiée contre les SHA YUV natifs. Ouvertures localisées jusque19s déjà disponibles.
 - Profil identique au premier film : SeedVR2 3B FP16/VAE FP16,LAB,1080,seed42,batch33 uniforme,overlap3,bruits0,SDPA,swap32,offloadCPU ; VAE encode1024/128 et decode768/128.
