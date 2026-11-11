@@ -1,7 +1,8 @@
-# Suivi vidéo — 2026-11-10
+# Suivi vidéo — 2026-11-11
 
-- Autorités : sources=`index/resources.csv` ; production/sélections=`index/processing.csv` ; QA=`index/qa-decisions/` ; installation=`installations/*/installation.json` ; release séparée.
-- Vue complète50assets : `index/status.csv` ;50sources natives présentes,37cinématiques+13tutoriels.7productions conservées,43assets sans production sélectionnée. Aucun asset vidéo intégré à la release.
+- Autorités : sources=`index/resources.csv` ; périmètre=`index/production-scope.json` ; production courante=`index/status.csv`, détails `index/processing.csv`, `index/intro-finals30-20261111-v1.json` et `index/endings-finals30-20261111-v1.json` ; QA=`index/qa-decisions/` ; installation=`installations/*/installation.json` ; release séparée.
+- Périmètre actif37cinématiques (variantes linguistiques comprises) :21avec résultat conservé,16sans production ; ≈7min39s de sources restantes.16installées pour test local ; QA ingame séparée. POCKETZZ reste candidat non validé ; anomalie DAYNITE ouverte. Aucun asset vidéo intégré à la release.
+-13tutoriels retirés du suivi et exclus des futurs traitements sur demande utilisateur2026-11-11 ; décision `index/production-scope.json`. Inventaire50sources et fichiers natifs conservés.
 
 | Vidéo | Production conservée | QA | Installation locale |
 |---|---|---|---|
@@ -12,6 +13,14 @@
 | REST | SeedVR FP16 LAB15 → Apollo8 FullHD30 | comparaison acceptée | non |
 | DAYNITE | H3 01604 → fondus10s → nearest FullHD24 → Apollo8 FullHD30 + son natif | sélection pour test local ; post-SeedVR rejeté ; ancienne vidéo signalée ingame | WBM30 présent et SHA conforme ; anomalie ingame non résolue |
 | POCKETZZ | `pocketzz/runs/pocketzz-comfyui-experiments-20260814/ComfyUI_00002_.mp4`,SeedVR FP16 LAB FullHD15 | candidat gardé explicitement ; pas de validation | non |
+| INTRO (défaut/DE/PL) |3assemblages SeedVR FullHD~30, audios natifs | visuelle selon décisions/index INTRO |3WBM installés ; test ingame en attente |
+| INTRO15F (défaut/DE/IT/PL) |4assemblages SeedVR + Apollo8 FullHD30, audios natifs |4versions acceptées visuellement |4WBM installés ; test ingame en attente |
+
+## END15FPS / MELISSAN — 7versions installées pour test
+
+- Production : `index/endings-finals30-20261111-v1.json` ; 2masters SeedVR FP16 LAB → Apollo8 FullHD30,7assemblages à audios Vorbis natifs. Défaut/DE/IT partagent les flux vidéo ; PL recalé sur ses PTS,fin blanche MEL prolongée sans IA supplémentaire.
+- Installation : `index/endings-ingame-test-20261111-v1.json` ;7WBM canoniques +7alias (`HDENEN/DE/IT/PL`, `HDMLEN/DE/PL`),sauvegardes réelles conservées. QA visuelle utilisateur/ingame en attente ; aucune acceptation ou intégration release déduite.
+- Console/restauration/réglages : `../pipeline/recipes/endings-shared-30fps-20261111-v1/README.md`.
 
 ## DAYNITE — chaîne conservée
 

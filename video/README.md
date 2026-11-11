@@ -7,6 +7,8 @@ zone restent sous l'autorité de `animations/index/occurrences.csv` et sont excl
 `index/processing.csv` sélectionne les runs validés par étape et le run utilisé par le patch.
 `patch_run` vide signifie qu'aucun artefact vidéo n'est intégré au patch.
 
+END15FPS/MELISSAN finales2026-11-11 : **7versions FullHD30 installées pour test local**,2masters SeedVR FP16 LAB/Apollo8 partagés, audios natifs et timings PL adaptés ; QA visuelle/ingame en attente. Production : `index/endings-finals30-20261111-v1.json` ; installation : `index/endings-ingame-test-20261111-v1.json` ; [console et restauration](../pipeline/recipes/endings-shared-30fps-20261111-v1/README.md). Aucune intégration release.
+
 Intros finales2026-11-11 : **7ensembles FullHD prêts techniquement pour installation future** :
 `index/intro-finals30-20261111-v1.json` ; chemins lecture/jeu : `index/intro-review-files-20261111-v1.json`.
 Local : `video/final/intro-30fps-20261111-v1/{INTRO,INTRO15F}/<locale>/` ; MP4 AAC de contrôle,
@@ -25,7 +27,10 @@ Test local des3INTRO déjà installé : `index/intro-ingame-test-20261111-v1.jso
 [Console/restauration](../pipeline/recipes/intro15f-ingame-test-20261111-v1/README.md). QA ingame reste en attente ; aucune intégration release.
 Sources/runs précédents conservés ; médias locaux ignorés par Git.
 
-Suivi courant : [`SUIVI.md`](SUIVI.md) ; vue50assets : `index/status.csv` ; médias réellement
+Périmètre production :37cinématiques ;13tutoriels exclus sur demande utilisateur2026-11-11,
+`index/production-scope.json`. Ne pas réintroduire les tutoriels dans le suivi ou une file de traitement.
+Inventaire source50assets et fichiers tutoriels conservés.
+Suivi courant : [`SUIVI.md`](SUIVI.md) ; vue37cinématiques : `index/status.csv` ; médias réellement
 conservés et alias des entrées déplacées : `index/retained-media-20261110-v1.json`.
 
 RESTDUNG : SeedVR2 3B FP16 LAB Full HD15 retenu le 2026-11-09 ; installé localement en WBM

@@ -1,0 +1,210 @@
+{
+  "schema": "video-multilingual-analysis-v1",
+  "date": "2026-11-11",
+  "scope": [
+    "END15FPS",
+    "MELISSAN"
+  ],
+  "source_inventory": "video/index/resources.csv",
+  "evidence": "video/research/endings-locales-analysis-20261111-v1",
+  "recipe": "pipeline/recipes/video-endings-locales-analysis-20261111-v1",
+  "sources": [
+    {
+      "name": "END15FPS-de_DE",
+      "source": "video/de_DE_end15fps/de_DE_end15fps.wbm",
+      "sha256": "38A2F429E956E49482D31DFEBF961F8BCED92CAADA5522E17AAC57182FF95E53",
+      "frames": 1829,
+      "audio_pcm_hash": "SHA256=baa56d37b11d8d011a1f48af54732d0a368c2eb13c9306d26128f6af404f2403"
+    },
+    {
+      "name": "MELISSAN-de_DE",
+      "source": "video/de_DE_melissan/de_DE_melissan.wbm",
+      "sha256": "BC117113CDE816F64E1C2D80BF82A8E024C795BFBC5A2147E8919558713B7654",
+      "frames": 525,
+      "audio_pcm_hash": "SHA256=828e1f129f8e8c579de62783e5e4b5142a18a0c5fc654728f5d298a529b4e532"
+    },
+    {
+      "name": "END15FPS-default",
+      "source": "video/end15fps/end15fps.wbm",
+      "sha256": "FFCA53B4BD6F92E40821E20F73631658141D08F8854CD4CDE61A859408A22368",
+      "frames": 1829,
+      "audio_pcm_hash": "SHA256=9ac3434a0dd4c6595ff5b82b45aecd5ee6a5c416d4c3a04b5f12ada00a5d6488"
+    },
+    {
+      "name": "MELISSAN-default",
+      "source": "video/melissan/melissan.wbm",
+      "sha256": "049D4D5D017DF9787F21AE2DBA0807D170277F9729B3954B9EEB406E1EF08566",
+      "frames": 525,
+      "audio_pcm_hash": "SHA256=b23f1fcb7ee12ae6e1ebdbb79432837aed0af794216968583fae1b68670e4c2e"
+    },
+    {
+      "name": "END15FPS-it_IT",
+      "source": "video/it_IT_end15fps/it_IT_end15fps.wbm",
+      "sha256": "E4AAE02AD13096EFEF638DF2FDBED89111EB7D1568B79D2EAFABA9ADA139FD57",
+      "frames": 1829,
+      "audio_pcm_hash": "SHA256=c66c92255c282c74ce4bce36cad2d3cd77503a9d8344ebcabac49373cab5cd60"
+    },
+    {
+      "name": "END15FPS-pl_PL",
+      "source": "video/pl_PL_end15fps/pl_PL_END15FPS.wbm",
+      "sha256": "1C1D2181D4C57141EBB67D772477BC723EA56008B512055CAE9765E13D4E831A",
+      "frames": 1827,
+      "audio_pcm_hash": "SHA256=647d3aad9849571cea4d590e6980bd311fee335ada49b09d3f0633d266e6f3b9"
+    },
+    {
+      "name": "MELISSAN-pl_PL",
+      "source": "video/pl_PL_melissan/pl_PL_MELISSAN.wbm",
+      "sha256": "B2F3A1252A36458C68076FFF2803E69F8D61D45E3AC381572C0CCB4D7B8258FD",
+      "frames": 556,
+      "audio_pcm_hash": "SHA256=088286b0516e8c97db56bed98a546511387d20776588a7f566892530f7843b93"
+    }
+  ],
+  "comparisons": [
+    {
+      "base": "END15FPS-default",
+      "other": "END15FPS-de_DE",
+      "base_frames": 1829,
+      "other_frames": 1829,
+      "exact_decoded_matches_anywhere": 1829,
+      "exact_encoded_packet_matches_anywhere": 1972,
+      "identical_decoded_sequence": true,
+      "identical_encoded_sequence": true,
+      "identical_audio_pcm": false,
+      "mae_percentiles": {
+        "p0": 0.0,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0,
+        "p100": 0.0
+      },
+      "frames_mae_gt3": 0,
+      "frames_mae_gt6": 0
+    },
+    {
+      "base": "END15FPS-default",
+      "other": "END15FPS-it_IT",
+      "base_frames": 1829,
+      "other_frames": 1829,
+      "exact_decoded_matches_anywhere": 1829,
+      "exact_encoded_packet_matches_anywhere": 1972,
+      "identical_decoded_sequence": true,
+      "identical_encoded_sequence": true,
+      "identical_audio_pcm": false,
+      "mae_percentiles": {
+        "p0": 0.0,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0,
+        "p100": 0.0
+      },
+      "frames_mae_gt3": 0,
+      "frames_mae_gt6": 0
+    },
+    {
+      "base": "END15FPS-default",
+      "other": "END15FPS-pl_PL",
+      "base_frames": 1829,
+      "other_frames": 1827,
+      "exact_decoded_matches_anywhere": 3,
+      "exact_encoded_packet_matches_anywhere": 0,
+      "identical_decoded_sequence": false,
+      "identical_encoded_sequence": false,
+      "identical_audio_pcm": false,
+      "mae_percentiles": {
+        "p0": 0.0,
+        "p50": 1.2416666666666667,
+        "p90": 2.30175,
+        "p95": 2.6517569444444438,
+        "p99": 2.8088625,
+        "p100": 3.5977083333333333
+      },
+      "frames_mae_gt3": 4,
+      "frames_mae_gt6": 0
+    },
+    {
+      "base": "MELISSAN-default",
+      "other": "MELISSAN-de_DE",
+      "base_frames": 525,
+      "other_frames": 525,
+      "exact_decoded_matches_anywhere": 525,
+      "exact_encoded_packet_matches_anywhere": 551,
+      "identical_decoded_sequence": true,
+      "identical_encoded_sequence": true,
+      "identical_audio_pcm": false,
+      "mae_percentiles": {
+        "p0": 0.0,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0,
+        "p100": 0.0
+      },
+      "frames_mae_gt3": 0,
+      "frames_mae_gt6": 0
+    },
+    {
+      "base": "MELISSAN-default",
+      "other": "MELISSAN-pl_PL",
+      "base_frames": 525,
+      "other_frames": 556,
+      "exact_decoded_matches_anywhere": 1,
+      "exact_encoded_packet_matches_anywhere": 0,
+      "identical_decoded_sequence": false,
+      "identical_encoded_sequence": false,
+      "identical_audio_pcm": false,
+      "mae_percentiles": {
+        "p0": 0.0,
+        "p50": 1.549375,
+        "p90": 4.275381944444445,
+        "p95": 4.68,
+        "p99": 5.816677083333334,
+        "p100": 6.7122222222222225
+      },
+      "frames_mae_gt3": 112,
+      "frames_mae_gt6": 1
+    }
+  ],
+  "findings": {
+    "exact_video_groups": [
+      [
+        "END15FPS-default",
+        "END15FPS-de_DE",
+        "END15FPS-it_IT"
+      ],
+      [
+        "MELISSAN-default",
+        "MELISSAN-de_DE"
+      ]
+    ],
+    "all_seven_pcm_tracks_distinct": true,
+    "polish": "Same scenes and framing observed; reencoded video, no pixel identity. Small cadence differences and visible white-level differences, especially MELISSAN.",
+    "localized_screen_text": "None observed: full-film luma alignment; every-second Polish contact sheets; RGB review of eight maximum-residual time bins per film. Visual inspection is sampled, not exhaustive OCR.",
+    "polish_melissan_tail": "525 content frames corresponding by index to default, followed by 31 near-static final white frames (~2.07s); final fade has different white level. DTW tail matches are ambiguous and must not be used blindly.",
+    "polish_pts": "Both Polish sources have frame 0 and frame 1 at PTS 0; retain source PTS data before any CFR normalization.",
+    "audio": "Vorbis stereo: default 22050Hz, localized tracks 44100Hz. Preserve all packet timing and end tails, not format duration tags."
+  },
+  "production_plan": {
+    "masters": [
+      "END15FPS-default",
+      "MELISSAN-default"
+    ],
+    "shared_spatial_and_interpolation_passes": 2,
+    "localized_picture_inference_passes": 0,
+    "assembly": "One SeedVR spatial pass and one Apollo temporal pass per film; use shared processed masters for all languages. Exact groups: same video content, locale-specific origin PTS and native audio. Polish: monotonic scene-aware retime using native frame/PTS correspondence, append MELISSAN final-frame hold; no AI on held frames.",
+    "audio_mux": "Copy native Vorbis to MKV/WBM; AAC only for MP4 preview. No audio stretch, no -shortest; explicitly preserve audio tails and distinguish last video frame from container duration.",
+    "polish_appearance": "Shared master adopts default rendering; preserving Polish white-level differences would need a deterministic post-grade, not another AI pass.",
+    "remaining_assembly_validation": "Check scene-cut timing and Polish final fade/hold; confirm native audio hash and packet timing and output durations on actual assemblies. Existing DTW mapping is diagnostic, not a sealed production edit."
+  },
+  "inference_estimate": {
+    "all_native_variant_frames": 8920,
+    "shared_master_frames": 2354,
+    "saved_frames": 6566,
+    "reduction_percent": 73.61,
+    "basis": "Spatial input-frame count; excludes render overhead, no GPU benchmark."
+  },
+  "production_started": false,
+  "installation_modified": false,
+  "release_modified": false
+}

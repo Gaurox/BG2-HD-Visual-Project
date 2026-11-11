@@ -1,0 +1,70 @@
+{
+  "state": "verified",
+  "results": [
+    {
+      "film": "END15FPS",
+      "apollo_check_second": 40,
+      "tested_odd_frames": 30,
+      "novel_odd_frames": 30,
+      "even_anchor_luma_mae": 0.7198275327682495,
+      "seedvr_joins": [
+        {
+          "frame": 330,
+          "native_adjacent_mae": 6.266805648803711,
+          "seedvr_adjacent_mae": 6.81909704208374,
+          "seedvr_local_median": 4.069583415985107
+        },
+        {
+          "frame": 660,
+          "native_adjacent_mae": 4.93916654586792,
+          "seedvr_adjacent_mae": 5.722986221313477,
+          "seedvr_local_median": 7.4029860496521
+        },
+        {
+          "frame": 990,
+          "native_adjacent_mae": 2.971736192703247,
+          "seedvr_adjacent_mae": 4.370833396911621,
+          "seedvr_local_median": 4.237430572509766
+        },
+        {
+          "frame": 1320,
+          "native_adjacent_mae": 1.6231944561004639,
+          "seedvr_adjacent_mae": 1.759374976158142,
+          "seedvr_local_median": 1.8366667032241821
+        },
+        {
+          "frame": 1650,
+          "native_adjacent_mae": 1.4633333683013916,
+          "seedvr_adjacent_mae": 1.6371527910232544,
+          "seedvr_local_median": 1.4922916889190674
+        }
+      ],
+      "shared_vp8_hashes": {
+        "default": "SHA256=d5f3963170ceffb2cf8b3a6821e339a30ce9d9b74c0bbe711db267665de877c1",
+        "de_DE": "SHA256=d5f3963170ceffb2cf8b3a6821e339a30ce9d9b74c0bbe711db267665de877c1",
+        "it_IT": "SHA256=d5f3963170ceffb2cf8b3a6821e339a30ce9d9b74c0bbe711db267665de877c1"
+      }
+    },
+    {
+      "film": "MELISSAN",
+      "apollo_check_second": 8,
+      "tested_odd_frames": 30,
+      "novel_odd_frames": 30,
+      "even_anchor_luma_mae": 0.839939534664154,
+      "seedvr_joins": [
+        {
+          "frame": 330,
+          "native_adjacent_mae": 4.485902786254883,
+          "seedvr_adjacent_mae": 4.873680591583252,
+          "seedvr_local_median": 4.926180362701416
+        }
+      ],
+      "shared_vp8_hashes": {
+        "default": "SHA256=99725406a08228f1f0dd2dca303c4bd642311cfc842d8ba67e66173d55db5e29",
+        "de_DE": "SHA256=99725406a08228f1f0dd2dca303c4bd642311cfc842d8ba67e66173d55db5e29"
+      }
+    }
+  ],
+  "user_visual_qa": "pending",
+  "ingame_qa": "pending"
+}

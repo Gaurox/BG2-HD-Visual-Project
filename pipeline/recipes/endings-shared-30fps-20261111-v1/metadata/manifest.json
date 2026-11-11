@@ -1,0 +1,1152 @@
+{
+  "schema": "endings-shared-finals30-v1",
+  "state": "runtime-ready",
+  "created_utc": "2026-11-11T20:03:43.575480+00:00",
+  "masters": [
+    {
+      "film": "END15FPS",
+      "output": "video/end15fps/runs/end15fps-shared-seedvr-apollo30-20261111-v1/END15FPS-shared-SeedVR2-Apollo8-1080p30.mp4",
+      "sha256": "230ff4c87283303e1c599506111abb12be9a572c7cd6f553a9aa903ffdc43c1c",
+      "frames": 3658,
+      "apollo_generated_frames": 3657,
+      "fps": "30/1",
+      "final_hold_frames": 1,
+      "model": "apo-8",
+      "spatial_source": "video/end15fps/runs/end15fps-shared-seedvr-apollo30-20261111-v1/END15FPS-common-SeedVR2-3B-FP16-LAB-1080-stream-raw.mp4",
+      "user_visual_qa": "pending"
+    },
+    {
+      "film": "MELISSAN",
+      "output": "video/melissan/runs/melissan-shared-seedvr-apollo30-20261111-v1/MELISSAN-shared-SeedVR2-Apollo8-1080p30.mp4",
+      "sha256": "0398ae5c70b6c6a4f0e5caa95b4439418bba60a477966a5a78dc9fb74c65ad5e",
+      "frames": 1050,
+      "apollo_generated_frames": 1049,
+      "fps": "30/1",
+      "final_hold_frames": 1,
+      "model": "apo-8",
+      "spatial_source": "video/melissan/runs/melissan-shared-seedvr-apollo30-20261111-v1/MELISSAN-common-SeedVR2-3B-FP16-LAB-1080-stream-raw.mp4",
+      "user_visual_qa": "pending"
+    }
+  ],
+  "variants": [
+    {
+      "film": "END15FPS",
+      "locale": "default",
+      "frames": 3658,
+      "fps": "30/1",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "source": "video/end15fps/end15fps.wbm",
+      "shared_master": "video/end15fps/runs/end15fps-shared-seedvr-apollo30-20261111-v1/END15FPS-shared-SeedVR2-Apollo8-1080p30.mp4",
+      "target": "config://bg2ee_game_root/movies/end15fps.wbm",
+      "files": {
+        "preview": {
+          "path": "video/final/endings-shared-30fps-20261111-v1/END15FPS/default/END15FPS-default-1080p30-audio.mp4",
+          "sha256": "11a5b18a87198fd2b4777ea977f68687e3dd98f99bb63ec205ed37bbb7234a4d",
+          "bytes": 148528155
+        },
+        "native_audio_master": {
+          "path": "video/final/endings-shared-30fps-20261111-v1/END15FPS/default/END15FPS-default-1080p30-native-audio.mkv",
+          "sha256": "6a6d10acf42676f9b25349356bde6197657b00f71fd592476cd7cedf80fdbae5",
+          "bytes": 146813853
+        },
+        "game_ready": {
+          "path": "video/final/endings-shared-30fps-20261111-v1/END15FPS/default/end15fps.wbm",
+          "sha256": "d52b654b92a3ef2a616fa8dedc80016f2c2c2167c748783bb8ce4feb71d6e166",
+          "bytes": 261987417
+        }
+      },
+      "native_audio_pcm_identical": true,
+      "native_audio_encoded_identical": true,
+      "audio_packets": 5527,
+      "max_audio_pts_deviation_s": 0,
+      "max_video_pts_deviation_s": 0.0,
+      "ssim_sampled_all": 0.995128,
+      "full_frame_decode": true,
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "vp8",
+            "codec_long_name": "On2 VP8",
+            "profile": "0",
+            "codec_type": "video",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "has_b_frames": 0,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuv420p",
+            "level": -99,
+            "color_range": "tv",
+            "color_space": "bt470bg",
+            "chroma_location": "left",
+            "field_order": "progressive",
+            "refs": 1,
+            "r_frame_rate": "30/1",
+            "avg_frame_rate": "30/1",
+            "time_base": "1/1000",
+            "start_pts": 12,
+            "start_time": "0.012000",
+            "nb_read_frames": "3658",
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "ENCODER": "Lavc62.0.101 libvpx",
+              "DURATION": "00:02:01.945000000"
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "vorbis",
+            "codec_long_name": "Vorbis",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "22050",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/1000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "nb_read_frames": "5526",
+            "extradata_size": 3614,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "DURATION": "00:02:01.922000000"
+            }
+          }
+        ],
+        "format": {
+          "filename": "G:\\AI\\BG2_Upscale\\video\\final\\endings-shared-30fps-20261111-v1\\END15FPS\\default\\end15fps.wbm",
+          "nb_streams": 2,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "matroska,webm",
+          "format_long_name": "Matroska / WebM",
+          "start_time": "0.000000",
+          "duration": "121.945000",
+          "size": "261987417",
+          "bit_rate": "17187251",
+          "probe_score": 100,
+          "tags": {
+            "ENCODER": "Lavf62.0.100"
+          }
+        }
+      },
+      "user_visual_qa": "pending",
+      "runtime_ingame_qa": "pending",
+      "installed_by_this_run": false,
+      "release_integration": false
+    },
+    {
+      "film": "END15FPS",
+      "locale": "de_DE",
+      "frames": 3658,
+      "fps": "30/1",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "source": "video/de_DE_end15fps/de_DE_end15fps.wbm",
+      "shared_master": "video/end15fps/runs/end15fps-shared-seedvr-apollo30-20261111-v1/END15FPS-shared-SeedVR2-Apollo8-1080p30.mp4",
+      "target": "config://bg2ee_game_root/lang/de_DE/movies/end15fps.wbm",
+      "files": {
+        "preview": {
+          "path": "video/final/endings-shared-30fps-20261111-v1/END15FPS/de_DE/END15FPS-de_DE-1080p30-audio.mp4",
+          "sha256": "a703814a82265b116bc2dcb2d11255b2909610da7bd06f5f27249af6f38a0398",
+          "bytes": 149005719
+        },
+        "native_audio_master": {
+          "path": "video/final/endings-shared-30fps-20261111-v1/END15FPS/de_DE/END15FPS-de_DE-1080p30-native-audio.mkv",
+          "sha256": "3639f8e83c09231cb58ad7d77fb7ed721234641f17b0b12452334b3d04f879c5",
+          "bytes": 147525533
+        },
+        "game_ready": {
+          "path": "video/final/endings-shared-30fps-20261111-v1/END15FPS/de_DE/end15fps.wbm",
+          "sha256": "3f05d226c981c1ac10f9260ef8443960a3cc23346b7cea27325be2c714112f42",
+          "bytes": 262699083
+        }
+      },
+      "native_audio_pcm_identical": true,
+      "native_audio_encoded_identical": true,
+      "audio_packets": 5917,
+      "max_audio_pts_deviation_s": 0,
+      "max_video_pts_deviation_s": 0.0,
+      "ssim_sampled_all": 0.995128,
+      "full_frame_decode": true,
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "vp8",
+            "codec_long_name": "On2 VP8",
+            "profile": "0",
+            "codec_type": "video",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "has_b_frames": 0,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuv420p",
+            "level": -99,
+            "color_range": "tv",
+            "color_space": "bt470bg",
+            "chroma_location": "left",
+            "field_order": "progressive",
+            "refs": 1,
+            "r_frame_rate": "30/1",
+            "avg_frame_rate": "30/1",
+            "time_base": "1/1000",
+            "start_pts": 3,
+            "start_time": "0.003000",
+            "nb_read_frames": "3658",
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "DURATION": "00:02:01.936000000"
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "vorbis",
+            "codec_long_name": "Vorbis",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "44100",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/1000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "nb_read_frames": "5916",
+            "extradata_size": 4258,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "DURATION": "00:02:01.921000000"
+            }
+          }
+        ],
+        "format": {
+          "filename": "G:\\AI\\BG2_Upscale\\video\\final\\endings-shared-30fps-20261111-v1\\END15FPS\\de_DE\\end15fps.wbm",
+          "nb_streams": 2,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "matroska,webm",
+          "format_long_name": "Matroska / WebM",
+          "start_time": "0.000000",
+          "duration": "121.936000",
+          "size": "262699083",
+          "bit_rate": "17235210",
+          "probe_score": 100,
+          "tags": {
+            "ENCODER": "Lavf62.0.100"
+          }
+        }
+      },
+      "user_visual_qa": "pending",
+      "runtime_ingame_qa": "pending",
+      "installed_by_this_run": false,
+      "release_integration": false
+    },
+    {
+      "film": "END15FPS",
+      "locale": "it_IT",
+      "frames": 3658,
+      "fps": "30/1",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "source": "video/it_IT_end15fps/it_IT_end15fps.wbm",
+      "shared_master": "video/end15fps/runs/end15fps-shared-seedvr-apollo30-20261111-v1/END15FPS-shared-SeedVR2-Apollo8-1080p30.mp4",
+      "target": "config://bg2ee_game_root/lang/it_IT/movies/end15fps.wbm",
+      "files": {
+        "preview": {
+          "path": "video/final/endings-shared-30fps-20261111-v1/END15FPS/it_IT/END15FPS-it_IT-1080p30-audio.mp4",
+          "sha256": "9c87dc953fcabb31c7526e0452247994d58e49219a92eb86503b63656b29b709",
+          "bytes": 149012961
+        },
+        "native_audio_master": {
+          "path": "video/final/endings-shared-30fps-20261111-v1/END15FPS/it_IT/END15FPS-it_IT-1080p30-native-audio.mkv",
+          "sha256": "ceed89b526490b68897ad235fe27219b28758145355de071f20abc18bce2bcd5",
+          "bytes": 147531861
+        },
+        "game_ready": {
+          "path": "video/final/endings-shared-30fps-20261111-v1/END15FPS/it_IT/end15fps.wbm",
+          "sha256": "47cb2aa8029f58d50e3ea1fa896897d246588e8c2c677023ae753e346262e4fc",
+          "bytes": 262705415
+        }
+      },
+      "native_audio_pcm_identical": true,
+      "native_audio_encoded_identical": true,
+      "audio_packets": 6057,
+      "max_audio_pts_deviation_s": 0,
+      "max_video_pts_deviation_s": 0.0,
+      "ssim_sampled_all": 0.995128,
+      "full_frame_decode": true,
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "vp8",
+            "codec_long_name": "On2 VP8",
+            "profile": "0",
+            "codec_type": "video",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "has_b_frames": 0,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuv420p",
+            "level": -99,
+            "color_range": "tv",
+            "color_space": "bt470bg",
+            "chroma_location": "left",
+            "field_order": "progressive",
+            "refs": 1,
+            "r_frame_rate": "30/1",
+            "avg_frame_rate": "30/1",
+            "time_base": "1/1000",
+            "start_pts": 3,
+            "start_time": "0.003000",
+            "nb_read_frames": "3658",
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "DURATION": "00:02:01.936000000"
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "vorbis",
+            "codec_long_name": "Vorbis",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "44100",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/1000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "nb_read_frames": "6056",
+            "extradata_size": 4267,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "DURATION": "00:02:02.002000000"
+            }
+          }
+        ],
+        "format": {
+          "filename": "G:\\AI\\BG2_Upscale\\video\\final\\endings-shared-30fps-20261111-v1\\END15FPS\\it_IT\\end15fps.wbm",
+          "nb_streams": 2,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "matroska,webm",
+          "format_long_name": "Matroska / WebM",
+          "start_time": "0.000000",
+          "duration": "122.002000",
+          "size": "262705415",
+          "bit_rate": "17226302",
+          "probe_score": 100,
+          "tags": {
+            "ENCODER": "Lavf62.0.100"
+          }
+        }
+      },
+      "user_visual_qa": "pending",
+      "runtime_ingame_qa": "pending",
+      "installed_by_this_run": false,
+      "release_integration": false
+    },
+    {
+      "film": "END15FPS",
+      "locale": "pl_PL",
+      "frames": 3656,
+      "fps": "30/1",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "source": "video/pl_PL_end15fps/pl_PL_END15FPS.wbm",
+      "shared_master": "video/end15fps/runs/end15fps-shared-seedvr-apollo30-20261111-v1/END15FPS-shared-SeedVR2-Apollo8-1080p30.mp4",
+      "target": "config://bg2ee_game_root/lang/pl_PL/movies/END15FPS.wbm",
+      "files": {
+        "preview": {
+          "path": "video/final/endings-shared-30fps-20261111-v1/END15FPS/pl_PL/END15FPS-pl_PL-1080p30-audio.mp4",
+          "sha256": "80be2bada0ff2202b246253b4eae84fa992c52e2b3d28f19d0cc001e42107b14",
+          "bytes": 199511756
+        },
+        "native_audio_master": {
+          "path": "video/final/endings-shared-30fps-20261111-v1/END15FPS/pl_PL/END15FPS-pl_PL-1080p30-native-audio.mkv",
+          "sha256": "75fdfddcbde5be829d9f8fdb80f45566487ac0a22a81c75efdeae78f4eec8b35",
+          "bytes": 198400355
+        },
+        "game_ready": {
+          "path": "video/final/endings-shared-30fps-20261111-v1/END15FPS/pl_PL/end15fps.wbm",
+          "sha256": "119b856599d468631301aba4d3da8e76b371c881e918b3104e3a751e4f93f316",
+          "bytes": 271230114
+        }
+      },
+      "native_audio_pcm_identical": true,
+      "native_audio_encoded_identical": true,
+      "audio_packets": 6563,
+      "max_audio_pts_deviation_s": 0,
+      "max_video_pts_deviation_s": 0.0,
+      "ssim_sampled_all": 0.995211,
+      "full_frame_decode": true,
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "vp8",
+            "codec_long_name": "On2 VP8",
+            "profile": "0",
+            "codec_type": "video",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "has_b_frames": 0,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuv420p",
+            "level": -99,
+            "color_range": "tv",
+            "chroma_location": "left",
+            "field_order": "progressive",
+            "refs": 1,
+            "r_frame_rate": "30/1",
+            "avg_frame_rate": "30/1",
+            "time_base": "1/1000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "nb_read_frames": "3656",
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "ENCODER": "Lavc62.0.101 libvpx",
+              "DURATION": "00:02:01.866000000"
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "vorbis",
+            "codec_long_name": "Vorbis",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "44100",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/1000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "nb_read_frames": "6562",
+            "extradata_size": 4342,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "DURATION": "00:02:01.923000000"
+            }
+          }
+        ],
+        "format": {
+          "filename": "G:\\AI\\BG2_Upscale\\video\\final\\endings-shared-30fps-20261111-v1\\END15FPS\\pl_PL\\end15fps.wbm",
+          "nb_streams": 2,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "matroska,webm",
+          "format_long_name": "Matroska / WebM",
+          "start_time": "0.000000",
+          "duration": "121.923000",
+          "size": "271230114",
+          "bit_rate": "17796813",
+          "probe_score": 100,
+          "tags": {
+            "ENCODER": "Lavf62.0.100"
+          }
+        }
+      },
+      "user_visual_qa": "pending",
+      "runtime_ingame_qa": "pending",
+      "installed_by_this_run": false,
+      "release_integration": false
+    },
+    {
+      "film": "MELISSAN",
+      "locale": "default",
+      "frames": 1050,
+      "fps": "30/1",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "source": "video/melissan/melissan.wbm",
+      "shared_master": "video/melissan/runs/melissan-shared-seedvr-apollo30-20261111-v1/MELISSAN-shared-SeedVR2-Apollo8-1080p30.mp4",
+      "target": "config://bg2ee_game_root/movies/melissan.wbm",
+      "files": {
+        "preview": {
+          "path": "video/final/endings-shared-30fps-20261111-v1/MELISSAN/default/MELISSAN-default-1080p30-audio.mp4",
+          "sha256": "0bcd4f93bddccc0e917a0708d6cfb5ed06addd733a9cc0f1fd2e8f7572d49fbc",
+          "bytes": 63956982
+        },
+        "native_audio_master": {
+          "path": "video/final/endings-shared-30fps-20261111-v1/MELISSAN/default/MELISSAN-default-1080p30-native-audio.mkv",
+          "sha256": "23ea61de324085e8ddfdd76abff9e202ace73b72e423d279c3c9a31eae3e862f",
+          "bytes": 63602173
+        },
+        "game_ready": {
+          "path": "video/final/endings-shared-30fps-20261111-v1/MELISSAN/default/melissan.wbm",
+          "sha256": "1347b5636dd701700689c152bb355b33fa73351a5096616949f26294d9beb093",
+          "bytes": 102643532
+        }
+      },
+      "native_audio_pcm_identical": true,
+      "native_audio_encoded_identical": true,
+      "audio_packets": 1702,
+      "max_audio_pts_deviation_s": 0,
+      "max_video_pts_deviation_s": 0.0,
+      "ssim_sampled_all": 0.994953,
+      "full_frame_decode": true,
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "vp8",
+            "codec_long_name": "On2 VP8",
+            "profile": "0",
+            "codec_type": "video",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "has_b_frames": 0,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuv420p",
+            "level": -99,
+            "color_range": "tv",
+            "color_space": "bt470bg",
+            "chroma_location": "left",
+            "field_order": "progressive",
+            "refs": 1,
+            "r_frame_rate": "30/1",
+            "avg_frame_rate": "30/1",
+            "time_base": "1/1000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "nb_read_frames": "1050",
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "ENCODER": "Lavc62.0.101 libvpx",
+              "DURATION": "00:00:35.000000000"
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "vorbis",
+            "codec_long_name": "Vorbis",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "22050",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/1000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "nb_read_frames": "1701",
+            "extradata_size": 3337,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "DURATION": "00:00:37.111000000"
+            }
+          }
+        ],
+        "format": {
+          "filename": "G:\\AI\\BG2_Upscale\\video\\final\\endings-shared-30fps-20261111-v1\\MELISSAN\\default\\melissan.wbm",
+          "nb_streams": 2,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "matroska,webm",
+          "format_long_name": "Matroska / WebM",
+          "start_time": "0.000000",
+          "duration": "37.111000",
+          "size": "102643532",
+          "bit_rate": "22126815",
+          "probe_score": 100,
+          "tags": {
+            "ENCODER": "Lavf62.0.100"
+          }
+        }
+      },
+      "user_visual_qa": "pending",
+      "runtime_ingame_qa": "pending",
+      "installed_by_this_run": false,
+      "release_integration": false
+    },
+    {
+      "film": "MELISSAN",
+      "locale": "de_DE",
+      "frames": 1050,
+      "fps": "30/1",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "source": "video/de_DE_melissan/de_DE_melissan.wbm",
+      "shared_master": "video/melissan/runs/melissan-shared-seedvr-apollo30-20261111-v1/MELISSAN-shared-SeedVR2-Apollo8-1080p30.mp4",
+      "target": "config://bg2ee_game_root/lang/de_DE/movies/melissan.wbm",
+      "files": {
+        "preview": {
+          "path": "video/final/endings-shared-30fps-20261111-v1/MELISSAN/de_DE/MELISSAN-de_DE-1080p30-audio.mp4",
+          "sha256": "77a3c30827e8d057744941464aa53c157cd202572f19b807f6193c180c11eaf2",
+          "bytes": 64023029
+        },
+        "native_audio_master": {
+          "path": "video/final/endings-shared-30fps-20261111-v1/MELISSAN/de_DE/MELISSAN-de_DE-1080p30-native-audio.mkv",
+          "sha256": "6b3edc2e09a1ab1297d362f6245cd115249dd6b6e9d8eae3d16ec7e82b5dd12b",
+          "bytes": 63563460
+        },
+        "game_ready": {
+          "path": "video/final/endings-shared-30fps-20261111-v1/MELISSAN/de_DE/melissan.wbm",
+          "sha256": "29ebf2a6bec7abef88a08fe1ec77f7a2234ac69ae04b25b28dc31658b5981245",
+          "bytes": 102604780
+        }
+      },
+      "native_audio_pcm_identical": true,
+      "native_audio_encoded_identical": true,
+      "audio_packets": 1815,
+      "max_audio_pts_deviation_s": 0,
+      "max_video_pts_deviation_s": 0.0,
+      "ssim_sampled_all": 0.994953,
+      "full_frame_decode": true,
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "vp8",
+            "codec_long_name": "On2 VP8",
+            "profile": "0",
+            "codec_type": "video",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "has_b_frames": 0,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuv420p",
+            "level": -99,
+            "color_range": "tv",
+            "color_space": "bt470bg",
+            "chroma_location": "left",
+            "field_order": "progressive",
+            "refs": 1,
+            "r_frame_rate": "30/1",
+            "avg_frame_rate": "30/1",
+            "time_base": "1/1000",
+            "start_pts": 3,
+            "start_time": "0.003000",
+            "nb_read_frames": "1050",
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "DURATION": "00:00:35.003000000"
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "vorbis",
+            "codec_long_name": "Vorbis",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "44100",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/1000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "nb_read_frames": "1814",
+            "extradata_size": 4258,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "DURATION": "00:00:37.237000000"
+            }
+          }
+        ],
+        "format": {
+          "filename": "G:\\AI\\BG2_Upscale\\video\\final\\endings-shared-30fps-20261111-v1\\MELISSAN\\de_DE\\melissan.wbm",
+          "nb_streams": 2,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "matroska,webm",
+          "format_long_name": "Matroska / WebM",
+          "start_time": "0.000000",
+          "duration": "37.237000",
+          "size": "102604780",
+          "bit_rate": "22043618",
+          "probe_score": 100,
+          "tags": {
+            "ENCODER": "Lavf62.0.100"
+          }
+        }
+      },
+      "user_visual_qa": "pending",
+      "runtime_ingame_qa": "pending",
+      "installed_by_this_run": false,
+      "release_integration": false
+    },
+    {
+      "film": "MELISSAN",
+      "locale": "pl_PL",
+      "frames": 1112,
+      "fps": "30/1",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "source": "video/pl_PL_melissan/pl_PL_MELISSAN.wbm",
+      "shared_master": "video/melissan/runs/melissan-shared-seedvr-apollo30-20261111-v1/MELISSAN-shared-SeedVR2-Apollo8-1080p30.mp4",
+      "target": "config://bg2ee_game_root/lang/pl_PL/movies/MELISSAN.wbm",
+      "files": {
+        "preview": {
+          "path": "video/final/endings-shared-30fps-20261111-v1/MELISSAN/pl_PL/MELISSAN-pl_PL-1080p30-audio.mp4",
+          "sha256": "a9eea86f9e84600f47958b854b64da318be04f2f9a651e6d40d673934acc0a65",
+          "bytes": 80529487
+        },
+        "native_audio_master": {
+          "path": "video/final/endings-shared-30fps-20261111-v1/MELISSAN/pl_PL/MELISSAN-pl_PL-1080p30-native-audio.mkv",
+          "sha256": "11c5567a533edc277270b8974e2e325ae586c161e9516e25702616d75758f76e",
+          "bytes": 80170545
+        },
+        "game_ready": {
+          "path": "video/final/endings-shared-30fps-20261111-v1/MELISSAN/pl_PL/melissan.wbm",
+          "sha256": "81141f0972c9d3ff46d76a03ca86cbb6e01cd15dd2b9056b4a0584224d301d4b",
+          "bytes": 101755660
+        }
+      },
+      "native_audio_pcm_identical": true,
+      "native_audio_encoded_identical": true,
+      "audio_packets": 1951,
+      "max_audio_pts_deviation_s": 0,
+      "max_video_pts_deviation_s": 0.0,
+      "ssim_sampled_all": 0.995177,
+      "full_frame_decode": true,
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "vp8",
+            "codec_long_name": "On2 VP8",
+            "profile": "0",
+            "codec_type": "video",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "has_b_frames": 0,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuv420p",
+            "level": -99,
+            "color_range": "tv",
+            "chroma_location": "left",
+            "field_order": "progressive",
+            "refs": 1,
+            "r_frame_rate": "30/1",
+            "avg_frame_rate": "30/1",
+            "time_base": "1/1000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "nb_read_frames": "1112",
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "ENCODER": "Lavc62.0.101 libvpx",
+              "DURATION": "00:00:37.066000000"
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "vorbis",
+            "codec_long_name": "Vorbis",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "44100",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/1000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "nb_read_frames": "1950",
+            "extradata_size": 4342,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "DURATION": "00:00:37.101000000"
+            }
+          }
+        ],
+        "format": {
+          "filename": "G:\\AI\\BG2_Upscale\\video\\final\\endings-shared-30fps-20261111-v1\\MELISSAN\\pl_PL\\melissan.wbm",
+          "nb_streams": 2,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "matroska,webm",
+          "format_long_name": "Matroska / WebM",
+          "start_time": "0.000000",
+          "duration": "37.101000",
+          "size": "101755660",
+          "bit_rate": "21941329",
+          "probe_score": 100,
+          "tags": {
+            "ENCODER": "Lavf62.0.100"
+          }
+        }
+      },
+      "user_visual_qa": "pending",
+      "runtime_ingame_qa": "pending",
+      "installed_by_this_run": false,
+      "release_integration": false
+    }
+  ],
+  "shared_spatial_passes": 2,
+  "shared_apollo_passes": 2,
+  "installed": false,
+  "release_integration": false
+}
