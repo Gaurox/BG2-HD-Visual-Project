@@ -1,0 +1,22 @@
+{
+  "schema": "video-intro15f-shared-body-v1",
+  "status": "in-production",
+  "source": "video/intro15f/intro15f.wbm",
+  "source_frame_start": 270,
+  "source_frame_end_exclusive": 2574,
+  "expected_frames": 2304,
+  "expected_duration_s": 153.6,
+  "fps": "15/1",
+  "dimensions": [
+    1920,
+    1080
+  ],
+  "profile": "SeedVR2 3B FP16/VAE FP16/LAB, seed42, batch33 uniform, overlap3, streaming330",
+  "run": "video/experiments/intro15f-common-seedvr3b-stream-1080-20261111-v1",
+  "first_portion_qa": "video/index/qa-decisions/INTRO15F/20261111-shared-body-first-portion-accepted-v1.json",
+  "audio": false,
+  "interpolation": false,
+  "localized_assembly": "not-started",
+  "installed": false,
+  "release_integration": false
+}

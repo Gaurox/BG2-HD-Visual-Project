@@ -1,0 +1,60 @@
+{
+  "schema": "video-intro-local-ingame-test-v1",
+  "state": "installed-local-test",
+  "receipt": "video/installations/intro-locales-seedvr-20261111-v1/installation.json",
+  "tracked_receipt": "pipeline/recipes/intro-ingame-test-20261111-v1/metadata/installation.json",
+  "targets": [
+    {
+      "locale": "default",
+      "role": "localized-movie",
+      "target": "config://bg2ee_game_root/movies/intro.wbm",
+      "sha256": "68805f74028da19b5430c761686c18d9ba228b8c5120a105d59b0991d8c9c92c",
+      "backup": "video/installations/intro-locales-seedvr-20261111-v1/before/movies/intro.wbm"
+    },
+    {
+      "locale": "default",
+      "role": "console-test-alias",
+      "target": "config://bg2ee_game_root/movies/HDINEN.wbm",
+      "sha256": "68805f74028da19b5430c761686c18d9ba228b8c5120a105d59b0991d8c9c92c",
+      "backup": null
+    },
+    {
+      "locale": "de_DE",
+      "role": "localized-movie",
+      "target": "config://bg2ee_game_root/lang/de_DE/movies/intro.wbm",
+      "sha256": "2f711a3a56b141dd4984e2997915a0a330a049e0060a257d486ed56427a6939d",
+      "backup": "video/installations/intro-locales-seedvr-20261111-v1/before/lang/de_DE/movies/intro.wbm"
+    },
+    {
+      "locale": "de_DE",
+      "role": "console-test-alias",
+      "target": "config://bg2ee_game_root/movies/HDINDE.wbm",
+      "sha256": "2f711a3a56b141dd4984e2997915a0a330a049e0060a257d486ed56427a6939d",
+      "backup": null
+    },
+    {
+      "locale": "pl_PL",
+      "role": "localized-movie",
+      "target": "config://bg2ee_game_root/lang/pl_PL/movies/INTRO.wbm",
+      "sha256": "577541eb2d0206cc438513035141fb65abba651bf7cbd4887ba290f525896ae6",
+      "backup": "video/installations/intro-locales-seedvr-20261111-v1/before/lang/pl_PL/movies/INTRO.wbm"
+    },
+    {
+      "locale": "pl_PL",
+      "role": "console-test-alias",
+      "target": "config://bg2ee_game_root/movies/HDINPL.wbm",
+      "sha256": "577541eb2d0206cc438513035141fb65abba651bf7cbd4887ba290f525896ae6",
+      "backup": null
+    }
+  ],
+  "aliases": {
+    "default": "HDINEN",
+    "de_DE": "HDINDE",
+    "pl_PL": "HDINPL"
+  },
+  "console_enabled_before_work": true,
+  "game_profile_language_unchanged": "fr_FR",
+  "qa_ingame": "pending-user",
+  "release_integration": false,
+  "intro15f_installation": "not-modified"
+}

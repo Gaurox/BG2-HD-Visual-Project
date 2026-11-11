@@ -1,5 +1,6 @@
 """Verify INTRO shared-body streaming output and prepare a review MP4, without comparator."""
 import csv
+import argparse
 import json
 import subprocess
 from pathlib import Path
@@ -16,44 +17,56 @@ def call(args):
 
 
 def main():
+    global RUN
+    parser=argparse.ArgumentParser();parser.add_argument('--film',choices=['INTRO','INTRO15F'],default='INTRO');film=parser.parse_args().film
+    if film=='INTRO15F':RUN=ROOT/'video/experiments/intro15f-common-seedvr3b-stream-1080-20261111-v1'
     report=json.loads((RUN/'run.json').read_text())
     assert report['status']=='inference-completed',report['status']
     raw=RUN/report['output']
     probe=json.loads(call(['ffprobe','-v','error','-select_streams','v:0','-show_streams','-show_frames',
         '-show_entries','frame=best_effort_timestamp_time:stream=width,height,r_frame_rate,avg_frame_rate,duration',
         '-of','json',raw]))
-    assert len(probe['frames'])==report['frames']==3137
+    count=report['frames'];assert len(probe['frames'])==count
     s=probe['streams'][0];assert (s['width'],s['height'])==(1920,1080)
     timeline=list(csv.DictReader((RUN/'frames.csv').open()))
     drift=max(abs(float(f['best_effort_timestamp_time'])-float(timeline[i]['rebased_pts_s']))
               for i,f in enumerate(probe['frames']))
     assert drift<.002,(drift,s)
-    final=RUN/'INTRO-common-SeedVR2-3B-FP16-LAB-1080p.mp4'
+    final=RUN/f'{film}-common-SeedVR2-3B-FP16-LAB-1080p.mp4'
     assert not final.exists(),final
     call(['ffmpeg','-v','error','-nostdin','-n','-i',raw,'-map','0:v:0','-an','-c:v','copy',
           '-movflags','+faststart',final])
     review=RUN/'controle';review.mkdir(exist_ok=True)
-    for sec in [5,25,55,85,103]:
+    for sec in ([5,35,65,100,150] if film=='INTRO15F' else [5,25,55,85,103]):
         call(['ffmpeg','-v','error','-nostdin','-n','-ss',str(sec),'-i',final,'-frames:v','1',review/f'{sec:03d}s.png'])
     # Diagnostic only: compare adjacent luma changes around streaming boundaries.
     # Source-normalized changes distinguish natural cuts from potential inference joins.
     output=np.frombuffer(call(['ffmpeg','-v','error','-threads','2','-i',final,'-an','-vf',
         'scale=160:90:flags=area,format=gray','-threads','1','-fps_mode','passthrough','-f','rawvideo','-']),np.uint8).reshape(-1,90,160)
-    source=np.fromfile(ROOT/'video/research/intro-locales-analysis-20261110-v1/INTRO-default.gray',np.uint8).reshape(-1,90,160)[report['source_first_frame']:]
-    assert len(source)==len(output)==3137
+    source=np.fromfile(ROOT/f'video/research/intro-locales-analysis-20261110-v1/{film}-default.gray',np.uint8).reshape(-1,90,160)[report['source_first_frame']:]
+    assert len(source)==len(output)==count
     native_change=np.abs(np.diff(source.astype(np.float32),axis=0)).mean(axis=(1,2))
     final_change=np.abs(np.diff(output.astype(np.float32),axis=0)).mean(axis=(1,2))
     joins=[]
-    for n in range(330,3137,330):
+    for n in range(330,count,330):
         joins.append(dict(frame=n,clip_time_s=float(probe['frames'][n]['best_effort_timestamp_time']),
             native_adjacent_luma_mae=float(native_change[n-1]),output_adjacent_luma_mae=float(final_change[n-1]),
             output_local_adjacent_mae_median=float(np.median(final_change[max(0,n-6):n+5]))))
-    verification=dict(status='review-ready',frames=3137,width=1920,height=1080,
+    verification=dict(status='review-ready',film=film,frames=count,width=1920,height=1080,
         duration_s=float(s['duration']),fps=s['r_frame_rate'],max_native_pts_deviation_s=drift,
         completed_chunks=report['expected_chunks'],chunk_frames=330,joins=joins,
-        video=final.name,audio=False,interpolation=False,second_film_started=False,
+        video=final.name,audio=False,interpolation=False,second_film_started=film=='INTRO15F',
         user_validation='pending',installed=False,comparator=False)
     (RUN/'verification.json').write_text(json.dumps(verification,indent=2)+'\n')
+    if film=='INTRO15F':
+        (RUN/'README.md').write_text('# INTRO15F — corps commun SeedVR streaming, 2026-11-11 v1\n\n'
+            '- Source défaut images270..2573, PTS18.012..171.545s ;2304images,153.6s à15fps. Recouvrement avec les ouvertures jusque19s.\n'
+            '- Même profil accepté : SeedVR2 3B FP16/VAE FP16/LAB,1080,seed42,batch33 uniforme,overlap3,bruits0,SDPA,swap32,CPU offload ; VAE encode1024/128 et decode768/128.\n'
+            '- Streaming330images/portion,7portions finalisées séparément, conversion export par groupes8, concaténation sans réencodage. Commande et horaires : run.json.\n'
+            '- Entrée FFV1 native vérifiée image par image ; frames.csv conserve les PTS ; verification.json : compte/dimensions/timings/jointures.\n'
+            '- MP4 H264CRF12,1920×1080/15fps,muet,sans interpolation ; validation utilisateur en attente. Aucun assemblage linguistique INTRO15F ni installation/release de ce film.\n',encoding='utf-8')
+        print(json.dumps(verification),flush=True)
+        return
     (RUN/'README.md').write_text('# INTRO — corps commun SeedVR streaming, 2026-11-11 v1\n\n'
         '- Source : video/intro/intro.wbm, images210..3346 incluses ; PTS7.019..111.656s ; 3137 images, ~104.67s. Recouvrement avec la fin du carton anglais : images210..239.\n'
         '- Entrée FFV1 YUV420p1280×720 ; égalité de toutes les images décodées vérifiée avec les SHA natifs ; frames.csv conserve correspondance/PTS.\n'

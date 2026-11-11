@@ -1,9 +1,11 @@
 """Compact read-only progress of the INTRO streaming run."""
-import json,re
+import argparse,json,re
 from pathlib import Path
 from datetime import datetime,timezone
 
-r=Path(__file__).resolve().parents[3]/'video/experiments/intro-common-seedvr3b-stream-1080-20261111-v1'
+p=argparse.ArgumentParser();p.add_argument('--film',choices=['INTRO','INTRO15F'],default='INTRO');film=p.parse_args().film
+folder='intro15f-common-seedvr3b-stream-1080-20261111-v1' if film=='INTRO15F' else 'intro-common-seedvr3b-stream-1080-20261111-v1'
+r=Path(__file__).resolve().parents[3]/'video/experiments'/folder
 d=json.loads((r/'run.json').read_text())
 log=(r/d.get('log','seedvr-stream.log')).read_text(encoding='utf-8',errors='replace')
 chunks=list(re.finditer(r'Chunk (\d+)/(\d+): (\d+) new',log))

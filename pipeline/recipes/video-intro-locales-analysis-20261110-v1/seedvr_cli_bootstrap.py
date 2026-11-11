@@ -33,7 +33,8 @@ def save_bounded_parts(frames_tensor,output_path,fps=30.0,writer=None,video_back
     """Bound conversion memory and finalize each portion for immediate review."""
     folder=Path(output_path).parent/'portions'
     folder.mkdir(exist_ok=True)
-    target=folder/f'INTRO-common-part-{len(parts)+1:02d}.mp4'
+    prefix=Path(output_path).stem.split('-SeedVR2')[0]
+    target=folder/f'{prefix}-part-{len(parts)+1:02d}.mp4'
     if target.exists():raise FileExistsError(target)
     local=None
     for start in range(0,len(frames_tensor),8):

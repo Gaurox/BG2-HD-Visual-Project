@@ -1,5 +1,6 @@
 """Prepare INTRO shared body and run installed SeedVR CLI in bounded-memory streaming mode."""
 import csv
+import argparse
 import hashlib
 import json
 import os
@@ -31,25 +32,29 @@ def call(args):
 
 
 def main():
+    global RUN
+    parser=argparse.ArgumentParser();parser.add_argument('--film',choices=['INTRO','INTRO15F'],default='INTRO');options=parser.parse_args()
+    film=options.film
+    if film=='INTRO15F':RUN=ROOT/'video/experiments/intro15f-common-seedvr3b-stream-1080-20261111-v1'
     RUN.mkdir(parents=True,exist_ok=False)
-    src=ROOT/'video/intro/intro.wbm'
-    times=json.loads((AUDIT/'INTRO-default.native-frame-times.json').read_text())['frames']
-    first=next(i for i,f in enumerate(times) if float(f['best_effort_timestamp_time'])>=7)
+    src=ROOT/f'video/{film.lower()}/{film.lower()}.wbm'
+    times=json.loads((AUDIT/f'{film}-default.native-frame-times.json').read_text())['frames']
+    first=next(i for i,f in enumerate(times) if float(f['best_effort_timestamp_time'])>=(18 if film=='INTRO15F' else 7))
     count=len(times)-first
-    source=RUN/'INTRO-common-native-input.mkv'
+    source=RUN/f'{film}-common-native-input.mkv'
     call(['ffmpeg','-v','error','-nostdin','-n','-threads','2','-i',src,'-map','0:v:0','-an',
         '-vf',f'trim=start_frame={first},setpts=PTS-STARTPTS','-c:v','ffv1','-level','3',
         '-pix_fmt','yuv420p','-threads','2','-fps_mode','passthrough',source])
     h=call(['ffmpeg','-v','error','-threads','2','-i',source,'-map','0:v:0','-an','-c:v','rawvideo',
         '-pix_fmt','yuv420p','-threads','1','-fps_mode','passthrough','-f','framehash','-hash','sha256','-'])
     hashes=lambda s:[l.rsplit(',',1)[-1].strip() for l in s.splitlines() if l and not l.startswith('#')]
-    native=hashes((AUDIT/'INTRO-default.decoded.sha256').read_text())[first:]
+    native=hashes((AUDIT/f'{film}-default.decoded.sha256').read_text())[first:]
     assert hashes(h)==native
     with (RUN/'frames.csv').open('w',newline='',encoding='utf-8') as f:
         w=csv.writer(f);w.writerow(['clip_frame_0based','source_frame_0based','source_pts_s','rebased_pts_s','source_yuv420p_sha256'])
         origin=float(times[first]['best_effort_timestamp_time'])
         for i,t in enumerate(times[first:]):w.writerow([i,first+i,t['best_effort_timestamp_time'],f"{float(t['best_effort_timestamp_time'])-origin:.6f}",native[i]])
-    output=RUN/'INTRO-common-SeedVR2-3B-FP16-LAB-1080-stream-raw.mp4'
+    output=RUN/f'{film}-common-SeedVR2-3B-FP16-LAB-1080-stream-raw.mp4'
     bootstrap=Path(__file__).with_name('seedvr_cli_bootstrap.py')
     args=[str(PYTHON),'-u',str(bootstrap),str(CLI),str(source),'--output',str(output),'--output_format','mp4',
         '--video_backend','ffmpeg','--model_dir',str(MODELS),
@@ -60,11 +65,12 @@ def main():
         '--tensor_offload_device','cpu','--blocks_to_swap','32','--vae_encode_tiled','--vae_encode_tile_size','1024',
         '--vae_encode_tile_overlap','128','--vae_decode_tiled','--vae_decode_tile_size','768',
         '--vae_decode_tile_overlap','128','--attention_mode','sdpa','--cache_dit','--cache_vae']
-    report=dict(status='running',started_utc=datetime.now(timezone.utc).isoformat(),source='video/intro/intro.wbm',
+    report=dict(status='running',film=film,started_utc=datetime.now(timezone.utc).isoformat(),source=src.relative_to(ROOT).as_posix(),
         source_first_frame=first,source_frames_end_exclusive=len(times),frames=count,source_first_pts_s=origin,
         source_last_pts_s=float(times[-1]['best_effort_timestamp_time']),input_pixels_native_verified=True,
         command=args,chunk_frames=330,expected_chunks=(count+329)//330,output=output.name,
-        audio=False,interpolation=False,second_film_started=False,installed=False)
+        audio=False,interpolation=False,second_film_started=film=='INTRO15F',installed=False,
+        log='seedvr-stream.log',export_conversion_batch=8,finalized_portions=True)
     save(report)
     env=os.environ.copy();env['PYTHONUTF8']='1';env['PYTHONIOENCODING']='utf-8'
     env['PATH']=str(Path(shutil.which('ffmpeg')).parent)+os.pathsep+env.get('PATH','')
