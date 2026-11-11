@@ -1,0 +1,861 @@
+{
+  "66:51": {
+    "inputs": {
+      "vae_name": "seedvr2_ema_vae_fp16.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "66:52": {
+    "inputs": {
+      "unet_name": "seedvr2_7b_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "GMPCARBB__1": {
+    "inputs": {
+      "image": "UI70-20261111-GMPCARBB-padded.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "GMPCARBB__9": {
+    "inputs": {
+      "filename_prefix": "BG2_UI70_7B_20261111/GMPCARBB-7b-x4",
+      "images": [
+        "GMPCARBB__66:59",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "GMPCARBB__66:48": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "pixels": [
+        "GMPCARBB__66:58",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEEncodeTiled",
+    "_meta": {
+      "title": "VAE Encode (Tiled)"
+    }
+  },
+  "GMPCARBB__66:50": {
+    "inputs": {
+      "image": [
+        "GMPCARBB__1",
+        0
+      ],
+      "alpha": [
+        "GMPCARBB__1",
+        1
+      ]
+    },
+    "class_type": "JoinImageWithAlpha",
+    "_meta": {
+      "title": "Join Image with Alpha"
+    }
+  },
+  "GMPCARBB__66:54": {
+    "inputs": {
+      "seed": 959948902156062,
+      "steps": 1,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "66:52",
+        0
+      ],
+      "positive": [
+        "GMPCARBB__66:61",
+        0
+      ],
+      "negative": [
+        "GMPCARBB__66:61",
+        1
+      ],
+      "latent_image": [
+        "GMPCARBB__66:48",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "GMPCARBB__66:55": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "samples": [
+        "GMPCARBB__66:54",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeTiled",
+    "_meta": {
+      "title": "VAE Decode (Tiled)"
+    }
+  },
+  "GMPCARBB__66:58": {
+    "inputs": {
+      "resized_images": [
+        "GMPCARBB__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Preprocess",
+    "_meta": {
+      "title": "Pre-Process SeedVR2 Input"
+    }
+  },
+  "GMPCARBB__66:59": {
+    "inputs": {
+      "color_correction_method": "lab",
+      "images": [
+        "GMPCARBB__66:55",
+        0
+      ],
+      "original_resized_images": [
+        "GMPCARBB__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2PostProcessing",
+    "_meta": {
+      "title": "Post-Process SeedVR2 Output"
+    }
+  },
+  "GMPCARBB__66:61": {
+    "inputs": {
+      "model": [
+        "66:52",
+        0
+      ],
+      "vae_conditioning": [
+        "GMPCARBB__66:48",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Conditioning",
+    "_meta": {
+      "title": "Apply SeedVR2 Conditioning"
+    }
+  },
+  "GMPCARBB__66:57": {
+    "inputs": {
+      "resize_type": "scale by multiplier",
+      "resize_type.multiplier": 4,
+      "scale_method": "lanczos",
+      "input": [
+        "GMPCARBB__66:50",
+        0
+      ]
+    },
+    "class_type": "ResizeImageMaskNode",
+    "_meta": {
+      "title": "Resize Image/Mask"
+    }
+  },
+  "GMWMSGA0__1": {
+    "inputs": {
+      "image": "UI70-20261111-GMWMSGA0-padded.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "GMWMSGA0__9": {
+    "inputs": {
+      "filename_prefix": "BG2_UI70_7B_20261111/GMWMSGA0-7b-x4",
+      "images": [
+        "GMWMSGA0__66:59",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "GMWMSGA0__66:48": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "pixels": [
+        "GMWMSGA0__66:58",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEEncodeTiled",
+    "_meta": {
+      "title": "VAE Encode (Tiled)"
+    }
+  },
+  "GMWMSGA0__66:50": {
+    "inputs": {
+      "image": [
+        "GMWMSGA0__1",
+        0
+      ],
+      "alpha": [
+        "GMWMSGA0__1",
+        1
+      ]
+    },
+    "class_type": "JoinImageWithAlpha",
+    "_meta": {
+      "title": "Join Image with Alpha"
+    }
+  },
+  "GMWMSGA0__66:54": {
+    "inputs": {
+      "seed": 959948902156062,
+      "steps": 1,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "66:52",
+        0
+      ],
+      "positive": [
+        "GMWMSGA0__66:61",
+        0
+      ],
+      "negative": [
+        "GMWMSGA0__66:61",
+        1
+      ],
+      "latent_image": [
+        "GMWMSGA0__66:48",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "GMWMSGA0__66:55": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "samples": [
+        "GMWMSGA0__66:54",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeTiled",
+    "_meta": {
+      "title": "VAE Decode (Tiled)"
+    }
+  },
+  "GMWMSGA0__66:58": {
+    "inputs": {
+      "resized_images": [
+        "GMWMSGA0__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Preprocess",
+    "_meta": {
+      "title": "Pre-Process SeedVR2 Input"
+    }
+  },
+  "GMWMSGA0__66:59": {
+    "inputs": {
+      "color_correction_method": "lab",
+      "images": [
+        "GMWMSGA0__66:55",
+        0
+      ],
+      "original_resized_images": [
+        "GMWMSGA0__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2PostProcessing",
+    "_meta": {
+      "title": "Post-Process SeedVR2 Output"
+    }
+  },
+  "GMWMSGA0__66:61": {
+    "inputs": {
+      "model": [
+        "66:52",
+        0
+      ],
+      "vae_conditioning": [
+        "GMWMSGA0__66:48",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Conditioning",
+    "_meta": {
+      "title": "Apply SeedVR2 Conditioning"
+    }
+  },
+  "GMWMSGA0__66:57": {
+    "inputs": {
+      "resize_type": "scale by multiplier",
+      "resize_type.multiplier": 4,
+      "scale_method": "lanczos",
+      "input": [
+        "GMWMSGA0__66:50",
+        0
+      ]
+    },
+    "class_type": "ResizeImageMaskNode",
+    "_meta": {
+      "title": "Resize Image/Mask"
+    }
+  },
+  "GMWMSGA9__1": {
+    "inputs": {
+      "image": "UI70-20261111-GMWMSGA9-padded.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "GMWMSGA9__9": {
+    "inputs": {
+      "filename_prefix": "BG2_UI70_7B_20261111/GMWMSGA9-7b-x4",
+      "images": [
+        "GMWMSGA9__66:59",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "GMWMSGA9__66:48": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "pixels": [
+        "GMWMSGA9__66:58",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEEncodeTiled",
+    "_meta": {
+      "title": "VAE Encode (Tiled)"
+    }
+  },
+  "GMWMSGA9__66:50": {
+    "inputs": {
+      "image": [
+        "GMWMSGA9__1",
+        0
+      ],
+      "alpha": [
+        "GMWMSGA9__1",
+        1
+      ]
+    },
+    "class_type": "JoinImageWithAlpha",
+    "_meta": {
+      "title": "Join Image with Alpha"
+    }
+  },
+  "GMWMSGA9__66:54": {
+    "inputs": {
+      "seed": 959948902156062,
+      "steps": 1,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "66:52",
+        0
+      ],
+      "positive": [
+        "GMWMSGA9__66:61",
+        0
+      ],
+      "negative": [
+        "GMWMSGA9__66:61",
+        1
+      ],
+      "latent_image": [
+        "GMWMSGA9__66:48",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "GMWMSGA9__66:55": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "samples": [
+        "GMWMSGA9__66:54",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeTiled",
+    "_meta": {
+      "title": "VAE Decode (Tiled)"
+    }
+  },
+  "GMWMSGA9__66:58": {
+    "inputs": {
+      "resized_images": [
+        "GMWMSGA9__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Preprocess",
+    "_meta": {
+      "title": "Pre-Process SeedVR2 Input"
+    }
+  },
+  "GMWMSGA9__66:59": {
+    "inputs": {
+      "color_correction_method": "lab",
+      "images": [
+        "GMWMSGA9__66:55",
+        0
+      ],
+      "original_resized_images": [
+        "GMWMSGA9__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2PostProcessing",
+    "_meta": {
+      "title": "Post-Process SeedVR2 Output"
+    }
+  },
+  "GMWMSGA9__66:61": {
+    "inputs": {
+      "model": [
+        "66:52",
+        0
+      ],
+      "vae_conditioning": [
+        "GMWMSGA9__66:48",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Conditioning",
+    "_meta": {
+      "title": "Apply SeedVR2 Conditioning"
+    }
+  },
+  "GMWMSGA9__66:57": {
+    "inputs": {
+      "resize_type": "scale by multiplier",
+      "resize_type.multiplier": 4,
+      "scale_method": "lanczos",
+      "input": [
+        "GMWMSGA9__66:50",
+        0
+      ]
+    },
+    "class_type": "ResizeImageMaskNode",
+    "_meta": {
+      "title": "Resize Image/Mask"
+    }
+  },
+  "GMWMSGB0__1": {
+    "inputs": {
+      "image": "UI70-20261111-GMWMSGB0-padded.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "GMWMSGB0__9": {
+    "inputs": {
+      "filename_prefix": "BG2_UI70_7B_20261111/GMWMSGB0-7b-x4",
+      "images": [
+        "GMWMSGB0__66:59",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "GMWMSGB0__66:48": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "pixels": [
+        "GMWMSGB0__66:58",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEEncodeTiled",
+    "_meta": {
+      "title": "VAE Encode (Tiled)"
+    }
+  },
+  "GMWMSGB0__66:50": {
+    "inputs": {
+      "image": [
+        "GMWMSGB0__1",
+        0
+      ],
+      "alpha": [
+        "GMWMSGB0__1",
+        1
+      ]
+    },
+    "class_type": "JoinImageWithAlpha",
+    "_meta": {
+      "title": "Join Image with Alpha"
+    }
+  },
+  "GMWMSGB0__66:54": {
+    "inputs": {
+      "seed": 959948902156062,
+      "steps": 1,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "66:52",
+        0
+      ],
+      "positive": [
+        "GMWMSGB0__66:61",
+        0
+      ],
+      "negative": [
+        "GMWMSGB0__66:61",
+        1
+      ],
+      "latent_image": [
+        "GMWMSGB0__66:48",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "GMWMSGB0__66:55": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "samples": [
+        "GMWMSGB0__66:54",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeTiled",
+    "_meta": {
+      "title": "VAE Decode (Tiled)"
+    }
+  },
+  "GMWMSGB0__66:58": {
+    "inputs": {
+      "resized_images": [
+        "GMWMSGB0__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Preprocess",
+    "_meta": {
+      "title": "Pre-Process SeedVR2 Input"
+    }
+  },
+  "GMWMSGB0__66:59": {
+    "inputs": {
+      "color_correction_method": "lab",
+      "images": [
+        "GMWMSGB0__66:55",
+        0
+      ],
+      "original_resized_images": [
+        "GMWMSGB0__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2PostProcessing",
+    "_meta": {
+      "title": "Post-Process SeedVR2 Output"
+    }
+  },
+  "GMWMSGB0__66:61": {
+    "inputs": {
+      "model": [
+        "66:52",
+        0
+      ],
+      "vae_conditioning": [
+        "GMWMSGB0__66:48",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Conditioning",
+    "_meta": {
+      "title": "Apply SeedVR2 Conditioning"
+    }
+  },
+  "GMWMSGB0__66:57": {
+    "inputs": {
+      "resize_type": "scale by multiplier",
+      "resize_type.multiplier": 4,
+      "scale_method": "lanczos",
+      "input": [
+        "GMWMSGB0__66:50",
+        0
+      ]
+    },
+    "class_type": "ResizeImageMaskNode",
+    "_meta": {
+      "title": "Resize Image/Mask"
+    }
+  },
+  "GUICGPR__1": {
+    "inputs": {
+      "image": "UI70-20261111-GUICGPR-padded.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "GUICGPR__9": {
+    "inputs": {
+      "filename_prefix": "BG2_UI70_7B_20261111/GUICGPR-7b-x4",
+      "images": [
+        "GUICGPR__66:59",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "GUICGPR__66:48": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "pixels": [
+        "GUICGPR__66:58",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEEncodeTiled",
+    "_meta": {
+      "title": "VAE Encode (Tiled)"
+    }
+  },
+  "GUICGPR__66:50": {
+    "inputs": {
+      "image": [
+        "GUICGPR__1",
+        0
+      ],
+      "alpha": [
+        "GUICGPR__1",
+        1
+      ]
+    },
+    "class_type": "JoinImageWithAlpha",
+    "_meta": {
+      "title": "Join Image with Alpha"
+    }
+  },
+  "GUICGPR__66:54": {
+    "inputs": {
+      "seed": 959948902156062,
+      "steps": 1,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "66:52",
+        0
+      ],
+      "positive": [
+        "GUICGPR__66:61",
+        0
+      ],
+      "negative": [
+        "GUICGPR__66:61",
+        1
+      ],
+      "latent_image": [
+        "GUICGPR__66:48",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "GUICGPR__66:55": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "samples": [
+        "GUICGPR__66:54",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeTiled",
+    "_meta": {
+      "title": "VAE Decode (Tiled)"
+    }
+  },
+  "GUICGPR__66:58": {
+    "inputs": {
+      "resized_images": [
+        "GUICGPR__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Preprocess",
+    "_meta": {
+      "title": "Pre-Process SeedVR2 Input"
+    }
+  },
+  "GUICGPR__66:59": {
+    "inputs": {
+      "color_correction_method": "lab",
+      "images": [
+        "GUICGPR__66:55",
+        0
+      ],
+      "original_resized_images": [
+        "GUICGPR__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2PostProcessing",
+    "_meta": {
+      "title": "Post-Process SeedVR2 Output"
+    }
+  },
+  "GUICGPR__66:61": {
+    "inputs": {
+      "model": [
+        "66:52",
+        0
+      ],
+      "vae_conditioning": [
+        "GUICGPR__66:48",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Conditioning",
+    "_meta": {
+      "title": "Apply SeedVR2 Conditioning"
+    }
+  },
+  "GUICGPR__66:57": {
+    "inputs": {
+      "resize_type": "scale by multiplier",
+      "resize_type.multiplier": 4,
+      "scale_method": "lanczos",
+      "input": [
+        "GUICGPR__66:50",
+        0
+      ]
+    },
+    "class_type": "ResizeImageMaskNode",
+    "_meta": {
+      "title": "Resize Image/Mask"
+    }
+  }
+}

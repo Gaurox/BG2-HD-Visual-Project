@@ -1,0 +1,97 @@
+{
+  "schema": "bg2-four-menus-install-v1",
+  "time_utc": "20261111T003037Z",
+  "game": "config://bg2ee_game_root",
+  "files": {
+    "InfinityEngine-Enhancer.dll": {
+      "before_sha256": "87b10946d3027517768f8b8c1f77942087be4bd691b7db5db7fdc5bc150a9a62",
+      "installed_sha256": "9adf5d5d1351bd054e27ea1260154fae33a220250c16e21555e92c3886ba799d"
+    },
+    "InfinityEngine-Enhancer.ini": {
+      "before_sha256": "801c4daa69d7137548367aaa5df7ddb34cad289feb4ca115516ec4bf737a90a6",
+      "installed_sha256": "801c4daa69d7137548367aaa5df7ddb34cad289feb4ca115516ec4bf737a90a6"
+    },
+    "iee-assets/GAMEPLAY7B-MOS0115-x4.dxt5": {
+      "before_sha256": null,
+      "installed_sha256": "1b021f1a7f8d4b0c0bc8951628447a88adc9b2216db37b46487e97fe88411798"
+    },
+    "iee-assets/GAMEPLAY7B-MOS0116-x4.dxt5": {
+      "before_sha256": null,
+      "installed_sha256": "e50e2586f60d6542458b6796d67efe64f7a7dee4b3ae4d520eae93feb9f2d953"
+    },
+    "iee-assets/GAMEPLAY7B-MOS0125-x4.dxt5": {
+      "before_sha256": null,
+      "installed_sha256": "bd4ef409a67e26c52d71ef54dbe280022b330ebd194093eab80c4ed65dfd368e"
+    },
+    "iee-assets/GAMEPLAY7B-MOS0126-x4.dxt5": {
+      "before_sha256": null,
+      "installed_sha256": "0027eee9a4467d221a6383dc18f55d6fe9d583e803df0cc98d3231d305a281b6"
+    },
+    "iee-assets/GAMEPLAY7B-MOS0138-x4.dxt5": {
+      "before_sha256": null,
+      "installed_sha256": "c35fc3d7808f736c5ac85bfe19aa762e00abf6e0c2439237c53c895a09f9ff3f"
+    },
+    "iee-assets/GAMEPLAY7B-MOS0139-x4.dxt5": {
+      "before_sha256": null,
+      "installed_sha256": "36afd0b42ee5caf691eaf09f98aa7a7cba77588518bdeabd82968e1782bb82ca"
+    },
+    "iee-assets/HUD-MOS0140-x4.dxt5": {
+      "before_sha256": null,
+      "installed_sha256": "c79c56bb2da5a85379f6b51910e75cf69210efaadf4859e095a4f9ee5eb6c8e6"
+    },
+    "iee-assets/GAMEPLAY7B-MOS0148-x4.dxt5": {
+      "before_sha256": null,
+      "installed_sha256": "526681c38b8559765b803e4ae3de8ee066e23c946f92036ed6c19c7e0f7330e4"
+    },
+    "iee-assets/GAMEPLAY7B-MOS0149-x4.dxt5": {
+      "before_sha256": null,
+      "installed_sha256": "af5d8d0713ddae24beb6294409e592582e1fc66bb27b2cc171f8d4a6ef950c82"
+    },
+    "iee-assets/GAMEPLAY7B-MOS0150-x4.dxt5": {
+      "before_sha256": null,
+      "installed_sha256": "ed9ee55f0ad502adcfd039fabca5d80afd6884c1389721b42738249a1222d05c"
+    },
+    "iee-assets/GAMEPLAY7B-MOS0154-x4.dxt5": {
+      "before_sha256": null,
+      "installed_sha256": "adadb514ee3804e76bf4e45d3f40c8e8f7c797410de562ffd31659a3de418a78"
+    },
+    "iee-assets/GAMEPLAY7B-MOS0168-x4.dxt5": {
+      "before_sha256": null,
+      "installed_sha256": "4c91d1d444ef4d08909ab2b25e1d821f020215c390abab6b510375498673dc95"
+    },
+    "iee-assets/GAMEPLAY7B-MOS0169-x4.dxt5": {
+      "before_sha256": null,
+      "installed_sha256": "a417335a70979785ae465e36eaec6cb502929f41008c6523912461120e2a5bd1"
+    },
+    "iee-assets/MAINMENU-MOS0181-x4.dxt5": {
+      "before_sha256": "1572c1e3f485de6cc0c970e8465a54a097f609856823faee043eac10fecddf38",
+      "installed_sha256": "5c4af5b775f186ea9c029c57efcca5c6824802ac3218de35f2cbcf48029eb7dd"
+    }
+  },
+  "scope": [
+    "INVSTATS",
+    "GUIINVHI",
+    "GUIMGX",
+    "GUIMGB",
+    "GUIPRB",
+    "GUIMGCP",
+    "GUICUSTB",
+    "GUICHISD",
+    "GUITUTB",
+    "GUILOAD"
+  ],
+  "qa": "ten assets accepted offline, ingame pending",
+  "release": "unchanged",
+  "backup_receipt": "interface/integration/next-ten-seedvr7b-x4-20261111-v1/backups/20261111T003037Z/receipt.json",
+  "unchanged_prior_files_verified": [
+    "iee-assets/GAMEPLAY7B-MOS0155-x4.dxt5",
+    "iee-assets/GAMEPLAY7B-MOS0156-x4.dxt5",
+    "iee-assets/GAMEPLAY7B-MOS0180-x4.dxt5",
+    "iee-assets/GAMEPLAY7B-MOS0253-x4.dxt5",
+    "iee-assets/GAMEPLAY7B-MOS0254-x4.dxt5",
+    "iee-assets/GAMEPLAY7B-MOS0263-x4.dxt5",
+    "iee-assets/GAMEPLAY7B-MOS0264-x4.dxt5",
+    "iee-assets/GAMEPLAY7B-MOS0255-x4.dxt5"
+  ],
+  "tests": "22 gameplay + 7 selector native payloads; isolation/hash/format/dimensions/off; iee_tests passed"
+}

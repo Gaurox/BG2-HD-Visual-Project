@@ -1,0 +1,251 @@
+{
+  "schema": "bg2-ui-seedvr7b-batch-v1",
+  "state": "produced-awaiting-user-review",
+  "recipe": {
+    "model": "seedvr2_7b_int8_convrot.safetensors",
+    "scale": 4,
+    "color_correction": "lab",
+    "seed": 959948902156062,
+    "steps": 1,
+    "cfg": 1,
+    "sampler": "euler",
+    "scheduler": "simple",
+    "padding": "edge replication to64, exact crop after inference",
+    "alpha": "native alpha nearest x4 reapplied separately"
+  },
+  "results": [
+    {
+      "number": 1,
+      "resref": "INVSTATS",
+      "label": "Panneau statistiques inventaire",
+      "state": "produced-awaiting-user-review",
+      "size": [
+        1396,
+        1504
+      ],
+      "output": "outputs/INVSTATS/INVSTATS-seedvr-7b-x4.png",
+      "sha256": "1ecca793a01fc76185932d4983d6767f3a2601909702c37d12c17436f58cb339",
+      "raw": "outputs/INVSTATS/raw/ecf21edf_000.png",
+      "crops_native_xy": [
+        [
+          0,
+          0
+        ],
+        [
+          80,
+          210
+        ]
+      ]
+    },
+    {
+      "number": 2,
+      "resref": "GUIINVHI",
+      "label": "Description des objets",
+      "state": "produced-awaiting-user-review",
+      "size": [
+        3456,
+        2840
+      ],
+      "output": "outputs/GUIINVHI/GUIINVHI-seedvr-7b-x4.png",
+      "sha256": "c77bc516ff7249fa94aaa798ce1e482eb7aba9c8e395c02f7ade4909e75d0e2b",
+      "raw": "outputs/GUIINVHI/raw/9430da68_000.png",
+      "crops_native_xy": [
+        [
+          0,
+          0
+        ],
+        [
+          250,
+          220
+        ]
+      ]
+    },
+    {
+      "number": 3,
+      "resref": "GUIMGX",
+      "label": "Capacités des objets",
+      "state": "produced-awaiting-user-review",
+      "size": [
+        3456,
+        2840
+      ],
+      "output": "outputs/GUIMGX/GUIMGX-seedvr-7b-x4.png",
+      "sha256": "ff94ccb2c2f1d8e624c01aabcd9e0e22535179111159c802b655dec3b593ccef",
+      "raw": "outputs/GUIMGX/raw/ece996e9_000.png",
+      "crops_native_xy": [
+        [
+          0,
+          0
+        ],
+        [
+          160,
+          460
+        ]
+      ]
+    },
+    {
+      "number": 4,
+      "resref": "GUIMGB",
+      "label": "Livre de sorts mage",
+      "state": "produced-awaiting-user-review",
+      "size": [
+        3456,
+        2840
+      ],
+      "output": "outputs/GUIMGB/GUIMGB-seedvr-7b-x4.png",
+      "sha256": "2617a2c155e248132ddb19f4d7458e8368fcdc5fc4b88e9352a3f613cf9990b9",
+      "raw": "outputs/GUIMGB/raw/f7e6e383_000.png",
+      "crops_native_xy": [
+        [
+          0,
+          0
+        ],
+        [
+          365,
+          250
+        ]
+      ]
+    },
+    {
+      "number": 5,
+      "resref": "GUIPRB",
+      "label": "Livre de sorts prêtre",
+      "state": "produced-awaiting-user-review",
+      "size": [
+        3456,
+        2840
+      ],
+      "output": "outputs/GUIPRB/GUIPRB-seedvr-7b-x4.png",
+      "sha256": "bba39bef70acd3858023610f97f68ced1167f492950d5ba7258ee526086ca2da",
+      "raw": "outputs/GUIPRB/raw/1d908174_000.png",
+      "crops_native_xy": [
+        [
+          0,
+          0
+        ],
+        [
+          70,
+          200
+        ]
+      ]
+    },
+    {
+      "number": 6,
+      "resref": "GUIMGCP",
+      "label": "Contingences",
+      "state": "produced-awaiting-user-review",
+      "size": [
+        3456,
+        2840
+      ],
+      "output": "outputs/GUIMGCP/GUIMGCP-seedvr-7b-x4.png",
+      "sha256": "b55a51520d41758cbb3ccc24fc3cd4719d2f8b892c03baee6e07779a40a78fc5",
+      "raw": "outputs/GUIMGCP/raw/4e9851fc_000.png",
+      "crops_native_xy": [
+        [
+          0,
+          0
+        ],
+        [
+          30,
+          180
+        ]
+      ]
+    },
+    {
+      "number": 7,
+      "resref": "GUICUSTB",
+      "label": "Personnalisation et biographie",
+      "state": "produced-awaiting-user-review",
+      "size": [
+        3456,
+        2840
+      ],
+      "output": "outputs/GUICUSTB/GUICUSTB-seedvr-7b-x4.png",
+      "sha256": "044d052fb00fee317a8118b323e688ef6efe61a92c4a271882225b9cbbb51755",
+      "raw": "outputs/GUICUSTB/raw/d3715010_000.png",
+      "crops_native_xy": [
+        [
+          0,
+          0
+        ],
+        [
+          300,
+          320
+        ]
+      ]
+    },
+    {
+      "number": 8,
+      "resref": "GUICHISD",
+      "label": "Options graphiques, raccourcis, scripts",
+      "state": "produced-awaiting-user-review",
+      "size": [
+        3456,
+        2840
+      ],
+      "output": "outputs/GUICHISD/GUICHISD-seedvr-7b-x4.png",
+      "sha256": "71c76448924760a5102b8e40be762e806cd1168587484e346738f028d92ef854",
+      "raw": "outputs/GUICHISD/raw/b7fd309b_000.png",
+      "crops_native_xy": [
+        [
+          0,
+          0
+        ],
+        [
+          360,
+          250
+        ]
+      ]
+    },
+    {
+      "number": 9,
+      "resref": "GUITUTB",
+      "label": "Options audio, gameplay, retours",
+      "state": "produced-awaiting-user-review",
+      "size": [
+        4096,
+        3072
+      ],
+      "output": "outputs/GUITUTB/GUITUTB-seedvr-7b-x4.png",
+      "sha256": "74cef4eee868da3217d88ba0aec36a99ab2d086cab1996bd42cb13cace998b85",
+      "raw": "outputs/GUITUTB/raw/ccc29743_000.png",
+      "crops_native_xy": [
+        [
+          0,
+          0
+        ],
+        [
+          370,
+          200
+        ]
+      ]
+    },
+    {
+      "number": 10,
+      "resref": "GUILOAD",
+      "label": "Chargement de partie",
+      "state": "produced-awaiting-user-review",
+      "size": [
+        4096,
+        3072
+      ],
+      "output": "outputs/GUILOAD/GUILOAD-seedvr-7b-x4.png",
+      "sha256": "c4b62caa60143603630e14ecede4f1584391a38649a363513a286392e63b1af3",
+      "raw": "outputs/GUILOAD/raw/9434fead_000.png",
+      "crops_native_xy": [
+        [
+          0,
+          0
+        ],
+        [
+          20,
+          400
+        ]
+      ]
+    }
+  ],
+  "qa": "awaiting user comparison; not ingame accepted",
+  "installation": "not installed",
+  "release": "unchanged"
+}

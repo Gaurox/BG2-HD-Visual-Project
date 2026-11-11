@@ -1,0 +1,192 @@
+[
+  {
+    "number": 1,
+    "resref": "GUISTBSC",
+    "label": "Boutique : achat et vente",
+    "test": "Parler à un marchand puis ouvrir Achat/Vente.",
+    "native_size": [
+      864,
+      598
+    ],
+    "padded_size": [
+      896,
+      640
+    ],
+    "expected_x4": [
+      3456,
+      2392
+    ],
+    "source_sha256": "9e03eda7a44797c88f6c5ba18c467c27efa2c1dd419fe9639f61846a13e08e2a"
+  },
+  {
+    "number": 2,
+    "resref": "GUISTDOB",
+    "label": "Temple : dons",
+    "test": "Parler au prêtre proposant les services du temple puis ouvrir Dons, sans verser d’or.",
+    "native_size": [
+      864,
+      598
+    ],
+    "padded_size": [
+      896,
+      640
+    ],
+    "expected_x4": [
+      3456,
+      2392
+    ],
+    "source_sha256": "b36cc9c0e34923b09d0bc295f0526a3533a572d056d560a5c9acf15257707505"
+  },
+  {
+    "number": 3,
+    "resref": "GUISTIDB",
+    "label": "Services : identification, soins, boissons",
+    "test": "Chez un marchand/temple/aubergiste proposant le service, ouvrir Identifier, Soins ou Boissons.",
+    "native_size": [
+      864,
+      598
+    ],
+    "padded_size": [
+      896,
+      640
+    ],
+    "expected_x4": [
+      3456,
+      2392
+    ],
+    "source_sha256": "d6bf84d01529fb67ff3726f5629e8a2778dae5b4e818d124461a7cbf9baa739b"
+  },
+  {
+    "number": 4,
+    "resref": "GUISTROB",
+    "label": "Auberge : chambres",
+    "test": "Parler à un aubergiste et ouvrir les chambres, sans réserver.",
+    "native_size": [
+      864,
+      598
+    ],
+    "padded_size": [
+      896,
+      640
+    ],
+    "expected_x4": [
+      3456,
+      2392
+    ],
+    "source_sha256": "2324aafe54709f4abc4029759c36e0ed03b63e21fcbceb24754a4114633b2623"
+  },
+  {
+    "number": 5,
+    "resref": "GUIMAPWB",
+    "label": "Carte du monde",
+    "test": "Ouvrir la carte locale puis Carte du monde ; ne pas choisir de destination.",
+    "native_size": [
+      1024,
+      768
+    ],
+    "padded_size": [
+      1024,
+      768
+    ],
+    "expected_x4": [
+      4096,
+      3072
+    ],
+    "source_sha256": "9159c9a3c1b1a649ab1222692a61969266ed116003aacb932cd68d9d0c56a539"
+  },
+  {
+    "number": 6,
+    "resref": "GUICREDT",
+    "label": "Sauvegarde : fond principal",
+    "test": "Options → Sauvegarder, puis annuler.",
+    "native_size": [
+      1024,
+      768
+    ],
+    "padded_size": [
+      1024,
+      768
+    ],
+    "expected_x4": [
+      4096,
+      3072
+    ],
+    "source_sha256": "ce31f334a518ccf3b8928bef5eba7f88bcab304a7a7c18e4d19e335c65b1ab65"
+  },
+  {
+    "number": 7,
+    "resref": "GUISAVEB",
+    "label": "Sauvegarde : panneaux des emplacements",
+    "test": "Sur le même écran de sauvegarde, regarder les cadres des emplacements existants.",
+    "native_size": [
+      950,
+      150
+    ],
+    "padded_size": [
+      960,
+      192
+    ],
+    "expected_x4": [
+      3800,
+      600
+    ],
+    "source_sha256": "98f5b30e4e819697b66281f7b7399e86610cab6772ae7a28c6b46f0f99432369"
+  },
+  {
+    "number": 8,
+    "resref": "GUICGB",
+    "label": "Couleurs du personnage : fond arrière",
+    "test": "Personnage principal → Fiche → Personnaliser → Couleurs ; regarder le fond arrière.",
+    "native_size": [
+      1024,
+      768
+    ],
+    "padded_size": [
+      1024,
+      768
+    ],
+    "expected_x4": [
+      4096,
+      3072
+    ],
+    "source_sha256": "290f9f311bdfada75453159db4c5a810494f54d924e45ee7b46e8c584f0ad0e3"
+  },
+  {
+    "number": 9,
+    "resref": "GUIHSB",
+    "label": "Couleurs du personnage : panneau central",
+    "test": "Même fenêtre Couleurs : regarder le panneau central ; annuler ensuite.",
+    "native_size": [
+      762,
+      609
+    ],
+    "padded_size": [
+      768,
+      640
+    ],
+    "expected_x4": [
+      3048,
+      2436
+    ],
+    "source_sha256": "c00626ea40dd805d46fefeb9e59a3f3d8ce6d0bd62759f86f7707db052b2db43"
+  },
+  {
+    "number": 10,
+    "resref": "GMPWMSG0",
+    "label": "Conteneur : cadre du butin",
+    "test": "Ouvrir un coffre ou fouiller un corps ; regarder le cadre du panneau de butin.",
+    "native_size": [
+      653,
+      130
+    ],
+    "padded_size": [
+      704,
+      192
+    ],
+    "expected_x4": [
+      2612,
+      520
+    ],
+    "source_sha256": "69e47cecba48ff696cee5fd9cfa8d7bce67d9d38cff878fd86e9e1b76c695e09"
+  }
+]

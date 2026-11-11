@@ -1,0 +1,251 @@
+{
+  "schema": "bg2-ui-seedvr7b-batch-v1",
+  "state": "produced-awaiting-user-review",
+  "recipe": {
+    "model": "seedvr2_7b_int8_convrot.safetensors",
+    "scale": 4,
+    "color_correction": "lab",
+    "seed": 959948902156062,
+    "steps": 1,
+    "cfg": 1,
+    "sampler": "euler",
+    "scheduler": "simple",
+    "padding": "edge replication to64, exact crop after inference",
+    "alpha": "native alpha nearest x4 reapplied separately"
+  },
+  "results": [
+    {
+      "number": 1,
+      "resref": "GUISTBSC",
+      "label": "Boutique : achat et vente",
+      "state": "produced-awaiting-user-review",
+      "size": [
+        3456,
+        2392
+      ],
+      "output": "outputs/GUISTBSC/GUISTBSC-seedvr-7b-x4.png",
+      "sha256": "7fc87fb9045fbeba25411f6490e8dbdab24212f1d3c152923699ea7f06b35fb0",
+      "raw": "outputs/GUISTBSC/raw/28250e04_000.png",
+      "crops_native_xy": [
+        [
+          0,
+          0
+        ],
+        [
+          372,
+          257
+        ]
+      ]
+    },
+    {
+      "number": 2,
+      "resref": "GUISTDOB",
+      "label": "Temple : dons",
+      "state": "produced-awaiting-user-review",
+      "size": [
+        3456,
+        2392
+      ],
+      "output": "outputs/GUISTDOB/GUISTDOB-seedvr-7b-x4.png",
+      "sha256": "82baa9d58fd0d58a6a30df4a6227d6efbc2956a0f23a58f68e144205f68803db",
+      "raw": "outputs/GUISTDOB/raw/5cc03d66_000.png",
+      "crops_native_xy": [
+        [
+          0,
+          0
+        ],
+        [
+          372,
+          257
+        ]
+      ]
+    },
+    {
+      "number": 3,
+      "resref": "GUISTIDB",
+      "label": "Services : identification, soins, boissons",
+      "state": "produced-awaiting-user-review",
+      "size": [
+        3456,
+        2392
+      ],
+      "output": "outputs/GUISTIDB/GUISTIDB-seedvr-7b-x4.png",
+      "sha256": "939e545d8a6ad6abd83bd67df16dcb166ba8e7f567e5cb1aba736cfa82857280",
+      "raw": "outputs/GUISTIDB/raw/362cf95b_000.png",
+      "crops_native_xy": [
+        [
+          0,
+          0
+        ],
+        [
+          372,
+          257
+        ]
+      ]
+    },
+    {
+      "number": 4,
+      "resref": "GUISTROB",
+      "label": "Auberge : chambres",
+      "state": "produced-awaiting-user-review",
+      "size": [
+        3456,
+        2392
+      ],
+      "output": "outputs/GUISTROB/GUISTROB-seedvr-7b-x4.png",
+      "sha256": "311dfa041dde6d79b13af6f9a80e11892cbf9e3eeb7eb873fcf59fd860eac438",
+      "raw": "outputs/GUISTROB/raw/403cf8a7_000.png",
+      "crops_native_xy": [
+        [
+          0,
+          0
+        ],
+        [
+          372,
+          257
+        ]
+      ]
+    },
+    {
+      "number": 5,
+      "resref": "GUIMAPWB",
+      "label": "Carte du monde",
+      "state": "produced-awaiting-user-review",
+      "size": [
+        4096,
+        3072
+      ],
+      "output": "outputs/GUIMAPWB/GUIMAPWB-seedvr-7b-x4.png",
+      "sha256": "08383e2256334c7ec6d6abb42687ac2f6c779d59b6a1e7d9c8c3af0f01c204fe",
+      "raw": "outputs/GUIMAPWB/raw/e232680e_000.png",
+      "crops_native_xy": [
+        [
+          0,
+          0
+        ],
+        [
+          452,
+          342
+        ]
+      ]
+    },
+    {
+      "number": 6,
+      "resref": "GUICREDT",
+      "label": "Sauvegarde : fond principal",
+      "state": "produced-awaiting-user-review",
+      "size": [
+        4096,
+        3072
+      ],
+      "output": "outputs/GUICREDT/GUICREDT-seedvr-7b-x4.png",
+      "sha256": "5c5cf3a7564732a4df1c3944ec35a9964ade1c2d7ea553839c1957da8663538d",
+      "raw": "outputs/GUICREDT/raw/ae32cba0_000.png",
+      "crops_native_xy": [
+        [
+          0,
+          0
+        ],
+        [
+          452,
+          342
+        ]
+      ]
+    },
+    {
+      "number": 7,
+      "resref": "GUISAVEB",
+      "label": "Sauvegarde : panneaux des emplacements",
+      "state": "produced-awaiting-user-review",
+      "size": [
+        3800,
+        600
+      ],
+      "output": "outputs/GUISAVEB/GUISAVEB-seedvr-7b-x4.png",
+      "sha256": "63343d4a2ae9f1cc5e1d11e56085c4aa5c3ed67759df9dcf2e63b33052f49a4f",
+      "raw": "outputs/GUISAVEB/raw/1d7ff1d5_000.png",
+      "crops_native_xy": [
+        [
+          0,
+          0
+        ],
+        [
+          415,
+          33
+        ]
+      ]
+    },
+    {
+      "number": 8,
+      "resref": "GUICGB",
+      "label": "Couleurs du personnage : fond arrière",
+      "state": "produced-awaiting-user-review",
+      "size": [
+        4096,
+        3072
+      ],
+      "output": "outputs/GUICGB/GUICGB-seedvr-7b-x4.png",
+      "sha256": "112534cf5aa01c5efb4d8ea8021333223d30b741519995b34cc2a99401bf3495",
+      "raw": "outputs/GUICGB/raw/7c02b75a_000.png",
+      "crops_native_xy": [
+        [
+          0,
+          0
+        ],
+        [
+          452,
+          342
+        ]
+      ]
+    },
+    {
+      "number": 9,
+      "resref": "GUIHSB",
+      "label": "Couleurs du personnage : panneau central",
+      "state": "produced-awaiting-user-review",
+      "size": [
+        3048,
+        2436
+      ],
+      "output": "outputs/GUIHSB/GUIHSB-seedvr-7b-x4.png",
+      "sha256": "aefc68a1a39cfd3fd3bd146e7b1ce57c8114598bac1d220edbfdc0468b705e2f",
+      "raw": "outputs/GUIHSB/raw/0aaf2762_000.png",
+      "crops_native_xy": [
+        [
+          0,
+          0
+        ],
+        [
+          321,
+          262
+        ]
+      ]
+    },
+    {
+      "number": 10,
+      "resref": "GMPWMSG0",
+      "label": "Conteneur : cadre du butin",
+      "state": "produced-awaiting-user-review",
+      "size": [
+        2612,
+        520
+      ],
+      "output": "outputs/GMPWMSG0/GMPWMSG0-seedvr-7b-x4.png",
+      "sha256": "e3993b1186ed3cd10d4b073abb86d741b3c06b2bccde049ca5e165b7597edf21",
+      "raw": "outputs/GMPWMSG0/raw/e98b50e2_000.png",
+      "crops_native_xy": [
+        [
+          0,
+          0
+        ],
+        [
+          266,
+          23
+        ]
+      ]
+    }
+  ],
+  "qa": "awaiting user comparison; not ingame accepted",
+  "installation": "not installed",
+  "release": "unchanged"
+}

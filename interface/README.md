@@ -83,3 +83,14 @@ des travaux actifs. États production, QA, installation et release séparés par
 Quatre menus SeedVR2 7B x4 retenus pour test ingame (2026-11-11) : `INVENTOR`, `QUESTBAK`, `GUIREC2`, `STONEOPT`.
 Installation/retour exact : [`integration/four-menus-seedvr7b-20261111-v1/README.md`](integration/four-menus-seedvr7b-20261111-v1/README.md).
 La recette Topaz reste inchangée pour les autres ressources.
+
+Lot supplémentaire 2026-11-11 : dix compositions 7B x4 retenues et installées, QA ingame en attente.
+Reçu/restauration : `integration/next-ten-seedvr7b-x4-20261111-v1/README.md`.
+La recette inscrite dans `index/work-tracking.json:resources[].production` prévaut pour chaque
+ressource ; les lots SeedVR retenus ne changent pas les sorties Topaz déjà validées.
+
+Lot4 : `integration/fourth-ten-seedvr7b-x4-20261111-v1/`, dix nouvelles ressources installées pour QA ; DONATE/INNROOMS traités par frame, alpha natif progressif préservé après DXT5.
+
+Lot6 installé/validé sur rendu observé : `integration/sixth-ten-seedvr7b-x4-20261111-v1/` (GUIDLC tactile hors observation PC). Lot7 produit pour comparaison : `experiments/seventh-ten-seedvr7b-x4-20261111-v1/`, dix fonds/panneaux 7B x4, non installés ; suivi et compteurs courants dans `tracking/progress.json`.
+
+Mise à jour lot7 : installé après validation des planches ; `integration/seventh-ten-seedvr7b-x4-20261111-v1/README.md`. Dix variantes historiques sans route actuelle établie, pas de QA ingame inférée. Total71/204 sorties complètes retenues +1 partielle ; compteurs canoniques `tracking/progress.json`.

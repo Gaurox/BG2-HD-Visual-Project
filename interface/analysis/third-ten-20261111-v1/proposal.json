@@ -1,0 +1,66 @@
+{
+  "state": "user-authorized-treatment",
+  "recipe": "SeedVR2 7B x4 LAB, same recipe as accepted menus",
+  "items": [
+    {
+      "number": 1,
+      "resref": "GUISTBSC",
+      "label": "Boutique : achat et vente",
+      "test": "Parler à un marchand puis ouvrir Achat/Vente."
+    },
+    {
+      "number": 2,
+      "resref": "GUISTDOB",
+      "label": "Temple : dons",
+      "test": "Parler au prêtre proposant les services du temple puis ouvrir Dons, sans verser d’or."
+    },
+    {
+      "number": 3,
+      "resref": "GUISTIDB",
+      "label": "Services : identification, soins, boissons",
+      "test": "Chez un marchand/temple/aubergiste proposant le service, ouvrir Identifier, Soins ou Boissons."
+    },
+    {
+      "number": 4,
+      "resref": "GUISTROB",
+      "label": "Auberge : chambres",
+      "test": "Parler à un aubergiste et ouvrir les chambres, sans réserver."
+    },
+    {
+      "number": 5,
+      "resref": "GUIMAPWB",
+      "label": "Carte du monde",
+      "test": "Ouvrir la carte locale puis Carte du monde ; ne pas choisir de destination."
+    },
+    {
+      "number": 6,
+      "resref": "GUICREDT",
+      "label": "Sauvegarde : fond principal",
+      "test": "Options → Sauvegarder, puis annuler."
+    },
+    {
+      "number": 7,
+      "resref": "GUISAVEB",
+      "label": "Sauvegarde : panneaux des emplacements",
+      "test": "Sur le même écran de sauvegarde, regarder les cadres des emplacements existants."
+    },
+    {
+      "number": 8,
+      "resref": "GUICGB",
+      "label": "Couleurs du personnage : fond arrière",
+      "test": "Personnage principal → Fiche → Personnaliser → Couleurs ; regarder le fond arrière."
+    },
+    {
+      "number": 9,
+      "resref": "GUIHSB",
+      "label": "Couleurs du personnage : panneau central",
+      "test": "Même fenêtre Couleurs : regarder le panneau central ; annuler ensuite."
+    },
+    {
+      "number": 10,
+      "resref": "GMPWMSG0",
+      "label": "Conteneur : cadre du butin",
+      "test": "Ouvrir un coffre ou fouiller un corps ; regarder le cadre du panneau de butin."
+    }
+  ]
+}

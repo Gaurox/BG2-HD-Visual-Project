@@ -1,0 +1,1701 @@
+{
+  "66:51": {
+    "inputs": {
+      "vae_name": "seedvr2_ema_vae_fp16.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "66:52": {
+    "inputs": {
+      "unet_name": "seedvr2_7b_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "DONATE-frame-00__1": {
+    "inputs": {
+      "image": "UI40-20261111-DONATE-frame-00-padded.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "DONATE-frame-00__9": {
+    "inputs": {
+      "filename_prefix": "BG2_UI40_7B_20261111/DONATE-frame-00-7b-x4",
+      "images": [
+        "DONATE-frame-00__66:59",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "DONATE-frame-00__66:48": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "pixels": [
+        "DONATE-frame-00__66:58",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEEncodeTiled",
+    "_meta": {
+      "title": "VAE Encode (Tiled)"
+    }
+  },
+  "DONATE-frame-00__66:50": {
+    "inputs": {
+      "image": [
+        "DONATE-frame-00__1",
+        0
+      ],
+      "alpha": [
+        "DONATE-frame-00__1",
+        1
+      ]
+    },
+    "class_type": "JoinImageWithAlpha",
+    "_meta": {
+      "title": "Join Image with Alpha"
+    }
+  },
+  "DONATE-frame-00__66:54": {
+    "inputs": {
+      "seed": 959948902156062,
+      "steps": 1,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "66:52",
+        0
+      ],
+      "positive": [
+        "DONATE-frame-00__66:61",
+        0
+      ],
+      "negative": [
+        "DONATE-frame-00__66:61",
+        1
+      ],
+      "latent_image": [
+        "DONATE-frame-00__66:48",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "DONATE-frame-00__66:55": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "samples": [
+        "DONATE-frame-00__66:54",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeTiled",
+    "_meta": {
+      "title": "VAE Decode (Tiled)"
+    }
+  },
+  "DONATE-frame-00__66:58": {
+    "inputs": {
+      "resized_images": [
+        "DONATE-frame-00__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Preprocess",
+    "_meta": {
+      "title": "Pre-Process SeedVR2 Input"
+    }
+  },
+  "DONATE-frame-00__66:59": {
+    "inputs": {
+      "color_correction_method": "lab",
+      "images": [
+        "DONATE-frame-00__66:55",
+        0
+      ],
+      "original_resized_images": [
+        "DONATE-frame-00__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2PostProcessing",
+    "_meta": {
+      "title": "Post-Process SeedVR2 Output"
+    }
+  },
+  "DONATE-frame-00__66:61": {
+    "inputs": {
+      "model": [
+        "66:52",
+        0
+      ],
+      "vae_conditioning": [
+        "DONATE-frame-00__66:48",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Conditioning",
+    "_meta": {
+      "title": "Apply SeedVR2 Conditioning"
+    }
+  },
+  "DONATE-frame-00__66:57": {
+    "inputs": {
+      "resize_type": "scale by multiplier",
+      "resize_type.multiplier": 4,
+      "scale_method": "lanczos",
+      "input": [
+        "DONATE-frame-00__66:50",
+        0
+      ]
+    },
+    "class_type": "ResizeImageMaskNode",
+    "_meta": {
+      "title": "Resize Image/Mask"
+    }
+  },
+  "DONATE-frame-01__1": {
+    "inputs": {
+      "image": "UI40-20261111-DONATE-frame-01-padded.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "DONATE-frame-01__9": {
+    "inputs": {
+      "filename_prefix": "BG2_UI40_7B_20261111/DONATE-frame-01-7b-x4",
+      "images": [
+        "DONATE-frame-01__66:59",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "DONATE-frame-01__66:48": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "pixels": [
+        "DONATE-frame-01__66:58",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEEncodeTiled",
+    "_meta": {
+      "title": "VAE Encode (Tiled)"
+    }
+  },
+  "DONATE-frame-01__66:50": {
+    "inputs": {
+      "image": [
+        "DONATE-frame-01__1",
+        0
+      ],
+      "alpha": [
+        "DONATE-frame-01__1",
+        1
+      ]
+    },
+    "class_type": "JoinImageWithAlpha",
+    "_meta": {
+      "title": "Join Image with Alpha"
+    }
+  },
+  "DONATE-frame-01__66:54": {
+    "inputs": {
+      "seed": 959948902156062,
+      "steps": 1,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "66:52",
+        0
+      ],
+      "positive": [
+        "DONATE-frame-01__66:61",
+        0
+      ],
+      "negative": [
+        "DONATE-frame-01__66:61",
+        1
+      ],
+      "latent_image": [
+        "DONATE-frame-01__66:48",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "DONATE-frame-01__66:55": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "samples": [
+        "DONATE-frame-01__66:54",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeTiled",
+    "_meta": {
+      "title": "VAE Decode (Tiled)"
+    }
+  },
+  "DONATE-frame-01__66:58": {
+    "inputs": {
+      "resized_images": [
+        "DONATE-frame-01__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Preprocess",
+    "_meta": {
+      "title": "Pre-Process SeedVR2 Input"
+    }
+  },
+  "DONATE-frame-01__66:59": {
+    "inputs": {
+      "color_correction_method": "lab",
+      "images": [
+        "DONATE-frame-01__66:55",
+        0
+      ],
+      "original_resized_images": [
+        "DONATE-frame-01__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2PostProcessing",
+    "_meta": {
+      "title": "Post-Process SeedVR2 Output"
+    }
+  },
+  "DONATE-frame-01__66:61": {
+    "inputs": {
+      "model": [
+        "66:52",
+        0
+      ],
+      "vae_conditioning": [
+        "DONATE-frame-01__66:48",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Conditioning",
+    "_meta": {
+      "title": "Apply SeedVR2 Conditioning"
+    }
+  },
+  "DONATE-frame-01__66:57": {
+    "inputs": {
+      "resize_type": "scale by multiplier",
+      "resize_type.multiplier": 4,
+      "scale_method": "lanczos",
+      "input": [
+        "DONATE-frame-01__66:50",
+        0
+      ]
+    },
+    "class_type": "ResizeImageMaskNode",
+    "_meta": {
+      "title": "Resize Image/Mask"
+    }
+  },
+  "INNROOMS-frame-00__1": {
+    "inputs": {
+      "image": "UI40-20261111-INNROOMS-frame-00-padded.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "INNROOMS-frame-00__9": {
+    "inputs": {
+      "filename_prefix": "BG2_UI40_7B_20261111/INNROOMS-frame-00-7b-x4",
+      "images": [
+        "INNROOMS-frame-00__66:59",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "INNROOMS-frame-00__66:48": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "pixels": [
+        "INNROOMS-frame-00__66:58",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEEncodeTiled",
+    "_meta": {
+      "title": "VAE Encode (Tiled)"
+    }
+  },
+  "INNROOMS-frame-00__66:50": {
+    "inputs": {
+      "image": [
+        "INNROOMS-frame-00__1",
+        0
+      ],
+      "alpha": [
+        "INNROOMS-frame-00__1",
+        1
+      ]
+    },
+    "class_type": "JoinImageWithAlpha",
+    "_meta": {
+      "title": "Join Image with Alpha"
+    }
+  },
+  "INNROOMS-frame-00__66:54": {
+    "inputs": {
+      "seed": 959948902156062,
+      "steps": 1,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "66:52",
+        0
+      ],
+      "positive": [
+        "INNROOMS-frame-00__66:61",
+        0
+      ],
+      "negative": [
+        "INNROOMS-frame-00__66:61",
+        1
+      ],
+      "latent_image": [
+        "INNROOMS-frame-00__66:48",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "INNROOMS-frame-00__66:55": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "samples": [
+        "INNROOMS-frame-00__66:54",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeTiled",
+    "_meta": {
+      "title": "VAE Decode (Tiled)"
+    }
+  },
+  "INNROOMS-frame-00__66:58": {
+    "inputs": {
+      "resized_images": [
+        "INNROOMS-frame-00__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Preprocess",
+    "_meta": {
+      "title": "Pre-Process SeedVR2 Input"
+    }
+  },
+  "INNROOMS-frame-00__66:59": {
+    "inputs": {
+      "color_correction_method": "lab",
+      "images": [
+        "INNROOMS-frame-00__66:55",
+        0
+      ],
+      "original_resized_images": [
+        "INNROOMS-frame-00__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2PostProcessing",
+    "_meta": {
+      "title": "Post-Process SeedVR2 Output"
+    }
+  },
+  "INNROOMS-frame-00__66:61": {
+    "inputs": {
+      "model": [
+        "66:52",
+        0
+      ],
+      "vae_conditioning": [
+        "INNROOMS-frame-00__66:48",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Conditioning",
+    "_meta": {
+      "title": "Apply SeedVR2 Conditioning"
+    }
+  },
+  "INNROOMS-frame-00__66:57": {
+    "inputs": {
+      "resize_type": "scale by multiplier",
+      "resize_type.multiplier": 4,
+      "scale_method": "lanczos",
+      "input": [
+        "INNROOMS-frame-00__66:50",
+        0
+      ]
+    },
+    "class_type": "ResizeImageMaskNode",
+    "_meta": {
+      "title": "Resize Image/Mask"
+    }
+  },
+  "INNROOMS-frame-01__1": {
+    "inputs": {
+      "image": "UI40-20261111-INNROOMS-frame-01-padded.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "INNROOMS-frame-01__9": {
+    "inputs": {
+      "filename_prefix": "BG2_UI40_7B_20261111/INNROOMS-frame-01-7b-x4",
+      "images": [
+        "INNROOMS-frame-01__66:59",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "INNROOMS-frame-01__66:48": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "pixels": [
+        "INNROOMS-frame-01__66:58",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEEncodeTiled",
+    "_meta": {
+      "title": "VAE Encode (Tiled)"
+    }
+  },
+  "INNROOMS-frame-01__66:50": {
+    "inputs": {
+      "image": [
+        "INNROOMS-frame-01__1",
+        0
+      ],
+      "alpha": [
+        "INNROOMS-frame-01__1",
+        1
+      ]
+    },
+    "class_type": "JoinImageWithAlpha",
+    "_meta": {
+      "title": "Join Image with Alpha"
+    }
+  },
+  "INNROOMS-frame-01__66:54": {
+    "inputs": {
+      "seed": 959948902156062,
+      "steps": 1,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "66:52",
+        0
+      ],
+      "positive": [
+        "INNROOMS-frame-01__66:61",
+        0
+      ],
+      "negative": [
+        "INNROOMS-frame-01__66:61",
+        1
+      ],
+      "latent_image": [
+        "INNROOMS-frame-01__66:48",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "INNROOMS-frame-01__66:55": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "samples": [
+        "INNROOMS-frame-01__66:54",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeTiled",
+    "_meta": {
+      "title": "VAE Decode (Tiled)"
+    }
+  },
+  "INNROOMS-frame-01__66:58": {
+    "inputs": {
+      "resized_images": [
+        "INNROOMS-frame-01__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Preprocess",
+    "_meta": {
+      "title": "Pre-Process SeedVR2 Input"
+    }
+  },
+  "INNROOMS-frame-01__66:59": {
+    "inputs": {
+      "color_correction_method": "lab",
+      "images": [
+        "INNROOMS-frame-01__66:55",
+        0
+      ],
+      "original_resized_images": [
+        "INNROOMS-frame-01__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2PostProcessing",
+    "_meta": {
+      "title": "Post-Process SeedVR2 Output"
+    }
+  },
+  "INNROOMS-frame-01__66:61": {
+    "inputs": {
+      "model": [
+        "66:52",
+        0
+      ],
+      "vae_conditioning": [
+        "INNROOMS-frame-01__66:48",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Conditioning",
+    "_meta": {
+      "title": "Apply SeedVR2 Conditioning"
+    }
+  },
+  "INNROOMS-frame-01__66:57": {
+    "inputs": {
+      "resize_type": "scale by multiplier",
+      "resize_type.multiplier": 4,
+      "scale_method": "lanczos",
+      "input": [
+        "INNROOMS-frame-01__66:50",
+        0
+      ]
+    },
+    "class_type": "ResizeImageMaskNode",
+    "_meta": {
+      "title": "Resize Image/Mask"
+    }
+  },
+  "INNROOMS-frame-02__1": {
+    "inputs": {
+      "image": "UI40-20261111-INNROOMS-frame-02-padded.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "INNROOMS-frame-02__9": {
+    "inputs": {
+      "filename_prefix": "BG2_UI40_7B_20261111/INNROOMS-frame-02-7b-x4",
+      "images": [
+        "INNROOMS-frame-02__66:59",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "INNROOMS-frame-02__66:48": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "pixels": [
+        "INNROOMS-frame-02__66:58",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEEncodeTiled",
+    "_meta": {
+      "title": "VAE Encode (Tiled)"
+    }
+  },
+  "INNROOMS-frame-02__66:50": {
+    "inputs": {
+      "image": [
+        "INNROOMS-frame-02__1",
+        0
+      ],
+      "alpha": [
+        "INNROOMS-frame-02__1",
+        1
+      ]
+    },
+    "class_type": "JoinImageWithAlpha",
+    "_meta": {
+      "title": "Join Image with Alpha"
+    }
+  },
+  "INNROOMS-frame-02__66:54": {
+    "inputs": {
+      "seed": 959948902156062,
+      "steps": 1,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "66:52",
+        0
+      ],
+      "positive": [
+        "INNROOMS-frame-02__66:61",
+        0
+      ],
+      "negative": [
+        "INNROOMS-frame-02__66:61",
+        1
+      ],
+      "latent_image": [
+        "INNROOMS-frame-02__66:48",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "INNROOMS-frame-02__66:55": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "samples": [
+        "INNROOMS-frame-02__66:54",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeTiled",
+    "_meta": {
+      "title": "VAE Decode (Tiled)"
+    }
+  },
+  "INNROOMS-frame-02__66:58": {
+    "inputs": {
+      "resized_images": [
+        "INNROOMS-frame-02__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Preprocess",
+    "_meta": {
+      "title": "Pre-Process SeedVR2 Input"
+    }
+  },
+  "INNROOMS-frame-02__66:59": {
+    "inputs": {
+      "color_correction_method": "lab",
+      "images": [
+        "INNROOMS-frame-02__66:55",
+        0
+      ],
+      "original_resized_images": [
+        "INNROOMS-frame-02__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2PostProcessing",
+    "_meta": {
+      "title": "Post-Process SeedVR2 Output"
+    }
+  },
+  "INNROOMS-frame-02__66:61": {
+    "inputs": {
+      "model": [
+        "66:52",
+        0
+      ],
+      "vae_conditioning": [
+        "INNROOMS-frame-02__66:48",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Conditioning",
+    "_meta": {
+      "title": "Apply SeedVR2 Conditioning"
+    }
+  },
+  "INNROOMS-frame-02__66:57": {
+    "inputs": {
+      "resize_type": "scale by multiplier",
+      "resize_type.multiplier": 4,
+      "scale_method": "lanczos",
+      "input": [
+        "INNROOMS-frame-02__66:50",
+        0
+      ]
+    },
+    "class_type": "ResizeImageMaskNode",
+    "_meta": {
+      "title": "Resize Image/Mask"
+    }
+  },
+  "INNROOMS-frame-03__1": {
+    "inputs": {
+      "image": "UI40-20261111-INNROOMS-frame-03-padded.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "INNROOMS-frame-03__9": {
+    "inputs": {
+      "filename_prefix": "BG2_UI40_7B_20261111/INNROOMS-frame-03-7b-x4",
+      "images": [
+        "INNROOMS-frame-03__66:59",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "INNROOMS-frame-03__66:48": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "pixels": [
+        "INNROOMS-frame-03__66:58",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEEncodeTiled",
+    "_meta": {
+      "title": "VAE Encode (Tiled)"
+    }
+  },
+  "INNROOMS-frame-03__66:50": {
+    "inputs": {
+      "image": [
+        "INNROOMS-frame-03__1",
+        0
+      ],
+      "alpha": [
+        "INNROOMS-frame-03__1",
+        1
+      ]
+    },
+    "class_type": "JoinImageWithAlpha",
+    "_meta": {
+      "title": "Join Image with Alpha"
+    }
+  },
+  "INNROOMS-frame-03__66:54": {
+    "inputs": {
+      "seed": 959948902156062,
+      "steps": 1,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "66:52",
+        0
+      ],
+      "positive": [
+        "INNROOMS-frame-03__66:61",
+        0
+      ],
+      "negative": [
+        "INNROOMS-frame-03__66:61",
+        1
+      ],
+      "latent_image": [
+        "INNROOMS-frame-03__66:48",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "INNROOMS-frame-03__66:55": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "samples": [
+        "INNROOMS-frame-03__66:54",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeTiled",
+    "_meta": {
+      "title": "VAE Decode (Tiled)"
+    }
+  },
+  "INNROOMS-frame-03__66:58": {
+    "inputs": {
+      "resized_images": [
+        "INNROOMS-frame-03__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Preprocess",
+    "_meta": {
+      "title": "Pre-Process SeedVR2 Input"
+    }
+  },
+  "INNROOMS-frame-03__66:59": {
+    "inputs": {
+      "color_correction_method": "lab",
+      "images": [
+        "INNROOMS-frame-03__66:55",
+        0
+      ],
+      "original_resized_images": [
+        "INNROOMS-frame-03__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2PostProcessing",
+    "_meta": {
+      "title": "Post-Process SeedVR2 Output"
+    }
+  },
+  "INNROOMS-frame-03__66:61": {
+    "inputs": {
+      "model": [
+        "66:52",
+        0
+      ],
+      "vae_conditioning": [
+        "INNROOMS-frame-03__66:48",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Conditioning",
+    "_meta": {
+      "title": "Apply SeedVR2 Conditioning"
+    }
+  },
+  "INNROOMS-frame-03__66:57": {
+    "inputs": {
+      "resize_type": "scale by multiplier",
+      "resize_type.multiplier": 4,
+      "scale_method": "lanczos",
+      "input": [
+        "INNROOMS-frame-03__66:50",
+        0
+      ]
+    },
+    "class_type": "ResizeImageMaskNode",
+    "_meta": {
+      "title": "Resize Image/Mask"
+    }
+  },
+  "INNROOMS-frame-04__1": {
+    "inputs": {
+      "image": "UI40-20261111-INNROOMS-frame-04-padded.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "INNROOMS-frame-04__9": {
+    "inputs": {
+      "filename_prefix": "BG2_UI40_7B_20261111/INNROOMS-frame-04-7b-x4",
+      "images": [
+        "INNROOMS-frame-04__66:59",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "INNROOMS-frame-04__66:48": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "pixels": [
+        "INNROOMS-frame-04__66:58",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEEncodeTiled",
+    "_meta": {
+      "title": "VAE Encode (Tiled)"
+    }
+  },
+  "INNROOMS-frame-04__66:50": {
+    "inputs": {
+      "image": [
+        "INNROOMS-frame-04__1",
+        0
+      ],
+      "alpha": [
+        "INNROOMS-frame-04__1",
+        1
+      ]
+    },
+    "class_type": "JoinImageWithAlpha",
+    "_meta": {
+      "title": "Join Image with Alpha"
+    }
+  },
+  "INNROOMS-frame-04__66:54": {
+    "inputs": {
+      "seed": 959948902156062,
+      "steps": 1,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "66:52",
+        0
+      ],
+      "positive": [
+        "INNROOMS-frame-04__66:61",
+        0
+      ],
+      "negative": [
+        "INNROOMS-frame-04__66:61",
+        1
+      ],
+      "latent_image": [
+        "INNROOMS-frame-04__66:48",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "INNROOMS-frame-04__66:55": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "samples": [
+        "INNROOMS-frame-04__66:54",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeTiled",
+    "_meta": {
+      "title": "VAE Decode (Tiled)"
+    }
+  },
+  "INNROOMS-frame-04__66:58": {
+    "inputs": {
+      "resized_images": [
+        "INNROOMS-frame-04__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Preprocess",
+    "_meta": {
+      "title": "Pre-Process SeedVR2 Input"
+    }
+  },
+  "INNROOMS-frame-04__66:59": {
+    "inputs": {
+      "color_correction_method": "lab",
+      "images": [
+        "INNROOMS-frame-04__66:55",
+        0
+      ],
+      "original_resized_images": [
+        "INNROOMS-frame-04__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2PostProcessing",
+    "_meta": {
+      "title": "Post-Process SeedVR2 Output"
+    }
+  },
+  "INNROOMS-frame-04__66:61": {
+    "inputs": {
+      "model": [
+        "66:52",
+        0
+      ],
+      "vae_conditioning": [
+        "INNROOMS-frame-04__66:48",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Conditioning",
+    "_meta": {
+      "title": "Apply SeedVR2 Conditioning"
+    }
+  },
+  "INNROOMS-frame-04__66:57": {
+    "inputs": {
+      "resize_type": "scale by multiplier",
+      "resize_type.multiplier": 4,
+      "scale_method": "lanczos",
+      "input": [
+        "INNROOMS-frame-04__66:50",
+        0
+      ]
+    },
+    "class_type": "ResizeImageMaskNode",
+    "_meta": {
+      "title": "Resize Image/Mask"
+    }
+  },
+  "INNROOMS-frame-05__1": {
+    "inputs": {
+      "image": "UI40-20261111-INNROOMS-frame-05-padded.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "INNROOMS-frame-05__9": {
+    "inputs": {
+      "filename_prefix": "BG2_UI40_7B_20261111/INNROOMS-frame-05-7b-x4",
+      "images": [
+        "INNROOMS-frame-05__66:59",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "INNROOMS-frame-05__66:48": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "pixels": [
+        "INNROOMS-frame-05__66:58",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEEncodeTiled",
+    "_meta": {
+      "title": "VAE Encode (Tiled)"
+    }
+  },
+  "INNROOMS-frame-05__66:50": {
+    "inputs": {
+      "image": [
+        "INNROOMS-frame-05__1",
+        0
+      ],
+      "alpha": [
+        "INNROOMS-frame-05__1",
+        1
+      ]
+    },
+    "class_type": "JoinImageWithAlpha",
+    "_meta": {
+      "title": "Join Image with Alpha"
+    }
+  },
+  "INNROOMS-frame-05__66:54": {
+    "inputs": {
+      "seed": 959948902156062,
+      "steps": 1,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "66:52",
+        0
+      ],
+      "positive": [
+        "INNROOMS-frame-05__66:61",
+        0
+      ],
+      "negative": [
+        "INNROOMS-frame-05__66:61",
+        1
+      ],
+      "latent_image": [
+        "INNROOMS-frame-05__66:48",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "INNROOMS-frame-05__66:55": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "samples": [
+        "INNROOMS-frame-05__66:54",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeTiled",
+    "_meta": {
+      "title": "VAE Decode (Tiled)"
+    }
+  },
+  "INNROOMS-frame-05__66:58": {
+    "inputs": {
+      "resized_images": [
+        "INNROOMS-frame-05__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Preprocess",
+    "_meta": {
+      "title": "Pre-Process SeedVR2 Input"
+    }
+  },
+  "INNROOMS-frame-05__66:59": {
+    "inputs": {
+      "color_correction_method": "lab",
+      "images": [
+        "INNROOMS-frame-05__66:55",
+        0
+      ],
+      "original_resized_images": [
+        "INNROOMS-frame-05__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2PostProcessing",
+    "_meta": {
+      "title": "Post-Process SeedVR2 Output"
+    }
+  },
+  "INNROOMS-frame-05__66:61": {
+    "inputs": {
+      "model": [
+        "66:52",
+        0
+      ],
+      "vae_conditioning": [
+        "INNROOMS-frame-05__66:48",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Conditioning",
+    "_meta": {
+      "title": "Apply SeedVR2 Conditioning"
+    }
+  },
+  "INNROOMS-frame-05__66:57": {
+    "inputs": {
+      "resize_type": "scale by multiplier",
+      "resize_type.multiplier": 4,
+      "scale_method": "lanczos",
+      "input": [
+        "INNROOMS-frame-05__66:50",
+        0
+      ]
+    },
+    "class_type": "ResizeImageMaskNode",
+    "_meta": {
+      "title": "Resize Image/Mask"
+    }
+  },
+  "INNROOMS-frame-06__1": {
+    "inputs": {
+      "image": "UI40-20261111-INNROOMS-frame-06-padded.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "INNROOMS-frame-06__9": {
+    "inputs": {
+      "filename_prefix": "BG2_UI40_7B_20261111/INNROOMS-frame-06-7b-x4",
+      "images": [
+        "INNROOMS-frame-06__66:59",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "INNROOMS-frame-06__66:48": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "pixels": [
+        "INNROOMS-frame-06__66:58",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEEncodeTiled",
+    "_meta": {
+      "title": "VAE Encode (Tiled)"
+    }
+  },
+  "INNROOMS-frame-06__66:50": {
+    "inputs": {
+      "image": [
+        "INNROOMS-frame-06__1",
+        0
+      ],
+      "alpha": [
+        "INNROOMS-frame-06__1",
+        1
+      ]
+    },
+    "class_type": "JoinImageWithAlpha",
+    "_meta": {
+      "title": "Join Image with Alpha"
+    }
+  },
+  "INNROOMS-frame-06__66:54": {
+    "inputs": {
+      "seed": 959948902156062,
+      "steps": 1,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "66:52",
+        0
+      ],
+      "positive": [
+        "INNROOMS-frame-06__66:61",
+        0
+      ],
+      "negative": [
+        "INNROOMS-frame-06__66:61",
+        1
+      ],
+      "latent_image": [
+        "INNROOMS-frame-06__66:48",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "INNROOMS-frame-06__66:55": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "samples": [
+        "INNROOMS-frame-06__66:54",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeTiled",
+    "_meta": {
+      "title": "VAE Decode (Tiled)"
+    }
+  },
+  "INNROOMS-frame-06__66:58": {
+    "inputs": {
+      "resized_images": [
+        "INNROOMS-frame-06__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Preprocess",
+    "_meta": {
+      "title": "Pre-Process SeedVR2 Input"
+    }
+  },
+  "INNROOMS-frame-06__66:59": {
+    "inputs": {
+      "color_correction_method": "lab",
+      "images": [
+        "INNROOMS-frame-06__66:55",
+        0
+      ],
+      "original_resized_images": [
+        "INNROOMS-frame-06__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2PostProcessing",
+    "_meta": {
+      "title": "Post-Process SeedVR2 Output"
+    }
+  },
+  "INNROOMS-frame-06__66:61": {
+    "inputs": {
+      "model": [
+        "66:52",
+        0
+      ],
+      "vae_conditioning": [
+        "INNROOMS-frame-06__66:48",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Conditioning",
+    "_meta": {
+      "title": "Apply SeedVR2 Conditioning"
+    }
+  },
+  "INNROOMS-frame-06__66:57": {
+    "inputs": {
+      "resize_type": "scale by multiplier",
+      "resize_type.multiplier": 4,
+      "scale_method": "lanczos",
+      "input": [
+        "INNROOMS-frame-06__66:50",
+        0
+      ]
+    },
+    "class_type": "ResizeImageMaskNode",
+    "_meta": {
+      "title": "Resize Image/Mask"
+    }
+  },
+  "INNROOMS-frame-07__1": {
+    "inputs": {
+      "image": "UI40-20261111-INNROOMS-frame-07-padded.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "INNROOMS-frame-07__9": {
+    "inputs": {
+      "filename_prefix": "BG2_UI40_7B_20261111/INNROOMS-frame-07-7b-x4",
+      "images": [
+        "INNROOMS-frame-07__66:59",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "INNROOMS-frame-07__66:48": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "pixels": [
+        "INNROOMS-frame-07__66:58",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEEncodeTiled",
+    "_meta": {
+      "title": "VAE Encode (Tiled)"
+    }
+  },
+  "INNROOMS-frame-07__66:50": {
+    "inputs": {
+      "image": [
+        "INNROOMS-frame-07__1",
+        0
+      ],
+      "alpha": [
+        "INNROOMS-frame-07__1",
+        1
+      ]
+    },
+    "class_type": "JoinImageWithAlpha",
+    "_meta": {
+      "title": "Join Image with Alpha"
+    }
+  },
+  "INNROOMS-frame-07__66:54": {
+    "inputs": {
+      "seed": 959948902156062,
+      "steps": 1,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "66:52",
+        0
+      ],
+      "positive": [
+        "INNROOMS-frame-07__66:61",
+        0
+      ],
+      "negative": [
+        "INNROOMS-frame-07__66:61",
+        1
+      ],
+      "latent_image": [
+        "INNROOMS-frame-07__66:48",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "INNROOMS-frame-07__66:55": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8,
+      "samples": [
+        "INNROOMS-frame-07__66:54",
+        0
+      ],
+      "vae": [
+        "66:51",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeTiled",
+    "_meta": {
+      "title": "VAE Decode (Tiled)"
+    }
+  },
+  "INNROOMS-frame-07__66:58": {
+    "inputs": {
+      "resized_images": [
+        "INNROOMS-frame-07__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Preprocess",
+    "_meta": {
+      "title": "Pre-Process SeedVR2 Input"
+    }
+  },
+  "INNROOMS-frame-07__66:59": {
+    "inputs": {
+      "color_correction_method": "lab",
+      "images": [
+        "INNROOMS-frame-07__66:55",
+        0
+      ],
+      "original_resized_images": [
+        "INNROOMS-frame-07__66:57",
+        0
+      ]
+    },
+    "class_type": "SeedVR2PostProcessing",
+    "_meta": {
+      "title": "Post-Process SeedVR2 Output"
+    }
+  },
+  "INNROOMS-frame-07__66:61": {
+    "inputs": {
+      "model": [
+        "66:52",
+        0
+      ],
+      "vae_conditioning": [
+        "INNROOMS-frame-07__66:48",
+        0
+      ]
+    },
+    "class_type": "SeedVR2Conditioning",
+    "_meta": {
+      "title": "Apply SeedVR2 Conditioning"
+    }
+  },
+  "INNROOMS-frame-07__66:57": {
+    "inputs": {
+      "resize_type": "scale by multiplier",
+      "resize_type.multiplier": 4,
+      "scale_method": "lanczos",
+      "input": [
+        "INNROOMS-frame-07__66:50",
+        0
+      ]
+    },
+    "class_type": "ResizeImageMaskNode",
+    "_meta": {
+      "title": "Resize Image/Mask"
+    }
+  }
+}
