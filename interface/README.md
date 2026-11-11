@@ -79,3 +79,7 @@ Décisions finales : `analysis/large-surfaces-20261110-v1/decisions.json` ; bout
 Autorité des travaux retenus : [suivi UI/HUD](tracking/README.md).
 Les inventaires source et anciens packs restent historiques ; leurs boutons/icônes ne sont plus
 des travaux actifs. États production, QA, installation et release séparés par ressource.
+
+Quatre menus SeedVR2 7B x4 retenus pour test ingame (2026-11-11) : `INVENTOR`, `QUESTBAK`, `GUIREC2`, `STONEOPT`.
+Installation/retour exact : [`integration/four-menus-seedvr7b-20261111-v1/README.md`](integration/four-menus-seedvr7b-20261111-v1/README.md).
+La recette Topaz reste inchangée pour les autres ressources.

@@ -12,7 +12,7 @@
 |---|---|
 | source | `resolved` + ressource native, frames, pages ; pas de QA |
 | usage | `observed-selector-normal`, `static-reference`, `variant-to-qualify` |
-| production | `complete-existing-x4`, `partial-existing-x4`, `not-assessed` ; complet = toutes frames natives |
+| production | `complete-existing-x4`, `complete-selected-x4`, `partial-existing-x4`, `not-assessed` ; complet = toutes frames natives |
 | QA | `accepted-observed-normal`, `accepted-complete`, `not-reconciled` ; preuve et limites obligatoires pour une acceptation |
 | installation | reçu daté / état non réconcilié ; ne pas déduire l’état live d’un reçu ancien |
 | release | `confirmed-current-scope` ou `not-reconciled` ; aucun changement payload déduit |
@@ -56,3 +56,5 @@ des unités comparables. Zéro ressource release réconciliée n’affirme pas u
 Publication distincte ; règles : `../../docs/WEBSITE.md`.
 
 Références absentes `GUIBG`/`GUINOTE` : `work-tracking.json:unresolved_references`, hors dénominateur 204, à qualifier avant tout ajout.
+
+Exception retenue 2026-11-11 : `INVENTOR`, `QUESTBAK`, `GUIREC2`, `STONEOPT` utilisent SeedVR2 7B x4 LAB ; recette et PNG exacts dans leurs états production. La recette Topaz demeure celle des autres ressources.

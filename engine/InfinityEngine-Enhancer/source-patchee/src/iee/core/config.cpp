@@ -293,6 +293,8 @@ static void apply_kv(EngineConfig& cfg, ConfigParseState& state, const std::stri
       assign_bool(cfg.enableMainMenuX4Test);
     else if (iequals(key, "EnableSelectorX4"))
       assign_bool(cfg.enableSelectorX4);
+    else if (iequals(key, "EnableGameplayMenusX4"))
+      assign_bool(cfg.enableGameplayMenusX4);
     else if (iequals(key, "EnableMenuX2Test"))
       assign_bool(cfg.enableMenuX2Test);
     return;
@@ -481,6 +483,7 @@ bool ConfigManager::save(const std::filesystem::path& path, const EngineConfig& 
   write_bool(f, "EnableBigLogoX4Test", cfg.enableBigLogoX4Test);
   write_bool(f, "EnableMainMenuX4Test", cfg.enableMainMenuX4Test);
   write_bool(f, "EnableSelectorX4", cfg.enableSelectorX4);
+  write_bool(f, "EnableGameplayMenusX4", cfg.enableGameplayMenusX4);
   write_bool(f, "EnableMenuX2Test", cfg.enableMenuX2Test);
 
   write_section(f, "ShaderSuite");

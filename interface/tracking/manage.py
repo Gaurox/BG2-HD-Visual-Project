@@ -18,8 +18,9 @@ def summary(data):
     rows = data['resources']
     return dict(schema='bg2-ui-progress-v1', authority='interface/index/work-tracking.json',
                 updated_on=data['updated_on'], unit='logical native resref; all frames for complete production',
-                total=len(rows), produced=sum(r['production']['state'] == 'complete-existing-x4' for r in rows),
+                total=len(rows), produced=sum(r['production']['state'] in ('complete-existing-x4', 'complete-selected-x4') for r in rows),
                 partial_production=sum(r['production']['state'] == 'partial-existing-x4' for r in rows),
+                qa_observed_resources=sum(r['qa']['state'] == 'accepted-observed-menu' for r in rows),
                 qa_complete=sum(r['qa']['state'] == 'accepted-complete' for r in rows),
                 qa_observed_normal=sum(r['qa']['state'] == 'accepted-observed-normal' for r in rows),
                 release_confirmed=sum(r['release']['state'] == 'confirmed-current-scope' for r in rows),

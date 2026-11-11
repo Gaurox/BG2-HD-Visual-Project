@@ -1,0 +1,114 @@
+{
+  "schema": "bg2-ui-seedvr-comparison-v1",
+  "state": "7b-selected-3b-removed",
+  "seed": 959948902156062,
+  "scale": 4,
+  "color_correction": "lab",
+  "steps": 1,
+  "cfg": 1,
+  "sampler": "euler",
+  "scheduler": "simple",
+  "padding": "right/bottom edge replication to multiple64; exact crop after inference",
+  "alpha": "native alpha nearest x4 applied separately after RGB inference",
+  "results": [
+    {
+      "resref": "INVENTOR",
+      "model": "7b",
+      "state": "selected-for-ingame-test",
+      "output": "seedvr-7b-x4/INVENTOR/INVENTOR-seedvr-7b-x4.png",
+      "size": [
+        3456,
+        2840
+      ],
+      "sha256": "2459989a8c99b0c88f98c28734bccbaded86c84e2c4415fc80cf09372ccd150a",
+      "raw_output": "seedvr-7b-x4/INVENTOR/raw/4f705d0f_000.png"
+    },
+    {
+      "resref": "INVENTOR",
+      "model": "3b",
+      "state": "rejected-files-removed",
+      "output": "seedvr-3b-x4/INVENTOR/INVENTOR-seedvr-3b-x4.png",
+      "size": [
+        3456,
+        2840
+      ],
+      "sha256": "6c42339a7729c6b11afeb71132ce29658388933d322b8f557529db0cfb6215d4",
+      "raw_output": "seedvr-3b-x4/INVENTOR/raw/e2000f67_000.png"
+    },
+    {
+      "resref": "QUESTBAK",
+      "model": "7b",
+      "state": "selected-for-ingame-test",
+      "output": "seedvr-7b-x4/QUESTBAK/QUESTBAK-seedvr-7b-x4.png",
+      "size": [
+        2004,
+        3092
+      ],
+      "sha256": "89c3dceaeb55ec511262376218acd7821f330ccea699f2219874a65e22522b4d",
+      "raw_output": "seedvr-7b-x4/QUESTBAK/raw/0a564dda_000.png"
+    },
+    {
+      "resref": "QUESTBAK",
+      "model": "3b",
+      "state": "rejected-files-removed",
+      "output": "seedvr-3b-x4/QUESTBAK/QUESTBAK-seedvr-3b-x4.png",
+      "size": [
+        2004,
+        3092
+      ],
+      "sha256": "9c12abfe40fe743c13df873df61821cea6b17614f1eb01c905a1ba7ef6778c48",
+      "raw_output": "seedvr-3b-x4/QUESTBAK/raw/00720bce_000.png"
+    },
+    {
+      "resref": "GUIREC2",
+      "model": "7b",
+      "state": "selected-for-ingame-test",
+      "output": "seedvr-7b-x4/GUIREC2/GUIREC2-seedvr-7b-x4.png",
+      "size": [
+        3456,
+        2836
+      ],
+      "sha256": "cf2a080baa72588e052507254163425fbabbbfcd63bee235d388c3bf3537cd2b",
+      "raw_output": "seedvr-7b-x4/GUIREC2/raw/7b2e68ed_000.png"
+    },
+    {
+      "resref": "GUIREC2",
+      "model": "3b",
+      "state": "rejected-files-removed",
+      "output": "seedvr-3b-x4/GUIREC2/GUIREC2-seedvr-3b-x4.png",
+      "size": [
+        3456,
+        2836
+      ],
+      "sha256": "384d8ba669472c1b8326c6ec1214fdf363af325b273eabe0b2314942410db3f7",
+      "raw_output": "seedvr-3b-x4/GUIREC2/raw/95d0fe9e_000.png"
+    },
+    {
+      "resref": "STONEOPT",
+      "model": "7b",
+      "state": "selected-for-ingame-test",
+      "output": "seedvr-7b-x4/STONEOPT/STONEOPT-seedvr-7b-x4.png",
+      "size": [
+        3456,
+        3072
+      ],
+      "sha256": "a370fadf67eb5700f394db57ea571b05ffd939918b1ffa4d17c9a7235eb2fd77",
+      "raw_output": "seedvr-7b-x4/STONEOPT/raw/91b225b2_000.png"
+    },
+    {
+      "resref": "STONEOPT",
+      "model": "3b",
+      "state": "rejected-files-removed",
+      "output": "seedvr-3b-x4/STONEOPT/STONEOPT-seedvr-3b-x4.png",
+      "size": [
+        3456,
+        3072
+      ],
+      "sha256": "bb245e390fd177d489eafdf6738cf76f8a4e9219f8268db427ceba22c2d146bf",
+      "raw_output": "seedvr-3b-x4/STONEOPT/raw/d3ea45e8_000.png"
+    }
+  ],
+  "qa": "offline-selection-only; awaiting-ingame-test",
+  "installation": "not installed",
+  "release": "unchanged"
+}

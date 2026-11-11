@@ -152,10 +152,10 @@ static DWORD WINAPI InitThread(LPVOID) {
     if (cfg.enableMenuX2Test) {
       const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
       (void)biglogo::prepare(moduleDir / "iee-assets", 2, true, true);
-    } else if (cfg.enableBigLogoX4Test || cfg.enableMainMenuX4Test || cfg.enableSelectorX4) {
+    } else if (cfg.enableBigLogoX4Test || cfg.enableMainMenuX4Test || cfg.enableSelectorX4 || cfg.enableGameplayMenusX4) {
       const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
       (void)biglogo::prepare(moduleDir / "iee-assets", 4, cfg.enableBigLogoX4Test,
-                             cfg.enableMainMenuX4Test, cfg.enableSelectorX4);
+                             cfg.enableMainMenuX4Test, cfg.enableSelectorX4, cfg.enableGameplayMenusX4);
     }
     if (cfg.enableAM3000AFrameX4Test) {
       const auto moduleDir = ModuleDirectory(cfgPath.parent_path());

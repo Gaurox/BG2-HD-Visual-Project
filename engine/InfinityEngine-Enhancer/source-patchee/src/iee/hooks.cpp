@@ -5365,7 +5365,7 @@ static void* dispatch_pvr_demand(void* thisPtr,
   // This boundary precedes native decompression/cache materialization/upload,
   // including the first START3EE texture. Do not wait for SwapBuffers or a map
   // draw, and do not throttle retries across the first group of UI pages.
-  if (ctx && ctx->cfg.enableSelectorX4) {
+  if (ctx && (ctx->cfg.enableSelectorX4 || ctx->cfg.enableGameplayMenusX4)) {
     const DWORD lastError = GetLastError();
     (void)probe::install_menu_upload_hook(ctx->cfg);
     SetLastError(lastError);
@@ -6006,7 +6006,7 @@ bool install_all(AppContext& ctx) {
     g_nativeFxSurfacePools = nullptr;
     // The selector must also work with all map diagnostics/preparation disabled.
     // Its guarded Demand interceptor is independent of those optional features.
-    if (ctx.cfg.enableSelectorX4 && !g_pvrDemandHook.original()) {
+    if ((ctx.cfg.enableSelectorX4 || ctx.cfg.enableGameplayMenusX4) && !g_pvrDemandHook.original()) {
       const auto module = core::get_module_span(nullptr);
       const auto& runtime = ctx.manifest->pvrDemand;
       if (!module || !runtime.enabled() ||

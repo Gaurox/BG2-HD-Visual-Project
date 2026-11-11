@@ -1,6 +1,6 @@
 {
   "schema": "bg2-ui-work-tracking-v1",
-  "updated_on": "2026-11-10",
+  "updated_on": "2026-11-11",
   "selection_inventory": "interface/analysis/large-surfaces-20261110-v1/inventory.json",
   "selection_decisions": "interface/analysis/large-surfaces-20261110-v1/decisions.json",
   "excluded_catalogue": "interface/tracking/out-of-scope.csv",
@@ -5946,18 +5946,29 @@
         ]
       },
       "production": {
-        "state": "not-assessed",
-        "evidence": [],
-        "note": "No inference of missing production from absence in these two current menu folders."
+        "state": "complete-selected-x4",
+        "recipe": "SeedVR2 7B int8 convrot, x4, LAB, seed959948902156062",
+        "evidence": [
+          "interface/experiments/menus-seedvr-x4-7b-3b-20261110-v1/seedvr-7b-x4/GUIREC2/GUIREC2-seedvr-7b-x4.png",
+          "interface/experiments/menus-seedvr-x4-7b-3b-20261110-v1/selection-20261111.json"
+        ],
+        "sha256": "cf2a080baa72588e052507254163425fbabbbfcd63bee235d388c3bf3537cd2b",
+        "coverage": "complete native MOS composition"
       },
       "qa": {
-        "state": "not-reconciled",
-        "evidence": [],
-        "note": "Historical menu-group QA retained separately; not automatically mapped to resource/frame units."
+        "state": "accepted-observed-menu",
+        "evidence": [
+          "interface/integration/four-menus-seedvr7b-20261111-v1/qa-three-menus-20261111-v1.json"
+        ],
+        "limits": "Current installed rendering observed by user; not all character/option variants or all controls states."
       },
       "installation": {
-        "state": "not-reconciled",
-        "evidence": []
+        "state": "installed-for-ingame-test",
+        "evidence": [
+          "interface/integration/four-menus-seedvr7b-20261111-v1/installed-20261111-v1.json"
+        ],
+        "flag": "EnableGameplayMenusX4=true",
+        "date": "2026-11-11"
       },
       "release": {
         "state": "not-reconciled",
@@ -5965,7 +5976,20 @@
         "note": "Existing release is unchanged. No resource count derived from two legacy menu groups."
       },
       "constraints": [],
-      "next_action": "qualify-usage-and-existing-production"
+      "next_action": "retain-accepted-output",
+      "experiments": [
+        {
+          "run": "interface/experiments/menus-seedvr-x4-7b-3b-20261110-v1",
+          "state": "7b-selected-3b-removed",
+          "variants": [
+            "seedvr-7b-x4"
+          ],
+          "evidence": [
+            "interface/experiments/menus-seedvr-x4-7b-3b-20261110-v1/results.json"
+          ],
+          "production_qa_installation_release_unchanged": false
+        }
+      ]
     },
     {
       "resref": "GUIRECBG",
@@ -8907,18 +8931,29 @@
         ]
       },
       "production": {
-        "state": "not-assessed",
-        "evidence": [],
-        "note": "No inference of missing production from absence in these two current menu folders."
+        "state": "complete-selected-x4",
+        "recipe": "SeedVR2 7B int8 convrot, x4, LAB, seed959948902156062",
+        "evidence": [
+          "interface/experiments/menus-seedvr-x4-7b-3b-20261110-v1/seedvr-7b-x4/INVENTOR/INVENTOR-seedvr-7b-x4.png",
+          "interface/experiments/menus-seedvr-x4-7b-3b-20261110-v1/selection-20261111.json"
+        ],
+        "sha256": "2459989a8c99b0c88f98c28734bccbaded86c84e2c4415fc80cf09372ccd150a",
+        "coverage": "complete native MOS composition"
       },
       "qa": {
-        "state": "not-reconciled",
-        "evidence": [],
-        "note": "Historical menu-group QA retained separately; not automatically mapped to resource/frame units."
+        "state": "accepted-observed-menu",
+        "evidence": [
+          "interface/integration/four-menus-seedvr7b-20261111-v1/qa-three-menus-20261111-v1.json"
+        ],
+        "limits": "Current installed rendering observed by user; not all character/option variants or all controls states."
       },
       "installation": {
-        "state": "not-reconciled",
-        "evidence": []
+        "state": "installed-for-ingame-test",
+        "evidence": [
+          "interface/integration/four-menus-seedvr7b-20261111-v1/installed-20261111-v1.json"
+        ],
+        "flag": "EnableGameplayMenusX4=true",
+        "date": "2026-11-11"
       },
       "release": {
         "state": "not-reconciled",
@@ -8926,7 +8961,20 @@
         "note": "Existing release is unchanged. No resource count derived from two legacy menu groups."
       },
       "constraints": [],
-      "next_action": "qualify-usage-and-existing-production"
+      "next_action": "retain-accepted-output",
+      "experiments": [
+        {
+          "run": "interface/experiments/menus-seedvr-x4-7b-3b-20261110-v1",
+          "state": "7b-selected-3b-removed",
+          "variants": [
+            "seedvr-7b-x4"
+          ],
+          "evidence": [
+            "interface/experiments/menus-seedvr-x4-7b-3b-20261110-v1/results.json"
+          ],
+          "production_qa_installation_release_unchanged": false
+        }
+      ]
     },
     {
       "resref": "INVSTATS",
@@ -9478,18 +9526,29 @@
         ]
       },
       "production": {
-        "state": "not-assessed",
-        "evidence": [],
-        "note": "No inference of missing production from absence in these two current menu folders."
+        "state": "complete-selected-x4",
+        "recipe": "SeedVR2 7B int8 convrot, x4, LAB, seed959948902156062",
+        "evidence": [
+          "interface/experiments/menus-seedvr-x4-7b-3b-20261110-v1/seedvr-7b-x4/QUESTBAK/QUESTBAK-seedvr-7b-x4.png",
+          "interface/experiments/menus-seedvr-x4-7b-3b-20261110-v1/selection-20261111.json"
+        ],
+        "sha256": "89c3dceaeb55ec511262376218acd7821f330ccea699f2219874a65e22522b4d",
+        "coverage": "complete native MOS composition"
       },
       "qa": {
-        "state": "not-reconciled",
-        "evidence": [],
-        "note": "Historical menu-group QA retained separately; not automatically mapped to resource/frame units."
+        "state": "accepted-observed-menu",
+        "evidence": [
+          "interface/integration/journal-paper-seedvr7b-20261111-v1/qa-accepted-20261111-v1.json"
+        ],
+        "limits": "Journal rendering after QUESTBG frame0/frame1 7B supplement; current observed menu accepted, not an exhaustive interaction/state audit."
       },
       "installation": {
-        "state": "not-reconciled",
-        "evidence": []
+        "state": "installed-for-ingame-test",
+        "evidence": [
+          "interface/integration/four-menus-seedvr7b-20261111-v1/installed-20261111-v1.json"
+        ],
+        "flag": "EnableGameplayMenusX4=true",
+        "date": "2026-11-11"
       },
       "release": {
         "state": "not-reconciled",
@@ -9497,7 +9556,20 @@
         "note": "Existing release is unchanged. No resource count derived from two legacy menu groups."
       },
       "constraints": [],
-      "next_action": "qualify-usage-and-existing-production"
+      "next_action": "retain-accepted-output",
+      "experiments": [
+        {
+          "run": "interface/experiments/menus-seedvr-x4-7b-3b-20261110-v1",
+          "state": "7b-selected-3b-removed",
+          "variants": [
+            "seedvr-7b-x4"
+          ],
+          "evidence": [
+            "interface/experiments/menus-seedvr-x4-7b-3b-20261110-v1/results.json"
+          ],
+          "production_qa_installation_release_unchanged": false
+        }
+      ]
     },
     {
       "resref": "QUESTBG",
@@ -9531,18 +9603,25 @@
         ]
       },
       "production": {
-        "state": "not-assessed",
-        "evidence": [],
-        "note": "No inference of missing production from absence in these two current menu folders."
+        "state": "complete-selected-x4",
+        "recipe": "SeedVR2 7B int8 convrot x4 LAB, same recipe as four selected menus",
+        "evidence": [
+          "interface/experiments/journal-paper-seedvr7b-20261111-v1/results.json"
+        ],
+        "coverage": "both native BAM frames 0/1; native alpha x4"
       },
       "qa": {
-        "state": "not-reconciled",
-        "evidence": [],
-        "note": "Historical menu-group QA retained separately; not automatically mapped to resource/frame units."
+        "state": "accepted-observed-menu",
+        "evidence": [
+          "interface/integration/journal-paper-seedvr7b-20261111-v1/qa-accepted-20261111-v1.json"
+        ],
+        "limits": "Journal rendering after QUESTBG frame0/frame1 7B supplement; current observed menu accepted, not an exhaustive interaction/state audit."
       },
       "installation": {
-        "state": "not-reconciled",
-        "evidence": []
+        "state": "installed-for-ingame-test",
+        "evidence": [
+          "interface/integration/journal-paper-seedvr7b-20261111-v1/installed-20261111-v1.json"
+        ]
       },
       "release": {
         "state": "not-reconciled",
@@ -9550,7 +9629,7 @@
         "note": "Existing release is unchanged. No resource count derived from two legacy menu groups."
       },
       "constraints": [],
-      "next_action": "qualify-usage-and-existing-production"
+      "next_action": "retain-accepted-output"
     },
     {
       "resref": "RECENTEV",
@@ -10256,18 +10335,29 @@
         ]
       },
       "production": {
-        "state": "not-assessed",
-        "evidence": [],
-        "note": "No inference of missing production from absence in these two current menu folders."
+        "state": "complete-selected-x4",
+        "recipe": "SeedVR2 7B int8 convrot, x4, LAB, seed959948902156062",
+        "evidence": [
+          "interface/experiments/menus-seedvr-x4-7b-3b-20261110-v1/seedvr-7b-x4/STONEOPT/STONEOPT-seedvr-7b-x4.png",
+          "interface/experiments/menus-seedvr-x4-7b-3b-20261110-v1/selection-20261111.json"
+        ],
+        "sha256": "a370fadf67eb5700f394db57ea571b05ffd939918b1ffa4d17c9a7235eb2fd77",
+        "coverage": "complete native MOS composition"
       },
       "qa": {
-        "state": "not-reconciled",
-        "evidence": [],
-        "note": "Historical menu-group QA retained separately; not automatically mapped to resource/frame units."
+        "state": "accepted-observed-menu",
+        "evidence": [
+          "interface/integration/four-menus-seedvr7b-20261111-v1/qa-three-menus-20261111-v1.json"
+        ],
+        "limits": "Current installed rendering observed by user; not all character/option variants or all controls states."
       },
       "installation": {
-        "state": "not-reconciled",
-        "evidence": []
+        "state": "installed-for-ingame-test",
+        "evidence": [
+          "interface/integration/four-menus-seedvr7b-20261111-v1/installed-20261111-v1.json"
+        ],
+        "flag": "EnableGameplayMenusX4=true",
+        "date": "2026-11-11"
       },
       "release": {
         "state": "not-reconciled",
@@ -10275,7 +10365,20 @@
         "note": "Existing release is unchanged. No resource count derived from two legacy menu groups."
       },
       "constraints": [],
-      "next_action": "qualify-usage-and-existing-production"
+      "next_action": "retain-accepted-output",
+      "experiments": [
+        {
+          "run": "interface/experiments/menus-seedvr-x4-7b-3b-20261110-v1",
+          "state": "7b-selected-3b-removed",
+          "variants": [
+            "seedvr-7b-x4"
+          ],
+          "evidence": [
+            "interface/experiments/menus-seedvr-x4-7b-3b-20261110-v1/results.json"
+          ],
+          "production_qa_installation_release_unchanged": false
+        }
+      ]
     },
     {
       "resref": "TITLE",

@@ -1,0 +1,39 @@
+{
+  "schema": "bg2-four-menus-install-v1",
+  "time_utc": "20261111T000047Z",
+  "game": "config://bg2ee_game_root",
+  "files": {
+    "InfinityEngine-Enhancer.dll": {
+      "before_sha256": "0af1caf2fc75fedc28ca4b69784b3afb2fa7ff5567e5e39971bd9fc78ca7fbae",
+      "installed_sha256": "87b10946d3027517768f8b8c1f77942087be4bd691b7db5db7fdc5bc150a9a62"
+    },
+    "InfinityEngine-Enhancer.ini": {
+      "before_sha256": "801c4daa69d7137548367aaa5df7ddb34cad289feb4ca115516ec4bf737a90a6",
+      "installed_sha256": "801c4daa69d7137548367aaa5df7ddb34cad289feb4ca115516ec4bf737a90a6"
+    },
+    "iee-assets/GAMEPLAY7B-MOS0254-x4.dxt5": {
+      "before_sha256": "a66f148b78ddc3d920f2fcd1b2384cbada29c6856e1fb6eaedbbbb1a7ef6b723",
+      "installed_sha256": "fe36688073a38edda0912c90da9c3b879c0f6bf2fd51546e39e96e8928062363"
+    },
+    "iee-assets/GAMEPLAY7B-MOS0255-x4.dxt5": {
+      "before_sha256": null,
+      "installed_sha256": "b125f72ce99ae001d32ae1b1d90655ad9c8e7f448cb5d138ef0f5fc2010316ae"
+    }
+  },
+  "scope": [
+    "QUESTBG frame0/frame1; pages254/255 only"
+  ],
+  "qa": "journal awaits user retest",
+  "release": "unchanged",
+  "backup_receipt": "interface/integration/journal-paper-seedvr7b-20261111-v1/backups/20261111T000047Z/receipt.json",
+  "untouched_prior_files_verified": [
+    "iee-assets/GAMEPLAY7B-MOS0155-x4.dxt5",
+    "iee-assets/GAMEPLAY7B-MOS0156-x4.dxt5",
+    "iee-assets/GAMEPLAY7B-MOS0180-x4.dxt5",
+    "iee-assets/MAINMENU-MOS0181-x4.dxt5",
+    "iee-assets/GAMEPLAY7B-MOS0253-x4.dxt5",
+    "iee-assets/GAMEPLAY7B-MOS0263-x4.dxt5",
+    "iee-assets/GAMEPLAY7B-MOS0264-x4.dxt5"
+  ],
+  "tests": "9 gameplay/7 selector exact payload and isolation passed"
+}

@@ -1,0 +1,62 @@
+{
+  "schema": "bg2-four-menus-install-v1",
+  "time_utc": "20261110T231055Z",
+  "game": "config://bg2ee_game_root",
+  "files": {
+    "InfinityEngine-Enhancer.dll": {
+      "before_sha256": "ee2eef18753665ea41cb1f2f87cf7890a62f6accbb68d508e76f31203486b333",
+      "installed_sha256": "0af1caf2fc75fedc28ca4b69784b3afb2fa7ff5567e5e39971bd9fc78ca7fbae"
+    },
+    "InfinityEngine-Enhancer.ini": {
+      "before_sha256": "fd41b3a505af60a65daa6bce152413f82968023e03f34f7b7106d17e86e894cf",
+      "installed_sha256": "801c4daa69d7137548367aaa5df7ddb34cad289feb4ca115516ec4bf737a90a6"
+    },
+    "iee-assets/GAMEPLAY7B-MOS0155-x4.dxt5": {
+      "before_sha256": null,
+      "installed_sha256": "2a96cd8b63c6e2ab05f8c89ec8602cef6c36ebf3b5247a53322e81856f6dc410"
+    },
+    "iee-assets/GAMEPLAY7B-MOS0156-x4.dxt5": {
+      "before_sha256": null,
+      "installed_sha256": "f0390405bb2365312b33563703d6f236a49ee42eb52aab8714e192c5022bbc0e"
+    },
+    "iee-assets/GAMEPLAY7B-MOS0180-x4.dxt5": {
+      "before_sha256": null,
+      "installed_sha256": "93d97f7e9bd2b3674ea9e215e4fde3049d164da0fed25a709dda12fb3510e3a3"
+    },
+    "iee-assets/MAINMENU-MOS0181-x4.dxt5": {
+      "before_sha256": "595c9d95288b7b01c9dbe71dd3c79d9d12fe46af4b8ae8f0645d4f99f04c41ca",
+      "installed_sha256": "1572c1e3f485de6cc0c970e8465a54a097f609856823faee043eac10fecddf38"
+    },
+    "iee-assets/GAMEPLAY7B-MOS0253-x4.dxt5": {
+      "before_sha256": null,
+      "installed_sha256": "2f260201380b7c04fde0fc42b8b318a4b2655f0cfb04c0b9b5f317b279d7c0e4"
+    },
+    "iee-assets/GAMEPLAY7B-MOS0254-x4.dxt5": {
+      "before_sha256": null,
+      "installed_sha256": "a66f148b78ddc3d920f2fcd1b2384cbada29c6856e1fb6eaedbbbb1a7ef6b723"
+    },
+    "iee-assets/GAMEPLAY7B-MOS0263-x4.dxt5": {
+      "before_sha256": null,
+      "installed_sha256": "79352a7dedc796d2d313845a3fbb3a7917eb4b9e773ba1aca3d98ae9fb83047f"
+    },
+    "iee-assets/GAMEPLAY7B-MOS0264-x4.dxt5": {
+      "before_sha256": null,
+      "installed_sha256": "9d1fbbf00d3ced1b2b99f31be260fe8c7f3d21ecf060948e6f258cf486eb9796"
+    }
+  },
+  "scope": [
+    "INVENTOR",
+    "QUESTBAK",
+    "GUIREC2",
+    "STONEOPT"
+  ],
+  "qa": "awaiting-user-ingame-test",
+  "release": "unchanged",
+  "backup_receipt": "interface/integration/four-menus-seedvr7b-20261111-v1/backups/20261110T231055Z/receipt.json",
+  "verification": {
+    "menu_tests": "passed; 8 gameplay + 7 selector payloads, exact match/isolation/config",
+    "common_tests": "iee_tests passed",
+    "outside_selected_rectangles": "DXT5 blocks byte-identical to baseline; native fallbacks decoded-exact nearest x4",
+    "ingame": "awaiting user test"
+  }
+}

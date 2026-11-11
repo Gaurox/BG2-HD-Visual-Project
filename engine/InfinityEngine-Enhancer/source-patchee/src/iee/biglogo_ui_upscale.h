@@ -13,7 +13,8 @@ struct ReplacementUpload {
 // Loads the selected pre-compressed x4 DXT5 atlases before rendering begins.
 // Each missing or invalid asset leaves only that original game upload untouched.
 bool prepare(const std::filesystem::path& assetsDirectory, int scale, bool includeBigLogo,
-             bool includeMainMenu, bool includeSelector = false) noexcept;
+             bool includeMainMenu, bool includeSelector = false,
+             bool includeGameplayMenus = false) noexcept;
 void release() noexcept;
 
 // Matches registered PVRZ pages by dimensions, DXT5 payload size, and fingerprint.

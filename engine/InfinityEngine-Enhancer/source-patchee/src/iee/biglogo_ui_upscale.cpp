@@ -26,6 +26,7 @@ struct AtlasReplacement {
   std::uint64_t sourceFingerprint;
   bool mainMenu;
   bool selector{false};
+  bool gameplayMenus{false};
   std::vector<std::byte> replacement;
   std::atomic<bool> ready{false};
   std::atomic<bool> logged{false};
@@ -33,11 +34,11 @@ struct AtlasReplacement {
 
 // Fingerprints make this an opt-in, exact-page replacement: a same-sized upload
 // from any other UI surface is always forwarded to the game unchanged.
-std::array<AtlasReplacement, 15> g_atlases{{
+std::array<AtlasReplacement, 23> g_atlases{{
     {"MOS0017.PVRZ", "BIGLOGO-MOS0017", 1024, 1024, 1024 * 1024,
      0x9AB16B5693C4F1EAull, false},
     {"MOS0181.PVRZ", "MAINMENU-MOS0181", 1024, 1024, 1024 * 1024,
-     0xA35AC19FF6FD4C10ull, true, true},
+     0xA35AC19FF6FD4C10ull, true, true, true},
     {"MOS0182.PVRZ", "SELECTOR-MOS0182", 512, 512, 512 * 512,
      0xBC13C466CDC91E6Cull, true, true},
     {"MOS0183.PVRZ", "SELECTOR-MOS0183", 512, 512, 512 * 512,
@@ -64,6 +65,22 @@ std::array<AtlasReplacement, 15> g_atlases{{
      0x5D70F0CB50989250ull, true},
     {"MOS0266.PVRZ", "MAINMENU-MOS0266", 512, 512, 512 * 512,
      0x767D769A9564FAA8ull, true},
+    {"MOS0155.PVRZ", "GAMEPLAY7B-MOS0155", 512, 512, 262144,
+     0x6156C86DAEC6BD41ull, false, false, true},
+    {"MOS0156.PVRZ", "GAMEPLAY7B-MOS0156", 1024, 1024, 1048576,
+     0x6149DBB936586A94ull, false, false, true},
+    {"MOS0180.PVRZ", "GAMEPLAY7B-MOS0180", 512, 512, 262144,
+     0xA3391759DF2485E9ull, false, false, true},
+    {"MOS0253.PVRZ", "GAMEPLAY7B-MOS0253", 512, 512, 262144,
+     0x3E61001D272210DCull, false, false, true},
+    {"MOS0254.PVRZ", "GAMEPLAY7B-MOS0254", 1024, 1024, 1048576,
+     0x65152CE9B2A57770ull, false, false, true},
+    {"MOS0263.PVRZ", "GAMEPLAY7B-MOS0263", 1024, 1024, 1048576,
+     0x190F6A9EFC856BF3ull, false, false, true},
+    {"MOS0264.PVRZ", "GAMEPLAY7B-MOS0264", 512, 512, 262144,
+     0x66ACBF1162FC8B7Cull, false, false, true},
+    {"MOS0255.PVRZ", "GAMEPLAY7B-MOS0255", 512, 512, 262144,
+     0xFD9AAB6691721074ull, false, false, true},
 }};
 
 std::mutex g_mutex;
@@ -86,7 +103,7 @@ std::uint64_t fnv1a64(const void* data, int byteCount) noexcept {
 }  // namespace
 
 bool prepare(const std::filesystem::path& assetsDirectory, int scale, bool includeBigLogo,
-             bool includeMainMenu, bool includeSelector) noexcept {
+             bool includeMainMenu, bool includeSelector, bool includeGameplayMenus) noexcept {
   try {
     if (scale != 2 && scale != 4) {
       LOG_WARN("Menu texture replacement disabled: unsupported scale x{}", scale);
@@ -96,8 +113,9 @@ bool prepare(const std::filesystem::path& assetsDirectory, int scale, bool inclu
     std::lock_guard lock(g_mutex);
     g_scale = 0;
     for (auto& atlas : g_atlases) {
-      const bool requested = (atlas.mainMenu ? includeMainMenu : includeBigLogo) ||
-                             (includeSelector && atlas.selector);
+      const bool requested = (atlas.gameplayMenus && !atlas.mainMenu) ? includeGameplayMenus :
+          ((atlas.mainMenu ? includeMainMenu : includeBigLogo) ||
+           (includeSelector && atlas.selector) || (includeGameplayMenus && atlas.gameplayMenus));
       atlas.ready.store(false, std::memory_order_release);
       atlas.logged.store(false, std::memory_order_release);
       atlas.replacement.clear();

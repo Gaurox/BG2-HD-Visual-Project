@@ -173,6 +173,7 @@ struct EngineConfig {
   bool enableMainMenuX4Test = false;
   // Only the seven START3EE selector pages; leaves the other menus/HUD disabled.
   bool enableSelectorX4 = false;
+  bool enableGameplayMenusX4 = false;
   // Reversible comparison mode: replace the complete menu with x2 atlases.
   // This includes BIGLOGO and takes precedence over the x4 switches.
   bool enableMenuX2Test = false;

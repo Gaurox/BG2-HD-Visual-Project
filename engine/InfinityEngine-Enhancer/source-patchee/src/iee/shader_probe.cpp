@@ -2262,7 +2262,7 @@ static void APIENTRY detour_glCompressedTexImage2D(unsigned target, int level,
     biglogo::ReplacementUpload replacement{};
     const bool logoReplacementEnabled = g_cfg.enableBigLogoX4Test ||
                                         g_cfg.enableMainMenuX4Test || g_cfg.enableMenuX2Test ||
-                                        g_cfg.enableSelectorX4;
+                                        (g_cfg.enableSelectorX4 || g_cfg.enableGameplayMenusX4);
     const bool useReplacement =
         logoReplacementEnabled && biglogo::try_replacement(
                                       target, level, internalFormat, width, height, imageSize,
@@ -2394,7 +2394,7 @@ void APIENTRY detour_glBindFramebuffer(unsigned target, unsigned framebuffer) no
 
 bool install_menu_upload_hook(const core::EngineConfig& cfg) noexcept {
   try {
-    if (!cfg.enableSelectorX4 || !game::gl::current_context()) return false;
+    if (!(cfg.enableSelectorX4 || cfg.enableGameplayMenusX4) || !game::gl::current_context()) return false;
     std::lock_guard lock(g_probeMutex);
     if (g_menuUploadHookReady ||
         (g_shaderProbesInstalled && g_glCompressedTexImage2DHook.original())) return true;
@@ -2531,7 +2531,7 @@ bool install_shader_probes(const core::EngineConfig& cfg) noexcept {
       }
       if ((cfg.enablePerformanceLogging || cfg.enableBamUiTextureProbe ||
            cfg.enableBigLogoX4Test || cfg.enableMainMenuX4Test || cfg.enableMenuX2Test ||
-           cfg.enableSelectorX4 ||
+           cfg.enableSelectorX4 || cfg.enableGameplayMenusX4 ||
            cfg.creature_sprite_upscale_enabled()) &&
           gl.glCompressedTexImage2D) {
         g_glCompressedTexImage2DHook.create(reinterpret_cast<void*>(gl.glCompressedTexImage2D),

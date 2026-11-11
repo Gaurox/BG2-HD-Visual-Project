@@ -1,0 +1,1349 @@
+19752: 					for objIdx2,objective2 in pairs(quest.objectives) do
+19753: 						for k, prevObj in pairs(entry.previous) do
+19754: 							if(prevObj == objective2.text) then
+19755: 								quest.objectives[objIdx2].stateType = const.ENTRY_TYPE_COMPLETE
+19756: 							end
+19757: 						end
+19758: 					end
+19759: 				end
+19760: 				
+19761: 				quests[questId] = quest
+19762: 				
+19763: 				--remove all in subgroup (except myself!)
+19764: 				if(stateType == const.JOURNAL_STATE_COMPLETE and entry.subGroup) then
+19765: 					for k,v in pairs(subGroups[entry.subGroup]) do
+19766: 						Infinity_Log("Checking subgroup, id = " .. v.id)
+19767: 						if(v.id ~= entry.id) then
+19768: 							removeJournalEntry(v.id)
+19769: 						end
+19770: 					end
+19771: 				end
+19772: 				
+19773: 			end
+19774: 		end
+19775: 	end
+19776: 	--sort the objectives.
+19777: 	table.sort(quest.objectives,compareByRecvTime)
+19778: 	
+19779: 	--update display data
+19780: 	buildQuestDisplay()
+19781: end
+19782: function checkEntryComplete(journalId, stateType)
+19783: 	--Check if a journal entry is part of a quest that's already complete
+19784: 	
+19785: 	--If anything other than an unfinished entry return false.
+19786: 	if(stateType ~= const.ENTRY_TYPE_INPROGRESS) then return false end
+19787: 	
+19788: 	--Check if my quest is marked complete.
+19789: 	local questIndex = entryToQuest[journalId]
+19790: 	if (quests[questIndex].stateType == const.ENTRY_TYPE_COMPLETE) then
+19791: 		return 1
+19792: 	else
+19793: 		return 0
+19794: 	end
+19795: end
+19796: --this should maybe be done recursively, but i kinda want direct control over each level
+19797: function buildQuestDisplay()
+19798: 	--this is basically just a flatten
+19799: 	questDisplay = {}
+19800: 	journalDisplay = {}
+19801: 	local journalEntries = {}
+19802: 	for k,quest in pairs(quests) do
+19803: 		--skip inactive quests
+19804: 		if(quest.stateType ~= nil and quest.stateType ~= const.ENTRY_TYPE_NONE) then
+19805: 			quest.quest = 1 -- tell the renderer what type of entry this is
+19806: 			table.insert(questDisplay, quest)
+19807: 			local curQuestIdx = #questDisplay --we'll need to modify current quest with it's children, store a reference.
+19808: 			local questChildren = {}
+19809: 			for k2,objective in pairs(quest.objectives) do
+19810: 				if(objective.stateType ~= const.ENTRY_TYPE_NONE) then
+19811: 					objective.objective = 1
+19812: 					objective.parent = curQuestIdx
+19813: 					
+19814: 					--fix for missing data in bg1 and bg2.
+19815: 					--if we have an objective title unique from the quest, use it. otherwise use the timestamp from my first(only) entry.
+19816: 					if(objective.text == Infinity_FetchString(quest.text) or objective.text == nil) then
+19817: 						objective.text = objective.entries[1].timeStamp
+19818: 					end
+19819: 					
+19820: 					if(objective.stateType ~= const.ENTRY_TYPE_INFO) then
+19821: 						--info entries should not go into quests
+19822: 						table.insert(questDisplay, objective)
+19823: 						table.insert(questChildren, #questDisplay)
+19824: 					end
+19825: 					local curObjectiveIdx = #questDisplay
+19826: 					local objectiveChildren = {}
+19827: 					for k3,entry in pairs(objective.entries) do
+19828: 						entry.entry = 1
+19829: 						
+19830: 						entry.parent = curObjectiveIdx
+19831: 						table.insert(questDisplay, entry)
+19832: 						table.insert(objectiveChildren, #questDisplay)
+19833: 					end
+19834: 					questDisplay[curObjectiveIdx].children = objectiveChildren
+19835: 				end
+19836: 			end
+19837: 			questDisplay[curQuestIdx].children = questChildren
+19838: 		end
+19839: 	end
+19840: 	
+19841: 	--add the loose entries (entries without quests) to the journal display
+19842: 	for k,entry in pairs(looseEntries) do
+19843: 		entry.entry = 1
+19844: 		table.insert(journalEntries,entry)
+19845: 	end
+19846: 	
+19847: 	-- add the user entries to the journal display
+19848: 	for k,entry in pairs(userNotes) do
+19849: 		entry.entry = 1
+19850: 		table.insert(journalEntries,entry)
+19851: 	end
+19852: 	
+19853: 	--sort the entries
+19854: 	table.sort(journalEntries, compareByRecvTime)
+19855: 	
+19856: 	for k,entry in pairs(journalEntries) do
+19857: 		local title  = {}
+19858: 		title.title = 1
+19859: 		title.text = entry.timeStamp
+19860: 		title.chapters = entry.chapters
+19861: 		table.insert(journalDisplay,title)
+19862: 		table.insert(journalDisplay, entry)
+19863: 	end
+19864: end
+19865: function questContainsSearchString(row)
+19866: 	if(journalSearchString == nil or journalSearchString == "") then return 1 end --no search string, do nothing
+19867: 	local text = Infinity_FetchString(questDisplay[row].text)
+19868: 	if(string.find(string.lower(text),string.lower(journalSearchString))) then return 1 end -- string contains search string.
+19869: 	if(questDisplay[row].children == nil) then return nil end --no children, does not contain search string.
+19870: 	for k,v in pairs(questDisplay[row].children) do
+19871: 		--Infinity_Log(v)
+19872: 		if(containsSearchString(v)) then return 1 end -- one of children contains search string
+19873: 	end
+19874: 	return nil --does not contain search string
+19875: end
+19876: function containsChapter(tab, chapter)
+19877: 	if(not tab) then return nil end
+19878: 	return tab[chapter]
+19879: end
+19880: function entryEnabled(row)
+19881: 	local rowTab =  questDisplay[row]
+19882: 	if(rowTab == nil or rowTab.entry == nil or not containsChapter(rowTab.chapters,chapter)) then return nil end
+19883: 
+19884: 	if(objectiveEnabled(rowTab.parent) and questDisplay[rowTab.parent].expanded) then return 1 else return nil end
+19885: end
+19886: function getEntryText(row)
+19887: 	return questDisplay[row].text
+19888: end
+19889: 
+19890: function objectiveEnabled(row)
+19891: 	local rowTab =  questDisplay[row]
+19892: 	if(rowTab == nil or rowTab.objective == nil or not containsChapter(rowTab.chapters,chapter)) then return nil end
+19893: 
+19894: 	if(questEnabled(rowTab.parent) and questDisplay[rowTab.parent].expanded) then return 1 else return nil end
+19895: end
+19896: function getObjectiveText(row)
+19897: 	local rowTab =  questDisplay[row]
+19898: 	if (rowTab == nil) then return nil end
+19899: 	local text = rowTab.text
+19900: 	if(text == "" or text == nil) then
+19901: 		text = getUiString("NO_OBJECTIVE_NORMAL")
+19902: 	end
+19903: 	--objectives shouldn't really display a completed state since they don't actually follow a progression.
+19904: 	--if(getFinished(row)) then
+19905: 	--	text = "^0xFF666666" .. text .. " (Finished)^-"
+19906: 	--end
+19907: 
+19908: 	return text
+19909: end
+19910: 
+19911: function questEnabled(row)
+19912: 	return (questDisplay[row] and questDisplay[row].quest and containsChapter(questDisplay[row].chapters,chapter) and (#questDisplay[row].children > 0))
+19913: end
+19914: function getQuestText(row)
+19915: 	local rowTab =  questDisplay[row]
+19916: 	if (rowTab == nil) then return nil end
+19917: 	local text = Infinity_FetchString(rowTab.text)
+19918: 	
+19919: 	if(getFinished(row)) then
+19920: 		text = "^0xFFaaaaaa" .. text .. " (" .. getUiString("OBJECTIVE_FINISHED_NORMAL") .. ")^-"
+19921: 	end
+19922: 
+19923: 	return text
+19924: end
+19925: function getArrowFrame(row)
+19926: 	if(questDisplay[row] == nil or (questDisplay[row].objective == nil and questDisplay[row].quest == nil)) then return "" end
+19927: 
+19928: 	
+19929: 	if(questDisplay[row].expanded) then
+19930: 		return 0
+19931: 	else
+19932: 		return 1
+19933: 	end
+19934: end
+19935: function getArrowEnabled(row)
+19936: 	if(questDisplay[row].quest == nil and questDisplay[row].objective == nil) then return nil end
+19937: 	if(questDisplay[row].objective and not objectiveEnabled(row)) then return nil end
+19938: 	if(questDisplay[row].quest and not questEnabled(row)) then return nil end
+19939: 	return 1
+19940: end
+19941: 
+19942: function getFinished(row)
+19943: 	if(questDisplay[row].stateType == const.ENTRY_TYPE_COMPLETE) then return 1 else return nil end
+19944: end
+19945: function showObjectiveSeperator(row)
+19946: 	local tab = questDisplay[row]
+19947: 	if(objectiveEnabled(row) or entryEnabled(row)) then
+19948: 		--seperator is enabled for objective or entry as long as the next thing is an objective.
+19949: 		--search until we find something enabled or end of table.
+19950: 		local idx = row + 1
+19951: 		while(questDisplay[idx]) do
+19952: 			if(objectiveEnabled(idx)) then
+19953: 				return 1
+19954: 			else 
+19955: 				if(questEnabled(idx) or entryEnabled(idx)) then
+19956: 					return nil
+19957: 				end
+19958: 			end
+19959: 			idx = idx + 1
+19960: 		end
+19961: 	end
+19962: end
+19963: 
+19964: 
+19965: function getJournalTitleEnabled(row)
+19966: 	return journalDisplay[row].title and containsChapter(journalDisplay[row].chapters,chapter) and journalContainsSearchString(row)
+19967: end
+19968: function getJournalTitleText(row)
+19969: 	return journalDisplay[row].text
+19970: end
+19971: function getJournalEntryEnabled(row)
+19972: 	return journalDisplay[row].entry and containsChapter(journalDisplay[row].chapters,chapter) and journalContainsSearchString(row)
+19973: end
+19974: function getJournalEntryText(row)
+19975: 	local text = Infinity_FetchString(journalDisplay[row].text)
+19976: 	if(text == nil or text == "") then
+19977: 		text = journalDisplay[row].text
+19978: 	end
+19979: 	
+19980: 	if(journalSearchString and journalSearchString ~= "") then
+19981: 		--do the search string highlight
+19982: 		text = highlightString(text, journalSearchString, "^0xFF0000FF")
+19983: 	end
+19984: 	
+19985: 	return text
+19986: end
+19987: function getJournalDarken(row)
+19988: 	local entry = journalDisplay[row]
+19989: 	if(entry.title) then
+19990: 		return (row == selectedJournal or row + 1 == selectedJournal)
+19991: 	end
+19992: 	if(entry.entry) then
+19993: 		return (row == selectedJournal or row - 1 == selectedJournal)
+19994: 	end
+19995: end
+19996: function journalContainsSearchString(row)
+19997: 	if(journalSearchString == nil or journalSearchString == "") then return 1 end --no search string, do nothing
+19998: 	local text = Infinity_FetchString(journalDisplay[row].text)
+19999: 	if(text == "") then text = journalDisplay[row].text end --no stringref, use the text.
+20000: 	if(string.find(string.lower(text),string.lower(journalSearchString))) then return 1 end -- string contains search string.
+20001: 	
+20002: 	--check if the corresponding row to this one contains the string.
+20003: 	local pairText = nil
+20004: 	if(journalDisplay[row].title) then
+20005: 		--check the corresponding entry
+20006: 		pairText = Infinity_FetchString(journalDisplay[row+1].text) or journalDisplay[row+1].text
+20007: 		if(pairText == "") then pairText = journalDisplay[row+1].text end 
+20008: 	else 
+20009: 		if (journalDisplay[row].entry) then
+20010: 			pairText = Infinity_FetchString(journalDisplay[row-1].text) or journalDisplay[row-1].text
+20011: 			if(pairText == "") then pairText = journalDisplay[row-1].text end 
+20012: 		end
+20013: 	end
+20014: 	if(string.find(string.lower(pairText),string.lower(journalSearchString))) then return 1 end -- pair string contains search string.
+20015: 	
+20016: 	return nil --does not contain search string
+20017: end
+20018: function dragJournal()
+20019: 	local offsetX,offsetY,menuWidth,menuHeight = Infinity_GetMenuArea('JOURNAL')
+20020: 	offsetX = offsetX + motionX
+20021: 	offsetY = offsetY + motionY
+20022: 	
+20023: 	--clamping
+20024: 	if(offsetX < 80) then
+20025: 		offsetX = 80
+20026: 	end
+20027: 	if(offsetY < 0) then
+20028: 		offsetY = 0
+20029: 	end
+20030: 	
+20031: 	local screenWidth, screenHeight = Infinity_GetScreenSize()
+20032: 	if(offsetX > screenWidth - 80 - menuWidth) then
+20033: 		offsetX = screenWidth - 80 - menuWidth
+20034: 	end
+20035: 	if(offsetY > screenHeight - menuHeight) then
+20036: 		offsetY = screenHeight - menuHeight
+20037: 	end
+20038: 	
+20039: 	Infinity_SetOffset('JOURNAL', offsetX, offsetY)
+20040: end
+20041: function journalEntryClickable(selectedJournal)
+20042: 	local entry = journalDisplay[selectedJournal]
+20043: 	if(entry) then return true end
+20044: end
+20045: function getJournalEntryRef(selectedJournal)
+20046: 	local entry = journalDisplay[selectedJournal]
+20047: 	if(not entry) then return end
+20048: 	if(entry.title) then
+20049: 		return journalDisplay[selectedJournal + 1].text
+20050: 	else
+20051: 		return entry.text
+20052: 	end
+20053: end
+20054: function getJournalBackgroundFrame()
+20055: 	if(journalMode == const.JOURNAL_MODE_QUESTS) then
+20056: 		return 0
+20057: 	else
+20058: 		return 1
+20059: 	end
+20060: end
+20061: journalMode = const.JOURNAL_MODE_QUESTS
+20062: journalSearchString = ""
+20063: `
+20064: menu
+20065: {
+20066: 	name 'JOURNAL'
+20067: 	align left top
+20068: 	offset 80 0
+20069: 	ignoreEsc
+20070: 	enabled "sidebarsGreyed ~= 1"
+20071: 	onopen "
+20072: 		reinitQuests()
+20073: 		buildQuestDisplay()
+20074: 		chapter = math.max(0,Infinity_GetMaxChapterPage());
+20075: 	"
+20076: 	label --background background
+20077: 	{
+20078: 		area 0 0 501 773
+20079: 		mosaic "QUESTBAK"
+20080: 	}
+20081: 	label --Background
+20082: 	{
+20083: 		area  	0 0 485 747
+20084: 		bam "QUESTBG"
+20085: 		sequence 0
+20086: 		frame lua "getJournalBackgroundFrame()"
+20087: 	}
+20088: 	handle
+20089: 	{
+20090: 		area 0 0 472 80
+20091: 		actionDrag
+20092: 		"
+20093: 			dragJournal()
+20094: 		"
+20095: 	}
+20096: 	button
+20097: 	{
+20098: 		area 216 22 134 34
+20099: 		text "JOURNAL_LABEL"
+20100: 		text style "label_parchment"
+20101: 		text point 16
+20102: 		action "journalMode = const.JOURNAL_MODE_JOURNAL"
+20103: 	}
+20104: 	button
+20105: 	{
+20106: 		area 34 18 136 42
+20107: 		text "QUESTS_LABEL"
+20108: 		text style "label_parchment"
+20109: 		text point 16
+20110: 		action "journalMode = const.JOURNAL_MODE_QUESTS"
+20111: 	}
+20112: 	button
+20113: 	{
+20114: 		area 419 13 66 67
+20115: 		on esc
+20116: 		bam "XBUTT"
+20117: 		action 
+20118: 		"
+20119: 			e:GetActiveEngine():OnLeftPanelButtonClick(2)
+20120: 		"
+20121: 	}
+20122: 	label -- Chapter
+20123: 	{
+20124: 		area 85 610 146 60
+20125: 		text lua "chapterText()"
+20126: 		text style "label_parchment"
+20127: 		mosaic "PCHAPTER"
+20128: 	}
+20129: 	button --prev chapter
+20130: 	{
+20131: 		area		48 610 41 60
+20132: 		bam "PARROW"
+20133: 		sequence 0
+20134: 		
+20135: 		action
+20136: 		"
+20137: 			incrChapter(-1);
+20138: 		"	
+20139: 	}
+20140: 	button
+20141: 	{
+20142: 		area		224 610 41 60
+20143: 		bam "PARROW"
+20144: 		sequence 1
+20145: 		
+20146: 		action
+20147: 		"
+20148: 			incrChapter(1);
+20149: 		"	
+20150: 	}
+20151: 	--[Bug #20368] Recent events button cut for now.
+20152: 	--
+20153: 	--button
+20154: 	--{
+20155: 	--	enabled "journalMode == const.JOURNAL_MODE_QUESTS"
+20156: 	--	area 278 616 162 47
+20157: 	--	bam "PAPERBUT"
+20158: 	--	sequence 1
+20159: 	--	text "RECENT_EVENTS_LABEL"
+20160: 	--	text style "button_parchment"
+20161: 	--	action 
+20162: 	--	"
+20163: 	--		Infinity_PushMenu('JOURNAL_RECENT_EVENTS')
+20164: 	--	"
+20165: 	--}
+20166: 	label
+20167: 	{
+20168: 		enabled "journalMode == const.JOURNAL_MODE_JOURNAL"
+20169: 		area 54 88 374 32
+20170: 		fill 50 50 50 150
+20171: 	}
+20172: 	edit
+20173: 	{
+20174: 		enabled "journalMode == const.JOURNAL_MODE_JOURNAL"
+20175: 		area 62 94 357 22
+20176: 		var journalSearchString
+20177: 		placeholder "ENTER_SEARCH_TERM_NORMAL"
+20178: 		text style "edit"
+20179: 		maxlines 1
+20180: 	}
+20181: 	list
+20182: 	{
+20183: 		column
+20184: 		{
+20185: 			width 10
+20186: 			label
+20187: 			{
+20188: 				area 0 0 31 31
+20189: 				enabled "getArrowEnabled(rowNumber)"
+20190: 				bam "PCHEV"
+20191: 				frame lua "getArrowFrame(rowNumber)"
+20192: 				text style "label_parchment"
+20193: 				align top center
+20194: 			}
+20195: 		}
+20196: 		column { 
+20197: 			width 90 
+20198: 			label
+20199: 			{
+20200: 				enabled "questEnabled(rowNumber)"
+20201: 				area 0 0 -1 -1
+20202: 				rectangle 1
+20203: 				rectangle opacity 150
+20204: 			}
+20205: 			label
+20206: 			{	
+20207: 				enabled "questEnabled(rowNumber)"
+20208: 				area 8 0 -1 -1
+20209: 				text lua "getQuestText(rowNumber)"
+20210: 				text style "label"
+20211: 				align left center
+20212: 			}
+20213: 			label
+20214: 			{
+20215: 				enabled "objectiveEnabled(rowNumber)"
+20216: 				area 16 0 -1 -1
+20217: 				pad 0 10 0 10
+20218: 				text lua "getObjectiveText(rowNumber)"
+20219: 				text style "normal_parchment"
+20220: 			}
+20221: 			label
+20222: 			{
+20223: 				enabled "entryEnabled(rowNumber)"
+20224: 				area 16 0 -1 -1
+20225: 				pad 0 10 0 10
+20226: 				text lua "getEntryText(rowNumber)"
+20227: 				text style "normal_parchment"
+20228: 				text color M
+20229: 			}
+20230: 		}
+20231: 		enabled "journalMode == const.JOURNAL_MODE_QUESTS"
+20232: 		rowheight	dynamic
+20233: 		hidehighlight
+20234: 		seperator "showObjectiveSeperator(rowNumber)"
+20235: 		table		"questDisplay"
+20236: 		var			selectedQuest
+20237: 		scrollbar	'GUISCRP'
+20238: 		area		48 98 404 480
+20239: 		action
+20240: 		"
+20241: 			if(questDisplay[selectedQuest].expanded) then 
+20242: 				questDisplay[selectedQuest].expanded = nil
+20243: 			else
+20244: 				questDisplay[selectedQuest].expanded = 1
+20245: 			end
+20246: 		"
+20247: 		
+20248: 	}
+20249: 	
+20250: 	list --journal
+20251: 	{
+20252: 		column
+20253: 		{
+20254: 			width 100
+20255: 			--light
+20256: 			label
+20257: 			{
+20258: 				enabled "getJournalTitleEnabled(rowNumber) and not getJournalDarken(rowNumber)"
+20259: 				area 0 0 -1 -1
+20260: 				pad 0 16 0 0
+20261: 				text lua "getJournalTitleText(rowNumber)"
+20262: 				text style "label_parchment"
+20263: 				text color 0 120 0 255
+20264: 			}
+20265: 			label
+20266: 			{
+20267: 				enabled "getJournalEntryEnabled(rowNumber) and not getJournalDarken(rowNumber)"
+20268: 				area 0 0 -1 -1
+20269: 				pad 8 16 0 16
+20270: 				text lua "getJournalEntryText(rowNumber)"
+20271: 				text style "normal_parchment"
+20272: 			}
+20273: 			
+20274: 			--dark
+20275: 			label
+20276: 			{
+20277: 				enabled "(getJournalTitleEnabled(rowNumber) or getJournalEntryEnabled(rowNumber)) and getJournalDarken(rowNumber)"
+20278: 				area 0 0 -1 -1
+20279: 				fill 0 0 0 150
+20280: 			}
+20281: 			label
+20282: 			{
+20283: 				enabled "getJournalTitleEnabled(rowNumber) and getJournalDarken(rowNumber)"
+20284: 				area 0 0 -1 -1
+20285: 				pad 0 16 0 0
+20286: 				text lua "getJournalTitleText(rowNumber)"
+20287: 				text style "label_parchment"
+20288: 				text color 255 100 100 255
+20289: 			}
+20290: 			label
+20291: 			{
+20292: 				enabled "getJournalEntryEnabled(rowNumber) and getJournalDarken(rowNumber)"
+20293: 				area 0 0 -1 -1
+20294: 				pad 8 16 0 16
+20295: 				text lua "getJournalEntryText(rowNumber)"
+20296: 				text style "normal_parchment"
+20297: 				text color 'B'
+20298: 			}
+20299: 			
+20300: 			
+20301: 		}
+20302: 		enabled "journalMode == const.JOURNAL_MODE_JOURNAL"
+20303: 		seperator "getJournalEntryEnabled(rowNumber)"
+20304: 		rowheight	dynamic
+20305: 		hidehighlight
+20306: 		table		"journalDisplay"
+20307: 		var			selectedJournal
+20308: 		scrollbar	'GUISCRP'
+20309: 		area		54 128 386 450
+20310: 	}
+20311: 	label
+20312: 	{
+20313: 		area 58 569 382 25
+20314: 		mosaic PAPERSEP
+20315: 	}
+20316: 	button
+20317: 	{
+20318: 		enabled "journalMode == const.JOURNAL_MODE_JOURNAL"
+20319: 		area 272 594 162 47
+20320: 		bam "PAPERBUT"
+20321: 		sequence 1
+20322: 		text "ADD_ENTRY_LABEL"
+20323: 		text style "button_parchment"
+20324: 		action 
+20325: 		"
+20326: 			journalMode = const.JOURNAL_MODE_EDIT
+20327: 			journalNoteEdit = ''
+20328: 			journalNoteEditRef = nil
+20329: 			Infinity_FocusTextEdit('journalNoteEditArea')
+20330: 		"
+20331: 	}
+20332: 	button
+20333: 	{
+20334: 		enabled "journalMode == const.JOURNAL_MODE_JOURNAL"
+20335: 		clickable lua "journalEntryClickable(selectedJournal)"
+20336: 		area 272 641 162 47
+20337: 		bam "PAPERBUT"
+20338: 		sequence 1
+20339: 		text "EDIT_ENTRY_LABEL"
+20340: 		text style "button_parchment"
+20341: 		action
+20342: 		"
+20343: 			journalNoteEditRef = getJournalEntryRef(selectedJournal)
+20344: 			journalNoteEdit = Infinity_FetchString(journalNoteEditRef)
+20345: 			journalMode = const.JOURNAL_MODE_EDIT
+20346: 		"
+20347: 	}
+20348: 	
+20349: 	
+20350: 	label
+20351: 	{
+20352: 		enabled "journalMode == const.JOURNAL_MODE_EDIT"
+20353: 		area 48 88 392 36
+20354: 		text style "normal_parchment"
+20355: 		text "WRITE_ENTRY_TEXT"
+20356: 		
+20357: 	}
+20358: 	label
+20359: 	{
+20360: 		enabled "journalMode == const.JOURNAL_MODE_EDIT"
+20361: 		area 58 140 376 4
+20362: 		fill 10 71 1 255
+20363: 	}
+20364: 	label
+20365: 	{
+20366: 		enabled "journalMode == const.JOURNAL_MODE_EDIT"
+20367: 		area 58 144 382 42
+20368: 		text style "label"
+20369: 		text color 0 120 0 255
+20370: 		text lua "Infinity_GetTimeString()"
+20371: 	}
+20372: 	edit
+20373: 	{
+20374: 		name "journalNoteEditArea"
+20375: 		enabled "journalMode == const.JOURNAL_MODE_EDIT"
+20376: 		area		58 186 382 383
+20377: 		text style	"edit_parchment"
+20378: 		var			journalNoteEdit
+20379: 		scrollbar	'GUISCRP'
+20380: 		
+20381: 	}
+20382: 	
+20383: 	button
+20384: 	{
+20385: 		enabled "journalMode == const.JOURNAL_MODE_EDIT"
+20386: 		area 272 641 162 47
+20387: 		bam "PAPERBUT"
+20388: 		sequence 1
+20389: 		text "CANCEL_BUTTON"
+20390: 		text style "button_parchment"
+20391: 		action 
+20392: 		"
+20393: 			journalMode = const.JOURNAL_MODE_JOURNAL
+20394: 		"
+20395: 	}
+20396: 	button
+20397: 	{
+20398: 		enabled "journalMode == const.JOURNAL_MODE_EDIT"
+20399: 		area 272 594 162 47
+20400: 		bam "PAPERBUT"
+20401: 		sequence 1
+20402: 		text "DONE_BUTTON"
+20403: 		text style "button_parchment"
+20404: 		action 
+20405: 		"
+20406: 			if(journalNoteEditRef == nil) then
+20407: 				Infinity_OnAddUserEntry(journalNoteEdit)
+20408: 			else
+20409: 				Infinity_OnEditUserEntry(journalNoteEditRef, journalNoteEdit)
+20410: 			end
+20411: 			journalMode = const.JOURNAL_MODE_JOURNAL
+20412: 		"
+20413: 	}
+20414: 	
+20415: 	
+20416: }
+20417: menu
+20418: {
+20419: 	name 'JOURNAL_RECENT_EVENTS'
+20420: 	align center center
+20421: 	modal
+20422: 	label
+20423: 	{
+20424: 		area 0 0 672 672
+20425: 		mosaic "RECENTEV"
+20426: 		
+20427: 	}
+20428: 	label
+20429: 	{
+20430: 		area 158 52 354 46
+20431: 		text "RECENT_EVENTS_TITLE"
+20432: 		text style "title"
+20433: 	}
+20434: 	button
+20435: 	{
+20436: 		area 594 10 33 35
+20437: 		bam "XBUTT"
+20438: 		action 
+20439: 		"
+20440: 			Infinity_PopMenu('JOURNAL_RECENT_EVENTS')
+20441: 		"
+20442: 	}
+20443: 	text
+20444: 	{
+20445: 		area 126 106 422 458
+20446: 		text "Recent events text will go here."
+20447: 		text style "normal"
+20448: 	}
+20449: 	button
+20450: 	{ 
+20451: 		area		320 572 200 44
+20452: 		text		"DONE_BUTTON"
+20453: 		text style	'button'
+20454: 		bam			GUIBUTNT
+20455: 		sequence	2
+20456: 		action
+20457: 		"
+20458: 			Infinity_PopMenu('JOURNAL_RECENT_EVENTS')
+20459: 		"
+20460: 	}
+20461: }
+20462: `
+20463: function processQuestsWithStyle()
+20464: 	out = ""
+20465: 	for k,v in pairs(quests_old) do
+20466: 		local questStrref = v[3]
+20467: 		out = out .. "createQuest    ( " .. questStrref .. " )\n"
+20468: 		
+20469: 		for k2,v2 in pairs(journals_quests_old) do
+20470: 			if(v2[2] == k) then
+20471: 				local subgroup = v2[const.ENTRIES_IDX_SUBGROUP]
+20472: 				if(subgroup == 0) then subgroup = "nil" end
+20473: 				out = out .. "createEntry    ( " .. questStrref .. ", -1, " .. v2[1] .. ", {}, " .. subgroup .." )\n"
+20474: 			end
+20475: 		end
+20476: 	end
+20477: 	Infinity_Log(out)
+20478: end
+20479: `
+20480: menu
+20481: {
+20482: 	name 'MESSAGE_SCREEN'
+20483: 	align center center
+20484: 	label
+20485: 	{
+20486: 		area 0 0 657 234
+20487: 		mosaic GUIERR6
+20488: 	}
+20489: 	label
+20490: 	{
+20491: 		area 29 21 580 126
+20492: 		text lua "Infinity_FetchString(messageScreenText)"
+20493: 		text style	"label"
+20494: 	}
+20495: }
+20496: `
+20497: function getDLCDescription()
+20498: 	return Infinity_FetchString(dlcScreen:GetDLCDescription())
+20499: end
+20500: function getDLCTitle()
+20501: 	return Infinity_FetchString(dlcScreen:GetDLCTitle())
+20502: end
+20503: function getDLCIndex()
+20504: 	return dlcScreen:GetDLCIndex() .. "/" .. dlcScreen:GetDLCCount()
+20505: end
+20506: function isDLCBuyButtonClickable()
+20507: 	local isBought = dlcScreen:GetDLCBought()
+20508: 	return isBought == false
+20509: end
+20510: 
+20511: function setDLCPurchased(index, purchaseLevel)
+20512: 	purchasedDLC[index] = purchaseLevel;
+20513: end
+20514: `
+20515: menu
+20516: {
+20517: 	name 'START_DLC'
+20518: 	align center center
+20519: 
+20520: 	label
+20521: 	{
+20522: 		area 0 0 1024 768
+20523: 		mosaic 'GUIDLC'
+20524: 	}
+20525: 
+20526: 	label
+20527: 	{
+20528: 		area		60 14 906 42
+20529: 		text        103043
+20530: 		text style  'title'
+20531: 		text align	center center
+20532: 	}
+20533: 
+20534: 	label
+20535: 	{
+20536: 		area		574 582 346 28
+20537: 		text lua	"getDLCIndex()"
+20538: 		text style  'title'
+20539: 		text align	center center
+20540: 	}
+20541: 
+20542: 	label
+20543: 	{
+20544: 		area		578 162 336 52
+20545: 		text lua	"getDLCTitle()"
+20546: 		text style  'title'
+20547: 		text align	center center
+20548: 	}
+20549: 		
+20550: 	text
+20551: 	{
+20552: 		area		578 220 336 362
+20553: 		text lua	"getDLCDescription()"
+20554: 		text style  'normal'
+20555: 		scrollbar	'GUISCRC'		
+20556: 	}
+20557: 	
+20558: 	label
+20559: 	{
+20560: 		area 154 98 366 566
+20561: 		bitmap lua "dlcScreen:GetDLCImage()"
+20562: 	}
+20563: 
+20564: 	button 
+20565: 	{
+20566: 		bam 'GUIPRC'
+20567: 		sequence 0
+20568: 		area 22 274 56 140
+20569: 		align center center
+20570: 		action 
+20571: 		"
+20572: 			dlcScreen:DecrementDLCIndex()
+20573: 		"
+20574: 	}
+20575: 
+20576: 	button 
+20577: 	{
+20578: 		bam 'GUIPRC'
+20579: 		sequence 1
+20580: 		area 946 270 52 140
+20581: 		align center center
+20582: 		action 
+20583: 		"
+20584: 			dlcScreen:IncrementDLCIndex()
+20585: 		"
+20586: 	}
+20587: 
+20588: 	button 
+20589: 	{
+20590: 	    on escape
+20591: 		bam 'GUIOSTUL'
+20592: 		sequence 0
+20593: 		area 280 710 240 48
+20594: 		align center center
+20595: 		text style "button"
+20596: 		text "BACK_BUTTON"
+20597: 		action 
+20598: 		"
+20599: 			dlcScreen:OnDoneButtonClick()
+20600: 		"
+20601: 	}
+20602: 
+20603: 	button 
+20604: 	{
+20605: 		bam 'GUIOSTCL'
+20606: 		sequence 0
+20607: 		area 602 646 302 46
+20608: 		align center center
+20609: 		text style "button"
+20610: 		text "STRREF_GUI_DLC_RESTORE_PURCHASES"
+20611: 		clickable lua "not e:IsAndroid()"
+20612: 		action 
+20613: 		"
+20614: 			dlcScreen:RestorePurchases()
+20615: 		"
+20616: 	}
+20617: 
+20618: 	button 
+20619: 	{
+20620: 		bam 'BUYBUTT'
+20621: 		sequence 2
+20622: 		area 530 710 238 48
+20623: 		align center center
+20624: 		text style "button"
+20625: 		text "STRREF_GUI_DLC_INSTALLED"
+20626: 		enabled "not isDLCBuyButtonClickable()"
+20627: 		clickable lua "false"
+20628: 	}
+20629: 
+20630: 	button 
+20631: 	{
+20632: 		bam 'BUYBUTT'
+20633: 		sequence 2
+20634: 		area 530 710 238 48
+20635: 		align center center
+20636: 		text style "button"
+20637: 		text "BUY_BUTTON"
+20638: 		enabled "isDLCBuyButtonClickable()"
+20639: 		clickable lua "isDLCBuyButtonClickable()"
+20640: 		action 
+20641: 		"
+20642: 			dlcScreen:OnBuyButtonClick()
+20643: 		"
+20644: 	}
+20645: }
+20646: 
+20647: `
+20648: dlcStatusDescriptionText = ""
+20649: dlcStatusButtonText = ""
+20650: dlcStatusState = 0
+20651: 
+20652: DLC_STATE_WAITING = 0
+20653: DLC_STATE_IN_PROGRESS = 1
+20654: DLC_STATE_SUCCESS = 2
+20655: DLC_STATE_FAILED = 3
+20656: DLC_STATE_CANCELLED = 4
+20657: DLC_STATE_RESTORING_PURCHASES = 5
+20658: DLC_STATE_RESTORING_PURCHASES_COMPLETE = 6
+20659: DLC_STATE_DOWNLOADING = 7
+20660: 
+20661: function checkDLCState()
+20662: 	dlcStatusState = dlcScreen:GetDLCState()
+20663: 	if dlcStatusState == DLC_STATE_WAITING then
+20664: 		dlcStatusDescriptionText = getUiString("STRREF_GUI_DLC_WAITING")
+20665: 		dlcStatusButtonText = getUiString("BACK_BUTTON")
+20666: 	elseif dlcStatusState == DLC_STATE_IN_PROGRESS then
+20667: 		dlcStatusDescriptionText = getUiString("STRREF_GUI_DLC_IN_PROGRESS")
+20668: 		dlcStatusButtonText = getUiString("BACK_BUTTON")
+20669: 	elseif dlcStatusState == DLC_STATE_SUCCESS then
+20670: 		dlcStatusDescriptionText = getUiString("STRREF_GUI_DLC_SUCCESS")
+20671: 		dlcStatusButtonText = getUiString("CONTINUE_BUTTON")
+20672: 	elseif dlcStatusState == DLC_STATE_FAILED then
+20673: 		dlcStatusDescriptionText = getUiString("STRREF_GUI_DLC_FAILED")
+20674: 		dlcStatusButtonText = getUiString("CONTINUE_BUTTON")
+20675: 	elseif dlcStatusState == DLC_STATE_CANCELLED then
+20676: 		dlcStatusDescriptionText = getUiString("STRREF_GUI_DLC_CANCELLED")
+20677: 		dlcStatusButtonText = getUiString("CONTINUE_BUTTON")
+20678: 	elseif dlcStatusState == DLC_STATE_RESTORING_PURCHASES then
+20679: 		dlcStatusDescriptionText = getUiString("STRREF_GUI_DLC_RESTORING_PURCHASES")
+20680: 		dlcStatusButtonText = getUiString("BACK_BUTTON")
+20681: 	elseif dlcStatusState == DLC_STATE_RESTORING_PURCHASES_COMPLETE then
+20682: 		dlcStatusDescriptionText = getUiString("STRREF_GUI_DLC_RESTORING_PURCHASES_COMPLETE")
+20683: 		dlcStatusButtonText = getUiString("CONTINUE_BUTTON")
+20684: 	elseif dlcStatusState == DLC_STATE_DOWNLOADING then
+20685: 		dlcScreen:GetDownloadString()
+20686: 		dlcStatusButtonText = ""
+20687: 	else
+20688: 		dlcStatusDescriptionText = "WAFFLES_Dont Know How We Got Here_WAFFLES"
+20689: 		dlcStatusButtonText = "WAFFLES_WAFFLES_WAFFLES"
+20690: 	end
+20691: end
+20692: 
+20693: function getDLCStatusText()
+20694: 	checkDLCState()
+20695: 	return dlcStatusDescriptionText
+20696: end
+20697: `
+20698: menu
+20699: {
+20700: 	name 'START_DLC_STATUS'
+20701: 	align center center
+20702: 
+20703: 	label
+20704: 	{
+20705: 		area 0 0 408 420
+20706: 		mosaic 'GUIERR'
+20707: 	}
+20708: 
+20709: 	label
+20710: 	{
+20711: 		area 86 76 236 84
+20712: 		text style "label"
+20713: 		text lua "getDLCStatusText()"
+20714: 	}
+20715: 
+20716: 	button 
+20717: 	{
+20718: 		bam 'GUIOSTUM'
+20719: 		sequence 0
+20720: 		area 104 320 202 46
+20721: 		align center center
+20722: 		text style "button"
+20723: 		text lua "dlcStatusButtonText"
+20724: 		enabled "dlcStatusState ~= DLC_STATE_DOWNLOADING"
+20725: 		action 
+20726: 		"
+20727: 			dlcScreen:OnErrorButtonClick();
+20728: 		"
+20729: 	}
+20730: }
+20731: `	
+20732: 	dialogTable = {}
+20733: 	dialogOverflowTable = {}
+20734: 	hasDialogResponse = nil
+20735: 	
+20736: 	chatboxScrollToBottom = nil
+20737: 	chatboxScrollTimeLast = 0
+20738: 	chatboxContentHeight = 0
+20739: 	chatboxOverflowed = nil
+20740: 	chatboxJumpToBottom = nil
+20741: 	
+20742: 	-- The following two values determine how many item entries can exist.  We trim 
+20743: 	-- the number of entries to numDialogTrimEntries once it has overflowed that value
+20744: 	-- by numDialogOverflowLimit.
+20745: 	numDialogTrimEntries = 512
+20746: 	numDialogOverflowEntries = numDialogTrimEntries + 128
+20747: 	
+20748: 	lastTrimmedContentHeight = 0
+20749: 	
+20750: 	function getNumDialogTableEntries()
+20751: 		local count = 0
+20752: 		for _ in pairs(dialogTable) do count = count + 1 end
+20753: 		return count
+20754: 	end
+20755: 	
+20756: 	function trimDialogTableSize()
+20757: 		local  numTableEntries = getNumDialogTableEntries()
+20758: 		if (numTableEntries > numDialogOverflowEntries) then
+20759: 			local numEntriesToRemove = numTableEntries - numDialogTrimEntries
+20760: 			while (numEntriesToRemove > 0) do
+20761: 				-- Get our table entry and calculate its size
+20762: 				local tableEntry = dialogTable[1]
+20763: 				local delta = Infinity_GetContentHeight(styles.normal.font, w, tableEntry.text, styles.normal.point, 1, styles.normal.useFontZoom) --1 for indent.
+20764: 				chatboxContentHeight = chatboxContentHeight - delta
+20765: 				lastTrimmedContentHeight = lastTrimmedContentHeight + delta
+20766: 					
+20767: 				table.remove(dialogTable, 1)
+20768: 				numEntriesToRemove = numEntriesToRemove - 1
+20769: 			end
+20770: 		end
+20771: 	end
+20772: 	
+20773: 	function buildResponsesList()
+20774: 
+20775: 		hasDialogResponse = nil
+20776: 		dialogResponses = {}
+20777: 		for k,v in pairs(worldPlayerDialogChoices) do
+20778: 			if v.marker then
+20779: 				table.insert(dialogResponses, v)
+20780: 				hasDialogResponse = 1
+20781: 			end
+20782: 		end
+20783: 	end
+20784: 	function canShowDialogButton(num)
+20785: 		-- Show the buttons if we have a response, and the dialog button is not enabled
+20786: 		return dialogResponses and dialogResponses[num] ~= nil and showDialogButtonChoices()
+20787: 	end
+20788: 	
+20789: 	function addDialogMessage(text,marker,makeTop)
+20790: 		local tab = {}
+20791: 		tab.text = text
+20792: 		tab.marker = marker
+20793: 		if(marker) then 
+20794: 			dialogViewMode = nil
+20795: 			if(text == "") then
+20796: 				--empty markers are a signal, we shouldn't actually display them.
+20797: 				if(makeTop == true) then
+20798: 					--we'll ensure the next line is included in the visible content.
+20799: 					chatboxContentHeight = 0
+20800: 				end
+20801: 				return
+20802: 			else
+20803: 				hasDialogResponse = 1
+20804: 			end
+20805: 		end
+20806: 		
+20807: 		--Calculate running total of dialog content height
+20808: 		local x,y,w,h = Infinity_GetArea("worldPlayerDialogChoicesList")
+20809: 		w = w - 18 --account for scrollbar influence on width
+20810: 		local delta = Infinity_GetContentHeight(styles.normal.font, w, text, styles.normal.point, 1, styles.normal.useFontZoom) --1 for indent.
+20811: 		chatboxContentHeight = chatboxContentHeight + delta
+20812: 		
+20813: 		if(marker and chatboxContentHeight > h) then
+20814: 			--More to display than we have room for, put the responses in overflow and hide them behind button
+20815: 			table.insert(dialogOverflowTable,tab)
+20816: 		else
+20817: 			table.insert(dialogTable,tab)
+20818: 		end
+20819: 		
+20820: 		if(makeTop == true) then
+20821: 			--we'll ensure the next line is included in the visible content.
+20822: 			chatboxContentHeight = 0
+20823: 		end
+20824: 		
+20825: 		trimDialogTableSize()
+20826: 		
+20827: 		triggerChatboxScroll()
+20828: 		
+20829: 		buildResponsesList()
+20830: 	end
+20831: 	function clearDialogResponses()
+20832: 		for k,v in pairs(dialogTable) do
+20833: 			if(v.marker) then
+20834: 				table.remove(dialogTable,k)
+20835: 				clearDialogResponses()
+20836: 			end
+20837: 		end
+20838: 		hasDialogResponse = nil
+20839: 		chatboxOverflowed = nil
+20840: 		chatboxContentHeight = 0
+20841: 		dialogOverflowTable = {}
+20842: 	end
+20843: 	function dialogEntrySelectable(row)
+20844: 		return (dialogTable[row].marker ~= nil)
+20845: 	end
+20846: 	function showDialogButtonChoices()
+20847: 		return not (not hasDialogResponse or dialogViewMode or #dialogOverflowTable > 0)
+20848: 	end
+20849: 	function getResponsePickable()
+20850: 		return not hasDialogResponse or dialogViewMode or (gameOptions.m_bConfirmDialog == true)
+20851: 	end
+20852: 	function getDialogButtonText()
+20853: 		if(dialogViewMode) then
+20854: 			return getUiString("DONE_BUTTON")
+20855: 		end
+20856: 		
+20857: 		if(#dialogOverflowTable > 0) then
+20858: 			return getUiString("SHOW_MORE_RESPONSES_BUTTON")
+20859: 		end
+20860: 		
+20861: 		if(gameOptions.m_bConfirmDialog == true) then
+20862: 			return getUiString("CHOOSE_RESPONSE_BUTTON")
+20863: 		end
+20864: 		
+20865: 		return dialogButtonText
+20866: 	end
+20867: 	function triggerChatboxScroll()
+20868: 		chatboxScrollToBottom = 1
+20869: 		chatboxScrollTimeLast = Infinity_GetClockTicks()
+20870: 	end
+20871: 	function chatboxScroll(top, height, contentHeight)
+20872: 		if(chatboxJumpToBottom and contentHeight > height) then
+20873: 			chatboxJumpToBottom = nil
+20874: 			return height-contentHeight
+20875: 		end
+20876: 		if(chatboxScrollToBottom == 0) then
+20877: 			--defer to default scrolling
+20878: 			return nil
+20879: 		end
+20880: 		if(contentHeight < height) then
+20881: 			--no scrolling required, content fits
+20882: 			chatboxScrollToBottom = nil
+20883: 			return nil
+20884: 		end
+20885: 		local dT = Infinity_GetClockTicks() - chatboxScrollTimeLast
+20886: 		chatboxScrollTimeLast = Infinity_GetClockTicks()
+20887: 		top = top + lastTrimmedContentHeight
+20888: 		lastTrimmedContentHeight = 0
+20889: 		local newTop = (dT * -0.25) + top
+20890: 		if (newTop + contentHeight > height + 200) then
+20891: 			return (height - contentHeight + 200)
+20892: 		end
+20893: 		if(newTop + contentHeight < height) then
+20894: 			chatboxScrollToBottom = 0
+20895: 			return height - contentHeight
+20896: 		end
+20897: 		return newTop
+20898: 	end
+20899: 	function displayOverflowResponses()
+20900: 		for k,v in pairs(dialogOverflowTable) do
+20901: 			table.insert(dialogTable,v)
+20902: 		end
+20903: 		dialogOverflowTable = {}
+20904: 		triggerChatboxScroll()
+20905: 		buildResponsesList()
+20906: 	end
+20907: 	function GetFirstMarkedResponse()
+20908: 		for k,v in pairs(dialogTable) do
+20909: 			if v.marker ~= nil then
+20910: 				return k
+20911: 			end
+20912: 		end
+20913: 		return -1	
+20914: 	end
+20915: 	function onDialogButtonClick()
+20916: 		if(dialogViewMode) then
+20917: 			--In dialog view mode this button closes the menu.
+20918: 			worldScreen:StopDialogHistory()
+20919: 			return
+20920: 		end
+20921: 		
+20922: 		if(#dialogOverflowTable > 0) then
+20923: 			displayOverflowResponses()
+20924: 			return
+20925: 		end
+20926: 
+20927: 		if(gameOptions.m_bConfirmDialog == true and hasDialogResponse) then
+20928: 			-- if confirm dialog and choices available.
+20929: 			worldScreen:OnDialogReplyClick(dialogTable[worldPlayerDialogSelection].marker)
+20930: 			worldPlayerDialogSelection = 0
+20931: 			return
+20932: 		else
+20933: 			-- no choices, just step.
+20934: 			worldScreen:StepDialog()
+20935: 		end
+20936: 	end
+20937: 	function getDialogRowClickable(row)
+20938: 		return dialogTable[row].marker ~= nil
+20939: 	end
+20940: 	function isTouchActionbar()
+20941: 		--Make this read from an option to make it easy to switch out.
+20942: 		local default = 0
+20943: 		if(e:IsTouchUI()) then default = 1 end
+20944: 		local val = Infinity_GetINIValue('Program Options', 'Use Touch Actionbar', default)
+20945: 		if (val ~= 0) then
+20946: 			return 1
+20947: 		else
+20948: 			return nil
+20949: 		end
+20950: 	end
+20951: `
+20952: menu
+20953: {
+20954: 	name 'WORLD_DIALOG_LEFT'
+20955: 	align left center
+20956: 	ignoreEsc
+20957: 	--ignoreFocus 1
+20958: 	onOpen
+20959: 	"
+20960: 		Infinity_PushMenu('WORLD_DIALOG_LEFT_BUTTONS')
+20961: 	"
+20962: 	onClose
+20963: 	"
+20964: 		Infinity_PopMenu('WORLD_DIALOG_LEFT_BUTTONS')
+20965: 	"
+20966: 	label
+20967: 	{
+20968: 		area 0 0 80 1536
+20969: 		mosaic GUIWLSP
+20970: 	}
+20971: }
+20972: menu
+20973: {
+20974: 	name 'WORLD_DIALOG_LEFT_BUTTONS'
+20975: 	align left center
+20976: 	ignoreEsc
+20977: 	--ignoreFocus 1
+20978: 	label
+20979: 	{
+20980: 		area 0 0 85 780
+20981: 		rectangle 4
+20982: 	}
+20983: 	button
+20984: 	{
+20985: 		area 15 25 54 54
+20986: 		bam CBUTT
+20987: 		scaleToClip
+20988: 		text lua "'...'"
+20989: 		text style "button"
+20990: 		pad -3 -6 0 0
+20991: 		enabled "not showDialogButtonChoices()"
+20992: 		clickable lua "not dialogEntryGreyed()"
+20993: 		action
+20994: 		"
+20995: 			onDialogButtonClick()
+20996: 		"
+20997: 	}
+20998: 
+20999: 	button
+21000: 	{
+21001: 		area 15 25 54 54
+21002: 		bam CBUTT
+21003: 		scaleToClip
+21004: 		text lua "'1'"
+21005: 		text style "button"
+21006: 		pad -3 -6 0 0
+21007: 		enabled "canShowDialogButton(1)"
+21008: 		clickable lua "not dialogEntryGreyed()"
+21009: 		action
+21010: 		"
+21011: 			worldScreen:OnDialogReplyClick(dialogResponses[1].marker)
+21012: 		"
+21013: 	}
+21014: 	button
+21015: 	{
+21016: 		area 15 100 54 54
+21017: 		bam CBUTT
+21018: 		scaleToClip
+21019: 		text lua "'2'"
+21020: 		text style "button"
+21021: 		pad -3 -6 0 0
+21022: 		enabled "canShowDialogButton(2)"
+21023: 		clickable lua "not dialogEntryGreyed()"
+21024: 		action
+21025: 		"
+21026: 			worldScreen:OnDialogReplyClick(dialogResponses[2].marker)
+21027: 		"
+21028: 	}
+21029: 	button
+21030: 	{
+21031: 		area 15 175 54 54
+21032: 		bam CBUTT
+21033: 		scaleToClip
+21034: 		text lua "'3'"
+21035: 		text style "button"
+21036: 		pad -3 -6 0 0
+21037: 		enabled "canShowDialogButton(3)"
+21038: 		clickable lua "not dialogEntryGreyed()"
+21039: 		action
+21040: 		"
+21041: 			worldScreen:OnDialogReplyClick(dialogResponses[3].marker)
+21042: 		"
+21043: 	}
+21044: 	button
+21045: 	{
+21046: 		area 15 250 54 54
+21047: 		bam CBUTT
+21048: 		scaleToClip
+21049: 		text lua "'4'"
+21050: 		text style "button"
+21051: 		pad -3 -6 0 0
+21052: 		enabled "canShowDialogButton(4)"
+21053: 		clickable lua "not dialogEntryGreyed()"
+21054: 		action
+21055: 		"
+21056: 			worldScreen:OnDialogReplyClick(dialogResponses[4].marker)
+21057: 		"
+21058: 	}
+21059: 	button
+21060: 	{
+21061: 		area 15 325 54 54
+21062: 		bam CBUTT
+21063: 		scaleToClip
+21064: 		text lua "'5'"
+21065: 		text style "button"
+21066: 		pad -3 -6 0 0
+21067: 		enabled "canShowDialogButton(5)"
+21068: 		clickable lua "not dialogEntryGreyed()"
+21069: 		action
+21070: 		"
+21071: 			worldScreen:OnDialogReplyClick(dialogResponses[5].marker)
+21072: 		"
+21073: 	}
+21074: 	button
+21075: 	{
+21076: 		area 15 400 54 54
+21077: 		bam CBUTT
+21078: 		scaleToClip
+21079: 		text lua "'6'"
+21080: 		text style "button"
+21081: 		pad -3 -6 0 0
+21082: 		enabled "canShowDialogButton(6)"
+21083: 		clickable lua "not dialogEntryGreyed()"
+21084: 		action
+21085: 		"
+21086: 			worldScreen:OnDialogReplyClick(dialogResponses[6].marker)
+21087: 		"
+21088: 	}
+21089: 	button
+21090: 	{
+21091: 		area 15 475 54 54
+21092: 		bam CBUTT
+21093: 		scaleToClip
+21094: 		text lua "'7'"
+21095: 		text style "button"
+21096: 		pad -3 -6 0 0
+21097: 		enabled "canShowDialogButton(7)"
+21098: 		clickable lua "not dialogEntryGreyed()"
+21099: 		action
+21100: 		"

@@ -1,0 +1,58 @@
+{
+  "schema": "bg2-ui-model-selection-v1",
+  "date": "2026-11-11",
+  "user_decision": "on part sur le 7B pour ces 4 menus",
+  "selected": [
+    {
+      "resref": "INVENTOR",
+      "model": "7b",
+      "state": "selected-for-ingame-test",
+      "output": "seedvr-7b-x4/INVENTOR/INVENTOR-seedvr-7b-x4.png",
+      "size": [
+        3456,
+        2840
+      ],
+      "sha256": "2459989a8c99b0c88f98c28734bccbaded86c84e2c4415fc80cf09372ccd150a",
+      "raw_output": "seedvr-7b-x4/INVENTOR/raw/4f705d0f_000.png"
+    },
+    {
+      "resref": "QUESTBAK",
+      "model": "7b",
+      "state": "selected-for-ingame-test",
+      "output": "seedvr-7b-x4/QUESTBAK/QUESTBAK-seedvr-7b-x4.png",
+      "size": [
+        2004,
+        3092
+      ],
+      "sha256": "89c3dceaeb55ec511262376218acd7821f330ccea699f2219874a65e22522b4d",
+      "raw_output": "seedvr-7b-x4/QUESTBAK/raw/0a564dda_000.png"
+    },
+    {
+      "resref": "GUIREC2",
+      "model": "7b",
+      "state": "selected-for-ingame-test",
+      "output": "seedvr-7b-x4/GUIREC2/GUIREC2-seedvr-7b-x4.png",
+      "size": [
+        3456,
+        2836
+      ],
+      "sha256": "cf2a080baa72588e052507254163425fbabbbfcd63bee235d388c3bf3537cd2b",
+      "raw_output": "seedvr-7b-x4/GUIREC2/raw/7b2e68ed_000.png"
+    },
+    {
+      "resref": "STONEOPT",
+      "model": "7b",
+      "state": "selected-for-ingame-test",
+      "output": "seedvr-7b-x4/STONEOPT/STONEOPT-seedvr-7b-x4.png",
+      "size": [
+        3456,
+        3072
+      ],
+      "sha256": "a370fadf67eb5700f394db57ea571b05ffd939918b1ffa4d17c9a7235eb2fd77",
+      "raw_output": "seedvr-7b-x4/STONEOPT/raw/91b225b2_000.png"
+    }
+  ],
+  "qa": "offline selection; ingame test pending",
+  "recipe": "SeedVR2 7B int8 convrot, x4, LAB, seed959948902156062",
+  "rejected": "3B files removed; shared comparison boards preserved"
+}

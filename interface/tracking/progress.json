@@ -1,18 +1,20 @@
 {
   "schema": "bg2-ui-progress-v1",
   "authority": "interface/index/work-tracking.json",
-  "updated_on": "2026-11-10",
+  "updated_on": "2026-11-11",
   "unit": "logical native resref; all frames for complete production",
   "total": 204,
-  "produced": 6,
+  "produced": 11,
   "partial_production": 1,
+  "qa_observed_resources": 5,
   "qa_complete": 0,
   "qa_observed_normal": 4,
   "release_confirmed": 0,
   "release_unreconciled": 204,
   "next_actions": {
-    "qualify-usage-and-existing-production": 197,
+    "qualify-usage-and-existing-production": 192,
     "complete-missing-large-medallion-variants": 1,
+    "retain-accepted-output": 5,
     "reuse-and-qualify-reduced-atlas": 6
   },
   "limits": [
