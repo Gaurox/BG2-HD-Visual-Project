@@ -1,0 +1,109 @@
+{
+  "decision": "accepted",
+  "decision_date": "2026-11-11",
+  "scope": "runtime-ingame-seven-END15FPS-MELISSAN-variants",
+  "user_decision": "ok les 7 versions passent bien ingame, je valide. mets à jour le suivi et committe, puis donne-moi la liste des vidéos restantes à traiter.",
+  "production_manifest": "video/index/endings-finals30-20261111-v1.json",
+  "installation_receipt": "video/index/endings-ingame-test-20261111-v1.json",
+  "files": [
+    {
+      "film": "END15FPS",
+      "locale": "default",
+      "alias": "HDENEN",
+      "runtime": {
+        "path": "video/final/endings-shared-30fps-20261111-v1/END15FPS/default/end15fps.wbm",
+        "sha256": "d52b654b92a3ef2a616fa8dedc80016f2c2c2167c748783bb8ce4feb71d6e166",
+        "bytes": 261987417
+      },
+      "fps": "30/1",
+      "frames": 3658,
+      "decision": "accepted",
+      "runtime_ingame_qa": "accepted-user"
+    },
+    {
+      "film": "END15FPS",
+      "locale": "de_DE",
+      "alias": "HDENDE",
+      "runtime": {
+        "path": "video/final/endings-shared-30fps-20261111-v1/END15FPS/de_DE/end15fps.wbm",
+        "sha256": "3f05d226c981c1ac10f9260ef8443960a3cc23346b7cea27325be2c714112f42",
+        "bytes": 262699083
+      },
+      "fps": "30/1",
+      "frames": 3658,
+      "decision": "accepted",
+      "runtime_ingame_qa": "accepted-user"
+    },
+    {
+      "film": "END15FPS",
+      "locale": "it_IT",
+      "alias": "HDENIT",
+      "runtime": {
+        "path": "video/final/endings-shared-30fps-20261111-v1/END15FPS/it_IT/end15fps.wbm",
+        "sha256": "47cb2aa8029f58d50e3ea1fa896897d246588e8c2c677023ae753e346262e4fc",
+        "bytes": 262705415
+      },
+      "fps": "30/1",
+      "frames": 3658,
+      "decision": "accepted",
+      "runtime_ingame_qa": "accepted-user"
+    },
+    {
+      "film": "END15FPS",
+      "locale": "pl_PL",
+      "alias": "HDENPL",
+      "runtime": {
+        "path": "video/final/endings-shared-30fps-20261111-v1/END15FPS/pl_PL/end15fps.wbm",
+        "sha256": "119b856599d468631301aba4d3da8e76b371c881e918b3104e3a751e4f93f316",
+        "bytes": 271230114
+      },
+      "fps": "30/1",
+      "frames": 3656,
+      "decision": "accepted",
+      "runtime_ingame_qa": "accepted-user"
+    },
+    {
+      "film": "MELISSAN",
+      "locale": "default",
+      "alias": "HDMLEN",
+      "runtime": {
+        "path": "video/final/endings-shared-30fps-20261111-v1/MELISSAN/default/melissan.wbm",
+        "sha256": "1347b5636dd701700689c152bb355b33fa73351a5096616949f26294d9beb093",
+        "bytes": 102643532
+      },
+      "fps": "30/1",
+      "frames": 1050,
+      "decision": "accepted",
+      "runtime_ingame_qa": "accepted-user"
+    },
+    {
+      "film": "MELISSAN",
+      "locale": "de_DE",
+      "alias": "HDMLDE",
+      "runtime": {
+        "path": "video/final/endings-shared-30fps-20261111-v1/MELISSAN/de_DE/melissan.wbm",
+        "sha256": "29ebf2a6bec7abef88a08fe1ec77f7a2234ac69ae04b25b28dc31658b5981245",
+        "bytes": 102604780
+      },
+      "fps": "30/1",
+      "frames": 1050,
+      "decision": "accepted",
+      "runtime_ingame_qa": "accepted-user"
+    },
+    {
+      "film": "MELISSAN",
+      "locale": "pl_PL",
+      "alias": "HDMLPL",
+      "runtime": {
+        "path": "video/final/endings-shared-30fps-20261111-v1/MELISSAN/pl_PL/melissan.wbm",
+        "sha256": "81141f0972c9d3ff46d76a03ca86cbb6e01cd15dd2b9056b4a0584224d301d4b",
+        "bytes": 101755660
+      },
+      "fps": "30/1",
+      "frames": 1112,
+      "decision": "accepted",
+      "runtime_ingame_qa": "accepted-user"
+    }
+  ],
+  "release_integration": false
+}

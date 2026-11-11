@@ -13,6 +13,8 @@
 - Profil WBM : libvpx/VP8,CRF4/30M,qmax12,cpu-used2,yuv420p,1920×1080,30fps,Vorbis copie. Vérifications intégrées : décodage complet/nombres/PTS images, SHA PCM et flux Vorbis, nombre/PTS paquets audio, SSIM1image/s >0,99. QA visuelle utilisateur et ingame restent distinctes.
 - Autorité finale (après production) : `video/index/endings-finals30-20261111-v1.json` ; copie `metadata/manifest.json`. Aucun changement de payload/staging/release.
 
+- Validation utilisateur2026-11-11 :7WBM acceptés après tests ingame ; décision immuable `video/index/qa-decisions/endings-ingame-accepted-20261111-v1.json`, SHA des7runtimes/alias liés au reçu. Les manifestes techniques et reçus historiques restent inchangés ; état QA courant = décision + `video/index/status.csv`. Aucune intégration release.
+
 ## Installation et test
 
 - Jeu/InfinityLoader fermés ; `python -B pipeline/recipes/endings-shared-30fps-20261111-v1/install.py prepare` :7cibles natives sauvegardées réellement,7alias neufs vérifiés ; `install.py install` :14copies temporaires/SHA/remplacement atomique, reçu final et index après vérification.
