@@ -1,0 +1,61 @@
+{
+  "status": "review-ready",
+  "user_qa": "pending",
+  "installed": false,
+  "settings": {
+    "model": "seedvr2_ema_3b_fp16.safetensors",
+    "vae": "ema_vae_fp16.safetensors",
+    "resolution": 1080,
+    "seed": 42,
+    "batch_size": 33,
+    "temporal_overlap": 3,
+    "color_correction": "lab"
+  },
+  "results": [
+    {
+      "name": "INTRO-default",
+      "frames": 240,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "video": "default/INTRO-default-SeedVR2-3B-FP16-LAB-1080p.mp4",
+      "source_preview": "default/INTRO-default-source-720p.mp4",
+      "raw_master": "comfy-output/default/4860be97_001.mov",
+      "source": "INTRO/default/INTRO-default__ouverture_contexte__n000000-000239.mkv",
+      "max_native_pts_deviation_s": 0.0009660000000000224,
+      "audio": false,
+      "interpolation": false
+    },
+    {
+      "name": "INTRO-de_DE",
+      "frames": 240,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "video": "de_DE/INTRO-de_DE-SeedVR2-3B-FP16-LAB-1080p.mp4",
+      "source_preview": "de_DE/INTRO-de_DE-source-720p.mp4",
+      "raw_master": "comfy-output/de_DE/5f4d9afa_001.mov",
+      "source": "INTRO/de_DE/INTRO-de_DE__ouverture_contexte__n000000-000239.mkv",
+      "max_native_pts_deviation_s": 0.0012330000000009278,
+      "audio": false,
+      "interpolation": false
+    },
+    {
+      "name": "INTRO-pl_PL",
+      "frames": 121,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "video": "pl_PL/INTRO-pl_PL-SeedVR2-3B-FP16-LAB-1080p.mp4",
+      "source_preview": "pl_PL/INTRO-pl_PL-source-720p.mp4",
+      "raw_master": "comfy-output/pl_PL/ea0f1d0f_001.mov",
+      "source": "INTRO/pl_PL/INTRO-pl_PL__ouverture_contexte__n000000-000120.mkv",
+      "max_native_pts_deviation_s": 0.0010659999999997893,
+      "audio": false,
+      "interpolation": false
+    }
+  ]
+}

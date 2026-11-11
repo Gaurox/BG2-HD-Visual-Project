@@ -1,0 +1,65 @@
+{
+  "status": "review-ready",
+  "results": [
+    {
+      "locale": "default",
+      "frames": 3347,
+      "source": "video/intro/intro.wbm",
+      "native_audio_pcm_identical": true,
+      "audio_codec_master": "vorbis-copy",
+      "master": "default/INTRO-default-SeedVR2-1080-native-audio.mkv",
+      "preview": "default/INTRO-default-SeedVR2-1080-audio.mp4",
+      "overlap_frames_inclusive": [
+        210,
+        239
+      ],
+      "blend": "same-scene aligned frames, linear opening-to-common weights",
+      "max_native_pts_deviation_s": 0.0010000000000047748,
+      "installed": false,
+      "user_validation": "pending"
+    },
+    {
+      "locale": "de_DE",
+      "frames": 3345,
+      "source": "video/de_DE_intro/de_DE_intro.wbm",
+      "native_audio_pcm_identical": true,
+      "audio_codec_master": "vorbis-copy",
+      "master": "de_DE/INTRO-de_DE-SeedVR2-1080-native-audio.mkv",
+      "preview": "de_DE/INTRO-de_DE-SeedVR2-1080-audio.mp4",
+      "overlap_frames_inclusive": [
+        208,
+        239
+      ],
+      "blend": "same-scene aligned frames, linear opening-to-common weights",
+      "max_native_pts_deviation_s": 0.0010000000000047748,
+      "installed": false,
+      "user_validation": "pending"
+    },
+    {
+      "locale": "pl_PL",
+      "frames": 1721,
+      "source": "video/pl_PL_intro/pl_PL_INTRO.wbm",
+      "native_audio_pcm_identical": true,
+      "audio_codec_master": "vorbis-copy",
+      "master": "pl_PL/INTRO-pl_PL-SeedVR2-1080-native-audio.mkv",
+      "preview": "pl_PL/INTRO-pl_PL-SeedVR2-1080-audio.mp4",
+      "overlap_frames_inclusive": [
+        105,
+        120
+      ],
+      "blend": "same-scene aligned frames, linear opening-to-common weights",
+      "max_native_pts_deviation_s": 0.0,
+      "installed": false,
+      "user_validation": "pending"
+    }
+  ],
+  "comparison": {
+    "original": "default/INTRO-original-720-audio-v2.mp4",
+    "processed": "default/INTRO-default-SeedVR2-1080-audio.mp4",
+    "comparator": "default/original-vs-seedvr.html",
+    "preview_audio_identical": true,
+    "french_separate_source": false
+  },
+  "second_film_started": false,
+  "installed": false
+}

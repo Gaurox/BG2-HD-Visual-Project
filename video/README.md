@@ -7,6 +7,12 @@ zone restent sous l'autorité de `animations/index/occurrences.csv` et sont excl
 `index/processing.csv` sélectionne les runs validés par étape et le run utilisé par le patch.
 `patch_run` vide signifie qu'aucun artefact vidéo n'est intégré au patch.
 
+Intros SeedVR2026-11-11 : 7ouvertures produites ; corps commun INTRO et3assemblages défaut/DE/PL
+avec audio natif ; comparaison commune acceptée, cadences natives conservées, **aucune interpolation**.
+Corps commun INTRO15F non commencé. Suivi/empreintes : `index/intro-seedvr-20261111-v1.json` ;
+recette/reprise : [`intro-seedvr-20261111-v1`](../pipeline/recipes/intro-seedvr-20261111-v1/README.md).
+Aucune installation/release ; médias locaux ignorés par Git.
+
 Suivi courant : [`SUIVI.md`](SUIVI.md) ; vue50assets : `index/status.csv` ; médias réellement
 conservés et alias des entrées déplacées : `index/retained-media-20261110-v1.json`.
 

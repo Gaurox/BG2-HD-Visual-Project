@@ -1,0 +1,166 @@
+{
+  "schema": "video-intro-seedvr-production-v1",
+  "date": "2026-11-11",
+  "spatial": "SeedVR2 3B FP16 + VAE FP16 / LAB / 1920x1080 / seed42 / batch33 uniform / overlap3",
+  "interpolation": "not-performed",
+  "source_analysis": "docs/validation/video-intro-locales-analysis-20261110-v1.json",
+  "openings": [
+    {
+      "film": "INTRO",
+      "locale": "de_DE",
+      "frames": 240,
+      "qa": "accepted-opening-comparison",
+      "file": {
+        "path": "video/experiments/intro-openings-seedvr3b-1080-20261111-v1/de_DE/INTRO-de_DE-SeedVR2-3B-FP16-LAB-1080p.mp4",
+        "bytes": 3487792,
+        "sha256": "d780a97b8f201df4a0b25ba804668bdcd88099ac9aafe1c5a97aa7a66956e4d9"
+      }
+    },
+    {
+      "film": "INTRO15F",
+      "locale": "de_DE",
+      "frames": 285,
+      "qa": "produced-not-separately-reviewed",
+      "file": {
+        "path": "video/experiments/intro15f-locales-seedvr3b-1080-20261111-v1/de_DE/INTRO15F-de_DE-SeedVR2-3B-FP16-LAB-1080p15.mp4",
+        "bytes": 2538506,
+        "sha256": "f3567c41432fae591b96ebd1b9f5692ebe17e4026f81a6f5df103b7e399928f2"
+      }
+    },
+    {
+      "film": "INTRO",
+      "locale": "default",
+      "frames": 240,
+      "qa": "accepted-opening-comparison",
+      "file": {
+        "path": "video/experiments/intro-openings-seedvr3b-1080-20261111-v1/default/INTRO-default-SeedVR2-3B-FP16-LAB-1080p.mp4",
+        "bytes": 3287374,
+        "sha256": "4b3644840f8630cbaafc826b00d84a8eefa6af2ee89c3e66b15a60768abad8f0"
+      }
+    },
+    {
+      "film": "INTRO15F",
+      "locale": "default",
+      "frames": 285,
+      "qa": "accepted-opening-comparison",
+      "file": {
+        "path": "video/experiments/intro15f-default-seedvr3b-1080-20261111-v1/INTRO15F-default-SeedVR2-3B-FP16-LAB-1080p15.mp4",
+        "bytes": 2250035,
+        "sha256": "39db6b10e43cf0772aa228167ea9dabe9c23b8eab453d7835871ef499a9b1ebb"
+      }
+    },
+    {
+      "film": "INTRO15F",
+      "locale": "it_IT",
+      "frames": 285,
+      "qa": "produced-not-separately-reviewed",
+      "file": {
+        "path": "video/experiments/intro15f-locales-seedvr3b-1080-20261111-v1/it_IT/INTRO15F-it_IT-SeedVR2-3B-FP16-LAB-1080p15.mp4",
+        "bytes": 2309516,
+        "sha256": "419848bfec48cb346d59c93ecc2f7206815b5f0d55b53bd4dc1273a471131a1b"
+      }
+    },
+    {
+      "film": "INTRO",
+      "locale": "pl_PL",
+      "frames": 121,
+      "qa": "accepted-opening-comparison",
+      "file": {
+        "path": "video/experiments/intro-openings-seedvr3b-1080-20261111-v1/pl_PL/INTRO-pl_PL-SeedVR2-3B-FP16-LAB-1080p.mp4",
+        "bytes": 3142460,
+        "sha256": "82c2b5e09ac17f0e5040999e6f15a1e687021526be43dcf03f260c3ae91ce786"
+      }
+    },
+    {
+      "film": "INTRO15F",
+      "locale": "pl_PL",
+      "frames": 286,
+      "qa": "produced-not-separately-reviewed",
+      "file": {
+        "path": "video/experiments/intro15f-locales-seedvr3b-1080-20261111-v1/pl_PL/INTRO15F-pl_PL-SeedVR2-3B-FP16-LAB-1080p15.mp4",
+        "bytes": 3142613,
+        "sha256": "5136ff0024d26f7f1dd675ab397e7f5a189ab1a0854134a1d4b3f411231471d9"
+      }
+    }
+  ],
+  "intro_shared_body": {
+    "frames": 3137,
+    "duration_s": 104.671233,
+    "file": {
+      "path": "video/experiments/intro-common-seedvr3b-stream-1080-20261111-v1/INTRO-common-SeedVR2-3B-FP16-LAB-1080p.mp4",
+      "bytes": 318430326,
+      "sha256": "8346d253f4fa7cd903cdea9a1beaa90fccc0d190039fd59d1838d96e4f9c9c6a"
+    }
+  },
+  "intro_assemblies": [
+    {
+      "locale": "default",
+      "frames": 3347,
+      "qa": "accepted-visual-comparison",
+      "native_audio_pcm_identical": true,
+      "max_native_pts_deviation_s": 0.0010000000000047748,
+      "master": {
+        "path": "video/assembly/intro-locales-seedvr-1080-20261111-v1/default/INTRO-default-SeedVR2-1080-native-audio.mkv",
+        "bytes": 317465667,
+        "sha256": "9cb4be1a2b0af9519ff29e5fdd352cc082796d07c30fb80f173c5445b16a8cda"
+      },
+      "preview": {
+        "path": "video/assembly/intro-locales-seedvr-1080-20261111-v1/default/INTRO-default-SeedVR2-1080-audio.mp4",
+        "bytes": 319124966,
+        "sha256": "36d8b1721eca0c649693668a739425cf0afc089315f4ce4db0753be14d5f4863"
+      }
+    },
+    {
+      "locale": "de_DE",
+      "frames": 3345,
+      "qa": "produced-not-separately-reviewed",
+      "native_audio_pcm_identical": true,
+      "max_native_pts_deviation_s": 0.0010000000000047748,
+      "master": {
+        "path": "video/assembly/intro-locales-seedvr-1080-20261111-v1/de_DE/INTRO-de_DE-SeedVR2-1080-native-audio.mkv",
+        "bytes": 318311003,
+        "sha256": "1873f279ff935b03be3e2c3601eaa3a9247d15b81723aafefc8c44a078d2edc4"
+      },
+      "preview": {
+        "path": "video/assembly/intro-locales-seedvr-1080-20261111-v1/de_DE/INTRO-de_DE-SeedVR2-1080-audio.mp4",
+        "bytes": 319734417,
+        "sha256": "160ee7317ab627f751ca6905a60871f8b13d1bdc6bc5e0c01206c11daee79a5d"
+      }
+    },
+    {
+      "locale": "pl_PL",
+      "frames": 1721,
+      "qa": "produced-not-separately-reviewed",
+      "native_audio_pcm_identical": true,
+      "max_native_pts_deviation_s": 0.0,
+      "master": {
+        "path": "video/assembly/intro-locales-seedvr-1080-20261111-v1/pl_PL/INTRO-pl_PL-SeedVR2-1080-native-audio.mkv",
+        "bytes": 262192508,
+        "sha256": "239c5954a40f3695529c63c2f80e899bff98c701c2ae94548914f3cd3b4668a5"
+      },
+      "preview": {
+        "path": "video/assembly/intro-locales-seedvr-1080-20261111-v1/pl_PL/INTRO-pl_PL-SeedVR2-1080-audio.mp4",
+        "bytes": 263174003,
+        "sha256": "3845e3a06b5c72313a8ae213b3158199c989bf6e269197e9ceec308838aae2dd"
+      }
+    }
+  ],
+  "comparison_original": {
+    "path": "video/assembly/intro-locales-seedvr-1080-20261111-v1/default/INTRO-original-720-audio-v2.mp4",
+    "bytes": 55501131,
+    "sha256": "1d662887f2172e88af0a9013fb7dcef8c4b411bf495881f8bff31e44805ab7f0"
+  },
+  "comparison_html": {
+    "path": "video/assembly/intro-locales-seedvr-1080-20261111-v1/default/original-vs-seedvr.html",
+    "bytes": 1309,
+    "sha256": "c0380ae08e03a6fb980d11d440d78b566058a951f7803f8e3b39cd591b1deadf"
+  },
+  "intro15f_shared_body": "not-started",
+  "separate_french_source": false,
+  "user_comparison_choice": "Comparer le fichier commun original et traité",
+  "installed": false,
+  "ingame_qa": "not-performed",
+  "release_integration": false,
+  "binary_storage": "local-media-outside-git",
+  "recipe": "pipeline/recipes/intro-seedvr-20261111-v1/README.md"
+}

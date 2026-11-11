@@ -56,6 +56,20 @@
       "environment": "BG2EE_REBOUTCX_CHAIN",
       "kind": "file"
     },
+    "comfyui_root": {
+      "environment": "BG2EE_COMFYUI_ROOT",
+      "kind": "directory",
+      "markers": ["main.py"]
+    },
+    "comfyui_python": {
+      "environment": "BG2EE_COMFYUI_PYTHON",
+      "kind": "file"
+    },
+    "seedvr_models": {
+      "environment": "BG2EE_SEEDVR_MODELS",
+      "kind": "directory",
+      "markers": ["seedvr2_ema_3b_fp16.safetensors", "ema_vae_fp16.safetensors"]
+    },
     "topaz_gigapixel_exe": {
       "environment": "BG2EE_TOPAZ_EXE",
       "kind": "file"
