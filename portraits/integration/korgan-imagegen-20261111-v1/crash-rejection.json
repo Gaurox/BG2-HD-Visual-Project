@@ -1,0 +1,47 @@
+{
+  "schema": "bg2-korgan-portrait-crash-rejection-v1",
+  "date": "2026-11-11",
+  "decision": "reject-direct-oversized-bmp-install",
+  "user_observation": "Crash 0xC0000005 at save-game load after Korgan L/M/S HD BMP installation.",
+  "evidence": {
+    "dump": "config://bg2ee_game_root/InfinityLoader_Crash/InfinityLoader_Crash_11_small.dmp",
+    "exception_code": "0xC0000005",
+    "exception_operation": "write",
+    "exception_address": "BaldurReal.exe+0x4FAB59",
+    "fault_instruction": "rep stosb",
+    "return_address": "BaldurReal.exe+0x42B427",
+    "function_identification": "DrawFlush_GL RVA 0x42B350, corroborated by src/iee/game/build_manifest.cpp",
+    "scratch_structure_address": "0x142F74080",
+    "scratch_width": 1024,
+    "scratch_height": 1024,
+    "scratch_pending_y": 1064,
+    "scratch_pending_height": 0,
+    "scratch_buffer": "0x55644040",
+    "requested_clear_bytes": 4358144,
+    "nominal_capacity_bytes": 4194304,
+    "excess_bytes": 163840,
+    "matching_asset": {
+      "resource": "NKORGANM",
+      "width": 676,
+      "height": 1064
+    },
+    "diagnosis": "Native DrawFlush_GL clears 1024*1064*4 bytes through a 1024x1024 atlas scratch buffer. Installed M portrait height matches the accumulated height at the crash. Direct oversized BMP override path exceeds native scratch capacity.",
+    "additional_risk": "NKORGANL height 1243 also exceeds this 1024-high native atlas path; not separately tested.",
+    "log": "Crash_11.log contains no usable traceback."
+  },
+  "mitigation": {
+    "receipt": "backups/20261111T012820119199Z/receipt.json",
+    "restoration": "backups/20261111T012820119199Z/restoration.json",
+    "state": "All three test overrides removed after installed hashes checked; all were absent before installation.",
+    "affected_files": [
+      "override/NKORGANL.bmp",
+      "override/NKORGANM.bmp",
+      "override/NKORGANS.bmp"
+    ],
+    "unaffected": "Native BIFs, renderer DLL/INI, UI experiments, saves and release untouched.",
+    "verification": "All three test override paths absent after restoration; game and InfinityLoader were closed.",
+    "ingame_after_restore": "Not observed."
+  },
+  "hd_requirement": "A renderer path supporting oversized portraits is required to retain L 791x1243 and M 676x1064. Do not reinstall the rejected set through the unmodified native atlas path.",
+  "qa": "rejected-crash; installation restored"
+}

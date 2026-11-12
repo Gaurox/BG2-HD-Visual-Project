@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "status": "working",
+  "portrait": "NKORGAN",
+  "member": "NKORGANL",
+  "date": "2026-11-11",
+  "scope": "large-portrait regeneration test only",
+  "source": {
+    "path": "portraits/grands/NKORGAN_L.bmp",
+    "width": 210,
+    "height": 330,
+    "sha256": "d8cb478cc396ec657200dd1521dc6504ceb8830972ad3a29d2c5ed77a6bc530c"
+  },
+  "generator": {
+    "tool": "image_gen.imagegen (built-in)",
+    "edit_target": "portraits-recrutables/Korgan/NKORGANL_grand.png",
+    "prompt": "prompt.txt",
+    "selected_attempt": 2
+  },
+  "raw": {
+    "path": "generated-raw.png",
+    "width": 873,
+    "height": 1801,
+    "aspect_ratio_requested": "7:11",
+    "aspect_ratio_observed": "873:1801",
+    "requested_ratio_met": false
+  },
+  "export": {
+    "path": "NKORGANL-regenerated-x4.png",
+    "width": 840,
+    "height": 1320,
+    "aspect_ratio": "7:11",
+    "native_scale": 4,
+    "postprocessing": "Full-canvas anisotropic resize using System.Drawing HighQualityBicubic, no crop or padding. Generator did not deliver requested ratio; this export changes the raw generated proportions."
+  },
+  "comparison": {
+    "path": "comparison-native-left-regenerated-right.png",
+    "left": "native portrait enlarged x4 nearest-neighbor",
+    "right": "regenerated export at 840x1320"
+  },
+  "assessment": {
+    "detail": "finer painted hair, beard and metal detail",
+    "style_background": "broadly similar to original",
+    "identity": "nose, mouth and relative facial proportions differ; perfect identity preservation NOT achieved",
+    "user_qa": "pending"
+  },
+  "installation": "not performed",
+  "release": "not modified"
+}

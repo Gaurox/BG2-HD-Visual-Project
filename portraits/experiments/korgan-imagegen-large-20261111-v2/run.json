@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "status": "working",
+  "portrait": "NKORGAN",
+  "member": "NKORGANL",
+  "date": "2026-11-11",
+  "source": "portraits/grands/NKORGAN_L.bmp",
+  "generator": {
+    "tool": "image_gen.imagegen (built-in)",
+    "prompt": "prompt.txt",
+    "edit_target": "reference-square-framed.png",
+    "canvas_strategy": "Original uniformly enlarged x8 to 1680x2640, centered on 2640x2640 square with 480 px magenta sidebars. Restoration constrained to the central 7:11 panel."
+  },
+  "raw": {
+    "path": "generated-square-raw.png",
+    "width": 1254,
+    "height": 1254,
+    "common_art_x_interval": [
+      229,
+      1025
+    ]
+  },
+  "export": {
+    "path": "NKORGANL-regenerated-7x11.png",
+    "width": 791,
+    "height": 1243,
+    "aspect_ratio": "7:11",
+    "operation": "integer crop only",
+    "crop_xywh": [
+      231,
+      5,
+      791,
+      1243
+    ],
+    "resampling": false,
+    "anisotropic_resize": false,
+    "verification": "Each final RGB pixel equals the corresponding raw generated pixel; exact 7:11 checked."
+  },
+  "comparison": "comparison-original-left-regenerated-right.png",
+  "qa": {
+    "format": "verified",
+    "identity_style": "user review pending",
+    "accepted": false
+  },
+  "installation": "not performed",
+  "release": "not modified"
+}
