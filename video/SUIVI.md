@@ -1,11 +1,12 @@
 # Suivi vidéo — 2026-11-12
 
 - Autorités : sources=`index/resources.csv` ; périmètre=`index/production-scope.json` ; production courante=`index/status.csv`, détails `index/processing.csv`, `index/intro-finals30-20261111-v1.json`, `index/endings-finals30-20261111-v1.json` et `index/outro-finals30-20261112-v1.json` ; QA=`index/qa-decisions/` ; installation=`installations/*/installation.json` ; release séparée.
-- Périmètre actif37cinématiques (variantes linguistiques comprises) :32productions complètes,1partielle en pause (ENDCRDIT),4sans production ;5cinématiques à terminer (≈3min3s de sources entières).28installées localement ;8versions validées ingame (7END15FPS/MELISSAN +OUTRO) ; autres QA ingame séparées. POCKETZZ validé visuellement, test ingame en attente ; anomalie DAYNITE ouverte. Aucun asset vidéo intégré à la release.
+- Périmètre actif37cinématiques (variantes linguistiques comprises) :33productions complètes,1partielle en pause (ENDCRDIT),3sans production ;4cinématiques à terminer (≈2min48s de sources entières).29installées localement ;8versions validées ingame (7END15FPS/MELISSAN +OUTRO) ; autres QA ingame séparées. POCKETZZ validé visuellement, test ingame en attente ; anomalie DAYNITE ouverte. Aucun asset vidéo intégré à la release.
 -13tutoriels retirés du suivi et exclus des futurs traitements sur demande utilisateur2026-11-11 ; décision `index/production-scope.json`. Inventaire50sources et fichiers natifs conservés.
 
 | Vidéo | Production conservée | QA | Installation locale |
 |---|---|---|---|
+| DORNGORG | SeedVR FP16 LAB1080 →Apollo8 ; PTS natifs reconstruits,464images/30fps/~15,47s,son natif | visuelle acceptée2026-11-12 ; ingame en attente | WBM +alias `HDDGORG` installés |
 | RASAADMI | SeedVR FP16 LAB1080 →Apollo8 ; PTS natifs reconstruits,484images/30fps/~16,13s,son natif | visuelle acceptée2026-11-12 ; ingame en attente | WBM +alias `HDRASAMI` installés |
 | FLYTHR04 | SeedVR FP16 LAB1080 →Apollo8,490images/30fps/~16,33s,son natif | visuelle acceptée2026-11-12 ; ingame en attente | WBM +alias `HDFLY04` installés |
 | NEERAES | SeedVR FP16 LAB1080 →Apollo8 ; PTS natifs reconstruits,507images/30fps/16,9s,son natif | visuelle acceptée2026-11-12 ; ingame en attente | WBM +alias `HDNEERA` installés |
@@ -92,15 +93,20 @@
 - Source16,127s,403images à PTS irréguliers ; SeedVR2 FP16 LAB1080/2portions avec contexte33images →Apollo8 puis reconstruction native30fps :484images/1920×1080/~16,13s. Son Vorbis natif copié sans étirement en MKV/WBM,MP4 AAC.
 - Résultats : `index/rasaadmi-finals30-20261112-v1.json` ; recette `../pipeline/recipes/rasaadmi-seedvr-apollo30-20261112-v1/README.md`. MP4/MKV/WBM contrôlés (décodage/comptes/PTS/audio natif PCM et paquets MKV/WBM),images intermédiaires Apollo vérifiées,SSIM runtime échantillonné0,995021. QA visuelle acceptée2026-11-12 : `index/qa-decisions/RASAADMI/20261112-fullhd30-visual-accepted-v1.json`. Installation : `index/rasaadmi-ingame-test-20261112-v1.json` ; original sauvegardé, `movies/rasaadmi.wbm` +alias `HDRASAMI` installés et SHA vérifiés. Test restant : `C:PlayMovie("HDRASAMI")`. **QA ingame en attente**, aucune intégration release.
 
+## DORNGORG — validé visuellement, vérification ingame en attente
+
+- Source15,462s,386images à PTS irréguliers ; SeedVR2 FP16 LAB1080/2portions avec contexte33images →Apollo8 puis reconstruction native30fps :464images/1920×1080/~15,47s. Son Vorbis natif copié sans étirement en MKV/WBM,MP4 AAC.
+- Résultats : `index/dorngorg-finals30-20261112-v1.json` ; recette `../pipeline/recipes/dorngorg-seedvr-apollo30-20261112-v1/README.md`. MP4/MKV/WBM contrôlés (décodage/comptes/PTS/audio natif PCM et paquets MKV/WBM),images intermédiaires Apollo vérifiées,SSIM runtime échantillonné0,992080. QA visuelle acceptée2026-11-12 : `index/qa-decisions/DORNGORG/20261112-fullhd30-visual-accepted-v1.json`. Installation : `index/dorngorg-ingame-test-20261112-v1.json` ; original sauvegardé, `movies/dorngorg.wbm` +alias `HDDGORG` installés et SHA vérifiés. Test restant : `C:PlayMovie("HDDGORG")`. **QA ingame en attente**, aucune intégration release.
+
 ## ENDCRDIT — pause après première portion
 
 - Demande utilisateur2026-11-11 : montrer la première portion puis libérer le GPU.330images/0–22s SeedVR FullHD15 conservées ;1671images source restantes, Apollo non démarré. Source/FFV1/SHA/commandes gardés ; reprise à l’image330 avec contexte natif297–329.
 - Point de reprise : `index/endcrdit-paused-20261111-v1.json` ; aperçu et comparaison : `../pipeline/recipes/endcrdit-seedvr-apollo30-20261111-v1/README.md`. QA utilisateur2026-11-11 : rendu apprécié mais lettres trop déformées, portion SeedVR refusée ; décision `index/qa-decisions/ENDCRDIT/20261111-first-seedvr-portion-text-rejected-v1.json`. Essais Topaz reportés à une reprise demandée ; pause maintenue, médias conservés. Aucune installation/release.
 
-## À terminer — 5cinématiques
+## À terminer — 4cinématiques
 
-- `DORNGORG`, `ENDCRDIT`, `FLYTHR02`, `LOGO`, `NITEDAY`.
-- Sources entières cumulées183,432s (≈3min3s) ;4états `not-started` +ENDCRDIT `partial-paused` dans `index/status.csv`.13tutoriels exclus. POCKETZZ en attente de test ingame et anomalie DAYNITE restent suivis séparément.
+- `ENDCRDIT`, `FLYTHR02`, `LOGO`, `NITEDAY`.
+- Sources entières cumulées167,970s (≈2min48s) ;3états `not-started` +ENDCRDIT `partial-paused` dans `index/status.csv`.13tutoriels exclus. POCKETZZ en attente de test ingame et anomalie DAYNITE restent suivis séparément.
 
 ## DAYNITE — chaîne conservée
 
