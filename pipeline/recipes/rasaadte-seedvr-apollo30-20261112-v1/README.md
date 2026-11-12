@@ -1,0 +1,12 @@
+# RASAADTE FullHD30 — 2026-11-12
+
+- Source `video/rasaadte/rasaadte.wbm` :1280×720,499images,VP8/Vorbis,19,964s ; annonce2997/100fps mais PTS réels11ms→19,931s,intervalles33/34/66/67ms. Comme BLACKPIT : préserver les images et la chronologie native.
+- `prepare.py` : SHA inventaire source ;2portions FFV1 index30,images0–329 puis297–498 (33images contexte à retirer). MD5 YUV420p de chaque image identiques à la source.
+- ComfyUI localhost8188/RTX5090 ; SeedVR2 3B FP16 LAB1080,seed42,batch33/uniforme/overlap3,bruits0,SDPA,swap32,CPU offload,VAE encode1024/128/decode768/128. Graphes/jobs/FFV1 sous `video/rasaadte/runs/rasaadte-seedvr-apollo30-20261112-v1/`.
+- `finish.py part --number N` : ProRes→H264CRF12,contexte retiré,comptes contrôlés. `finish.py final` : concat499images index30 →Apollo8 apo-8 index60/rdt=-0.01/device0/vram0.8/instances0/download0 ;997images+1tenue. RGB→limited bt601 identique aux précédents.
+- Reconstruction native : grille30fps sur PTS source ; indice Apollo le plus proche parmi les demi-images,sans étirement audio ; `native-mapping.json` conserve les correspondances. MasterMKV H264/Vorbis natif,MP4 H264/AAC192k,WBM VP8CRF4/30M/qmax12/Vorbis natif.
+- Résultats : `video/final/rasaadte-seedvr-apollo30-20261112-v1/RASAADTE/default/` ; manifeste `video/index/rasaadte-finals30-20261112-v1.json` créé après contrôles :3formats décodés,comptes/dimensions/FPS/PTS,audio natif PCM/paquets/PTS MKV/WBM,SSIM runtime échantillonné>0,99.
+- QA visuelle acceptée2026-11-12 : `video/index/qa-decisions/RASAADTE/20261112-fullhd30-visual-accepted-v1.json` liée aux SHA finaux. **Vérification ingame en attente**, aucune intégration release.
+- `install.py prepare` puis `install.py install` : jeu/InfinityLoader fermés ; original réel sauvegardé ; destinations/SHA contrôlés ; remplacement atomique `config://bg2ee_game_root/movies/rasaadte.wbm` +alias neuf `movies/HDRASATE.wbm`. Reçu : `video/index/rasaadte-ingame-test-20261112-v1.json` ; copie `metadata/installation.json`.
+- CLUA Ctrl+Espace en partie : `C:PlayMovie("HDRASATE")`.
+- Restauration jeu/loader fermés : contrôler SHA actuel=`after_sha256` du reçu ; recopier `video/installations/rasaadte-apollo30-20261112-v1/before/movies/rasaadte.wbm` vers `config://bg2ee_game_root/movies/rasaadte.wbm`, vérifier SHA=`before_sha256` ; retirer uniquement l’alias neuf `movies/HDRASATE.wbm` après contrôle de son SHA. Conserver sauvegarde/reçu.
