@@ -9,7 +9,8 @@ inventaires globaux ne sont pas reconstruits après chaque icône.
 
 | Information | Fichier | Édition |
 |---|---|---|
-| Snapshot et compteurs | `index/manifest.json` | généré |
+| Inventaire source et compteurs bruts | `index/manifest.json` | généré |
+| Périmètre de production actif | `index/production-scope.json` | décision utilisateur |
 | BAM, format, provenance et extraction | `index/resources.csv` | généré |
 | Appartenance normalisée aux familles | `index/families.csv` | généré |
 | Références propriétaires ITM/SPL | `index/usages.csv` | généré |
@@ -19,7 +20,14 @@ inventaires globaux ne sont pas reconstruits après chaque icône.
 | Production, sélection, QA, installation, release | `index/processing.csv` | autorité métier |
 | Décisions QA futures | `index/qa-decisions/<RESREF>/*.json` | immuable |
 
-Familles admises : `item-inventory`, `item-description`, `item-ground`, `spellbook`.
+Familles inventoriées : `item-inventory`, `item-description`, `item-ground`, `spellbook`.
+Périmètre actif depuis le 2026-11-12 : **1451 BAM uniques** = 976 `item-description` +
+67 `item-ground` + 408 `spellbook`. `item-inventory` exclu sur demande utilisateur :
+1480 BAM exclusivement inventaire hors production ; inventaire brut2931 conservé.
+Quatre BAM multirôles restent pour leurs autres usages : FIST/OHNIKEY1 (description),
+IBLUN04/ISTAF01 (sorts). Aucune production de leur usage inventaire demandée.
+Autorité : `index/production-scope.json` ; filtre = au moins une famille active.
+Sources, essais historiques, processing, QA, installation et release conservés.
 Ne jamais déduire la famille depuis le nom du resref. Une resref multirôle possède plusieurs lignes
 dans `families.csv`; elle n'est ni copiée ni classée dans un dossier de famille.
 
