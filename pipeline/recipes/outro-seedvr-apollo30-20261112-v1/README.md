@@ -1,0 +1,19 @@
+# OUTRO — ComfyUI SeedVR FP16 LAB / Apollo30, 2026-11-12 v1
+
+- Demande : traiter OUTRO ; instance utilisateur `http://127.0.0.1:8188`, file active vide au démarrage, RTX5090/32Gio,~30Gio VRAM disponibles. Aucune autre tâche interrompue. Serveur et schémas des nœuds vérifiés, workflow local validé sans crédits/API partenaire.
+- Source : `video/outro/outro.wbm`,1225images1280×720/15fps,~81,667s,sans piste audio. SHA source conforme à `video/index/resources.csv` ; FFV1 des4portions vérifiés image par image en YUV420p contre les hashes natifs.
+- GPU via ComfyUI existant : SeedVR2 3B FP16/VAE FP16/LAB,1080,seed42,batch33 uniforme,overlap3,bruits0,SDPA,swap32,CPU offload,VAE encode1024/128/decode768/128 ; même profil que films précédents. `workflow-first-portion.api.json` = graphe exact.
+-4portions : source0–329 ;297–659 ;627–989 ;957–1224. Les3dernières contiennent33images natives de contexte avant leur plage utile. Exports MOV ProRes via ComfyUI ; `finish.py part --number <1..4>` retire uniquement ce contexte,encode les portions utiles en H264CRF12 et vérifie comptes/PTS avant assemblage.
+- Jobs/downloads/entrées/graphes : `video/outro/runs/outro-seedvr-apollo30-20261112-v1/production.json`, `inputs/`, `workflows/`, `downloads/`. Soumission/poll/download via connecteur ComfyUI, un job GPU à la fois ; ID de chaque prompt conservé. Contrôles source à5/25/50/75s et raccords22/44/66s.
+- `python -B pipeline/recipes/outro-seedvr-apollo30-20261112-v1/finish.py final` : concaténation1225images15fps puis Apollo8 apo-8/30fps/slowmo1/rdt−0.01/GPU0/vram0.8/instances0/download0 ;2449images IA+1maintien terminal=2450images (~81,667s). Un seul passage Apollo sur le master complet.
+- Avant Apollo : libérer les modèles ComfyUI sans arrêter le serveur ni un travail tiers. Export RGB/gbrp16 puis conversion limited-range bt601 identique aux intros acceptées ; H264CRF14/slow ; WBM VP8CRF4/30M/qmax12/cpu-used2. Source et3livrables doivent rester **sans audio**.
+- Finals : `video/final/outro-seedvr-apollo30-20261112-v1/OUTRO/default/` : MP4 de lecture,masterMKV,WBM installable ; index `video/index/outro-finals30-20261112-v1.json` seulement après contrôle. Production initiale sans remplacement ingame ; installation ultérieure ci-dessous. Aucune intégration release.
+- Vérifications intégrées : comptes/dimensions/cadences/PTS/décodage complet des3livrables,absence audio,SSIM WBM1image/s >0,99,novelty des images Apollo intermédiaires,diagnostic luma des3raccords et captures de part et d’autre. QA visuelle acceptée selon décision ci-dessous ; QA ingame en attente ; métadonnées finales immuables.
+
+## Validation et installation locale2026-11-12
+
+- Validation visuelle utilisateur : `video/index/qa-decisions/OUTRO/20261112-fullhd30-visual-accepted-v1.json`, SHA des3livrables liés au manifeste technique immuable. Cette décision ne vaut pas validation ingame.
+- `install.py prepare` puis `install.py install` exécutés : jeu/InfinityLoader fermés, source SHA vérifiée, `movies/outro.wbm` réel sauvegardé ; alias neuf `movies/HDOUTRO.wbm` sans collision dans override/lang ;2copies temporaires/SHA/remplacement atomique, vérification finale des2destinations.
+- Reçu : `video/installations/outro-apollo30-20261112-v1/installation.json` ; sauvegarde `before/movies/outro.wbm`. Index : `video/index/outro-ingame-test-20261112-v1.json` ; copie `metadata/installation.json`. Chemins du jeu via `config://bg2ee_game_root`. Aucune modification release.
+- Charger une partie, Ctrl+Espace, puis `C:PlayMovie("HDOUTRO")` pour viser précisément le fichier installé ; `C:PlayMovie("OUTRO")` utilise la résolution habituelle du jeu. QA ingame en attente du retour utilisateur.
+- Restauration : jeu/loader fermés, SHA actuel=`after_sha256` exigé ; cible canonique ← sauvegarde réelle, vérifier `before_sha256` ; retirer uniquement l’alias neuf après contrôle SHA. Reçus/sauvegardes conservés.

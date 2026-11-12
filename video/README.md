@@ -7,6 +7,8 @@ zone restent sous l'autorité de `animations/index/occurrences.csv` et sont excl
 `index/processing.csv` sélectionne les runs validés par étape et le run utilisé par le patch.
 `patch_run` vide signifie qu'aucun artefact vidéo n'est intégré au patch.
 
+OUTRO finale2026-11-12 : SeedVR FP16 LAB →Apollo8 FullHD30,2450images/~81,667s,sans audio comme la source ; MP4/MKV/WBM validés visuellement, WBM installé pour test local avec alias `HDOUTRO`,QA ingame en attente. Résultats : `index/outro-finals30-20261112-v1.json` ; [recette](../pipeline/recipes/outro-seedvr-apollo30-20261112-v1/README.md). Installation : `index/outro-ingame-test-20261112-v1.json` ; décision QA : `index/qa-decisions/OUTRO/20261112-fullhd30-visual-accepted-v1.json`. Aucune intégration release.
+
 END15FPS/MELISSAN finales2026-11-11 : **7versions FullHD30 validées ingame le2026-11-11**,2masters SeedVR FP16 LAB/Apollo8 partagés, audios natifs et timings PL adaptés ; décision : `index/qa-decisions/endings-ingame-accepted-20261111-v1.json`. Production : `index/endings-finals30-20261111-v1.json` ; installation : `index/endings-ingame-test-20261111-v1.json` ; [console et restauration](../pipeline/recipes/endings-shared-30fps-20261111-v1/README.md). Aucune intégration release.
 
 Intros finales2026-11-11 : **7ensembles FullHD prêts techniquement pour installation future** :

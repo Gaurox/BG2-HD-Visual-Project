@@ -1,0 +1,34 @@
+{
+  "decision": "accepted",
+  "decision_date": "2026-11-12",
+  "scope": "visual-review-complete-OUTRO-SeedVR-Apollo30",
+  "user_decision": "ok validé. installe outro ingame pour test, donne-moi la commande CLUA et committe.",
+  "files": {
+    "preview": {
+      "path": "video/final/outro-seedvr-apollo30-20261112-v1/OUTRO/default/OUTRO-default-1080p30.mp4",
+      "bytes": 195941632,
+      "sha256": "c238e9e64d93971353f3e01323bb5db96466a5618f077c5c5e126a5c28f36545"
+    },
+    "master": {
+      "path": "video/final/outro-seedvr-apollo30-20261112-v1/OUTRO/default/OUTRO-default-1080p30-master.mkv",
+      "bytes": 195917520,
+      "sha256": "c633fc296ddcd82c30853b99e8b8de7b21ada920ccfb0149cc3d68bdacbe2295"
+    },
+    "game_ready": {
+      "path": "video/final/outro-seedvr-apollo30-20261112-v1/OUTRO/default/outro.wbm",
+      "bytes": 273263635,
+      "sha256": "f95b1964cb567ebd4541b9d2f113ab0b6010fecd610b8b9de3404b295d351c55"
+    }
+  },
+  "contract": {
+    "width": 1920,
+    "height": 1080,
+    "fps": "30/1",
+    "frames": 2450,
+    "audio": "absent-native-contract"
+  },
+  "ssim_runtime_to_master": 0.993753,
+  "runtime_selected_for_local_test": true,
+  "runtime_ingame_qa": "pending-user",
+  "release_integration": false
+}

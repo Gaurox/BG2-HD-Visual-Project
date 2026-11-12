@@ -1,0 +1,318 @@
+{
+  "schema": "outro-final-v1",
+  "state": "runtime-ready",
+  "created_utc": "2026-11-12T09:37:55.921876+00:00",
+  "asset_key": "movie:default:OUTRO",
+  "source": "video/outro/outro.wbm",
+  "source_sha256": "AF6AE520D04FCBC5E9F1333FBCDB8860BC672468418A77172C24F594DF12DCBC",
+  "dimensions": [
+    1920,
+    1080
+  ],
+  "fps": "30/1",
+  "frames": 2450,
+  "duration_s": 81.66666666666667,
+  "native_source_frames": 1225,
+  "audio": "absent in native source and all results",
+  "seedvr_profile": "SeedVR2 3B FP16/LAB 1080, seed42,batch33,overlap3,SDPA; identical previous films; API chunks with 33 native context frames",
+  "apollo": {
+    "film": "OUTRO",
+    "output": "video/outro/runs/outro-seedvr-apollo30-20261112-v1/OUTRO-shared-SeedVR2-Apollo8-1080p30.mp4",
+    "sha256": "c238e9e64d93971353f3e01323bb5db96466a5618f077c5c5e126a5c28f36545",
+    "frames": 2450,
+    "apollo_generated_frames": 2449,
+    "fps": "30/1",
+    "final_hold_frames": 1,
+    "model": "apo-8",
+    "spatial_source": "video/outro/runs/outro-seedvr-apollo30-20261112-v1/OUTRO-SeedVR2-3B-FP16-LAB-1080p15.mp4",
+    "user_visual_qa": "pending"
+  },
+  "files": {
+    "preview": {
+      "path": "video/final/outro-seedvr-apollo30-20261112-v1/OUTRO/default/OUTRO-default-1080p30.mp4",
+      "bytes": 195941632,
+      "sha256": "c238e9e64d93971353f3e01323bb5db96466a5618f077c5c5e126a5c28f36545"
+    },
+    "master": {
+      "path": "video/final/outro-seedvr-apollo30-20261112-v1/OUTRO/default/OUTRO-default-1080p30-master.mkv",
+      "bytes": 195917520,
+      "sha256": "c633fc296ddcd82c30853b99e8b8de7b21ada920ccfb0149cc3d68bdacbe2295"
+    },
+    "game_ready": {
+      "path": "video/final/outro-seedvr-apollo30-20261112-v1/OUTRO/default/outro.wbm",
+      "bytes": 273263635,
+      "sha256": "f95b1964cb567ebd4541b9d2f113ab0b6010fecd610b8b9de3404b295d351c55"
+    }
+  },
+  "target": "config://bg2ee_game_root/movies/outro.wbm",
+  "ssim_sampled_all": 0.993753,
+  "full_frame_decode": true,
+  "interpolation_check": {
+    "tested_odd_frames": 30,
+    "novel_odd_frames": 30
+  },
+  "seedvr_joins": [
+    {
+      "frame": 330,
+      "native_adjacent_mae": 7.388333320617676,
+      "seedvr_adjacent_mae": 8.365625381469727
+    },
+    {
+      "frame": 660,
+      "native_adjacent_mae": 9.940763473510742,
+      "seedvr_adjacent_mae": 11.465764045715332
+    },
+    {
+      "frame": 990,
+      "native_adjacent_mae": 2.3762500286102295,
+      "seedvr_adjacent_mae": 2.7733333110809326
+    }
+  ],
+  "probes": {
+    "preview": {
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "h264",
+          "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+          "profile": "High",
+          "codec_type": "video",
+          "codec_tag_string": "avc1",
+          "codec_tag": "0x31637661",
+          "width": 1920,
+          "height": 1080,
+          "coded_width": 1920,
+          "coded_height": 1088,
+          "has_b_frames": 2,
+          "pix_fmt": "yuv420p",
+          "level": 50,
+          "color_range": "tv",
+          "color_space": "bt470bg",
+          "chroma_location": "left",
+          "field_order": "progressive",
+          "refs": 5,
+          "is_avc": "true",
+          "nal_length_size": "4",
+          "id": "0x1",
+          "r_frame_rate": "30/1",
+          "avg_frame_rate": "1715000003/57166667",
+          "time_base": "1/1000000",
+          "start_pts": 0,
+          "start_time": "0.000000",
+          "duration_ts": 81666666,
+          "duration": "81.666666",
+          "bit_rate": "19189828",
+          "bits_per_raw_sample": "8",
+          "nb_frames": "2450",
+          "nb_read_frames": "2450",
+          "extradata_size": 50,
+          "disposition": {
+            "default": 1,
+            "dub": 0,
+            "original": 0,
+            "comment": 0,
+            "lyrics": 0,
+            "karaoke": 0,
+            "forced": 0,
+            "hearing_impaired": 0,
+            "visual_impaired": 0,
+            "clean_effects": 0,
+            "attached_pic": 0,
+            "timed_thumbnails": 0,
+            "non_diegetic": 0,
+            "captions": 0,
+            "descriptions": 0,
+            "metadata": 0,
+            "dependent": 0,
+            "still_image": 0,
+            "multilayer": 0
+          },
+          "tags": {
+            "language": "und",
+            "handler_name": "VideoHandler",
+            "vendor_id": "[0][0][0][0]",
+            "encoder": "Lavc62.0.101 libx264"
+          }
+        }
+      ],
+      "format": {
+        "filename": "G:\\AI\\BG2_Upscale\\video\\final\\outro-seedvr-apollo30-20261112-v1\\OUTRO\\default\\OUTRO-default-1080p30.mp4",
+        "nb_streams": 1,
+        "nb_programs": 0,
+        "nb_stream_groups": 0,
+        "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+        "format_long_name": "QuickTime / MOV",
+        "start_time": "0.000000",
+        "duration": "81.666666",
+        "size": "195941632",
+        "bit_rate": "19194282",
+        "probe_score": 100,
+        "tags": {
+          "major_brand": "isom",
+          "minor_version": "512",
+          "compatible_brands": "isomiso2avc1mp41",
+          "encoder": "Lavf62.0.100"
+        }
+      }
+    },
+    "master": {
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "h264",
+          "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+          "profile": "High",
+          "codec_type": "video",
+          "codec_tag_string": "[0][0][0][0]",
+          "codec_tag": "0x0000",
+          "width": 1920,
+          "height": 1080,
+          "coded_width": 1920,
+          "coded_height": 1088,
+          "has_b_frames": 2,
+          "pix_fmt": "yuv420p",
+          "level": 50,
+          "color_range": "tv",
+          "color_space": "bt470bg",
+          "chroma_location": "left",
+          "field_order": "progressive",
+          "refs": 5,
+          "is_avc": "true",
+          "nal_length_size": "4",
+          "r_frame_rate": "30/1",
+          "avg_frame_rate": "30/1",
+          "time_base": "1/1000",
+          "start_pts": 0,
+          "start_time": "0.000000",
+          "bits_per_raw_sample": "8",
+          "nb_read_frames": "2450",
+          "extradata_size": 50,
+          "disposition": {
+            "default": 1,
+            "dub": 0,
+            "original": 0,
+            "comment": 0,
+            "lyrics": 0,
+            "karaoke": 0,
+            "forced": 0,
+            "hearing_impaired": 0,
+            "visual_impaired": 0,
+            "clean_effects": 0,
+            "attached_pic": 0,
+            "timed_thumbnails": 0,
+            "non_diegetic": 0,
+            "captions": 0,
+            "descriptions": 0,
+            "metadata": 0,
+            "dependent": 0,
+            "still_image": 0,
+            "multilayer": 0
+          },
+          "tags": {
+            "HANDLER_NAME": "VideoHandler",
+            "VENDOR_ID": "[0][0][0][0]",
+            "ENCODER": "Lavc62.0.101 libx264",
+            "DURATION": "00:01:21.666000000"
+          }
+        }
+      ],
+      "format": {
+        "filename": "G:\\AI\\BG2_Upscale\\video\\final\\outro-seedvr-apollo30-20261112-v1\\OUTRO\\default\\OUTRO-default-1080p30-master.mkv",
+        "nb_streams": 1,
+        "nb_programs": 0,
+        "nb_stream_groups": 0,
+        "format_name": "matroska,webm",
+        "format_long_name": "Matroska / WebM",
+        "start_time": "0.000000",
+        "duration": "81.666000",
+        "size": "195917520",
+        "bit_rate": "19192076",
+        "probe_score": 100,
+        "tags": {
+          "COMPATIBLE_BRANDS": "isomiso2avc1mp41",
+          "MAJOR_BRAND": "isom",
+          "MINOR_VERSION": "512",
+          "ENCODER": "Lavf62.0.100"
+        }
+      }
+    },
+    "runtime": {
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "vp8",
+          "codec_long_name": "On2 VP8",
+          "profile": "0",
+          "codec_type": "video",
+          "codec_tag_string": "[0][0][0][0]",
+          "codec_tag": "0x0000",
+          "width": 1920,
+          "height": 1080,
+          "coded_width": 1920,
+          "coded_height": 1080,
+          "has_b_frames": 0,
+          "sample_aspect_ratio": "1:1",
+          "display_aspect_ratio": "16:9",
+          "pix_fmt": "yuv420p",
+          "level": -99,
+          "color_range": "tv",
+          "color_space": "bt470bg",
+          "chroma_location": "left",
+          "field_order": "progressive",
+          "refs": 1,
+          "r_frame_rate": "30/1",
+          "avg_frame_rate": "30/1",
+          "time_base": "1/1000",
+          "start_pts": 0,
+          "start_time": "0.000000",
+          "nb_read_frames": "2450",
+          "disposition": {
+            "default": 1,
+            "dub": 0,
+            "original": 0,
+            "comment": 0,
+            "lyrics": 0,
+            "karaoke": 0,
+            "forced": 0,
+            "hearing_impaired": 0,
+            "visual_impaired": 0,
+            "clean_effects": 0,
+            "attached_pic": 0,
+            "timed_thumbnails": 0,
+            "non_diegetic": 0,
+            "captions": 0,
+            "descriptions": 0,
+            "metadata": 0,
+            "dependent": 0,
+            "still_image": 0,
+            "multilayer": 0
+          },
+          "tags": {
+            "ENCODER": "Lavc62.0.101 libvpx",
+            "DURATION": "00:01:21.666000000"
+          }
+        }
+      ],
+      "format": {
+        "filename": "G:\\AI\\BG2_Upscale\\video\\final\\outro-seedvr-apollo30-20261112-v1\\OUTRO\\default\\outro.wbm",
+        "nb_streams": 1,
+        "nb_programs": 0,
+        "nb_stream_groups": 0,
+        "format_name": "matroska,webm",
+        "format_long_name": "Matroska / WebM",
+        "start_time": "0.000000",
+        "duration": "81.666000",
+        "size": "273263635",
+        "bit_rate": "26768901",
+        "probe_score": 100,
+        "tags": {
+          "ENCODER": "Lavf62.0.100"
+        }
+      }
+    }
+  },
+  "user_visual_qa": "pending",
+  "ingame_qa": "not-performed",
+  "installed": false,
+  "release_integration": false
+}
