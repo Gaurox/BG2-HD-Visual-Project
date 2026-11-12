@@ -1,0 +1,528 @@
+{
+  "decision": "accepted",
+  "decision_date": "2026-11-12",
+  "scope": "24-installed-runtime-versions",
+  "user_decision": "ok toutes ces vidéos passent bien ingame, je valide. mets à jour le suivi et committe.",
+  "daynite_user_decision": "validé",
+  "daynite_context": "Separate explicit validation after C:PlayMovie(\"DAYNITE\"); closes previous old-video report for unchanged installed SHA.",
+  "entries": [
+    {
+      "asset_key": "movie:de_DE:INTRO",
+      "alias": "HDINDE",
+      "command": "C:PlayMovie(\"HDINDE\")",
+      "installation_receipt": "video/index/intro-ingame-test-20261111-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/lang/de_DE/movies/intro.wbm",
+          "sha256": "2f711a3a56b141dd4984e2997915a0a330a049e0060a257d486ed56427a6939d",
+          "bytes": 382556705,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HDINDE.wbm",
+          "sha256": "2f711a3a56b141dd4984e2997915a0a330a049e0060a257d486ed56427a6939d",
+          "bytes": 382556705,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    },
+    {
+      "asset_key": "movie:de_DE:INTRO15F",
+      "alias": "HD15DE",
+      "command": "C:PlayMovie(\"HD15DE\")",
+      "installation_receipt": "video/index/intro15f-ingame-test-20261111-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/lang/de_DE/movies/intro15f.wbm",
+          "sha256": "e9cd5f51e46d0bfff117a8d469922aaac9675ad399e7038f6b4fc3ad311a62b0",
+          "bytes": 482165767,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HD15DE.wbm",
+          "sha256": "e9cd5f51e46d0bfff117a8d469922aaac9675ad399e7038f6b4fc3ad311a62b0",
+          "bytes": 482165767,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    },
+    {
+      "asset_key": "movie:default:BLACKPIT",
+      "alias": "HDBLKPIT",
+      "command": "C:PlayMovie(\"HDBLKPIT\")",
+      "installation_receipt": "video/index/blackpit-ingame-test-20261112-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/movies/blackpit.wbm",
+          "sha256": "1c2473e5bc91efd84d018ca0863869bd3fadaf3ffbd54f5db5e66fc2dc464ce9",
+          "bytes": 60097127,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HDBLKPIT.wbm",
+          "sha256": "1c2473e5bc91efd84d018ca0863869bd3fadaf3ffbd54f5db5e66fc2dc464ce9",
+          "bytes": 60097127,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    },
+    {
+      "asset_key": "movie:default:DAYNITE",
+      "alias": "DAYNITE",
+      "command": "C:PlayMovie(\"DAYNITE\")",
+      "installation_receipt": "video/installations/daynite-h3-nearest-20261110-v1/installation.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/movies/daynite.wbm",
+          "sha256": "f71b042e9e4cd1f3af6f78d42c1485511d49a5ae17a8aa90c0055c73029617c9",
+          "bytes": 25117307,
+          "role": "localized-movie"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    },
+    {
+      "asset_key": "movie:default:DORNGORG",
+      "alias": "HDDGORG",
+      "command": "C:PlayMovie(\"HDDGORG\")",
+      "installation_receipt": "video/index/dorngorg-ingame-test-20261112-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/movies/dorngorg.wbm",
+          "sha256": "7d432fd496fb649d59c428157abe59924b9471f07f3409f1235d67e342f668ee",
+          "bytes": 53575427,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HDDGORG.wbm",
+          "sha256": "7d432fd496fb649d59c428157abe59924b9471f07f3409f1235d67e342f668ee",
+          "bytes": 53575427,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    },
+    {
+      "asset_key": "movie:default:DORNTREE",
+      "alias": "HDDTREE",
+      "command": "C:PlayMovie(\"HDDTREE\")",
+      "installation_receipt": "video/index/dorntree-ingame-test-20261112-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/movies/dorntree.wbm",
+          "sha256": "5237fdb7740c51ca4db203076f73f0ff8377c2711234249c6a3c3881256b7074",
+          "bytes": 47601805,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HDDTREE.wbm",
+          "sha256": "5237fdb7740c51ca4db203076f73f0ff8377c2711234249c6a3c3881256b7074",
+          "bytes": 47601805,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    },
+    {
+      "asset_key": "movie:default:FLYTHR01",
+      "alias": "HDFLY01",
+      "command": "C:PlayMovie(\"HDFLY01\")",
+      "installation_receipt": "video/index/flythr01-ingame-test-20261112-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/movies/flythr01.wbm",
+          "sha256": "6c16141fff066fbec14d7f25603b29247c199882af80d367ca3948212f09f527",
+          "bytes": 73471592,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HDFLY01.wbm",
+          "sha256": "6c16141fff066fbec14d7f25603b29247c199882af80d367ca3948212f09f527",
+          "bytes": 73471592,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    },
+    {
+      "asset_key": "movie:default:FLYTHR02",
+      "alias": "HDFLY02",
+      "command": "C:PlayMovie(\"HDFLY02\")",
+      "installation_receipt": "video/index/flythr02-ingame-test-20261112-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/movies/flythr02.wbm",
+          "sha256": "2a9f530314387101bbe7769199769b5214e8268f6e68347a61ad41befa78567d",
+          "bytes": 45239794,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HDFLY02.wbm",
+          "sha256": "2a9f530314387101bbe7769199769b5214e8268f6e68347a61ad41befa78567d",
+          "bytes": 45239794,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    },
+    {
+      "asset_key": "movie:default:FLYTHR04",
+      "alias": "HDFLY04",
+      "command": "C:PlayMovie(\"HDFLY04\")",
+      "installation_receipt": "video/index/flythr04-ingame-test-20261112-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/movies/flythr04.wbm",
+          "sha256": "ecd18467a20d4b7ab7ab082692e4d8f8c36eb2ea1b1e31d7e5d22bc655658fdf",
+          "bytes": 42321707,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HDFLY04.wbm",
+          "sha256": "ecd18467a20d4b7ab7ab082692e4d8f8c36eb2ea1b1e31d7e5d22bc655658fdf",
+          "bytes": 42321707,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    },
+    {
+      "asset_key": "movie:default:HEXXATDR",
+      "alias": "HDHEXX",
+      "command": "C:PlayMovie(\"HDHEXX\")",
+      "installation_receipt": "video/index/hexxatdr-ingame-test-20261112-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/movies/hexxatdr.wbm",
+          "sha256": "5eb0bf6bea2133fc09e743c3a1509c4471030775f9eb77a03d6458a797607bd1",
+          "bytes": 45939743,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HDHEXX.wbm",
+          "sha256": "5eb0bf6bea2133fc09e743c3a1509c4471030775f9eb77a03d6458a797607bd1",
+          "bytes": 45939743,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    },
+    {
+      "asset_key": "movie:default:INTRO",
+      "alias": "HDINEN",
+      "command": "C:PlayMovie(\"HDINEN\")",
+      "installation_receipt": "video/index/intro-ingame-test-20261111-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/movies/intro.wbm",
+          "sha256": "68805f74028da19b5430c761686c18d9ba228b8c5120a105d59b0991d8c9c92c",
+          "bytes": 381620459,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HDINEN.wbm",
+          "sha256": "68805f74028da19b5430c761686c18d9ba228b8c5120a105d59b0991d8c9c92c",
+          "bytes": 381620459,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    },
+    {
+      "asset_key": "movie:default:INTRO15F",
+      "alias": "HD15EN",
+      "command": "C:PlayMovie(\"HD15EN\")",
+      "installation_receipt": "video/index/intro15f-ingame-test-20261111-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/movies/intro15f.wbm",
+          "sha256": "fbfc82142de93f2bbcc99daf046769d914d52a1b990aa6b7e35420f46d2cda7d",
+          "bytes": 480363676,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HD15EN.wbm",
+          "sha256": "fbfc82142de93f2bbcc99daf046769d914d52a1b990aa6b7e35420f46d2cda7d",
+          "bytes": 480363676,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    },
+    {
+      "asset_key": "movie:default:LOGO",
+      "alias": "HDLOGO",
+      "command": "C:PlayMovie(\"HDLOGO\")",
+      "installation_receipt": "video/index/logo-ingame-test-20261112-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/movies/logo.wbm",
+          "sha256": "f55e89bf6149b39e29dd6fd9b0e9433ae7f03a2789385d75cb6ad8a3d96aea82",
+          "bytes": 15223141,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HDLOGO.wbm",
+          "sha256": "f55e89bf6149b39e29dd6fd9b0e9433ae7f03a2789385d75cb6ad8a3d96aea82",
+          "bytes": 15223141,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": "Native 30000/1001fps; no interpolation"
+    },
+    {
+      "asset_key": "movie:default:MANAFORG",
+      "alias": "HDMANA",
+      "command": "C:PlayMovie(\"HDMANA\")",
+      "installation_receipt": "video/index/manaforg-ingame-test-20261112-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/movies/manaforg.wbm",
+          "sha256": "4bc234bcef460d088f66054d9bf4cb60f8410624277c81993bd55b3ab5526e23",
+          "bytes": 37543595,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HDMANA.wbm",
+          "sha256": "4bc234bcef460d088f66054d9bf4cb60f8410624277c81993bd55b3ab5526e23",
+          "bytes": 37543595,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    },
+    {
+      "asset_key": "movie:default:NEERAES",
+      "alias": "HDNEERA",
+      "command": "C:PlayMovie(\"HDNEERA\")",
+      "installation_receipt": "video/index/neeraes-ingame-test-20261112-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/movies/neeraes.wbm",
+          "sha256": "b0d8d1fdd5ad0d4b4adeaedbb800d4a981b19d4d568f9eef42150045015d356f",
+          "bytes": 52077793,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HDNEERA.wbm",
+          "sha256": "b0d8d1fdd5ad0d4b4adeaedbb800d4a981b19d4d568f9eef42150045015d356f",
+          "bytes": 52077793,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    },
+    {
+      "asset_key": "movie:default:NITEDAY",
+      "alias": "HDNTDAY",
+      "command": "C:PlayMovie(\"HDNTDAY\")",
+      "installation_receipt": "video/index/niteday-h3-reverse-ingame-test-20261112-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/movies/niteday.wbm",
+          "sha256": "d60a5b48146c36eca432a1c0220f86ca66222b09d515863b252becbf0bffcf3f",
+          "bytes": 22138029,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HDNTDAY.wbm",
+          "sha256": "d60a5b48146c36eca432a1c0220f86ca66222b09d515863b252becbf0bffcf3f",
+          "bytes": 22138029,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    },
+    {
+      "asset_key": "movie:default:POCKETZZ",
+      "alias": "HDPCKZZ",
+      "command": "C:PlayMovie(\"HDPCKZZ\")",
+      "installation_receipt": "video/index/pocketzz-ingame-test-20261112-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/movies/pocketzz.wbm",
+          "sha256": "fe18361b33db851548fb8875827af4982edc41055734b147c456caddf9e13643",
+          "bytes": 10987334,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HDPCKZZ.wbm",
+          "sha256": "fe18361b33db851548fb8875827af4982edc41055734b147c456caddf9e13643",
+          "bytes": 10987334,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    },
+    {
+      "asset_key": "movie:default:RASAADMI",
+      "alias": "HDRASAMI",
+      "command": "C:PlayMovie(\"HDRASAMI\")",
+      "installation_receipt": "video/index/rasaadmi-ingame-test-20261112-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/movies/rasaadmi.wbm",
+          "sha256": "06ac1b25dec0d601121a88b93e3b5791518cd6dec4c79e21d7515ab103b42b5c",
+          "bytes": 50183398,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HDRASAMI.wbm",
+          "sha256": "06ac1b25dec0d601121a88b93e3b5791518cd6dec4c79e21d7515ab103b42b5c",
+          "bytes": 50183398,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    },
+    {
+      "asset_key": "movie:default:RASAADTE",
+      "alias": "HDRASATE",
+      "command": "C:PlayMovie(\"HDRASATE\")",
+      "installation_receipt": "video/index/rasaadte-ingame-test-20261112-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/movies/rasaadte.wbm",
+          "sha256": "cb81c3fd1f0b015f24bdf904f6cf2994814fb204392a6d29fa04f4d3a89001dc",
+          "bytes": 44502285,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HDRASATE.wbm",
+          "sha256": "cb81c3fd1f0b015f24bdf904f6cf2994814fb204392a6d29fa04f4d3a89001dc",
+          "bytes": 44502285,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    },
+    {
+      "asset_key": "movie:default:RESTDUNG",
+      "alias": "RESTDUNG",
+      "command": "C:PlayMovie(\"RESTDUNG\")",
+      "installation_receipt": "video/installations/restdung-seedvr-20261109-v1/installation.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/movies/restdung.wbm",
+          "sha256": "98e98838208b6fd44ded83e51917bf605ed255376409a620a088371266b20047",
+          "bytes": 5654570,
+          "role": "localized-movie"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": "Installed SeedVR FullHD15 only; Apollo30 comparison is separate"
+    },
+    {
+      "asset_key": "movie:default:SARADUSH",
+      "alias": "HDSARAD",
+      "command": "C:PlayMovie(\"HDSARAD\")",
+      "installation_receipt": "video/index/saradush-ingame-test-20261112-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/movies/saradush.wbm",
+          "sha256": "541d24143c73a7b08b49f71ae7228f211c4944c4b5e12b984471a8fb9a17441d",
+          "bytes": 78354565,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HDSARAD.wbm",
+          "sha256": "541d24143c73a7b08b49f71ae7228f211c4944c4b5e12b984471a8fb9a17441d",
+          "bytes": 78354565,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    },
+    {
+      "asset_key": "movie:it_IT:INTRO15F",
+      "alias": "HD15IT",
+      "command": "C:PlayMovie(\"HD15IT\")",
+      "installation_receipt": "video/index/intro15f-ingame-test-20261111-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/lang/it_IT/movies/intro15f.wbm",
+          "sha256": "a2de4ab2ae6a70d7520846c8ff67d126d508e5dcf7de7151c80e6c7477461fbc",
+          "bytes": 480933633,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HD15IT.wbm",
+          "sha256": "a2de4ab2ae6a70d7520846c8ff67d126d508e5dcf7de7151c80e6c7477461fbc",
+          "bytes": 480933633,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    },
+    {
+      "asset_key": "movie:pl_PL:INTRO",
+      "alias": "HDINPL",
+      "command": "C:PlayMovie(\"HDINPL\")",
+      "installation_receipt": "video/index/intro-ingame-test-20261111-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/lang/pl_PL/movies/INTRO.wbm",
+          "sha256": "577541eb2d0206cc438513035141fb65abba651bf7cbd4887ba290f525896ae6",
+          "bytes": 382332043,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HDINPL.wbm",
+          "sha256": "577541eb2d0206cc438513035141fb65abba651bf7cbd4887ba290f525896ae6",
+          "bytes": 382332043,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    },
+    {
+      "asset_key": "movie:pl_PL:INTRO15F",
+      "alias": "HD15PL",
+      "command": "C:PlayMovie(\"HD15PL\")",
+      "installation_receipt": "video/index/intro15f-ingame-test-20261111-v1.json",
+      "installed_files": [
+        {
+          "target": "config://bg2ee_game_root/lang/pl_PL/movies/INTRO15F.wbm",
+          "sha256": "36f6c6327d47d3103c72f3d63eefa8bf751038f0e81b2b21a643443edc7c7d78",
+          "bytes": 506268086,
+          "role": "localized-movie"
+        },
+        {
+          "target": "config://bg2ee_game_root/movies/HD15PL.wbm",
+          "sha256": "36f6c6327d47d3103c72f3d63eefa8bf751038f0e81b2b21a643443edc7c7d78",
+          "bytes": 506268086,
+          "role": "console-test-alias"
+        }
+      ],
+      "runtime_ingame_qa": "accepted-user",
+      "runtime_note": null
+    }
+  ],
+  "release_integration": false,
+  "historical_receipts_and_qa_unchanged": true
+}
