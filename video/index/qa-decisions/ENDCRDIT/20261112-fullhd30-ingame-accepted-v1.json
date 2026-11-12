@@ -1,0 +1,26 @@
+{
+  "asset_key": "movie:default:ENDCRDIT",
+  "decision": "accepted",
+  "decision_date": "2026-11-12",
+  "scope": "runtime-ingame-ENDCRDIT-FullHD30",
+  "user_decision": "considère la vérif ingame validée. donne le clua. si y'a un pb je te dirai. sinon c'est que c'est validé",
+  "basis": "explicit-user-instruction-on-installation",
+  "agent_observed_gameplay_test": false,
+  "runtime": {
+    "path": "video/final/endcrdit-proteus-T1-apollo30-20261112-v1/ENDCRDIT/default/endcrdit.wbm",
+    "sha256": "2e0392d21053e5c47c346b34e25f1e4bd572f3a90fa7d4a5e2b8b9e691f84e80",
+    "bytes": 495652712
+  },
+  "alias": "HDENDCRD",
+  "contract": {
+    "width": 1920,
+    "height": 1080,
+    "frames": 4004,
+    "fps": "30/1",
+    "audio": "native-Vorbis-PCM-packets-PTS-preserved"
+  },
+  "production_manifest": "video/index/endcrdit-proteus-T1-finals30-20261112-v1.json",
+  "installation_receipt": "video/index/endcrdit-ingame-test-20261112-v1.json",
+  "runtime_ingame_qa": "accepted-user",
+  "release_integration": false
+}

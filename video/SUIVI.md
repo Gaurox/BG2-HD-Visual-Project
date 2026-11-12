@@ -1,12 +1,13 @@
 # Suivi vidéo — 2026-11-12
 
 - Autorités : sources=`index/resources.csv` ; périmètre=`index/production-scope.json` ; production courante=`index/status.csv`, détails `index/processing.csv`, `index/intro-finals30-20261111-v1.json`, `index/endings-finals30-20261111-v1.json` et `index/outro-finals30-20261112-v1.json` ; QA=`index/qa-decisions/` ; installation=`installations/*/installation.json` ; release séparée.
-- Périmètre actif37cinématiques (variantes linguistiques comprises) :36productions complètes,1partielle en pause (ENDCRDIT),0sans production ;1cinématique à terminer (≈2min13s de source entière).32installées localement ;32versions installées validées ingame ; validation groupée24versions2026-11-12,DAYNITE inclus après confirmation explicite. RESTDUNG validé correspond au WBM15 installé ; sa comparaison30 reste distincte. Aucun asset vidéo intégré à la release.
+- Périmètre actif37cinématiques (variantes linguistiques comprises) :37productions complètes,0partielle,0sans production ;aucun traitement initial restant ;ENDCRDIT complet accepté2026-11-12.33installées localement ;33versions installées validées ingame ; validation groupée24versions2026-11-12,DAYNITE inclus après confirmation explicite. RESTDUNG validé correspond au WBM15 installé ; sa comparaison30 reste distincte. Aucun asset vidéo intégré à la release.
 - QA groupée immuable24versions : `index/qa-decisions/installed-batch-ingame-accepted-20261112-v1.json` ;SHA des fichiers canoniques/alias installés vérifiés. Reçus et décisions historiques conservés inchangés. DAYNITE :ancienne anomalie close après test explicite ;aucun correctif/réencodage requis.
 -13tutoriels retirés du suivi et exclus des futurs traitements sur demande utilisateur2026-11-11 ; décision `index/production-scope.json`. Inventaire50sources et fichiers natifs conservés.
 
 | Vidéo | Production conservée | QA | Installation locale |
 |---|---|---|---|
+| ENDCRDIT | Proteus T1 neutre →Apollo8,4004images/FullHD30/~133,47s,son natif complet | film complet accepté ;ingame accepté sur instruction utilisateur2026-11-12 | WBM +alias `HDENDCRD` installés |
 | LOGO | SeedVR FullHD,302images à29,97fps natifs ;aucune interpolation | visuelle acceptée2026-11-12 ;ingame accepté2026-11-12 | WBM +alias `HDLOGO` installés |
 | NITEDAY | DAYNITE H3 01604 inversé/recalé,300images/FullHD30/10s vidéo,10,942s total déclaré,son NITEDAY natif | H3 inversé accepté2026-11-12 ; ingame accepté2026-11-12 | WBM +alias `HDNTDAY` installés |
 | FLYTHR02 | SeedVR FP16 LAB1080 →Apollo8,404images/30fps/~13,47s,son natif complet | visuelle acceptée2026-11-12 ; ingame accepté2026-11-12 | WBM +alias `HDFLY02` installés |
@@ -114,15 +115,17 @@
 - Production sélectionnée : `index/niteday-h3-reverse-finals30-20261112-v1.json` ; recette `../pipeline/recipes/niteday-h3-reverse-20261112-v1/README.md` ; analyse historique `index/niteday-reverse-analysis-20261112-v1.json`. WBM copié à octets identiques depuis l’aperçu validé ; SSIM échantillonné0,994300 face au master.
 - Installation : `index/niteday-h3-reverse-ingame-test-20261112-v1.json` ; original réel sauvegardé,`movies/niteday.wbm` +alias `HDNTDAY` installés et SHA vérifiés. Test accepté2026-11-12 : `C:PlayMovie("HDNTDAY")`. **QA ingame acceptée2026-11-12**, aucune intégration release.
 
-## ENDCRDIT — pause après première portion
+## ENDCRDIT — production complète T1 + Apollo30
 
-- Demande utilisateur2026-11-11 : montrer la première portion puis libérer le GPU.330images/0–22s SeedVR FullHD15 conservées ;1671images source restantes, Apollo non démarré. Source/FFV1/SHA/commandes gardés ; reprise à l’image330 avec contexte natif297–329.
-- Point de reprise : `index/endcrdit-paused-20261111-v1.json` ; aperçu et comparaison : `../pipeline/recipes/endcrdit-seedvr-apollo30-20261111-v1/README.md`. QA utilisateur2026-11-11 : rendu apprécié mais lettres trop déformées, portion SeedVR refusée ; décision `index/qa-decisions/ENDCRDIT/20261111-first-seedvr-portion-text-rejected-v1.json`. Essais Topaz reportés à une reprise demandée ; pause maintenue, médias conservés. Aucune installation/release.
+- Choix utilisateur2026-11-12 :T1 Proteus neutre seul ;secondes passes et nearest720→SeedVR7B non sélectionnés. QA extrait T1 : `index/qa-decisions/ENDCRDIT/20261112-topaz-T1-first5s-visual-accepted-v1.json` ;choix production complète : `index/qa-decisions/ENDCRDIT/20261112-T1-single-pass-full-production-selected-v1.json`.
+- Source2001images1280×720/15fps →Proteus prob-4 neutre x2/2560×1440 puis Lanczos1080 →Apollo8 :4001images générées+3tenues terminales=4004images/1920×1080/30fps/~133,47s ;origine PTS et audio natif complet conservés. Une seule passe spatiale ;aucun SeedVR. MP4/AAC,MKV/Vorbis,WBM VP8/Vorbis ;comptes/décodage/PTS/audio/SSIM vérifiés.
+- Résultats : `index/endcrdit-proteus-T1-finals30-20261112-v1.json` ;[recette](../pipeline/recipes/endcrdit-proteus-T1-apollo30-20261112-v1/README.md). **Film complet accepté2026-11-12** ;WBM/alias `HDENDCRD` installés,SHA vérifiés,original sauvegardé. QA ingame acceptée sur instruction explicite utilisateur (aucun test observé par agent). Reçu : `index/endcrdit-ingame-test-20261112-v1.json` ;QA visuelle/ingame : `index/qa-decisions/ENDCRDIT/20261112-fullhd30-{visual,ingame}-accepted-v1.json`. CLUA : `C:PlayMovie("HDENDCRD")`. Aucune intégration release.
+- Historique conservé :préfixe SeedVR330images rejeté pour lettres déformées,checkpoint `index/endcrdit-paused-20261111-v1.json` et anciens essais inchangés ;cet ancien checkpoint ne décrit pas la production courante.
+- Essais0–5s :[14variantes initiales](../pipeline/recipes/endcrdit-topaz-tests-5s-20261112-v1/README.md),[secondes passes](../pipeline/recipes/endcrdit-topaz-second-pass-5s-20261112-v1/README.md),[nearest720 puis7B](../pipeline/recipes/endcrdit-T1-nearest720-seedvr7b-5s-20261112-v1/README.md). T1 reste le seul choix retenu.
 
-## À terminer — 1cinématique
+## Production — 37cinématiques complètes
 
-- `ENDCRDIT` uniquement ;pause conservée,texte SeedVR rejeté,essais Topaz reportés.
-- Source entière133,451s (≈2min13s) ;0état `not-started` ;ENDCRDIT `partial-paused` dans `index/status.csv`.13tutoriels exclus. POCKETZZ et DAYNITE validés ingame2026-11-12.
+-0état `not-started` ou `partial-paused` ;13tutoriels exclus,50sources conservées.33versions installées/validées ingame ;ENDCRDIT inclus sur instruction explicite utilisateur. QA/installation/release restent séparées.
 
 ## DAYNITE — chaîne conservée
 

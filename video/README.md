@@ -7,7 +7,9 @@ zone restent sous l'autorité de `animations/index/occurrences.csv` et sont excl
 `index/processing.csv` sélectionne les runs validés par étape et le run utilisé par le patch.
 `patch_run` vide signifie qu'aucun artefact vidéo n'est intégré au patch.
 
-QA ingame2026-11-12 :24versions supplémentaires acceptées,DAYNITE inclus explicitement ;32versions installées désormais acceptées. Décision/SHA : `index/qa-decisions/installed-batch-ingame-accepted-20261112-v1.json`. RESTDUNG :validation du WBM15 installé ;LOGO :29,97fps natifs,sans interpolation. Reçus/QA historiques inchangés ;aucune intégration release.
+ENDCRDIT produit2026-11-12 :**T1 Proteus neutre seul +Apollo8 FullHD30**,4004images/~133,47s,audio natif complet. **Film complet accepté2026-11-12**,WBM +alias `HDENDCRD` installés ;**QA ingame acceptée sur instruction explicite utilisateur**. Reçu : `index/endcrdit-ingame-test-20261112-v1.json` ;QA visuelle/ingame sous `index/qa-decisions/ENDCRDIT/`. [Recette](../pipeline/recipes/endcrdit-proteus-T1-apollo30-20261112-v1/README.md),manifeste `index/endcrdit-proteus-T1-finals30-20261112-v1.json`.37cinématiques désormais produites ;anciens essais/pauses conservés comme historique.
+
+QA ingame2026-11-12 :24versions supplémentaires acceptées,DAYNITE inclus explicitement ;33versions installées désormais acceptées (ENDCRDIT ajouté sur instruction utilisateur). Décision/SHA : `index/qa-decisions/installed-batch-ingame-accepted-20261112-v1.json`. RESTDUNG :validation du WBM15 installé ;LOGO :29,97fps natifs,sans interpolation. Reçus/QA historiques inchangés ;aucune intégration release.
 
 LOGO produit2026-11-12 : SeedVR FullHD seul,302images à30000/1001fps (~29,97),sans interpolation/Apollo sur instruction utilisateur. Original1280×720 déjà propre ;rendu accepté2026-11-12,WBM +alias `HDLOGO` installés ;**QA ingame acceptée2026-11-12**. Reçu : `index/logo-ingame-test-20261112-v1.json` ;QA : `index/qa-decisions/LOGO/20261112-nativefps-visual-accepted-v1.json`. Manifeste : `index/logo-finals-nativefps-20261112-v1.json` ;[recette](../pipeline/recipes/logo-seedvr-nativefps-20261112-v1/README.md).
 
