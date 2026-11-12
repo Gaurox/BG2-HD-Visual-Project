@@ -56,6 +56,23 @@ Un nouveau `run.json` suit `../docs/workspace-run.schema.json`. La sélection re
 `index/processing.csv`; ni la présence d'un run ni un fichier interne ne prouvent QA, installation
 ou release. Le contenu interne des runs sera défini avec le pipeline d'upscale, pas par ce document.
 
+## Illustrations de description : essai conservé, généralisation différée
+
+- Décision utilisateur 2026-11-12 : conserver l'essai SeedVR2 7B x4 ; reprendre ce traitement
+  ultérieurement sur les **976 `item-description`**. Aucun lancement global maintenant.
+- Essai local : `batches/item-description-seedvr7b-x4-20261112-v1/` ; assets :
+  `CSW1H01`, `CHELM01`, `CAMUL01`, `CPOTN02`.
+- Recette exacte : `workflows/four-items.api.json` ; paramètres/sorties : `run.json` ;
+  comparaison : `comparison/four-items-comparison.png` (chemins relatifs à l'essai).
+- Copie Git de la recette et des métadonnées :
+  `../pipeline/recipes/icons-item-description-seedvr7b-x4-20261112-v1/`.
+- Modèle `seedvr2_7b_int8_convrot.safetensors`, VAE `seedvr2_ema_vae_fp16.safetensors` ;
+  x4 Lanczos, seed `959948902156062`, 1 step, CFG 1, Euler/simple, correction couleur LAB.
+- Entrées RGB sur beige `(234,221,190)`, padding droite/bas au multiple de 64 ; crop final
+  aux dimensions natives x4. Comparaison RGB ; variante RGBA avec alpha natif nearest x4 séparée.
+- Résultats, entrées et workflow conservés localement ; médias ignorés Git. Cette décision
+  conserve la piste de traitement ; aucune QA runtime, installation ou release déduite.
+
 ## Test runtime x2 des icônes d'inventaire
 
 - Source scellée : `batches/item-inventory-xbr2x-aa-v1/`.

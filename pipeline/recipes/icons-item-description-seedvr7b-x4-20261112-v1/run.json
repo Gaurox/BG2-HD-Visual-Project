@@ -1,0 +1,85 @@
+{
+  "schema": "bg2-item-description-seedvr-trial-v1",
+  "asset_ids": [
+    "CSW1H01",
+    "CHELM01",
+    "CAMUL01",
+    "CPOTN02"
+  ],
+  "assets": [
+    {
+      "asset_id": "CSW1H01",
+      "source": "icons/batches/item-description-preview-20261112-v1/assets/CSW1H01/source-frame-000.png",
+      "native_size": [
+        126,
+        200
+      ],
+      "input": "BG2-IDESC-20261112-CSW1H01-padded.png",
+      "output_rgb": "outputs/CSW1H01-seedvr7b-x4-rgb.png",
+      "output_rgba": "outputs/CSW1H01-seedvr7b-x4-native-alpha.png",
+      "output_size": [
+        504,
+        800
+      ]
+    },
+    {
+      "asset_id": "CHELM01",
+      "source": "icons/batches/item-description-preview-20261112-v1/assets/CHELM01/source-frame-000.png",
+      "native_size": [
+        122,
+        169
+      ],
+      "input": "BG2-IDESC-20261112-CHELM01-padded.png",
+      "output_rgb": "outputs/CHELM01-seedvr7b-x4-rgb.png",
+      "output_rgba": "outputs/CHELM01-seedvr7b-x4-native-alpha.png",
+      "output_size": [
+        488,
+        676
+      ]
+    },
+    {
+      "asset_id": "CAMUL01",
+      "source": "icons/batches/item-description-preview-20261112-v1/assets/CAMUL01/source-frame-000.png",
+      "native_size": [
+        91,
+        174
+      ],
+      "input": "BG2-IDESC-20261112-CAMUL01-padded.png",
+      "output_rgb": "outputs/CAMUL01-seedvr7b-x4-rgb.png",
+      "output_rgba": "outputs/CAMUL01-seedvr7b-x4-native-alpha.png",
+      "output_size": [
+        364,
+        696
+      ]
+    },
+    {
+      "asset_id": "CPOTN02",
+      "source": "icons/batches/item-description-preview-20261112-v1/assets/CPOTN02/source-frame-000.png",
+      "native_size": [
+        49,
+        131
+      ],
+      "input": "BG2-IDESC-20261112-CPOTN02-padded.png",
+      "output_rgb": "outputs/CPOTN02-seedvr7b-x4-rgb.png",
+      "output_rgba": "outputs/CPOTN02-seedvr7b-x4-native-alpha.png",
+      "output_size": [
+        196,
+        524
+      ]
+    }
+  ],
+  "model": "seedvr2_7b_int8_convrot.safetensors",
+  "scale": 4,
+  "seed": 959948902156062,
+  "input_background": [
+    234,
+    221,
+    190
+  ],
+  "alpha": "native alpha scaled separately x4 nearest; preview matte beige",
+  "qa": "pending",
+  "installation": "not-installed",
+  "prompt_id": "fb786d26-ff2d-44f7-a0e0-e2effd6e7684",
+  "state": "awaiting-user-comparison",
+  "comparison": "RGB inference on beige; original alpha nearest x4 saved separately, not shown in comparison"
+}
