@@ -1,7 +1,7 @@
 # Suivi vidéo — 2026-11-12
 
 - Autorités : sources=`index/resources.csv` ; périmètre=`index/production-scope.json` ; production courante=`index/status.csv`, détails `index/processing.csv`, `index/intro-finals30-20261111-v1.json`, `index/endings-finals30-20261111-v1.json` et `index/outro-finals30-20261112-v1.json` ; QA=`index/qa-decisions/` ; installation=`installations/*/installation.json` ; release séparée.
-- Périmètre actif37cinématiques (variantes linguistiques comprises) :22productions complètes,1partielle en pause (ENDCRDIT),14sans production ;15cinématiques à terminer (≈6min17s de sources entières).17installées localement ;7END15FPS/MELISSAN validées ingame ; autres QA ingame séparées. POCKETZZ reste candidat non validé ; anomalie DAYNITE ouverte. Aucun asset vidéo intégré à la release.
+- Périmètre actif37cinématiques (variantes linguistiques comprises) :22productions complètes,1partielle en pause (ENDCRDIT),14sans production ;15cinématiques à terminer (≈6min17s de sources entières).17installées localement ;8versions validées ingame (7END15FPS/MELISSAN +OUTRO) ; autres QA ingame séparées. POCKETZZ reste candidat non validé ; anomalie DAYNITE ouverte. Aucun asset vidéo intégré à la release.
 -13tutoriels retirés du suivi et exclus des futurs traitements sur demande utilisateur2026-11-11 ; décision `index/production-scope.json`. Inventaire50sources et fichiers natifs conservés.
 
 | Vidéo | Production conservée | QA | Installation locale |
@@ -22,10 +22,10 @@
 - Installation : `index/endings-ingame-test-20261111-v1.json` ;7WBM canoniques +7alias (`HDENEN/DE/IT/PL`, `HDMLEN/DE/PL`),sauvegardes réelles conservées. 7WBM acceptés ingame par l’utilisateur2026-11-11 ; décision immuable `index/qa-decisions/endings-ingame-accepted-20261111-v1.json` liée aux SHA des fichiers testés. Aucune intégration release.
 - Console/restauration/réglages : `../pipeline/recipes/endings-shared-30fps-20261111-v1/README.md`.
 
-## OUTRO — validé visuellement, installé pour test
+## OUTRO — validé ingame
 
 - Source muette1225images15fps →4portions SeedVR2 3B FP16 LAB/1080 (contexte33images) →master1225images →Apollo8/2450images30fps (~81,667s). MP4,MKV,WBM restent sans piste audio.
-- Résultats/contrôles : `index/outro-finals30-20261112-v1.json` ; recette `../pipeline/recipes/outro-seedvr-apollo30-20261112-v1/README.md`. QA visuelle acceptée2026-11-12 : `index/qa-decisions/OUTRO/20261112-fullhd30-visual-accepted-v1.json`. Installation locale : `index/outro-ingame-test-20261112-v1.json`, `movies/outro.wbm` +alias `HDOUTRO`, sauvegarde réelle conservée. Test : `C:PlayMovie("HDOUTRO")`. QA ingame en attente ; aucune intégration release.
+- Résultats/contrôles : `index/outro-finals30-20261112-v1.json` ; recette `../pipeline/recipes/outro-seedvr-apollo30-20261112-v1/README.md`. QA visuelle acceptée2026-11-12 : `index/qa-decisions/OUTRO/20261112-fullhd30-visual-accepted-v1.json`. Installation locale : `index/outro-ingame-test-20261112-v1.json`, `movies/outro.wbm` +alias `HDOUTRO`, sauvegarde réelle conservée. Test `C:PlayMovie("HDOUTRO")` accepté par l’utilisateur2026-11-12 ; décision immuable `index/qa-decisions/OUTRO/20261112-fullhd30-ingame-accepted-v1.json`, liée au SHA du WBM installé. Aucune intégration release.
 
 ## ENDCRDIT — pause après première portion
 

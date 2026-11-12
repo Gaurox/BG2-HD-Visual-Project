@@ -1,0 +1,24 @@
+{
+  "decision": "accepted",
+  "decision_date": "2026-11-12",
+  "asset_key": "movie:default:OUTRO",
+  "scope": "runtime-ingame-OUTRO-FullHD30",
+  "user_decision": "ok outro passe bien ingame, je valide. mets à jour le suivi et committe",
+  "runtime": {
+    "path": "video/final/outro-seedvr-apollo30-20261112-v1/OUTRO/default/outro.wbm",
+    "bytes": 273263635,
+    "sha256": "f95b1964cb567ebd4541b9d2f113ab0b6010fecd610b8b9de3404b295d351c55"
+  },
+  "alias": "HDOUTRO",
+  "contract": {
+    "width": 1920,
+    "height": 1080,
+    "frames": 2450,
+    "fps": "30/1",
+    "audio": "absent-native-contract"
+  },
+  "production_manifest": "video/index/outro-finals30-20261112-v1.json",
+  "installation_receipt": "video/index/outro-ingame-test-20261112-v1.json",
+  "runtime_ingame_qa": "accepted-user",
+  "release_integration": false
+}
