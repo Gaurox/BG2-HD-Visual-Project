@@ -7,6 +7,8 @@ zone restent sous l'autorité de `animations/index/occurrences.csv` et sont excl
 `index/processing.csv` sélectionne les runs validés par étape et le run utilisé par le patch.
 `patch_run` vide signifie qu'aucun artefact vidéo n'est intégré au patch.
 
+POCKETZZ finale2026-11-12 : SeedVR FullHD15 →Apollo8 FullHD30,180images/6s, rendu validé visuellement. WBM installé avec alias `HDPCKZZ` ; **QA ingame en attente**. Production : `index/pocketzz-finals30-20261112-v1.json` ; installation : `index/pocketzz-ingame-test-20261112-v1.json` ; [recette/console/restauration](../pipeline/recipes/pocketzz-apollo30-20261112-v1/README.md). Aucune intégration release.
+
 OUTRO finale2026-11-12 : SeedVR FP16 LAB →Apollo8 FullHD30,2450images/~81,667s,sans audio comme la source ; MP4/MKV/WBM validés visuellement, WBM installé avec alias `HDOUTRO` et validé ingame le2026-11-12. Résultats : `index/outro-finals30-20261112-v1.json` ; [recette](../pipeline/recipes/outro-seedvr-apollo30-20261112-v1/README.md). Installation : `index/outro-ingame-test-20261112-v1.json` ; décisions QA : `index/qa-decisions/OUTRO/20261112-fullhd30-visual-accepted-v1.json` et `index/qa-decisions/OUTRO/20261112-fullhd30-ingame-accepted-v1.json`. Aucune intégration release.
 
 END15FPS/MELISSAN finales2026-11-11 : **7versions FullHD30 validées ingame le2026-11-11**,2masters SeedVR FP16 LAB/Apollo8 partagés, audios natifs et timings PL adaptés ; décision : `index/qa-decisions/endings-ingame-accepted-20261111-v1.json`. Production : `index/endings-finals30-20261111-v1.json` ; installation : `index/endings-ingame-test-20261111-v1.json` ; [console et restauration](../pipeline/recipes/endings-shared-30fps-20261111-v1/README.md). Aucune intégration release.
@@ -60,7 +62,7 @@ direct/inverse et T1/T3 ont été supprimés. Réglages/logs historiques :
 Nettoyage2026-11-11 :141fichiers de travail supprimés,14 631 402 684octets (~13,63Gio),dont109dans le projet et32caches vidéo BG2 ComfyUI.34contrôles de doublons ;748fichiers protégés inchangés.50sources,42fichiers finaux,preuves QA,sauvegardes et pause ENDCRDIT conservés ; aucune tâche GPU/décodage. Reçu : `index/cleanup-20261111-v1.json` ; recette : `../pipeline/recipes/video-cleanup-20261111-v1/README.md`.
 
 Nettoyage2026-11-10 :467fichiers supprimés (gain net≈4,27Gio),50sources et sauvegardes conservées.
-POCKETZZ : seul candidat SeedVR FullHD15 gardé explicitement, aucune validation déduite.
+POCKETZZ : candidat SeedVR FullHD15 conservé lors de ce nettoyage ; statut courant ci-dessus.
 Comparateur `tools/comparator.html` : uniquement sources/résultats retenus/étapes encore utiles.
 
 ## Organisation

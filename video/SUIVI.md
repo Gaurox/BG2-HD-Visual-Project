@@ -1,7 +1,7 @@
 # Suivi vidéo — 2026-11-12
 
 - Autorités : sources=`index/resources.csv` ; périmètre=`index/production-scope.json` ; production courante=`index/status.csv`, détails `index/processing.csv`, `index/intro-finals30-20261111-v1.json`, `index/endings-finals30-20261111-v1.json` et `index/outro-finals30-20261112-v1.json` ; QA=`index/qa-decisions/` ; installation=`installations/*/installation.json` ; release séparée.
-- Périmètre actif37cinématiques (variantes linguistiques comprises) :22productions complètes,1partielle en pause (ENDCRDIT),14sans production ;15cinématiques à terminer (≈6min17s de sources entières).17installées localement ;8versions validées ingame (7END15FPS/MELISSAN +OUTRO) ; autres QA ingame séparées. POCKETZZ reste candidat non validé ; anomalie DAYNITE ouverte. Aucun asset vidéo intégré à la release.
+- Périmètre actif37cinématiques (variantes linguistiques comprises) :22productions complètes,1partielle en pause (ENDCRDIT),14sans production ;15cinématiques à terminer (≈6min17s de sources entières).18installées localement ;8versions validées ingame (7END15FPS/MELISSAN +OUTRO) ; autres QA ingame séparées. POCKETZZ validé visuellement, test ingame en attente ; anomalie DAYNITE ouverte. Aucun asset vidéo intégré à la release.
 -13tutoriels retirés du suivi et exclus des futurs traitements sur demande utilisateur2026-11-11 ; décision `index/production-scope.json`. Inventaire50sources et fichiers natifs conservés.
 
 | Vidéo | Production conservée | QA | Installation locale |
@@ -12,7 +12,7 @@
 | RESTINN | SeedVR FP16 LAB15 → Apollo8 FullHD30 | comparaison acceptée | non |
 | REST | SeedVR FP16 LAB15 → Apollo8 FullHD30 | comparaison acceptée | non |
 | DAYNITE | H3 01604 → fondus10s → nearest FullHD24 → Apollo8 FullHD30 + son natif | sélection pour test local ; post-SeedVR rejeté ; ancienne vidéo signalée ingame | WBM30 présent et SHA conforme ; anomalie ingame non résolue |
-| POCKETZZ | `pocketzz/runs/pocketzz-comfyui-experiments-20260814/ComfyUI_00002_.mp4`,SeedVR FP16 LAB FullHD15 | candidat gardé explicitement ; pas de validation | non |
+| POCKETZZ | SeedVR FP16 LAB FullHD15 → Apollo8 FullHD30,180images/6s | visuelle acceptée2026-11-12 ; ingame en attente | WBM +alias `HDPCKZZ` installés |
 | INTRO (défaut/DE/PL) |3assemblages SeedVR FullHD~30, audios natifs | visuelle selon décisions/index INTRO |3WBM installés ; test ingame en attente |
 | INTRO15F (défaut/DE/IT/PL) |4assemblages SeedVR + Apollo8 FullHD30, audios natifs |4versions acceptées visuellement |4WBM installés ; test ingame en attente |
 
@@ -27,6 +27,11 @@
 - Source muette1225images15fps →4portions SeedVR2 3B FP16 LAB/1080 (contexte33images) →master1225images →Apollo8/2450images30fps (~81,667s). MP4,MKV,WBM restent sans piste audio.
 - Résultats/contrôles : `index/outro-finals30-20261112-v1.json` ; recette `../pipeline/recipes/outro-seedvr-apollo30-20261112-v1/README.md`. QA visuelle acceptée2026-11-12 : `index/qa-decisions/OUTRO/20261112-fullhd30-visual-accepted-v1.json`. Installation locale : `index/outro-ingame-test-20261112-v1.json`, `movies/outro.wbm` +alias `HDOUTRO`, sauvegarde réelle conservée. Test `C:PlayMovie("HDOUTRO")` accepté par l’utilisateur2026-11-12 ; décision immuable `index/qa-decisions/OUTRO/20261112-fullhd30-ingame-accepted-v1.json`, liée au SHA du WBM installé. Aucune intégration release.
 
+## POCKETZZ — validé visuellement, test ingame en attente
+
+- Production : `index/pocketzz-finals30-20261112-v1.json` ; recette `../pipeline/recipes/pocketzz-apollo30-20261112-v1/README.md`. Candidat SeedVR accepté →Apollo8/1920×1080/30fps/180images/6s ; audio candidat copié en MP4, Vorbis pour WBM.
+- QA visuelle acceptée2026-11-12 : `index/qa-decisions/POCKETZZ/20261112-apollo30-visual-accepted-v1.json`. Installation : `index/pocketzz-ingame-test-20261112-v1.json`, sauvegarde réelle conservée ; `movies/pocketzz.wbm` +alias `HDPCKZZ`. Test restant : `C:PlayMovie("HDPCKZZ")`. **QA ingame en attente**, aucune intégration release.
+
 ## ENDCRDIT — pause après première portion
 
 - Demande utilisateur2026-11-11 : montrer la première portion puis libérer le GPU.330images/0–22s SeedVR FullHD15 conservées ;1671images source restantes, Apollo non démarré. Source/FFV1/SHA/commandes gardés ; reprise à l’image330 avec contexte natif297–329.
@@ -35,7 +40,7 @@
 ## À terminer — 15cinématiques
 
 - `BLACKPIT`, `DORNGORG`, `DORNTREE`, `ENDCRDIT`, `FLYTHR01`, `FLYTHR02`, `FLYTHR04`, `HEXXATDR`, `LOGO`, `MANAFORG`, `NEERAES`, `NITEDAY`, `RASAADMI`, `RASAADTE`, `SARADUSH`.
-- Sources entières cumulées377,061s (≈6min17s) ;14états `not-started` +ENDCRDIT `partial-paused` dans `index/status.csv`.13tutoriels exclus. POCKETZZ candidat et anomalie DAYNITE restent suivis séparément.
+- Sources entières cumulées377,061s (≈6min17s) ;14états `not-started` +ENDCRDIT `partial-paused` dans `index/status.csv`.13tutoriels exclus. POCKETZZ en attente de test ingame et anomalie DAYNITE restent suivis séparément.
 
 ## DAYNITE — chaîne conservée
 
