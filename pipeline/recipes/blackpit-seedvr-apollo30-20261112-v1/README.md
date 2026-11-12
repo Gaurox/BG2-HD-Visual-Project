@@ -1,0 +1,13 @@
+# BLACKPIT FullHD30 — 2026-11-12
+
+- Choix utilisateur délégué : plus longue nouvelle vidéo `not-started` =BLACKPIT24,437s (SARADUSH23,133s suivante). ENDCRDIT partiel/rejet texte reste en pause.
+- Source `video/blackpit/blackpit.wbm` :1280×720,611images,VP8/Vorbis ; annonce2997/100fps mais PTS réels11ms→24,402s,intervalles33/34/66/67ms. Conserver intégralement les images et l’horloge native, éviter une lecture611images/29,97fps qui accélérerait le film.
+- `prepare.py` : SHA inventaire source ;2portions FFV1 à horloge temporaire30fps,images0–329 puis297–610 (33images de contexte à retirer). MD5 YUV420p image par image identiques à la source.
+- ComfyUI existant localhost8188, RTX5090 ; SeedVR2 3B FP16 LAB1080,seed42,batch33/uniforme/overlap3,bruits0,SDPA,swap32,offloadCPU,VAE encode1024/128/decode768/128. Graphes exacts/jobs/FFV1 : `video/blackpit/runs/blackpit-seedvr-apollo30-20261112-v1/`.
+- `finish.py part --number N` : ProRes Comfy →H264CRF12,contexte retiré,comptes contrôlés. `finish.py final` : concat611images index30 →Apollo8 apo-8 index60/rdt=-0.01/GPU0/vram0.8/instances0 ;1221images +1tenue terminale. Conversion RGB→limited bt601 comme autres films.
+- Reconstruction native : grille finale30fps issue des PTS source ; indice Apollo le plus proche parmi les demi-images,aucun étirement audio. `native-mapping.json` conserve chaque correspondance. MKV H264/Vorbis natif,MP4 H264/AAC192k,WBM VP8CRF4/30M/qmax12/Vorbis natif.
+- Résultats : `video/final/blackpit-seedvr-apollo30-20261112-v1/BLACKPIT/default/` ; manifeste produit uniquement après vérification des3livrables : comptes/PTS/cadence/décodage complet,audio natif PCM/paquets/PTS sur MKV/WBM,SSIM runtime échantillonné>0,99.
+- QA visuelle acceptée2026-11-12 : `video/index/qa-decisions/BLACKPIT/20261112-fullhd30-visual-accepted-v1.json` liée aux SHA finaux. **Vérification ingame en attente**, aucune intégration release.
+- `install.py prepare` puis `install.py install` : jeu/InfinityLoader fermés ; original réel sauvegardé ; destinations/SHA contrôlés ; remplacement atomique `config://bg2ee_game_root/movies/blackpit.wbm` +alias neuf `movies/HDBLKPIT.wbm`. Reçu : `video/index/blackpit-ingame-test-20261112-v1.json` ; copie `metadata/installation.json`.
+- CLUA Ctrl+Espace en partie : `C:PlayMovie("HDBLKPIT")`.
+- Restauration jeu/loader fermés : contrôler SHA actuel=`after_sha256` du reçu ; recopier `video/installations/blackpit-apollo30-20261112-v1/before/movies/blackpit.wbm` vers `config://bg2ee_game_root/movies/blackpit.wbm` puis vérifier SHA=`before_sha256`. Retirer uniquement l’alias neuf `movies/HDBLKPIT.wbm` après contrôle de son SHA ; conserver sauvegarde/reçu.
