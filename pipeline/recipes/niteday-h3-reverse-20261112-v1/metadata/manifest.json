@@ -1,0 +1,2532 @@
+{
+  "asset_key": "movie:default:NITEDAY",
+  "state": "runtime-ready",
+  "method": "selected DAYNITE H3 inverse, native NITEDAY timing and untouched Vorbis audio",
+  "dimensions": [
+    1920,
+    1080
+  ],
+  "fps": "30/1",
+  "frames": 300,
+  "video_duration_s": 10,
+  "total_declared_duration_s": 10.942,
+  "ssim_sampled_all": 0.9943,
+  "files": {
+    "preview": {
+      "path": "video/final/niteday-h3-reverse-20261112-v1/NITEDAY/default/NITEDAY-H3-reverse-1080p30-native-audio.webm",
+      "sha256": "d60a5b48146c36eca432a1c0220f86ca66222b09d515863b252becbf0bffcf3f",
+      "bytes": 22138029
+    },
+    "master": {
+      "path": "video/final/niteday-h3-reverse-20261112-v1/NITEDAY/default/NITEDAY-H3-reverse-1080p30-native-audio.mkv",
+      "sha256": "786198ae52872c49813b9aa0abe88d5f815a8aaa6e5d3fe914638c20ef69fdf0",
+      "bytes": 14181335
+    },
+    "game_ready": {
+      "path": "video/final/niteday-h3-reverse-20261112-v1/NITEDAY/default/niteday.wbm",
+      "sha256": "d60a5b48146c36eca432a1c0220f86ca66222b09d515863b252becbf0bffcf3f",
+      "bytes": 22138029
+    }
+  },
+  "source": "video/niteday/niteday.wbm",
+  "source_sha256": "7e45bd2942940f8b6ebcaddc06b1bc39f95187424c302d43f1c49e7b8fff57fe",
+  "shared_generated_source": "video/daynite/runs/daynite-h3-01604-nearest-apollo30-20261110-v1/DAYNITE-H3-01604-NEAREST-Apollo8-1080p30-son-original-v1.mp4",
+  "shared_generated_source_sha256": "2f7929e7e5d60bf40474d563fb89fedb2f064db25e124aa917d91cf49670cb4c",
+  "native_audio_encoded_identical": true,
+  "native_audio_pcm_identical": true,
+  "native_audio_packets_and_pts_identical": true,
+  "vorbis_tail_ms": 23,
+  "native_container_duration_convention_preserved": true,
+  "runtime_matches_user_reviewed_webm": true,
+  "proof": {
+    "state": "feasibility-preview-only",
+    "gpu_used": false,
+    "new_ai_inference": false,
+    "source": "video/daynite/runs/daynite-h3-01604-nearest-apollo30-20261110-v1/DAYNITE-H3-01604-NEAREST-Apollo8-1080p30-son-original-v1.mp4",
+    "source_sha256": "2f7929e7e5d60bf40474d563fb89fedb2f064db25e124aa917d91cf49670cb4c",
+    "native_source": "video/niteday/niteday.wbm",
+    "native_source_sha256": "7e45bd2942940f8b6ebcaddc06b1bc39f95187424c302d43f1c49e7b8fff57fe",
+    "video_frames": 300,
+    "fps": "30/1",
+    "video_duration_s": 10,
+    "native_total_duration_s": 10.942,
+    "declared_duration_preserved": true,
+    "native_vorbis_last_packet_tail_ms": 23,
+    "native_audio_encoded_identical": true,
+    "native_audio_pcm_identical": true,
+    "native_audio_packets_and_pts_identical": true,
+    "night_luma_reference": 13.803935050964355,
+    "day_luma_reference": 56.61158561706543,
+    "used_generated_frames": [
+      60,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      105,
+      106,
+      107,
+      108,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      157,
+      158,
+      159,
+      161,
+      162,
+      163,
+      164,
+      165,
+      166,
+      167,
+      168,
+      169,
+      170,
+      172,
+      173,
+      174,
+      175,
+      176,
+      177,
+      178,
+      179,
+      180,
+      181,
+      182,
+      183,
+      184,
+      185,
+      186,
+      187,
+      188,
+      189,
+      190,
+      192,
+      193,
+      194,
+      195,
+      197,
+      198,
+      199,
+      200,
+      202,
+      203,
+      204,
+      206,
+      207,
+      208,
+      209,
+      210,
+      240
+    ],
+    "core_generated_indices_nonincreasing": true,
+    "fade_strategy": "native NITEDAY measured opacity; hold night/day anchors; reverse existing H3 transition; no fresh inference",
+    "files": {
+      "master": {
+        "path": "video/previews/niteday-h3-reverse-proof-20261112-v1/NITEDAY-H3-inverse-1080p30-son-natif.mkv",
+        "sha256": "786198ae52872c49813b9aa0abe88d5f815a8aaa6e5d3fe914638c20ef69fdf0",
+        "probe": {
+          "streams": [
+            {
+              "index": 0,
+              "codec_name": "h264",
+              "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+              "profile": "High",
+              "codec_type": "video",
+              "codec_tag_string": "[0][0][0][0]",
+              "codec_tag": "0x0000",
+              "width": 1920,
+              "height": 1080,
+              "coded_width": 1920,
+              "coded_height": 1080,
+              "has_b_frames": 2,
+              "pix_fmt": "yuv420p",
+              "level": 40,
+              "color_range": "tv",
+              "color_space": "bt709",
+              "chroma_location": "left",
+              "field_order": "progressive",
+              "refs": 1,
+              "is_avc": "true",
+              "nal_length_size": "4",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "time_base": "1/1000",
+              "start_pts": 0,
+              "start_time": "0.000000",
+              "bits_per_raw_sample": "8",
+              "extradata_size": 50,
+              "disposition": {
+                "default": 0,
+                "dub": 0,
+                "original": 0,
+                "comment": 0,
+                "lyrics": 0,
+                "karaoke": 0,
+                "forced": 0,
+                "hearing_impaired": 0,
+                "visual_impaired": 0,
+                "clean_effects": 0,
+                "attached_pic": 0,
+                "timed_thumbnails": 0,
+                "non_diegetic": 0,
+                "captions": 0,
+                "descriptions": 0,
+                "metadata": 0,
+                "dependent": 0,
+                "still_image": 0,
+                "multilayer": 0
+              },
+              "tags": {
+                "ENCODER": "Lavc62.0.101 libx264",
+                "DURATION": "00:00:10.000000000"
+              }
+            },
+            {
+              "index": 1,
+              "codec_name": "vorbis",
+              "codec_long_name": "Vorbis",
+              "codec_type": "audio",
+              "codec_tag_string": "[0][0][0][0]",
+              "codec_tag": "0x0000",
+              "sample_fmt": "fltp",
+              "sample_rate": "22050",
+              "channels": 2,
+              "channel_layout": "stereo",
+              "bits_per_sample": 0,
+              "initial_padding": 0,
+              "r_frame_rate": "0/0",
+              "avg_frame_rate": "0/0",
+              "time_base": "1/1000",
+              "start_pts": 0,
+              "start_time": "0.000000",
+              "extradata_size": 3337,
+              "disposition": {
+                "default": 1,
+                "dub": 0,
+                "original": 0,
+                "comment": 0,
+                "lyrics": 0,
+                "karaoke": 0,
+                "forced": 0,
+                "hearing_impaired": 0,
+                "visual_impaired": 0,
+                "clean_effects": 0,
+                "attached_pic": 0,
+                "timed_thumbnails": 0,
+                "non_diegetic": 0,
+                "captions": 0,
+                "descriptions": 0,
+                "metadata": 0,
+                "dependent": 0,
+                "still_image": 0,
+                "multilayer": 0
+              },
+              "tags": {
+                "DURATION": "00:00:10.965000000"
+              }
+            }
+          ],
+          "format": {
+            "filename": "G:\\AI\\BG2_Upscale\\video\\previews\\niteday-h3-reverse-proof-20261112-v1\\NITEDAY-H3-inverse-1080p30-son-natif.mkv",
+            "nb_streams": 2,
+            "nb_programs": 0,
+            "nb_stream_groups": 0,
+            "format_name": "matroska,webm",
+            "format_long_name": "Matroska / WebM",
+            "start_time": "0.000000",
+            "duration": "10.942000",
+            "size": "14181335",
+            "bit_rate": "10368367",
+            "probe_score": 100,
+            "tags": {
+              "ENCODER": "Lavf62.0.100"
+            }
+          }
+        }
+      },
+      "preview": {
+        "path": "video/previews/niteday-h3-reverse-proof-20261112-v1/NITEDAY-H3-inverse-1080p30-son-natif.webm",
+        "sha256": "d60a5b48146c36eca432a1c0220f86ca66222b09d515863b252becbf0bffcf3f",
+        "probe": {
+          "streams": [
+            {
+              "index": 0,
+              "codec_name": "vp8",
+              "codec_long_name": "On2 VP8",
+              "profile": "0",
+              "codec_type": "video",
+              "codec_tag_string": "[0][0][0][0]",
+              "codec_tag": "0x0000",
+              "width": 1920,
+              "height": 1080,
+              "coded_width": 1920,
+              "coded_height": 1080,
+              "has_b_frames": 0,
+              "sample_aspect_ratio": "1:1",
+              "display_aspect_ratio": "16:9",
+              "pix_fmt": "yuv420p",
+              "level": -99,
+              "color_range": "tv",
+              "color_space": "bt709",
+              "chroma_location": "left",
+              "field_order": "progressive",
+              "refs": 1,
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "time_base": "1/1000",
+              "start_pts": 0,
+              "start_time": "0.000000",
+              "disposition": {
+                "default": 0,
+                "dub": 0,
+                "original": 0,
+                "comment": 0,
+                "lyrics": 0,
+                "karaoke": 0,
+                "forced": 0,
+                "hearing_impaired": 0,
+                "visual_impaired": 0,
+                "clean_effects": 0,
+                "attached_pic": 0,
+                "timed_thumbnails": 0,
+                "non_diegetic": 0,
+                "captions": 0,
+                "descriptions": 0,
+                "metadata": 0,
+                "dependent": 0,
+                "still_image": 0,
+                "multilayer": 0
+              },
+              "tags": {
+                "ENCODER": "Lavc62.0.101 libvpx",
+                "DURATION": "00:00:10.000000000"
+              }
+            },
+            {
+              "index": 1,
+              "codec_name": "vorbis",
+              "codec_long_name": "Vorbis",
+              "codec_type": "audio",
+              "codec_tag_string": "[0][0][0][0]",
+              "codec_tag": "0x0000",
+              "sample_fmt": "fltp",
+              "sample_rate": "22050",
+              "channels": 2,
+              "channel_layout": "stereo",
+              "bits_per_sample": 0,
+              "initial_padding": 0,
+              "r_frame_rate": "0/0",
+              "avg_frame_rate": "0/0",
+              "time_base": "1/1000",
+              "start_pts": 0,
+              "start_time": "0.000000",
+              "extradata_size": 3337,
+              "disposition": {
+                "default": 1,
+                "dub": 0,
+                "original": 0,
+                "comment": 0,
+                "lyrics": 0,
+                "karaoke": 0,
+                "forced": 0,
+                "hearing_impaired": 0,
+                "visual_impaired": 0,
+                "clean_effects": 0,
+                "attached_pic": 0,
+                "timed_thumbnails": 0,
+                "non_diegetic": 0,
+                "captions": 0,
+                "descriptions": 0,
+                "metadata": 0,
+                "dependent": 0,
+                "still_image": 0,
+                "multilayer": 0
+              },
+              "tags": {
+                "DURATION": "00:00:10.965000000"
+              }
+            }
+          ],
+          "format": {
+            "filename": "G:\\AI\\BG2_Upscale\\video\\previews\\niteday-h3-reverse-proof-20261112-v1\\NITEDAY-H3-inverse-1080p30-son-natif.webm",
+            "nb_streams": 2,
+            "nb_programs": 0,
+            "nb_stream_groups": 0,
+            "format_name": "matroska,webm",
+            "format_long_name": "Matroska / WebM",
+            "start_time": "0.000000",
+            "duration": "10.942000",
+            "size": "22138029",
+            "bit_rate": "16185727",
+            "probe_score": 100,
+            "tags": {
+              "ENCODER": "Lavf62.0.100"
+            }
+          }
+        }
+      }
+    },
+    "mapping": [
+      {
+        "frame": 0,
+        "time_s": 0.0,
+        "daynite_frame": 240,
+        "opacity": 0.0,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 1,
+        "time_s": 0.03333333333333333,
+        "daynite_frame": 240,
+        "opacity": 2.5153858616984598e-05,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 2,
+        "time_s": 0.06666666666666667,
+        "daynite_frame": 240,
+        "opacity": 5.0307717233969195e-05,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 3,
+        "time_s": 0.1,
+        "daynite_frame": 240,
+        "opacity": 0.010428790044039947,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 4,
+        "time_s": 0.13333333333333333,
+        "daynite_frame": 240,
+        "opacity": 0.02080727237084592,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 5,
+        "time_s": 0.16666666666666666,
+        "daynite_frame": 240,
+        "opacity": 0.044617914682570516,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 6,
+        "time_s": 0.2,
+        "daynite_frame": 240,
+        "opacity": 0.06842855699429513,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 7,
+        "time_s": 0.23333333333333334,
+        "daynite_frame": 240,
+        "opacity": 0.10550701968465177,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 8,
+        "time_s": 0.26666666666666666,
+        "daynite_frame": 240,
+        "opacity": 0.14258548237500843,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 9,
+        "time_s": 0.3,
+        "daynite_frame": 240,
+        "opacity": 0.1818254979887008,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 10,
+        "time_s": 0.3333333333333333,
+        "daynite_frame": 240,
+        "opacity": 0.22106551360239318,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 11,
+        "time_s": 0.36666666666666664,
+        "daynite_frame": 240,
+        "opacity": 0.25998021517188014,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 12,
+        "time_s": 0.4,
+        "daynite_frame": 240,
+        "opacity": 0.29889491674136714,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 13,
+        "time_s": 0.43333333333333335,
+        "daynite_frame": 240,
+        "opacity": 0.33810474991320927,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 14,
+        "time_s": 0.4666666666666667,
+        "daynite_frame": 240,
+        "opacity": 0.37731458308505145,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 15,
+        "time_s": 0.5,
+        "daynite_frame": 240,
+        "opacity": 0.4188695963066018,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 16,
+        "time_s": 0.5333333333333333,
+        "daynite_frame": 240,
+        "opacity": 0.4604246095281521,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 17,
+        "time_s": 0.5666666666666667,
+        "daynite_frame": 240,
+        "opacity": 0.5007890096186562,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 18,
+        "time_s": 0.6,
+        "daynite_frame": 240,
+        "opacity": 0.5411534097091605,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 19,
+        "time_s": 0.6333333333333333,
+        "daynite_frame": 240,
+        "opacity": 0.5806332354023203,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 20,
+        "time_s": 0.6666666666666666,
+        "daynite_frame": 240,
+        "opacity": 0.6201130610954801,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 21,
+        "time_s": 0.7,
+        "daynite_frame": 240,
+        "opacity": 0.659544232174224,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 22,
+        "time_s": 0.7333333333333333,
+        "daynite_frame": 240,
+        "opacity": 0.6989754032529677,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 23,
+        "time_s": 0.7666666666666667,
+        "daynite_frame": 240,
+        "opacity": 0.7359197138410892,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 24,
+        "time_s": 0.8,
+        "daynite_frame": 240,
+        "opacity": 0.7728640244292108,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 25,
+        "time_s": 0.8333333333333334,
+        "daynite_frame": 240,
+        "opacity": 0.8105679826038595,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 26,
+        "time_s": 0.8666666666666667,
+        "daynite_frame": 240,
+        "opacity": 0.8482719407785084,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 27,
+        "time_s": 0.9,
+        "daynite_frame": 240,
+        "opacity": 0.8855533274954704,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 28,
+        "time_s": 0.9333333333333333,
+        "daynite_frame": 240,
+        "opacity": 0.9228347142124326,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 29,
+        "time_s": 0.9666666666666667,
+        "daynite_frame": 240,
+        "opacity": 0.9530444800243186,
+        "phase": "native_fade_in"
+      },
+      {
+        "frame": 30,
+        "time_s": 1.0,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 31,
+        "time_s": 1.0333333333333334,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 32,
+        "time_s": 1.0666666666666667,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 33,
+        "time_s": 1.1,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 34,
+        "time_s": 1.1333333333333333,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 35,
+        "time_s": 1.1666666666666667,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 36,
+        "time_s": 1.2,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 37,
+        "time_s": 1.2333333333333334,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 38,
+        "time_s": 1.2666666666666666,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 39,
+        "time_s": 1.3,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 40,
+        "time_s": 1.3333333333333333,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 41,
+        "time_s": 1.3666666666666667,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 42,
+        "time_s": 1.4,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 43,
+        "time_s": 1.4333333333333333,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 44,
+        "time_s": 1.4666666666666666,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 45,
+        "time_s": 1.5,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 46,
+        "time_s": 1.5333333333333334,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 47,
+        "time_s": 1.5666666666666667,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 48,
+        "time_s": 1.6,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 49,
+        "time_s": 1.6333333333333333,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 50,
+        "time_s": 1.6666666666666667,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 51,
+        "time_s": 1.7,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 52,
+        "time_s": 1.7333333333333334,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 53,
+        "time_s": 1.7666666666666666,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 54,
+        "time_s": 1.8,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 55,
+        "time_s": 1.8333333333333333,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 56,
+        "time_s": 1.8666666666666667,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 57,
+        "time_s": 1.9,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 58,
+        "time_s": 1.9333333333333333,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 59,
+        "time_s": 1.9666666666666666,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 60,
+        "time_s": 2.0,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 61,
+        "time_s": 2.033333333333333,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 62,
+        "time_s": 2.066666666666667,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 63,
+        "time_s": 2.1,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 64,
+        "time_s": 2.1333333333333333,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 65,
+        "time_s": 2.1666666666666665,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 66,
+        "time_s": 2.2,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 67,
+        "time_s": 2.2333333333333334,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 68,
+        "time_s": 2.2666666666666666,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 69,
+        "time_s": 2.3,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 70,
+        "time_s": 2.3333333333333335,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 71,
+        "time_s": 2.3666666666666667,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 72,
+        "time_s": 2.4,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 73,
+        "time_s": 2.433333333333333,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 74,
+        "time_s": 2.466666666666667,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 75,
+        "time_s": 2.5,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 76,
+        "time_s": 2.533333333333333,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 77,
+        "time_s": 2.566666666666667,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 78,
+        "time_s": 2.6,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 79,
+        "time_s": 2.6333333333333333,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 80,
+        "time_s": 2.6666666666666665,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 81,
+        "time_s": 2.7,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 82,
+        "time_s": 2.7333333333333334,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 83,
+        "time_s": 2.7666666666666666,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 84,
+        "time_s": 2.8,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 85,
+        "time_s": 2.8333333333333335,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 86,
+        "time_s": 2.8666666666666667,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 87,
+        "time_s": 2.9,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 88,
+        "time_s": 2.933333333333333,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 89,
+        "time_s": 2.966666666666667,
+        "daynite_frame": 240,
+        "opacity": 1.0,
+        "phase": "night_hold"
+      },
+      {
+        "frame": 90,
+        "time_s": 3.0,
+        "daynite_frame": 210,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 91,
+        "time_s": 3.033333333333333,
+        "daynite_frame": 210,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 92,
+        "time_s": 3.066666666666667,
+        "daynite_frame": 210,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 93,
+        "time_s": 3.1,
+        "daynite_frame": 209,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 94,
+        "time_s": 3.1333333333333333,
+        "daynite_frame": 208,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 95,
+        "time_s": 3.1666666666666665,
+        "daynite_frame": 208,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 96,
+        "time_s": 3.2,
+        "daynite_frame": 207,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 97,
+        "time_s": 3.2333333333333334,
+        "daynite_frame": 207,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 98,
+        "time_s": 3.2666666666666666,
+        "daynite_frame": 206,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 99,
+        "time_s": 3.3,
+        "daynite_frame": 204,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 100,
+        "time_s": 3.3333333333333335,
+        "daynite_frame": 204,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 101,
+        "time_s": 3.3666666666666667,
+        "daynite_frame": 203,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 102,
+        "time_s": 3.4,
+        "daynite_frame": 202,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 103,
+        "time_s": 3.433333333333333,
+        "daynite_frame": 200,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 104,
+        "time_s": 3.466666666666667,
+        "daynite_frame": 199,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 105,
+        "time_s": 3.5,
+        "daynite_frame": 198,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 106,
+        "time_s": 3.533333333333333,
+        "daynite_frame": 197,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 107,
+        "time_s": 3.566666666666667,
+        "daynite_frame": 195,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 108,
+        "time_s": 3.6,
+        "daynite_frame": 194,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 109,
+        "time_s": 3.6333333333333333,
+        "daynite_frame": 194,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 110,
+        "time_s": 3.6666666666666665,
+        "daynite_frame": 193,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 111,
+        "time_s": 3.7,
+        "daynite_frame": 192,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 112,
+        "time_s": 3.7333333333333334,
+        "daynite_frame": 190,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 113,
+        "time_s": 3.7666666666666666,
+        "daynite_frame": 189,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 114,
+        "time_s": 3.8,
+        "daynite_frame": 188,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 115,
+        "time_s": 3.8333333333333335,
+        "daynite_frame": 187,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 116,
+        "time_s": 3.8666666666666667,
+        "daynite_frame": 186,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 117,
+        "time_s": 3.9,
+        "daynite_frame": 185,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 118,
+        "time_s": 3.933333333333333,
+        "daynite_frame": 184,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 119,
+        "time_s": 3.966666666666667,
+        "daynite_frame": 183,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 120,
+        "time_s": 4.0,
+        "daynite_frame": 182,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 121,
+        "time_s": 4.033333333333333,
+        "daynite_frame": 181,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 122,
+        "time_s": 4.066666666666666,
+        "daynite_frame": 180,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 123,
+        "time_s": 4.1,
+        "daynite_frame": 179,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 124,
+        "time_s": 4.133333333333334,
+        "daynite_frame": 178,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 125,
+        "time_s": 4.166666666666667,
+        "daynite_frame": 178,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 126,
+        "time_s": 4.2,
+        "daynite_frame": 177,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 127,
+        "time_s": 4.233333333333333,
+        "daynite_frame": 176,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 128,
+        "time_s": 4.266666666666667,
+        "daynite_frame": 175,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 129,
+        "time_s": 4.3,
+        "daynite_frame": 174,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 130,
+        "time_s": 4.333333333333333,
+        "daynite_frame": 173,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 131,
+        "time_s": 4.366666666666666,
+        "daynite_frame": 172,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 132,
+        "time_s": 4.4,
+        "daynite_frame": 170,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 133,
+        "time_s": 4.433333333333334,
+        "daynite_frame": 169,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 134,
+        "time_s": 4.466666666666667,
+        "daynite_frame": 169,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 135,
+        "time_s": 4.5,
+        "daynite_frame": 168,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 136,
+        "time_s": 4.533333333333333,
+        "daynite_frame": 167,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 137,
+        "time_s": 4.566666666666666,
+        "daynite_frame": 166,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 138,
+        "time_s": 4.6,
+        "daynite_frame": 165,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 139,
+        "time_s": 4.633333333333334,
+        "daynite_frame": 164,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 140,
+        "time_s": 4.666666666666667,
+        "daynite_frame": 163,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 141,
+        "time_s": 4.7,
+        "daynite_frame": 162,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 142,
+        "time_s": 4.733333333333333,
+        "daynite_frame": 161,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 143,
+        "time_s": 4.766666666666667,
+        "daynite_frame": 159,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 144,
+        "time_s": 4.8,
+        "daynite_frame": 159,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 145,
+        "time_s": 4.833333333333333,
+        "daynite_frame": 158,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 146,
+        "time_s": 4.866666666666666,
+        "daynite_frame": 157,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 147,
+        "time_s": 4.9,
+        "daynite_frame": 155,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 148,
+        "time_s": 4.933333333333334,
+        "daynite_frame": 154,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 149,
+        "time_s": 4.966666666666667,
+        "daynite_frame": 153,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 150,
+        "time_s": 5.0,
+        "daynite_frame": 152,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 151,
+        "time_s": 5.033333333333333,
+        "daynite_frame": 151,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 152,
+        "time_s": 5.066666666666666,
+        "daynite_frame": 150,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 153,
+        "time_s": 5.1,
+        "daynite_frame": 149,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 154,
+        "time_s": 5.133333333333334,
+        "daynite_frame": 148,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 155,
+        "time_s": 5.166666666666667,
+        "daynite_frame": 148,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 156,
+        "time_s": 5.2,
+        "daynite_frame": 147,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 157,
+        "time_s": 5.233333333333333,
+        "daynite_frame": 146,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 158,
+        "time_s": 5.266666666666667,
+        "daynite_frame": 145,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 159,
+        "time_s": 5.3,
+        "daynite_frame": 143,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 160,
+        "time_s": 5.333333333333333,
+        "daynite_frame": 143,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 161,
+        "time_s": 5.366666666666666,
+        "daynite_frame": 142,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 162,
+        "time_s": 5.4,
+        "daynite_frame": 141,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 163,
+        "time_s": 5.433333333333334,
+        "daynite_frame": 140,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 164,
+        "time_s": 5.466666666666667,
+        "daynite_frame": 139,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 165,
+        "time_s": 5.5,
+        "daynite_frame": 138,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 166,
+        "time_s": 5.533333333333333,
+        "daynite_frame": 137,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 167,
+        "time_s": 5.566666666666666,
+        "daynite_frame": 136,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 168,
+        "time_s": 5.6,
+        "daynite_frame": 135,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 169,
+        "time_s": 5.633333333333334,
+        "daynite_frame": 134,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 170,
+        "time_s": 5.666666666666667,
+        "daynite_frame": 133,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 171,
+        "time_s": 5.7,
+        "daynite_frame": 132,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 172,
+        "time_s": 5.733333333333333,
+        "daynite_frame": 131,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 173,
+        "time_s": 5.766666666666667,
+        "daynite_frame": 130,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 174,
+        "time_s": 5.8,
+        "daynite_frame": 129,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 175,
+        "time_s": 5.833333333333333,
+        "daynite_frame": 128,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 176,
+        "time_s": 5.866666666666666,
+        "daynite_frame": 127,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 177,
+        "time_s": 5.9,
+        "daynite_frame": 126,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 178,
+        "time_s": 5.933333333333334,
+        "daynite_frame": 124,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 179,
+        "time_s": 5.966666666666667,
+        "daynite_frame": 124,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 180,
+        "time_s": 6.0,
+        "daynite_frame": 123,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 181,
+        "time_s": 6.033333333333333,
+        "daynite_frame": 122,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 182,
+        "time_s": 6.066666666666666,
+        "daynite_frame": 121,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 183,
+        "time_s": 6.1,
+        "daynite_frame": 120,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 184,
+        "time_s": 6.133333333333334,
+        "daynite_frame": 119,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 185,
+        "time_s": 6.166666666666667,
+        "daynite_frame": 118,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 186,
+        "time_s": 6.2,
+        "daynite_frame": 117,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 187,
+        "time_s": 6.233333333333333,
+        "daynite_frame": 115,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 188,
+        "time_s": 6.266666666666667,
+        "daynite_frame": 114,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 189,
+        "time_s": 6.3,
+        "daynite_frame": 113,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 190,
+        "time_s": 6.333333333333333,
+        "daynite_frame": 113,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 191,
+        "time_s": 6.366666666666666,
+        "daynite_frame": 112,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 192,
+        "time_s": 6.4,
+        "daynite_frame": 111,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 193,
+        "time_s": 6.433333333333334,
+        "daynite_frame": 110,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 194,
+        "time_s": 6.466666666666667,
+        "daynite_frame": 108,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 195,
+        "time_s": 6.5,
+        "daynite_frame": 108,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 196,
+        "time_s": 6.533333333333333,
+        "daynite_frame": 107,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 197,
+        "time_s": 6.566666666666666,
+        "daynite_frame": 106,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 198,
+        "time_s": 6.6,
+        "daynite_frame": 105,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 199,
+        "time_s": 6.633333333333334,
+        "daynite_frame": 103,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 200,
+        "time_s": 6.666666666666667,
+        "daynite_frame": 103,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 201,
+        "time_s": 6.7,
+        "daynite_frame": 102,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 202,
+        "time_s": 6.733333333333333,
+        "daynite_frame": 101,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 203,
+        "time_s": 6.766666666666667,
+        "daynite_frame": 100,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 204,
+        "time_s": 6.8,
+        "daynite_frame": 99,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 205,
+        "time_s": 6.833333333333333,
+        "daynite_frame": 98,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 206,
+        "time_s": 6.866666666666666,
+        "daynite_frame": 97,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 207,
+        "time_s": 6.9,
+        "daynite_frame": 96,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 208,
+        "time_s": 6.933333333333334,
+        "daynite_frame": 95,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 209,
+        "time_s": 6.966666666666667,
+        "daynite_frame": 94,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 210,
+        "time_s": 7.0,
+        "daynite_frame": 93,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 211,
+        "time_s": 7.033333333333333,
+        "daynite_frame": 92,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 212,
+        "time_s": 7.066666666666666,
+        "daynite_frame": 92,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 213,
+        "time_s": 7.1,
+        "daynite_frame": 92,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 214,
+        "time_s": 7.133333333333334,
+        "daynite_frame": 91,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 215,
+        "time_s": 7.166666666666667,
+        "daynite_frame": 91,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 216,
+        "time_s": 7.2,
+        "daynite_frame": 91,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 217,
+        "time_s": 7.233333333333333,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 218,
+        "time_s": 7.266666666666667,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 219,
+        "time_s": 7.3,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 220,
+        "time_s": 7.333333333333333,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 221,
+        "time_s": 7.366666666666666,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 222,
+        "time_s": 7.4,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 223,
+        "time_s": 7.433333333333334,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 224,
+        "time_s": 7.466666666666667,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 225,
+        "time_s": 7.5,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 226,
+        "time_s": 7.533333333333333,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 227,
+        "time_s": 7.566666666666666,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 228,
+        "time_s": 7.6,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 229,
+        "time_s": 7.633333333333334,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 230,
+        "time_s": 7.666666666666667,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 231,
+        "time_s": 7.7,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 232,
+        "time_s": 7.733333333333333,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 233,
+        "time_s": 7.766666666666667,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 234,
+        "time_s": 7.8,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 235,
+        "time_s": 7.833333333333333,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 236,
+        "time_s": 7.866666666666666,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 237,
+        "time_s": 7.9,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 238,
+        "time_s": 7.933333333333334,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 239,
+        "time_s": 7.966666666666667,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 240,
+        "time_s": 8.0,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 241,
+        "time_s": 8.033333333333333,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 242,
+        "time_s": 8.066666666666666,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 243,
+        "time_s": 8.1,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 244,
+        "time_s": 8.133333333333333,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 245,
+        "time_s": 8.166666666666666,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 246,
+        "time_s": 8.2,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 247,
+        "time_s": 8.233333333333333,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 248,
+        "time_s": 8.266666666666667,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 249,
+        "time_s": 8.3,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 250,
+        "time_s": 8.333333333333334,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 251,
+        "time_s": 8.366666666666667,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 252,
+        "time_s": 8.4,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 253,
+        "time_s": 8.433333333333334,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 254,
+        "time_s": 8.466666666666667,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 255,
+        "time_s": 8.5,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 256,
+        "time_s": 8.533333333333333,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 257,
+        "time_s": 8.566666666666666,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 258,
+        "time_s": 8.6,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 259,
+        "time_s": 8.633333333333333,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 260,
+        "time_s": 8.666666666666666,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 261,
+        "time_s": 8.7,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 262,
+        "time_s": 8.733333333333333,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 263,
+        "time_s": 8.766666666666667,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 264,
+        "time_s": 8.8,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 265,
+        "time_s": 8.833333333333334,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 266,
+        "time_s": 8.866666666666667,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 267,
+        "time_s": 8.9,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 268,
+        "time_s": 8.933333333333334,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 269,
+        "time_s": 8.966666666666667,
+        "daynite_frame": 90,
+        "opacity": 1.0,
+        "phase": "native_clock_reverse_transition"
+      },
+      {
+        "frame": 270,
+        "time_s": 9.0,
+        "daynite_frame": 60,
+        "opacity": 1.0,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 271,
+        "time_s": 9.033333333333333,
+        "daynite_frame": 60,
+        "opacity": 0.981377743674146,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 272,
+        "time_s": 9.066666666666666,
+        "daynite_frame": 60,
+        "opacity": 0.9612517867205287,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 273,
+        "time_s": 9.1,
+        "daynite_frame": 60,
+        "opacity": 0.9289047540032226,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 274,
+        "time_s": 9.133333333333333,
+        "daynite_frame": 60,
+        "opacity": 0.8965577212859166,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 275,
+        "time_s": 9.166666666666666,
+        "daynite_frame": 60,
+        "opacity": 0.8558136706336004,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 276,
+        "time_s": 9.2,
+        "daynite_frame": 60,
+        "opacity": 0.8150696199812841,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 277,
+        "time_s": 9.233333333333333,
+        "daynite_frame": 60,
+        "opacity": 0.776306245372637,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 278,
+        "time_s": 9.266666666666667,
+        "daynite_frame": 60,
+        "opacity": 0.7375428707639878,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 279,
+        "time_s": 9.3,
+        "daynite_frame": 60,
+        "opacity": 0.7008415716907661,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 280,
+        "time_s": 9.333333333333334,
+        "daynite_frame": 60,
+        "opacity": 0.6641402726175445,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 281,
+        "time_s": 9.366666666666667,
+        "daynite_frame": 60,
+        "opacity": 0.6270173538258351,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 282,
+        "time_s": 9.4,
+        "daynite_frame": 60,
+        "opacity": 0.5898944350341256,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 283,
+        "time_s": 9.433333333333334,
+        "daynite_frame": 60,
+        "opacity": 0.5537933898289381,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 284,
+        "time_s": 9.466666666666667,
+        "daynite_frame": 60,
+        "opacity": 0.5176923446237506,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 285,
+        "time_s": 9.5,
+        "daynite_frame": 60,
+        "opacity": 0.480672910326634,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 286,
+        "time_s": 9.533333333333333,
+        "daynite_frame": 60,
+        "opacity": 0.44365347602951744,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 287,
+        "time_s": 9.566666666666666,
+        "daynite_frame": 60,
+        "opacity": 0.4055700870344524,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 288,
+        "time_s": 9.6,
+        "daynite_frame": 60,
+        "opacity": 0.36748669803938744,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 289,
+        "time_s": 9.633333333333333,
+        "daynite_frame": 60,
+        "opacity": 0.3310703814169273,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 290,
+        "time_s": 9.666666666666666,
+        "daynite_frame": 60,
+        "opacity": 0.29465406479446715,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 291,
+        "time_s": 9.7,
+        "daynite_frame": 60,
+        "opacity": 0.25716377857384115,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 292,
+        "time_s": 9.733333333333333,
+        "daynite_frame": 60,
+        "opacity": 0.21967349235321518,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 293,
+        "time_s": 9.766666666666667,
+        "daynite_frame": 60,
+        "opacity": 0.18399298030459016,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 294,
+        "time_s": 9.8,
+        "daynite_frame": 60,
+        "opacity": 0.14831246825596703,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 295,
+        "time_s": 9.833333333333334,
+        "daynite_frame": 60,
+        "opacity": 0.11499270150459347,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 296,
+        "time_s": 9.866666666666667,
+        "daynite_frame": 60,
+        "opacity": 0.08167293475321989,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 297,
+        "time_s": 9.9,
+        "daynite_frame": 60,
+        "opacity": 0.047297813146725445,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 298,
+        "time_s": 9.933333333333334,
+        "daynite_frame": 60,
+        "opacity": 0.012922691540231008,
+        "phase": "native_fade_out"
+      },
+      {
+        "frame": 299,
+        "time_s": 9.966666666666667,
+        "daynite_frame": 60,
+        "opacity": 0.012922691540231008,
+        "phase": "native_fade_out"
+      }
+    ],
+    "installed": false,
+    "user_visual_qa": "pending"
+  },
+  "visual_qa": "accepted-user",
+  "ingame_qa": "pending-user",
+  "installed": false,
+  "release_integration": false,
+  "new_ai_inference": false,
+  "gpu_used": false
+}
