@@ -7,6 +7,8 @@ zone restent sous l'autorité de `animations/index/occurrences.csv` et sont excl
 `index/processing.csv` sélectionne les runs validés par étape et le run utilisé par le patch.
 `patch_run` vide signifie qu'aucun artefact vidéo n'est intégré au patch.
 
+SARADUSH produit2026-11-12 : SeedVR FP16 LAB1080 →Apollo8,694images/FullHD30/23,133s ;315images natives conservées,maintien terminal pour la queue audio complète. Rendu validé visuellement2026-11-12 ; WBM installé avec alias `HDSARAD`, **QA ingame en attente**. Reçu : `index/saradush-ingame-test-20261112-v1.json` ; QA : `index/qa-decisions/SARADUSH/20261112-fullhd30-visual-accepted-v1.json`. Résultats : `index/saradush-finals30-20261112-v1.json` ; [recette](../pipeline/recipes/saradush-seedvr-apollo30-20261112-v1/README.md).
+
 BLACKPIT produit2026-11-12 : SeedVR FP16 LAB1080 →Apollo8,611images natives à PTS irréguliers reconstruits en733images/FullHD30/~24,44s ; audio natif conservé dans MKV/WBM. Rendu validé visuellement2026-11-12 ; WBM installé avec alias `HDBLKPIT`, **QA ingame en attente**. Reçu : `index/blackpit-ingame-test-20261112-v1.json` ; QA : `index/qa-decisions/BLACKPIT/20261112-fullhd30-visual-accepted-v1.json`. Manifeste : `index/blackpit-finals30-20261112-v1.json` ; [recette](../pipeline/recipes/blackpit-seedvr-apollo30-20261112-v1/README.md).
 
 POCKETZZ finale2026-11-12 : SeedVR FullHD15 →Apollo8 FullHD30,180images/6s, rendu validé visuellement. WBM installé avec alias `HDPCKZZ` ; **QA ingame en attente**. Production : `index/pocketzz-finals30-20261112-v1.json` ; installation : `index/pocketzz-ingame-test-20261112-v1.json` ; [recette/console/restauration](../pipeline/recipes/pocketzz-apollo30-20261112-v1/README.md). Aucune intégration release.

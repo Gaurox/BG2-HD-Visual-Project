@@ -1,0 +1,12 @@
+# SARADUSH FullHD30 — 2026-11-12
+
+- Plus longue nouvelle vidéo restante après BLACKPIT : SARADUSH23,133s ; ENDCRDIT en pause exclu. Source `video/saradush/saradush.wbm`,1280×720/15fps,315images/21s,Vorbis jusqu’à~23,133s.
+- `prepare.py` : SHA inventaire et MD5 YUV420p de chaque image source→FFV1 vérifiés ;1portion315images,sans raccord. Horloge15fps conservée ; dernières images fondues très sombres,dernière tenue jusqu’à la fin du son comme en lecture native.
+- ComfyUI localhost8188/RTX5090 ; SeedVR2 3B FP16 LAB1080,seed42,batch33/uniforme/overlap3,bruits0,SDPA,swap32,CPU offload,VAE encode1024/128/decode768/128. Entrée/graphes/jobs/downloads dans `video/saradush/runs/saradush-seedvr-apollo30-20261112-v1/`.
+- `finish.py` : ProRes SeedVR→H264CRF12 ; fonction Apollo8 des endings partagée,apo-8/30fps/rdt=-0.01/device0/vram0.8/instances0/download0,629images+1tenue=630images/21s ;64images de maintien terminal supplémentaires→694images/23,133s. RGB→limited bt601 identique aux rendus précédents.
+- MP4 H264/AAC192k,masterMKV H264/Vorbis natif,WBM VP8CRF4/30M/qmax12/Vorbis natif. Réencodage de maintien CPU uniquement. Décodage/comptes/PTS des3formats,audio natif PCM/paquets/PTS MKV/WBM,SSIM runtime échantillonné>0,99 et images intermédiaires Apollo contrôlés avant manifeste final.
+- Résultats : `video/final/saradush-seedvr-apollo30-20261112-v1/SARADUSH/default/` ; manifeste `video/index/saradush-finals30-20261112-v1.json` et `metadata/manifest.json`.
+- QA visuelle acceptée2026-11-12 : `video/index/qa-decisions/SARADUSH/20261112-fullhd30-visual-accepted-v1.json` liée aux SHA finaux. **Vérification ingame en attente**, aucune intégration release.
+- `install.py prepare` puis `install.py install` : jeu/InfinityLoader fermés ; original réel sauvegardé ; destinations/SHA contrôlés ; remplacement atomique `config://bg2ee_game_root/movies/saradush.wbm` +alias neuf `movies/HDSARAD.wbm`. Reçu : `video/index/saradush-ingame-test-20261112-v1.json` ; copie `metadata/installation.json`.
+- CLUA Ctrl+Espace en partie : `C:PlayMovie("HDSARAD")`.
+- Restauration jeu/loader fermés : contrôler SHA actuel=`after_sha256` du reçu ; recopier `video/installations/saradush-apollo30-20261112-v1/before/movies/saradush.wbm` vers `config://bg2ee_game_root/movies/saradush.wbm`, vérifier SHA=`before_sha256` ; retirer uniquement l’alias neuf `movies/HDSARAD.wbm` après contrôle de son SHA. Conserver sauvegarde/reçu.
