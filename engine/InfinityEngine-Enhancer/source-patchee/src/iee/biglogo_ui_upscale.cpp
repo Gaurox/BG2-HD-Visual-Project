@@ -4,9 +4,11 @@
 #include <atomic>
 #include <cstddef>
 #include <cstdint>
+#include <deque>
 #include <exception>
 #include <fstream>
 #include <mutex>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -18,8 +20,8 @@
 namespace iee::biglogo {
 namespace {
 struct AtlasReplacement {
-  const char* sourceName;
-  const char* assetStem;
+  std::string sourceName;
+  std::string assetStem;
   int sourceWidth;
   int sourceHeight;
   int sourceByteCount;
@@ -204,7 +206,38 @@ std::array<AtlasReplacement, 83> g_atlases{{
 }};
 
 std::mutex g_mutex;
+std::deque<AtlasReplacement> g_uiPack;
 int g_scale{};
+
+void read_ui_pack(const std::filesystem::path& directory) {
+  std::ifstream manifest(directory / "ui-review-atlases.txt");
+  std::string line;
+  while (std::getline(manifest, line)) {
+    std::istringstream row(line);
+    int number{}, width{}, height{};
+    std::uint64_t fingerprint{};
+    auto valid_size = [](int side) {
+      return side >= 64 && side <= 1024 && (side & (side - 1)) == 0;
+    };
+    if (!(row >> number >> width >> height >> std::hex >> fingerprint) ||
+        number < 7000 || number > 9999 || !valid_size(width) || !valid_size(height) ||
+        fingerprint == 0 || (row >> std::ws && !row.eof())) {
+      LOG_WARN("Invalid UI review atlas entry: {}", line);
+      continue;
+    }
+    const auto name = "MOS" + std::to_string(number);
+    bool duplicate = false;
+    for (const auto& atlas : g_uiPack) {
+      duplicate |= atlas.sourceName == name + ".PVRZ" ||
+          (width == atlas.sourceWidth && height == atlas.sourceHeight &&
+           fingerprint == atlas.sourceFingerprint);
+    }
+    if (!duplicate) {
+      g_uiPack.emplace_back(name + ".PVRZ", "UIREVIEW-" + name, width, height,
+                            width * height, fingerprint, false, false, true);
+    }
+  }
+}
 
 std::uint64_t fnv1a64(const void* data, int byteCount) noexcept {
   if (!data || byteCount <= 0) return 0;
@@ -232,14 +265,13 @@ bool prepare(const std::filesystem::path& assetsDirectory, int scale, bool inclu
     bool preparedAny = false;
     std::lock_guard lock(g_mutex);
     g_scale = 0;
-    for (auto& atlas : g_atlases) {
-      const bool requested = (atlas.gameplayMenus && !atlas.mainMenu) ? includeGameplayMenus :
-          ((atlas.mainMenu ? includeMainMenu : includeBigLogo) ||
-           (includeSelector && atlas.selector) || (includeGameplayMenus && atlas.gameplayMenus));
+    g_uiPack.clear();
+    if (includeGameplayMenus && scale == 4) read_ui_pack(assetsDirectory);
+    auto prepareAtlas = [&](AtlasReplacement& atlas, bool requested) {
       atlas.ready.store(false, std::memory_order_release);
       atlas.logged.store(false, std::memory_order_release);
       atlas.replacement.clear();
-      if (!requested) continue;
+      if (!requested) return;
 
       const auto assetPath = assetsDirectory /
                              (std::string(atlas.assetStem) + "-x" + std::to_string(scale) + ".dxt5");
@@ -247,26 +279,33 @@ bool prepare(const std::filesystem::path& assetsDirectory, int scale, bool inclu
       std::ifstream file(assetPath, std::ios::binary | std::ios::ate);
       if (!file) {
         LOG_WARN("{} x{} replacement skipped: missing {}", atlas.sourceName, scale, assetPath.string());
-        continue;
+        return;
       }
       const auto byteCount = file.tellg();
       if (byteCount != replacementByteCount) {
         LOG_WARN("{} x{} replacement skipped: {} has {} bytes (expected {})", atlas.sourceName,
                  scale, assetPath.string(), static_cast<long long>(byteCount), replacementByteCount);
-        continue;
+        return;
       }
       file.seekg(0);
       std::vector<std::byte> loaded(replacementByteCount);
       if (!file.read(reinterpret_cast<char*>(loaded.data()), loaded.size())) {
         LOG_WARN("{} x{} replacement skipped: could not read {}", atlas.sourceName, scale,
                  assetPath.string());
-        continue;
+        return;
       }
       atlas.replacement = std::move(loaded);
       atlas.ready.store(true, std::memory_order_release);
       preparedAny = true;
       LOG_INFO("Prepared reversible {} x{} atlas: {}", atlas.sourceName, scale, assetPath.string());
+    };
+    for (auto& atlas : g_atlases) {
+      const bool requested = (atlas.gameplayMenus && !atlas.mainMenu) ? includeGameplayMenus :
+          ((atlas.mainMenu ? includeMainMenu : includeBigLogo) ||
+           (includeSelector && atlas.selector) || (includeGameplayMenus && atlas.gameplayMenus));
+      prepareAtlas(atlas, requested);
     }
+    for (auto& atlas : g_uiPack) prepareAtlas(atlas, true);
     if (preparedAny) g_scale = scale;
     return preparedAny;
   } catch (const std::exception& error) {
@@ -285,6 +324,7 @@ void release() noexcept {
     atlas.replacement.clear();
     atlas.replacement.shrink_to_fit();
   }
+  g_uiPack.clear();
   g_scale = 0;
 }
 
@@ -299,11 +339,11 @@ bool try_replacement(unsigned target, int level, unsigned internalFormat, int wi
 
   std::lock_guard lock(g_mutex);
   if (g_scale <= 0) return false;
-  for (auto& atlas : g_atlases) {
+  auto match = [&](AtlasReplacement& atlas) {
     if (!atlas.ready.load(std::memory_order_acquire) || width != atlas.sourceWidth ||
         height != atlas.sourceHeight || byteCount != atlas.sourceByteCount ||
         fingerprint != atlas.sourceFingerprint) {
-      continue;
+      return false;
     }
     const int replacementByteCount = atlas.sourceByteCount * g_scale * g_scale;
     if (static_cast<int>(atlas.replacement.size()) != replacementByteCount) return false;
@@ -313,7 +353,9 @@ bool try_replacement(unsigned target, int level, unsigned internalFormat, int wi
       LOG_INFO("Replacing {} with x{} atlas; UI geometry stays unchanged", atlas.sourceName, g_scale);
     }
     return true;
-  }
+  };
+  for (auto& atlas : g_atlases) if (match(atlas)) return true;
+  for (auto& atlas : g_uiPack) if (match(atlas)) return true;
   return false;
 }
 }  // namespace iee::biglogo

@@ -13,6 +13,33 @@
 // Fixtures are the native DXT5 payloads extracted read-only from the user's BIFs.
 // argv[1] is a disposable directory containing them; no live GL/game is needed.
 int main(int argc, char** argv) {
+  if (argc == 3) {
+    const std::filesystem::path fixtures = argv[1], assets = argv[2];
+    if (!iee::biglogo::prepare(assets, 4, false, false, false, true)) return 1;
+    std::ifstream manifest(assets / "ui-review-atlases.txt");
+    int number{}, width{}, height{};
+    std::string hash;
+    int count = 0;
+    while (manifest >> number >> width >> height >> hash) {
+      std::ifstream file(fixtures / ("MOS" + std::to_string(number) + ".dxt5"), std::ios::binary);
+      std::vector<char> source((std::istreambuf_iterator<char>(file)), {});
+      if (source.size() != static_cast<std::size_t>(width * height)) return 1;
+      iee::biglogo::ReplacementUpload out{};
+      auto check = [&]() {
+        return iee::biglogo::try_replacement(iee::game::gl::TEXTURE_2D, 0,
+            iee::game::gl::COMPRESSED_RGBA_S3TC_DXT5_EXT, width, height,
+            static_cast<int>(source.size()), source.data(), out);
+      };
+      if (!check() || out.width != width * 4 || out.height != height * 4 ||
+          out.byteCount != width * height * 16) return 1;
+      source[0] ^= 1;
+      if (check()) return 1;
+      ++count;
+    }
+    iee::biglogo::release();
+    std::cout << count << " UI review pages verified against their PVRZ bytes\n";
+    return count > 0 && manifest.eof() ? 0 : 1;
+  }
   if (argc != 2) return 2;
   const std::filesystem::path root = argv[1];
   struct Page { const char* name; const char* stem; int side; bool selector; bool gameplay{false}; };
