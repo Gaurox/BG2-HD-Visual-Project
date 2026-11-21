@@ -2,6 +2,7 @@
 #include "iee/core/effect_smoke_palette.h"
 #include "iee/core/effect_native_underlay.h"
 #include "iee/core/effect_storage_index.h"
+#include "iee/core/effect_crop_index.h"
 
 #include <algorithm>
 #include <atomic>
@@ -28,6 +29,7 @@
 #include "iee/game/opengl_types.h"
 #include "iee/game/build_manifest.h"
 #include "iee/game/scoped_effect_gl_state.h"
+#include <bcrypt.h>
 
 namespace iee::effect_animation_x4 {
 namespace {
@@ -192,6 +194,21 @@ std::vector<std::byte> read_file(const std::filesystem::path& path,
     throw std::runtime_error("cannot read asset: " + path.string());
   }
   return bytes;
+}
+
+core::EffectCropIndex::Digest index_sha256(std::span<const std::byte> bytes) {
+  BCRYPT_ALG_HANDLE algorithm{};
+  if (BCryptOpenAlgorithmProvider(&algorithm, BCRYPT_SHA256_ALGORITHM, nullptr, 0) < 0)
+    throw std::runtime_error("cannot initialize effect crop SHA256");
+  core::EffectCropIndex::Digest digest{};
+  unsigned char empty{};
+  const auto status = BCryptHash(algorithm, nullptr, 0,
+      bytes.empty() ? &empty : reinterpret_cast<unsigned char*>(const_cast<std::byte*>(bytes.data())),
+      static_cast<ULONG>(bytes.size()), reinterpret_cast<unsigned char*>(digest.data()),
+      static_cast<ULONG>(digest.size()));
+  BCryptCloseAlgorithmProvider(algorithm, 0);
+  if (status < 0) throw std::runtime_error("cannot hash effect crop metadata");
+  return digest;
 }
 
 std::string resref_name(const std::array<char, 8>& resref) {
@@ -608,7 +625,11 @@ bool prepare(const std::filesystem::path& assetsDirectory, const Options& option
     loaded.reserve(resourceCount);
     std::unordered_map<std::uint64_t, std::size_t> index;
     index.reserve(resourceCount);
-    struct Source { std::array<char, 8> resref; std::size_t frame; };
+    struct Source {
+      std::array<char, 8> resref;
+      std::uint32_t frame;
+      std::uint16_t width, height;
+    };
     auto sources = std::make_shared<std::vector<Source>>();
     std::vector<std::uint64_t> sizes;
     std::uint64_t totalRawBytes = 0;
@@ -646,7 +667,8 @@ bool prepare(const std::filesystem::path& assetsDirectory, const Options& option
         resource.frames.push_back({.logicalWidth = static_cast<int>(width),
             .logicalHeight = static_cast<int>(height), .cacheId = sizes.size()});
         sizes.push_back(physicalBytes);
-        sources->push_back({resource.resref, frameIndex});
+        sources->push_back({resource.resref, frameIndex, static_cast<std::uint16_t>(width * kScale),
+                           static_cast<std::uint16_t>(height * kScale)});
       }
       resource.cycles.reserve(cycleCount);
       resource.observedSlots.reserve(cycleCount);
@@ -719,31 +741,62 @@ bool prepare(const std::filesystem::path& assetsDirectory, const Options& option
 
     auto storage = std::make_shared<std::vector<std::uint32_t>>();
     const auto storagePath = assetsDirectory / "EffectStorage-X4.index";
+    const auto cropPath = assetsDirectory / "EffectCrops-X4.index";
+    const bool useCrop = std::filesystem::exists(cropPath);
+    auto storageHash = useCrop ? index_sha256({}) : core::EffectCropIndex::Digest{};
     if (std::filesystem::exists(storagePath)) {
-      const auto storageBytes = read_file(storagePath, 0, options.metadataBytes);
+      const auto storageBytes = read_file(storagePath, 0, options.metadataBytes - metadata);
       charge(storageBytes.size()); // include temporary binding bytes in the peak budget
       charge(sizes.size() * sizeof(std::uint32_t));
       *storage = core::effect_storage_index(storageBytes, payload, sizes);
+      if (useCrop) storageHash = index_sha256(storageBytes);
+      metadata -= storageBytes.size();  // The parsed map survives this scope.
     }
-    const auto physicalSource = [sources, storage](std::size_t id) -> const Source& {
-      return (*sources)[storage->empty() ? id : (*storage)[id]];
+    const auto physicalId = [storage](std::size_t id) {
+      return storage->empty() ? id : static_cast<std::size_t>((*storage)[id]);
     };
+    std::shared_ptr<const core::EffectCropIndex> crop;
+    if (useCrop) {
+      auto cropBytes = read_file(cropPath, 0, options.metadataBytes - metadata);
+      charge(cropBytes.size());
+      const auto pixels = assetsDirectory / "EffectCrops-X4.rgba";
+      const auto pixelBytes = std::filesystem::file_size(pixels);
+      if (pixelBytes > options.packBytes) throw std::runtime_error("effect crop blob exceeds pack limit");
+      crop = std::make_shared<core::EffectCropIndex>(std::move(cropBytes), sizes.size(), *storage,
+          index_sha256(payload), storageHash, pixels, pixelBytes, [&](std::size_t id) {
+            const auto& src = (*sources)[id];
+            return std::pair{src.width, src.height};
+          });
+      LOG_INFO("Effect crop storage: physicalFrames={}, pixelBytes={}", crop->count(), pixelBytes);
+    }
 
     if (!options.streaming) for (Resource& resource : loaded) {
       for (std::size_t frameIndex = 0; frameIndex < resource.frames.size(); ++frameIndex) {
         Frame& frame = resource.frames[frameIndex];
         const auto expectedBytes = static_cast<std::uint64_t>(frame.logicalWidth) * kScale *
                                    static_cast<std::uint64_t>(frame.logicalHeight) * kScale * 4ull;
-        const auto& physical = physicalSource(frame.cacheId);
-        frame.replacement = read_file(assetsDirectory / frame_asset_name(physical.resref, physical.frame),
-                                      expectedBytes);
+        const auto id = physicalId(frame.cacheId);
+        if (crop) {
+          frame.replacement.resize(static_cast<std::size_t>(expectedBytes));
+          if (!crop->read(id, frame.replacement)) throw std::runtime_error("cannot reconstruct cropped effect");
+        } else {
+          const auto& physical = (*sources)[id];
+          frame.replacement = read_file(assetsDirectory / frame_asset_name(physical.resref, physical.frame),
+                                        expectedBytes);
+        }
       }
     }
 
     if (options.streaming) {
-      const auto loader = [physicalSource, assetsDirectory](std::size_t id, std::span<std::byte> out) {
-        const auto& src = physicalSource(id);
+      const auto loader = [sources, physicalId, crop, assetsDirectory](std::size_t id, std::span<std::byte> out) {
+        const auto canonical = physicalId(id);
         const auto beforeOpen = steady_ns();
+        if (crop) {
+          const bool success = crop->read(canonical, out);
+          cpu_cache().record_storage_timing(0, steady_ns() - beforeOpen);
+          return success;
+        }
+        const auto& src = (*sources)[canonical];
         std::ifstream file(assetsDirectory / frame_asset_name(src.resref, src.frame),
                            std::ios::binary | std::ios::ate);
         const auto opened = steady_ns();

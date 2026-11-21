@@ -13,6 +13,7 @@
 #include "iee/effect_animation_x4_registry.h"
 #include "iee/core/effect_playback_profile.h"
 #include "iee/core/effect_storage_index.h"
+#include "iee/core/effect_crop_index.h"
 
 namespace {
 constexpr std::array<char, 8> kMagic{{'I', 'E', 'E', 'E', 'F', 'X', '4', '\0'}};
@@ -183,6 +184,52 @@ bool storage_contracts(const std::filesystem::path& root) {
   return ok;
 }
 
+bool crop_rectangles(const std::filesystem::path& root) {
+  using iee::core::EffectCropIndex;
+  std::filesystem::create_directories(root);
+  const auto pixels = root / "crop-fixture.rgba";
+  // Two rows at x=1 in a 3x2 canvas. The first pixel has RGB under zero alpha.
+  constexpr std::array<char, 8> content{8, 0, 0, 0, 7, 6, 5, 4};
+  { std::ofstream out(pixels, std::ios::binary); out.write(content.data(), content.size()); }
+  std::vector<std::byte> index(80);
+  constexpr char magic[] = "IEECROP2";
+  for (std::size_t i = 0; i < 8; ++i) index[i] = static_cast<std::byte>(magic[i]);
+  index[8] = std::byte{2};
+  index[12] = std::byte{3};
+  const auto append_rect = [&](std::uint32_t id, unsigned x, unsigned w, unsigned h, unsigned offset) {
+    append_u32(index, id);
+    append_u32(index, 3u | (2u << 16));
+    append_u32(index, x);
+    append_u32(index, w | (h << 16));
+    append_u32(index, offset);
+    append_u32(index, 0);
+  };
+  append_rect(0, 1, 1, 2, 0);
+  append_rect(2, 0, 0, 0, 8);
+  const std::array<std::uint32_t, 3> shared{0, 0, 2};
+  const EffectCropIndex::Digest empty{};
+  const auto dimensions = [](std::size_t) { return std::pair{3u, 2u}; };
+  EffectCropIndex pack(index, 3, shared, empty, empty, pixels, content.size(), dimensions);
+  std::array<std::byte, 24> frame;
+  frame.fill(std::byte{255});
+  if (!pack.read(0, frame)) return false;
+  std::array<std::byte, 24> expected{};
+  for (std::size_t i = 0; i < 4; ++i) {
+    expected[4 + i] = static_cast<std::byte>(content[i]);
+    expected[16 + i] = static_cast<std::byte>(content[4 + i]);
+  }
+  if (frame != expected || pack.read(1, frame) || !pack.read(2, frame) ||
+      frame != std::array<std::byte, 24>{}) return false;
+  const auto rejected = [&](std::size_t byte) {
+    auto invalid = index;
+    invalid[byte] ^= std::byte{0x80};
+    try { EffectCropIndex bad(invalid, 3, shared, empty, empty, pixels, content.size(), dimensions); }
+    catch (const std::runtime_error&) { return true; }
+    return false;
+  };
+  return rejected(16) && rejected(88) && rejected(96);
+}
+
 int main(int argc, char** argv) {
   int option=1;
   std::uint64_t metadataMiB=0;
@@ -195,11 +242,12 @@ int main(int argc, char** argv) {
     option=3;
   }
   const bool catalogueOnly = argc > option+1 && std::string_view(argv[option]) == "--catalogue-only";
-  const int first = option+(catalogueOnly?1:0);
+  const bool streamingPack = argc > option+1 && std::string_view(argv[option]) == "--streaming";
+  const int first = option + (catalogueOnly || streamingPack ? 1 : 0);
   if (argc == first + 1 || argc == first + 2) {
     iee::effect_animation_x4::Options options;
     if(metadataMiB) options.metadataBytes=metadataMiB<<20;
-    options.streaming = catalogueOnly;
+    options.streaming = catalogueOnly || streamingPack;
     if (catalogueOnly) options.cpu.headBytes = 0;
     const bool loaded = iee::effect_animation_x4::prepare(std::filesystem::path(argv[first]), options);
     if (!loaded || !iee::effect_animation_x4::ready()) {
@@ -316,8 +364,9 @@ int main(int argc, char** argv) {
   iee::effect_animation_x4::release();
   const bool storage = storage_contracts(root);
   iee::effect_animation_x4::release();
+  const bool crops = crop_rectangles(root);
   std::filesystem::remove_all(root, error);
-  if (!storage || !streaming || !resolved || !mixedResolved || !diagnosticGates || !rejectedDimensions || !rejectedFrame ||
+  if (!crops || !storage || !streaming || !resolved || !mixedResolved || !diagnosticGates || !rejectedDimensions || !rejectedFrame ||
       !timelineLoaded || !profileResolved || !ownerRouting || !malformedRejected) {
     std::cerr << "effect registry resolution contract failed\n";
     return 1;
