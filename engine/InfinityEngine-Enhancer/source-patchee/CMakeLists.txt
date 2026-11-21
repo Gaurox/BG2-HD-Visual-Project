@@ -381,7 +381,7 @@ if(BUILD_TESTING)
             src/iee/game/opengl_types.cpp
             src/iee/item_icon_x2.cpp
         )
-        target_link_libraries(iee_tests PRIVATE opengl32 Cabinet)
+        target_link_libraries(iee_tests PRIVATE opengl32 Cabinet bcrypt)
         add_executable(iee_menu_upscale_tests tests/menu_upscale_tests.cpp
             src/iee/biglogo_ui_upscale.cpp)
         target_link_libraries(iee_menu_upscale_tests PRIVATE iee_common)

@@ -9,6 +9,7 @@
 #include <exception>
 #include <fstream>
 #include <limits>
+#include <memory>
 #include <mutex>
 #include <stdexcept>
 #include <string>
@@ -16,6 +17,7 @@
 #include <utility>
 #include <vector>
 
+#include "iee/core/area_animation_archive.h"
 #include "iee/core/logger.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/game/opengl_types.h"
@@ -702,8 +704,9 @@ bool ensure_texture_locked(FrameHandle handle, const EngineTextureApi& api,
 }
 }  // namespace
 
-bool prepare(const std::filesystem::path& assetsDirectory,
-             PackPreparationStats* stats) noexcept {
+static bool prepare_impl(const std::filesystem::path& assetsDirectory,
+                         const std::filesystem::path& archiveDirectory,
+                         PackPreparationStats* stats) noexcept {
   if (stats) {
     *stats = {};
     stats->processBefore = core::capture_process_resource_snapshot();
@@ -713,6 +716,15 @@ bool prepare(const std::filesystem::path& assetsDirectory,
     const auto registryReadStarted =
         stats ? TelemetryClock::now() : TelemetryClock::time_point{};
     auto registryPayload = read_file(assetsDirectory / "AreaAnimations-X4.registry");
+    std::unique_ptr<core::AreaAnimationArchive> archive;
+    if (!archiveDirectory.empty()) {
+      auto index = archiveDirectory / assetsDirectory.filename();
+      index += ".index";
+      if (std::filesystem::exists(index)) {
+        archive = std::make_unique<core::AreaAnimationArchive>(archiveDirectory, index,
+                                                               registryPayload);
+      }
+    }
     if (stats) {
       stats->registryReadMilliseconds =
           elapsed_milliseconds(registryReadStarted, TelemetryClock::now());
@@ -818,14 +830,25 @@ bool prepare(const std::filesystem::path& assetsDirectory,
         }
         const auto frameReadStarted =
             stats ? TelemetryClock::now() : TelemetryClock::time_point{};
-        auto pixels = read_file(
-            assetsDirectory /
-                frame_asset_name(resource.displayName, frameIndex, resource.variantIndex),
-            rawBytes, stats);
+        std::vector<std::byte> pixels;
+        if (archive) {
+          pixels.resize(static_cast<std::size_t>(rawBytes));
+          if (!archive->read(static_cast<unsigned>(physicalWidth),
+                             static_cast<unsigned>(physicalHeight), pixels)) {
+            throw std::runtime_error("invalid archived area-animation frame: " +
+                                     frame_asset_name(resource.displayName, frameIndex,
+                                                      resource.variantIndex));
+          }
+        } else {
+          pixels = read_file(
+              assetsDirectory /
+                  frame_asset_name(resource.displayName, frameIndex, resource.variantIndex),
+              rawBytes, stats);
+        }
         if (stats) {
           stats->frameReadMilliseconds +=
               elapsed_milliseconds(frameReadStarted, TelemetryClock::now());
-          ++stats->frameFiles;
+          if (!archive) ++stats->frameFiles;
           stats->frameBytes += rawBytes;
         }
         totalRawBytes += rawBytes;
@@ -884,8 +907,15 @@ bool prepare(const std::filesystem::path& assetsDirectory,
       loaded.push_back(std::move(resource));
     }
     if (!reader.at_end()) throw std::runtime_error("trailing bytes in area-animation registry");
+    if (archive && !archive->finished())
+      throw std::runtime_error("trailing records in area-animation archive index");
 
     if (stats) {
+      if (archive) {
+        stats->archiveFrames = true;
+        stats->archiveFrameBytes = archive->bytes_read();
+        stats->archiveBitmapCapacity = archive->bitmap_capacity();
+      }
       stats->processAtCoexistence = core::capture_process_resource_snapshot();
     }
     const auto swapStarted = stats ? TelemetryClock::now() : TelemetryClock::time_point{};
@@ -948,6 +978,10 @@ bool prepare(const std::filesystem::path& assetsDirectory,
   // loaded pack active after a malformed replacement was presented.
   release();
   return false;
+}
+
+bool prepare(const std::filesystem::path& assetsDirectory, PackPreparationStats* stats) noexcept {
+  return prepare_impl(assetsDirectory, {}, stats);
 }
 
 void release() noexcept {
@@ -1380,7 +1414,8 @@ bool prepare_for_area(std::string_view areaResref, bool enablePerformanceLogging
     return false;
   }
   PackPreparationStats stats{};
-  if (!prepare(packDirectory, enablePerformanceLogging ? &stats : nullptr)) {
+  if (!prepare_impl(packDirectory, packDirectory.parent_path().parent_path() / "area-animation-pack",
+                    enablePerformanceLogging ? &stats : nullptr)) {
     if (enablePerformanceLogging && !outgoingArea.empty()) {
       log_texture_cache_telemetry(outgoingArea, "pack-load-failure", outgoingTextureCache);
       log_cache_budget_simulation(outgoingArea, "pack-load-failure",
@@ -1407,14 +1442,19 @@ bool prepare_for_area(std::string_view areaResref, bool enablePerformanceLogging
         stats.outgoingTextureNames, stats.deferredTextureNames,
         stats.registryReadMilliseconds, stats.frameReadMilliseconds,
         stats.parseAndAllocateMilliseconds, stats.swapMilliseconds, stats.totalMilliseconds);
-    LOG_INFO("Area-animation frame read phases: area={}, files={}, bytes={}, openSizeSeekMs={:.3f}, "
-             "allocateZeroMs={:.3f}, streamReadMs={:.3f}, closeMs={:.3f}, "
-             "slowestFrame={}, slowestBytes={}, slowestMs={:.3f}; "
-             "phases included in frameRead; streamRead is not physical disk time",
-             area, stats.frameFiles, stats.frameBytes, stats.frameOpenMilliseconds,
-             stats.frameAllocateMilliseconds, stats.frameStreamReadMilliseconds,
-             stats.frameCloseMilliseconds, stats.slowestFrame, stats.slowestFrameBytes,
-             stats.slowestFrameMilliseconds);
+    if (stats.archiveFrames) {
+      LOG_INFO("Area-animation archive stream: area={}, frames={}, bytesRead={}, bitmapCapacity={}",
+               area, stats.frameCount, stats.archiveFrameBytes, stats.archiveBitmapCapacity);
+    } else {
+      LOG_INFO("Area-animation frame read phases: area={}, files={}, bytes={}, openSizeSeekMs={:.3f}, "
+               "allocateZeroMs={:.3f}, streamReadMs={:.3f}, closeMs={:.3f}, "
+               "slowestFrame={}, slowestBytes={}, slowestMs={:.3f}; "
+               "phases included in frameRead; streamRead is not physical disk time",
+               area, stats.frameFiles, stats.frameBytes, stats.frameOpenMilliseconds,
+               stats.frameAllocateMilliseconds, stats.frameStreamReadMilliseconds,
+               stats.frameCloseMilliseconds, stats.slowestFrame, stats.slowestFrameBytes,
+               stats.slowestFrameMilliseconds);
+    }
     log_pack_process_resource_telemetry(area, stats);
   }
   std::lock_guard lock(g_mutex);

@@ -58,7 +58,18 @@ struct Inputs {
     std::uint32_t logicalCount{};
 };
 
-Inputs load(const fs::path& work, const fs::path& tiles) {
+bool valid_source_name(const std::string& name, bool area) {
+    const auto allowed = area ? "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_./"
+                              : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.";
+    if (!name.ends_with(".rgba") || name.find_first_not_of(allowed) != std::string::npos)
+        return false;
+    if (!area) return name.starts_with("EFX4-");
+    const fs::path path(name);
+    return name.starts_with("animations/") && path.filename().string().starts_with("AAX4-") &&
+        std::none_of(path.begin(), path.end(), [](const fs::path& part) { return part == "." || part == ".."; });
+}
+
+Inputs load(const fs::path& work, const fs::path& tileIndex, bool area) {
     Inputs inputs;
     std::ifstream table(work / "plan.txt");
     require(static_cast<bool>(table), "missing source plan");
@@ -67,7 +78,7 @@ Inputs load(const fs::path& work, const fs::path& tiles) {
     require(line.size() == 64, "invalid tile index hash");
     for (std::size_t i = 0; i < inputs.tileHash.size(); ++i)
         inputs.tileHash[i] = static_cast<Byte>(std::stoul(line.substr(2*i, 2), nullptr, 16));
-    inputs.bitmaps = file(tiles / "EffectTiles-X4.index");
+    inputs.bitmaps = file(tileIndex);
     while (std::getline(table, line)) {
         std::istringstream row(line);
         Frame frame{};
@@ -79,9 +90,7 @@ Inputs load(const fs::path& work, const fs::path& tiles) {
         require((!edge && !frame.maskBytes) || (edge >= 4 && edge <= 64 && !(edge & (edge-1)) &&
             frame.maskBytes == (((frame.w + edge-1)/edge) * ((frame.h + edge-1)/edge) + 7)/8), "invalid tile grid");
         for (std::string name; row >> name;) {
-            require(name.starts_with("EFX4-") && name.ends_with(".rgba") &&
-                name.find_first_not_of("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.") ==
-                std::string::npos, "invalid original name");
+            require(valid_source_name(name, area), "invalid original name");
             frame.files.push_back(std::move(name));
         }
         require(!frame.files.empty(), "missing frame reference");
@@ -193,7 +202,7 @@ std::uint32_t spool(const Inputs& inputs, const fs::path& original, const fs::pa
                 buffered[bucket] += sizeof(record) + bytes;
             });
         }
-        if (++count % 8192 == 0) std::cout << "Read original frames: " << count << '\n' << std::flush;
+        if (++count % 1024 == 0) std::cout << "Read original frames: " << count << '\n' << std::flush;
     }
     for (std::size_t i = 0; i < kBuckets; ++i) {
         flush(i);
@@ -336,7 +345,7 @@ void emit(const Inputs& inputs, const fs::path& original, const fs::path& output
         if (!payload.empty()) write(pixelStream, payload.data(), payload.size());
         offset += payload.size();
         records.push_back(record);
-        if (records.size() % 8192 == 0) std::cout << "Packed frames: " << records.size() << '\n' << std::flush;
+        if (records.size() % 1024 == 0) std::cout << "Packed frames: " << records.size() << '\n' << std::flush;
     }
     require(id == references.size(), "unexpected tile assignments");
     pixelStream.close();
@@ -417,7 +426,7 @@ void verify(const Inputs& inputs, const fs::path& original, const fs::path& outp
             if (canvas != file(original / name)) throw std::runtime_error("byte mismatch against original " + name);
             ++verified;
         }
-        if ((i+1) % 8192 == 0) std::cout << "Original frame files checked: " << verified << '\n' << std::flush;
+        if ((i+1) % 1024 == 0) std::cout << "Original frame files checked: " << verified << '\n' << std::flush;
     }
     require(verified == header.logical, "incomplete original comparison");
     std::cout << "Byte-exact originals: " << verified << '\n';
@@ -426,9 +435,11 @@ void verify(const Inputs& inputs, const fs::path& original, const fs::path& outp
 
 int wmain(int argc, wchar_t** argv) {
     try {
-        require(argc == 7, "usage: effect_tile_sharing build|verify ORIGINAL TILED WORK OUTPUT COUNTS");
+        const bool area = argc == 8 && std::wstring_view(argv[7]) == L"--area";
+        require(argc == 7 || area,
+                "usage: effect_tile_sharing build|verify ORIGINAL TILED WORK OUTPUT COUNTS [--area]");
         const fs::path original(argv[2]), tiled(argv[3]), work(argv[4]), output(argv[5]);
-        const auto inputs = load(work, tiled);
+        const auto inputs = load(work, area ? tiled : tiled / "EffectTiles-X4.index", area);
         if (std::wstring_view(argv[1]) == L"build") {
             const auto tiles = spool(inputs, original, work);
             std::vector<std::uint32_t> references(tiles);

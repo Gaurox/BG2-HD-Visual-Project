@@ -4,6 +4,7 @@
 #include "iee/core/effect_storage_index.h"
 #include "iee/core/effect_crop_index.h"
 #include "iee/core/effect_tile_index.h"
+#include "iee/core/effect_shared_tile_index.h"
 
 #include <algorithm>
 #include <atomic>
@@ -198,6 +199,8 @@ std::vector<std::byte> read_file(const std::filesystem::path& path,
 }
 
 core::EffectCropIndex::Digest index_sha256(std::span<const std::byte> bytes) {
+  if (bytes.size() > (std::numeric_limits<ULONG>::max)())
+    throw std::runtime_error("effect index exceeds SHA256 input limit");
   BCRYPT_ALG_HANDLE algorithm{};
   if (BCryptOpenAlgorithmProvider(&algorithm, BCRYPT_SHA256_ALGORITHM, nullptr, 0) < 0)
     throw std::runtime_error("cannot initialize effect crop SHA256");
@@ -745,9 +748,17 @@ bool prepare(const std::filesystem::path& assetsDirectory, const Options& option
     const auto cropPath = assetsDirectory / "EffectCrops-X4.index";
     const auto tilePath = assetsDirectory / "EffectTiles-X4.index";
     const auto tilePixels = assetsDirectory / "EffectTiles-X4.rgba";
+    const auto sharedIndex = assetsDirectory / "EffectSharedTiles-X4.index";
+    const auto sharedPixels = assetsDirectory / "EffectSharedTiles-X4.bin";
+    const auto dictionary = assetsDirectory / "EffectSharedTiles-X4.dictionary.rgba";
     const bool useCrop = std::filesystem::exists(cropPath);
     const bool useTiles = std::filesystem::exists(tilePath);
-    if (useTiles != std::filesystem::exists(tilePixels) || (useTiles && !useCrop))
+    const bool useSharedTiles = std::filesystem::exists(sharedIndex);
+    if (useSharedTiles != std::filesystem::exists(sharedPixels) ||
+        useSharedTiles != std::filesystem::exists(dictionary) ||
+        (useSharedTiles && !useTiles) ||
+        (useTiles != (useSharedTiles || std::filesystem::exists(tilePixels))) ||
+        (useSharedTiles && std::filesystem::exists(tilePixels)) || (useTiles && !useCrop))
       throw std::runtime_error("incomplete effect tile pack");
     auto storageHash = useCrop ? index_sha256({}) : core::EffectCropIndex::Digest{};
     if (std::filesystem::exists(storagePath)) {
@@ -763,11 +774,12 @@ bool prepare(const std::filesystem::path& assetsDirectory, const Options& option
     };
     std::shared_ptr<const core::EffectCropIndex> crop;
     std::shared_ptr<const core::EffectTileIndex> tiles;
+    std::shared_ptr<const core::EffectSharedTileIndex> sharedTiles;
     if (useCrop) {
       auto cropBytes = read_file(cropPath, 0, options.metadataBytes - metadata);
       charge(cropBytes.size());
       const auto pixels = assetsDirectory / "EffectCrops-X4.rgba";
-      const auto pixelBytes = std::filesystem::file_size(useTiles ? tilePixels : pixels);
+      const auto pixelBytes = useSharedTiles ? 0u : std::filesystem::file_size(useTiles ? tilePixels : pixels);
       if (pixelBytes > options.packBytes) throw std::runtime_error("effect crop blob exceeds pack limit");
       const auto cropHash = useTiles ? index_sha256(cropBytes) : core::EffectCropIndex::Digest{};
       crop = std::make_shared<core::EffectCropIndex>(std::move(cropBytes), sizes.size(), *storage,
@@ -775,7 +787,13 @@ bool prepare(const std::filesystem::path& assetsDirectory, const Options& option
             const auto& src = (*sources)[id];
             return std::pair{src.width, src.height};
           });
-      if (useTiles) {
+      if (useSharedTiles) {
+        sharedTiles = std::make_shared<core::EffectSharedTileIndex>(
+            crop, assetsDirectory, cropHash, sizes.size(), options.packBytes, index_sha256);
+        charge(sizeof(core::EffectSharedTileIndex));
+        LOG_INFO("Effect shared tile storage: physicalFrames={}, dictionaryBytes={}",
+                 crop->count(), sharedTiles->dictionary_bytes());
+      } else if (useTiles) {
         tiles = std::make_shared<core::EffectTileIndex>(crop, tilePath, tilePixels, cropHash, sizes.size(), pixelBytes);
         const auto readers = options.streaming ? core::EffectFrameCache::kReaderCount : 1;
         charge(sizeof(core::EffectTileIndex) + readers * (tiles->max_bitmap_bytes() + 16 * 1024));
@@ -785,7 +803,8 @@ bool prepare(const std::filesystem::path& assetsDirectory, const Options& option
         LOG_INFO("Effect crop storage: physicalFrames={}, pixelBytes={}", crop->count(), pixelBytes);
       }
     }
-    const auto readCropped = [crop, tiles](std::size_t id, std::span<std::byte> out) {
+    const auto readCropped = [crop, tiles, sharedTiles](std::size_t id, std::span<std::byte> out) {
+      if (sharedTiles) return sharedTiles->read(id, out);
       return tiles ? tiles->read(id, out) : crop->read(id, out);
     };
 

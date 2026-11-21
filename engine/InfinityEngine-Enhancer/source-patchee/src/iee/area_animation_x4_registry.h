@@ -82,6 +82,9 @@ struct PackPreparationStats {
   std::uint64_t registryBytes{};
   std::uint64_t frameFiles{};
   std::uint64_t frameBytes{};
+  std::uint64_t archiveFrameBytes{};
+  std::size_t archiveBitmapCapacity{};
+  bool archiveFrames{};
   std::uint64_t outgoingRawBytes{};
   std::uint64_t residentRawBytes{};
   std::uint64_t peakRawBytes{};

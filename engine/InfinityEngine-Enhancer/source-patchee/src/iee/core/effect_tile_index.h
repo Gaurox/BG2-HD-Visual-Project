@@ -1,6 +1,7 @@
 #pragma once
 
 #include "iee/core/effect_crop_index.h"
+#include "iee/core/rgba_tile_decode.h"
 
 #include <cstring>
 #include <limits>
@@ -67,46 +68,8 @@ public:
           !read_bytes(source, destination.data(), remaining)) return false;
     }
 
-    std::size_t writeEnd = destination.size();
-    const auto move = [&](std::size_t start, std::size_t bytes) {
-      if (bytes > remaining || start < remaining - bytes || start + bytes > writeEnd) return false;
-      remaining -= bytes;
-      std::memmove(destination.data() + start, destination.data() + remaining, bytes);
-      std::fill(destination.begin() + start + bytes, destination.begin() + writeEnd, std::byte{});
-      writeEnd = start;
-      return true;
-    };
-    if (rect.w) {
-      if (!current.edge) {
-        for (auto y = rect.h; y-- > 0;) {
-          const auto start = (std::size_t{rect.y + y} * rect.width + rect.x) * 4;
-          if (!move(start, std::size_t{rect.w} * 4)) return false;
-        }
-      } else {
-        const auto edge = current.edge;
-        const auto columns = (rect.w + edge - 1) / edge;
-        const auto bits = columns * ((rect.h + edge - 1) / edge);
-        if (bits % 8 && (bitmap.back() >> (bits % 8))) return false;
-        for (auto y = rect.h; y-- > 0;) {
-          const auto row = (y / edge) * columns;
-          const auto active = [&](unsigned x) {
-            const auto bit = row + x;
-            return (bitmap[bit / 8] >> (bit % 8)) & 1;
-          };
-          for (auto x = columns; x;) {
-            if (!active(x - 1)) { --x; continue; }
-            const auto right = std::min(rect.w, x * edge);
-            do { --x; } while (x && active(x - 1));
-            const auto left = x * edge;
-            const auto start = (std::size_t{rect.y + y} * rect.width + rect.x + left) * 4;
-            if (!move(start, std::size_t{right - left} * 4)) return false;
-          }
-        }
-      }
-    }
-    if (remaining) return false;
-    std::fill(destination.begin(), destination.begin() + writeEnd, std::byte{});
-    return true;
+    return expand_rgba_tiles({rect.width, rect.height, rect.x, rect.y, rect.w, rect.h},
+                             current.edge, bitmap, remaining, destination);
   }
 
 private:

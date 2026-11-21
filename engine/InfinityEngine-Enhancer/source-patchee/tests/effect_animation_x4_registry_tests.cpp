@@ -15,6 +15,9 @@
 #include "iee/core/effect_storage_index.h"
 #include "iee/core/effect_crop_index.h"
 #include "iee/core/effect_tile_index.h"
+#include "iee/core/effect_shared_tile_index.h"
+#include "iee/core/process_resource_telemetry.h"
+#include <bcrypt.h>
 
 namespace {
 constexpr std::array<char, 8> kMagic{{'I', 'E', 'E', 'E', 'F', 'X', '4', '\0'}};
@@ -294,7 +297,112 @@ bool tile_rectangles(const std::filesystem::path& root) {
   return false;
 }
 
+int compare_shared_tiles(const std::filesystem::path& tiled, const std::filesystem::path& shared) {
+  using namespace iee::core;
+  const auto sha256 = [](std::span<const std::byte> bytes) {
+    EffectCropIndex::Digest result{};
+    BCRYPT_ALG_HANDLE alg{};
+    if (BCryptOpenAlgorithmProvider(&alg, BCRYPT_SHA256_ALGORITHM, nullptr, 0) < 0)
+      throw std::runtime_error("cannot open SHA256");
+    const auto status = BCryptHash(alg, nullptr, 0,
+        reinterpret_cast<PUCHAR>(const_cast<std::byte*>(bytes.data())),
+        static_cast<ULONG>(bytes.size()), reinterpret_cast<PUCHAR>(result.data()),
+        static_cast<ULONG>(result.size()));
+    BCryptCloseAlgorithmProvider(alg, 0);
+    if (status < 0) throw std::runtime_error("cannot hash index");
+    return result;
+  };
+  constexpr std::uint64_t limit = 512ull << 30;
+  const EffectTileFile cropFile(shared / "EffectCrops-X4.index", limit);
+  const auto data = cropFile.bytes();
+  const auto number = [](std::span<const std::byte> bytes, std::size_t offset, unsigned size) {
+    std::uint64_t value{};
+    for (unsigned i = 0; i < size; ++i)
+      value |= std::uint64_t{std::to_integer<unsigned char>(bytes[offset+i])} << (8*i);
+    return value;
+  };
+  const auto field = [&](std::size_t offset, unsigned size) {
+    return static_cast<unsigned>(number(data, offset, size));
+  };
+  if (data.size() < 80 || data.size() != 80 + std::uint64_t{field(8, 4)} * 24)
+    throw std::runtime_error("invalid fixture crop size");
+  const auto logical = field(12, 4);
+  std::vector<std::uint32_t> canonical(logical, 0);
+  std::vector<std::pair<unsigned, unsigned>> dimensions(logical);
+  for (std::size_t offset = 80; offset < data.size(); offset += 24) {
+    const auto id = field(offset, 4);
+    if (id >= logical) throw std::runtime_error("invalid fixture crop id");
+    canonical[id] = id;
+    dimensions[id] = {field(offset+4, 2), field(offset+6, 2)};
+  }
+  EffectCropIndex::Digest registry{}, storage{};
+  std::copy_n(data.begin()+16, 32, registry.begin());
+  std::copy_n(data.begin()+48, 32, storage.begin());
+  auto crop = std::make_shared<EffectCropIndex>(
+      std::vector<std::byte>(data.begin(), data.end()), logical, canonical, registry, storage,
+      std::filesystem::path{}, std::nullopt, [&](std::size_t id) { return dimensions[id]; });
+  const auto start = capture_process_resource_snapshot();
+  const auto hash = sha256(data);
+  const auto oldPayload = tiled / "EffectTiles-X4.rgba";
+  EffectTileIndex old(crop, tiled / "EffectTiles-X4.index", oldPayload, hash, logical,
+                      std::filesystem::file_size(oldPayload));
+  EffectSharedTileIndex packed(crop, shared, hash, logical, limit, sha256);
+  const EffectTileFile oldIndex(tiled / "EffectTiles-X4.index", limit), oldPixels(oldPayload, limit);
+  const auto records = oldIndex.bytes();
+  const auto maskStart = 48 + 16 * crop->count();
+  std::vector<std::byte> expected, decoded, sample;
+  std::uint64_t totalBytes{}, standaloneNs{}, sharedNs{};
+  for (std::size_t i = 0; i < crop->count(); ++i) {
+    const auto rect = crop->record(i);
+    const auto bytes = std::size_t{rect.width} * rect.height * 4;
+    expected.resize(bytes);
+    decoded.resize(bytes);
+    using Clock = std::chrono::steady_clock;
+    const auto before = Clock::now();
+    const auto offset = 48 + 16*i;
+    const auto pixelStart = number(records, offset, 8);
+    const auto pixelEnd = i+1 == crop->count() ? oldPixels.bytes().size() :
+                          number(records, offset+16, 8);
+    const auto maskOffset = number(records, offset+8, 4);
+    const auto maskEnd = i+1 == crop->count() ? records.size()-maskStart :
+                         number(records, offset+24, 4);
+    const auto bitmap = records.subspan(maskStart+maskOffset, maskEnd-maskOffset);
+    const auto pixels = oldPixels.bytes().subspan(pixelStart, pixelEnd-pixelStart);
+    std::copy(pixels.begin(), pixels.end(), expected.begin());
+    if (!expand_rgba_tiles({rect.width, rect.height, rect.x, rect.y, rect.w, rect.h},
+                           static_cast<unsigned>(number(records, offset+12, 4)),
+                           {reinterpret_cast<const unsigned char*>(bitmap.data()), bitmap.size()},
+                           pixels.size(), expected))
+      throw std::runtime_error("standalone reader failed");
+    const auto middle = Clock::now();
+    if (!packed.read(rect.id, decoded)) throw std::runtime_error("shared reader failed");
+    const auto end = Clock::now();
+    if (expected != decoded)
+      throw std::runtime_error("shared frame differs: " + std::to_string(rect.id));
+    if (i%2048 == 0) {
+      sample.resize(bytes);
+      if (!old.read(rect.id, sample) || sample != decoded)
+        throw std::runtime_error("standalone sample differs");
+    }
+    standaloneNs += std::chrono::duration_cast<std::chrono::nanoseconds>(middle-before).count();
+    sharedNs += std::chrono::duration_cast<std::chrono::nanoseconds>(end-middle).count();
+    totalBytes += bytes;
+    if ((i+1)%16384 == 0) std::cout << "Compared frames: " << i+1 << std::endl;
+  }
+  const auto finish = capture_process_resource_snapshot();
+  std::cout << "physicalFrames=" << crop->count() << " logicalFrames=" << logical
+            << " byteExact=" << totalBytes << " tiledReadNs=" << standaloneNs
+            << " sharedReadNs=" << sharedNs << " privateBefore=" << start.privateBytes
+            << " privateAfter=" << finish.privateBytes << " peakWorkingSet=" << finish.peakWorkingSetBytes
+            << '\n';
+  return 0;
+}
+
 int main(int argc, char** argv) {
+  if (argc == 4 && std::string_view(argv[1]) == "--compare-shared-tiles") {
+    try { return compare_shared_tiles(argv[2], argv[3]); }
+    catch (const std::exception& e) { std::cerr << e.what() << '\n'; return 1; }
+  }
   int option=1;
   std::uint64_t metadataMiB=0;
   if(argc>3 && std::string_view(argv[1])=="--metadata-mib") {
@@ -313,6 +421,7 @@ int main(int argc, char** argv) {
     if(metadataMiB) options.metadataBytes=metadataMiB<<20;
     options.streaming = catalogueOnly || streamingPack;
     if (catalogueOnly) options.cpu.headBytes = 0;
+    const auto before = iee::core::capture_process_resource_snapshot();
     const bool loaded = iee::effect_animation_x4::prepare(std::filesystem::path(argv[first]), options);
     if (!loaded || !iee::effect_animation_x4::ready()) {
       std::cerr << "external effect runtime pack rejected\n";
@@ -372,11 +481,14 @@ int main(int argc, char** argv) {
       std::cout << "external native-slot/30fps phase contracts checked: " << checked << '\n';
     }
     if (streamingPack) {
+      const auto memory = iee::core::capture_process_resource_snapshot();
       const auto stats = iee::effect_animation_x4::cpu_cache_stats();
       if (!warm.reads || stats.failures || stats.peakBytes > options.cpu.bytes || stats.headBytes > options.cpu.headBytes) return 1;
       std::cout << "streaming reads=" << stats.reads << " warmReads=" << warm.reads << " coldChecks=" << cold
                 << " peakBytes=" << stats.peakBytes << " headBytes=" << stats.headBytes
-                << " failures=" << stats.failures << '\n';
+                << " failures=" << stats.failures << " privateBefore=" << before.privateBytes
+                << " privateAfter=" << memory.privateBytes << " workingSetAfter=" << memory.workingSetBytes
+                << " peakWorkingSet=" << memory.peakWorkingSetBytes << '\n';
     }
     if (catalogueOnly && iee::effect_animation_x4::cpu_cache_stats().reads != 0) return 1;
     if (catalogueOnly) std::cout << "catalogue-only: zero RGBA reads\n";

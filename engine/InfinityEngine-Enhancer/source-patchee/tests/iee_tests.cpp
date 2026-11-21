@@ -9,8 +9,10 @@
 #include <fstream>
 #include <iostream>
 #include <limits>
+#include <memory>
 #include <optional>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <string_view>
 #include <thread>
@@ -27,6 +29,7 @@
 #include "iee/core/config.h"
 #include "iee/core/water_overlay_policy.h"
 #include "iee/core/area_animation_clock_probe.h"
+#include "iee/core/area_animation_archive.h"
 #include "iee/core/area_animation_timeline.h"
 #include "iee/core/cache_budget_simulator.h"
 #include "iee/core/creature_sprite_filter_math.h"
@@ -7636,7 +7639,75 @@ void test_shader_suite_neutral_override_assets() {
   }
 }
 
-int main() {
+int verify_area_animation_archive(const std::filesystem::path& trial,
+                                  const std::filesystem::path& originalAssets,
+                                  const std::filesystem::path& catalog) {
+  using iee::area_animation_x4::configure_area_packs;
+  using iee::area_animation_x4::prepare_for_area;
+  iee::core::init_logger((trial.parent_path() / "archive-stream.log").generic_string());
+  if (!configure_area_packs(trial)) throw std::runtime_error("Missing trial areas");
+  std::ifstream frames(catalog);
+  if (!frames) throw std::runtime_error("Missing frame catalog");
+  const auto overlay = trial / "area-animation-pack";
+  std::string area, previous, frame;
+  unsigned width, height;
+  std::uint64_t totalBytes{}, count{}, areas{}, maxZoneBytes{}, zoneBytes{}, maxBitmap{};
+  std::unique_ptr<iee::core::AreaAnimationArchive> archive;
+  std::vector<std::byte> received, reference;
+  while (frames >> area >> frame >> width >> height) {
+    if (area != previous) {
+      if (archive && !archive->finished()) throw std::runtime_error("Unexpected extra frame records");
+      maxZoneBytes = std::max(maxZoneBytes, zoneBytes);
+      zoneBytes = 0;
+      if (!prepare_for_area(area, true)) throw std::runtime_error("Loader refused area " + area);
+      std::ifstream registryFile(trial / "areas" / area / "AreaAnimations-X4.registry",
+                                 std::ios::binary | std::ios::ate);
+      const auto length = registryFile.tellg();
+      if (length <= 0) throw std::runtime_error("Missing area registry");
+      std::vector<std::byte> registry(static_cast<std::size_t>(length));
+      if (!registryFile.seekg(0).read(reinterpret_cast<char*>(registry.data()), length))
+        throw std::runtime_error("Truncated area registry");
+      archive = std::make_unique<iee::core::AreaAnimationArchive>(overlay, overlay / (area + ".index"),
+                                                                registry);
+      previous = area;
+      ++areas;
+    }
+    if (!width || !height || width > 32768 || height > 32768 ||
+        std::uint64_t{width} * height * 4 > 512ull * 1024 * 1024)
+      throw std::runtime_error("Invalid catalog frame dimensions");
+    const auto bytes = static_cast<std::size_t>(width) * height * 4;
+    received.resize(bytes);
+    reference.resize(bytes);
+    std::ifstream original(originalAssets / "areas" / area / frame, std::ios::binary);
+    if (!original.read(reinterpret_cast<char*>(reference.data()), bytes) ||
+        original.peek() != std::char_traits<char>::eof() ||
+        !archive->read(width, height, received) || reference != received)
+      throw std::runtime_error("Frame differs: " + area + "/" + frame);
+    totalBytes += bytes;
+    zoneBytes += bytes;
+    maxBitmap = std::max<std::uint64_t>(maxBitmap, archive->bitmap_capacity());
+    ++count;
+  }
+  if (!frames.eof() || !archive || !archive->finished())
+    throw std::runtime_error("Invalid frame catalog end");
+  maxZoneBytes = std::max(maxZoneBytes, zoneBytes);
+  if (prepare_for_area("AR0000", true) || iee::area_animation_x4::ready())
+    throw std::runtime_error("Area without a registry kept a loaded pack");
+  std::cout << "Areas=" << areas << " frames=" << count << " fullBytes=" << totalBytes
+            << " largestResidentAreaBytes=" << maxZoneBytes << " maxBitmapCapacity=" << maxBitmap
+            << '\n';
+  return 0;
+}
+
+int main(int argc, char** argv) {
+  if (argc == 5 && std::string_view(argv[1]) == "--verify-area-animation-archive") {
+    try {
+      return verify_area_animation_archive(argv[2], argv[3], argv[4]);
+    } catch (const std::exception& error) {
+      std::cerr << error.what() << '\n';
+      return 1;
+    }
+  }
   test_creature_sprite_xn_native_border_geometry();
   test_creature_sprite_native_pixel_encodings();
   test_creature_sprite_transient_texture_lifecycle();
