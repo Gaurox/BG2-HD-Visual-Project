@@ -14,6 +14,7 @@
 #include "iee/core/effect_playback_profile.h"
 #include "iee/core/effect_storage_index.h"
 #include "iee/core/effect_crop_index.h"
+#include "iee/core/effect_tile_index.h"
 
 namespace {
 constexpr std::array<char, 8> kMagic{{'I', 'E', 'E', 'E', 'F', 'X', '4', '\0'}};
@@ -230,6 +231,69 @@ bool crop_rectangles(const std::filesystem::path& root) {
   return rejected(16) && rejected(88) && rejected(96);
 }
 
+bool tile_rectangles(const std::filesystem::path& root) {
+  using iee::core::EffectCropIndex;
+  using iee::core::EffectTileIndex;
+  const EffectCropIndex::Digest empty{};
+  std::vector<std::byte> cropBytes(80), index(48);
+  for (std::size_t i = 0; i < 8; ++i) {
+    cropBytes[i] = static_cast<std::byte>("IEECROP2"[i]);
+    index[i] = static_cast<std::byte>("IEETILE1"[i]);
+  }
+  cropBytes[8] = cropBytes[12] = index[8] = index[12] = std::byte{3};
+  const auto crop_rect = [&](unsigned id, unsigned x, unsigned y, unsigned w, unsigned h, unsigned offset) {
+    for (const auto word : {id, 13u | (11u << 16), x | (y << 16), w | (h << 16), offset, 0u})
+      append_u32(cropBytes, word);
+  };
+  crop_rect(0, 1, 2, 9, 5, 0);
+  crop_rect(1, 2, 3, 5, 1, 180);
+  crop_rect(2, 0, 0, 0, 0, 200);
+  auto crop = std::make_shared<EffectCropIndex>(cropBytes, 3, std::span<const std::uint32_t>{}, empty,
+      empty, std::filesystem::path{}, std::nullopt, [](std::size_t) { return std::pair{13u, 11u}; });
+  const auto tile_record = [&](unsigned offset, unsigned bitmap, unsigned edge) {
+    for (const auto word : {offset, 0u, bitmap, edge}) append_u32(index, word);
+  };
+  tile_record(0, 0, 4);
+  tile_record(84, 1, 0);
+  tile_record(104, 1, 0);
+  index.push_back(std::byte{0b100101});
+  const auto indexPath = root / "tile-fixture.index";
+  const auto pixelPath = root / "tile-fixture.rgba";
+  const auto write_index = [&] {
+    std::ofstream out(indexPath, std::ios::binary);
+    out.write(reinterpret_cast<const char*>(index.data()), index.size());
+  };
+  write_index();
+  std::array<std::byte, 13 * 11 * 4> expected{}, output{};
+  {
+    std::ofstream out(pixelPath, std::ios::binary);
+    unsigned char color = 0x11;
+    for (unsigned y = 0; y < 5; ++y) {
+      for (unsigned x = 0; x < 9; ++x) {
+        if (x != 8 && (x >= 4 || y >= 4)) continue;
+        const char pixel[4] = {static_cast<char>(color), 0, 0, 0};
+        out.write(pixel, 4);
+        expected[((y + 2) * 13 + x + 1) * 4] = static_cast<std::byte>(color++);
+      }
+    }
+    for (int i = 0; i < 20; ++i) out.put(static_cast<char>(0x37 + i));
+  }
+  const EffectTileIndex reader(crop, indexPath, pixelPath, empty, 3, 104);
+  if (reader.max_bitmap_bytes() != 1 || !reader.read(0, output) || output != expected) return false;
+  expected.fill(std::byte{});
+  for (int i = 0; i < 20; ++i) expected[(3 * 13 + 2) * 4 + i] = static_cast<std::byte>(0x37 + i);
+  if (!reader.read(1, output) || output != expected || !reader.read(2, output) ||
+      output != decltype(output){} || reader.read(3, output)) return false;
+  index.back() |= std::byte{0x80};
+  write_index();
+  if (reader.read(0, output)) return false;
+  index[16] = std::byte{1};
+  write_index();
+  try { EffectTileIndex wrongBinding(crop, indexPath, pixelPath, empty, 3, 104); }
+  catch (const std::runtime_error&) { return true; }
+  return false;
+}
+
 int main(int argc, char** argv) {
   int option=1;
   std::uint64_t metadataMiB=0;
@@ -255,6 +319,8 @@ int main(int argc, char** argv) {
       return 1;
     }
     std::cout << "external effect runtime pack prepared and ready\n";
+    const auto warm = iee::effect_animation_x4::cpu_cache_stats();
+    std::size_t cold = 0;
     if (argc == first + 2) {
       std::ifstream contracts(argv[first + 1]);
       std::string line;
@@ -287,10 +353,30 @@ int main(int argc, char** argv) {
           std::cerr << "external effect contract failed: " << line << '\n';
           return 1;
         }
+        using namespace iee::effect_animation_x4;
+        using State = iee::core::EffectFrameCache::State;
+        if (streamingPack && cold < 12 && cpu_frame_state(target) == State::Absent) {
+          constexpr std::uintptr_t owner = 0x4321;
+          begin_occurrence(owner);
+          prefetch_window(owner, ref, sequence, static_cast<std::uint32_t>(phase), once != 0, true);
+          const auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(3);
+          while (cpu_frame_state(target) != State::Ready && std::chrono::steady_clock::now() < deadline)
+            std::this_thread::sleep_for(std::chrono::milliseconds(2));
+          if (cpu_frame_state(target) != State::Ready) return 1;
+          end_occurrence(owner);
+          ++cold;
+        }
         ++checked;
       }
       if (!checked) return 1;
       std::cout << "external native-slot/30fps phase contracts checked: " << checked << '\n';
+    }
+    if (streamingPack) {
+      const auto stats = iee::effect_animation_x4::cpu_cache_stats();
+      if (!warm.reads || stats.failures || stats.peakBytes > options.cpu.bytes || stats.headBytes > options.cpu.headBytes) return 1;
+      std::cout << "streaming reads=" << stats.reads << " warmReads=" << warm.reads << " coldChecks=" << cold
+                << " peakBytes=" << stats.peakBytes << " headBytes=" << stats.headBytes
+                << " failures=" << stats.failures << '\n';
     }
     if (catalogueOnly && iee::effect_animation_x4::cpu_cache_stats().reads != 0) return 1;
     if (catalogueOnly) std::cout << "catalogue-only: zero RGBA reads\n";
@@ -365,8 +451,9 @@ int main(int argc, char** argv) {
   const bool storage = storage_contracts(root);
   iee::effect_animation_x4::release();
   const bool crops = crop_rectangles(root);
+  const bool tiles = tile_rectangles(root);
   std::filesystem::remove_all(root, error);
-  if (!crops || !storage || !streaming || !resolved || !mixedResolved || !diagnosticGates || !rejectedDimensions || !rejectedFrame ||
+  if (!tiles || !crops || !storage || !streaming || !resolved || !mixedResolved || !diagnosticGates || !rejectedDimensions || !rejectedFrame ||
       !timelineLoaded || !profileResolved || !ownerRouting || !malformedRejected) {
     std::cerr << "effect registry resolution contract failed\n";
     return 1;

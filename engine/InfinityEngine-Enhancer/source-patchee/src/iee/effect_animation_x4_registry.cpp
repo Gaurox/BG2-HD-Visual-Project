@@ -3,6 +3,7 @@
 #include "iee/core/effect_native_underlay.h"
 #include "iee/core/effect_storage_index.h"
 #include "iee/core/effect_crop_index.h"
+#include "iee/core/effect_tile_index.h"
 
 #include <algorithm>
 #include <atomic>
@@ -742,7 +743,12 @@ bool prepare(const std::filesystem::path& assetsDirectory, const Options& option
     auto storage = std::make_shared<std::vector<std::uint32_t>>();
     const auto storagePath = assetsDirectory / "EffectStorage-X4.index";
     const auto cropPath = assetsDirectory / "EffectCrops-X4.index";
+    const auto tilePath = assetsDirectory / "EffectTiles-X4.index";
+    const auto tilePixels = assetsDirectory / "EffectTiles-X4.rgba";
     const bool useCrop = std::filesystem::exists(cropPath);
+    const bool useTiles = std::filesystem::exists(tilePath);
+    if (useTiles != std::filesystem::exists(tilePixels) || (useTiles && !useCrop))
+      throw std::runtime_error("incomplete effect tile pack");
     auto storageHash = useCrop ? index_sha256({}) : core::EffectCropIndex::Digest{};
     if (std::filesystem::exists(storagePath)) {
       const auto storageBytes = read_file(storagePath, 0, options.metadataBytes - metadata);
@@ -756,19 +762,32 @@ bool prepare(const std::filesystem::path& assetsDirectory, const Options& option
       return storage->empty() ? id : static_cast<std::size_t>((*storage)[id]);
     };
     std::shared_ptr<const core::EffectCropIndex> crop;
+    std::shared_ptr<const core::EffectTileIndex> tiles;
     if (useCrop) {
       auto cropBytes = read_file(cropPath, 0, options.metadataBytes - metadata);
       charge(cropBytes.size());
       const auto pixels = assetsDirectory / "EffectCrops-X4.rgba";
-      const auto pixelBytes = std::filesystem::file_size(pixels);
+      const auto pixelBytes = std::filesystem::file_size(useTiles ? tilePixels : pixels);
       if (pixelBytes > options.packBytes) throw std::runtime_error("effect crop blob exceeds pack limit");
+      const auto cropHash = useTiles ? index_sha256(cropBytes) : core::EffectCropIndex::Digest{};
       crop = std::make_shared<core::EffectCropIndex>(std::move(cropBytes), sizes.size(), *storage,
-          index_sha256(payload), storageHash, pixels, pixelBytes, [&](std::size_t id) {
+          index_sha256(payload), storageHash, pixels, useTiles ? std::nullopt : std::optional{pixelBytes}, [&](std::size_t id) {
             const auto& src = (*sources)[id];
             return std::pair{src.width, src.height};
           });
-      LOG_INFO("Effect crop storage: physicalFrames={}, pixelBytes={}", crop->count(), pixelBytes);
+      if (useTiles) {
+        tiles = std::make_shared<core::EffectTileIndex>(crop, tilePath, tilePixels, cropHash, sizes.size(), pixelBytes);
+        const auto readers = options.streaming ? core::EffectFrameCache::kReaderCount : 1;
+        charge(sizeof(core::EffectTileIndex) + readers * (tiles->max_bitmap_bytes() + 16 * 1024));
+        LOG_INFO("Effect tile storage: physicalFrames={}, pixelBytes={}, maxBitmapBytes={}, readers={}",
+                 crop->count(), pixelBytes, tiles->max_bitmap_bytes(), readers);
+      } else {
+        LOG_INFO("Effect crop storage: physicalFrames={}, pixelBytes={}", crop->count(), pixelBytes);
+      }
     }
+    const auto readCropped = [crop, tiles](std::size_t id, std::span<std::byte> out) {
+      return tiles ? tiles->read(id, out) : crop->read(id, out);
+    };
 
     if (!options.streaming) for (Resource& resource : loaded) {
       for (std::size_t frameIndex = 0; frameIndex < resource.frames.size(); ++frameIndex) {
@@ -778,7 +797,7 @@ bool prepare(const std::filesystem::path& assetsDirectory, const Options& option
         const auto id = physicalId(frame.cacheId);
         if (crop) {
           frame.replacement.resize(static_cast<std::size_t>(expectedBytes));
-          if (!crop->read(id, frame.replacement)) throw std::runtime_error("cannot reconstruct cropped effect");
+          if (!readCropped(id, frame.replacement)) throw std::runtime_error("cannot reconstruct cropped effect");
         } else {
           const auto& physical = (*sources)[id];
           frame.replacement = read_file(assetsDirectory / frame_asset_name(physical.resref, physical.frame),
@@ -788,11 +807,11 @@ bool prepare(const std::filesystem::path& assetsDirectory, const Options& option
     }
 
     if (options.streaming) {
-      const auto loader = [sources, physicalId, crop, assetsDirectory](std::size_t id, std::span<std::byte> out) {
+      const auto loader = [sources, physicalId, useCrop, readCropped, assetsDirectory](std::size_t id, std::span<std::byte> out) {
         const auto canonical = physicalId(id);
         const auto beforeOpen = steady_ns();
-        if (crop) {
-          const bool success = crop->read(canonical, out);
+        if (useCrop) {
+          const bool success = readCropped(canonical, out);
           cpu_cache().record_storage_timing(0, steady_ns() - beforeOpen);
           return success;
         }

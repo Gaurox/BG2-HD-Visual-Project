@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <filesystem>
 #include <fstream>
+#include <optional>
 #include <span>
 #include <stdexcept>
 #include <utility>
@@ -18,11 +19,15 @@ namespace iee::core {
 class EffectCropIndex {
 public:
   using Digest = std::array<std::byte, 32>;
+  struct Rectangle {
+    std::uint32_t id, width, height, x, y, w, h;
+    std::uint64_t offset;
+  };
 
   template <class Dimensions>
   EffectCropIndex(std::vector<std::byte> bytes, std::size_t logicalCount,
                   std::span<const std::uint32_t> shared, const Digest& registry, const Digest& storage,
-                  std::filesystem::path pixels, std::uint64_t pixelBytes, Dimensions dimensions)
+                  std::filesystem::path pixels, std::optional<std::uint64_t> pixelBytes, Dimensions dimensions)
       : bytes_(std::move(bytes)), pixels_(std::move(pixels)) {
     constexpr char magic[] = "IEECROP2";
     if (bytes_.size() < kHeader ||
@@ -49,30 +54,33 @@ public:
       if (rect.id != id || rect.width != width || rect.height != height ||
           rect.x + rect.w > width || rect.y + rect.h > height || rect.offset != cursor ||
           ((!rect.w || !rect.h) && (rect.x || rect.y || rect.w || rect.h)) ||
-          cursor > pixelBytes || size > pixelBytes - cursor) {
+          (pixelBytes && (cursor > *pixelBytes || size > *pixelBytes - cursor))) {
         throw std::runtime_error("invalid effect crop frame rectangle or offset");
       }
       cursor += size;
     }
-    if (position != count_ || cursor != pixelBytes) {
+    if (position != count_ || (pixelBytes && cursor != *pixelBytes)) {
       throw std::runtime_error("effect crop payload size differs");
     }
   }
 
   [[nodiscard]] std::size_t count() const noexcept { return count_; }
 
-  bool read(std::size_t canonicalId, std::span<std::byte> destination) const {
+  [[nodiscard]] std::size_t find(std::size_t canonicalId) const noexcept {
     std::size_t first = 0, last = count_;
     while (first < last) {
       const auto middle = first + (last - first) / 2;
       if (field(kHeader + kRecord * middle, 4) < canonicalId) first = middle + 1;
       else last = middle;
     }
-    if (first == count_) return false;
-    const auto rect = record(first);
-    if (rect.id != canonicalId || destination.size() != std::uint64_t{rect.width} * rect.height * 4) {
-      return false;
-    }
+    return first < count_ && record(first).id == canonicalId ? first : count_;
+  }
+
+  bool read(std::size_t canonicalId, std::span<std::byte> destination) const {
+    const auto position = find(canonicalId);
+    if (position == count_) return false;
+    const auto rect = record(position);
+    if (destination.size() != std::uint64_t{rect.width} * rect.height * 4) return false;
     if (rect.w != rect.width || rect.h != rect.height)
       std::fill(destination.begin(), destination.end(), std::byte{0});
     if (!rect.w) return true;
@@ -89,11 +97,16 @@ public:
     return true;
   }
 
+  [[nodiscard]] Rectangle record(std::size_t position) const noexcept {
+    const auto off = kHeader + kRecord * position;
+    return {
+        static_cast<std::uint32_t>(field(off, 4)), static_cast<std::uint32_t>(field(off + 4, 2)),
+        static_cast<std::uint32_t>(field(off + 6, 2)), static_cast<std::uint32_t>(field(off + 8, 2)),
+        static_cast<std::uint32_t>(field(off + 10, 2)), static_cast<std::uint32_t>(field(off + 12, 2)),
+        static_cast<std::uint32_t>(field(off + 14, 2)), field(off + 16, 8)};
+  }
+
 private:
-  struct Rectangle {
-    std::uint32_t id, width, height, x, y, w, h;
-    std::uint64_t offset;
-  };
   static constexpr std::size_t kHeader = 80;
   static constexpr std::size_t kRecord = 24;
   std::vector<std::byte> bytes_;
@@ -105,15 +118,6 @@ private:
     for (std::size_t i = 0; i < size; ++i)
       value |= std::uint64_t{std::to_integer<unsigned char>(bytes_[offset + i])} << (8 * i);
     return value;
-  }
-
-  Rectangle record(std::size_t position) const noexcept {
-    const auto off = kHeader + kRecord * position;
-    return {
-        static_cast<std::uint32_t>(field(off, 4)), static_cast<std::uint32_t>(field(off + 4, 2)),
-        static_cast<std::uint32_t>(field(off + 6, 2)), static_cast<std::uint32_t>(field(off + 8, 2)),
-        static_cast<std::uint32_t>(field(off + 10, 2)), static_cast<std::uint32_t>(field(off + 12, 2)),
-        static_cast<std::uint32_t>(field(off + 14, 2)), field(off + 16, 8)};
   }
 };
 

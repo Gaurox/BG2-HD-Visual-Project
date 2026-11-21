@@ -27,6 +27,7 @@ class EffectFrameCache {
   using Pixels = std::vector<std::byte>;
   using Lease = std::shared_ptr<const Pixels>;
   using Loader = std::function<bool(Id, std::span<std::byte>)>;
+  static constexpr std::size_t kReaderCount = 2;
   enum class State : std::uint8_t { Absent, Queued, Reading, Ready, Failed };
   struct Limits {
     std::uint64_t bytes{768ull << 20};
@@ -87,9 +88,9 @@ class EffectFrameCache {
   void report() noexcept;
 #ifdef _WIN32
   static unsigned __stdcall worker_entry(void* self) noexcept;
-  std::array<ProcessLifetimeWorker, 2> workers_;
+  std::array<ProcessLifetimeWorker, kReaderCount> workers_;
 #else
-  std::array<std::thread, 2> workers_;
+  std::array<std::thread, kReaderCount> workers_;
 #endif
   mutable std::mutex mutex_;
   std::condition_variable changed_;
