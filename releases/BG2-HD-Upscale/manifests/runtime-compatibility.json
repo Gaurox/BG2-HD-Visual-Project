@@ -61,18 +61,18 @@
     "status": "integrated-awaiting-clean-lifecycle-test",
     "active_development_install": {
       "path": "InfinityEngine-Enhancer.dll",
-      "sha256": "291D6609B27CEBCD6592BD1E728AADDCF32007E54EB183A0FFDDD5E2B67AD97D",
-      "bytes": 3521536,
-      "qa_evidence": "interface/integration/remaining-ui-20261121-v1/qa-accepted-20261121-v1.json"
+      "sha256": "66C4E4400CFA996373305C968DB186ED8DE1BF08544821034C0F00CD6CD19D4F",
+      "bytes": 3527168,
+      "qa_evidence": "releases/BG2-HD-Upscale/manifests/renderer-effect-crop-continuity.json"
     },
     "reproducible_source_build": {
-      "source": "git:195d0fe7:engine/InfinityEngine-Enhancer/source-patchee",
-      "output_sha256": "291D6609B27CEBCD6592BD1E728AADDCF32007E54EB183A0FFDDD5E2B67AD97D",
-      "output_bytes": 3521536,
-      "build_status": "Installed UI renderer accepted. Clean-game and full uninstall lifecycle pending.",
+      "source": "git:707746d3:engine/InfinityEngine-Enhancer/source-patchee",
+      "output_sha256": "66C4E4400CFA996373305C968DB186ED8DE1BF08544821034C0F00CD6CD19D4F",
+      "output_bytes": 3527168,
+      "build_status": "Cropped effects accepted in the local game. Clean-game and full uninstall lifecycle pending.",
       "bundle_manifest": "manifests/renderer-bundle.json"
     },
-    "publication_rule": "Alpha.12 adds the accepted UI pack. Representative storage smoke, clean-game, future-save and full-uninstall lifecycle tests remain pending.",
+    "publication_rule": "Alpha.13 reads the byte-exact cropped effect storage. Clean-game, future-save and full-uninstall lifecycle tests remain pending.",
     "area_animation_runtime": {
       "status": "integrated",
       "payload_layout": "iee-assets/areas/<AREA>",
@@ -103,17 +103,17 @@
       ],
       "qa_scope": "Accepted images and scoped native owner qualifications; no exhaustive gameplay QA or interpolated projectile motion claimed.",
       "integration_evidence": "pipeline/recipes/effects-release-finalization-20261110-v1/integration.json",
-      "storage_index": "EffectStorage-X4.index: exact registry binding, independent logical cache identities"
+      "storage_index": "EffectStorage-X4.index: exact registry binding, independent logical cache identities; EffectCrops-X4.index binds the cropped RGBA blob to the same registry and sharing index"
     },
     "map_water_runtime": {
       "inherited_from_dll_sha256": "5D4EE06D84E0D6C6F6FB81797EAB0E9756B3ECE335EBF537E57C5597E0B40BCF",
-      "dll_sha256": "291D6609B27CEBCD6592BD1E728AADDCF32007E54EB183A0FFDDD5E2B67AD97D",
+      "dll_sha256": "66C4E4400CFA996373305C968DB186ED8DE1BF08544821034C0F00CD6CD19D4F",
       "registry_sha256": "BC1EB12DB3B8FD112A77182C0C7405B57B9E2949312C49FCD0C6F537BC8577F1",
       "build_contract": "IEE_WATER_ROUTE2_V1:E582C7879B50C0765DAC7918EF80AD9CE3CC17E884FAE6E599E81796FF635471:3:188",
       "evidence": {
-        "path": "releases/BG2-HD-Upscale/manifests/renderer-ui-continuity.json",
-        "bytes": 2704,
-        "sha256": "7B22AD777C9844670BA36B07C4CD54BF7B304ABA87F6919761A5FFCC96C7A261"
+        "path": "releases/BG2-HD-Upscale/manifests/renderer-effect-crop-continuity.json",
+        "bytes": 1226,
+        "sha256": "6F08AA7501DB27A83F9EE3EBDAE8DC2E7058FFCE8589A01D4A03D5E77521138E"
       }
     }
   },

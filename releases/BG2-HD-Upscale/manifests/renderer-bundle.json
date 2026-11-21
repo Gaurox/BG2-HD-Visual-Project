@@ -1,15 +1,15 @@
 {
   "$schema": "../schemas/renderer-bundle.schema.json",
   "schema_version": 1,
-  "bundle_id": "iee-0.1.0-alpha.12",
+  "bundle_id": "iee-0.1.0-alpha.13",
   "status": "integrated-awaiting-clean-lifecycle-test",
-  "source_tree": "git:195d0fe7:engine/InfinityEngine-Enhancer/source-patchee",
+  "source_tree": "git:707746d3:engine/InfinityEngine-Enhancer/source-patchee",
   "build_environment": {
     "cmake": "4.0.2",
     "generator": "Visual Studio 16 2019, x64",
     "compiler": "MSVC 19.29.30158.0 (v142, toolset 14.29.30133, x64)",
     "build_type": "Release",
-    "command": "cmake --build engine/InfinityEngine-Enhancer/source-patchee/build-ui-review-20261121-v1 --config Release --target InfinityEngine-Enhancer iee_menu_upscale_tests"
+    "command": "cmake --build engine/InfinityEngine-Enhancer/source-patchee/build-ui-review-20261121-v1 --config Release --target InfinityEngine-Enhancer"
   },
   "files": [
     {
@@ -34,8 +34,8 @@
     },
     {
       "path": "InfinityEngine-Enhancer.dll",
-      "bytes": 3521536,
-      "sha256": "291D6609B27CEBCD6592BD1E728AADDCF32007E54EB183A0FFDDD5E2B67AD97D"
+      "bytes": 3527168,
+      "sha256": "66C4E4400CFA996373305C968DB186ED8DE1BF08544821034C0F00CD6CD19D4F"
     },
     {
       "path": "InfinityEngine-Enhancer.sample.ini",
@@ -100,7 +100,7 @@
     "In-place Steam shim lifecycle and verified full vanilla restoration after Phase 3",
     "Combined accepted effect v3 catalogue, retained native routes and COW bridge on clean game",
     "Future native saves/full uninstall with renderer alpha.10",
-    "Exact-byte shared storage: representative ingame streaming/masking smoke pending; no new image QA inferred",
+    "IEECROP2: local ingame pass and release byte-exact reconstruction; clean-game shared/cropped installation and uninstall remain pending",
     "Component 120 isolated clean-game install, x4 UI review pack and uninstall"
   ]
 }

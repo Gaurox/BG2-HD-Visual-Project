@@ -33,6 +33,41 @@ def load(path):
     return json.loads(path.read_text(encoding='utf-8-sig'))
 
 
+def verify_crop(pack_root, pack, crop, frames, manifest_hash, check, root):
+    assert crop['format'] == 'IEECROP2'
+    logical_count = len(pack['frames'])
+    assert crop['physical_frame_count'] == len(frames)
+    files = {f['name']: f for f in crop['files']}
+    assert len(crop['files']) == 2 and files.keys() == {'EffectCrops-X4.index', 'EffectCrops-X4.rgba'}
+    index_path = check(dict(files['EffectCrops-X4.index'], path=(pack_root/'EffectCrops-X4.index').relative_to(root).as_posix()))
+    check(dict(files['EffectCrops-X4.rgba'], path=(pack_root/'EffectCrops-X4.rgba').relative_to(root).as_posix()))
+    index = index_path.read_bytes()
+    header = struct.Struct('<8sII32s32s')
+    record = struct.Struct('<I6HQ')
+    storage_hash = (bytes.fromhex(pack['storage']['sha256']) if pack.get('storage')
+                    else hashlib.sha256(b'').digest())
+    assert header.unpack_from(index) == (b'IEECROP2', len(frames), logical_count,
+                                         bytes.fromhex(pack['registry_sha256']), storage_hash)
+    logical_ids = {f['asset']: i for i, f in enumerate(pack['frames'])}
+    offset = 0
+    for frame, row in zip(frames, record.iter_unpack(index[header.size:]), strict=True):
+        canonical, width, height, x, y, w, h, start = row
+        assert canonical == logical_ids[frame['asset']] and [width, height] == frame['physical_size_x4']
+        assert start == offset and x+w <= width and y+h <= height
+        assert (w and h) or not any((x, y, w, h))
+        offset += w*h*4
+    assert offset == files['EffectCrops-X4.rgba']['bytes']
+    proof = load(check(crop['reconstruction_evidence']))
+    assert proof['logical_frames_verified'] == logical_count and proof['physical_frames_byte_exact'] == len(frames)
+    for name in (pack['registry'], 'manifest.json', *files, *([STORAGE_NAME] if pack.get('storage') else [])):
+        assert proof['files'][name]['bytes'] == (pack_root/name).stat().st_size
+        expected_hash = files[name]['sha256'] if name in files else (
+            pack['registry_sha256'] if name == pack['registry'] else
+            pack['storage']['sha256'] if name == STORAGE_NAME else manifest_hash)
+        assert proof['files'][name]['sha256'].upper() == expected_hash.upper()
+    return crop['files']
+
+
 def verify(root, content_path=None):
     release = root/'releases/BG2-HD-Upscale'
     candidates = load(release/'manifests/effect-release-candidates.json')['candidates']
@@ -112,7 +147,12 @@ def verify(root, content_path=None):
                     assert hashlib.sha256(raw).hexdigest().upper()==route['source_sha256'],'PRO changed beyond BAM reference'
         files=[dict(name=c['runtime_pack']['manifest'],bytes=mp.stat().st_size,sha256=c['runtime_pack']['manifest_sha256']),
                dict(name=pack['registry'],bytes=pack['registry_bytes'],sha256=pack['registry_sha256'])]
-        files += [dict(name=f['asset'],bytes=f['bytes'],sha256=f['sha256']) for f in physical_frames(mp.parent,pack)]
+        frames = physical_frames(mp.parent, pack)
+        crop = c['runtime_pack'].get('crop')
+        if crop:
+            files += verify_crop(mp.parent, pack, crop, frames, c['runtime_pack']['manifest_sha256'], check, root)
+        else:
+            files += [dict(name=f['asset'],bytes=f['bytes'],sha256=f['sha256']) for f in frames]
         if pack.get('storage'):
             st=pack['storage'];check(dict(path=(mp.parent/STORAGE_NAME).relative_to(root).as_posix(),bytes=st['bytes'],sha256=st['sha256']))
             files.append(dict(name=STORAGE_NAME,bytes=st['bytes'],sha256=st['sha256']))

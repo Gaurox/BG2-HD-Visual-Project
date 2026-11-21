@@ -7,7 +7,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-function Get-Hash([string]$Path) { $sha=[Security.Cryptography.SHA256]::Create();try{([BitConverter]::ToString($sha.ComputeHash([IO.File]::ReadAllBytes($Path)))).Replace('-','')}finally{$sha.Dispose()} }
+function Get-Hash([string]$Path) { (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash }
 function Require([bool]$Condition,[string]$Message) { if(-not $Condition){throw $Message} }
 function RelativePath([string]$Base,[string]$Target) { [IO.Path]::GetRelativePath($Base,$Target).Replace('\','/') }
 

@@ -42,9 +42,13 @@ Shared-storage packs retain registry v3 and every logical frame record. The opti
 logical count, registry byte count, reserved0, exact registry bytes, u32 physical
 source IDs). IDs must point directly to canonical IDs with identical byte sizes;
 offline verification additionally requires identical RGBA hashes/dimensions.
-Only canonical RGBA files and the index are projected into the payload. Both
-eager and streaming readers retain independent logical cache/GPU identities.
-Absent index uses legacy flat storage; invalid index rejects the pack.
+`runtime_pack.crop` selects `EffectCrops-X4.index` and `EffectCrops-X4.rgba`
+in place of individual canonical frame files. IEECROP2 binds both the registry
+and sharing index by SHA-256. Its canonical rectangles reconstruct exact RGBA
+canvases in eager and streaming readers while preserving logical cache/GPU IDs.
+The candidate pins the reconstruction receipt and both payload hashes.
+For alpha.11, regenerate with `effects/research/rgba-crop-full-20261121-v1/build.py build release`
+using the local alpha.10 inputs, then copy `packs/release` to the candidate's declared `runtime_pack.path`.
 
 Acquired map assemblies retain their original renderer hash. An explicit
 `runtime-compatibility.json:renderer.map_water_runtime` successor must pin both

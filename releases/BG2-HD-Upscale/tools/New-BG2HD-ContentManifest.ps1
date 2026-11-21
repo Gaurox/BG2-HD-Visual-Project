@@ -717,6 +717,19 @@ function Get-EffectCandidateEntries {
             [void]$expectedNames.Add($storageFile.Name)
             $result.Add((New-ContentEntry $baseSpec $storageFile))
         }
+        if ($null -ne $candidate.runtime_pack.crop) {
+            $crop = $candidate.runtime_pack.crop
+            Require ($crop.format -ceq 'IEECROP2' -and [int]$crop.physical_frame_count -eq $payloadFrames.Count) 'Contrat de rognage effets invalide.'
+            Require (-not (Compare-Object @('EffectCrops-X4.index', 'EffectCrops-X4.rgba') @($crop.files | ForEach-Object name))) 'Inventaire du rognage effets invalide.'
+            foreach ($croppedFile in $crop.files) {
+                $file = Get-Item -LiteralPath (Join-Path $packRoot ([string]$croppedFile.name)) -ErrorAction Stop
+                $entry = New-ContentEntry $baseSpec $file
+                Require ($entry.bytes -eq [int64]$croppedFile.bytes -and $entry.sha256 -eq [string]$croppedFile.sha256) "Payload rogne invalide : $($file.Name)"
+                [void]$expectedNames.Add($file.Name)
+                $result.Add($entry)
+            }
+            $payloadFrames = @()
+        }
         foreach ($frame in $payloadFrames) {
             $name = [string]$frame.asset
             Require ($name -match '^EFX4-[A-Z0-9_]{1,8}-frame[0-9]{3,4}[.]rgba$') "Nom de frame effet invalide : $name"

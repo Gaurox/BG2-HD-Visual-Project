@@ -26,10 +26,11 @@ composants UI approuvés, overlays explicitement sélectionnés et packs animati
 cartes `installed-pending-qa`, builds de développement, backups et captures sont exclus.
 
 Le composant 120 couvre 133 ressources x4 des menus et du HUD, dont les 39
-ressources V1 converties en V2. La version d'essai utilise le renderer alpha.12.
+ressources V1 converties en V2. La version d'essai utilise le renderer alpha.13.
 
 Le composant effets comprend 424 effets x4 acceptés et leurs variantes de rendu
-nécessaires, ainsi que les raccords projectiles terminés. Le déplacement des
+nécessaires, ainsi que les raccords projectiles terminés. Le rognage sans perte
+reconstitue les frames à l'identique et économise 8,34 Go de données d'effets. Le déplacement des
 projectiles conserve son comportement natif. Icônes et vidéos ne sont pas incluses.
 
 Le composant sprites propose 331 animations de créatures en Q3m x2 / Nearest.

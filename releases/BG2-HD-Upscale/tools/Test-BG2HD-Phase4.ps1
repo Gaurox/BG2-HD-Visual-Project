@@ -5,7 +5,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-function Get-Hash([string]$Path) { $sha=[Security.Cryptography.SHA256]::Create();try{([BitConverter]::ToString($sha.ComputeHash([IO.File]::ReadAllBytes($Path)))).Replace('-','')}finally{$sha.Dispose()} }
+function Get-Hash([string]$Path) { (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash }
 function Require([bool]$Condition,[string]$Message) { if(-not $Condition){throw $Message} }
 
 $release = (Resolve-Path -LiteralPath $ReleaseRoot).Path
@@ -56,6 +56,10 @@ foreach($file in @($rendererManifest.files)){
 }
 $rendererDllPath=Join-Path $rendererPayload 'InfinityEngine-Enhancer.dll'
 $rendererBinaryText=[Text.Encoding]::ASCII.GetString([IO.File]::ReadAllBytes($rendererDllPath))
+if ($content.entries.destination -contains 'iee-assets/effects/EffectCrops-X4.index') {
+    Require ($rendererBinaryText.Contains('Effect crop storage: physicalFrames=')) 'Le lecteur IEECROP2 est absent du renderer.'
+    Require ($runtimeManifest.owned_ini_keys.'core-steam'.Shaders.EnableEffectAnimationStreaming -eq 'true') 'Le pack rogne exige le streaming des effets.'
+}
 foreach($marker in @('WTSEW','WTOIL','AreaAnimations-X4.registry','TimedTimeline','EnableAreaAnimationX4','EnableEffectAnimationX4','CreatureSprites-XN.catalog','EnableNativeOcclusionBridge','FXRenderClippingPolys','LoadArea')){
     Require ($rendererBinaryText.IndexOf($marker,[StringComparison]::Ordinal) -ge 0) "Classificateur liquide absent de la DLL renderer : $marker"
 }

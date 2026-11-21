@@ -2980,7 +2980,7 @@
         }
       ],
       "runtime_pack": {
-        "path": "releases/BG2-HD-Upscale/release-inputs/effects/accepted-shared-20261110-v1",
+        "path": "releases/BG2-HD-Upscale/release-inputs/effects/accepted-crop-20261121-v1",
         "manifest": "manifest.json",
         "manifest_sha256": "78ADB0DC67C31E27EB5CE698584F5C9016C71A8C0E60006B1F6B8CBB6BAAD0BD",
         "registry": "EffectAnimations-X4.registry",
@@ -2995,17 +2995,38 @@
           "bytes": 1431440,
           "sha256": "D10ED46CF03198B5F5573A5C04476393B60276F2FF0A6DC3625FC493277ED9F7",
           "physical_frame_count": 65849
+        },
+        "crop": {
+          "format": "IEECROP2",
+          "physical_frame_count": 65849,
+          "files": [
+            {
+              "name": "EffectCrops-X4.index",
+              "bytes": 1580456,
+              "sha256": "F4F3FB7D1B9509109556E496083B5FE162F67C5686D52E0651E379B2B7BC1E5E"
+            },
+            {
+              "name": "EffectCrops-X4.rgba",
+              "bytes": 26426642396,
+              "sha256": "AFFA10B848387D639F6018B860B5DF6429CE2BE06BB7C32DC714E9BDCE34CE75"
+            }
+          ],
+          "reconstruction_evidence": {
+            "path": "effects/research/rgba-crop-full-20261121-v1/results-release.json",
+            "bytes": 1012,
+            "sha256": "D7DDA4645B59288D47A8E8986184355BB0068EC282F3C37C2A722089332D1287"
+          }
         }
       },
       "renderer_contract": {
-        "bundle_id": "iee-0.1.0-alpha.12",
-        "dll_sha256": "291D6609B27CEBCD6592BD1E728AADDCF32007E54EB183A0FFDDD5E2B67AD97D",
+        "bundle_id": "iee-0.1.0-alpha.13",
+        "dll_sha256": "66C4E4400CFA996373305C968DB186ED8DE1BF08544821034C0F00CD6CD19D4F",
         "required_ini_key": "Shaders.EnableEffectAnimationX4=true"
       },
       "payload_projection": {
         "status": "integrated",
         "content_manifest_integration": true,
-        "reason": "Exact-byte shared storage; 71971 logical images, 65849 physical images. Native routes and acquired image QA unchanged."
+        "reason": "Lossless IEECROP2 storage over the exact-byte shared catalogue: 71971 logical images, 65849 physical rectangles. Native routes and acquired image QA preserved."
       },
       "runtime_files": [
         {

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.0-alpha.11 — lossless effect storage
+
+- Ships renderer alpha.13 and the IEECROP2 effect data. All 65,849 physical frames reconstruct byte-for-byte, with 71,971 logical frames and native routes preserved.
+- Effect data and index save 8,337,298,300 bytes compared with alpha.10. Local ingame check accepted. Clean-game installer lifecycle remains pending.
+
 ## 0.1.0-alpha.10 — interface and HUD
 
 - Component 120 adds 133 accepted UI resources and 153 frames. Renderer alpha.12 binds 73 dedicated x4 atlases by DXT5 fingerprint.

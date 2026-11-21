@@ -1,9 +1,7 @@
 # Known issues — alpha locale BG2 HD
 
-- Alpha.9 : stockage partagé exact des RGBA, renderer alpha.11. Régression technique
-  et identité des pixels vérifiées ; test ingame représentatif du nouveau lecteur
-  et qualification combinée sur jeu propre encore en attente. Le jeu installé
-  conserve son moteur précédent jusqu'à une installation explicitement demandée.
+- Alpha.11 : stockage RGBA rogné et partagé, renderer alpha.13. Reconstruction
+  exacte et test en jeu local validés. Le cycle combiné sur jeu propre reste à vérifier.
 
 - Alpha.8 : 424 effets acceptés et raccords projectiles clos intégrés ; QA limitée
   aux images/composants/usages observés. 313/320 contrats propriétaires qualifiés,

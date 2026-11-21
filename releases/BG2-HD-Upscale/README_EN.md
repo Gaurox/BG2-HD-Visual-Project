@@ -32,10 +32,11 @@ approved UI, selected overlays, and approved area-animation packs. Pending-QA ma
 builds, backups, and captures are excluded.
 
 Component 120 covers 133 x4 menu and HUD resources, including 39 resources
-converted from V1 to V2. This local build uses renderer alpha.12.
+converted from V1 to V2. This local build uses renderer alpha.13.
 
 The effect component includes 424 accepted x4 effects, their required rendering
-variants and completed native projectile routes. Projectile movement remains
+variants and completed native projectile routes. Lossless cropping restores each
+frame byte-for-byte and saves 8.34 GB of effect data. Projectile movement remains
 native. Icons and movies are not included.
 
 Core installs the verified `Baldur.exe → InfinityLoader → BaldurReal.exe` path, renderer, and

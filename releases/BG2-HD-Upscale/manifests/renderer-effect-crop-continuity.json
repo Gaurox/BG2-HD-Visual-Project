@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "prior_dll_sha256": "291D6609B27CEBCD6592BD1E728AADDCF32007E54EB183A0FFDDD5E2B67AD97D",
+  "dll_sha256": "66C4E4400CFA996373305C968DB186ED8DE1BF08544821034C0F00CD6CD19D4F",
+  "source_tree": "git:707746d3:engine/InfinityEngine-Enhancer/source-patchee",
+  "changed_runtime_sources": [
+    "CMakeLists.txt",
+    "src/iee/effect_animation_x4_registry.cpp",
+    "src/iee/core/effect_crop_index.h"
+  ],
+  "previous_ui_continuity": {
+    "path": "releases/BG2-HD-Upscale/manifests/renderer-ui-continuity.json",
+    "bytes": 2704,
+    "sha256": "7B22AD777C9844670BA36B07C4CD54BF7B304ABA87F6919761A5FFCC96C7A261"
+  },
+  "reconstruction": {
+    "path": "effects/research/rgba-crop-full-20261121-v1/results-release.json",
+    "bytes": 1012,
+    "sha256": "D7DDA4645B59288D47A8E8986184355BB0068EC282F3C37C2A722089332D1287"
+  },
+  "local_ingame_qa": {
+    "status": "accepted-by-user",
+    "date": "2026-11-21",
+    "physical_frames": 72563,
+    "evidence": "effects/research/rgba-crop-full-20261121-v1/results-live.json"
+  },
+  "release_check": {
+    "status": "host-streaming-and-byte-exact-reconstruction-passed",
+    "physical_frames": 65849,
+    "logical_frames": 71971
+  }
+}

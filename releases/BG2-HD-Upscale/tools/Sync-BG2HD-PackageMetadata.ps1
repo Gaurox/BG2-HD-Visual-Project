@@ -137,7 +137,7 @@ $names = @(
     'release.json'
 )
 $spriteInventoryRoot = Join-Path $source 'sprite-inventories'
-foreach ($name in @('ui-release-candidate.json', 'renderer-ui-continuity.json')) {
+foreach ($name in @('ui-release-candidate.json', 'renderer-ui-continuity.json', 'renderer-effect-crop-continuity.json')) {
     if (Test-Path -LiteralPath (Join-Path $source $name) -PathType Leaf) { $names += $name }
 }
 if (Test-Path -LiteralPath $spriteInventoryRoot) {
