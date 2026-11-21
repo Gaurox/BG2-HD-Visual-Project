@@ -25,6 +25,9 @@ Le contenu exact vient de `manifests/content.json` et `components.json` : cartes
 composants UI approuvés, overlays explicitement sélectionnés et packs animation approuvés. Les
 cartes `installed-pending-qa`, builds de développement, backups et captures sont exclus.
 
+Le composant 120 couvre 133 ressources x4 des menus et du HUD, dont les 39
+ressources V1 converties en V2. La version d'essai utilise le renderer alpha.12.
+
 Le composant effets comprend 424 effets x4 acceptés et leurs variantes de rendu
 nécessaires, ainsi que les raccords projectiles terminés. Le déplacement des
 projectiles conserve son comportement natif. Icônes et vidéos ne sont pas incluses.

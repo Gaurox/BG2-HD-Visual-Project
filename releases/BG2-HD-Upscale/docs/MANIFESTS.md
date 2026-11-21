@@ -19,6 +19,7 @@ small daily-write authorities; `areas.csv` is a production catalogue and the dev
 | `animation-release-candidates.json` | approved per-area v2/v3 animation packs and renderer contract |
 | `effect-release-candidates.json` | approved shared x4/30 FPS effect packs, QA and renderer contract |
 | `sprite-release-candidates.json` | v2 acquired flat Q3m world/UI selection, exact inventories, immutable family QA and pinned renderer |
+| `ui-release-candidate.json` | component 120, 133 accepted UI resrefs, SHA256-pinned runtime files and ingame decision |
 | `sprite-inventories/*.json` | exact Q3m world catalogue/leaves and scoped P7 paperdoll files, sizes and SHA-256 |
 | `overlay-sources.json` | authoritative stock/x2/x4 decision and hashes for shared liquid resrefs |
 | `renderer-bundle.json` | frozen renderer candidate inventory |

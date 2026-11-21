@@ -1,15 +1,15 @@
 {
   "$schema": "../schemas/renderer-bundle.schema.json",
   "schema_version": 1,
-  "bundle_id": "iee-0.1.0-alpha.11",
+  "bundle_id": "iee-0.1.0-alpha.12",
   "status": "integrated-awaiting-clean-lifecycle-test",
-  "source_tree": "releases/BG2-HD-Upscale/release-inputs/renderer/iee-0.1.0-alpha.11-source",
+  "source_tree": "git:195d0fe7:engine/InfinityEngine-Enhancer/source-patchee",
   "build_environment": {
     "cmake": "4.0.2",
     "generator": "Visual Studio 16 2019, x64",
     "compiler": "MSVC 19.29.30158.0 (v142, toolset 14.29.30133, x64)",
     "build_type": "Release",
-    "command": "cmake --build build/iee-projectile-secondary-links-20261028-v1 --config Release --target InfinityEngine-Enhancer iee_effect_animation_x4_registry_tests iee_effect_texture_cache_tests"
+    "command": "cmake --build engine/InfinityEngine-Enhancer/source-patchee/build-ui-review-20261121-v1 --config Release --target InfinityEngine-Enhancer iee_menu_upscale_tests"
   },
   "files": [
     {
@@ -34,8 +34,8 @@
     },
     {
       "path": "InfinityEngine-Enhancer.dll",
-      "bytes": 3484160,
-      "sha256": "F4DCF02BDA7887F2BAE5B74E31D2951CF29588073F4158F0C9F34132AF9F4D7A"
+      "bytes": 3521536,
+      "sha256": "291D6609B27CEBCD6592BD1E728AADDCF32007E54EB183A0FFDDD5E2B67AD97D"
     },
     {
       "path": "InfinityEngine-Enhancer.sample.ini",
@@ -100,6 +100,7 @@
     "In-place Steam shim lifecycle and verified full vanilla restoration after Phase 3",
     "Combined accepted effect v3 catalogue, retained native routes and COW bridge on clean game",
     "Future native saves/full uninstall with renderer alpha.10",
-    "Exact-byte shared storage: representative ingame streaming/masking smoke pending; no new image QA inferred"
+    "Exact-byte shared storage: representative ingame streaming/masking smoke pending; no new image QA inferred",
+    "Component 120 isolated clean-game install, x4 UI review pack and uninstall"
   ]
 }

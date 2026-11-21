@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.0-alpha.10 — interface and HUD
+
+- Component 120 adds 133 accepted UI resources and 153 frames. Renderer alpha.12 binds 73 dedicated x4 atlases by DXT5 fingerprint.
+- Converts 34 MOS V1 and 5 BAM V1 resources to V2 with native dimensions, frame centers and cycle playback.
+- The game review gallery is local QA tooling. Clean-game installation and uninstall qualification remain open.
+
 ## 0.1.0-alpha.9 — exact-byte shared effect storage
 
 - Keeps all 71,971 logical effect images, native clocks and independent palette/GPU

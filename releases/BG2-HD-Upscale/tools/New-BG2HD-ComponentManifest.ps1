@@ -90,6 +90,10 @@ $animationCandidates = Read-Json $AnimationCandidatesPath
 $base = @($existing.components | Where-Object { [int]$_.id -in @(0, 100, 110) } | Sort-Object id)
 if (@($base | Where-Object { [int]$_.id -eq 0 }).Count -ne 1) { throw 'Composant Core 0 absent ou duplique.' }
 if (@($base | Where-Object { [int]$_.id -eq 100 }).Count -ne 1 -or @($base | Where-Object { [int]$_.id -eq 110 }).Count -ne 1) { throw 'Composants UI attendus absents.' }
+if (@($content.entries | Where-Object { [int]$_.component_id -eq 120 }).Count -gt 0) {
+    $base += [ordered]@{ id = 120; label = 'ui-gameplay-x4'; name = 'Gameplay interface and HUD (x4)';
+        status = 'validated'; depends_on = @(0); payload_groups = @('ui-gameplay') }
+}
 
 $maps = @($content.entries | Where-Object { $_.kind -eq 'map' } | Group-Object component_id | Sort-Object { [int]$_.Name })
 $mapOverlayDependencies = @{} # Final map-local overlays are packaged with their map.

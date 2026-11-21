@@ -1,0 +1,1546 @@
+{
+  "schema_version": 1,
+  "status": "approved-for-release",
+  "component_id": 120,
+  "resrefs": [
+    "ARRIVE",
+    "BAR-FINL",
+    "BAR-STEP",
+    "BGDECBAR",
+    "BGPADB",
+    "BGPADL",
+    "BGPADR",
+    "BIGLOGO",
+    "BPEND",
+    "CH01AJON",
+    "CH02AGLN",
+    "CH03AMON",
+    "CH04ASHP",
+    "CH04BGTH",
+    "CH04CSAH",
+    "CH05AUND",
+    "CH06ADRW",
+    "CH07ASUL",
+    "CHPTAMKE",
+    "CHPTMANA",
+    "CHPTODRE",
+    "CHPTSARA",
+    "COADCNTR",
+    "COLOR",
+    "COLORI",
+    "COLORR",
+    "DLGDIVI",
+    "GKEYMAP",
+    "GMPNTCPB",
+    "GMPPARBB",
+    "GMPWBTP0",
+    "GMPWPKP0",
+    "GOPGAMB",
+    "GOPSNDSB",
+    "GPROGBAR",
+    "GU10BKLS",
+    "GU10BKMD",
+    "GU10BKRS",
+    "GU20BKLS",
+    "GU20BKMD",
+    "GU20BKRS",
+    "GUDEATH0",
+    "GUICHP0B",
+    "GUICHP1B",
+    "GUICHP2B",
+    "GUICHP3B",
+    "GUICHP4B",
+    "GUICHP5B",
+    "GUICHP6B",
+    "GUICHP7B",
+    "GUICHP8B",
+    "GUICONTB",
+    "GUICP",
+    "GUIDCB",
+    "GUIDIFF",
+    "GUIDLCH",
+    "GUIDRM2",
+    "GUIDRM3",
+    "GUIDRM4",
+    "GUIDRM5",
+    "GUIDRM6",
+    "GUIDRM7",
+    "GUIERR09",
+    "GUIERR10",
+    "GUIERR2",
+    "GUIERR21",
+    "GUIERR8",
+    "GUIHELP",
+    "GUIJRNL",
+    "GUIMAPAB",
+    "GUIOLSP0",
+    "GUIOSTUM",
+    "GUIPBARB",
+    "GUIPNLC",
+    "GUIPOPAI",
+    "GUIRECBG",
+    "GUIRSP20",
+    "GUISAVEC",
+    "GUISMF2",
+    "GUISPLHB",
+    "GUISPMB",
+    "GUISRSVB",
+    "GUISTATS",
+    "GUISTBBB",
+    "GUISTBBM",
+    "GUITUT",
+    "GUIVERB",
+    "GUIW12_1",
+    "GUIW12_2",
+    "GUIW12_3",
+    "GUIW12_4",
+    "GUIW12_5",
+    "GUIW12_6",
+    "GUIW12_7",
+    "GUIW12_8",
+    "GUIWBTP1",
+    "GUIWBTP2",
+    "GUIWBTP3",
+    "GUIWDMB",
+    "GUIWDMB0",
+    "GUIWDMB9",
+    "GUIWDMBM",
+    "GUIWDSL0",
+    "GUIWDSL1",
+    "GUIWDSL9",
+    "GUIWLS20",
+    "GUIWLSP0",
+    "GUIWRS20",
+    "GUWBTP10",
+    "GUWBTP29",
+    "GUWBTP39",
+    "GUWBTP3M",
+    "GUWBTP9M",
+    "GUWDMBM9",
+    "GUWDSL9",
+    "GWCONTB0",
+    "LEAVE",
+    "LOADCNTR",
+    "NPCCHAP",
+    "RECENTEV",
+    "ROOMDELU",
+    "ROOMMERC",
+    "ROOMNOBE",
+    "ROOMPEAS",
+    "SIDEBLOK",
+    "STARTBP2",
+    "STARTEE",
+    "STARTM",
+    "STARTOLD",
+    "TOBMAP72",
+    "TOSCEND",
+    "ULGOTHST",
+    "WORLDMAP"
+  ],
+  "qa": {
+    "path": "interface/integration/remaining-ui-20261121-v1/qa-accepted-20261121-v1.json",
+    "sha256": "0ac08152d3c88d60188c3673752b601f09641bb40c9b0ac9eac8dc05c8229ce3"
+  },
+  "files": [
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7000-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "45e546896ede00216307823798c3746462f28f0afcccda39632588ab23cc539a"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7001-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "2a1b3d8ac1b8a8729785878db1444740a7130f92f44e1f48c9c24e4e2c3e0cd3"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7002-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "481289b782e368cbc53f35680d689ec886e22402c64713320912c7cfa143e14b"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7003-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "7ed8f55d8ad522ec3c9763d1fffede94350d2495b21d9eecc8224b448d0bb64a"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7004-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "8f344c884afb98dd988099a706ba4dd272092e8323088e1e76eb30b35349ddc7"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7005-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "f2faf386fb521306a37decd7c13f45ea262cccd7d27f103e87622782227c814a"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7006-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "fc2baa8d7665c53fab2529ca9d474354127507c4df26104d1c5a3da4b6c39455"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7007-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "5825b0937623534eb965ec9e70ab352af74b6a969ed9b7500146750d90fff634"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7008-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "097d867947b15bfa719354c3d2efdca28661edfe1ceb09d18a7cb53fb0b79e1a"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7009-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "fcecd5cde194ac47a9c1403763eddb6897cadffdfea1245b585ae1c17cbd5ba2"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7010-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "272d6db4d9460ca3e87a3140880c5057bf01921aa68da398f8b8ddeb8b2dd024"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7011-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "b507eb9b39705cb6b33fe164fccf8afb9493bfc219408ad957cf5477b19c2fba"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7012-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "da9d8c2d9f21195329c20f253e91037332b1c7375bc55c6daabb7fc83db06d39"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7013-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "52591c4c9556b775d48542f0be0adf6a061822630d75e495389a5e7ed0144c85"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7014-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "c1f32c3ff18df8cbaddd972b839a827e68d2f603b9e6cac835418abf6ea33690"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7015-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "cdc6a713b233afa643aada0f985ee18bdeb27fe9bbe722faa4f6ec461b3821bf"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7016-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "05173413004d5879c637f31ff6e72f219c2226428feaa9e36a7f9dfd4730befb"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7017-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "6a45c1e6fe12345a536d9731b3557ce526b41079f5fa4c9dde0941ffeb0d2436"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7018-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "b6c723e75c3e7f43c90b9e8a438a783805caeda714bb8a5336f01c864ff8dcba"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7019-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "4d864cae1b1b64461bd6d7a2936af0a90d7fa463ba314380deb95f01282a706b"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7020-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "6be19603c7679dabf0bcdbb903c1ec7133e59b887bde45c081eff528ee933211"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7021-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "0defa3b224afe8f22c55779f99dcd245d5eec43d499e071444071c857c24723b"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7022-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "f0f715870333249940ca9a14e5ef391022d313d05c4dedd2b0f4a189a24b28a2"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7023-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "a34e349e6a62c387cafc59a7cb1c7c72401c259c5df1a3b7ec9f8c8342911ac9"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7024-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "0a47627d7afa3b17a88d4f52ba95964de02535cb856d04b48ccd84003232d56e"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7025-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "6ea028f3268a77fae353014b5fbdb70cbd8714798f424dd489e9caa8f08ddcec"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7026-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "aac99d8449ef4a6f5485dab43d9021b7f4a166df5b4b0990f8e8aed4af3190c0"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7027-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "5880ccaa13559e97d0c4406b16448d2ef3351a7ec3d58591ce4a922193ba177a"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7028-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "104e8a96479a94486d3ffe0874da8d8f91761eb56d92f08f7174191a10511e2e"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7029-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "c3e56fb2c52d6a341bd3f2d315bb48b88822e4772a1d74946371cc55628fbf24"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7030-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "d7e1452954e729a72c0fcdda08f260343f7898af5c629e6c4ef19dcf6b8fe793"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7031-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "590f9f122199102e7cb86a4b0119e16230b8f9e07ffb398089d486f6898696f4"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7032-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "9e1173530f39852b25f569bd8b0c5ffb736c8a8ea3eaf189400b8752468bb57c"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7033-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "07f28b222fa53ffdee9ccc37f19cd7d42335af8166fc07853ff1015661577014"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7034-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "b750e036a22450d7f596973c047925832ed76ac297415bf4a4a922591dad1f10"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7035-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "a51cb6767c4dae0d59c47c4e62711a6c5ecd3302a17eb214e810596c5be4e04f"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7036-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "1e614c2483619afcd9cb9dc219b746af98a67be8489e20937f0be33a8e295154"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7037-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "7122a71c598874cd6f6d9131969629fff8053d15000b1bce815034af43a8fc64"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7038-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "bc31dc92b3d32437cd7a01ac5b085e7e5d79a5e7109c17744997c5a87a0f9b6c"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7039-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "942779df96219b9bdb1b484e72073fc7dee6f46dd3904276d1ecf33226c02c99"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7040-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "7686e1bdb73ed12a95f944833e92b8c58df987bb326d6833b9e12483696ae2a7"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7041-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "7ccd977c1620ff397959d5691b666152ae11a980a55d738aba90398bc812cac9"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7042-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "2afc088207b1552a9d63d1630b4d93d9fc7f2bb72c41936fc8743327425c3cf4"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7043-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "18878f573578a5f6fd0174dd805133821e418b4a9f55b4c76d44046e1bb9cde9"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7044-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "42618661c6ec888231c5c814a3c0b7293421ae251a6758a29c74d6d4279d8871"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7045-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "8b5edb8dd42752cad5facc37096e0b0a9a8caecb31f4d6dd36c0057fac60aaf4"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7046-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "b016025f21fa6b003cace697ccbeaa4e156bec5cb95c1492cae6fb571de4ea2f"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7047-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "73a4d73fc9ce057dffbd0b3ad75575628827e08eb32fd8fee74efa27bf14c552"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7048-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "bdcda91ffce861ade487c61d1c57164db02741b57b6ae641f665bee351d81c43"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7049-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "3b23a3eac077b4a811d3118152cf0f297267ecd3898c956cdcde96a3880412ca"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7050-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "d09e2dfecd207740a6c219a6250a87e4f769a39514a80bfc22d58fa7eeac6970"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7051-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "d056e3ff71c59bdc6c36223ea315e239529161738fffda91c4f9a9d341d79488"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7052-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "a3e72b47a8cab1524deddacb6c95af491e76fbc44990dcf2fb09fb7d68a1a187"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7053-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "d82d24bb0fad8d60fc6482ccf1f6bd800c4f4c78437078870beb8e197b99d579"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7054-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "c2b2662b024e37ba8878b2c756b1769427afff9b6f13ae65e5cf117f056c2560"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7055-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "835089f21792bc117fbe18b4ed92c78cbe864a42768c5a373a735c5b1caa6982"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7056-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "4a80d22d80d0837eeb87ff6796b0fdb72cee0f1e213935897eab7da6c833eeeb"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7057-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "5112eebd2c29a0c6635aa988b492aa3c1272c9a4c11cb971f337f30673e4a69a"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7058-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "ea124a5309c9eba45e551a047fda8025f5c96a5f6e344588f5e522a26fee8c2f"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7059-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "8847dcced3a2d6b8ec26dcda7415363dd5a131791e27a069f0fd1da842941495"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7060-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "f09f61e9cc9414da9aca1645cc0b87a272c8aeb3fa88ced1ec6b71b6643adbb0"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7061-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "e9a2f04dcdf9e8b9d604cd1227fa120e9c211b465c90741e92d67b54a78a417d"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7062-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "8bd96ca9817c3a3db4022470325d648bcc81ee4df0fe8f1fa0175cfdae765c1d"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7063-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "b5b0b6e9c500e590596d197a82b75a463c309dc03c2a461957e51bfac8c60ab3"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7064-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "691ffc8ae69a1c0e12d96d42da0ca3abd7514024358c736490a99e70444603ad"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7065-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "726c0f409a1cb75d12e7b510137f4cce30376901cb531342775ebc735d483f99"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7066-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "f8cb0c69495dc83f4a17d6f1582b8a2b595a3a05eb85c0598b9a7c5b46a9e8d5"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7067-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "dc6cb95822a4efa604a6b50f5f184b8d3eef146deed59bfdf1c21276a953d251"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7068-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "d3f8468f9bc8048ac2a11135f94d487e80bf7fa729b05f35db9d99d7bda52261"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7069-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "6b8b5598f0f81b16ac8f081dcac95cf1588cfb8bc8f864712e0eba38631d54e8"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7070-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "00b1a18ced2b222e4ae3ba59052e4bed4f90871d866d91a60e9a90c993bdec43"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7071-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "95fe74563d24aec753b123d6cd9e61c946dcd5b81041c10da8562ef6afe449d9"
+    },
+    {
+      "destination": "iee-assets/UIREVIEW-MOS7072-x4.dxt5",
+      "bytes": 16777216,
+      "sha256": "2eaf1eab398b8b38cf91803e2e3515cd471f4b6bf203a69d1230c24777bf67e0"
+    },
+    {
+      "destination": "iee-assets/ui-review-atlases.txt",
+      "bytes": 2336,
+      "sha256": "d7285c483f15406829c37913cc32442c04da06f05b495bdc9c49256b0d706016"
+    },
+    {
+      "destination": "override/ARRIVE.MOS",
+      "bytes": 80,
+      "sha256": "0204be9c41fcbb8e3202c85da5aa1ea32ced84ed29d2229bb7eebf6782a52f9a"
+    },
+    {
+      "destination": "override/BAR-FINL.MOS",
+      "bytes": 52,
+      "sha256": "f0d5c40c4e29f9f9155c760ccac298bcc2aa4c6de6e464ffd93e987e61d53e08"
+    },
+    {
+      "destination": "override/BAR-STEP.MOS",
+      "bytes": 52,
+      "sha256": "00469a3dd849c342dd5af188158e56ebfb3b0f73d84a821f82155a350e9b88be"
+    },
+    {
+      "destination": "override/BGDECBAR.MOS",
+      "bytes": 52,
+      "sha256": "4b752044c3f4f2eef61d88f06d557659050db0ced7b060d83865d789f4a3436f"
+    },
+    {
+      "destination": "override/BGPADB.MOS",
+      "bytes": 80,
+      "sha256": "a554edcc3368bae2c9c6adcba506a772711125b121e6ecb6913fe2671bd6887c"
+    },
+    {
+      "destination": "override/BGPADL.MOS",
+      "bytes": 52,
+      "sha256": "1f17827dd6516296d2c3ccd7c7437c4ded33d74cda3959ad06388069967431bb"
+    },
+    {
+      "destination": "override/BGPADR.MOS",
+      "bytes": 52,
+      "sha256": "0b23c66c75a4b151961858b69f5009eaa3aed84eccea3ad3059088965d99b419"
+    },
+    {
+      "destination": "override/BIGLOGO.BAM",
+      "bytes": 156,
+      "sha256": "b739b667357400144722d153ec56f9845b9ae4a737f4b56d799ab9d742646a3d"
+    },
+    {
+      "destination": "override/BPEND.MOS",
+      "bytes": 80,
+      "sha256": "b264bbbb29a16ea568bcb12932b980ac6e76f70fff23b2904d07a98a98231b01"
+    },
+    {
+      "destination": "override/CH01AJON.MOS",
+      "bytes": 80,
+      "sha256": "1522b6c834e0d08654c24152d56947716609c121066aa8d6d3595aa359d929a2"
+    },
+    {
+      "destination": "override/CH02AGLN.MOS",
+      "bytes": 80,
+      "sha256": "d951a03293b93ba69f4d4e9676fed10ff4a34a7834407435a5b228e81d81c75d"
+    },
+    {
+      "destination": "override/CH03AMON.MOS",
+      "bytes": 80,
+      "sha256": "7d91876e0ae549322403b3f6a490de8826e405480996316cc7f17afc6a588400"
+    },
+    {
+      "destination": "override/CH04ASHP.MOS",
+      "bytes": 80,
+      "sha256": "43dd91088c631f46eb123acf5516c1ca3bc9834ecf5697ad9552248647105900"
+    },
+    {
+      "destination": "override/CH04BGTH.MOS",
+      "bytes": 80,
+      "sha256": "3f8df9e1a899038d57505da6e8e374d19bbbf64b201c159212e3bebd5ca046f8"
+    },
+    {
+      "destination": "override/CH04CSAH.MOS",
+      "bytes": 80,
+      "sha256": "a4e190b4a51bc837c8f70962cb9ea39426f0fa75c106848a2a8ee96ac6c3049e"
+    },
+    {
+      "destination": "override/CH05AUND.MOS",
+      "bytes": 80,
+      "sha256": "9350e90833534c972ac851f24f2ad8968be2388ad478a330e8b36c90e6e7d1c4"
+    },
+    {
+      "destination": "override/CH06ADRW.MOS",
+      "bytes": 80,
+      "sha256": "247685c9e0213150c9349a119913d217f4daccd395277e2e4def015e5dca9afc"
+    },
+    {
+      "destination": "override/CH07ASUL.MOS",
+      "bytes": 80,
+      "sha256": "37f4dfd27ec73699df5a7003df47475f6be14c4cab4d42517402dbd02477d884"
+    },
+    {
+      "destination": "override/CHPTAMKE.MOS",
+      "bytes": 80,
+      "sha256": "88726ca474c82decc1495c819b3e5cb1022852ef3102eb2b8ebf4fbb8edf7cfb"
+    },
+    {
+      "destination": "override/CHPTMANA.MOS",
+      "bytes": 80,
+      "sha256": "1206f2464b8b38e65ae4207b8337b4a989100606803b480b246a4cba53c84a73"
+    },
+    {
+      "destination": "override/CHPTODRE.MOS",
+      "bytes": 80,
+      "sha256": "84878fafc300b3e404678597d31e8d14094e326ff7be8fed0d0fd860d260bb5e"
+    },
+    {
+      "destination": "override/CHPTSARA.MOS",
+      "bytes": 80,
+      "sha256": "64b00cb5bac481d78348ef3fe40b96722eaf74a982533d39d193d783e95c5ecf"
+    },
+    {
+      "destination": "override/COADCNTR.BAM",
+      "bytes": 76,
+      "sha256": "56eb51a05536ceb2a665d6c4eafab911af8d0c4cb5e681e4981ff4438d504d82"
+    },
+    {
+      "destination": "override/COLOR.MOS",
+      "bytes": 52,
+      "sha256": "3b774883ab9885040d4beb363ce2e95f63eae736c2f553ad67c15e2ddce4b0d1"
+    },
+    {
+      "destination": "override/COLORI.MOS",
+      "bytes": 52,
+      "sha256": "fba5676abeb4ac2bdcf8bec85146513c95adc73bb6d03e7ef73177ef0aec292f"
+    },
+    {
+      "destination": "override/COLORR.MOS",
+      "bytes": 52,
+      "sha256": "37d3cb004fc37a14c3a1c2c913a0ce2d66e18e88758f26e0157021cb4e0d955e"
+    },
+    {
+      "destination": "override/DLGDIVI.MOS",
+      "bytes": 52,
+      "sha256": "0ce0acd31a7d54d76097d32b789ec2376a496757bd02474a106b3e1e12fc3af6"
+    },
+    {
+      "destination": "override/GKEYMAP.MOS",
+      "bytes": 52,
+      "sha256": "98d60116fd7aed7de62655e590c8c6f56ee93357f430b53604fcdd5443744a8e"
+    },
+    {
+      "destination": "override/GMPNTCPB.MOS",
+      "bytes": 52,
+      "sha256": "9da28f575fa5bea716ae04be19ff582cda708a31134b01910ffac4e5916177ce"
+    },
+    {
+      "destination": "override/GMPPARBB.MOS",
+      "bytes": 52,
+      "sha256": "ff8618e928e66348dc1c4b8d8143ba978cf9effca7e0543e2f3e4af687f1e5c5"
+    },
+    {
+      "destination": "override/GMPWBTP0.MOS",
+      "bytes": 80,
+      "sha256": "e17a2bff41c824c1f2025a1453c5e9739ac708370804201c6ce7994b83f1f275"
+    },
+    {
+      "destination": "override/GMPWPKP0.MOS",
+      "bytes": 80,
+      "sha256": "2b0806e7865c29e30557da736c82c4ac58ff7e44c18b1ec68d8ec77cb22201ae"
+    },
+    {
+      "destination": "override/GOPGAMB.MOS",
+      "bytes": 52,
+      "sha256": "7dc6ce06cad9060a57d6f7b7c0c6b4faf8a4c98985f9f58f7a4a9118788a2624"
+    },
+    {
+      "destination": "override/GOPSNDSB.MOS",
+      "bytes": 52,
+      "sha256": "49f5272073af8fda20fceb975df18497536f06a391d76eb0e3bb8fa5a4ddcff0"
+    },
+    {
+      "destination": "override/GPROGBAR.MOS",
+      "bytes": 52,
+      "sha256": "5d5ef03f2edb6e162df1b8a52d985e1149195d68d52816e258b60365fa9df92a"
+    },
+    {
+      "destination": "override/GU10BKLS.MOS",
+      "bytes": 52,
+      "sha256": "4182000ef46e72d73634bd75105f39f093e9516f47df03487695a23bb12e7cd1"
+    },
+    {
+      "destination": "override/GU10BKMD.MOS",
+      "bytes": 80,
+      "sha256": "df0dc5aac3275cc41318a24b97adc954f8d9a805dec63ebc69e9df24492ac67e"
+    },
+    {
+      "destination": "override/GU10BKRS.MOS",
+      "bytes": 52,
+      "sha256": "a58c1bb0138cb780f35b60d9dfd5132b5a536c3ed718e8fa7207543af16cf3fb"
+    },
+    {
+      "destination": "override/GU20BKLS.MOS",
+      "bytes": 80,
+      "sha256": "19771fb4ae409f276460a232e920f8c48840c537a40c23f03f76209d0bf15ceb"
+    },
+    {
+      "destination": "override/GU20BKMD.MOS",
+      "bytes": 108,
+      "sha256": "ed41caa0b38b5e2a268cb6817d05c9192df26ec2bb480e1f7724c015f2c116d9"
+    },
+    {
+      "destination": "override/GU20BKRS.MOS",
+      "bytes": 80,
+      "sha256": "b4f95c3924a5c432cac509dffc9e1e754f36078ac32a637c1c27d9acd1337e05"
+    },
+    {
+      "destination": "override/GUDEATH0.MOS",
+      "bytes": 52,
+      "sha256": "b4434f878a7466809c59e0bfeba65eaf875ca0bc4acc3665c557ccd4609eede2"
+    },
+    {
+      "destination": "override/GUICHP0B.MOS",
+      "bytes": 80,
+      "sha256": "d897131c2b04869f0244469262b3b82a25822a05aceb31b0d7e7e1d156ee43f8"
+    },
+    {
+      "destination": "override/GUICHP1B.MOS",
+      "bytes": 80,
+      "sha256": "92090c6ba14c035b1467d27f750e4532d4a1d2a6025ee12e8d9a842d1c361c32"
+    },
+    {
+      "destination": "override/GUICHP2B.MOS",
+      "bytes": 80,
+      "sha256": "eae7715c0300a76dbb876a3306149cd5d229d51a5ece66f5e5550ddb77d5e245"
+    },
+    {
+      "destination": "override/GUICHP3B.MOS",
+      "bytes": 80,
+      "sha256": "e2307070efff613ca9b4d0212604a1122ac615089065b04acb51b98280f78796"
+    },
+    {
+      "destination": "override/GUICHP4B.MOS",
+      "bytes": 80,
+      "sha256": "f66e7ef296be34f6d29afcb4239fc55f706506b4ebf308e54a1e7d8740c7b827"
+    },
+    {
+      "destination": "override/GUICHP5B.MOS",
+      "bytes": 80,
+      "sha256": "d317d9a4e5a9174a4b3a7496061996c60b3e6ef62a4bd9d0ea11f098fc2e49cc"
+    },
+    {
+      "destination": "override/GUICHP6B.MOS",
+      "bytes": 80,
+      "sha256": "03299a41515404978659321b2fa5544a13c3bf3ac07cba0ee750f9cab83cfbc7"
+    },
+    {
+      "destination": "override/GUICHP7B.MOS",
+      "bytes": 80,
+      "sha256": "ee7df75952a271928d8ab471d452fcf4e0a0be553b2467c571ce30bfb03f2112"
+    },
+    {
+      "destination": "override/GUICHP8B.MOS",
+      "bytes": 80,
+      "sha256": "07369f5f67791e6ee3a5912b0041b1477c410e15958aa17aaca66d1105b1adae"
+    },
+    {
+      "destination": "override/GUICONTB.MOS",
+      "bytes": 80,
+      "sha256": "8ec7f12124bf04fa151012c86235669c14b7fbd5ef192c8f11fa56cb6a4e5760"
+    },
+    {
+      "destination": "override/GUICP.MOS",
+      "bytes": 80,
+      "sha256": "72e3dd8c680901b367ac6ce003ce6ec72c6583bfcf38cc91bda08e6c3a2bddde"
+    },
+    {
+      "destination": "override/GUIDCB.MOS",
+      "bytes": 52,
+      "sha256": "811cf8e3f0ba51fe5a1ff17d9d74a52065b6fb9c979d831b046c360a5cabc892"
+    },
+    {
+      "destination": "override/GUIDIFF.BAM",
+      "bytes": 316,
+      "sha256": "8b60982aa3bc803724f7d4656c2772c97312121df38662b54ff68c10cd4da412"
+    },
+    {
+      "destination": "override/GUIDLCH.MOS",
+      "bytes": 80,
+      "sha256": "6de73205aabfc5a61c3e8657985122ae59ede4081d3f76e660dbc8e97a09465d"
+    },
+    {
+      "destination": "override/GUIDRM2.MOS",
+      "bytes": 80,
+      "sha256": "191785b84cf05fbf8ce6bc40c0e6aae60e6e7767f7660837881ce2f018d874ff"
+    },
+    {
+      "destination": "override/GUIDRM3.MOS",
+      "bytes": 80,
+      "sha256": "3b53895b3e0f30c9ce7ee484edbe37dc6b17daa386003e32181eddc0c9ee6d47"
+    },
+    {
+      "destination": "override/GUIDRM4.MOS",
+      "bytes": 80,
+      "sha256": "012285d536848ec7128b62917ed569a404241950c4181cc1ed36c16f1ee4a69f"
+    },
+    {
+      "destination": "override/GUIDRM5.MOS",
+      "bytes": 80,
+      "sha256": "3864da9f3d749d37c5ad4564440abae844e7e326d70b4877ef64844fdcb12f61"
+    },
+    {
+      "destination": "override/GUIDRM6.MOS",
+      "bytes": 80,
+      "sha256": "3ab976a40a4dcd329a57bdfe59dc791ae28f628a151a8a76ae332ade4f25969a"
+    },
+    {
+      "destination": "override/GUIDRM7.MOS",
+      "bytes": 80,
+      "sha256": "107d7ec3dae60ce675043ed5f4cdfdd4cea9d456d7c4eeb48700abc40f1f2b6d"
+    },
+    {
+      "destination": "override/GUIERR09.MOS",
+      "bytes": 52,
+      "sha256": "38dbb3af0ba81ade2dc1912ffc9033c4ecfc3ed23b2ee68482b5afe05a120875"
+    },
+    {
+      "destination": "override/GUIERR10.MOS",
+      "bytes": 52,
+      "sha256": "d6589363d708b9920e3075d85660656a51ae0c3543e5a6b6e6cf70470ff2d936"
+    },
+    {
+      "destination": "override/GUIERR2.MOS",
+      "bytes": 52,
+      "sha256": "2f87a43cf7277bcc521111cc6dbe3bbdbd9b3dc8e4a5052702c55d3c0287bcbb"
+    },
+    {
+      "destination": "override/GUIERR21.MOS",
+      "bytes": 52,
+      "sha256": "51520c0ffa0ddcd7a54af42d65891dee1f36efac1d6ca02b3a77d6b839d0ca58"
+    },
+    {
+      "destination": "override/GUIERR8.MOS",
+      "bytes": 52,
+      "sha256": "10e102f71f7c1fc6fc43d93b475d4f3e814d818b57572450dd3dc1a30978b425"
+    },
+    {
+      "destination": "override/GUIHELP.MOS",
+      "bytes": 52,
+      "sha256": "f6743a426113e480d86fdc1829782a4f2ba8cfb253c9e962f987cbccb551202b"
+    },
+    {
+      "destination": "override/GUIJRNL.MOS",
+      "bytes": 52,
+      "sha256": "e211119daca8edcf360e326a698b236c249de093166006fb809bbb1b344bccd5"
+    },
+    {
+      "destination": "override/GUIMAPAB.MOS",
+      "bytes": 52,
+      "sha256": "12060fbb27ada6e20842452b589ec9ee0594d7c32633b8a5796db7f9ed492a97"
+    },
+    {
+      "destination": "override/GUIOLSP0.MOS",
+      "bytes": 80,
+      "sha256": "b27145fc0afd8d2deae95e30b2ba0683693d3b0c0467382bc2d3753edd15e953"
+    },
+    {
+      "destination": "override/GUIOSTUM.MOS",
+      "bytes": 52,
+      "sha256": "0d0ddab563f1eea349d4827c91f3ad90cb814342e797118ab30da01a68edda54"
+    },
+    {
+      "destination": "override/GUIPBARB.MOS",
+      "bytes": 52,
+      "sha256": "da9eac25740bb9c5dd25f6128f8dfa0225e8682a05a4f616492383da9071d9dc"
+    },
+    {
+      "destination": "override/GUIPNLC.MOS",
+      "bytes": 52,
+      "sha256": "7dfa4c1e7c8a9ceb642d1441269c67e1f7a18ecd78a664cafdad0018bcfa675c"
+    },
+    {
+      "destination": "override/GUIPOPAI.MOS",
+      "bytes": 52,
+      "sha256": "a6be5d70c6a544db9c9df098e3635b7fd722ca7e934bf27ac221026b687841c3"
+    },
+    {
+      "destination": "override/GUIRECBG.MOS",
+      "bytes": 52,
+      "sha256": "c5835fdefca686ef53c0dee27b424d66431d0b9445a91c7243bb924e0790f1d2"
+    },
+    {
+      "destination": "override/GUIRSP20.BAM",
+      "bytes": 116,
+      "sha256": "391e8441007dbecbb4c6d621b4fc6838b4bfa718fe9d0bfcd9906a7d4210f685"
+    },
+    {
+      "destination": "override/GUISAVEC.MOS",
+      "bytes": 52,
+      "sha256": "73c5bb296d8ee46e8c39b290e3be108c634b10e7bbcb4b9258ab5d7eb610acf4"
+    },
+    {
+      "destination": "override/GUISMF2.MOS",
+      "bytes": 80,
+      "sha256": "74b117023c00385e402a33a2eee2bd2ec1d66f30dc5fc69f84974722882cd228"
+    },
+    {
+      "destination": "override/GUISPLHB.MOS",
+      "bytes": 52,
+      "sha256": "f03b30c7eae886044c0d382a9512a36ae21fa8b22413e1fe122bd55066686ef0"
+    },
+    {
+      "destination": "override/GUISPMB.MOS",
+      "bytes": 80,
+      "sha256": "a27c23107c7b160bbba6db9f5e50c79768c5023e9298eacec1af55ee37244940"
+    },
+    {
+      "destination": "override/GUISRSVB.MOS",
+      "bytes": 80,
+      "sha256": "378168e88b2e9ac4895403b6f959ef6458c8757c562ce61e1c3cc41b83568c48"
+    },
+    {
+      "destination": "override/GUISTATS.MOS",
+      "bytes": 52,
+      "sha256": "e50aee47459290d9d578ef19b0ca58b697c0c74c242ff36e27bee63284abc83f"
+    },
+    {
+      "destination": "override/GUISTBBB.MOS",
+      "bytes": 52,
+      "sha256": "69881c5da2c1f3701bd63c204167acadc7bc0975fcc30f755a16abca3510b48b"
+    },
+    {
+      "destination": "override/GUISTBBM.MOS",
+      "bytes": 52,
+      "sha256": "c8f5149172f01b0cec5b1576d0fd68bed9802db5f61355609f4aa24332be9ec3"
+    },
+    {
+      "destination": "override/GUITUT.MOS",
+      "bytes": 52,
+      "sha256": "86eb5788a2d22c12643a4de1d7be3d332221868c4a4b3c22dcd1d7d67c4ae4f0"
+    },
+    {
+      "destination": "override/GUIVERB.MOS",
+      "bytes": 52,
+      "sha256": "d2320960232b3b51871a34f5eb3fabb1c4811adac269502a35d6019573fe2f0b"
+    },
+    {
+      "destination": "override/GUIW12_1.MOS",
+      "bytes": 80,
+      "sha256": "74c935347847f09bc39be1f8641dff729c51576a3eb929d88cc656150d4ea525"
+    },
+    {
+      "destination": "override/GUIW12_2.MOS",
+      "bytes": 80,
+      "sha256": "2c9bb87a33b35e8d3f51b6c7664d47ab6a7a84b7ba1dfb0a3529253f29acd0e0"
+    },
+    {
+      "destination": "override/GUIW12_3.MOS",
+      "bytes": 80,
+      "sha256": "708b85d20efe92d5e8f77724abc6bd6fadf7e39e2aea9e257531c13ef6a05df3"
+    },
+    {
+      "destination": "override/GUIW12_4.MOS",
+      "bytes": 80,
+      "sha256": "27e4c8214b9bf4aeb69c51f0491a21ab7145ee24abef49b719d783a0e4aeffc0"
+    },
+    {
+      "destination": "override/GUIW12_5.MOS",
+      "bytes": 80,
+      "sha256": "de7a1bd75285ebf7441a73becf8d0bc2eabea5d930169deb48fed6de560e641a"
+    },
+    {
+      "destination": "override/GUIW12_6.MOS",
+      "bytes": 80,
+      "sha256": "c947ad81fac5961dcaa2e46388e39637f5815b96c6dcc9a0789f448c1d5b1305"
+    },
+    {
+      "destination": "override/GUIW12_7.MOS",
+      "bytes": 80,
+      "sha256": "7373f359fdb60fcaa13a6cb7856ffe45fc993bb6d36662ead9887a8f215899c1"
+    },
+    {
+      "destination": "override/GUIW12_8.MOS",
+      "bytes": 80,
+      "sha256": "9bad12f1f4f5fa11cbcca2a315feb107bd20405f544cefb7c7baa818f25bd594"
+    },
+    {
+      "destination": "override/GUIWBTP1.MOS",
+      "bytes": 80,
+      "sha256": "df713d3434146cc4b885a170a640fa64d3df78d11b252dcd1d3cbcc89ad19a57"
+    },
+    {
+      "destination": "override/GUIWBTP2.MOS",
+      "bytes": 52,
+      "sha256": "e40586c9e118170c32e9e7638f56acba494a4878e13a9819c1a61c8774ef8f4b"
+    },
+    {
+      "destination": "override/GUIWBTP3.MOS",
+      "bytes": 52,
+      "sha256": "e2e44477b00ffc279f493761e1448ae55a084d75f9e4d6228c601fc5a5a27a27"
+    },
+    {
+      "destination": "override/GUIWDMB.MOS",
+      "bytes": 52,
+      "sha256": "e8ad069114d2cc708e42dc94bd12dfab72386ab72ac2e1c6f78f8eac41881912"
+    },
+    {
+      "destination": "override/GUIWDMB0.MOS",
+      "bytes": 52,
+      "sha256": "9ff86091c876f9ae707c733145c243fed4f0b1160a261982708e9ef5d3568cae"
+    },
+    {
+      "destination": "override/GUIWDMB9.MOS",
+      "bytes": 80,
+      "sha256": "536142a788e8df01a353b8369dc1080870bc27ebb7c3d96c4ff97d3091e5475c"
+    },
+    {
+      "destination": "override/GUIWDMBM.MOS",
+      "bytes": 52,
+      "sha256": "b3e620f882890f74864af78d51767af64f3a2910a98f1693711b07f9e031d143"
+    },
+    {
+      "destination": "override/GUIWDSL0.MOS",
+      "bytes": 52,
+      "sha256": "350812351f6cbfdf0238d0994a4dc37cb0d70624fb6e34ea47abea32703549ad"
+    },
+    {
+      "destination": "override/GUIWDSL1.MOS",
+      "bytes": 52,
+      "sha256": "6a0afca12a9334df57055349edb27152c30e1aba3a01e5f912d4c94a517d7c63"
+    },
+    {
+      "destination": "override/GUIWDSL9.MOS",
+      "bytes": 80,
+      "sha256": "9fe02547ca1d5c732d35ff6104e25167a57e12b3759c53d963b3a55f5442c9cf"
+    },
+    {
+      "destination": "override/GUIWLS20.MOS",
+      "bytes": 80,
+      "sha256": "7fb7e7cfba243c53653993217d7a64c1dd1ead453833dfeab07f9fd67aa6f5cc"
+    },
+    {
+      "destination": "override/GUIWLSP0.MOS",
+      "bytes": 80,
+      "sha256": "89f353073c7d46f6a64b69d3b8cadda55811445b70674ce00aacbfc6663daaf1"
+    },
+    {
+      "destination": "override/GUIWRS20.MOS",
+      "bytes": 80,
+      "sha256": "236b876b4cfa5d0283c1e5949649f6b549c7195f614e236585f339ca7aacc8ac"
+    },
+    {
+      "destination": "override/GUWBTP10.MOS",
+      "bytes": 52,
+      "sha256": "190513ae1b5081c572daa93dea1967dd98d260a70bd2b6db5714873f5e9ab235"
+    },
+    {
+      "destination": "override/GUWBTP29.MOS",
+      "bytes": 80,
+      "sha256": "a3431cdee024398cf9352223215c8b199dcded8e628e7dacc756e4c0c8cec3bc"
+    },
+    {
+      "destination": "override/GUWBTP39.MOS",
+      "bytes": 80,
+      "sha256": "331f108413bde850bf7cc3cc11d4452419815a9d6fd3d885b059ee21ea47088c"
+    },
+    {
+      "destination": "override/GUWBTP3M.MOS",
+      "bytes": 52,
+      "sha256": "8e950f8b258f0b7946802e3dc1637290acb978e632cc04eec591ea2be61945a9"
+    },
+    {
+      "destination": "override/GUWBTP9M.MOS",
+      "bytes": 80,
+      "sha256": "17c14ae39070611da4d3d2dccc315f4c49a2e12a7344e60a7f70db2cf0d75ed4"
+    },
+    {
+      "destination": "override/GUWDMBM9.MOS",
+      "bytes": 80,
+      "sha256": "0050db4ed54f15d8a9bf6cf12de0dc61623527820a4db04be4017e638c2208d8"
+    },
+    {
+      "destination": "override/GUWDSL9.MOS",
+      "bytes": 80,
+      "sha256": "94e9b72fa0a1860151c40ae197217dd316905ded9c6db97086fe261493536a95"
+    },
+    {
+      "destination": "override/GWCONTB0.MOS",
+      "bytes": 52,
+      "sha256": "43ac130d97bfe6698af9afeb99c96d30cfdd9a689a94aca32edffb7c1ac0844f"
+    },
+    {
+      "destination": "override/LEAVE.MOS",
+      "bytes": 80,
+      "sha256": "6d1f9917ffac7c4b42a1e30986c1760363c8d498290e6b96be04f9b9ee5ed012"
+    },
+    {
+      "destination": "override/LOADCNTR.BAM",
+      "bytes": 456,
+      "sha256": "1691fcfed7adfc01a2b3a239d279c97eccdfb97b9e2e2315de03f396284480ec"
+    },
+    {
+      "destination": "override/MOS7000.PVRZ",
+      "bytes": 279613,
+      "sha256": "9608d155397c7083c480c59aa7458e363b03def5fa45360fe5099b6e4552e924"
+    },
+    {
+      "destination": "override/MOS7001.PVRZ",
+      "bytes": 382741,
+      "sha256": "59b3e0aaa6d13b9281e1e99539d21b4699d5555d9e0534ce8a43cea2ce244a71"
+    },
+    {
+      "destination": "override/MOS7002.PVRZ",
+      "bytes": 395927,
+      "sha256": "bb00c98295bb9afcdd8d3412fe1f303972cd29f5245409e6cf2f7ce3b4f3c856"
+    },
+    {
+      "destination": "override/MOS7003.PVRZ",
+      "bytes": 325792,
+      "sha256": "45b0671e2281aed2a0a917450b86e3bc2f2fbf5e059c5f7ff64f9686d9a7b4e6"
+    },
+    {
+      "destination": "override/MOS7004.PVRZ",
+      "bytes": 324970,
+      "sha256": "22fe24310d6f87c0e39e1a45063377d8c74d54ff61edcc572d9aa0a2ad698844"
+    },
+    {
+      "destination": "override/MOS7005.PVRZ",
+      "bytes": 258561,
+      "sha256": "e5452d94c709b3fdb0694c2499ac788dabba070c684a8742b304b98b4cd9c44a"
+    },
+    {
+      "destination": "override/MOS7006.PVRZ",
+      "bytes": 277192,
+      "sha256": "3efe6a6e14bc312157479299ac27cb7a2a775790b28571eb9bd644b426f8f096"
+    },
+    {
+      "destination": "override/MOS7007.PVRZ",
+      "bytes": 288172,
+      "sha256": "ac0eee2380bc3b62fdbebe2c03c72c510c20945c2d65cb2f118eac4f14ab14ea"
+    },
+    {
+      "destination": "override/MOS7008.PVRZ",
+      "bytes": 285996,
+      "sha256": "231fce083438f20d07a91d8f051805a14fe014a2a6388ef90525c53e49379126"
+    },
+    {
+      "destination": "override/MOS7009.PVRZ",
+      "bytes": 268655,
+      "sha256": "c0c66b868c788533ab98c455f13fcfaae49f664ede5c0735632a8722023e3bb9"
+    },
+    {
+      "destination": "override/MOS7010.PVRZ",
+      "bytes": 273783,
+      "sha256": "73df82f0d98295b4d33d719be96d4514d01fd226abdb1a55290a636217c95848"
+    },
+    {
+      "destination": "override/MOS7011.PVRZ",
+      "bytes": 260778,
+      "sha256": "5ae4f708391a3d7ca679924f7fef48eb837f041a539dbf269bbae90f321f35a4"
+    },
+    {
+      "destination": "override/MOS7012.PVRZ",
+      "bytes": 272583,
+      "sha256": "1e35c2a9fd70cccc8adf637811eb0e587b23c12eae3bc5ea1ae5dd8d47b5d2f9"
+    },
+    {
+      "destination": "override/MOS7013.PVRZ",
+      "bytes": 290533,
+      "sha256": "d8f6e172265235b40615e80ff1d1007751b259fa9b2f8883708690a033ccd897"
+    },
+    {
+      "destination": "override/MOS7014.PVRZ",
+      "bytes": 329070,
+      "sha256": "a662d06b40f45691351bf17f0385ebadb0e1be9f40b558893ff808b7fa20f0bd"
+    },
+    {
+      "destination": "override/MOS7015.PVRZ",
+      "bytes": 218459,
+      "sha256": "a36aa7841158ac7358f8c6c9d8f7d96684d2d006d52695bafd3d8bde4f725760"
+    },
+    {
+      "destination": "override/MOS7016.PVRZ",
+      "bytes": 291841,
+      "sha256": "7db6a0c8d04d81265dc42ed20ca4054a210884c4b3ec686e0d866842f4977222"
+    },
+    {
+      "destination": "override/MOS7017.PVRZ",
+      "bytes": 303354,
+      "sha256": "9771293b398a9ceb29e92b7ee9ff66ea96e3abb7e1b2fa55d7f785719341f6bb"
+    },
+    {
+      "destination": "override/MOS7018.PVRZ",
+      "bytes": 326510,
+      "sha256": "e6ec195a5d5965f89ab59b163c5f25b3c91cd4d026f4cfa019a696d8d56f81bd"
+    },
+    {
+      "destination": "override/MOS7019.PVRZ",
+      "bytes": 316618,
+      "sha256": "f9347567e486bca5cbffeaf5dbce759cd51ee565272db22be3e6fced2a7656ce"
+    },
+    {
+      "destination": "override/MOS7020.PVRZ",
+      "bytes": 321719,
+      "sha256": "9547715bb4de7d0bc4480a42d6f026a56e04cfca53b5bf0264e774a050661650"
+    },
+    {
+      "destination": "override/MOS7021.PVRZ",
+      "bytes": 330453,
+      "sha256": "c409dd7e5fccd423f20142626ab2cea246b3fbda57e80c6ea63c8dcdb499c57c"
+    },
+    {
+      "destination": "override/MOS7022.PVRZ",
+      "bytes": 345239,
+      "sha256": "f5d29efe8c4bb729fde167bf955da50595cfdc44298d1eeccf971086b696ef33"
+    },
+    {
+      "destination": "override/MOS7023.PVRZ",
+      "bytes": 242365,
+      "sha256": "f2b199131bc7fdf9ce10aa0eb8ce259b8a83d57b792cf7cd4cfafd1ec8385d5a"
+    },
+    {
+      "destination": "override/MOS7024.PVRZ",
+      "bytes": 312705,
+      "sha256": "b66ced2abe034d2e019d69cfa28df1d5b68e6222ff41f608391ed8f1a95c7379"
+    },
+    {
+      "destination": "override/MOS7025.PVRZ",
+      "bytes": 245478,
+      "sha256": "f344279fe2d710b54f8fcadb53887784a76705ab22e62c17fd1d3df0de134718"
+    },
+    {
+      "destination": "override/MOS7026.PVRZ",
+      "bytes": 333918,
+      "sha256": "a14cb1d3a8682ff838071c4ca1d61ce7a49188287cf49440e0cb5a9871dee674"
+    },
+    {
+      "destination": "override/MOS7027.PVRZ",
+      "bytes": 306560,
+      "sha256": "1d6b0ee5c2ee45230759ccb5497f5c50b0035c1b53113e940118188d2922c30b"
+    },
+    {
+      "destination": "override/MOS7028.PVRZ",
+      "bytes": 306353,
+      "sha256": "379efc038a81fcdffef5d6401fba1d248f6fd849b6d1365bfa8ce999f8e1ffda"
+    },
+    {
+      "destination": "override/MOS7029.PVRZ",
+      "bytes": 293286,
+      "sha256": "db88eac71d933525226f4afe4644fdda55b550af352e51a2ca039e4be763e039"
+    },
+    {
+      "destination": "override/MOS7030.PVRZ",
+      "bytes": 289014,
+      "sha256": "e6cbf0189a924ce69cf8da9a15bc5f261442fe3060868fd3c8b7cfcc7acfefdd"
+    },
+    {
+      "destination": "override/MOS7031.PVRZ",
+      "bytes": 305988,
+      "sha256": "dc48bafaef88b0a86058bb712f691b7da53bee6f658adda18133579b4c32e8c5"
+    },
+    {
+      "destination": "override/MOS7032.PVRZ",
+      "bytes": 299501,
+      "sha256": "f476d751ec75f43d7cee4592dc53d1ca29c825b7c327dceea5ba2de46b71a47b"
+    },
+    {
+      "destination": "override/MOS7033.PVRZ",
+      "bytes": 207375,
+      "sha256": "7dfb1f5ba3bc9f3ca86faa468309f1dfe677c130059e0df72f10727ae49a10be"
+    },
+    {
+      "destination": "override/MOS7034.PVRZ",
+      "bytes": 288379,
+      "sha256": "1be713152adfba4954c76d1c3ac62a86803b2921524cbb7a510b9e915574a53e"
+    },
+    {
+      "destination": "override/MOS7035.PVRZ",
+      "bytes": 304212,
+      "sha256": "d98c924e669a1b8549e3d6bd600f35d575d064ef186cbc1e261e5f58f7513757"
+    },
+    {
+      "destination": "override/MOS7036.PVRZ",
+      "bytes": 297573,
+      "sha256": "60e5439fa9e41f3707ffc40daefa339c577aedabc6b1de1f64b31a5cf9e6d0e5"
+    },
+    {
+      "destination": "override/MOS7037.PVRZ",
+      "bytes": 294326,
+      "sha256": "ca831a61527baa0d980fbc65775bfbf64d29d80992532f27e31d8cf881e0f9e5"
+    },
+    {
+      "destination": "override/MOS7038.PVRZ",
+      "bytes": 301721,
+      "sha256": "24940bb0dacb525a6a13f42c745e536639819dcaf7e2cd50d6d5d3ec50470e31"
+    },
+    {
+      "destination": "override/MOS7039.PVRZ",
+      "bytes": 298238,
+      "sha256": "647ae4ba33b4494e2b74224e82f7e6a302848b6ca28097f9249aedaf2fd0b597"
+    },
+    {
+      "destination": "override/MOS7040.PVRZ",
+      "bytes": 253815,
+      "sha256": "15c43de2d9540c054d1966743743f8846a46cf9643567ccfecc975dfc5630228"
+    },
+    {
+      "destination": "override/MOS7041.PVRZ",
+      "bytes": 326629,
+      "sha256": "e535c8867a48e184bd523a5993decf86dbb5769754ab0e561d7d6d488609ae8b"
+    },
+    {
+      "destination": "override/MOS7042.PVRZ",
+      "bytes": 274281,
+      "sha256": "8dbe1b273faef7c325a3a66b8e1267deeeeca11fc41943b944a965bb0556f454"
+    },
+    {
+      "destination": "override/MOS7043.PVRZ",
+      "bytes": 206878,
+      "sha256": "7c156e0cca0a5afb36a6fe7bfbd2a4ccbee810502f9e4816dc380b88524b9dee"
+    },
+    {
+      "destination": "override/MOS7044.PVRZ",
+      "bytes": 271227,
+      "sha256": "e9494f81fd63ef179e2799aa68742a787f5fa74a739acbf9f936d4187f19d9c0"
+    },
+    {
+      "destination": "override/MOS7045.PVRZ",
+      "bytes": 375011,
+      "sha256": "cad83d13dad651482c77e188d1bf86c8b7730bf1498f2e2a608ac70a32e09a67"
+    },
+    {
+      "destination": "override/MOS7046.PVRZ",
+      "bytes": 360059,
+      "sha256": "4e89cef3b2d9004447af9afb928733c6c73b6a57cb3871a98fee168d29839d15"
+    },
+    {
+      "destination": "override/MOS7047.PVRZ",
+      "bytes": 365021,
+      "sha256": "48327d4f7f99c837cfc582b3efefd720c98b2c393820bb3d5e5f65f481d6df90"
+    },
+    {
+      "destination": "override/MOS7048.PVRZ",
+      "bytes": 339762,
+      "sha256": "0e4cd5bc2bc123641492c51fe9776716bf53a051a3ec6f1776636da959310d43"
+    },
+    {
+      "destination": "override/MOS7049.PVRZ",
+      "bytes": 286092,
+      "sha256": "7c9fa2f5d7f6b330b56ddd2f5518cb86a511c77c16b279c1a52d713954fcb547"
+    },
+    {
+      "destination": "override/MOS7050.PVRZ",
+      "bytes": 260765,
+      "sha256": "541792f9530e23389f98f69a990b5f0ee613722efe27ef09c9aee656204de3c9"
+    },
+    {
+      "destination": "override/MOS7051.PVRZ",
+      "bytes": 241483,
+      "sha256": "d1793f5b920314f13f3aa7f7c4e13ce2cc117fbd03bac5bbeda778a12dc1cf58"
+    },
+    {
+      "destination": "override/MOS7052.PVRZ",
+      "bytes": 247182,
+      "sha256": "8da320ff0328766e3398398edeb946d07c19d3adaf4440520fdf12bd6017c7e0"
+    },
+    {
+      "destination": "override/MOS7053.PVRZ",
+      "bytes": 263996,
+      "sha256": "6262870cf44ff066d285531bd3789ff63d66f74712a4ee571bea27f83e8acc58"
+    },
+    {
+      "destination": "override/MOS7054.PVRZ",
+      "bytes": 271142,
+      "sha256": "340d66a56f45f6ee20881e28509d482325548f48b5827be1159dddff6d3d8fd2"
+    },
+    {
+      "destination": "override/MOS7055.PVRZ",
+      "bytes": 239901,
+      "sha256": "ac2dab13319b396d8ae45ea5dd69fd5d0af5040cda8580c5a5e31a89ac146ee7"
+    },
+    {
+      "destination": "override/MOS7056.PVRZ",
+      "bytes": 287703,
+      "sha256": "6d5039e32f7575bf0e8b72838165ec875888d2d487cad7a28af9ebebd6c07c2c"
+    },
+    {
+      "destination": "override/MOS7057.PVRZ",
+      "bytes": 145066,
+      "sha256": "5b4774c9bbfd6b4b327bc3e72c5afe648a497b14a839c03a74a66783c2265bc3"
+    },
+    {
+      "destination": "override/MOS7058.PVRZ",
+      "bytes": 128548,
+      "sha256": "89eb2f9071cd0dfc08d0b93eac7da037b076cd67c1f6f539683f24e56901c8f4"
+    },
+    {
+      "destination": "override/MOS7059.PVRZ",
+      "bytes": 232023,
+      "sha256": "ab83463997770ba5d512850cfbe33791b22229896e4c71e61b9167006bb4d262"
+    },
+    {
+      "destination": "override/MOS7060.PVRZ",
+      "bytes": 385166,
+      "sha256": "3a3796e22f2d4cae3252ba9ef7527026049f65d7016b9ec898ddee9f19becc59"
+    },
+    {
+      "destination": "override/MOS7061.PVRZ",
+      "bytes": 330246,
+      "sha256": "525ca127f7ab434b11d53897eb1106628e7c6fafba9d4ea4b75ed4f4095006d5"
+    },
+    {
+      "destination": "override/MOS7062.PVRZ",
+      "bytes": 124431,
+      "sha256": "364ea10c0d06c6a1c4b30c2cd73083d4b681e1d5a5c8b9dee6b989595a92f068"
+    },
+    {
+      "destination": "override/MOS7063.PVRZ",
+      "bytes": 249784,
+      "sha256": "38acd14a6e0a5801be3088838eaadc2683aaea55540cbc2ba089cfe61ca57795"
+    },
+    {
+      "destination": "override/MOS7064.PVRZ",
+      "bytes": 360649,
+      "sha256": "67eb538d0817963d6e00f7ba4a55a1d327b53ccb9af3cefa99d167ed87e36539"
+    },
+    {
+      "destination": "override/MOS7065.PVRZ",
+      "bytes": 348042,
+      "sha256": "d029732e9435dbdcd0d6e75e25c578ffd9974be64815dd104176ad5bc2bb4916"
+    },
+    {
+      "destination": "override/MOS7066.PVRZ",
+      "bytes": 264387,
+      "sha256": "cc00cb7453949dbabb84ce65ab5e608e933660210cfb8125e1ae631520af2b04"
+    },
+    {
+      "destination": "override/MOS7067.PVRZ",
+      "bytes": 292044,
+      "sha256": "fe89e0a19201df1428f03c0f6a9f20ddc253ab9e18494aa56ec9e0bca642c4fc"
+    },
+    {
+      "destination": "override/MOS7068.PVRZ",
+      "bytes": 287581,
+      "sha256": "e1ce31bab86e4d8d1a9b6d4c3e8ca3750a7107473cbc5ed51ca8dbc24bbb6d6b"
+    },
+    {
+      "destination": "override/MOS7069.PVRZ",
+      "bytes": 298773,
+      "sha256": "0ce34d72c2537ee47d7d9a1768891fe46f360bb60b9d8a119dffd68b83e9a37e"
+    },
+    {
+      "destination": "override/MOS7070.PVRZ",
+      "bytes": 264838,
+      "sha256": "935003e35bbbc0d51e83c5e5b0d76b24013021da4d14ec3134dbf2ed9ef3c80e"
+    },
+    {
+      "destination": "override/MOS7071.PVRZ",
+      "bytes": 185193,
+      "sha256": "837652fdde8e49687bf4022276f07c7ad151c86ea5ebfb536940af8d1e4810f6"
+    },
+    {
+      "destination": "override/MOS7072.PVRZ",
+      "bytes": 54941,
+      "sha256": "effb23b60da5acd770c87fa699e051775453762855b821847a12c158cec2e7cd"
+    },
+    {
+      "destination": "override/NPCCHAP.MOS",
+      "bytes": 80,
+      "sha256": "3da3b8f0f896ead579b1b6aa043ad0dd40dbaeee45aa16b2f53dc1bbe3de8caa"
+    },
+    {
+      "destination": "override/RECENTEV.MOS",
+      "bytes": 52,
+      "sha256": "abc38779ddd210bf1d266f27ee7492af1ea9a894e65a1bab7b8bfe626f502aa6"
+    },
+    {
+      "destination": "override/ROOMDELU.BAM",
+      "bytes": 116,
+      "sha256": "ff05fd6bb5d87353f22aee671328321164101553e172d5ccae6e45c8ac210700"
+    },
+    {
+      "destination": "override/ROOMMERC.BAM",
+      "bytes": 116,
+      "sha256": "99d8906edf414725815a70673491b5899f948734b4cb07253f8a504f419005fd"
+    },
+    {
+      "destination": "override/ROOMNOBE.BAM",
+      "bytes": 116,
+      "sha256": "b9fec4a0d75658e853b6b9e77bc7fa694a36d5a55c05b48dad04afe572705667"
+    },
+    {
+      "destination": "override/ROOMPEAS.BAM",
+      "bytes": 116,
+      "sha256": "6340080729cb9b18a40565eb0ac0b535f2682f24b995a8ccb0439456ba510630"
+    },
+    {
+      "destination": "override/SIDEBLOK.MOS",
+      "bytes": 52,
+      "sha256": "8f60130385aee22d8a7985db7662c23a33637861e83a13ef71fd5474f5b1ed1c"
+    },
+    {
+      "destination": "override/STARTBP2.MOS",
+      "bytes": 80,
+      "sha256": "935be29e9e97a2cf71490da733ab0bc6fac1ecb5158e23fc3e4b16631cdb6a05"
+    },
+    {
+      "destination": "override/STARTEE.MOS",
+      "bytes": 80,
+      "sha256": "67eeb9a5854b6b26a9dd1aa59ebbeca1ac47b0b0d6967fa636932f67cc34fd3b"
+    },
+    {
+      "destination": "override/STARTM.MOS",
+      "bytes": 80,
+      "sha256": "e4916de06ad0c7606f5ea1aa56de075089e024545267988d9abf1b1f1bd7a437"
+    },
+    {
+      "destination": "override/STARTOLD.MOS",
+      "bytes": 80,
+      "sha256": "ebb5e4239d67473a94127c933afd6b3ebd15e719c0cdfe23f51a1f80f78918a5"
+    },
+    {
+      "destination": "override/TOBMAP72.MOS",
+      "bytes": 52,
+      "sha256": "c4498c26171652e825250b4344f0594ed025ff320c5b1a15caa7555e7084bc35"
+    },
+    {
+      "destination": "override/TOSCEND.MOS",
+      "bytes": 80,
+      "sha256": "7e8b97c0608b314b51826ca0069b265ff737da285953bc1820fd281aa79a57e6"
+    },
+    {
+      "destination": "override/ULGOTHST.MOS",
+      "bytes": 80,
+      "sha256": "bd443e242f74490933eb1696e13fcb09f23867555eb4c9bfb9819a2fad11536c"
+    },
+    {
+      "destination": "override/WORLDMAP.MOS",
+      "bytes": 80,
+      "sha256": "bd53c58510c2f4248d2b8242217913c59c71c16cc5c136b12e7e1c808de1a4f4"
+    }
+  ]
+}

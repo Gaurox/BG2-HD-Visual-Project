@@ -61,18 +61,18 @@
     "status": "integrated-awaiting-clean-lifecycle-test",
     "active_development_install": {
       "path": "InfinityEngine-Enhancer.dll",
-      "sha256": "ED9A5E4EE34D695DB84448EE7E9A8E221D39E6DEBD340479F114AD4E9132A844",
-      "bytes": 3481088,
-      "qa_evidence": "projectiles/analysis/residual-four-colours-accepted-20261110-v1/acceptance.json"
+      "sha256": "291D6609B27CEBCD6592BD1E728AADDCF32007E54EB183A0FFDDD5E2B67AD97D",
+      "bytes": 3521536,
+      "qa_evidence": "interface/integration/remaining-ui-20261121-v1/qa-accepted-20261121-v1.json"
     },
     "reproducible_source_build": {
-      "source": "releases/BG2-HD-Upscale/release-inputs/renderer/iee-0.1.0-alpha.11-source",
-      "output_sha256": "F4DCF02BDA7887F2BAE5B74E31D2951CF29588073F4158F0C9F34132AF9F4D7A",
-      "output_bytes": 3484160,
-      "build_status": "Built and CPU/GPU regression tested; shared storage smoke and clean-game lifecycle pending.",
+      "source": "git:195d0fe7:engine/InfinityEngine-Enhancer/source-patchee",
+      "output_sha256": "291D6609B27CEBCD6592BD1E728AADDCF32007E54EB183A0FFDDD5E2B67AD97D",
+      "output_bytes": 3521536,
+      "build_status": "Installed UI renderer accepted. Clean-game and full uninstall lifecycle pending.",
       "bundle_manifest": "manifests/renderer-bundle.json"
     },
-    "publication_rule": "Alpha.11 adds exact-byte shared effect storage; representative storage smoke, combined clean-game, future-save and full-uninstall lifecycle tests remain pending.",
+    "publication_rule": "Alpha.12 adds the accepted UI pack. Representative storage smoke, clean-game, future-save and full-uninstall lifecycle tests remain pending.",
     "area_animation_runtime": {
       "status": "integrated",
       "payload_layout": "iee-assets/areas/<AREA>",
@@ -107,13 +107,13 @@
     },
     "map_water_runtime": {
       "inherited_from_dll_sha256": "5D4EE06D84E0D6C6F6FB81797EAB0E9756B3ECE335EBF537E57C5597E0B40BCF",
-      "dll_sha256": "F4DCF02BDA7887F2BAE5B74E31D2951CF29588073F4158F0C9F34132AF9F4D7A",
+      "dll_sha256": "291D6609B27CEBCD6592BD1E728AADDCF32007E54EB183A0FFDDD5E2B67AD97D",
       "registry_sha256": "BC1EB12DB3B8FD112A77182C0C7405B57B9E2949312C49FCD0C6F537BC8577F1",
       "build_contract": "IEE_WATER_ROUTE2_V1:E582C7879B50C0765DAC7918EF80AD9CE3CC17E884FAE6E599E81796FF635471:3:188",
       "evidence": {
-        "path": "pipeline/recipes/effects-shared-storage-20261110-v1/map-runtime-continuity.json",
-        "bytes": 3096,
-        "sha256": "CBBD0E88D133556F2539C8FBC3FBC5660A8C03E45208C98FAAB56D193D292B5C"
+        "path": "releases/BG2-HD-Upscale/manifests/renderer-ui-continuity.json",
+        "bytes": 2704,
+        "sha256": "7B22AD777C9844670BA36B07C4CD54BF7B304ABA87F6919761A5FFCC96C7A261"
       }
     }
   },
@@ -185,6 +185,11 @@
       "Shaders": {
         "EnablePaperdollQ3mTest": "true",
         "EnablePaperdollUIProbe": "false"
+      }
+    },
+    "ui-gameplay-x4": {
+      "Shaders": {
+        "EnableGameplayMenusX4": "true"
       }
     }
   }

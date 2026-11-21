@@ -137,6 +137,9 @@ $names = @(
     'release.json'
 )
 $spriteInventoryRoot = Join-Path $source 'sprite-inventories'
+foreach ($name in @('ui-release-candidate.json', 'renderer-ui-continuity.json')) {
+    if (Test-Path -LiteralPath (Join-Path $source $name) -PathType Leaf) { $names += $name }
+}
 if (Test-Path -LiteralPath $spriteInventoryRoot) {
     $names += @(Get-ChildItem -LiteralPath $spriteInventoryRoot -File -Filter '*.json' | ForEach-Object { 'sprite-inventories/' + $_.Name })
 }

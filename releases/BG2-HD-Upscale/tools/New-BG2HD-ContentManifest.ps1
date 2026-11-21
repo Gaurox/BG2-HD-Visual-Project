@@ -895,6 +895,25 @@ if (-not $isAnimationDelta) {
             $entries.Add((New-ContentEntry $normalized $file))
         }
     }
+    $uiCandidatePath = Join-Path $WorkspaceRoot 'releases/BG2-HD-Upscale/manifests/ui-release-candidate.json'
+    if (Test-Path -LiteralPath $uiCandidatePath -PathType Leaf) {
+        $candidate = Read-Json $uiCandidatePath
+        $uiInput = 'releases/BG2-HD-Upscale/release-inputs/ui/remaining-ui-20261121-v1'
+        Require ($candidate.status -eq 'approved-for-release' -and [int]$candidate.component_id -eq 120) 'Candidat UI invalide.'
+        Require (Test-QAEvidenceHash -Workspace $WorkspaceRoot -RelativePath ([string]$candidate.qa.path) -ExpectedHash ([string]$candidate.qa.sha256)) 'Preuve QA UI invalide.'
+        foreach ($asset in $candidate.files) {
+            $destination = [string]$asset.destination
+            Require ($destination -cmatch '^(override/[A-Z0-9_-]{1,8}[.](BAM|MOS|PVRZ)|iee-assets/(UIREVIEW-MOS7[0-9]{3}-x4[.]dxt5|ui-review-atlases[.]txt))$') "Destination UI interdite : $destination"
+            $directory = if ($destination.StartsWith('override/')) { 'resources' } else { 'atlases' }
+            $name = [IO.Path]::GetFileName($destination)
+            $file = Get-Item -LiteralPath (Join-Path $WorkspaceRoot "$uiInput/$directory/$name") -ErrorAction Stop
+            $spec = @{ ComponentId = 120; ComponentLabel = 'ui-gameplay-x4'; PayloadGroup = 'ui-gameplay'; Kind = 'ui'; Area = 'UI';
+                DestinationRoot = ($destination -split '/')[0]; Model = 'SeedVR2-7B-LAB'; SourceRun = $uiInput; InstallOrder = 120; ReplacesComponentOutput = $false }
+            $entry = New-ContentEntry $spec $file
+            Require ($entry.sha256 -eq [string]$asset.sha256 -and $entry.bytes -eq [int64]$asset.bytes -and $entry.destination -ceq $destination) "Payload UI modifie : $destination"
+            $entries.Add($entry)
+        }
+    }
     foreach ($spec in $overlaySpecs) {
         $sourceDirectory = Join-Path $WorkspaceRoot $spec.Path
         Require (Test-Path -LiteralPath $sourceDirectory -PathType Container) "Source overlay absente : $sourceDirectory"

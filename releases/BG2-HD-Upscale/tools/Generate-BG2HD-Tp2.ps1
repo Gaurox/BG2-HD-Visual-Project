@@ -87,15 +87,21 @@ $componentNames = @{
     0 = 1; 100 = 2; 110 = 3; 1000 = 4; 1010 = 5; 1020 = 6; 1030 = 7; 1040 = 8; 1050 = 9; 1060 = 10
 }
 $componentById = @{}
+$contentByComponent = @{}
 foreach ($component in $components) {
     if ($componentById.ContainsKey([int]$component.id)) { throw "ID composant duplique : $($component.id)" }
     $componentById[[int]$component.id] = $component
 }
 foreach ($entry in $content) {
-    if (-not $componentById.ContainsKey([int]$entry.component_id)) { throw "Entree de contenu sans composant : $($entry.source)" }
+    $componentId = [int]$entry.component_id
+    if (-not $componentById.ContainsKey($componentId)) { throw "Entree de contenu sans composant : $($entry.source)" }
     $validScale = ([int]$entry.scale -eq 4) -or ($entry.kind -in @('overlay', 'sprite', 'paperdoll') -and [int]$entry.scale -eq 2)
     if ($entry.qa_status -ne 'validated' -or -not $validScale) { throw "Contenu non valide : $($entry.source)" }
     if ($entry.source -match '(^|/)(override|backups|archive|captures|temp)(/|$)') { throw "Source interdite : $($entry.source)" }
+    if (-not $contentByComponent.ContainsKey($componentId)) {
+        $contentByComponent[$componentId] = [System.Collections.Generic.List[object]]::new()
+    }
+    $contentByComponent[$componentId].Add($entry)
 }
 
 $lines = [System.Collections.Generic.List[string]]::new()
@@ -138,7 +144,7 @@ foreach ($component in $components) {
             $message = if ([int]$dependency -eq 0) { '@14' } else { '@15' }
             $lines.Add("  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~$dependency~ $message")
         }
-        $entries = @($content | Where-Object { [int]$_.component_id -eq $id } | Sort-Object install_order, destination, source)
+        $entries = @($contentByComponent[$id] | Where-Object { $null -ne $_ } | Sort-Object install_order, destination, source)
         if (@($entries | Where-Object { $_.destination -eq 'iee-assets/effects/EffectStorage-X4.index' }).Count -gt 0) {
             $lines.Add('  AT_NOW effect_storage_result ~powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File bg2hd/tools/bg2hd-effect-storage.ps1~')
             $lines.Add('  ACTION_IF effect_storage_result != 0 THEN BEGIN FAIL ~Update the BG2 HD Core component before installing effects.~ END')
@@ -167,7 +173,7 @@ foreach ($component in $components) {
             $lines.Add('  ACTION_IF ui_config_result != 0 THEN BEGIN FAIL @19 END')
             $lines.Add('  AT_UNINSTALL ~powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File bg2hd/tools/bg2hd-config.ps1 -Action Restore -GameRoot . -Owner ui-mainmenu-x4 -StatePath bg2hd/state/renderer-config-ui-mainmenu.json~')
         }
-        if ($component.label -in @('sprites-approved-creatures-x2', 'paperdolls-q3m-6110-x2')) {
+        if ($component.label -in @('sprites-approved-creatures-x2', 'paperdolls-q3m-6110-x2', 'ui-gameplay-x4')) {
             $owner = [string]$component.label
             $state = "bg2hd/state/renderer-config-$owner.json"
             $lines.Add("  AT_NOW sprite_config_result ~powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File bg2hd/tools/bg2hd-config.ps1 -Action Apply -GameRoot . -Owner $owner -StatePath $state~")

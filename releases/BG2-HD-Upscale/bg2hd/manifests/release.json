@@ -7,7 +7,7 @@
     "setup_executable": "setup-bg2hd.exe",
     "release_repository": "BG2-HD-Upscale"
   },
-  "version": "0.1.0-alpha.9",
+  "version": "0.1.0-alpha.10",
   "target": {
     "store": "Steam",
     "steam_app_id": 257350,
@@ -26,7 +26,8 @@
     "renderer-alpha.11-shared-storage-combined-clean-game-lifecycle-test-pending",
     "public-contact-and-provenance-record-pending",
     "q3m-world-and-paperdolls-clean-game-lifecycle-test-pending",
-    "shared-effect-storage-representative-ingame-smoke-pending"
+    "shared-effect-storage-representative-ingame-smoke-pending",
+    "ui-gameplay-x4-clean-game-lifecycle-test-pending"
   ],
   "manifest_files": [
     "manifests/runtime-compatibility.json",
@@ -39,11 +40,13 @@
     "manifests/sprite-release-candidates.json",
     "manifests/overlay-sources.json",
     "manifests/licenses-and-exclusions.json",
-    "manifests/map-release-assemblies.json"
+    "manifests/map-release-assemblies.json",
+    "manifests/ui-release-candidate.json",
+    "manifests/renderer-ui-continuity.json"
   ],
   "content_scope": {
     "maps": "399 variantes x4 : selections explicites dans map-release-candidates.csv, inventaires et QA acquises dans map-release-assemblies.json ; 63 assemblages eau/contours/WED/overlays jour-pluie finaux et AR3003 actualises a octets constants. OH6460 utilise le tileset partage du composant OH8100 sans duplication.",
-    "ui": "approved Topaz Recovery v2 Detail 50 x4 atlas set",
+    "ui": "Existing Topaz x4 menus and selector plus 133 accepted UI/HUD resources (153 frames) in component 120, including 39 V1 UI resources converted to V2.",
     "overlays": "overlay-sources.json gouverne les overlays partages historiques ; les 188 identites liquides locales du registre runtime courant sont groupees avec leur map (TIS/PVRZ jour-pluie + WED), inventoriees dans map-release-assemblies.json.",
     "sprites": "331 acquired animation IDs / 15 families; Q3m x2 Nearest mixed V6/V7/V9 catalog; 81 acquired V6 P7 paperdolls (0x6110 body + 77 shared equipment packs); local-only qualification pending. Display: accepted Nearest RGB / silhouette alpha AA, pinned in renderer alpha.10.",
     "effects": "424 accepted x4 effects plus scoped retained normal/palette variants, native carriers, five native VVC routes, lot31 PRO reference routing and accepted COW sprite bridge; six native masks preserved, 67 exclusions retained. Exact-byte shared storage: 71971 logical /65849 physical RGBA, 6122 duplicate files removed; image QA unchanged.",
@@ -51,12 +54,12 @@
       "all x2 map builds",
       "maps not registered in the historical bootstrap or map-release-candidates.csv",
       "unapproved x4 water overlays",
-      "HUD",
       "development override",
       "backups, archives, previews and captures",
       "icons pending ingame QA",
       "movies without finalized delivery and ingame qualification",
-      "effect comparison resources and isolated visual test controllers"
+      "effect comparison resources and isolated visual test controllers",
+      "UI review gallery, QA aliases and test scripts"
     ],
     "animations": "234 zones : composition BAM actuelle complete, registres runtime et octets exacts rattaches aux QA acquises ; 246 assets BAM acceptes, aucune nouvelle validation ingame deduite."
   }

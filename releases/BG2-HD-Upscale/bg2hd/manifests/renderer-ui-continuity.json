@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "prior_dll_sha256": "F4DCF02BDA7887F2BAE5B74E31D2951CF29588073F4158F0C9F34132AF9F4D7A",
+  "dll_sha256": "291D6609B27CEBCD6592BD1E728AADDCF32007E54EB183A0FFDDD5E2B67AD97D",
+  "water_build_contract": "IEE_WATER_ROUTE2_V1:E582C7879B50C0765DAC7918EF80AD9CE3CC17E884FAE6E599E81796FF635471:3:188",
+  "qa": "interface/integration/remaining-ui-20261121-v1/qa-accepted-20261121-v1.json",
+  "scope": "UI-specific flags, PVR demand hook and x4 atlas dispatch. Creature/paperdoll/effect implementation files and shader bundle carried forward. No new QA for these domains.",
+  "inherited_from_dll_sha256": "5D4EE06D84E0D6C6F6FB81797EAB0E9756B3ECE335EBF537E57C5597E0B40BCF",
+  "changed_runtime_sources": [
+    {
+      "path": "src/iee/biglogo_ui_upscale.cpp",
+      "prior_lf_sha256": "852720a4c8821b21d9cba34a14d2797f7c502e28ae9301a574d75b6915a90920",
+      "current_lf_sha256": "93b86100bbce70a4d6c5a95e2e4b96bd6308fd86519438b2fd51de17ae3261f9"
+    },
+    {
+      "path": "src/iee/biglogo_ui_upscale.h",
+      "prior_lf_sha256": "194eb94fd79cb9301222c7afefc7a3d634415a80ea1f8e2b2b8cfd1350e6a7d2",
+      "current_lf_sha256": "0fc3e809e92ad2e2ec3954d76a564e1e024a839a6e5142e5d78943f117b8f448"
+    },
+    {
+      "path": "src/iee/core/config.cpp",
+      "prior_lf_sha256": "44f79b23fb9b78a7f9ad082e9d6b231228ba2b179f7874744da916071ccc6a30",
+      "current_lf_sha256": "1c3bf945fb0f1ce072e92940ea093f36107613dd48dbb4e7b0c34c43ee9362f6"
+    },
+    {
+      "path": "src/iee/core/config.h",
+      "prior_lf_sha256": "cbb17ee5f3b1170446f6f01e1a3a884cdf05635dcc3a385d0bbb736f1cc6c72f",
+      "current_lf_sha256": "22f502de08309ba04bbf1b313fba7640f181d20d1e83509c4595612097ff000d"
+    },
+    {
+      "path": "src/iee/dll_main.cpp",
+      "prior_lf_sha256": "3e98dae8df02619a213df668004642a60ee59c33dfb62094798c3e552f7ef7a9",
+      "current_lf_sha256": "367273d0175b3329bfb8f5127f37b7f0aef292691da277705be9f254daf3942f"
+    },
+    {
+      "path": "src/iee/hooks.cpp",
+      "prior_lf_sha256": "20e2fdad61953ac2dc5c10390ab8100ccf9a54dbcbc26f978b00e4d59f31f295",
+      "current_lf_sha256": "dc638904662547695826c466c733a961cc64471f5ef96a0a3754f53fb70bbbd2"
+    },
+    {
+      "path": "src/iee/shader_probe.cpp",
+      "prior_lf_sha256": "d3bc861fb34793dfb515e339b626ca33437f078982294425a4d42d951bd1ac80",
+      "current_lf_sha256": "3ba3b4f47cfadd1ebe36e4472d4e3264280228b05afd655ad9b14cf64d627c3c"
+    },
+    {
+      "path": "src/iee/shader_probe.h",
+      "prior_lf_sha256": "939c25006470bccc34550546c154b6bad1c4af4a27862fd419504ed43a2ed2e0",
+      "current_lf_sha256": "68a6acaf47029035691e49287c16164708058cd00a2a7c2b790e2479dcdb7696"
+    }
+  ]
+}
