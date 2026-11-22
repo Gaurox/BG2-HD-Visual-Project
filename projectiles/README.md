@@ -1,5 +1,7 @@
 # Projectiles — source, production réutilisable, travail restant
 
+**Projectiles terminés à 100 % — 2026-11-22.** 320/320 dispositions clôturées, 0 tâche active sur les images et raccords. `LIGHTSTO` testé via `XQLSTO` : éclair `SKYBOLT` x4 observé en jeu, `MAGMIS.BAM` de trajet absent. Déplacement `PROJ-MOTION-001` reporté. [Décision et preuve](analysis/lightsto-accepted-20261122-v1/acceptance.json) · [Bilan](ETAT_VALIDATIONS.md).
+
 **Lot images/raccords clôturé2026-11-10 : [décision](analysis/images-routes-closed-20261110-v1/README.md).** 320 dispositions examinées :313 contrats qualifiés +7 conservations natives documentées ;0 asset/raccord/test manuel actif identifié. Le déplacement reste reporté à la demande utilisateur ;release séparée,aucune QA visuelle globale déduite.
 
 **Sept cas natifs examinés2026-11-10 : [décisions et limites](analysis/legacy-seven-usage-20261110-v1/README.md).** LIGHTSTO et IDs21/24/25/44/96/241 conservés natifs :aucun pilote établi dans les sources stock/overrides scannées. SPSMKJET/Hexxat et SPHOLYMT/op215 emploient des routes d'effets nommés déjà couvertes.320/320 dispositions examinées ;313/320 contrats qualifiés (97,8 %) inchangés,7 conservations natives distinctes de la QAHD.0 nouveau raccord/asset/test,0 revue d'usage restante ;QA/install/release conservées. Les étapes ci-dessous sont historiques.

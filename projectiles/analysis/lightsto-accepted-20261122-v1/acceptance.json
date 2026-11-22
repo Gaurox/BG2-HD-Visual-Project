@@ -1,0 +1,44 @@
+{
+  "date": "2026-11-22",
+  "owner": "LIGHTSTO",
+  "projectl_id": 92,
+  "driver": {
+    "resref": "XQLSTO",
+    "spell_projectile_word": 93,
+    "sha256": "445701E46603152238D84F9C9BE4C90F15BD0F0379C8FC3D90BCC6C45C36A48B"
+  },
+  "native_contract": {
+    "path": "projectiles/analysis/native-contracts-20261109-v2/lightsto.json",
+    "sha256": "FA890C9DE3EF3E1312209D783534B485A263C10C0EB01F911E86591212831B4D"
+  },
+  "travel_bam": {
+    "resref": "MAGMIS",
+    "present": false,
+    "visual_observation": null
+  },
+  "observed_child": {
+    "resref": "SKYBOLT",
+    "projectl_id": 22,
+    "replacement": "effect-animation",
+    "scale": 4
+  },
+  "user_observation": "ca a fait un sort bien visible et upscalé",
+  "renderer_log_excerpt": [
+    "[2026-11-22 15:26:07.862] [info] EFX_NATIVE_SURFACE resref=SKYBOLT cell=4690B4A70 flags=8020208 smokePalette=0000000000000000 opacity=255 source=78x500 offset=0,0 layers=1 nativePrefix=false nativeOpacity=255",
+    "[2026-11-22 15:26:07.863] [info] Native occlusion phase0: owner=ProjectileBAM instance=0x4690B4A70 subject=0x544C4F42594B53, clip_calls=1 successful_clip_calls=1, native_clip=present infinity=0x45F46D5D8 at (3544,3079,z=0) fx_rect=0x15F928 clip_rect=0x15F978 dither=0 clip_flags=0x8020208 result=1, final_draw=(232,-151) logical=78x500 draw_flags=0x8020209 native_texture=1 replacement=effect-animation"
+  ],
+  "decision": {
+    "user_confirmation": "ok donc on considère projectiles terminé a 100% met a jour le suivi",
+    "completion_percent": 100,
+    "active_work_remaining": 0,
+    "scope": [
+      "images",
+      "runtime-routes"
+    ],
+    "prior_closure": {
+      "path": "projectiles/analysis/images-routes-closed-20261110-v1/closure.json",
+      "sha256": "EE6354C3A92A0330E4A54C855498553C41CF954D3F64268E22B536DA12B634AB"
+    },
+    "motion": "deferred-by-user:PROJ-MOTION-001"
+  }
+}

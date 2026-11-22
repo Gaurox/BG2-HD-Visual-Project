@@ -1,9 +1,9 @@
 {
   "schema": "bg2-projectile-validation-progress-v1",
-  "as_of_local_date": "2026-11-10",
-  "latest_user_confirmation": "ok les 2 tests sont bons, valide-les, maj le suivi et committe",
+  "as_of_local_date": "2026-11-22",
+  "latest_user_confirmation": "ok donc on considère projectiles terminé a 100% met a jour le suivi",
   "authorities": {
-    "work_tracking_sha256": "6574BE0946A540BB833452372EAF5A446C8E8A148662211FD703A46C82A0ED76",
+    "work_tracking_sha256": "80660C0F7F58FB4B9F4B5AFABA64D528F7D4E912997077FD9B54E76955A95790",
     "analysis_snapshot": "projectiles/analysis/20261109-bilan-validations-v13",
     "analysis_sha256": "153DECFFE9065026E4932025698B620D77E2ACB46638BCBA0633844B50834E23"
   },
@@ -24,7 +24,7 @@
     "new_inference_queued": 0
   },
   "scoped_visual_QA": {
-    "PRO_observed_components_accepted": 39,
+    "PRO_observed_components_accepted": 40,
     "engine_IDs_observed_components_accepted": 12,
     "historical_PRE_FIX_PRO_approvals_remaining": 0,
     "new_colour_variants_accepted": 3,
@@ -68,7 +68,7 @@
     "meaning": "Historical conservative projection. Current per-owner technical disposition: owner-reconciliation-current.json; generic source tasks are not actionable exceptions or manual tests."
   },
   "remaining_work": [
-    "Images/routes batch closed by user2026-11-10:0 active work identified in scope.",
+    "Images/routes batch confirmed 100% complete by user on 2026-11-22; zero active work.",
     "Position interpolation PROJ-MOTION-001 remains deferred by user;release separate."
   ],
   "whole_chain_acceptance_percentage": null,
@@ -84,6 +84,10 @@
     {
       "path": "projectiles/analysis/final-four-colours-accepted-20261109-v1/acceptance.json",
       "sha256": "1D5B32518087ABD1623E601432BDD39FEE2A6A67C57E46F64B733DE79C42B1EE"
+    },
+    {
+      "path": "projectiles/analysis/lightsto-accepted-20261122-v1/acceptance.json",
+      "sha256": "A081CDD1772E154F40FE5828B36FE02FE05B49C65A4BFEC2A70731339C32D4BA"
     }
   ],
   "automatic_owner_reconciliation": {
@@ -130,6 +134,13 @@
       "sha256": "EE6354C3A92A0330E4A54C855498553C41CF954D3F64268E22B536DA12B634AB"
     },
     "report": "projectiles/analysis/images-routes-closed-20261110-v1/README.md",
-    "motion": "deferred-by-user:PROJ-MOTION-001"
+    "motion": "deferred-by-user:PROJ-MOTION-001",
+    "confirmed_on": "2026-11-22",
+    "completion_percent": 100,
+    "active_work_remaining": 0,
+    "confirmation_evidence": {
+      "path": "projectiles/analysis/lightsto-accepted-20261122-v1/acceptance.json",
+      "sha256": "A081CDD1772E154F40FE5828B36FE02FE05B49C65A4BFEC2A70731339C32D4BA"
+    }
   }
 }

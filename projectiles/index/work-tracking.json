@@ -8437,7 +8437,8 @@
         "state": "technical-reconciliation-recorded",
         "evidence": [
           "projectiles/analysis/owner-contracts-20261110-v1/owners.json",
-          "projectiles/analysis/legacy-seven-usage-20261110-v1/decisions.json"
+          "projectiles/analysis/legacy-seven-usage-20261110-v1/decisions.json",
+          "projectiles/analysis/lightsto-accepted-20261122-v1/acceptance.json"
         ],
         "automatic_reconciliation": {
           "state": "reviewed-native-legacy-preserved",
@@ -8459,6 +8460,13 @@
           "scope": "Usage disposition only; source/HD gaps/QA/installation/release preserved.",
           "reopen_when": "An actual driver/runtime observation is identified for the preserved ID, or source bytes/mod configuration change."
         }
+      },
+      "qa": {
+        "state": "accepted-observed-components",
+        "evidence": [
+          "projectiles/analysis/lightsto-accepted-20261122-v1/acceptance.json"
+        ],
+        "notes": "SKYBOLT x4 observed in game via XQLSTO; missing native MAGMIS travel BAM retained."
       }
     },
     "NEWBOLT1": {
@@ -9099,6 +9107,13 @@
       "sha256": "EE6354C3A92A0330E4A54C855498553C41CF954D3F64268E22B536DA12B634AB"
     },
     "report": "projectiles/analysis/images-routes-closed-20261110-v1/README.md",
-    "motion": "deferred-by-user:PROJ-MOTION-001"
+    "motion": "deferred-by-user:PROJ-MOTION-001",
+    "confirmed_on": "2026-11-22",
+    "completion_percent": 100,
+    "active_work_remaining": 0,
+    "confirmation_evidence": {
+      "path": "projectiles/analysis/lightsto-accepted-20261122-v1/acceptance.json",
+      "sha256": "A081CDD1772E154F40FE5828B36FE02FE05B49C65A4BFEC2A70731339C32D4BA"
+    }
   }
 }

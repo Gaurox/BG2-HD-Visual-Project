@@ -1,4 +1,6 @@
-# Validations manuelles des projectiles — 2026-10-28
+# Validations manuelles des projectiles — 2026-11-22
+
+**Dernier essai, `LIGHTSTO` — 2026-11-22.** Sort de test `XQLSTO`, éclair enfant `SKYBOLT` x4 accepté et confirmé par le journal moteur. `MAGMIS.BAM` absent, trajet non attesté. 0 essai restant. [Preuve et clôture à 100 %](analysis/lightsto-accepted-20261122-v1/acceptance.json).
 
 **Lot images/raccords clôturé2026-11-10 : [clôture utilisateur](analysis/images-routes-closed-20261110-v1/README.md).** 0 essai manuel restant ;accords et limites de QA antérieurs conservés. Déplacement reporté,release séparée.
 
