@@ -94,7 +94,17 @@ ou release. Le contenu interne des runs sera défini avec le pipeline d'upscale,
 - Commande : `python -B pipeline/scripts/build_ground_icon_cyan_x2.py item-ground-reboutcx-x2-20261122-v1 item-ground-cyan-x2-20261122-v1`.
 - QA visuelle utilisateur : 67 sprites ×2 avec et sans surbrillance, voir
   `index/qa-decisions/batches/20261122-item-ground-x2-cyan-visual-accepted-v1.json`.
-  `qa_state=visual-accepted` porte sur les planches. L'état en jeu reste à évaluer.
+  La décision visuelle sur les planches reste la référence des pixels.
+- Test local BG2EE 2.7.3 : `EnableGroundItemIconX2` dans `[Shaders]`, registre
+  `iee-assets/icons/GroundItems-X2.registry`. Route `CGameContainer::Render` → `FXRender` →
+  `FXBltFromClipped`, centres x1, texture physique x2. Filtrage `Nearest` figé en minification et
+  magnification, sur le rendu normal et surligné. État de surbrillance natif
+  `CVidCell::m_bShadowOn`, visibilité des polygones WED reprise du tampon FX.
+- Registre : `python -B pipeline/scripts/build_ground_icon_x2_registry.py <DLL Release>`.
+  Installation et restauration : `pipeline/scripts/Install-GroundIcon-X2-Test.ps1 -Mode Install|Verify|Restore`.
+  Reçu dans `batches/item-ground-x2-runtime-20261122-v1/installation.json`.
+- QA en jeu utilisateur 2026-11-22 : rendu ×2 `Nearest` accepté pour le lot de 67. Témoins
+  normal et surligné dans `index/qa-decisions/batches/20261122-item-ground-x2-nearest-ingame-accepted-v1.json`.
 
 ## Test runtime x2 des icônes d'inventaire
 

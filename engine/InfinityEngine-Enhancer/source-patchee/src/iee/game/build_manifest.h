@@ -367,10 +367,15 @@ struct ItemIconRuntime {
   std::string_view vidCellRenderSignature{};
   std::uintptr_t vidCellCommonRenderTexture{};
   std::string_view vidCellCommonRenderTextureSignature{};
-  // Exact world-ground call into CVidCell::Render. Other callers of the same
-  // method are UI/internal paths and must not acquire the D7 x1 owner scope.
+  // Legacy D7 owner call in CIcon::RenderIcon. The world pile uses the FX path.
   std::uintptr_t groundItemVidCellRenderCall{};
   std::string_view groundItemVidCellRenderCallSignature{};
+  std::uintptr_t groundFxRenderCall{};
+  std::string_view groundFxRenderCallSignature{};
+  std::uintptr_t groundFxClippedCall{};
+  std::string_view groundFxClippedCallSignature{};
+  std::uintptr_t groundFxClipped{};
+  std::string_view groundFxClippedSignature{};
 
   [[nodiscard]] constexpr bool validate() const noexcept {
     return !enabled ||

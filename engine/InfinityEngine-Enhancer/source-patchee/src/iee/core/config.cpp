@@ -227,6 +227,8 @@ static void apply_kv(EngineConfig& cfg, ConfigParseState& state, const std::stri
       assign_bool(cfg.enableAM0205EAnimationX4Test);
     else if (iequals(key, "EnableItemIconX2"))
       assign_bool(cfg.enableItemIconX2);
+    else if (iequals(key, "EnableGroundItemIconX2"))
+      assign_bool(cfg.enableGroundItemIconX2);
     else if (iequals(key, "EnableAreaAnimationX4"))
       assign_bool(cfg.enableAreaAnimationX4);
     else if (iequals(key, "EnableEffectAnimationX4"))
@@ -454,6 +456,7 @@ bool ConfigManager::save(const std::filesystem::path& path, const EngineConfig& 
   write_bool(f, "EnableAM0700AAnimationX4Test", cfg.enableAM0700AAnimationX4Test);
   write_bool(f, "EnableAM0205EAnimationX4Test", cfg.enableAM0205EAnimationX4Test);
   write_bool(f, "EnableItemIconX2", cfg.enableItemIconX2);
+  write_bool(f, "EnableGroundItemIconX2", cfg.enableGroundItemIconX2);
   write_bool(f, "EnableAreaAnimationX4", cfg.enableAreaAnimationX4);
   write_bool(f, "EnableEffectAnimationX4", cfg.enableEffectAnimationX4);
   write_bool(f, "EnableEffectAnimationStreaming", cfg.enableEffectAnimationStreaming);

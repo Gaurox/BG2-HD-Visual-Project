@@ -22,6 +22,7 @@
 #include "frame_hook.h"
 #include "hooks.h"
 #include "item_icon_x2.h"
+#include "ground_icon_x2.h"
 #include "paperdoll_q3m.h"
 #include "iee/core/config.h"
 #include "iee/core/logger.h"
@@ -172,6 +173,11 @@ static DWORD WINAPI InitThread(LPVOID) {
     if (cfg.enableItemIconX2) {
       const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
       (void)item_icon_x2::prepare(moduleDir / "iee-assets" / "icons");
+    }
+    if (cfg.enableGroundItemIconX2) {
+      const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
+      if (!ground_icon_x2::prepare(moduleDir / "iee-assets" / "icons"))
+        LOG_WARN("Ground icon x2 registry unavailable; native ground items retained");
     }
     if (cfg.enablePaperdollQ3mTest) {
       const auto moduleDir = ModuleDirectory(cfgPath.parent_path());

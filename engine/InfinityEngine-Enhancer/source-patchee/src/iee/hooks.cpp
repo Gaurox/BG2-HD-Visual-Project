@@ -31,6 +31,7 @@
 #include "iee/area_animation_x4_registry.h"
 #include "iee/effect_animation_x4_registry.h"
 #include "iee/item_icon_x2.h"
+#include "iee/ground_icon_x2.h"
 #include "iee/paperdoll_q3m.h"
 #include "iee/game/opengl_types.h"
 #include "app_context.h"
@@ -89,6 +90,7 @@ using VvcVidCellRenderFn = void (*)(void*, void*, void*);
 using ProjectileFxRenderFn = int (*)(void*, void*, int, int, int, int, int);
 using EffectFxLockFn = int (*)(void*, void*, int);
 using EffectFxRenderBamFn = int (*)(void*, void*, int, int, int, int);
+using GroundFxClippedFn = int (*)(void*, void*, int, int, int, int, int, void*);
 using EffectCellConstructFn = void* (*)(void*, std::uint64_t);
 using EffectCellDestructFn = void (*)(void*);
 using EffectVvcConfigureFn = std::uintptr_t (*)(void*, void*);
@@ -137,7 +139,11 @@ static core::Hook<VvcVidCellRenderFn> g_vvcVidCellRenderHook;
 static core::Hook<ProjectileFxRenderFn> g_projectileFxRenderHook;
 static core::Hook<EffectFxLockFn> g_effectFxLockHook;
 static core::Hook<EffectFxRenderBamFn> g_effectFxRenderBamHook;
+static core::Hook<GroundFxClippedFn> g_groundFxClippedHook;
+static std::uintptr_t g_groundFxRenderReturn{}, g_groundFxClippedReturn{};
 static void remove_effect_surface_hooks() noexcept {
+  (void)g_groundFxClippedHook.remove();
+  g_groundFxRenderReturn = g_groundFxClippedReturn = 0;
   (void)g_effectFxRenderBamHook.remove();
   (void)g_effectFxLockHook.remove();
 }
@@ -184,6 +190,8 @@ static am0205e_x4::EngineTextureApi g_am0205eTextureApi{};
 static area_animation_x4::EngineTextureApi g_areaAnimationTextureApi{};
 static effect_animation_x4::EngineTextureApi g_effectAnimationTextureApi{};
 static item_icon_x2::EngineTextureApi g_itemIconTextureApi{};
+static item_icon_x2::EngineTextureApi g_groundIconTextureApi{};
+static const area_animation_x4::NativePixelEncoding* g_groundPixelEncoding{};
 static creature_sprite_x2::EngineTextureApi g_creatureSpriteTextureApi{};
 static native_occlusion_bridge::EngineTextureApi g_nativeOcclusionTextureApi{};
 static const std::byte* g_nativeFxSurfacePools{};
@@ -348,6 +356,19 @@ thread_local bool g_effectSurfaceOpacityValid{};
 thread_local bool g_effectNormalTextureProfile{};
 using EffectCellGeometryFn = int (*)(void*,void*);
 EffectCellGeometryFn g_effectCellCenter{},g_effectCellSize{};
+struct GroundSurface {
+  void* infinity{};
+  std::array<std::int32_t, 4> rect{};
+  std::uint32_t flags{};
+  std::array<ground_icon_x2::Layer, 3> layers{};
+  std::size_t count{};
+  bool nativeOnly{}, clippingObserved{};
+  core::NativeOcclusionMaskCapture mask;
+};
+thread_local GroundSurface g_groundSurface;
+thread_local const GroundSurface* g_groundFinalDraw{};
+thread_local const void* g_groundPaletteOwner{};
+thread_local ground_icon_x2::Layer* g_groundPaletteLayer{};
 thread_local core::NativeOcclusionSampleGate g_nativeOcclusionSampleGate{};
 thread_local std::uint64_t g_nativeOcclusionSampleGeneration = 0;
 thread_local map_page_prewarm::PvrConsumeAttempt* g_activePvrConsumeAttempt = nullptr;
@@ -2715,6 +2736,18 @@ static int detour_infinity_fx_render_clipping_polys(
     std::uint8_t dither, std::uint32_t flags) {
   const auto original = g_infinityFxRenderClippingPolysHook.original();
   core::NativeFxSurfaceView fxSurface{};
+  auto& ground = g_groundSurface;
+  if (ground.infinity == thisPtr && ground.count && !ground.nativeOnly) {
+    ground.clippingObserved = true;
+    const bool captured = read_native_fx_surface(ground.flags, ground.rect.data(), fxSurface) &&
+                          ground.mask.begin_call(fxSurface);
+    if (!captured) ground.nativeOnly = true;
+    const auto result = original(thisPtr, x, y, referenceZ, fxRect, clipRect, dither, flags);
+    // A native return of zero also occurs when there are no clipping polygons.
+    // In that case the before/after snapshots supply the identity transfer.
+    if (captured) ground.mask.finish_call(fxSurface, 1);
+    return result;
+  }
   // A projectile owner can draw a clipped glow, unlock it, then lock a second
   // surface for the flight cell. The owner-wide capture would combine both
   // allocations and fail closed. The single-cell FX pass owns its own mask,
@@ -2917,8 +2950,10 @@ static void detour_effect_destroy_game(void* game, unsigned char first, unsigned
 }
 
 static BOOL WINAPI detour_effect_delete_context(HGLRC context) {
-  if (game::gl::current_context() == context)
+  if (game::gl::current_context() == context) {
     effect_animation_x4::release_gpu(g_effectAnimationTextureApi);
+    ground_icon_x2::forget_textures();
+  }
   const auto result = g_effectDeleteContextHook.original()(context);
   if (result) effect_animation_x4::context_destroyed(reinterpret_cast<std::uintptr_t>(context));
   return result;
@@ -3033,11 +3068,62 @@ static int detour_effect_fx_lock(void* infinity, void* rect, int flags) {
   (void)core::safe_read(rect,g_effectSurfaceRect);
   const int result = g_effectFxLockHook.original()(infinity, rect, flags);
   if (!result) g_effectSurfaceOwner.clear();
+  if (g_groundFxRenderReturn) {
+    g_groundSurface = {};
+    if (result && core::safe_read(rect, g_groundSurface.rect)) {
+      g_groundSurface.infinity = infinity;
+      g_groundSurface.flags = static_cast<std::uint32_t>(flags);
+    }
+  }
+  return result;
+}
+
+static int render_ground_layer(void* infinity, void* cell, int x, int y,
+                               int flags, int transparency) {
+  auto& surface = g_groundSurface;
+  const auto original = g_effectFxRenderBamHook.original();
+  if (!cell || !g_ctx || !g_ctx->manifest || surface.infinity != infinity ||
+      surface.nativeOnly || surface.count == surface.layers.size() ||
+      !g_effectCellCenter || !g_effectCellSize) {
+    surface.nativeOnly = true;
+    return original(infinity, cell, x, y, flags, transparency);
+  }
+  const auto* bytes = static_cast<const std::byte*>(cell);
+  const auto& runtime = g_ctx->manifest->itemIcons;
+  std::array<char, 8> resref{};
+  std::array<int, 2> center{}, size{};
+  std::uint8_t highlighted{};
+  auto& layer = surface.layers[surface.count];
+  if (!core::safe_read(bytes + runtime.vidCellResref, resref) ||
+      !core::safe_read(bytes + offsetof(game::CVidCell, m_bShadowOn), highlighted) ||
+      highlighted > 1 || !g_effectCellCenter(cell, center.data()) ||
+      !g_effectCellSize(cell, size.data()) ||
+      !ground_icon_x2::resolve(resref, size[0], size[1], layer.asset)) {
+    surface.nativeOnly = true;
+    return original(infinity, cell, x, y, flags, transparency);
+  }
+  layer.x = x - center[0];
+  layer.y = y - center[1];
+  layer.highlighted = highlighted != 0;
+  const auto* previousOwner = g_groundPaletteOwner;
+  auto* previousLayer = g_groundPaletteLayer;
+  g_groundPaletteOwner = bytes + g_ctx->manifest->areaAnimations.vidCellPalette;
+  g_groundPaletteLayer = &layer;
+  const int result = original(infinity, cell, x, y, flags, transparency);
+  g_groundPaletteOwner = previousOwner;
+  g_groundPaletteLayer = previousLayer;
+  if (result) ++surface.count;
+  else surface.nativeOnly = true;
   return result;
 }
 
 static int detour_effect_fx_render_bam(void* infinity, void* cell, int x, int y,
                                       int flags, int transparency) {
+  if (g_groundFxRenderReturn &&
+      reinterpret_cast<std::uintptr_t>(_ReturnAddress()) == g_groundFxRenderReturn)
+    return render_ground_layer(infinity, cell, x, y, flags, transparency);
+  if (g_groundSurface.infinity == infinity && g_groundSurface.count)
+    g_groundSurface.nativeOnly = true;
   const bool previousNormalProfile=g_effectNormalTextureProfile;
   g_effectNormalTextureProfile=(flags & 8)==0;
   std::array<char,8> ref{};
@@ -3078,6 +3164,53 @@ static int detour_effect_fx_render_bam(void* infinity, void* cell, int x, int y,
   g_effectSurfaceRealizingCell = previousRealizingCell;
   g_effectNormalTextureProfile=previousNormalProfile;
   return result;
+}
+
+static int detour_ground_fx_clipped(void* infinity, void* sourceRect, int x, int y,
+                                   int centerX, int centerY, int flags, void* clip) {
+  auto& surface = g_groundSurface;
+  const bool owned = reinterpret_cast<std::uintptr_t>(_ReturnAddress()) == g_groundFxClippedReturn;
+  const auto* previous = g_groundFinalDraw;
+  g_groundFinalDraw = owned && surface.infinity == infinity && !surface.nativeOnly &&
+      surface.count && g_nativeOcclusionProbeHookEnabled && surface.clippingObserved
+      ? &surface : nullptr;
+  const auto result = g_groundFxClippedHook.original()(
+      infinity, sourceRect, x, y, centerX, centerY, flags, clip);
+  g_groundFinalDraw = previous;
+  if (owned) surface = {};
+  return result;
+}
+
+static void install_ground_fx_hook(AppContext& ctx, const core::ModuleSpan& module) noexcept {
+  if (!ctx.cfg.enableGroundItemIconX2 || !ground_icon_x2::ready() ||
+      !g_nativeOcclusionBridgeEnabled || !ctx.manifest) return;
+  const auto& runtime = ctx.manifest->itemIcons;
+  const auto base = reinterpret_cast<std::uintptr_t>(module.base);
+  const auto verified = [&](std::uintptr_t rva, std::string_view signature) {
+    return rva && !signature.empty() && matches_pattern_at_rva(module, rva, signature);
+  };
+  if (!verified(runtime.groundFxRenderCall, runtime.groundFxRenderCallSignature) ||
+      !verified(runtime.groundFxClippedCall, runtime.groundFxClippedCallSignature) ||
+      !verified(runtime.groundFxClipped, runtime.groundFxClippedSignature)) {
+    LOG_WARN("Ground icon x2 hook skipped: CGameContainer FX signatures differ");
+    return;
+  }
+  try {
+    g_groundFxClippedHook.create(reinterpret_cast<void*>(base + runtime.groundFxClipped),
+                                 reinterpret_cast<void*>(&detour_ground_fx_clipped));
+    g_groundFxClippedHook.enable();
+    const auto& fx = g_effectAnimationTextureApi;
+    g_groundIconTextureApi = {fx.DrawGenTexture, fx.DrawBindTexture, fx.DrawDeleteTexture,
+                             fx.TexImage, fx.DrawGetRenderer, fx.glTextureState};
+    g_groundPixelEncoding = reinterpret_cast<const area_animation_x4::NativePixelEncoding*>(
+        base + ctx.manifest->areaAnimations.nativeTextureFormat);
+    g_groundFxRenderReturn = base + runtime.groundFxRenderCall + 5;
+    g_groundFxClippedReturn = base + runtime.groundFxClippedCall + 5;
+    LOG_INFO("Ground icon x2 world hooks enabled: CGameContainer FX and native highlight");
+  } catch (const std::exception& error) {
+    (void)g_groundFxClippedHook.remove();
+    LOG_WARN("Ground icon x2 hook skipped: {}", error.what());
+  }
 }
 
 static int detour_projectile_fx_render(void* thisPtr, void* sourceRect, int x, int y,
@@ -3912,6 +4045,20 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
 
   g_vidPaletteRealizeHook.original()(paletteThis, realizedOutput, flags, rangeEffects,
                                       transparency, arg6);
+  if (g_groundPaletteLayer && paletteThis == g_groundPaletteOwner) {
+    core::area_lighting::Palette source{}, realized{};
+    game::CVidPalette palette{};
+    area_animation_x4::NativePixelEncoding encoding{};
+    if (core::safe_read(paletteThis, palette) && palette.m_nType == 0 &&
+        palette.m_nEntries == 256 && core::safe_read(palette.m_pPalette, source) &&
+        core::safe_read(realizedOutput, realized) &&
+        g_groundPixelEncoding && core::safe_read(g_groundPixelEncoding, encoding) &&
+        encoding.type == game::gl::UNSIGNED_INT_8_8_8_8_REV &&
+        (encoding.externalFormat == game::gl::BGRA || encoding.externalFormat == game::gl::RGBA)) {
+      g_groundPaletteLayer->lighting = core::area_lighting::derive(
+          source, realized, encoding.externalFormat == game::gl::BGRA);
+    }
+  }
   if (g_effectSurfaceRealizingCell && g_ctx && g_ctx->manifest &&
       paletteThis == static_cast<std::byte*>(g_effectSurfaceRealizingCell) +
           g_ctx->manifest->areaAnimations.vidCellPalette) {
@@ -4241,6 +4388,28 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
                                            std::uint64_t logicalSize, void* clipRect,
                                            std::uint32_t flags) {
   const auto original = g_vidCellRenderTextureHook.original();
+  if (const auto* ground = g_groundFinalDraw) {
+    const int width = static_cast<std::int32_t>(logicalSize & 0xFFFFFFFFull);
+    const int height = static_cast<std::int32_t>(logicalSize >> 32u);
+    std::vector<std::uint8_t> visibility;
+    bool changed = false;
+    int previous = 0;
+    const bool maskReady = ground->mask.build_transfer(width, height, visibility, changed);
+    const bool bound = maskReady && ground_icon_x2::bind(
+        std::span(ground->layers).first(ground->count), width, height,
+        changed ? std::span<const std::uint8_t>(visibility) : std::span<const std::uint8_t>{},
+        g_groundIconTextureApi, previous);
+    original(x, y, sourceRect, logicalSize, clipRect, flags);
+    if (bound) {
+      item_icon_x2::restore_texture(g_groundIconTextureApi, previous);
+      static std::atomic<bool> logged[2]{};
+      const auto highlighted = ground->layers[0].highlighted;
+      if (!logged[highlighted].exchange(true))
+        LOG_INFO("Ground icon x2 bound: logical={}x{}, layers={}, highlighted={}, sampler=nearest",
+                 width, height, ground->count, highlighted);
+    }
+    return;
+  }
   if (g_ctx && g_ctx->cfg.creature_sprite_upscale_enabled()) {
     try {
       install_shader_probes_once();
@@ -6111,6 +6280,7 @@ bool install_all(AppContext& ctx) {
               reinterpret_cast<void*>(moduleBase + effectRuntime.infinityFxRenderBam),
               reinterpret_cast<void*>(&detour_effect_fx_render_bam));
           g_effectFxRenderBamHook.enable();
+          install_ground_fx_hook(ctx, *module);
           if (g_effectStreamHooksPrepared) {
             g_effectCellConstructHook.enable(); g_effectCellDestructHook.enable();
             g_effectVvcConfigureHook.enable(); g_effectVvcSequenceHook.enable();
@@ -6724,6 +6894,7 @@ void prepare_for_shutdown() noexcept {
   (void)g_vvcVidCellRenderHook.disable();
   (void)g_projectileFxRenderHook.disable();
   (void)g_effectFxLockHook.disable(); (void)g_effectFxRenderBamHook.disable();
+  (void)g_groundFxClippedHook.disable();
   (void)g_gameStaticRenderBamHook.disable();
   (void)g_infinityFxRenderClippingPolysHook.disable();
   (void)g_vidPaletteRealizeHook.disable();

@@ -236,6 +236,7 @@ if(IEE_BUILD_WINDOWS_DLL)
         src/iee/exports.cpp
         src/iee/features/tile_render.cpp
         src/iee/frame_hook.cpp
+        src/iee/ground_icon_x2.cpp
         src/iee/hooks.cpp
         src/iee/item_icon_x2.cpp
         src/iee/paperdoll_q3m.cpp
