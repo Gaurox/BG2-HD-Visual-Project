@@ -1,8 +1,10 @@
-# Suivi vidéo — 2026-11-12
+# Suivi vidéo — 2026-11-22
+
+- **37/37 variantes acceptées en jeu.** Confirmation utilisateur du 2026-11-22 pour `DEATHAND`, `FLYTHR03`, `REST`, `RESTINN`. [Décision](index/qa-decisions/remaining-four-ingame-accepted-20261122-v1.json).
 
 - 2026-11-22 — Candidat local `0.1.0-alpha.13`, composant WeiDU `4300` : 37 WBM Full HD en VP8 deux passes, cible 8 Mbit/s vidéo, Vorbis natif conservé. Vidéos 2 149 334 182 octets, ZIP 25 293 596 056 octets. SHA des 37 fichiers installés et des 37 originaux restaurés vérifiés sur copie isolée. QA en jeu des nouveaux encodages en attente. [Inventaire et reçu](index/alpha13-movies-8mbit-20261122-v1.json) · [Comparateur local](previews/vp8-bitrates-20261121-v1/comparaison.html).
 - Autorités : sources=`index/resources.csv` ; périmètre=`index/production-scope.json` ; production courante=`index/status.csv`, détails `index/processing.csv`, `index/intro-finals30-20261111-v1.json`, `index/endings-finals30-20261111-v1.json` et `index/outro-finals30-20261112-v1.json` ; QA=`index/qa-decisions/` ; installation=`installations/*/installation.json` ; release séparée.
-- Périmètre actif37cinématiques (variantes linguistiques comprises) :37productions complètes,0partielle,0sans production ;aucun traitement initial restant ;ENDCRDIT complet accepté2026-11-12.33installées localement ;33versions installées validées ingame ; validation groupée24versions2026-11-12,DAYNITE inclus après confirmation explicite. RESTDUNG validé correspond au WBM15 installé ; sa comparaison30 reste distincte.
+- Périmètre actif : 37 cinématiques produites, variantes linguistiques comprises. 33 versions locales validées au 2026-11-12. RESTDUNG validé correspond au WBM15 installé.
 - QA groupée immuable24versions : `index/qa-decisions/installed-batch-ingame-accepted-20261112-v1.json` ;SHA des fichiers canoniques/alias installés vérifiés. Reçus et décisions historiques conservés inchangés. DAYNITE :ancienne anomalie close après test explicite ;aucun correctif/réencodage requis.
 -13tutoriels retirés du suivi et exclus des futurs traitements sur demande utilisateur2026-11-11 ; décision `index/production-scope.json`. Inventaire50sources et fichiers natifs conservés.
 
@@ -23,11 +25,11 @@
 | FLYTHR01 | SeedVR FP16 LAB1080 →Apollo8,670images/30fps/22,333s,son natif complet | visuelle acceptée2026-11-12 ; ingame accepté2026-11-12 | WBM +alias `HDFLY01` installés |
 | SARADUSH | SeedVR FP16 LAB1080 →Apollo8,694images/30fps/23,133s,son natif complet | visuelle acceptée2026-11-12 ; ingame accepté2026-11-12 | WBM +alias `HDSARAD` installés |
 | BLACKPIT | SeedVR FP16 LAB1080 →Apollo8 ; PTS natifs reconstruits,733images/30fps/~24,44s,MP4/MKV/WBM | visuelle acceptée2026-11-12 ; ingame accepté2026-11-12 | WBM +alias `HDBLKPIT` installés |
-| DEATHAND | SeedVR LAB15 → Apollo8 FullHD30, MP4 parent + MOV final | méthode validée2026-08-31 ; livraison/QA asset non définies | non |
-| FLYTHR03 | SeedVR LAB15 → Apollo8 FullHD30, MP4 parent + MOV final | méthode validée2026-08-31 ; livraison/QA asset non définies | non |
+| DEATHAND | SeedVR LAB15 → Apollo8 FullHD30, MP4 parent + MOV final | ingame accepté 2026-11-22 | aucun reçu individuel |
+| FLYTHR03 | SeedVR LAB15 → Apollo8 FullHD30, MP4 parent + MOV final | ingame accepté 2026-11-22 | aucun reçu individuel |
 | RESTDUNG | SeedVR FP16 LAB15 → Apollo8 FullHD30 | comparaison15/30 acceptée | WBM15 ; test ingame accepté2026-11-12 |
-| RESTINN | SeedVR FP16 LAB15 → Apollo8 FullHD30 | comparaison acceptée | non |
-| REST | SeedVR FP16 LAB15 → Apollo8 FullHD30 | comparaison acceptée | non |
+| RESTINN | SeedVR FP16 LAB15 → Apollo8 FullHD30 | ingame accepté 2026-11-22 | aucun reçu individuel |
+| REST | SeedVR FP16 LAB15 → Apollo8 FullHD30 | ingame accepté 2026-11-22 | aucun reçu individuel |
 | DAYNITE | H3 01604 → fondus10s → nearest FullHD24 → Apollo8 FullHD30 + son natif | sélection pour test local ; post-SeedVR rejeté ; ancien signalement clos par validation utilisateur2026-11-12 | WBM30 présent et SHA conforme ;ingame accepté2026-11-12,ancien signalement clos |
 | POCKETZZ | SeedVR FP16 LAB FullHD15 → Apollo8 FullHD30,180images/6s | visuelle acceptée2026-11-12 ; ingame accepté2026-11-12 | WBM +alias `HDPCKZZ` installés |
 | INTRO (défaut/DE/PL) |3assemblages SeedVR FullHD~30, audios natifs | ingame accepté2026-11-12 |3WBM installés ; test ingame accepté2026-11-12 |

@@ -12,11 +12,12 @@
 | Sprites UI x4 | `interface/menus-options-bg2ee/x4-topaz-recovery-v2-d50/sprite-manifest.json` |
 | Sélecteur | `interface/menus-options-bg2ee/x4-topaz-recovery-v2-d50/selection-des-trois-jeux/assets/asset-manifest.json` |
 | Icônes | `icons/index/manifest.json`, `resources.csv`, `families.csv`, `usages.csv`, `frames.csv`, `dependencies.csv`, `missing-resources.csv`, `processing.csv` |
-| Curseurs | `cursors/index/manifest.json`, `resources.csv` |
 | Effets | `effects/index/manifest.json`, `resources.csv`, `dependencies.csv`, `bam-assets.csv`, `processing.csv` |
 | Projectiles | `projectiles/index/manifest.json`, `resources.csv`, `dependencies.csv` |
 | Compléments BAM | `graphics/index/supplemental-manifest.json`, `supplemental-assets.csv` |
 | Portraits | `portraits/inventaire_portraits.csv` ; une base logique, tailles L/M/S dépendantes |
+
+Curseurs vanilla hors suivi : `CURSORS.BAM`, `CURSARW.BAM`, `CAROT.BAM`.
 
 Animations, sprites et cartes conservent leurs autorités propres ; voir [`../AGENTS.md`](../AGENTS.md).
 L'état de release provient exclusivement des manifestes sous `releases/BG2-HD-Upscale/manifests/`.

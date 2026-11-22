@@ -5,10 +5,11 @@
   "key_resource_count": 62575,
   "limitations": [
     "BMP, PLT et PVRZ sont des membres dépendants et ne sont pas comptés comme assets autonomes",
-    "les BAM restants ne sont pas projetés tant que leur propriétaire logique n'est pas démontré"
+    "les BAM restants ne sont pas projetés tant que leur propriétaire logique n'est pas démontré",
+    "CURSORS, CURSARW et CAROT sont exclus de la couverture et du suivi"
   ],
   "owned_format_counts": {
-    "BAM": 17086,
+    "BAM": 17083,
     "BMP": 10,
     "FNT": 13,
     "MOS": 617,
@@ -19,7 +20,7 @@
     "VVC": 250,
     "WBM": 33
   },
-  "owned_raw_resource_count": 18539,
+  "owned_raw_resource_count": 18536,
   "raw_cross_domain_overlap_count": 113,
   "raw_cross_domain_overlap_policy": "reported raw dependency reuse; logical registry assets remain unique",
   "raw_cross_domain_overlaps": [
@@ -933,7 +934,7 @@
     }
   ],
   "raw_format_counts": {
-    "BAM": 17188,
+    "BAM": 17185,
     "BMP": 2694,
     "FNT": 13,
     "MOS": 617,
@@ -945,7 +946,7 @@
     "VVC": 250,
     "WBM": 33
   },
-  "raw_graphical_resource_count": 24934,
+  "raw_graphical_resource_count": 24931,
   "schema": "bg2-upscale-graphics-inventory-coverage-v1",
   "top_unclassified_source_bifs": [
     {

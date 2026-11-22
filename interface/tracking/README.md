@@ -5,6 +5,7 @@
 - Sélection : `../analysis/large-surfaces-20261110-v1/decisions.json` ; dernière décision prévaut.
 - Hors périmètre actif : `out-of-scope.csv` ; historique/exports/QA conservés, aucune suppression physique.
 - Vue tabulaire : `resources.csv` ; chiffres site : `progress.json` ; projections de l’autorité active.
+- Clôture utilisateur 2026-11-22 : 204/204 sorties complètes. Contribution UI au résultat visible du site à 100 %. QA complète et présence alpha attestées pour 133/204, suivies séparément.
 
 ## États indépendants
 

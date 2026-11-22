@@ -19,6 +19,7 @@ def summary(data):
     return dict(schema='bg2-ui-progress-v1', authority='interface/index/work-tracking.json',
                 updated_on=data['updated_on'], unit='logical native resref; all frames for complete production',
                 total=len(rows), produced=sum(r['production']['state'] in ('complete-existing-x4', 'complete-selected-x4') for r in rows),
+                completion=data.get('completion'),
                 candidate_production=sum(r['production']['state'] == 'complete-awaiting-review-x4' for r in rows),
                 partial_production=sum(r['production']['state'] == 'partial-existing-x4' for r in rows),
                 qa_observed_resources=sum(r['qa']['state'] == 'accepted-observed-menu' for r in rows),
@@ -46,6 +47,9 @@ def validate(data):
     inventory = json.loads((ROOT / data['selection_inventory']).read_text(encoding='utf-8'))
     expected = {r['resref'] for r in inventory['resources'] if r['status'].startswith('keep')}
     assert set(names) == expected, 'Active queue differs from selection'
+    if data.get('completion', {}).get('state') == 'complete':
+        progress = summary(data)
+        assert progress['produced'] == progress['total'], 'Closed UI scope has incomplete production'
     for row in data['resources']:
         for stage in ('source', 'production', 'qa', 'installation', 'release'):
             assert row[stage]['state']

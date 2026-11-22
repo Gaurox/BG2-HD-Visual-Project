@@ -9,7 +9,7 @@ La capture de référence est une partie en cours en 2560×1440. Les éléments 
 - les séparateurs et bordures statiques de cette barre ;
 - les cadres et boutons d'interface qui se superposent à ces panneaux.
 
-La zone centrale de jeu est explicitement hors périmètre. Les portraits, icônes de sorts/objets, curseurs, jauges à contenu variable et texte seront traités dans une seconde liste, après identification dynamique.
+La zone centrale de jeu est explicitement hors périmètre. Les portraits, icônes de sorts/objets, jauges à contenu variable et texte seront traités dans une seconde liste, après identification dynamique.
 
 ## Pages statiques identifiées
 

@@ -75,6 +75,8 @@ GRAPHICAL_TYPES = {
     TYPE_PNG,
 }
 
+UNTRACKED_CURSOR_KEYS = {(resref, TYPE_BAM) for resref in ("CURSORS", "CURSARW", "CAROT")}
+
 OUTPUT_PATHS = {
     "video_manifest": "video/index/manifest.json",
     "video_resources": "video/index/resources.csv",
@@ -88,8 +90,6 @@ OUTPUT_PATHS = {
     "icon_frames": "icons/index/frames.csv",
     "icon_dependencies": "icons/index/dependencies.csv",
     "icon_missing_resources": "icons/index/missing-resources.csv",
-    "cursor_manifest": "cursors/index/manifest.json",
-    "cursor_resources": "cursors/index/resources.csv",
     "effect_manifest": "effects/index/manifest.json",
     "effect_resources": "effects/index/resources.csv",
     "effect_dependencies": "effects/index/dependencies.csv",
@@ -854,41 +854,6 @@ def build_icons(
     )
 
 
-def build_cursors(
-    index: KeyIndex, extract: bool
-) -> tuple[dict[str, Any], list[dict[str, Any]], set[tuple[str, int]]]:
-    resource = index.get("CURSORS", TYPE_BAM)
-    if resource is None:
-        raise RuntimeError("CURSORS.BAM absent du chitin.key")
-    payload = index.resolve(resource)
-    metadata = bam_metadata(payload)
-    extracted_relative = Path("cursors/source/CURSORS.bam")
-    if extract:
-        extract_payload(ROOT / extracted_relative, payload)
-    rows = [
-        {
-            "asset_key": "cursor-set:CURSORS",
-            "resref": "CURSORS",
-            "granularity": "single-engine-cursor-set",
-            "bam_container": metadata["container"],
-            "bam_version": metadata["version"],
-            "frame_count": metadata["frame_count"],
-            "cycle_count": metadata["cycle_count"],
-            "source_bif": resource.bif_name,
-            "locator": f"0x{resource.locator:08X}",
-            "source_size": len(payload),
-            "source_sha256": sha256_bytes(payload),
-            "extracted_path": extracted_relative.as_posix(),
-        }
-    ]
-    manifest = {
-        **manifest_base(index, "cursors", 1),
-        "granularity": "one CURSORS.BAM set; cycles are unnamed members, not invented assets",
-        "resources_csv": "cursors/index/resources.csv",
-    }
-    return manifest, rows, {resource.key}
-
-
 def parse_vvc_dependencies(data: bytes) -> list[tuple[str, str, tuple[int, ...]]]:
     if len(data) < 0x90 or data[:8] != b"VVC V1.0":
         raise ValueError(f"VVC invalide: {data[:8]!r}")
@@ -1318,8 +1283,9 @@ def existing_ui_keys(index: KeyIndex) -> set[tuple[str, int]]:
         if resource_type is None:
             continue
         resref = Path(str(row.get("resource", ""))).stem.upper()
-        if index.get(resref, resource_type):
-            result.add((resref, resource_type))
+        key = (resref, resource_type)
+        if key not in UNTRACKED_CURSOR_KEYS and index.get(*key):
+            result.add(key)
     return result
 
 
@@ -1341,7 +1307,7 @@ def is_ui_bam(resource: KeyResource) -> bool:
     return (
         bif_name.startswith(("GUI", "HD0G"))
         or resource.resref.startswith(
-            ("GUI", "GU", "START", "TITLE", "LOGO", "BIGLOGO", "CAROT")
+            ("GUI", "GU", "START", "TITLE", "LOGO", "BIGLOGO")
         )
     )
 
@@ -1369,6 +1335,7 @@ def build_ui_supplement(
         )
         and resource.key not in existing
         and resource.key not in excluded
+        and resource.key not in UNTRACKED_CURSOR_KEYS
     ]
     rows: list[dict[str, Any]] = []
     dependencies: list[dict[str, Any]] = []
@@ -1469,7 +1436,7 @@ def build_supplemental_graphics(
     rows: list[dict[str, Any]] = []
     owned: set[tuple[str, int]] = set()
     for resource in sorted(index.entries(TYPE_BAM), key=lambda item: item.resref):
-        if resource.key in already_owned:
+        if resource.key in already_owned or resource.key in UNTRACKED_CURSOR_KEYS:
             continue
         rule = SUPPLEMENTAL_BIF_RULES.get(Path(resource.bif_name).name.upper())
         if rule is None:
@@ -1529,7 +1496,9 @@ def build_graphics_coverage(
     ownership_sets: Mapping[str, set[tuple[str, int]]],
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     raw_graphics = [
-        resource for resource in index.resources if resource.resource_type in GRAPHICAL_TYPES
+        resource
+        for resource in index.resources
+        if resource.resource_type in GRAPHICAL_TYPES and resource.key not in UNTRACKED_CURSOR_KEYS
     ]
     dependency_only_types = {TYPE_BMP, TYPE_PLT, TYPE_PVRZ}
     unclassified = [
@@ -1593,6 +1562,7 @@ def build_graphics_coverage(
         "limitations": [
             "BMP, PLT et PVRZ sont des membres dépendants et ne sont pas comptés comme assets autonomes",
             "les BAM restants ne sont pas projetés tant que leur propriétaire logique n'est pas démontré",
+            "CURSORS, CURSARW et CAROT sont exclus de la couverture et du suivi",
         ],
         "unclassified_csv": "graphics/index/unclassified-resources.csv",
     }
@@ -1634,11 +1604,6 @@ CSV_FIELDS = {
     ),
     "icon_missing_resources": (
         "icon_resref", "roles", "usage_count", "owner_count",
-    ),
-    "cursor_resources": (
-        "asset_key", "resref", "granularity", "bam_container", "bam_version",
-        "frame_count", "cycle_count", "source_bif", "locator", "source_size",
-        "source_sha256", "extracted_path",
     ),
     "effect_resources": (
         "asset_key", "resref", "format", "dependency_count", "source_bif", "locator",
@@ -1714,7 +1679,6 @@ def build_outputs(
             icon_missing_resources,
             icon_owned,
         ) = build_icons(index, extract or extract_icons)
-        cursor_manifest, cursor_rows, cursor_owned = build_cursors(index, extract)
         effect_manifest, effect_rows, effect_dependencies, effect_owned = build_effects(
             index, extract or extract_effects
         )
@@ -1726,7 +1690,6 @@ def build_outputs(
             video_owned
             | hud_owned
             | icon_owned
-            | cursor_owned
             | effect_owned
             | projectile_owned
             | font_owned
@@ -1767,7 +1730,6 @@ def build_outputs(
             "videos": video_owned,
             "hud": hud_owned,
             "icons": icon_owned,
-            "cursors": cursor_owned,
             "effects": effect_owned,
             "projectiles": projectile_owned,
             "fonts": font_owned,
@@ -1784,7 +1746,6 @@ def build_outputs(
             "video_manifest": video_manifest,
             "hud_manifest": hud_manifest,
             "icon_manifest": icon_manifest,
-            "cursor_manifest": cursor_manifest,
             "effect_manifest": effect_manifest,
             "projectile_manifest": projectile_manifest,
             "font_manifest": font_manifest,
@@ -1802,7 +1763,6 @@ def build_outputs(
             "icon_frames": icon_frames,
             "icon_dependencies": icon_dependencies,
             "icon_missing_resources": icon_missing_resources,
-            "cursor_resources": cursor_rows,
             "effect_resources": effect_rows,
             "effect_dependencies": effect_dependencies,
             "effect_bam_assets": effect_bam_rows,

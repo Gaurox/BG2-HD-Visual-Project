@@ -38,7 +38,6 @@ class GraphicsInventoryTests(unittest.TestCase):
             ("video_manifest", "video_resources"),
             ("hud_manifest", "hud_resources"),
             ("icon_manifest", "icon_resources"),
-            ("cursor_manifest", "cursor_resources"),
             ("effect_manifest", "effect_resources"),
             ("projectile_manifest", "projectile_resources"),
             ("font_manifest", "font_resources"),
@@ -58,6 +57,14 @@ class GraphicsInventoryTests(unittest.TestCase):
             self.assertEqual(len(keys), len(set(keys)), resources_name)
             for row in rows:
                 self.assertRegex(row["source_sha256"], r"^[A-F0-9]{64}$")
+
+    def test_vanilla_cursors_are_outside_tracking(self) -> None:
+        excluded = {"CURSORS", "CURSARW", "CAROT"}
+        for path, payload in self.outputs.items():
+            if path.suffix == ".csv":
+                rows = csv.DictReader(io.StringIO(payload.decode("utf-8-sig"), newline=""))
+                self.assertFalse(excluded & {row.get("resref") for row in rows}, path)
+        self.assertFalse(any(path.is_relative_to(ROOT / "cursors") for path in self.outputs))
 
     def test_dependency_failures_are_explicit(self) -> None:
         for manifest_name, dependencies_name in (
@@ -182,7 +189,6 @@ class GraphicsInventoryTests(unittest.TestCase):
             "video_resources",
             "hud_resources",
             "icon_resources",
-            "cursor_resources",
             "effect_resources",
             "projectile_resources",
             "ui_resources",

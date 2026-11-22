@@ -1,5 +1,7 @@
 # Vidéos BG2EE
 
+**37/37 variantes acceptées en jeu** après confirmation utilisateur pour `DEATHAND`, `FLYTHR03`, `REST`, `RESTINN` le 2026-11-22. [Suivi](SUIVI.md) · [Décision](index/qa-decisions/remaining-four-ingame-accepted-20261122-v1.json).
+
 `index/manifest.json` et `index/resources.csv` constituent l'inventaire canonique des
 cinématiques WBM libres et des tutoriels WBM du KEY/BIF. Les WBM utilisés comme animations de
 zone restent sous l'autorité de `animations/index/occurrences.csv` et sont exclus ici.
