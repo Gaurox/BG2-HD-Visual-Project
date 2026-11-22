@@ -18,7 +18,7 @@ inventaires globaux ne sont pas reconstruits après chaque icône.
 | Pages PVRZ des BAM V2 | `index/dependencies.csv` | généré |
 | Resrefs référencées mais absentes | `index/missing-resources.csv` | généré |
 | Production, sélection, QA, installation, release | `index/processing.csv` | autorité métier |
-| Décisions QA futures | `index/qa-decisions/<RESREF>/*.json` | immuable |
+| Décisions QA | `index/qa-decisions/<RESREF>/*.json` ou `index/qa-decisions/batches/*.json` | immuable |
 
 Familles inventoriées : `item-inventory`, `item-description`, `item-ground`, `spellbook`.
 Périmètre actif depuis le 2026-11-12 : **1451 BAM uniques** = 976 `item-description` +
@@ -72,6 +72,29 @@ ou release. Le contenu interne des runs sera défini avec le pipeline d'upscale,
   aux dimensions natives x4. Comparaison RGB ; variante RGBA avec alpha natif nearest x4 séparée.
 - Résultats, entrées et workflow conservés localement ; médias ignorés Git. Cette décision
   conserve la piste de traitement ; aucune QA runtime, installation ou release déduite.
+
+## Objets au sol : ReboutCX et lissage renforcé
+
+- Choix utilisateur 2026-11-22 : conserver ReboutCX avec lissage renforcé pour les objets au sol.
+- Essai sur `GSW1H01`, `GSACK01`, `GPLAT01`. Masquer l'index cyan 1, inférer le RGB en ×4 avec
+  ReboutCX, puis lisser la silhouette par couverture et prolonger les couleurs au bord.
+- Lissage : iso-contour du masque à 0,5, couverture à 16 × 16 échantillons par pixel ×4,
+  gaussien d'alpha σ 0,62 px natif, transition smoothstep ±0,19 et seuil ajusté à l'aire du
+  masque de couverture. RGB pondéré au bord, σ 0,5 px natif. Dériver le ×2 du ×4 lissé
+  par moyenne 2 × 2 en alpha prémultiplié.
+- Essais locaux : `batches/item-ground-x4-edge-smooth-20261122-v1/` et
+  `batches/item-ground-reboutcx-x2-x4-20261122-v1/` (`compare.py`, `planche.png`).
+- Choix utilisateur 2026-11-22 : ×2 pour les 67 BAM `item-ground`, contour cyan masqué.
+- Production : `python -B pipeline/scripts/build_ground_icon_reboutcx_x2.py item-ground-reboutcx-x2-20261122-v1`.
+  Sorties locales : `batches/item-ground-reboutcx-x2-20261122-v1/assets/<RESREF>/reboutcx-lisse-x2.png`
+  et `planche.png`. Géométrie et centres dans `geometry.json`, empreintes dans `run.json`.
+- Surbrillance ×2 validée visuellement sur les trois objets d'essai : alpha du contour extérieur
+  lissé à partir du BAM, calque cyan séparé composé sous le sprite ReboutCX. Les 67 calques et
+  aperçus côte à côte sont dans `batches/item-ground-cyan-x2-20261122-v1/`.
+- Commande : `python -B pipeline/scripts/build_ground_icon_cyan_x2.py item-ground-reboutcx-x2-20261122-v1 item-ground-cyan-x2-20261122-v1`.
+- QA visuelle utilisateur : 67 sprites ×2 avec et sans surbrillance, voir
+  `index/qa-decisions/batches/20261122-item-ground-x2-cyan-visual-accepted-v1.json`.
+  `qa_state=visual-accepted` porte sur les planches. L'état en jeu reste à évaluer.
 
 ## Test runtime x2 des icônes d'inventaire
 
