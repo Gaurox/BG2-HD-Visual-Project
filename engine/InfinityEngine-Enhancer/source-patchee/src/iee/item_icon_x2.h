@@ -33,6 +33,10 @@ bool resolve_frame(const std::array<char, 8>& resref, int sequence, int currentF
                    FrameHandle& out) noexcept;
 bool bind_frame_texture(FrameHandle handle, int logicalWidth, int logicalHeight,
                         const EngineTextureApi& api, int& previousTextureId) noexcept;
+// Keep native coordinates in the renderer's descriptor and upload a larger RGBA backing.
+bool upload_rgba_texture(int textureId, int logicalWidth, int logicalHeight,
+                         int pixelWidth, int pixelHeight, const void* pixels,
+                         const EngineTextureApi& api, int previousTextureId) noexcept;
 void restore_texture(const EngineTextureApi& api, int previousTextureId) noexcept;
 void forget_engine_textures() noexcept;
 

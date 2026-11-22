@@ -56,7 +56,7 @@ Un nouveau `run.json` suit `../docs/workspace-run.schema.json`. La sélection re
 `index/processing.csv`; ni la présence d'un run ni un fichier interne ne prouvent QA, installation
 ou release. Le contenu interne des runs sera défini avec le pipeline d'upscale, pas par ce document.
 
-## Illustrations de description : essai conservé, généralisation différée
+## Illustrations de description : SeedVR2 7B ×4
 
 - Décision utilisateur 2026-11-12 : conserver l'essai SeedVR2 7B x4 ; reprendre ce traitement
   ultérieurement sur les **976 `item-description`**. Aucun lancement global maintenant.
@@ -72,6 +72,18 @@ ou release. Le contenu interne des runs sera défini avec le pipeline d'upscale,
   aux dimensions natives x4. Comparaison RGB ; variante RGBA avec alpha natif nearest x4 séparée.
 - Résultats, entrées et workflow conservés localement ; médias ignorés Git. Cette décision
   conserve la piste de traitement ; aucune QA runtime, installation ou release déduite.
+- Décision utilisateur 2026-11-22 : produire les 976 illustrations en ×4. Réduction ×2 différée.
+- Lot : `batches/item-description-seedvr7b-x4-20261122-v1/`. Production :
+  `python -B pipeline/scripts/build_item_description_seedvr7b_x4.py item-description-seedvr7b-x4-20261122-v1`.
+  Sorties RGBA `assets/<RESREF>/frame-<index>-x4.png`. Les quatre quadrants de `CSHLD20`
+  sont inférés ensemble, puis recoupés suivant la géométrie native.
+- Validation utilisateur en jeu 2026-11-22 : **976 illustrations ×4, 979 frames**.
+  Décision QA : `index/qa-decisions/batches/20261122-item-description-x4-ingame-accepted-v1.json`.
+  Reçu `validated-installed` : `batches/item-description-x4-runtime-20261122-v1/installation.json`.
+  Présentation `ITEM_DESCRIPTION` : texture ×4, géométrie native, filtrage linéaire.
+  `FIST` et `OHNIKEY1` suivent cette décision pour leur usage description. Historique inventaire dans `index/processing.csv`.
+  Installation, vérification et restauration :
+  `pipeline/scripts/Install-ItemDescription-X4-Test.ps1 -Mode Install|Verify|Restore`.
 
 ## Objets au sol : ReboutCX et lissage renforcé
 

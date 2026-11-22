@@ -214,13 +214,15 @@ void clear_texture_cache_locked() noexcept {
   g_textureUseCounter = 0;
 }
 
-bool upload_frame_locked(const Record& frame, int textureId, const EngineTextureApi& api,
-                         int previousTextureId) noexcept {
+}  // namespace
+
+bool upload_rgba_texture(int textureId, int logicalWidth, int logicalHeight,
+                         int pixelWidth, int pixelHeight, const void* pixels,
+                         const EngineTextureApi& api, int previousTextureId) noexcept {
   auto& gl = game::gl::get_gl_functions();
   if ((!gl.valid && !gl.initialize()) || !gl.glGetIntegerv || !gl.glTexImage2D ||
       !gl.glTexParameteri || !gl.glPixelStorei || !gl.glGetTexLevelParameteriv ||
-      !gl.glGetError || frame.dataOffset > g_pack.size() ||
-      g_pack.size() - frame.dataOffset < frame.dataBytes) return false;
+      !gl.glGetError) return false;
   int alignment = 4, rowLength = 0, skipRows = 0, skipPixels = 0, unpackBuffer = 0;
   gl.glGetIntegerv(game::gl::UNPACK_ALIGNMENT, &alignment);
   gl.glGetIntegerv(game::gl::UNPACK_ROW_LENGTH, &rowLength);
@@ -241,7 +243,7 @@ bool upload_frame_locked(const Record& frame, int textureId, const EngineTexture
   gl.glPixelStorei(game::gl::UNPACK_SKIP_ROWS, 0);
   gl.glPixelStorei(game::gl::UNPACK_SKIP_PIXELS, 0);
   api.DrawBindTexture(textureId);
-  api.TexImage(frame.sourceWidth, frame.sourceHeight, nullptr, 0);
+  api.TexImage(logicalWidth, logicalHeight, nullptr, 0);
   int boundTexture = 0;
   gl.glGetIntegerv(game::gl::TEXTURE_BINDING_2D, &boundTexture);
   if (boundTexture <= 0 || gl.glGetError() != game::gl::GL_NO_ERROR) {
@@ -249,8 +251,8 @@ bool upload_frame_locked(const Record& frame, int textureId, const EngineTexture
     return false;
   }
   gl.glTexImage2D(game::gl::TEXTURE_2D, 0, static_cast<int>(game::gl::RGBA8),
-                  frame.replacementWidth, frame.replacementHeight, 0, game::gl::RGBA,
-                  game::gl::UNSIGNED_BYTE, g_pack.data() + frame.dataOffset);
+                  pixelWidth, pixelHeight, 0, game::gl::RGBA,
+                  game::gl::UNSIGNED_BYTE, pixels);
   gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_WRAP_S,
                      static_cast<int>(game::gl::CLAMP_TO_EDGE));
   gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_WRAP_T,
@@ -263,10 +265,21 @@ bool upload_frame_locked(const Record& frame, int textureId, const EngineTexture
   int width = 0, height = 0;
   gl.glGetTexLevelParameteriv(game::gl::TEXTURE_2D, 0, game::gl::TEXTURE_WIDTH, &width);
   gl.glGetTexLevelParameteriv(game::gl::TEXTURE_2D, 0, game::gl::TEXTURE_HEIGHT, &height);
-  const bool success = width == frame.replacementWidth && height == frame.replacementHeight &&
+  const bool success = width == pixelWidth && height == pixelHeight &&
                        gl.glGetError() == game::gl::GL_NO_ERROR;
   restore();
   return success;
+}
+
+namespace {
+
+bool upload_frame_locked(const Record& frame, int textureId, const EngineTextureApi& api,
+                         int previousTextureId) noexcept {
+  if (frame.dataOffset > g_pack.size() || g_pack.size() - frame.dataOffset < frame.dataBytes)
+    return false;
+  return upload_rgba_texture(textureId, frame.sourceWidth, frame.sourceHeight,
+                             frame.replacementWidth, frame.replacementHeight,
+                             g_pack.data() + frame.dataOffset, api, previousTextureId);
 }
 
 }  // namespace

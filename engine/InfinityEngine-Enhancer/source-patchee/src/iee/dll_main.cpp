@@ -23,6 +23,7 @@
 #include "hooks.h"
 #include "item_icon_x2.h"
 #include "ground_icon_x2.h"
+#include "item_description_x4.h"
 #include "paperdoll_q3m.h"
 #include "iee/core/config.h"
 #include "iee/core/logger.h"
@@ -173,6 +174,11 @@ static DWORD WINAPI InitThread(LPVOID) {
     if (cfg.enableItemIconX2) {
       const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
       (void)item_icon_x2::prepare(moduleDir / "iee-assets" / "icons");
+    }
+    if (cfg.enableItemDescriptionX4) {
+      const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
+      if (!item_description_x4::prepare(moduleDir / "iee-assets" / "icons"))
+        LOG_WARN("Item description x4 registry unavailable; native illustrations retained");
     }
     if (cfg.enableGroundItemIconX2) {
       const auto moduleDir = ModuleDirectory(cfgPath.parent_path());

@@ -107,6 +107,7 @@ struct EngineConfig {
   // Complete item-inventory icon pack. Exact stock x1 frame uploads are
   // replaced by x2 RGBA storage while BAM/UI geometry remains native.
   bool enableItemIconX2 = false;
+  bool enableItemDescriptionX4 = false;
   bool enableGroundItemIconX2 = false;
   // External multi-resource area-animation pack. Resrefs, BAM cycles and
   // native per-frame dimensions come from AreaAnimations-X4.registry.

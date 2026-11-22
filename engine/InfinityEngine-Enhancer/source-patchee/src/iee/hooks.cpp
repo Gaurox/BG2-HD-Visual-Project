@@ -32,6 +32,7 @@
 #include "iee/effect_animation_x4_registry.h"
 #include "iee/item_icon_x2.h"
 #include "iee/ground_icon_x2.h"
+#include "iee/item_description_x4.h"
 #include "iee/paperdoll_q3m.h"
 #include "iee/game/opengl_types.h"
 #include "app_context.h"
@@ -2953,6 +2954,7 @@ static BOOL WINAPI detour_effect_delete_context(HGLRC context) {
   if (game::gl::current_context() == context) {
     effect_animation_x4::release_gpu(g_effectAnimationTextureApi);
     ground_icon_x2::forget_textures();
+    item_description_x4::forget_textures();
   }
   const auto result = g_effectDeleteContextHook.original()(context);
   if (result) effect_animation_x4::context_destroyed(reinterpret_cast<std::uintptr_t>(context));
@@ -4192,6 +4194,7 @@ static int detour_item_vid_cell_render(void* cell, std::uintptr_t arg2,
                                        std::uintptr_t arg9) {
   const auto original = g_itemVidCellRenderHook.original();
   const auto caller = reinterpret_cast<std::uintptr_t>(_ReturnAddress());
+  const item_description_x4::CellScope descriptionScope(cell, caller);
   trace_mdr1_native_cell(cell, caller, false);
   const bool spriteRoutingOwned =
       g_spriteShaderScopeActive && caller == g_groundItemVidCellRenderReturn;
@@ -6209,6 +6212,12 @@ bool install_all(AppContext& ctx) {
     g_effectAnimationHooksEnabled = prepare_effect_animation_composition_hooks(ctx);
     g_creatureSpriteHooksEnabled = prepare_creature_sprite_composition_hooks(ctx);
     g_itemIconHooksEnabled = prepare_item_icon_composition_hooks(ctx);
+    const auto descriptionModule = core::get_module_span(nullptr);
+    const bool itemDescriptionReady = item_description_x4::ready() && descriptionModule &&
+        validate_area_animation_runtime(ctx, "Item description x4") &&
+        ctx.manifest->itemIcons.enabled &&
+        matches_pattern_at_rva(*descriptionModule, ctx.manifest->itemIcons.vidCellRender,
+                               ctx.manifest->itemIcons.vidCellRenderSignature);
     g_spriteShaderScopePrepared = prepare_sprite_shader_scope_hooks(ctx);
     // Native UI observation must work with the user's fpSprite/fpSELECT styling
     // disabled. Validate the owner/common entries without enabling D7 styling.
@@ -6231,7 +6240,7 @@ bool install_all(AppContext& ctx) {
     }
     if (g_areaCompositionMode != AreaCompositionMode::None || g_effectAnimationHooksEnabled ||
         g_creatureSpriteHooksEnabled || g_itemIconHooksEnabled ||
-        g_spriteShaderScopePrepared) {
+        g_spriteShaderScopePrepared || itemDescriptionReady) {
       try {
         const auto module = core::get_module_span(nullptr);
         if (!module || !ctx.manifest) throw std::runtime_error("module or manifest unavailable");
@@ -6244,7 +6253,8 @@ bool install_all(AppContext& ctx) {
             reinterpret_cast<void*>(moduleBase + runtime.vidCellRenderTexture),
             reinterpret_cast<void*>(&detour_vid_cell_render_texture));
         g_vidCellRenderTextureHook.enable();
-        if (g_itemIconHooksEnabled || g_spriteShaderScopePrepared || g_paperdollProbeReady || g_paperdollHDReady) {
+        if (g_itemIconHooksEnabled || g_spriteShaderScopePrepared || g_paperdollProbeReady ||
+            g_paperdollHDReady || itemDescriptionReady) {
           const auto& itemRuntime = ctx.manifest->itemIcons;
           g_itemVidCellCommonRenderTextureHook.create(
               reinterpret_cast<void*>(moduleBase + itemRuntime.vidCellCommonRenderTexture),
@@ -6649,6 +6659,8 @@ bool install_all(AppContext& ctx) {
     g_renderTextureHook.enable();
     g_tileHooksReady.store(true, std::memory_order_release);
     LOG_INFO("RenderTexture hook enabled");
+    if (itemDescriptionReady && g_itemVidCellRenderHook.original())
+      item_description_x4::install(ctx);
 
     LOG_INFO("All hooks installed successfully");
     LOG_INFO("LoadArea: 0x{:X}", ctx.addrs.LoadArea);
@@ -6788,6 +6800,7 @@ bool install_all(AppContext& ctx) {
 
 void uninstall_all() noexcept {
   g_tileHooksReady.store(false, std::memory_order_release);
+  item_description_x4::remove();
   try {
     LOG_INFO("Uninstalling all hooks...");
   } catch (...) {
@@ -6869,6 +6882,7 @@ void uninstall_all() noexcept {
 }
 
 void prepare_for_shutdown() noexcept {
+  item_description_x4::disable();
   g_tileHooksReady.store(false, std::memory_order_release);
   // Quiesce engine entry points before dependent frame/GL hooks and shared
   // state are torn down. MinHook itself stays initialized until
