@@ -1,7 +1,7 @@
 """Initialize the icon processing authority from the generated BAM inventory.
 
-Existing rows are preserved byte-for-field. Newly inventoried assets are appended
-with conservative lifecycle states. Use ``--run`` to write.
+In-scope rows keep their lifecycle values. Newly tracked assets start with
+conservative lifecycle states. Use ``--run`` to write.
 """
 
 from __future__ import annotations
@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import csv
 import io
+import json
 from pathlib import Path
 from typing import Iterable, Mapping
 
@@ -40,13 +41,19 @@ def read_csv(path: Path) -> list[dict[str, str]]:
             raise ValueError(
                 f"schéma inattendu: {path.relative_to(ROOT)}; attendu: {','.join(FIELDS)}"
             )
-        return list(reader)
+        rows = list(reader)
+    for row in rows:
+        # Older records may leave commas in the final notes column unquoted.
+        extra_notes = row.pop(None, [])
+        if extra_notes:
+            row["notes"] = ",".join([row["notes"], *extra_notes])
+    return rows
 
 
 def read_resources() -> list[dict[str, str]]:
     with RESOURCES.open(encoding="utf-8-sig", newline="") as stream:
         rows = list(csv.DictReader(stream))
-    expected = {"asset_key", "resref", "source_sha256", "extracted_path"}
+    expected = {"asset_key", "resref", "roles", "source_sha256", "extracted_path"}
     if not rows or not expected.issubset(rows[0]):
         raise ValueError("resources.csv absent ou incomplet; régénérer l'inventaire icons")
     keys = [row["asset_key"] for row in rows]
@@ -92,9 +99,15 @@ def build_rows() -> tuple[list[dict[str, str]], int]:
             "processing contient des assets absents de resources.csv: " + ", ".join(stale)
         )
 
+    scope = json.loads((ROOT / "icons/index/production-scope.json").read_text(encoding="utf-8"))
+    active_families = set(scope["active_families"])
+    excluded_families = set(scope["excluded_tracking_families"])
     rows: list[dict[str, str]] = []
     additions = 0
     for asset in assets:
+        roles = set(asset["roles"].split(";"))
+        if roles & excluded_families and not roles & active_families:
+            continue
         key = asset["asset_key"]
         resref = asset["resref"].upper()
         expected_id = icon_asset_id(resref)
@@ -127,8 +140,7 @@ def main() -> int:
     parser.add_argument("--run", action="store_true", help="écrit icons/index/processing.csv")
     args = parser.parse_args()
     rows, additions = build_rows()
-    payload = csv_bytes(rows)
-    unchanged = PROCESSING.is_file() and PROCESSING.read_bytes() == payload
+    unchanged = PROCESSING.is_file() and read_csv(PROCESSING) == rows
     print(
         f"assets: {len(rows)}; additions: {additions}; "
         f"write: {'yes' if args.run and not unchanged else 'no'}"
@@ -136,7 +148,7 @@ def main() -> int:
     if args.run and not unchanged:
         PROCESSING.parent.mkdir(parents=True, exist_ok=True)
         temporary = PROCESSING.with_suffix(".csv.partial")
-        temporary.write_bytes(payload)
+        temporary.write_bytes(csv_bytes(rows))
         temporary.replace(PROCESSING)
     return 0
 

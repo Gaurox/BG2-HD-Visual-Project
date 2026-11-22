@@ -1,42 +1,39 @@
 {
   "schema": "bg2-icons-production-scope-v1",
-  "decision_date": "2026-11-12",
+  "decision_date": "2026-11-22",
   "decision_origin": "explicit-user-scope-decision",
-  "user_decision": "retire objets d'inventaire. je ne veux pas les traiter",
+  "user_decision": "je ne veux pas traiter les icones du grimoire. sors les du suivi.",
   "source_inventory": "icons/index/resources.csv",
   "family_inventory": "icons/index/families.csv",
   "excluded_families": [
-    "item-inventory"
+    "item-inventory",
+    "spellbook"
+  ],
+  "excluded_tracking_families": [
+    "spellbook"
   ],
   "active_families": [
     "item-description",
-    "item-ground",
-    "spellbook"
+    "item-ground"
   ],
-  "asset_policy": "Keep a unique BAM when it has at least one active family; inventory usage itself is excluded.",
+  "asset_policy": "Track one BAM per asset. Exclude spellbook BAMs without an active family.",
   "source_asset_count": 2931,
   "excluded_inventory_only_assets": 1480,
-  "active_asset_count": 1451,
+  "excluded_spellbook_assets": 408,
+  "active_asset_count": 1043,
   "active_family_counts": {
     "item-description": 976,
-    "item-ground": 67,
-    "spellbook": 408
+    "item-ground": 67
   },
   "shared_assets_retained_for_other_families": {
     "icon:FIST": [
       "item-description"
-    ],
-    "icon:IBLUN04": [
-      "spellbook"
-    ],
-    "icon:ISTAF01": [
-      "spellbook"
     ],
     "icon:OHNIKEY1": [
       "item-description"
     ]
   },
   "source_files_deleted": false,
-  "processing_history_changed": false,
+  "processing_rows_removed": 408,
   "qa_installation_release_changed": false
 }

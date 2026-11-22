@@ -21,13 +21,12 @@ inventaires globaux ne sont pas reconstruits après chaque icône.
 | Décisions QA | `index/qa-decisions/<RESREF>/*.json` ou `index/qa-decisions/batches/*.json` | immuable |
 
 Familles inventoriées : `item-inventory`, `item-description`, `item-ground`, `spellbook`.
-Périmètre actif depuis le 2026-11-12 : **1451 BAM uniques** = 976 `item-description` +
-67 `item-ground` + 408 `spellbook`. `item-inventory` exclu sur demande utilisateur :
-1480 BAM exclusivement inventaire hors production ; inventaire brut2931 conservé.
-Quatre BAM multirôles restent pour leurs autres usages : FIST/OHNIKEY1 (description),
-IBLUN04/ISTAF01 (sorts). Aucune production de leur usage inventaire demandée.
-Autorité : `index/production-scope.json` ; filtre = au moins une famille active.
-Sources, essais historiques, processing, QA, installation et release conservés.
+Périmètre actif au 2026-11-22 : **1043 BAM uniques** = 976 `item-description` +
+67 `item-ground`. Les 1043 sont produits, installés et validés en jeu dans `index/processing.csv`.
+`item-inventory` est hors production depuis le 2026-11-12. Les 408 BAM `spellbook`, dont
+`IBLUN04` et `ISTAF01` partagés avec l’inventaire, sortent du suivi le 2026-11-22.
+`FIST` et `OHNIKEY1` restent actifs pour leur usage description.
+L’inventaire source compte 2931 BAM.
 Ne jamais déduire la famille depuis le nom du resref. Une resref multirôle possède plusieurs lignes
 dans `families.csv`; elle n'est ni copiée ni classée dans un dossier de famille.
 
@@ -143,8 +142,9 @@ qa_state,qa_evidence,installation_state,installation_receipt,release_state,
 release_candidate,notes
 ```
 
-`sync_icon_processing.py` conserve toute ligne existante, ajoute seulement les nouveaux assets et
-refuse les identités obsolètes. `icons/index/processing.csv` fait autorité pour ces états.
+`sync_icon_processing.py` applique les exclusions de suivi de `index/production-scope.json`,
+conserve les autres états et refuse les identités absentes de l’inventaire source.
+`icons/index/processing.csv` fait autorité pour ces états.
 
 ## Extraction
 
